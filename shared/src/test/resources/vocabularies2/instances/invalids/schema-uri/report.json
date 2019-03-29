@@ -8,7 +8,7 @@
         "@id": "http://www.w3.org/ns/shacl#Violation"
       },
       "http://www.w3.org/ns/shacl#focusNode": {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/invalids/schema-uri/dialect.yaml#/declarations/AssetNode/property/description"
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/invalids/schema-uri/dialect.yaml#/declarations/AssetNode/property/description"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "Cannot find property term with alias schema.org.description",
       "http://www.w3.org/ns/shacl#sourceShape": {

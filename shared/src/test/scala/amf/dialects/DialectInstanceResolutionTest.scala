@@ -65,7 +65,7 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
     if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
 
     for {
-      b <- new AMFCompiler(s"file://$directory/$source", platform, None, None,Some(Aml.name), cache = Cache()).build()
+      b <- new AMFCompiler(s"file://$directory/$source", platform, None, None,Some(hint.vendor.name), cache = Cache()).build()
       t <- Future{transform(b)}
       s <- new AMFSerializer(t,  vendorToSyntax(target), target.name, options)
         .renderToString(scala.concurrent.ExecutionContext.Implicits.global)

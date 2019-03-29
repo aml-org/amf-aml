@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#",
+    "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#",
     "@type": [
       "http://a.ml/vocabularies/meta#Dialect",
       "http://a.ml/vocabularies/document#Document",
@@ -20,7 +20,7 @@
     ],
     "http://a.ml/vocabularies/meta#externals": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/externals/owl",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/externals/owl",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -40,14 +40,14 @@
     ],
     "http://a.ml/vocabularies/meta#documents": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#",
         "@type": [
           "http://a.ml/vocabularies/meta#DocumentsModel",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://a.ml/vocabularies/meta#rootDocument": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/documents",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/documents",
             "@type": [
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -59,12 +59,12 @@
             ],
             "http://a.ml/vocabularies/meta#encodedNode": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode"
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/documents/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/documents/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -72,7 +72,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/documents"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/documents"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -90,7 +90,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -108,7 +108,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/partOf",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/partOf",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://www.w3.org/ns/shacl#PropertyShape",
@@ -131,7 +131,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/partOf/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/partOf/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -139,7 +139,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/partOf"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/partOf"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -153,7 +153,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/stargazersCount",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/stargazersCount",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://www.w3.org/ns/shacl#PropertyShape",
@@ -176,7 +176,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/stargazersCount/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/stargazersCount/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -184,7 +184,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/stargazersCount"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/stargazersCount"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -198,7 +198,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/name",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/name",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://www.w3.org/ns/shacl#PropertyShape",
@@ -221,7 +221,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/name/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -229,7 +229,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/name"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -243,7 +243,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/owner",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/owner",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://www.w3.org/ns/shacl#PropertyShape",
@@ -266,7 +266,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/owner/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/owner/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -274,7 +274,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/owner"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/owner"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -288,7 +288,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/ownerAvatar",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/ownerAvatar",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://www.w3.org/ns/shacl#PropertyShape",
@@ -311,7 +311,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/ownerAvatar/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/ownerAvatar/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -319,7 +319,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/ownerAvatar"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/ownerAvatar"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -333,7 +333,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/createdAt",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/createdAt",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://www.w3.org/ns/shacl#PropertyShape",
@@ -356,7 +356,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/createdAt/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/createdAt/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -364,7 +364,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/createdAt"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/createdAt"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -378,7 +378,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/languages",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/languages",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://www.w3.org/ns/shacl#PropertyShape",
@@ -396,10 +396,10 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/languages/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/languages/list",
                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#first": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode"
                   }
                 ],
                 "http://www.w3.org/1999/02/22-rdf-syntax-ns#rest": [
@@ -416,7 +416,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/languages/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/languages/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -424,7 +424,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/languages"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/property/languages"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -440,7 +440,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -448,7 +448,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/SoftwareProjectGitHubMetadataNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -462,7 +462,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -480,7 +480,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/language",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/language",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://www.w3.org/ns/shacl#PropertyShape",
@@ -503,7 +503,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/language/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/language/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -511,7 +511,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/language"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/language"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -525,7 +525,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/usage",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/usage",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://www.w3.org/ns/shacl#PropertyShape",
@@ -548,7 +548,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/usage/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/usage/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -556,7 +556,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/usage"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/property/usage"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -572,7 +572,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -580,7 +580,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/declarations/LanguageUsageNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1056,7 +1056,7 @@
         ],
         "http://a.ml/vocabularies/document#location": [
           {
-            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-vocabulary.raml"
+            "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-vocabulary.raml"
           }
         ],
         "http://a.ml/vocabularies/document#references": [],
@@ -1115,7 +1115,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/source-map",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
@@ -1123,7 +1123,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#"
+                "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1149,7 +1149,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#"
+                "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/github/ABOUT-GitHub-dialect.raml#"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [

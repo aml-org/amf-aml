@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#",
+    "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -10,15 +10,15 @@
     ],
     "http://a.ml/vocabularies/meta#definedBy": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#"
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#"
       }
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/",
         "@type": [
           "http://mulesoft.com/vocabularies/about#SoftwareProject",
-          "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode",
+          "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ProjectNode",
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -44,10 +44,10 @@
         ],
         "http://mulesoft.com/vocabularies/about#license": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/licenses/0",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/licenses/0",
             "@type": [
               "http://mulesoft.com/vocabularies/about#License",
-              "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/LicenseNode",
+              "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/LicenseNode",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -63,7 +63,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/licenses/0/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/licenses/0/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -71,7 +71,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/licenses/0"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/licenses/0"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -92,10 +92,10 @@
         ],
         "http://mulesoft.com/vocabularies/about#contributor": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/contributors/0",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/contributors/0",
             "@type": [
               "http://mulesoft.com/vocabularies/about#Contributor",
-              "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContributorNode",
+              "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.raml#/declarations/ContributorNode",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -119,7 +119,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/contributors/0/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/contributors/0/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -127,7 +127,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/contributors/0"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/contributors/0"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -167,7 +167,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -175,7 +175,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -191,7 +191,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/source-map",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
@@ -199,7 +199,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#"
+                "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [

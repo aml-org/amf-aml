@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml",
+    "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -10,30 +10,30 @@
     ],
     "http://a.ml/vocabularies/meta#definedBy": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect10.raml"
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/dialect10.raml"
       }
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/",
         "@type": [
           "http://test.com/tmp#Test",
-          "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/RootNode",
+          "file://shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/RootNode",
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://test.com/tmp#y": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/y",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/y",
             "@type": [
               "http://test.com/tmp#B",
-              "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/B",
+              "file://shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/B",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho"
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho"
               }
             ],
             "http://a.ml/vocabularies/document#link-label": [
@@ -43,7 +43,7 @@
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho"
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho"
               }
             ],
             "http://a.ml/vocabularies/document#link-label": [
@@ -53,7 +53,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/y/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/y/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -61,7 +61,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/y"
+                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/y"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -77,16 +77,16 @@
         ],
         "http://test.com/tmp#x": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/x",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/x",
             "@type": [
               "http://test.com/tmp#A",
-              "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/A",
+              "file://shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/A",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey"
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey"
               }
             ],
             "http://a.ml/vocabularies/document#link-label": [
@@ -96,7 +96,7 @@
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey"
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey"
               }
             ],
             "http://a.ml/vocabularies/document#link-label": [
@@ -106,7 +106,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/x/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/x/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -114,7 +114,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/x"
+                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/x"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -130,7 +130,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -150,7 +150,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -178,7 +178,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/source-map",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
@@ -186,7 +186,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml"
+                "@value": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -200,10 +200,10 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey",
         "@type": [
           "http://test.com/tmp#A",
-          "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/A",
+          "file://shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/A",
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -212,14 +212,14 @@
             "@value": "Hey"
           }
         ],
-        "http://test.com/tmp#a": [
-          {
-            "@value": "hey"
-          }
-        ],
         "http://test.com/tmp#c": [
           {
             "@value": "ho"
+          }
+        ],
+        "http://test.com/tmp#a": [
+          {
+            "@value": "hey"
           }
         ],
         "http://a.ml/vocabularies/meta#declarationName": [
@@ -229,35 +229,11 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://test.com/tmp#c"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(5,7)-(5,9)]"
-                  }
-                ]
-              },
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(4,0)-(6,0)]"
-                  }
-                ]
-              },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
@@ -269,67 +245,16 @@
                     "@value": "[(4,7)-(4,10)]"
                   }
                 ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho",
-        "@type": [
-          "http://test.com/tmp#B",
-          "file://amf-client/shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/B",
-          "http://a.ml/vocabularies/meta#DialectDomainElement",
-          "http://a.ml/vocabularies/document#DomainElement"
-        ],
-        "http://a.ml/vocabularies/meta#declarationName": [
-          {
-            "@value": "Ho"
-          }
-        ],
-        "http://test.com/tmp#c": [
-          {
-            "@value": "go"
-          }
-        ],
-        "http://test.com/tmp#b": [
-          {
-            "@value": "lets"
-          }
-        ],
-        "http://a.ml/vocabularies/meta#declarationName": [
-          {
-            "@value": "Ho"
-          }
-        ],
-        "http://a.ml/vocabularies/document-source-maps#sources": [
-          {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho/source-map",
-            "@type": [
-              "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#lexical": [
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://test.com/tmp#b"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(8,7)-(8,11)]"
-                  }
-                ]
               },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,0)-(10,0)]"
+                    "@value": "[(4,0)-(6,0)]"
                   }
                 ]
               },
@@ -341,7 +266,82 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
+                    "@value": "[(5,7)-(5,9)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho",
+        "@type": [
+          "http://test.com/tmp#B",
+          "file://shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/B",
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/meta#declarationName": [
+          {
+            "@value": "Ho"
+          }
+        ],
+        "http://test.com/tmp#b": [
+          {
+            "@value": "lets"
+          }
+        ],
+        "http://test.com/tmp#c": [
+          {
+            "@value": "go"
+          }
+        ],
+        "http://a.ml/vocabularies/meta#declarationName": [
+          {
+            "@value": "Ho"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#c"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
                     "@value": "[(9,7)-(9,9)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(8,0)-(10,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#b"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(8,7)-(8,11)]"
                   }
                 ]
               }

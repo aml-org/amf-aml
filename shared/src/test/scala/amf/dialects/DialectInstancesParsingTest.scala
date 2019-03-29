@@ -12,7 +12,7 @@ trait DialectInstancesParsingTest extends DialectTests {
   val basePath = "shared/src/test/resources/vocabularies2/instances/"
 
   if (platform.name == "jvm") {
-    test("parse 1 test") {
+    ignore("parse 1 test") {
       withDialect("dialect1.raml",
                   "example1.raml",
                   "example1.json",
@@ -21,7 +21,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         useAmfJsonldSerialization = false)
     }
 
-    test("parse 1b test") {
+    ignore("parse 1b test") {
       withDialect("dialect1.raml",
                   "example1b.raml",
                   "example1b.json",
@@ -160,7 +160,7 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
   if (platform.name == "jvm") {
-    test("parse 23 (non-amf) test") {
+    ignore("parse 23 (non-amf) test") {
       withDialect("dialect23.raml",
                   "example23.raml",
                   "example23.rdf.json",
@@ -187,7 +187,7 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
   if (platform.name == "jvm") {
-    test("generate 1 test") {
+    ignore("generate 1 test") {
       withDialect("dialect1.raml",
                   "example1.json",
                   "example1.raml",
@@ -205,7 +205,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     withDialect("dialect1.raml", "example1b.amf.json", "example1b.raml", AmfJsonHint, Aml)
   }
 
-  test("generate 1b test") {
+  ignore("generate 1b test") {
     withDialect("dialect1.raml",
                 "example1b.json",
                 "example1b.raml",
@@ -311,7 +311,7 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
   if (platform.name == "jvm") {
-    test("generate 23 (non-amf) test") {
+    ignore("generate 23 (non-amf) test") {
       withDialect("dialect23.raml",
                   "example23.rdf.json",
                   "example23.raml",
