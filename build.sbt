@@ -8,7 +8,7 @@ import sbtcrossproject.CrossPlugin.autoImport.crossProject
 import scala.collection.JavaConversions
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
-name := "amf"
+name := "amf-aml"
 
 version in ThisBuild := "4.0.0-SNAPSHOT"
 
