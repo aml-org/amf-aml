@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml",
+    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/stream1.yaml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -10,15 +10,15 @@
     ],
     "http://a.ml/vocabularies/meta#definedBy": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
       }
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/",
         "@type": [
           "https://www.w3.org/ns/activitystreams/Collection",
-          "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode",
+          "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode",
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -29,10 +29,10 @@
         ],
         "https://www.w3.org/ns/activitystreams/items": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0",
             "@type": [
               "https://www.w3.org/ns/activitystreams/Create",
-              "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode",
+              "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
@@ -47,7 +47,7 @@
                 "@id": "http://clients.api.org/user132332",
                 "@type": [
                   "https://www.w3.org/ns/activitystreams/Actor",
-                  "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode",
+                  "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode",
                   "http://a.ml/vocabularies/meta#DialectDomainElement",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
@@ -97,7 +97,7 @@
                 "@id": "http://individuals.api.org/i34994",
                 "@type": [
                   "http://crm.com/vocabularies/core#Individual",
-                  "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode",
+                  "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode",
                   "http://a.ml/vocabularies/meta#DialectDomainElement",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
@@ -144,7 +144,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -176,7 +176,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/items/0"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -204,7 +204,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -224,7 +224,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -252,7 +252,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/source-map",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/stream1.yaml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
@@ -260,7 +260,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/stream1.yaml"
+                "@value": "file://shared/src/test/resources/vocabularies2/production/streams/stream1.yaml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [

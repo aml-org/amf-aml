@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml",
+    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml",
     "@type": [
       "http://a.ml/vocabularies/meta#Dialect",
       "http://a.ml/vocabularies/document#Document",
@@ -20,7 +20,7 @@
     ],
     "http://a.ml/vocabularies/meta#externals": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/externals/stream",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml/externals/stream",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -40,14 +40,14 @@
     ],
     "http://a.ml/vocabularies/meta#documents": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/documents",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml/documents",
         "@type": [
           "http://a.ml/vocabularies/meta#DocumentsModel",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://a.ml/vocabularies/meta#rootDocument": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root",
             "@type": [
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -59,12 +59,12 @@
             ],
             "http://a.ml/vocabularies/meta#encodedNode": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode"
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -72,7 +72,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/documents/root"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -90,7 +90,7 @@
     ],
     "http://a.ml/vocabularies/document#references": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/crm.yaml",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/crm.yaml",
         "@type": [
           "http://a.ml/vocabularies/meta#Vocabulary",
           "http://www.w3.org/2002/07/owl#Ontology",
@@ -4817,12 +4817,12 @@
         ],
         "http://a.ml/vocabularies/document#location": [
           {
-            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/crm.yaml"
+            "@value": "file://shared/src/test/resources/vocabularies2/production/streams/crm.yaml"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/crm.yaml#/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/crm.yaml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -4842,7 +4842,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/crm.yaml"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/streams/crm.yaml"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4870,7 +4870,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
@@ -4878,7 +4878,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
+                "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4904,7 +4904,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
+                "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4930,7 +4930,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -4948,7 +4948,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PhotoURL",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PhotoURL",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -4970,7 +4970,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PhotoURL/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PhotoURL/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -4978,7 +4978,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PhotoURL"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PhotoURL"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -4992,7 +4992,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5014,7 +5014,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5022,7 +5022,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5036,7 +5036,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Salutation",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Salutation",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5058,7 +5058,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Salutation/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Salutation/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5066,7 +5066,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Salutation"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Salutation"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5080,7 +5080,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FirstName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FirstName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5102,7 +5102,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FirstName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FirstName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5110,7 +5110,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FirstName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FirstName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5124,7 +5124,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MiddleName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MiddleName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5146,7 +5146,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MiddleName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MiddleName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5154,7 +5154,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MiddleName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MiddleName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5168,7 +5168,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FamilyName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FamilyName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5190,7 +5190,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FamilyName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FamilyName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5198,7 +5198,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FamilyName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/FamilyName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5212,7 +5212,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SecondFamilyName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SecondFamilyName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5234,7 +5234,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SecondFamilyName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SecondFamilyName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5242,7 +5242,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SecondFamilyName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SecondFamilyName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5256,7 +5256,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NameSuffix",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NameSuffix",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5278,7 +5278,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NameSuffix/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NameSuffix/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5286,7 +5286,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NameSuffix"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NameSuffix"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5300,7 +5300,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OfficialName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OfficialName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5322,7 +5322,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OfficialName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OfficialName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5330,7 +5330,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OfficialName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OfficialName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5344,7 +5344,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MailingName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MailingName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5366,7 +5366,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MailingName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MailingName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5374,7 +5374,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MailingName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MailingName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5388,7 +5388,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OrderingName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OrderingName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5410,7 +5410,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OrderingName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OrderingName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5418,7 +5418,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OrderingName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OrderingName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5432,7 +5432,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NickName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NickName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5454,7 +5454,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NickName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NickName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5462,7 +5462,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NickName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NickName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5476,7 +5476,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCountryCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCountryCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5498,7 +5498,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCountryCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCountryCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5506,7 +5506,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCountryCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCountryCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5520,7 +5520,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCaptureMethodCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCaptureMethodCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5542,7 +5542,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCaptureMethodCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCaptureMethodCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5550,7 +5550,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCaptureMethodCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ResidenceCaptureMethodCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5564,7 +5564,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutTracking",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutTracking",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5586,7 +5586,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutTracking/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutTracking/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5594,7 +5594,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutTracking"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutTracking"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5608,7 +5608,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackUpdateDate",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackUpdateDate",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5630,7 +5630,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackUpdateDate/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackUpdateDate/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5638,7 +5638,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackUpdateDate"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackUpdateDate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5652,7 +5652,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutGeoTracking",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutGeoTracking",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5674,7 +5674,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutGeoTracking/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutGeoTracking/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5682,7 +5682,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutGeoTracking"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutGeoTracking"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5696,7 +5696,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackLocationUpdateDate",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackLocationUpdateDate",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5718,7 +5718,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackLocationUpdateDate/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackLocationUpdateDate/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5726,7 +5726,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackLocationUpdateDate"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotTrackLocationUpdateDate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5740,7 +5740,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutSolicit",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutSolicit",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5762,7 +5762,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutSolicit/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutSolicit/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5770,7 +5770,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutSolicit"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutSolicit"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5784,7 +5784,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotMarketFromUpdateDate",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotMarketFromUpdateDate",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5806,7 +5806,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotMarketFromUpdateDate/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotMarketFromUpdateDate/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5814,7 +5814,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotMarketFromUpdateDate"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotMarketFromUpdateDate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5828,7 +5828,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProfiling",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProfiling",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5850,7 +5850,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProfiling/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProfiling/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5858,7 +5858,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProfiling"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProfiling"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5872,7 +5872,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProfileFromUpdateDate",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProfileFromUpdateDate",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5894,7 +5894,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProfileFromUpdateDate/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProfileFromUpdateDate/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5902,7 +5902,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProfileFromUpdateDate"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProfileFromUpdateDate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5916,7 +5916,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProcessing",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProcessing",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5938,7 +5938,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProcessing/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProcessing/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5946,7 +5946,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProcessing"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/HasOptedOutProcessing"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -5960,7 +5960,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessFromUpdateDate",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessFromUpdateDate",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -5982,7 +5982,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessFromUpdateDate/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessFromUpdateDate/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -5990,7 +5990,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessFromUpdateDate"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessFromUpdateDate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6004,7 +6004,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessReasonCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessReasonCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6026,7 +6026,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessReasonCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessReasonCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6034,7 +6034,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessReasonCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoNotProcessReasonCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6048,7 +6048,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ShouldForget",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ShouldForget",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6070,7 +6070,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ShouldForget/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ShouldForget/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6078,7 +6078,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ShouldForget"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ShouldForget"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6092,7 +6092,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoForgetMeFromUpdateDate",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoForgetMeFromUpdateDate",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6114,7 +6114,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoForgetMeFromUpdateDate/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoForgetMeFromUpdateDate/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6122,7 +6122,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoForgetMeFromUpdateDate"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoForgetMeFromUpdateDate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6136,7 +6136,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SendIndividualData",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SendIndividualData",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6158,7 +6158,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SendIndividualData/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SendIndividualData/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6166,7 +6166,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SendIndividualData"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/SendIndividualData"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6180,7 +6180,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoExtractMyDataUpdateDate",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoExtractMyDataUpdateDate",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6202,7 +6202,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoExtractMyDataUpdateDate/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoExtractMyDataUpdateDate/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6210,7 +6210,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoExtractMyDataUpdateDate"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DoExtractMyDataUpdateDate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6224,7 +6224,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CanStorePIIElsewhere",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CanStorePIIElsewhere",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6246,7 +6246,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CanStorePIIElsewhere/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CanStorePIIElsewhere/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6254,7 +6254,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CanStorePIIElsewhere"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CanStorePIIElsewhere"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6268,7 +6268,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthDate",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthDate",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6290,7 +6290,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthDate/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthDate/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6298,7 +6298,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthDate"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthDate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6312,7 +6312,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OverAgeNumber",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OverAgeNumber",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6334,7 +6334,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OverAgeNumber/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OverAgeNumber/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6342,7 +6342,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OverAgeNumber"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OverAgeNumber"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6356,7 +6356,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeletionCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeletionCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6378,7 +6378,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeletionCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeletionCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6386,7 +6386,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeletionCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeletionCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6400,7 +6400,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/InfluencerRating",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/InfluencerRating",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6422,7 +6422,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/InfluencerRating/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/InfluencerRating/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6430,7 +6430,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/InfluencerRating"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/InfluencerRating"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6444,7 +6444,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryLanguageCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryLanguageCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6466,7 +6466,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryLanguageCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryLanguageCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6474,7 +6474,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryLanguageCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryLanguageCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6488,7 +6488,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NetWorth",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NetWorth",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6510,7 +6510,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NetWorth/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NetWorth/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6518,7 +6518,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NetWorth"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/NetWorth"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6532,7 +6532,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncome",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncome",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6554,7 +6554,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncome/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncome/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6562,7 +6562,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncome"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncome"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6576,7 +6576,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeCurrencyCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeCurrencyCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6598,7 +6598,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeCurrencyCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeCurrencyCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6606,7 +6606,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeCurrencyCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeCurrencyCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6620,7 +6620,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeRangeCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeRangeCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6642,7 +6642,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeRangeCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeRangeCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6650,7 +6650,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeRangeCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/YearlyIncomeRangeCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6664,7 +6664,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScore",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScore",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6686,7 +6686,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScore/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScore/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6694,7 +6694,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScore"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScore"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6708,7 +6708,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScoreProviderName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScoreProviderName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6730,7 +6730,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScoreProviderName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScoreProviderName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6738,7 +6738,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScoreProviderName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConsumerCreditScoreProviderName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6752,7 +6752,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalityType",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalityType",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6774,7 +6774,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalityType/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalityType/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6782,7 +6782,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalityType"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalityType"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6796,7 +6796,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalValueType",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalValueType",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6818,7 +6818,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalValueType/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalValueType/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6826,7 +6826,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalValueType"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainPersonalValueType"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6840,7 +6840,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeStyleType",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeStyleType",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6862,7 +6862,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeStyleType/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeStyleType/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6870,7 +6870,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeStyleType"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeStyleType"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6884,7 +6884,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeAttitudeType",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeAttitudeType",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6906,7 +6906,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeAttitudeType/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeAttitudeType/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6914,7 +6914,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeAttitudeType"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainLifeAttitudeType"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6928,7 +6928,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDietaryHabitType",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDietaryHabitType",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6950,7 +6950,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDietaryHabitType/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDietaryHabitType/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -6958,7 +6958,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDietaryHabitType"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDietaryHabitType"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -6972,7 +6972,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDisabilityType",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDisabilityType",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -6994,7 +6994,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDisabilityType/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDisabilityType/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7002,7 +7002,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDisabilityType"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MainDisabilityType"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7016,7 +7016,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeight",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeight",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7038,7 +7038,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeight/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeight/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7046,7 +7046,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeight"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeight"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7060,7 +7060,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeightUnitofMeasure",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeightUnitofMeasure",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7082,7 +7082,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeightUnitofMeasure/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeightUnitofMeasure/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7090,7 +7090,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeightUnitofMeasure"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeightUnitofMeasure"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7104,7 +7104,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeight",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeight",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7126,7 +7126,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeight/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeight/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7134,7 +7134,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeight"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeight"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7148,7 +7148,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeightUnitofMeasure",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeightUnitofMeasure",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7170,7 +7170,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeightUnitofMeasure/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeightUnitofMeasure/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7178,7 +7178,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeightUnitofMeasure"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonWeightUnitofMeasure"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7192,7 +7192,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryCitizenshipCountryCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryCitizenshipCountryCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7214,7 +7214,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryCitizenshipCountryCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryCitizenshipCountryCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7222,7 +7222,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryCitizenshipCountryCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryCitizenshipCountryCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7236,7 +7236,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CountryofOrigin",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CountryofOrigin",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7258,7 +7258,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CountryofOrigin/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CountryofOrigin/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7266,7 +7266,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CountryofOrigin"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/CountryofOrigin"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7280,7 +7280,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthPlace",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthPlace",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7302,7 +7302,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthPlace/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthPlace/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7310,7 +7310,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthPlace"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/BirthPlace"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7324,7 +7324,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathPlace",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathPlace",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7346,7 +7346,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathPlace/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathPlace/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7354,7 +7354,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathPlace"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathPlace"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7368,7 +7368,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/LastKnownLocation",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/LastKnownLocation",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7390,7 +7390,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/LastKnownLocation/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/LastKnownLocation/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7398,7 +7398,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/LastKnownLocation"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/LastKnownLocation"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7412,7 +7412,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MaritalStatusCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MaritalStatusCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7434,7 +7434,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MaritalStatusCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MaritalStatusCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7442,7 +7442,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MaritalStatusCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MaritalStatusCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7456,7 +7456,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonLifeStageCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonLifeStageCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7478,7 +7478,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonLifeStageCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonLifeStageCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7486,7 +7486,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonLifeStageCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonLifeStageCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7500,7 +7500,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/EthnicityCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/EthnicityCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7522,7 +7522,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/EthnicityCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/EthnicityCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7530,7 +7530,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/EthnicityCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/EthnicityCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7544,7 +7544,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHouseholdId",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHouseholdId",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7566,7 +7566,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHouseholdId/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHouseholdId/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7574,7 +7574,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHouseholdId"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHouseholdId"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7588,7 +7588,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathDate",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathDate",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7610,7 +7610,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathDate/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathDate/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7618,7 +7618,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathDate"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/DeathDate"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7632,7 +7632,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/GenderCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/GenderCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7654,7 +7654,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/GenderCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/GenderCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7662,7 +7662,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/GenderCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/GenderCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7676,7 +7676,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ReligionCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ReligionCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7698,7 +7698,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ReligionCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ReligionCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7706,7 +7706,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ReligionCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ReligionCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7720,7 +7720,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConvictionsCount",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConvictionsCount",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7742,7 +7742,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConvictionsCount/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConvictionsCount/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7750,7 +7750,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConvictionsCount"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ConvictionsCount"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7764,7 +7764,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/IsHomeOwner",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/IsHomeOwner",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7786,7 +7786,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/IsHomeOwner/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/IsHomeOwner/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7794,7 +7794,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/IsHomeOwner"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/IsHomeOwner"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7808,7 +7808,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ChildrenCount",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ChildrenCount",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7830,7 +7830,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ChildrenCount/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ChildrenCount/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7838,7 +7838,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ChildrenCount"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/ChildrenCount"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7852,7 +7852,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OccupationTypeCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OccupationTypeCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7874,7 +7874,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OccupationTypeCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OccupationTypeCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7882,7 +7882,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OccupationTypeCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/OccupationTypeCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7896,7 +7896,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryServiceFlag",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryServiceFlag",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7918,7 +7918,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryServiceFlag/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryServiceFlag/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7926,7 +7926,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryServiceFlag"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryServiceFlag"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7940,7 +7940,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryStatusCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryStatusCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -7962,7 +7962,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryStatusCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryStatusCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -7970,7 +7970,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryStatusCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/MilitaryStatusCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -7984,7 +7984,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Occupation",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Occupation",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8006,7 +8006,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Occupation/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Occupation/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8014,7 +8014,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Occupation"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/Occupation"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8028,7 +8028,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHobbyCode",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHobbyCode",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8050,7 +8050,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHobbyCode/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHobbyCode/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8058,7 +8058,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHobbyCode"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PrimaryHobbyCode"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8072,7 +8072,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/WebSiteURL",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/WebSiteURL",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8094,7 +8094,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/WebSiteURL/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/WebSiteURL/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8102,7 +8102,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/WebSiteURL"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/WebSiteURL"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8118,7 +8118,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -8126,7 +8126,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8140,7 +8140,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -8158,7 +8158,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/object",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/object",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8175,11 +8175,11 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/object/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/object/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode"
                   }
                 ]
               }
@@ -8191,7 +8191,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/object/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/object/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8199,7 +8199,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/object"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/object"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8213,7 +8213,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/actor",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/actor",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8230,11 +8230,11 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/actor/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/actor/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode"
                   }
                 ]
               }
@@ -8246,7 +8246,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/actor/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/actor/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8254,7 +8254,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/actor"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/actor"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8268,7 +8268,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/timestamp",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/timestamp",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8295,7 +8295,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/timestamp/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/timestamp/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8303,7 +8303,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/timestamp"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/property/timestamp"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8319,7 +8319,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -8327,7 +8327,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8341,7 +8341,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -8359,7 +8359,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/object",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/object",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8376,11 +8376,11 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/object/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/object/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode"
                   }
                 ]
               }
@@ -8392,7 +8392,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/object/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/object/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8400,7 +8400,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/object"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/object"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8414,7 +8414,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/actor",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/actor",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8431,11 +8431,11 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/actor/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/actor/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode"
                   }
                 ]
               }
@@ -8447,7 +8447,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/actor/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/actor/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8455,7 +8455,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/actor"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/actor"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8469,7 +8469,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/timestamp",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/timestamp",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8496,7 +8496,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/timestamp/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/timestamp/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8504,7 +8504,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/timestamp"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/property/timestamp"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8520,7 +8520,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -8528,7 +8528,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8542,7 +8542,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -8560,7 +8560,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/object",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/object",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8577,11 +8577,11 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/object/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/object/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode"
                   }
                 ]
               }
@@ -8593,7 +8593,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/object/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/object/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8601,7 +8601,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/object"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/object"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8615,7 +8615,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/actor",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/actor",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8632,11 +8632,11 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/actor/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/actor/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode"
                   }
                 ]
               }
@@ -8648,7 +8648,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/actor/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/actor/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8656,7 +8656,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/actor"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/actor"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8670,7 +8670,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/timestamp",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/timestamp",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8697,7 +8697,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/timestamp/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/timestamp/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8705,7 +8705,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/timestamp"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/property/timestamp"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8721,7 +8721,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -8729,7 +8729,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8743,7 +8743,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -8761,7 +8761,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/count",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/count",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8783,7 +8783,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/count/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/count/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8791,7 +8791,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/count"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/count"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8805,7 +8805,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/next",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/next",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8827,7 +8827,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/next/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/next/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8835,7 +8835,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/next"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/next"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8849,7 +8849,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/prev",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/prev",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8871,7 +8871,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/prev/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/prev/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8879,7 +8879,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/prev"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/prev"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8893,7 +8893,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/items",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/items",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -8910,21 +8910,21 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/items/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/items/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode"
                   }
                 ],
                 "http://www.w3.org/2000/01/rdf-schema#_2": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode"
                   }
                 ],
                 "http://www.w3.org/2000/01/rdf-schema#_3": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode"
                   }
                 ]
               }
@@ -8936,7 +8936,7 @@
             ],
             "http://a.ml/vocabularies/meta#typeDiscriminatorMap": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode->Create,file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode->Delete,file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode->Update"
+                "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CreateActivityNode->Create,file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/DeleteActivityNode->Delete,file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/UpdateActivityNode->Update"
               }
             ],
             "http://a.ml/vocabularies/meta#typeDiscriminatorName": [
@@ -8946,7 +8946,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/items/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/items/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -8954,7 +8954,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/items"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/property/items"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8970,7 +8970,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -8978,7 +8978,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CollectionNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -8992,7 +8992,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -9010,7 +9010,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/id",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/id",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -9037,7 +9037,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/id/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/id/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -9045,7 +9045,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/id"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/id"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -9059,7 +9059,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/added",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/added",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -9076,18 +9076,18 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/added/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/added/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode"
                   }
                 ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/added/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/added/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -9095,7 +9095,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/added"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/added"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -9109,7 +9109,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/removed",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/removed",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -9126,18 +9126,18 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/removed/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/removed/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode"
                   }
                 ]
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/removed/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/removed/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -9145,7 +9145,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/removed"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/property/removed"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -9166,7 +9166,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -9174,7 +9174,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualDeltaNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -9188,7 +9188,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -9206,7 +9206,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/property/id",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/property/id",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -9233,7 +9233,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/property/id/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/property/id/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -9241,7 +9241,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/property/id"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/property/id"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -9262,7 +9262,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -9270,7 +9270,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualRefNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -9284,7 +9284,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -9302,7 +9302,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/property/id",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/property/id",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -9329,7 +9329,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/property/id/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/property/id/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -9337,7 +9337,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/property/id"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/property/id"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -9358,7 +9358,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -9366,7 +9366,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/ActorNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

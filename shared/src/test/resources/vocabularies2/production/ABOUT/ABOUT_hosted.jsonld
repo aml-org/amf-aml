@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml",
+    "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -10,15 +10,15 @@
     ],
     "http://a.ml/vocabularies/meta#definedBy": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-hosted-vcs-dialect.yaml"
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-hosted-vcs-dialect.yaml"
       }
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/",
         "@type": [
           "http://about.org/ABOUT-hosted-vcs-vocabulary.yaml#SoftwareProjectHostedVcsMetadata",
-          "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-hosted-vcs-dialect.yaml#/declarations/SoftwareProjectHostedVcsMetadataNode",
+          "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-hosted-vcs-dialect.yaml#/declarations/SoftwareProjectHostedVcsMetadataNode",
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -74,7 +74,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -142,7 +142,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -206,7 +206,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/source-map",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
@@ -214,7 +214,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml"
+                "@value": "file://shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [

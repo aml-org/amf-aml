@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml",
+    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml",
     "@type": [
       "http://a.ml/vocabularies/meta#Dialect",
       "http://a.ml/vocabularies/document#Document",
@@ -20,7 +20,7 @@
     ],
     "http://a.ml/vocabularies/meta#externals": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/schema-org",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/schema-org",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -38,7 +38,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/shacl",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/shacl",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -56,7 +56,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/validation",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/validation",
         "@type": [
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -76,14 +76,14 @@
     ],
     "http://a.ml/vocabularies/meta#documents": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents",
         "@type": [
           "http://a.ml/vocabularies/meta#DocumentsModel",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
         "http://a.ml/vocabularies/meta#rootDocument": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root",
             "@type": [
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -95,12 +95,12 @@
             ],
             "http://a.ml/vocabularies/meta#encodedNode": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode"
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -108,7 +108,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -124,7 +124,7 @@
         ],
         "http://a.ml/vocabularies/meta#fragments": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation",
             "@type": [
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -136,12 +136,12 @@
             ],
             "http://a.ml/vocabularies/meta#encodedNode": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -149,7 +149,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -163,7 +163,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation",
             "@type": [
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -175,12 +175,12 @@
             ],
             "http://a.ml/vocabularies/meta#encodedNode": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -188,7 +188,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -204,7 +204,7 @@
         ],
         "http://a.ml/vocabularies/meta#library": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules",
             "@type": [
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -216,7 +216,7 @@
             ],
             "http://a.ml/vocabularies/meta#declaredNode": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/shapes",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/shapes",
                 "@type": [
                   "http://a.ml/vocabularies/meta#PublicNodeMapping",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -228,12 +228,12 @@
                 ],
                 "http://a.ml/vocabularies/meta#mappedNode": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/shapes/source-map",
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/shapes/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -241,7 +241,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/shapes"
+                            "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/shapes"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -255,7 +255,7 @@
                 ]
               },
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/functions",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/functions",
                 "@type": [
                   "http://a.ml/vocabularies/meta#PublicNodeMapping",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -267,12 +267,12 @@
                 ],
                 "http://a.ml/vocabularies/meta#mappedNode": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/functions/source-map",
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/functions/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
@@ -280,7 +280,7 @@
                       {
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/functions"
+                            "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/functions"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -296,7 +296,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -304,7 +304,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -327,7 +327,7 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
@@ -359,7 +359,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml"
+                "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -385,7 +385,7 @@
     ],
     "http://a.ml/vocabularies/document#declares": [
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -403,7 +403,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -425,7 +425,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -433,7 +433,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -447,7 +447,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -474,7 +474,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -482,7 +482,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -496,7 +496,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -518,7 +518,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -526,7 +526,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -540,7 +540,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -562,7 +562,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -570,7 +570,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -584,7 +584,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -606,7 +606,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -614,7 +614,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -628,7 +628,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -650,7 +650,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -658,7 +658,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -672,7 +672,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -694,7 +694,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -702,7 +702,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -716,7 +716,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -738,7 +738,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -746,7 +746,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -760,7 +760,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -782,7 +782,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -790,7 +790,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -804,7 +804,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -826,7 +826,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -834,7 +834,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -848,7 +848,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -875,7 +875,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -883,7 +883,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -899,7 +899,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -907,7 +907,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -921,7 +921,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -939,7 +939,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -956,11 +956,11 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode"
                   }
                 ]
               }
@@ -977,7 +977,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -985,7 +985,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -999,7 +999,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1026,7 +1026,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1034,7 +1034,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1048,7 +1048,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1070,7 +1070,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1078,7 +1078,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1092,7 +1092,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1114,7 +1114,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1122,7 +1122,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1136,7 +1136,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1163,7 +1163,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1171,7 +1171,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1185,7 +1185,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1212,7 +1212,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1220,7 +1220,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1234,7 +1234,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1261,7 +1261,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1269,7 +1269,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1283,7 +1283,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1310,7 +1310,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1318,7 +1318,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1332,7 +1332,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1349,21 +1349,21 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode"
                   }
                 ],
                 "http://www.w3.org/2000/01/rdf-schema#_2": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
                   }
                 ],
                 "http://www.w3.org/2000/01/rdf-schema#_3": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
                   }
                 ]
               }
@@ -1375,7 +1375,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1383,7 +1383,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1399,7 +1399,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1407,7 +1407,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1421,7 +1421,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -1439,7 +1439,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1461,7 +1461,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1469,7 +1469,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1483,7 +1483,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1505,7 +1505,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1513,7 +1513,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1527,7 +1527,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1554,7 +1554,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1562,7 +1562,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1576,7 +1576,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1593,11 +1593,11 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode"
                   }
                 ]
               }
@@ -1609,7 +1609,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1617,7 +1617,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1633,7 +1633,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1641,7 +1641,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1655,7 +1655,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -1673,7 +1673,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1695,7 +1695,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1703,7 +1703,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1717,7 +1717,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1739,7 +1739,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1747,7 +1747,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1761,7 +1761,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1788,7 +1788,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1796,7 +1796,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1810,7 +1810,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1832,7 +1832,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1840,7 +1840,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1856,7 +1856,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1864,7 +1864,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1878,7 +1878,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -1896,7 +1896,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1918,7 +1918,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1926,7 +1926,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1940,7 +1940,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -1962,7 +1962,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -1970,7 +1970,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -1986,7 +1986,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -1994,7 +1994,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2008,7 +2008,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -2026,7 +2026,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2048,7 +2048,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2056,7 +2056,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2070,7 +2070,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2092,7 +2092,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2100,7 +2100,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2114,7 +2114,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2141,7 +2141,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2149,7 +2149,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2163,7 +2163,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2180,11 +2180,11 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode"
                   }
                 ]
               }
@@ -2201,7 +2201,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2209,7 +2209,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2225,7 +2225,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -2233,7 +2233,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2247,7 +2247,7 @@
         ]
       },
       {
-        "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode",
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode",
         "@type": [
           "http://a.ml/vocabularies/meta#NodeMapping",
           "http://www.w3.org/ns/shacl#Shape",
@@ -2265,7 +2265,7 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2287,7 +2287,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2295,7 +2295,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2309,7 +2309,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2331,7 +2331,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2339,7 +2339,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2353,7 +2353,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2380,7 +2380,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2388,7 +2388,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2402,7 +2402,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2419,11 +2419,11 @@
             ],
             "http://www.w3.org/ns/shacl#node": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/list",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/list",
                 "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
                 "http://www.w3.org/2000/01/rdf-schema#_1": [
                   {
-                    "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode"
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode"
                   }
                 ]
               }
@@ -2435,7 +2435,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2443,7 +2443,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2457,7 +2457,7 @@
             ]
           },
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
@@ -2484,7 +2484,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -2492,7 +2492,7 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery"
+                        "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -2508,7 +2508,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
@@ -2516,7 +2516,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-client/shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
