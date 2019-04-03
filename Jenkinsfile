@@ -36,8 +36,8 @@ pipeline {
         branch 'build/develop'
       }
       steps {
-        echo "Starting TCKutor Applications/AMF/amf/amf-core"
-        build job: 'application/AMF/amf/amf-core', wait: false
+        echo "Starting TCKutor Applications/AMF/amf/amf-core/build/develop"
+        build job: 'application/AMF/amf/amf-core/build/develop', wait: false
       }
     }
   }
