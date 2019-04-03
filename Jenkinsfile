@@ -33,11 +33,11 @@ pipeline {
     }
     stage('Trigger amf projects') {
       when {
-        branch 'build/develop'
+        branch 'develop'
       }
       steps {
-        echo "Starting TCKutor Applications/AMF/amf/amf-core/build/develop"
-        build job: 'application/AMF/amf/amf-core/build/develop', wait: false
+        echo "Starting TCKutor Applications/AMF/amf/extract-core"
+        build job: 'application/AMF/amf/extract-core', wait: false
       }
     }
   }
