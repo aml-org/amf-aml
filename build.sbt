@@ -96,7 +96,7 @@ val settings = Common.settings ++ Common.publish ++ Seq(
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
     "com.github.scopt" %%% "scopt"     % "3.7.0",
-    "com.github.amlorg" %%% "amf-core" % "4.0.0-SNAPSHOT"
+    "com.github.amlorg" %%% "amf-core" % "4.0.1"
   )
 )
 
@@ -112,7 +112,7 @@ lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   * ********************************************* */
 lazy val aml = crossProject(JSPlatform, JVMPlatform)
   .settings(Seq(
-    name := "aml"
+    name := "amf-aml"
   ))
   .in(file("."))
   .settings(settings)
