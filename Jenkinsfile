@@ -21,7 +21,7 @@ pipeline {
       when {
         anyOf {
           branch 'master'
-          branch 'build/develop'
+          branch 'develop'
           branch 'release/*'
         }
       }
@@ -31,7 +31,9 @@ pipeline {
         }
       }
     }
-    stage('Trigger amf projects') {
+    /* enable triggers when snapshots branch be created*/
+    /*stage('Trigger amf projects') {
+
       when {
         branch 'develop'
       }
@@ -39,6 +41,6 @@ pipeline {
         echo "Starting TCKutor Applications/AMF/amf/extract-core"
         build job: 'application/AMF/amf/extract-core', wait: false
       }
-    }
+    }*/
   }
 }
