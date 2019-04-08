@@ -88,15 +88,27 @@ sonarMe := {
   sonar.value
 }
 
+
+lazy val workspaceDirectory: File =
+  sys.props.get("sbt.mulesoft") match {
+    case Some(x) => file(x)
+    case _       => Path.userHome / "mulesoft"
+  }
+
+
+lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
+lazy val amfCoreJSRef = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
+lazy val amfCoreLib = "com.github.amlorg" %% "amf-core" % "4.0.3"
+
+
 val settings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
   resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal),
-  resolvers += "jitpack" at "https://jitpack.io",
+//  resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
-    "com.github.scopt" %%% "scopt"     % "3.7.0",
-    "com.github.amlorg" %%% "amf-core" % "4.0.3"
+    "com.github.scopt" %%% "scopt"     % "3.7.0"
   )
 )
 
@@ -128,6 +140,7 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js"
   )
 
-lazy val amlJVM = aml.jvm.in(file("./jvm"))
-lazy val amlJS  = aml.js.in(file("./js"))
+lazy val amlJVM = aml.jvm.in(file("./jvm")).sourceDependency(amfCoreJVMRef, amfCoreLib)
+
+lazy val amlJS  = aml.js.in(file("./js")).sourceDependency(amfCoreJSRef, amfCoreLib)
 
