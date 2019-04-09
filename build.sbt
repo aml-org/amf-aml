@@ -98,7 +98,8 @@ lazy val workspaceDirectory: File =
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
-lazy val amfCoreLib = "com.github.amlorg" %% "amf-core" % "4.0.3"
+lazy val amfCoreLibJVM = "com.github.amlorg" %% "amf-core" % "4.0.3"
+lazy val amfCoreLibJS = "com.github.amlorg" %% "amf-core_sjs0.6" % "4.0.3"
 
 
 val settings = Common.settings ++ Common.publish ++ Seq(
@@ -140,7 +141,7 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js"
   )
 
-lazy val amlJVM = aml.jvm.in(file("./jvm")).sourceDependency(amfCoreJVMRef, amfCoreLib)
+lazy val amlJVM = aml.jvm.in(file("./jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
 
-lazy val amlJS  = aml.js.in(file("./js")).sourceDependency(amfCoreJSRef, amfCoreLib)
+lazy val amlJS  = aml.js.in(file("./js")).sourceDependency(amfCoreJSRef, amfCoreLibJS)
 
