@@ -39,7 +39,7 @@ case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainE
                                           unresolved: T,
                                           supportsRecursion: Boolean): T = {
     val unresolvedNodeMapping = unresolved.asInstanceOf[NodeMapping]
-    val linked: T             = unresolvedNodeMapping.link(label, annotations)
+    val linked: T             = link(label, annotations)
     if (supportsRecursion && linked.isInstanceOf[Linkable])
       linked.asInstanceOf[Linkable].withSupportsRecursion(supportsRecursion)
     linked

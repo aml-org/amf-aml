@@ -186,6 +186,10 @@ trait DialectInstancesParsingTest extends DialectTests {
     withDialect("dialect27.raml", "example27a.raml", "example27a.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 28 test") {
+    withDialect("dialect28.raml", "example28.raml", "example28.json", VocabularyYamlHint, Amf)
+  }
+
   if (platform.name == "jvm") {
     ignore("generate 1 test") {
       withDialect("dialect1.raml",
@@ -335,6 +339,10 @@ trait DialectInstancesParsingTest extends DialectTests {
 
   test("generate 27a test") {
     withDialect("dialect27.raml", "example27a.json", "example27a.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 28 test") {
+    withDialect("dialect28.raml", "example28.json", "example28.raml", AmfJsonHint, Aml)
   }
 
   test("Generate instance with invalid property terms") {

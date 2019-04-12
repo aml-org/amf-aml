@@ -52,6 +52,14 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
     }
   }
 
+  def cloneNodeMapping(target: NodeMapping) = {
+    val fields = Fields()
+    target.fields.fields().foreach { entry =>
+      fields.setWithoutId(entry.field, entry.value.value, entry.value.annotations)
+    }
+    NodeMapping(fields, Annotations())
+  }
+
   override def resolve[T <: BaseUnit](model: T): T = {
     var allDeclarations = findDeclarations(model)
     var allExternals    = findExternals(model)
@@ -60,20 +68,25 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
     val finalDeclarations = allDeclarations.values.zipWithIndex.map {
       // Resolving links in node mappings declarations
       case (mapping: NodeMapping, i) =>
-        if (mapping.isLink) {
+        val finalNode = if (mapping.isLink) {
           val target = mapping.linkTarget.get.asInstanceOf[NodeMapping]
-          val fields = Fields()
-          target.fields.fields().foreach { entry =>
-            fields.setWithoutId(entry.field, entry.value.value, entry.value.annotations)
-          }
-          NodeMapping(fields, Annotations()).withId(mapping.id).withName(s"node$i")
+          cloneNodeMapping(target).withId(mapping.id).withName(mapping.name.value())
         } else {
-          mapping.withName(s"node$i")
-
+          mapping
         }
 
+
+
+        val extended = finalNode.extend.map {
+          case superNode: NodeMapping if superNode.isLink && superNode.linkTarget.isDefined =>
+            cloneNodeMapping(superNode.linkTarget.get.asInstanceOf[NodeMapping])
+          case other                                      =>
+            other
+        }
+        finalNode.withExtends(extended)
+
       // we ignore them in unions
-      case (union: UnionNodeMapping, i) =>union
+      case (union: UnionNodeMapping, i) => union
     }.toSeq
 
     val vocabulariesAliases =

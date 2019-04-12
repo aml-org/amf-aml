@@ -34,9 +34,10 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
                             directory: String = basePath,
                             useAmfJsonldSerialization: Boolean = true) = {
     for {
-      _   <- init()
-      _   <- new AMFCompiler(s"file://$directory/$dialect", platform, None, None,Some(Aml.name), cache = Cache()).build()
-      res <- cycle(source, golden, hint, target, useAmfJsonldSerialization = useAmfJsonldSerialization, directory = directory)
+      _         <- init()
+      dialect   <- new AMFCompiler(s"file://$directory/$dialect", platform, None, None,Some(Aml.name), cache = Cache()).build()
+      _         <- Future { AMLPlugin.resolve(dialect, UnhandledErrorHandler) }
+      res       <- cycle(source, golden, hint, target, useAmfJsonldSerialization = useAmfJsonldSerialization, directory = directory)
     } yield {
       res
     }
