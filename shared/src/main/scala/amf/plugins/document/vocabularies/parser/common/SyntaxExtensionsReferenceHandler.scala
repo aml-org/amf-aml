@@ -2,7 +2,6 @@ package amf.plugins.document.vocabularies.parser.common
 
 import amf.core.parser.{LibraryReference, LinkReference, ReferenceHandler, _}
 import amf.plugins.document.vocabularies.DialectsRegistry
-import amf.plugins.features.validation.ParserSideValidations.{InvalidInclude, InvalidModuleType}
 import org.yaml.model._
 
 class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHandler) extends ReferenceHandler {

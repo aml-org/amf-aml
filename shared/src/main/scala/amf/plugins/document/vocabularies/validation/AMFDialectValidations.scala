@@ -8,7 +8,6 @@ import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
-import amf.plugins.features.validation.Validations
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable

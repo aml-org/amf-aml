@@ -9,7 +9,6 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.model.document.{DialectInstance, DialectInstancePatch}
 import amf.plugins.document.vocabularies.model.domain._
-import amf.plugins.features.validation.ParserSideValidations.InvalidDialectPatch
 
 import scala.language.postfixOps
 

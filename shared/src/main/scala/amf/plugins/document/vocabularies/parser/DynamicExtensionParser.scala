@@ -4,7 +4,7 @@ import amf.core.model.domain.{DataNode, ScalarNode, ArrayNode => DataArrayNode, 
 import amf.core.parser.{Annotations, ParserContext}
 import amf.core.utils.{IdCounter, _}
 import amf.core.vocabulary.Namespace
-import amf.plugins.features.validation.ParserSideValidations.DialectError
+import amf.plugins.validation.ParserSideValidations.DialectError
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
 
