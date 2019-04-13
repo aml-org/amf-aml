@@ -1478,7 +1478,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       val propertyName = key.name().value()
       nodeMap.entries.find(_.key.as[YScalar].text == propertyName) match {
         case Some(entry) if scalarYType(entry) =>
-          keyId = keyId ++ Seq(entry.value.toString())
+          keyId = keyId ++ Seq(entry.value.value.asInstanceOf[YScalar].text)
         case _ =>
           additionalProperties.get(key.nodePropertyMapping().value()) match {
             case Some(v) => keyId = keyId ++ Seq(v.toString)
