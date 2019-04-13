@@ -61,7 +61,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     val dialectId = headerKey(header.split("\\|").head)
     map.get(dialectId) match {
       case Some(dialect) =>
-        if (resolved.getOrElse(dialectId, false)) {
+        if (!resolved.getOrElse(dialectId, false)) {
           val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
           resolved += (dialectId -> true)
           map += (dialectId -> resolvedDialect)
@@ -135,7 +135,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     val dialectId = headerKey(header.split("\\|").head)
     map.get(dialectId) match {
       case Some(dialect) =>
-        if (resolved.getOrElse(dialectId, false)) {
+        if (!resolved.getOrElse(dialectId, false)) {
           val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
           resolved += (dialectId -> true)
           map += (dialectId -> resolvedDialect)
