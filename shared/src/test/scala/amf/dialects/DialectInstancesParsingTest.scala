@@ -139,6 +139,10 @@ trait DialectInstancesParsingTest extends DialectTests {
     withDialect("dialect18.raml", "example18.raml", "example18.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 18 b test") {
+    withDialect("dialect18.raml", "example18b.raml", "example18b.json", VocabularyYamlHint, Amf)
+  }
+
   test("parse 19 test") {
     withDialect("dialect19.raml", "example19.raml", "example19.json", VocabularyYamlHint, Amf)
   }
@@ -304,6 +308,10 @@ trait DialectInstancesParsingTest extends DialectTests {
 
   test("generate 18 test") {
     withDialect("dialect18.raml", "example18.json", "example18.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 18b test") {
+    withDialect("dialect18.raml", "example18b.json", "example18b.raml", AmfJsonHint, Aml)
   }
 
   test("generate 19 test") {

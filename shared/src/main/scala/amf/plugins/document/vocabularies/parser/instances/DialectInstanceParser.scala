@@ -569,7 +569,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
               case mapping: NodeMapping =>
                 val node: DialectDomainElement = DialectDomainElement(nodeMap).withDefinedBy(mapping)
                 val finalId =
-                  generateNodeId(node, nodeMap, Seq(path), defaultId, mapping, additionalProperties, rootNode)
+                  generateNodeId(node, nodeMap, Seq(defaultId), defaultId, mapping, additionalProperties, rootNode)
                 node.withId(finalId)
                 node.withInstanceTypes(Seq(mapping.nodetypeMapping.value(), mapping.id))
                 parseAnnotations(nodeMap, node, ctx.declarations)
@@ -1014,7 +1014,11 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   protected def pathSegment(parent: String, nexts: List[String]): String = {
     var path = parent
     nexts.foreach { n =>
-      path = path + "/" + n.urlComponentEncoded
+      path = if (path.endsWith("/")){
+        path + n.urlComponentEncoded
+      } else {
+        path + "/" + n.urlComponentEncoded
+      }
     }
     path
   }
@@ -1448,8 +1452,18 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
     if (template.contains("://"))
       template
-    else
+    else if (template.startsWith("/"))
+      root.location + "#" + template
+    else if (template.startsWith("#"))
       root.location + template
+    else {
+      val pathLocation = (path ++ template.split("/")).mkString("/")
+      if (pathLocation.startsWith(root.location) || pathLocation.contains("#")) {
+        pathLocation
+      } else {
+        root.location + "#" + pathLocation
+      }
+    }
   }
 
   protected def primaryKeyNodeId(node: DialectDomainElement,
