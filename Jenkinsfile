@@ -29,7 +29,10 @@ pipeline {
     }
     stage('Publish') {
       when {
-        branch 'master'
+        anyOf {
+          branch 'master'
+          branch 'new_model'
+        }
       }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {

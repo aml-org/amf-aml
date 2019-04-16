@@ -26,6 +26,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
 
   def name(): StrField = fields.field(Name)
   def nodePropertyMapping(): StrField = fields.field(NodePropertyMapping)
+
   def literalRange(): StrField = fields.field(LiteralRange)
   def mapKeyProperty(): StrField = fields.field(MapKeyProperty)
   def mapValueProperty(): StrField = fields.field(MapValueProperty)

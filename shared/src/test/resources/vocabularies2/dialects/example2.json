@@ -8,12 +8,12 @@
       "http://a.ml/vocabularies/document#Module",
       "http://a.ml/vocabularies/document#Unit"
     ],
-    "http://schema.org/name": [
+    "http://a.ml/vocabularies/core#name": [
       {
         "@value": "Test"
       }
     ],
-    "http://schema.org/version": [
+    "http://a.ml/vocabularies/core#version": [
       {
         "@value": "1.0"
       }
@@ -32,7 +32,7 @@
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/meta#name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "FB"
               }
@@ -71,7 +71,7 @@
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/meta#name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "FA"
               }
@@ -114,7 +114,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "1.0.0"
+        "@value": "2.0.0"
       }
     ],
     "http://a.ml/vocabularies/document#references": [
@@ -125,7 +125,7 @@
           "http://www.w3.org/2002/07/owl#Ontology",
           "http://a.ml/vocabularies/document#Unit"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "vocab2"
           }
@@ -136,6 +136,11 @@
             "@type": [
               "http://www.w3.org/2002/07/owl#Class",
               "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/core#name": [
+              {
+                "@value": "A"
+              }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
@@ -203,7 +208,7 @@
         ],
         "http://a.ml/vocabularies/document#version": [
           {
-            "@value": "1.0.0"
+            "@value": "2.0.0"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -240,7 +245,7 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://schema.org/name"
+                    "@value": "http://a.ml/vocabularies/core#name"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -278,7 +283,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/version"
+                "@value": "http://a.ml/vocabularies/core#version"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -302,7 +307,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/name"
+                "@value": "http://a.ml/vocabularies/core#name"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -327,7 +332,7 @@
             "@id": "http://a.ml/vocabularies/vocab2#A"
           }
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "nodeB"
           }
@@ -344,7 +349,7 @@
                 "@id": "http://a.ml/vocabularies/vocab2#a"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "za"
               }
@@ -419,7 +424,7 @@
             "@id": "http://a.ml/vocabularies/vocab2#A"
           }
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "nodeA"
           }
@@ -436,7 +441,7 @@
                 "@id": "http://a.ml/vocabularies/vocab2#a"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "a"
               }

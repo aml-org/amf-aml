@@ -8,12 +8,12 @@
       "http://a.ml/vocabularies/document#Module",
       "http://a.ml/vocabularies/document#Unit"
     ],
-    "http://schema.org/name": [
+    "http://a.ml/vocabularies/core#name": [
       {
         "@value": "Test"
       }
     ],
-    "http://schema.org/version": [
+    "http://a.ml/vocabularies/core#version": [
       {
         "@value": "1.0"
       }
@@ -26,7 +26,7 @@
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/alias": [
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "v2"
           }
@@ -52,7 +52,7 @@
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/meta#name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "Test 1.0"
               }
@@ -95,7 +95,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "1.0.0"
+        "@value": "2.0.0"
       }
     ],
     "http://a.ml/vocabularies/document#references": [
@@ -114,7 +114,7 @@
               "http://a.ml/vocabularies/meta#ExternalVocabulary",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://schema.org/alias": [
+            "http://a.ml/vocabularies/core#displayName": [
               {
                 "@value": "v2"
               }
@@ -144,7 +144,7 @@
                 "@id": "http://test.com/v2#B"
               }
             ],
-            "http://schema.org/name": [
+            "http://a.ml/vocabularies/core#name": [
               {
                 "@value": "fragment"
               }
@@ -161,7 +161,7 @@
                     "@id": "http://test.com/v2#b"
                   }
                 ],
-                "http://schema.org/name": [
+                "http://a.ml/vocabularies/core#name": [
                   {
                     "@value": "za"
                   }
@@ -221,7 +221,7 @@
         ],
         "http://a.ml/vocabularies/document#version": [
           {
-            "@value": "1.0.0"
+            "@value": "2.0.0"
           }
         ],
         "http://a.ml/vocabularies/document#references": [],
@@ -259,7 +259,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/version"
+                "@value": "http://a.ml/vocabularies/core#version"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -283,7 +283,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/name"
+                "@value": "http://a.ml/vocabularies/core#name"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -303,7 +303,7 @@
           "http://www.w3.org/ns/shacl#Shape",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://schema.org/name": [
+        "http://a.ml/vocabularies/core#name": [
           {
             "@value": "Local"
           }

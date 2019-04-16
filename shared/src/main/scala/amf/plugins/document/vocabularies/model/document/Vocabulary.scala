@@ -22,11 +22,9 @@ case class Vocabulary(fields: Fields, annotations: Annotations) extends BaseUnit
   def base: StrField                    = fields.field(Base)
   def imports: Seq[VocabularyReference] = fields.field(Imports)
 
-  def withName(name: String) = set(Name, name)
-  def withBase(base: String) = {
-    set(Base, base)
-  }
-  def withImports(vocabularies: Seq[VocabularyReference]) = setArray(Imports, vocabularies)
+  def withName(name: String): Vocabulary = set(Name, name)
+  def withBase(base: String): Vocabulary = set(Base, base)
+  def withImports(vocabularies: Seq[VocabularyReference]): Vocabulary = setArray(Imports, vocabularies)
 
   /** Meta data for the document */
   override def meta: Obj = VocabularyModel

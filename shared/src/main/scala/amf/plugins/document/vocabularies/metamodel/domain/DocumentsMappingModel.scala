@@ -9,8 +9,11 @@ import amf.plugins.document.vocabularies.model.domain.{DocumentMapping, Document
 
 object PublicNodeMappingModel extends DomainElementModel {
 
-  val Name =
-    Field(Str, Namespace.Schema + "name", ModelDoc(ExternalModelVocabularies.SchemaOrg, "name", "Name of the mapping"))
+  val Name = Field(
+    Str,
+    Namespace.Core + "name",
+    ModelDoc(ModelVocabularies.Core, "name", "Name of the mapping"))
+
   val MappedNode = Field(
     Iri,
     Namespace.Meta + "mappedNode",
@@ -32,8 +35,8 @@ object PublicNodeMappingModel extends DomainElementModel {
 object DocumentMappingModel extends DomainElementModel {
 
   val DocumentName = Field(Str,
-                           Namespace.Meta + "name",
-                           ModelDoc(ModelVocabularies.Meta, "name", "Name of the document for a dialect base unit"))
+                           Namespace.Core + "name",
+                           ModelDoc(ModelVocabularies.Core, "name", "Name of the document for a dialect base unit"))
   val EncodedNode = Field(
     Iri,
     Namespace.Meta + "encodedNode",

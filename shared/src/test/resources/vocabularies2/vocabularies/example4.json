@@ -6,7 +6,7 @@
       "http://www.w3.org/2002/07/owl#Ontology",
       "http://a.ml/vocabularies/document#Unit"
     ],
-    "http://schema.org/name": [
+    "http://a.ml/vocabularies/core#name": [
       {
         "@value": "test4"
       }
@@ -23,7 +23,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "1.0.0"
+        "@value": "2.0.0"
       }
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -60,7 +60,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://schema.org/name"
+                "@value": "http://a.ml/vocabularies/core#name"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -78,6 +78,11 @@
         "@type": [
           "http://www.w3.org/2002/07/owl#Class",
           "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "D"
+          }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
@@ -109,12 +114,12 @@
           "http://a.ml/vocabularies/meta#Property",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/meta#displayName": [
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "property c"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "c"
           }
@@ -162,12 +167,12 @@
           "http://a.ml/vocabularies/meta#Property",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/meta#displayName": [
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "property a"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "description"
           }
@@ -207,12 +212,12 @@
           "http://a.ml/vocabularies/meta#Property",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/meta#displayName": [
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "property b"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "b"
           }
@@ -257,12 +262,12 @@
           "http://a.ml/vocabularies/meta#Property",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/meta#displayName": [
+        "http://a.ml/vocabularies/core#displayName": [
           {
             "@value": "property d"
           }
         ],
-        "http://schema.org/description": [
+        "http://a.ml/vocabularies/core#description": [
           {
             "@value": "d"
           }

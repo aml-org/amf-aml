@@ -3,7 +3,7 @@ package amf.plugins.document.vocabularies.emitters.instances
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.BaseEmitters.{ValueEmitter, _}
 import amf.core.emitter.SpecOrdering.Lexical
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, RenderOptions, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
@@ -11,16 +11,8 @@ import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import amf.core.utils._
 import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.annotations.{
-  AliasesLocation,
-  CustomId,
-  JsonPointerRef,
-  RefInclude
-}
-import amf.plugins.document.vocabularies.emitters.common.{
-  ExternalEmitter,
-  IdCounter
-}
+import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
+import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
@@ -187,7 +179,7 @@ case class DiscriminatorHelper(mapping: NodeWithDiscriminator[_],
   }
 }
 
-case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Dialect) extends DialectEmitterHelper {
+case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Dialect, renderOptions: RenderOptions) extends DialectEmitterHelper {
   val ordering: SpecOrdering                 = Lexical
   val aliases: Map[String, (String, String)] = collectAliases()
 
@@ -271,7 +263,8 @@ case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Diale
       None,
       rootNode = true,
       topLevelEmitters = externalEmitters(instance, ordering) ++ entry,
-      discriminator = discriminator.flatMap(_.compute(element))
+      discriminator = discriminator.flatMap(_.compute(element)),
+      renderOptions = renderOptions
     ).emit(b)
   }
 
@@ -291,7 +284,8 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                     ordering: SpecOrdering,
                                     declarationsPath: Seq[String],
                                     aliases: Map[String, (String, String)],
-                                    keyPropertyId: Option[String] = None)
+                                    keyPropertyId: Option[String] = None,
+                                    renderOptions: RenderOptions)
     extends EntryEmitter
     with DialectEmitterHelper {
 
@@ -336,7 +330,8 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                     dialect,
                     ordering,
                     aliases,
-                    discriminator = discriminatorProperty).emit(b)
+                    discriminator = discriminatorProperty,
+                    renderOptions = renderOptions).emit(b)
                 }
               )
           }
@@ -354,7 +349,8 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                    ordering,
                                    declarationsPath.tail,
                                    aliases,
-                                   keyPropertyId).emit(b)
+                                   keyPropertyId,
+                                   renderOptions).emit(b)
         }
       )
     }
@@ -391,7 +387,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               discriminatorMappable: Option[NodeWithDiscriminator[Any]] = None,
                               discriminator: Option[(String, String)] = None,
                               emitDialect: Boolean = false,
-                              topLevelEmitters: Seq[EntryEmitter] = Nil)
+                              topLevelEmitters: Seq[EntryEmitter] = Nil,
+                              renderOptions: RenderOptions)
     extends PartEmitter
     with DialectEmitterHelper {
 
@@ -413,7 +410,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         val (discriminatorName, discriminatorValue) = discriminator.get
         emitters ++= Seq(MapEntryEmitter(discriminatorName, discriminatorValue))
       }
-      if (node.annotations.find(classOf[CustomId]).isDefined) {
+      if (node.annotations.find(classOf[CustomId]).isDefined || renderOptions.isEmitNodeIds) {
         val customId = if (node.id.contains(dialect.location().getOrElse(""))) {
           node.id.replace(dialect.id, "")
         } else {
@@ -422,7 +419,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         emitters ++= Seq(MapEntryEmitter("$id", customId))
       }
 
-      node.meta.fields.foreach { field =>
+      uniqueFields(node.meta).foreach { field =>
         findPropertyMapping(node, field) foreach { propertyMapping =>
           if (keyPropertyId.isEmpty || propertyMapping
                 .nodePropertyMapping()
@@ -522,6 +519,18 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     }
   }
 
+  protected def uniqueFields(meta: DialectDomainElementModel) = {
+    val allFields = meta.fields
+    var acc = Map[String,Field]()
+    allFields.foreach { case f =>
+        acc.get(f.value.iri()) match {
+          case Some(_) => // ignore
+          case _       =>
+            acc = acc.updated(f.value.iri(), f)
+        }
+    }
+    acc values
+  }
   override def position(): Position =
     node.annotations
       .find(classOf[LexicalInformation])
@@ -651,7 +660,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                     ordering,
                     aliases,
                     discriminator = discriminator.compute(dialectDomainElement),
-                    keyPropertyId = keyPropertyId
+                    keyPropertyId = keyPropertyId,
+                    renderOptions = renderOptions
                   )
                   acc + (nodeEmitter -> dialectDomainElement)
                 case _ =>
@@ -739,7 +749,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                           externalDialect,
                                           ordering,
                                           aliases,
-                                          emitDialect = true)))
+                                          emitDialect = true,
+                                          renderOptions = renderOptions)))
   }
 
   protected def emitObjectPairs(
@@ -877,7 +888,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                                .option()
                                                .getOrElse("/")
                                                .split("/"),
-                                             aliases))
+                                             aliases,
+                                             renderOptions = renderOptions))
               }
             } else acc
         }

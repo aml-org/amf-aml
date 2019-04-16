@@ -11,8 +11,8 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
 
   val Name = Field(
     Str,
-    Namespace.Schema + "name",
-    ModelDoc(ExternalModelVocabularies.SchemaOrg, "name", "Name in the source AST for the mapped property"))
+    Namespace.Core + "name",
+    ModelDoc(ModelVocabularies.Core, "name", "Name in the source AST for the mapped property"))
   val NodePropertyMapping = Field(
     Iri,
     Namespace.Shacl + "path",
@@ -85,11 +85,18 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
              "Marks the values for the property mapping as a primary key for this type of node")
   )
 
+  val ExternallyLinkable = Field(
+    Bool,
+    Namespace.Meta + "externallyLinkable",
+    ModelDoc(ModelVocabularies.Meta, "linkable", "Marks this object property as supporting external links")
+  )
+
   override def fields: List[Field] =
+
     NodePropertyMapping :: Name :: LiteralRange :: ObjectRange ::
       MapKeyProperty :: MapValueProperty :: MapTermKeyProperty :: MapTermValueProperty ::
-        MinCount :: Pattern :: Minimum :: Maximum :: AllowMultiple :: Sorted :: Enum :: TypeDiscriminator ::
-      Unique :: TypeDiscriminatorName :: MergePolicy :: DomainElementModel.fields
+      MinCount :: Pattern :: Minimum :: Maximum :: AllowMultiple :: Sorted :: Enum :: TypeDiscriminator ::
+      Unique :: ExternallyLinkable :: TypeDiscriminatorName :: MergePolicy :: DomainElementModel.fields
 
   override def modelInstance: AmfObject = PropertyMapping()
 

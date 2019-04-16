@@ -11,10 +11,10 @@ import org.yaml.model.YMap
 
 case class External(fields: Fields, annotations: Annotations) extends DomainElement {
 
-  def alias: StrField = fields.field(Alias)
+  def alias: StrField = fields.field(DisplayName)
   def base: StrField  = fields.field(Base)
 
-  def withAlias(alias: String): External = set(Alias, alias)
+  def withAlias(alias: String): External = set(DisplayName, alias)
   def withBase(base: String): External   = set(Base, base)
 
   override def meta: Obj = ExternalModel

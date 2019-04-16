@@ -3,7 +3,7 @@ package amf.plugins.document.vocabularies.metamodel.document
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Array, Str}
 import amf.core.metamodel.document.{BaseUnitModel, ModuleModel}
-import amf.core.metamodel.domain.{ExternalModelVocabularies, ModelDoc, ModelVocabularies}
+import amf.core.metamodel.domain.{ModelVocabularies, ModelDoc, ExternalModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.metamodel.domain.{ExternalModel, VocabularyReferenceModel}
@@ -12,7 +12,7 @@ import amf.plugins.document.vocabularies.model.document.Vocabulary
 object VocabularyModel extends ModuleModel with ExternalContextModel {
 
   val Name =
-    Field(Str, Namespace.Schema + "name", ModelDoc(ExternalModelVocabularies.SchemaOrg, "name", "name for an entity"))
+    Field(Str, Namespace.Core + "name", ModelDoc(ModelVocabularies.Core, "name", "name for an entity"))
   val Base = Field(Str,
                    Namespace.Meta + "base",
                    ModelDoc(ModelVocabularies.Meta, "base", "Base URI prefix for definitions in this vocabulary"))

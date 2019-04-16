@@ -12,13 +12,15 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragmen
 object DialectModel extends DocumentModel with ExternalContextModel {
 
   val Name =
-    Field(Str, Namespace.Schema + "name", ModelDoc(ExternalModelVocabularies.SchemaOrg, "name", "Name of the dialect"))
+    Field(Str,
+      Namespace.Core + "name",
+      ModelDoc(ModelVocabularies.Core, "name", "Name of the dialect"))
   val Version = Field(Str,
-                      Namespace.Schema + "version",
-                      ModelDoc(ExternalModelVocabularies.SchemaOrg, "version", "Version of the dialect"))
+                      Namespace.Core + "version",
+                      ModelDoc(ModelVocabularies.Core, "version", "Version of the dialect"))
   val Documents = Field(DocumentsModelModel,
                         Namespace.Meta + "documents",
-                        ModelDoc(ModelVocabularies.Meta, "documents", "Document mappint for the the dialect"))
+                        ModelDoc(ModelVocabularies.Meta, "documents", "Document mapping for the the dialect"))
 
   override def modelInstance: AmfObject = Dialect()
 
