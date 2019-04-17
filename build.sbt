@@ -96,8 +96,8 @@ lazy val workspaceDirectory: File =
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
-lazy val amfCoreLibJVM = "com.github.amlorg" %% "amf-core" % "4.0.9"
-lazy val amfCoreLibJS = "com.github.amlorg" %% "amf-core_sjs0.6" % "4.0.9"
+lazy val amfCoreLibJVM = "com.github.amlorg" %% "amf-core" % "4.0.10"
+lazy val amfCoreLibJS = "com.github.amlorg" %% "amf-core_sjs0.6" % "4.0.10"
 
 
 val settings = Common.settings ++ Common.publish ++ Seq(

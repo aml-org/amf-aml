@@ -318,7 +318,8 @@ object AMLPlugin
                                  profile: ProfileName,
                                  validations: EffectiveValidations,
                                  platform: Platform,
-                                 env: Environment): Future[AMFValidationReport] = {
+                                 env: Environment,
+                                 resolved: Boolean): Future[AMFValidationReport] = {
     baseUnit match {
       case dialectInstance: DialectInstance =>
         val resolvedModel =
