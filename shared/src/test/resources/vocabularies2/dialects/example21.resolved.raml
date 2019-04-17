@@ -1,0 +1,45 @@
+#%Dialect 1.0
+nodeMappings:
+  Base:
+    classTerm: external0.Base
+    mapping:
+      a:
+        propertyTerm: external0.a
+        range: string
+      b:
+        propertyTerm: external0.b
+        range: integer
+  Root:
+    classTerm: external0.Root
+    mapping:
+      b:
+        propertyTerm: external0.b
+        range: integer
+      a:
+        propertyTerm: external0.a
+        range: integer
+      c:
+        propertyTerm: external0.c
+        range: string
+  Other:
+    classTerm: external0.Other
+    mapping:
+      e:
+        propertyTerm: external0.e
+        range: string
+      d:
+        propertyTerm: external0.d
+        range: string
+  Forward:
+    classTerm: external0.Forward
+    mapping:
+      e:
+        propertyTerm: external0.e
+        range: string
+external:
+  external0: http://test.com/v3#
+dialect: example
+version: "1.21"
+documents:
+  root:
+    encodes: Root

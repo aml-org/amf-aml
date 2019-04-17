@@ -39,6 +39,9 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
 
   def +=(nodeMapping: NodeMappable): DialectDeclarations = {
     nodeMappings += (nodeMapping.name.value() -> nodeMapping)
+    if (! nodeMapping.isUnresolved) {
+      futureDeclarations.resolveRef(nodeMapping.name.value(), nodeMapping)
+    }
     this
   }
 
@@ -92,7 +95,8 @@ trait DialectSyntax { this: DialectContext =>
     "mapping"    -> false,
     "idProperty" -> false,
     "idTemplate" -> false,
-    "patch"      -> false
+    "patch"      -> false,
+    "extends"    -> false
   )
 
   val fragment: Map[String, Boolean] = Map(
@@ -533,6 +537,23 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     )
 
     map.key(
+      "extends",
+      entry => {
+        val reference = entry.value.toOption[YScalar]
+        val parsed = reference match {
+          case Some(s) => resolveNodeMappingLink(entry, adopt)
+          case _       => None
+        }
+        parsed match {
+          case Some(resolvedNodeMapping: NodeMapping) =>
+            nodeMapping.withExtends(Seq(resolvedNodeMapping))
+          case _                         =>
+            ctx.violation(DialectError, nodeMapping.id, s"Cannot find extended node mapping with reference '${reference.map(_.toString()).getOrElse("")}'", entry.value)
+        }
+      }
+    )
+
+    map.key(
       "idTemplate",
       entry => {
         val template = entry.value.as[String]
@@ -542,6 +563,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     )
 
     parseAnnotations(map, nodeMapping, ctx.declarations)
+
+    ctx.declarations.+=(nodeMapping)
 
     Some(nodeMapping)
   }
@@ -559,27 +582,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
         // 2) reference linking a declared node mapping
       case YType.Str if entry.value.toOption[YScalar].isDefined =>
-        val refTuple = ctx.link(entry.value) match {
-          case Left(key) =>
-            (key, ctx.declarations.findNodeMapping(key, SearchScope.Fragments))
-          case _ =>
-            val text = entry.value.as[YScalar].text
-            (text, ctx.declarations.findNodeMapping(text, SearchScope.Named))
-        }
-        refTuple match {
-          case (text: String, Some(s)) =>
-            val linkedNode = s
-              .link(text, Annotations(entry.value))
-              .asInstanceOf[NodeMapping]
-              .withName(text) // we setup the local reference in the name
-            adopt(linkedNode) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
-            Some(linkedNode)
-          case (text: String, _) =>
-            val linkedNode = NodeMapping(map)
-            adopt(linkedNode)
-            linkedNode.unresolved(text, map)
-            Some(linkedNode)
-        }
+        resolveNodeMappingLink(entry, adopt)
 
         // 3) node mapping included from a fragment
       case YType.Include if entry.value.toOption[YScalar].isDefined =>
@@ -1088,4 +1091,26 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     fragment
   }
 
+  protected def resolveNodeMappingLink(entry: YMapEntry, adopt: DomainElement => Any): Some[NodeMapping] = {
+    val refTuple = ctx.link(entry.value) match {
+      case Left(key) =>
+        (key, ctx.declarations.findNodeMapping(key, SearchScope.Fragments))
+      case _ =>
+        val text = entry.value.as[YScalar].text
+        (text, ctx.declarations.findNodeMapping(text, SearchScope.Named))
+    }
+    refTuple match {
+      case (text: String, Some(s)) =>
+        val linkedNode = s
+          .link(text, Annotations(entry.value))
+          .asInstanceOf[NodeMapping]
+        adopt(linkedNode) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+        Some(linkedNode)
+      case (text: String, _) =>
+        val linkedNode = NodeMapping(map)
+        adopt(linkedNode)
+        linkedNode.unresolved(text, map)
+        Some(linkedNode)
+    }
+  }
 }

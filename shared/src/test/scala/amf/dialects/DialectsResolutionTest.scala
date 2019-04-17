@@ -25,4 +25,8 @@ class DialectsResolutionTest extends DialectInstanceResolutionCycleTests {
   test("resolve 13 test") {
     init().flatMap( _ => cycle("example13.raml", "example13.resolved.raml", VocabularyYamlHint, Aml))
   }
+
+  test("resolve 21 test") {
+    init().flatMap( _ => cycle("example21.raml", "example21.resolved.raml", VocabularyYamlHint, Aml))
+  }
 }

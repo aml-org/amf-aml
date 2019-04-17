@@ -127,5 +127,4 @@ class DialectProductionResolutionTest extends DialectInstanceResolutionCycleTest
                 Aml,
                 basePath + "asyncapi/")
   }
-
 }

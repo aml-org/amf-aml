@@ -6,7 +6,7 @@ import amf.core.emitter.SpecOrdering.Lexical
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfScalar, DomainElement, Linkable}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
@@ -537,16 +537,25 @@ case class NodeMappingEmitter(dialect: Dialect,
           case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
           case None                 => nodeMapping.nodetypeMapping
         }
-        b.entry(
-          "mapping",
-          _.obj { b =>
-            val propertiesEmitters: Seq[PropertyMappingEmitter] = nodeMapping.propertiesMapping().map {
-              pm: PropertyMapping =>
-                PropertyMappingEmitter(dialect, pm, ordering, aliases)
-            }
-            traverse(propertiesEmitters, b)
-          }
-        )
+        nodeMapping.propertiesMapping() match {
+          case properties: Seq[PropertyMapping] if properties.nonEmpty =>
+            b.entry(
+              "mapping",
+              _.obj { b =>
+                val propertiesEmitters: Seq[PropertyMappingEmitter] = properties.map {
+                  pm: PropertyMapping =>
+                    PropertyMappingEmitter(dialect, pm, ordering, aliases)
+                }
+                traverse(propertiesEmitters, b)
+              }
+            )
+          case _ => // ignore
+        }
+        nodeMapping.extend.headOption match {
+          case Some(link: Linkable) =>
+            b.entry("extends", link.linkLabel.value())
+          case _                    => // ignore
+        }
         nodeMapping.idTemplate.option().foreach { idTemplate =>
           b.entry("idTemplate", idTemplate)
         }

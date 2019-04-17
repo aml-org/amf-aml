@@ -4,7 +4,7 @@ import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfObject, DomainElement}
-import amf.core.parser.Annotations
+import amf.core.parser.{Annotations, DefaultParserSideErrorHandler}
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.{Aml, Cache, Context}
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
@@ -15,6 +15,7 @@ import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
+import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -22,6 +23,7 @@ import scala.concurrent.Future
 class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   protected var map: Map[String, Dialect] = Map()
+  protected var resolved: Map[String, Boolean] = Map()
 
   def findNode(dialectNode: String): Option[(Dialect, NodeMapping)] = {
     map.values.find(dialect => dialectNode.contains(dialect.id)) map { dialect =>
@@ -48,9 +50,25 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     this
   }
 
+
+  /**
+    * Finds and resolve if unresolved a resolved dialect, the output of this invocation is a dialect ready to parse
+    * @param header
+    * @param k
+    * @return
+    */
   def withRegisteredDialect(header: String)(k: Dialect => Option[BaseUnit]): Option[BaseUnit] = {
-    map.get(headerKey(header.split("\\|").head)) match {
-      case Some(dialect) => k(dialect)
+    val dialectId = headerKey(header.split("\\|").head)
+    map.get(dialectId) match {
+      case Some(dialect) =>
+        if (!resolved.getOrElse(dialectId, false)) {
+          val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
+          resolved += (dialectId -> true)
+          map += (dialectId -> resolvedDialect)
+          k(resolvedDialect)
+        } else {
+          k(dialect)
+        }
       case _             => None
     }
   }
@@ -111,6 +129,20 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
         .map(iri => Field(Type.Str, ValueType(iri.value()), ModelDoc(ModelVocabularies.Parser, "custom", iri.value())))
 
     new DialectDomainElementModel(Seq(nodeType.value()), fields ++ mapPropertiesFields, Some(nodeMapping))
+  }
+
+  def resolveRegisteredDialect(header: String): Unit = {
+    val dialectId = headerKey(header.split("\\|").head)
+    map.get(dialectId) match {
+      case Some(dialect) =>
+        if (!resolved.getOrElse(dialectId, false)) {
+          val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
+          resolved += (dialectId -> true)
+          map += (dialectId -> resolvedDialect)
+        }
+      case _             =>
+        throw new Exception(s"Cannot find register Dialect with header '$header'")
+    }
   }
 
   def registerDialect(uri: String, environment: Environment = Environment()): Future[Dialect] = {
