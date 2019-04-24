@@ -46,6 +46,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   def register(dialect: Dialect): DialectsRegistry = {
     dialect.allHeaders foreach { header =>
       map += (header -> dialect)
+      resolved -= header
     }
     this
   }

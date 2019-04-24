@@ -17,10 +17,12 @@ case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainE
   def nodetypeMapping: StrField                 = fields.field(NodeTypeMapping)
   def propertiesMapping(): Seq[PropertyMapping] = fields.field(PropertiesMapping)
   def idTemplate: StrField                      = fields.field(IdTemplate)
+  def resolvedExtends: Seq[String]              = fields.field(ResolvedExtends)
 
   def withNodeTypeMapping(nodeType: String): NodeMapping              = set(NodeTypeMapping, nodeType)
   def withPropertiesMapping(props: Seq[PropertyMapping]): NodeMapping = setArrayWithoutId(PropertiesMapping, props)
   def withIdTemplate(idTemplate: String): NodeMapping                 = set(IdTemplate, idTemplate)
+  def withResolvedExtends(ids: Seq[String]): NodeMapping              = set(ResolvedExtends, ids)
   override def withName(name: String): NodeMapping                    = super.withName(name).asInstanceOf[NodeMapping]
 
   /**

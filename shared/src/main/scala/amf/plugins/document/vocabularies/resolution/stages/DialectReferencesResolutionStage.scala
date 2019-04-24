@@ -4,8 +4,11 @@ import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.parser.{Annotations, ErrorHandler, Fields}
 import amf.core.resolution.stages.ResolutionStage
+import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain.{External, NodeMappable, NodeMapping, UnionNodeMapping}
+
+import scala.collection.mutable
 
 class DialectReferencesResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
 
@@ -52,42 +55,131 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
     }
   }
 
-  def cloneNodeMapping(target: NodeMapping) = {
+  def dereference(nodeMappable: NodeMappable, finalDeclarations: mutable.Map[String, NodeMappable]): NodeMappable = {
+    finalDeclarations.get(nodeMappable.id) match {
+      case Some(mappable) => mappable
+      case _              =>
+        nodeMappable match {
+          // Resolving links in node mappings declarations
+          case mapping: NodeMapping =>
+            val finalNode = if (mapping.isLink) {
+              val target = dereference(mapping.linkTarget.get.asInstanceOf[NodeMapping], finalDeclarations).asInstanceOf[NodeMapping]
+              target.withName(mapping.name.value()).withId(target.id)
+            } else {
+              mapping
+            }
+
+            val extended = finalNode.extend.map {
+              case superNode: NodeMapping =>
+                val target = dereference(superNode, finalDeclarations).asInstanceOf[NodeMapping]
+                Some(target)
+              case _                      =>
+                None
+
+            }
+            finalNode.withExtends(extended.collect { case Some(n) => n})
+            finalDeclarations += (finalNode.id -> finalNode)
+            finalNode
+
+          // we ignore them in unions
+          case union: UnionNodeMapping => {
+            finalDeclarations += (union.id -> union)
+            union
+          }
+        }
+    }
+  }
+
+  def cloneNodeMapping(target: NodeMappable) = {
     val fields = Fields()
     target.fields.fields().foreach { entry =>
       fields.setWithoutId(entry.field, entry.value.value, entry.value.annotations)
     }
-    NodeMapping(fields, Annotations())
+    target match {
+      case _: NodeMapping =>
+        NodeMapping(fields, Annotations())
+      case _: UnionNodeMapping =>
+         new UnionNodeMapping(fields, Annotations())
+    }
+  }
+
+  def genName(baseName: String, allDeclarations: Map[String, NodeMappable]): String = {
+    var c = 1
+    var acc = baseName
+    while (allDeclarations.contains(acc)) {
+      c += 1
+      acc = s"$baseName$c"
+    }
+    acc
+  }
+
+  def dereferencePendingDeclarations(pending: Seq[NodeMappable], acc: mutable.Map[String, NodeMappable], allDeclarations: Map[String, NodeMappable]): Unit = {
+    if (pending.nonEmpty) {
+      val nextPending = pending.head
+      // has this been already dereferenced with some alias
+      acc.get(nextPending.id) match {
+        case Some(_) => // ignore already added, ignore
+        case None    =>
+          val effectiveNextPending = if (nextPending.isLink) {
+            // if this is a link, we clone
+            cloneNodeMapping(nextPending.effectiveLinkTarget().asInstanceOf[NodeMappable]).withName(nextPending.name.value()).withId(nextPending.id)
+          } else {
+            // otherwise we just introduce the node mapping
+            nextPending
+          }
+          val newPendingRange = effectiveNextPending match {
+            case nodeMapping: NodeMapping =>
+              // we add all object ranges to the list of pendings
+              pending.tail ++ nodeMapping.propertiesMapping().flatMap(_.objectRange()).map(r => allDeclarations.get(r.value())).collect { case Some(x) => x }
+            case union: UnionNodeMapping =>
+              // we add all union ranges to the list of pendings
+              pending.tail ++ union.objectRange().map(r => allDeclarations.get(r.value())).collect { case Some(x) => x }
+          }
+
+          val newPending = effectiveNextPending.extend.headOption match {
+            case Some(n: NodeMappable) if n.linkTarget.isDefined => newPendingRange ++ Seq(n.linkTarget.get.asInstanceOf[NodeMappable])
+            case _                                               => newPendingRange
+          }
+
+          if (effectiveNextPending.name.value().contains(".")) { // this might come from a library TODO: check collisions in names
+            effectiveNextPending.withName(genName(effectiveNextPending.name.value().split(".").last, allDeclarations))
+          }
+
+          acc += (effectiveNextPending.id -> effectiveNextPending)
+
+          dereferencePendingDeclarations(newPending, acc, allDeclarations)
+
+      }
+
+    }
+  }
+
+  // Set the final extend references to the final list of node mappings
+  def linkExtendedNodes(acc: mutable.Map[String, NodeMappable]): Unit = {
+    acc.values.foreach { nodeMappable =>
+      nodeMappable.extend.headOption match {
+        case Some(extended: NodeMappable) if extended.linkTarget.isDefined && acc.contains(extended.linkTarget.get.id) =>
+          val found = acc(extended.linkTarget.get.id)
+          nodeMappable.setArrayWithoutId(NodeMappingModel.Extends, Seq(found))
+        case _                        =>
+          // ignore
+      }
+    }
   }
 
   override def resolve[T <: BaseUnit](model: T): T = {
+
     var allDeclarations = findDeclarations(model)
     var allExternals    = findExternals(model)
     var allVocabularies = findVocabularies(model)
 
-    val finalDeclarations = allDeclarations.values.zipWithIndex.map {
-      // Resolving links in node mappings declarations
-      case (mapping: NodeMapping, i) =>
-        val finalNode = if (mapping.isLink) {
-          val target = mapping.linkTarget.get.asInstanceOf[NodeMapping]
-          cloneNodeMapping(target).withId(mapping.id).withName(mapping.name.value())
-        } else {
-          mapping
-        }
+    val finalDeclarationsMap = mutable.Map[String, NodeMappable]()
+    val unitDeclarations = model.asInstanceOf[DeclaresModel].declares.filter(_.isInstanceOf[NodeMappable]).asInstanceOf[Seq[NodeMappable]]
 
+    dereferencePendingDeclarations(pending = unitDeclarations, acc = finalDeclarationsMap, allDeclarations = allDeclarations)
+    linkExtendedNodes(finalDeclarationsMap)
 
-
-        val extended = finalNode.extend.map {
-          case superNode: NodeMapping if superNode.isLink && superNode.linkTarget.isDefined =>
-            cloneNodeMapping(superNode.linkTarget.get.asInstanceOf[NodeMapping])
-          case other                                      =>
-            other
-        }
-        finalNode.withExtends(extended)
-
-      // we ignore them in unions
-      case (union: UnionNodeMapping, i) => union
-    }.toSeq
+    val finalDeclarations = finalDeclarationsMap.values.toSeq
 
     val vocabulariesAliases =
       allVocabularies.zipWithIndex.foldLeft(Map[Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl)]()) {

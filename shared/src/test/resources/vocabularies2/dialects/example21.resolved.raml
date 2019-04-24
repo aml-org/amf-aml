@@ -1,14 +1,20 @@
 #%Dialect 1.0
 nodeMappings:
-  Base:
-    classTerm: external0.Base
+  Simple:
+    classTerm: external0.Simple
     mapping:
       a:
         propertyTerm: external0.a
         range: string
+  Base:
+    classTerm: external0.Base
+    mapping:
       b:
         propertyTerm: external0.b
         range: integer
+      a:
+        propertyTerm: external0.a
+        range: string
   Root:
     classTerm: external0.Root
     mapping:

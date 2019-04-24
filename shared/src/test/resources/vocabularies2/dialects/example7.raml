@@ -2,6 +2,13 @@
 dialect: Test
 version: "1.0"
 nodeMappings:
+  Here: lib.nodeB
+  Other:
+    mapping:
+      zz:
+        range: lib.nodeB
+      aaa:
+        range: Here
   Local: lib.nodeB
 uses:
   lib: mappings_lib.raml
