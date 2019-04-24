@@ -2,15 +2,19 @@
 dialect: example
 version: "1.21"
 nodeMappings:
-  Base:
-    classTerm: v3.Base
+  Simple:
+    classTerm: v3.Simple
     mapping:
       a:
         propertyTerm: v3.a
         range: string
+  Base:
+    classTerm: v3.Base
+    mapping:
       b:
         propertyTerm: v3.b
         range: integer
+    extends: Simple
   Root:
     classTerm: v3.Root
     mapping:

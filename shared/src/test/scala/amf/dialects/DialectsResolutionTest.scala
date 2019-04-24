@@ -2,7 +2,7 @@ package amf.dialects
 
 import amf.core.model.document.BaseUnit
 import amf.core.parser.UnhandledErrorHandler
-import amf.core.remote.{Aml, VocabularyYamlHint}
+import amf.core.remote.{Amf, AmfJsonHint, Aml, VocabularyYamlHint}
 import amf.plugins.document.vocabularies.AMLPlugin
 
 import scala.concurrent.ExecutionContext
@@ -28,5 +28,9 @@ class DialectsResolutionTest extends DialectInstanceResolutionCycleTests {
 
   test("resolve 21 test") {
     init().flatMap( _ => cycle("example21.raml", "example21.resolved.raml", VocabularyYamlHint, Aml))
+  }
+
+  test("resolve 21 test JSON-LD") {
+    init().flatMap( _ => cycle("example21.raml", "example21.resolved.jsonld", VocabularyYamlHint, Amf))
   }
 }

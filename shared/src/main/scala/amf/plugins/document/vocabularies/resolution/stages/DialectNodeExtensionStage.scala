@@ -1,10 +1,10 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.parser.ErrorHandler
+import amf.core.parser.{Annotations, ErrorHandler, Fields}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
-import amf.plugins.document.vocabularies.model.domain.{NodeMapping, PropertyMapping}
+import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping}
 
 import scala.collection.mutable
 
@@ -23,6 +23,14 @@ class DialectNodeExtensionStage()(override implicit val errorHandler: ErrorHandl
     model
   }
 
+  def cloneNodeMapping(target: NodeMapping) = {
+    val fields = Fields()
+    target.fields.fields().foreach { entry =>
+      fields.setWithoutId(entry.field, entry.value.value, entry.value.annotations)
+    }
+    NodeMapping(fields, Annotations())
+  }
+
   def mergeNode(nodeMapping: NodeMapping): NodeMapping = {
     nodeMapping.extend match {
       case (superNodeMapping: NodeMapping) :: _ =>
@@ -35,11 +43,16 @@ class DialectNodeExtensionStage()(override implicit val errorHandler: ErrorHandl
             }
           case _ => // ignore
         }
-        mergeNodeMapping(nodeMapping, superMerged)
+
+        val merged = mergeNodeMapping(nodeMapping, superMerged)
+        // we store the extended reference and remove the extends property
+        merged.withResolvedExtends(Seq(superNodeMapping.id))
+        merged.fields.removeField(NodeMappingModel.Extends)
+        // return the final node
+        merged
       case _                     =>
         nodeMapping
     }
-    nodeMapping.fields.removeField(NodeMappingModel.Extends)
     nodeMapping
   }
 
