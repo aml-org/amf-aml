@@ -9,22 +9,16 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 name := "amf-aml"
 
 version in ThisBuild := {
-  val mayor = 4
+  val major = 4
   val minor = 0
 
-  lazy val buildNumber = sys.env.getOrElse("BUILD_NUMBER", "0")
-  lazy val branchName = sys.env.getOrElse("BRANCH_NAME", "fake")
-  println("Build number is: "+buildNumber)
-  println("Branch number is: "+branchName)
+  lazy val build = sys.env.getOrElse("BUILD_NUMBER", "0")
+  lazy val branch = sys.env.get("BRANCH_NAME")
 
-  val v = {
-    if(branchName == "master")
-      mayor.toString + "." + minor.toString + "." + buildNumber
-    else
-      mayor.toString + "." + (minor +1).toString + ".0-SNAPSHOT"
-  }
-  println("Setting version to : "+v)
-  v
+  if (branch.exists(_ == "master"))
+    major.toString + "." + minor.toString + "." + build
+  else
+    major.toString + "." + (minor + 1).toString + ".0-SNAPSHOT"
 }
 
 publish := {}
@@ -93,11 +87,12 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
+val amfCoreVersion = "4.0.12"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
-lazy val amfCoreLibJVM = "com.github.amlorg" %% "amf-core" % "4.0.10"
-lazy val amfCoreLibJS = "com.github.amlorg" %% "amf-core_sjs0.6" % "4.0.10"
+lazy val amfCoreLibJVM = "com.github.amlorg" %% "amf-core" % amfCoreVersion
+lazy val amfCoreLibJS = "com.github.amlorg" %% "amf-core_sjs0.6" % amfCoreVersion
 
 
 val settings = Common.settings ++ Common.publish ++ Seq(
