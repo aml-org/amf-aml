@@ -2,12 +2,14 @@ package amf.plugins.document.vocabularies.parser.instances
 
 import amf.core.Root
 import amf.core.annotations.{Aliases, LexicalInformation}
+import amf.core.metamodel.Field
+import amf.core.metamodel.Type.Str
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfScalar, Annotation, DomainElement}
 import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
-import amf.core.vocabulary.Namespace
+import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
@@ -457,7 +459,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                 case Some(node) =>
                   // lookup by ref name
 
-                  node.set(DialectDomainElementModel.DeclarationName, AmfScalar(declarationName, Annotations(declarationEntry.key)))
+                  node.set(DialectDomainElementModel.DeclarationName, AmfScalar(declarationName, Annotations(declarationEntry.key)),Annotations(declarationEntry.key))
                   ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
                   // lookup by JSON pointer, absolute URI
                   ctx.registerJsonPointerDeclaration(id, node)
@@ -678,7 +680,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     propertyMapping.mapTermKeyProperty().option() match {
       case Some(propId) =>
         try {
-          node.setMapKeyField(propId, propertyEntry.key.as[YScalar].text, propertyEntry.key)
+          node.set(Field(Str,ValueType(propId)), AmfScalar(propertyEntry.key.as[YScalar].text), Annotations(propertyEntry.key))
         } catch {
           case e: UnknownMapKeyProperty =>
             ctx.violation(DialectError, e.id, s"Cannot find mapping for key map property ${e.id}")
@@ -799,7 +801,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
               node.withId(finalId)
               var instanceTypes: Seq[String] = Nil
               mappings.foreach { mapping =>
-                val beforeValues = node.literalProperties.size + node.objectCollectionProperties.size + node.objectProperties.size + node.mapKeyProperties.size
+                val beforeValues = node.fields.fields().size
                 mapping.propertiesMapping().foreach { propertyMapping =>
                   if (!node.containsProperty(propertyMapping)) {
                     val propertyName = propertyMapping.name().value()
@@ -810,7 +812,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                     }
                   }
                 }
-                val afterValues = node.literalProperties.size + node.objectCollectionProperties.size + node.objectProperties.size + node.mapKeyProperties.size
+                val afterValues = node.fields.fields().size
                 if (afterValues != beforeValues) {
                   instanceTypes ++= Seq(mapping.nodetypeMapping.value())
                 }
@@ -924,8 +926,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
               .withDefinedBy(nodeMapping)
               .withInstanceTypes(Seq(nodeMapping.nodetypeMapping.value(), nodeMapping.id))
             try {
-              nestedNode.setMapKeyField(propertyKeyMapping.get, pair.key.as[YScalar].text, pair.key)
-              nestedNode.setMapKeyField(propertyValueMapping.get, pair.value.as[YScalar].text, pair.value)
+              nestedNode.set(Field(Str, ValueType(propertyKeyMapping.get)),AmfScalar( pair.key.as[YScalar].text), Annotations(pair.key))
+              nestedNode.set(Field(Str, ValueType(propertyValueMapping.get)),AmfScalar( pair.value.as[YScalar].text), Annotations(pair.value))
             } catch {
               case e: UnknownMapKeyProperty =>
                 ctx.violation(DialectError, e.id, s"Cannot find mapping for key map property ${e.id}", pair)
@@ -943,6 +945,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       }
 
       node.setObjectField(property, nested, propertyEntry.key)
+
     } else {
       ctx.violation(DialectError,
                     id,
@@ -1103,13 +1106,13 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
 
   protected def setLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement) = {
     parseLiteralValue(value, property, node) match {
-      case Some(b: Boolean)          => node.setLiteralField(property, b, value)
-      case Some(i: Int)              => node.setLiteralField(property, i, value)
-      case Some(f: Float)            => node.setLiteralField(property, f, value)
-      case Some(d: Double)           => node.setLiteralField(property, d, value)
-      case Some(s: String)           => node.setLiteralField(property, s, value)
-      case Some(("link", l: String)) => node.setLinkField(property, l, value)
-      case Some(d: SimpleDateTime)   => node.setLiteralField(property, d, value)
+      case Some(b: Boolean)          => node.setProperty(property, b, value)
+      case Some(i: Int)              => node.setProperty(property, i, value)
+      case Some(f: Float)            => node.setProperty(property, f, value)
+      case Some(d: Double)           => node.setProperty(property, d, value)
+      case Some(s: String)           => node.setProperty(property, s, value)
+      case Some(("link", l: String)) => node.setProperty(property, l, value)
+      case Some(d: SimpleDateTime)   => node.setProperty(property, d, value)
       case _                         => // ignore
     }
   }
@@ -1125,33 +1128,30 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                                                propertyEntry: YMapEntry,
                                                property: PropertyMapping,
                                                node: DialectDomainElement): Unit = {
-    propertyEntry.value.tagType match {
+    val finalValues = propertyEntry.value.tagType match {
       case YType.Seq =>
         val values = propertyEntry.value
           .as[YSequence]
           .nodes
-          .map { elemValue =>
+          .flatMap { elemValue =>
             parseLiteralValue(elemValue, property, node)
           }
-          .collect { case Some(v) => v }
-        if (values.nonEmpty) {
-          values.head match {
-            case ("link", _: String) =>
-              val links = values.collect { case (_, link) => link }.asInstanceOf[Seq[String]]
-              node.setLinkField(property, links, propertyEntry.value)
-            case _ =>
-              node.setLiteralField(property, values, propertyEntry.value)
+
+          values.headOption match {
+            case Some(("link", _: String)) => values.collect { case (_, link) => link }.asInstanceOf[Seq[String]]
+            case _ => values
           }
-        } else {
-          node.setLiteralField(property, values, propertyEntry.value)
-        }
+
       case _ =>
         parseLiteralValue(propertyEntry.value, property, node) match {
-          case Some(("link", v)) => node.setLiteralField(property, Seq(v), propertyEntry.value)
-          case Some(v)           => node.setLiteralField(property, Seq(v), propertyEntry.value)
-          case _                 => // ignore
+          case Some(("link", v)) => Seq(v)
+          case Some(v)           => Seq(v)
+          case _                 => Nil
         }
+
     }
+    node.setProperty(property, finalValues, propertyEntry.value)
+
   }
 
   protected def parseNestedNode(path: String,

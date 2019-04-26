@@ -35,11 +35,6 @@
             "@value": "go let's ho hey"
           }
         ],
-        "http://a.ml/vocabularies/meta#abstract": [
-          {
-            "@value": true
-          }
-        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://shared/src/test/resources/vocabularies2/instances/patch21b.raml#/source-map",

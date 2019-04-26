@@ -22,20 +22,14 @@
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://test.com/tmp#date": [
+        "http://test.com/tmp#int": [
           {
-            "@value": "2017-09-18",
-            "@type": "http://www.w3.org/2001/XMLSchema#date"
+            "@value": 10
           }
         ],
         "http://test.com/tmp#str": [
           {
             "@value": "hey"
-          }
-        ],
-        "http://test.com/tmp#float": [
-          {
-            "@value": 12.35
           }
         ],
         "http://test.com/tmp#timestamp": [
@@ -44,9 +38,15 @@
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
           }
         ],
-        "http://test.com/tmp#int": [
+        "http://test.com/tmp#float": [
           {
-            "@value": 10
+            "@value": 12.35
+          }
+        ],
+        "http://test.com/tmp#date": [
+          {
+            "@value": "2017-09-18",
+            "@type": "http://www.w3.org/2001/XMLSchema#date"
           }
         ],
         "http://test.com/tmp#boolean": [
@@ -76,12 +76,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/tmp#timestamp"
+                    "@value": "http://test.com/tmp#float"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,11)-(7,31)]"
+                    "@value": "[(4,7)-(4,12)]"
                   }
                 ]
               },
@@ -112,36 +112,36 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/tmp#date"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(6,6)-(6,16)]"
-                  }
-                ]
-              },
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://test.com/tmp#float"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(4,7)-(4,12)]"
-                  }
-                ]
-              },
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
                     "@value": "http://test.com/tmp#int"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(3,5)-(3,7)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#timestamp"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(7,11)-(7,31)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#date"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(6,6)-(6,16)]"
                   }
                 ]
               }

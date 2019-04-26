@@ -31,14 +31,14 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://test.com/v3#c": [
-              {
-                "@value": "hey, ho"
-              }
-            ],
             "http://test.com/v3#a": [
               {
                 "@value": 1
+              }
+            ],
+            "http://test.com/v3#c": [
+              {
+                "@value": "hey, ho"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -51,12 +51,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/v3#a"
+                        "@value": "http://test.com/v3#c"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(4,5)-(4,6)]"
+                        "@value": "[(3,5)-(3,12)]"
                       }
                     ]
                   },
@@ -75,12 +75,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/v3#c"
+                        "@value": "http://test.com/v3#a"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(3,5)-(3,12)]"
+                        "@value": "[(4,5)-(4,6)]"
                       }
                     ]
                   }
@@ -98,14 +98,14 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://test.com/v3#d": [
-              {
-                "@value": "go"
-              }
-            ],
             "http://test.com/v3#e": [
               {
                 "@value": "let's"
+              }
+            ],
+            "http://test.com/v3#d": [
+              {
+                "@value": "go"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -118,12 +118,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/v3#e"
+                        "@value": "http://test.com/v3#d"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(6,5)-(6,10)]"
+                        "@value": "[(7,5)-(7,7)]"
                       }
                     ]
                   },
@@ -142,12 +142,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/v3#d"
+                        "@value": "http://test.com/v3#e"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(7,5)-(7,7)]"
+                        "@value": "[(6,5)-(6,10)]"
                       }
                     ]
                   }
@@ -171,7 +171,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,0)-(7,7)]"
+                    "@value": "[(5,6)-(7,7)]"
                   }
                 ]
               },
@@ -195,7 +195,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(3,0)-(5,0)]"
+                    "@value": "[(2,5)-(5,0)]"
                   }
                 ]
               }

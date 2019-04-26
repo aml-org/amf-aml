@@ -95,11 +95,6 @@
                 "@value": "lets go"
               }
             ],
-            "http://a.ml/vocabularies/meta#declarationName": [
-              {
-                "@value": "myDeclarations"
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://shared/src/test/resources/vocabularies2/instances/library24.raml#/declarations/path/declarations/myDeclarations/source-map",
@@ -110,12 +105,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://a.ml/vocabularies/meta#declarationName"
+                        "@value": "http://test.com/v3#b"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(5,6)-(5,20)]"
+                        "@value": "[(6,11)-(6,18)]"
                       }
                     ]
                   },
@@ -134,12 +129,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/v3#b"
+                        "@value": "http://a.ml/vocabularies/meta#declarationName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(6,11)-(6,18)]"
+                        "@value": "[(5,6)-(5,20)]"
                       }
                     ]
                   }

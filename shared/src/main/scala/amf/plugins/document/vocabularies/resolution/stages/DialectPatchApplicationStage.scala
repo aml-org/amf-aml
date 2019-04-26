@@ -144,23 +144,21 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                                    propertyMapping: PropertyMapping,
                                    targetLocation: String,
                                    patchLocation: String): Unit = {
-    val targetPropertyValue = targetNode.valueForField(patchField)
     findPropertyMappingMergePolicy(propertyMapping) match {
-      case "insert" =>
-        if (targetPropertyValue.isEmpty) targetNode.patchLiteralField(patchField, patchValue.value)
-      case "delete" =>
+      case "insert" if !targetNode.graph.containsField(patchField) =>
+        targetNode.graph.patchField(patchField, patchValue)
+      case "delete" if targetNode.graph.containsField(patchField) =>
         try {
-          if (targetPropertyValue.nonEmpty && patchValue.value
-                .asInstanceOf[AmfScalar]
-                .value == targetPropertyValue.get.value.asInstanceOf[AmfScalar].value)
-            targetNode.removeField(patchField)
+          if(targetNode.fields.getValue(patchField).value.asInstanceOf[AmfScalar].value
+            == patchValue.value.asInstanceOf[AmfScalar].value)
+            targetNode.graph.removeField(patchField.toString)
         } catch {
           case _: Exception => // ignore
         }
-      case "update" =>
-        if (targetPropertyValue.nonEmpty) targetNode.patchLiteralField(patchField, patchValue.value)
+      case "update" if targetNode.graph.containsField(patchField) =>
+        targetNode.graph.patchField(patchField, patchValue)
       case "upsert" =>
-        targetNode.patchLiteralField(patchField, patchValue.value)
+        targetNode.graph.patchField(patchField, patchValue)
       case "ignore" =>
       // ignore
       case "fail" =>
@@ -169,7 +167,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
           targetNode.id,
           None,
           s"Property ${patchField.value.iri()} cannot be patched",
-          targetPropertyValue.get.annotations.find(classOf[LexicalInformation]),
+          targetNode.fields.getValue(patchField).annotations.find(classOf[LexicalInformation]),
           None
         )
       case _ =>
@@ -183,8 +181,8 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                                              propertyMapping: PropertyMapping,
                                              targetLocation: String,
                                              patchLocation: String): Unit = {
-    val targetPropertyValueSeq: Seq[AmfElement] = targetNode.valueForField(patchField) match {
-      case Some(v) if v.value.isInstanceOf[AmfArray] => v.value.asInstanceOf[AmfArray].values
+    val targetPropertyValueSeq: Seq[AmfElement] = targetNode.fields.getValueAsOption(patchField) match {
+      case Some(v ) if v.value.isInstanceOf[AmfArray] => v.value.asInstanceOf[AmfArray].values
       case Some(v)                                   => Seq(v.value)
       case _                                         => Nil
     }
@@ -198,13 +196,13 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
 
     findPropertyMappingMergePolicy(propertyMapping) match {
       case "insert" =>
-        targetNode.patchLiteralField(patchField, targetPropertyValue.union(patchPropertyValue).toSeq)
+        targetNode.graph.patchSeqField(patchField, targetPropertyValue.union(patchPropertyValue).toSeq)
       case "delete" =>
-        targetNode.patchLiteralField(patchField, targetPropertyValue.diff(patchPropertyValue).toSeq)
+        targetNode.graph.patchSeqField(patchField, targetPropertyValue.diff(patchPropertyValue).toSeq)
       case "update" =>
-        targetNode.patchLiteralField(patchField, patchPropertyValue.toSeq)
+        targetNode.graph.patchSeqField(patchField, patchPropertyValue.toSeq)
       case "upsert" =>
-        targetNode.patchLiteralField(patchField, targetPropertyValue.union(patchPropertyValue).toSeq)
+        targetNode.graph.patchSeqField(patchField, targetPropertyValue.union(patchPropertyValue).toSeq)
       case "ignore" =>
       // ignore
       case "fail" =>
@@ -231,7 +229,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                                             propertyMapping: PropertyMapping,
                                             targetLocation: String,
                                             patchLocation: String): Unit = {
-    val targetPropertyValue: Seq[AmfElement] = targetNode.valueForField(patchField) match {
+    val targetPropertyValue: Seq[AmfElement] = targetNode.fields.getValueAsOption(patchField) match {
       case Some(v) if v.value.isInstanceOf[AmfArray] => v.value.asInstanceOf[AmfArray].values
       case Some(v)                                   => Seq(v.value)
       case _                                         => Nil
@@ -263,15 +261,15 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
               case None    => Some(elem)
             }
         } collect { case Some(elem) => elem } toSeq
-        val unionElements = targetPropertyValue.collect { case d: DialectDomainElement => d } union newDialectDomainElements
-        targetNode.patchObjectField(patchField, unionElements)
+        val unionElements: Seq[DialectDomainElement] = targetPropertyValue.collect { case d: DialectDomainElement => d } union newDialectDomainElements
+        targetNode.graph.patchSeqField(patchField, unionElements)
       case "delete" =>
         val newDialectDomainElements = patchPropertyValueIds.collect {
           case (id, _) =>
             targetPropertyValueIds.get(neutralId(id, patchLocation))
         } collect { case Some(elem) => elem } toSeq
         val unionElements = targetPropertyValue.collect { case d: DialectDomainElement => d } diff newDialectDomainElements
-        targetNode.patchObjectField(patchField, unionElements)
+        targetNode.graph.patchSeqField(patchField, unionElements)
       case "update" =>
         val computedDomainElements: Seq[(DialectDomainElement, Option[DialectDomainElement])] =
           patchPropertyValueIds.collect {
@@ -292,7 +290,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
               case None             => acc - neutralId(targetElem.id, targetLocation)
             }
         }
-        targetNode.patchObjectField(patchField, newDomainElements.values.toSeq)
+        targetNode.graph.patchSeqField(patchField, newDomainElements.values.toSeq)
       case "upsert" =>
         val existingElems = patchPropertyValueIds.toSeq.map {
           case (id, elem) =>
@@ -334,7 +332,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                 }
             }
         }
-        targetNode.patchObjectField(patchField, newDomainElements.values.toSeq)
+        targetNode.graph.patchSeqField(patchField, newDomainElements.values.toSeq)
       case "ignore" =>
       // ignore
       case "fail" =>
@@ -359,15 +357,10 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                                   patchLocation: String): Unit = {
     patchValue.value match {
       case patchDialectDomainElement: DialectDomainElement =>
-        val targetNodeValue = targetNode.valueForField(patchField) match {
-          case Some(v) if v.value.isInstanceOf[DialectDomainElement] =>
-            Some(v.value.asInstanceOf[DialectDomainElement])
-          case _ =>
-            None
-        }
+        val targetNodeValue = targetNode.fields ? patchField
         patchNode(targetNodeValue, targetLocation, patchDialectDomainElement, patchLocation) match {
-          case Some(mergedNode: DialectDomainElement) => targetNode.patchObjectField(patchField, mergedNode)
-          case _                                      => targetNode.removeField(patchField)
+          case Some(mergedNode: DialectDomainElement) => targetNode.graph.patchObj(patchField, mergedNode)
+          case _                                      => targetNode.graph.removeField(patchField.toString)
         }
       case _ => // ignore
     }
@@ -381,7 +374,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
     val nodeMapping = patchNode.definedBy
     if (targetNode.isDefined && sameNodeIdentity(targetNode.get, targetLocation, patchNode, patchLocation)) {
       patchNode.meta.fields.foreach { patchField =>
-        patchNode.valueForField(patchField) match {
+        patchNode.fields.getValueAsOption(patchField) match {
           case Some(fieldValue) =>
             nodeMapping
               .propertiesMapping()

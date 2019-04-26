@@ -6,7 +6,7 @@ import amf.core.emitter.SpecOrdering.Lexical
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
+import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import amf.core.utils._
@@ -115,7 +115,7 @@ case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliases
 
 case class DiscriminatorHelper(mapping: NodeWithDiscriminator[_], dialectEmitter: DialectEmitterHelper) {
   // maybe we have a discriminator
-  val discriminator = Option(mapping.typeDiscriminator()).orElse {
+  val discriminator: Option[Map[String, String]] = Option(mapping.typeDiscriminator()).orElse {
     val rangeId = mapping.objectRange().head.value()
     dialectEmitter.findNodeMappingById(rangeId) match {
       case (_, unionMapping: UnionNodeMapping) => Option(unionMapping.typeDiscriminator())
@@ -124,7 +124,7 @@ case class DiscriminatorHelper(mapping: NodeWithDiscriminator[_], dialectEmitter
   }
 
   // maybe we have a discriminator name
-  val discriminatorName = mapping.typeDiscriminatorName().option().orElse {
+  val discriminatorName: Option[String] = mapping.typeDiscriminatorName().option().orElse {
     val rangeId = mapping.objectRange().head.value()
     dialectEmitter.findNodeMappingById(rangeId) match {
       case (_, unionMapping: UnionNodeMapping) => unionMapping.typeDiscriminatorName().option()
@@ -146,7 +146,7 @@ case class DiscriminatorHelper(mapping: NodeWithDiscriminator[_], dialectEmitter
     val elementTypes = dialectDomainElement.meta.`type`.map(_.iri())
     discriminatorMappings.find {
       case (_, discriminatorMapping) =>
-        elementTypes.contains(discriminatorMapping.nodetypeMapping.value()).asInstanceOf[Boolean]
+        elementTypes.contains(discriminatorMapping.nodetypeMapping.value())
     } match {
       case Some((alias, _)) =>
         Some((discriminatorName.getOrElse("type"), alias))
@@ -168,7 +168,7 @@ case class DialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) 
       .find(classOf[Aliases])
       .map { aliases =>
         aliases.aliases.foldLeft(Map[String, String]()) {
-          case (acc, (alias, (fullUrl, relativeUrl))) =>
+          case (acc, (alias, (fullUrl, _))) =>
             acc + (fullUrl -> alias)
         }
       }
@@ -226,7 +226,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
     extends EntryEmitter
     with DialectEmitterHelper {
 
-  def computeIdentifier(decl: DialectDomainElement) = {
+  def computeIdentifier(decl: DialectDomainElement): String = {
     decl.declarationName.option() match {
       case Some(name) => name
       case _ =>
@@ -354,7 +354,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
             val key                    = propertyMapping.name().value()
             val propertyClassification = propertyMapping.classification()
 
-            val nextEmitter: Seq[EntryEmitter] = node.valueForField(field) match {
+            val nextEmitter: Seq[EntryEmitter] = node.fields.getValueAsOption(field) match {
               case Some(entry) if entry.value.isInstanceOf[AmfScalar] =>
                 val scalar = entry.value.asInstanceOf[AmfScalar]
                 emitScalar(key, field, scalar, Some(entry.annotations))
@@ -503,7 +503,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
     Seq(new EntryEmitter {
       // this can be multiple mappings if we have a union in the range or a range pointing to a union mapping
-      val nodeMappings = propertyMapping.objectRange().flatMap { rangeNodeMapping =>
+      val nodeMappings: Seq[NodeMapping] = propertyMapping.objectRange().flatMap { rangeNodeMapping =>
         findAllNodeMappings(rangeNodeMapping.value())
       }
 
@@ -556,7 +556,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
               val dialectDomainElement = mapElements(emitter)
               val mapKeyField =
                 dialectDomainElement.meta.fields.find(_.value.iri() == propertyMapping.mapTermKeyProperty().value()).get
-              val mapKeyValue = dialectDomainElement.valueForField(mapKeyField).get.toString
+              val mapKeyValue = dialectDomainElement.fields.getValue(mapKeyField).toString
               EntryPartEmitter(mapKeyValue, emitter).emit(b)
             }
           }
@@ -613,8 +613,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                   val keyField   = element.meta.fields.find(_.value.iri() == keyProperty)
                   val valueField = element.meta.fields.find(_.value.iri() == valueProperty)
                   if (keyField.isDefined && valueField.isDefined) {
-                    val keyLiteral   = element.valueForField(keyField.get).map(_.value)
-                    val valueLiteral = element.valueForField(valueField.get).map(_.value)
+                    val keyLiteral   = element.fields.getValueAsOption(keyField.get).map(_.value)
+                    val valueLiteral = element.fields.getValueAsOption(valueField.get).map(_.value)
                     (keyLiteral, valueLiteral) match {
                       case (Some(keyScalar: AmfScalar), Some(valueScalar: AmfScalar)) =>
                         MapEntryEmitter(keyScalar.value.toString, valueScalar.value.toString).emit(b)

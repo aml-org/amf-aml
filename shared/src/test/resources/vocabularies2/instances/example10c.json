@@ -31,14 +31,14 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://test.com/tmp#c": [
-              {
-                "@value": "ho"
-              }
-            ],
             "http://test.com/tmp#a": [
               {
                 "@value": "hey"
+              }
+            ],
+            "http://test.com/tmp#c": [
+              {
+                "@value": "ho"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -51,12 +51,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/tmp#a"
+                        "@value": "http://test.com/tmp#c"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(4,7)-(4,10)]"
+                        "@value": "[(5,7)-(5,9)]"
                       }
                     ]
                   },
@@ -75,12 +75,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/tmp#c"
+                        "@value": "http://test.com/tmp#a"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(5,7)-(5,9)]"
+                        "@value": "[(4,7)-(4,10)]"
                       }
                     ]
                   }
@@ -96,14 +96,14 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://test.com/tmp#b": [
-              {
-                "@value": "lets"
-              }
-            ],
             "http://test.com/tmp#c": [
               {
                 "@value": "go"
+              }
+            ],
+            "http://test.com/tmp#b": [
+              {
+                "@value": "lets"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -116,12 +116,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/tmp#c"
+                        "@value": "http://test.com/tmp#b"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(8,7)-(8,9)]"
+                        "@value": "[(7,7)-(7,11)]"
                       }
                     ]
                   },
@@ -140,12 +140,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/tmp#b"
+                        "@value": "http://test.com/tmp#c"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(7,7)-(7,11)]"
+                        "@value": "[(8,7)-(8,9)]"
                       }
                     ]
                   }
