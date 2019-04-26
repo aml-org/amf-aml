@@ -15,10 +15,7 @@ version in ThisBuild := {
   lazy val build = sys.env.getOrElse("BUILD_NUMBER", "0")
   lazy val branch = sys.env.get("BRANCH_NAME")
 
-  if (branch.exists(_ == "master"))
-    major.toString + "." + minor.toString + "." + build
-  else
-    major.toString + "." + (minor + 1).toString + ".0-SNAPSHOT"
+  if (branch.exists(_ == "master")) s"$major.$minor.$build" else s"$major.${minor + 1}.0-SNAPSHOT"
 }
 
 publish := {}
@@ -44,10 +41,8 @@ setSonarProperties := {
     "sonar.projectKey" -> "mulesoft.amf-aml",
     "sonar.projectName" -> "AMF-AML",
     "sonar.projectVersion" -> "4.0.0",
-
     "sonar.sourceEncoding" -> "UTF-8",
     "sonar.github.repository" -> "mulesoft/amf-aml",
-
     "sonar.sources" -> "shared/src/main/scala",
     "sonar.tests" -> "shared/src/test/scala",
     "scoverage.reportPath" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml"
@@ -62,9 +57,7 @@ setSonarProperties := {
   stream.close()
 }
 
-val sonarMe = TaskKey[Unit](
-  "sonarMe",
-  "Run sonar!")
+val sonarMe = TaskKey[Unit]("sonarMe", "Run sonar!")
 sonarMe := {
 
 //  sonarRunnerOptions := Seq(
@@ -80,20 +73,18 @@ sonarMe := {
   sonar.value
 }
 
-
 lazy val workspaceDirectory: File =
   sys.props.get("sbt.mulesoft") match {
     case Some(x) => file(x)
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "4.0.12"
+val amfCoreVersion = "4.0.13"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
 lazy val amfCoreLibJVM = "com.github.amlorg" %% "amf-core" % amfCoreVersion
 lazy val amfCoreLibJS = "com.github.amlorg" %% "amf-core_sjs0.6" % amfCoreVersion
-
 
 val settings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
@@ -101,8 +92,8 @@ val settings = Common.settings ++ Common.publish ++ Seq(
 //  resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   libraryDependencies ++= Seq(
-    "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
-    "com.github.scopt" %%% "scopt"     % "3.7.0"
+    "org.scalatest" %%% "scalatest" % "3.0.5" % Test,
+    "com.github.scopt" %%% "scopt" % "3.7.0"
   )
 )
 
@@ -123,9 +114,9 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
   .in(file("."))
   .settings(settings)
   .jvmSettings(
-    libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
+    libraryDependencies += "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
-    libraryDependencies += "org.json4s"             %% "json4s-native"          % "3.5.4",
+    libraryDependencies += "org.json4s" %% "json4s-native" % "3.5.4",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-aml-javadoc.jar"
   )
   .jsSettings(
@@ -134,7 +125,8 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js"
   )
 
-lazy val amlJVM = aml.jvm.in(file("./jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
+lazy val amlJVM =
+  aml.jvm.in(file("./jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
 
-lazy val amlJS  = aml.js.in(file("./js")).sourceDependency(amfCoreJSRef, amfCoreLibJS)
-
+lazy val amlJS =
+  aml.js.in(file("./js")).sourceDependency(amfCoreJSRef, amfCoreLibJS)
