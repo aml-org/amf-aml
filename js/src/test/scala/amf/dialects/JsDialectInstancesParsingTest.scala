@@ -1,0 +1,3 @@
+package amf.dialects
+
+class JsDialectInstancesParsingTest extends DialectInstancesParsingTest
