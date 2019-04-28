@@ -14,10 +14,9 @@ class DialectDomainElementModel(val typeIri: Seq[String] = Seq(),
     with DynamicObj
     with LinkableElementModel {
 
-  val DeclarationName = Field(Str, Namespace.Meta + "declarationName")
-  val Abstract        = Field(Bool, Namespace.Meta + "abstract")
+
   override def fields: List[Field] =
-    Abstract :: DeclarationName :: DomainElementModel.fields ++ LinkableElementModel.fields ++ typeFields
+    DialectDomainElementModel.Abstract :: DialectDomainElementModel.DeclarationName :: DomainElementModel.fields ++ LinkableElementModel.fields ++ typeFields
   override val `type`: List[ValueType] = typeIri
     .map(iriToValue)
     .toList ++ ((Namespace.Meta + "DialectDomainElement") :: DomainElementModel.`type`)
@@ -30,4 +29,7 @@ class DialectDomainElementModel(val typeIri: Seq[String] = Seq(),
 object DialectDomainElementModel {
   def apply(): DialectDomainElementModel = new DialectDomainElementModel()
   def apply(typeIri: String)             = new DialectDomainElementModel(Seq(typeIri))
+
+  val DeclarationName = Field(Str, Namespace.Meta + "declarationName")
+  val Abstract        = Field(Bool, Namespace.Meta + "abstract")
 }

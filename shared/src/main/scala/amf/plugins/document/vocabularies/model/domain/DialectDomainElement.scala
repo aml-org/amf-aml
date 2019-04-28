@@ -25,15 +25,15 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   val objectCollectionProperties: mutable.Map[String, Seq[DialectDomainElement]] = mutable.HashMap()
   val propertyAnnotations: mutable.Map[String, Annotations]                      = mutable.HashMap()
 
-  def isAbstract: BoolField = fields.field(meta.asInstanceOf[DialectDomainElementModel].Abstract)
+  def isAbstract: BoolField = fields.field(DialectDomainElementModel.Abstract)
   def withAbstract(isAbstract: Boolean): DialectDomainElement = {
-    set(meta.asInstanceOf[DialectDomainElementModel].Abstract, isAbstract)
+    set(DialectDomainElementModel.Abstract, isAbstract)
     this
   }
 
-  def declarationName: StrField = fields.field(meta.asInstanceOf[DialectDomainElementModel].DeclarationName)
+  def declarationName: StrField = fields.field(DialectDomainElementModel.DeclarationName)
   def withDeclarationName(name: String): DialectDomainElement = {
-    set(meta.asInstanceOf[DialectDomainElementModel].DeclarationName, name)
+    set(DialectDomainElementModel.DeclarationName, name)
     this
   }
 
