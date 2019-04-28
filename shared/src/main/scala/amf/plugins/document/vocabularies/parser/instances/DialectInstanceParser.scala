@@ -557,6 +557,10 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
           case "$ref" =>
             resolveJSONPointer(nodeMap, mappable, defaultId).map { ref =>
               ref.annotations += JsonPointerRef()
+              mappable match {
+                case m:NodeMapping => ref.withDefinedBy(m)
+                case _ => // ignore
+              }
               ref
             }
           case "$include" =>
