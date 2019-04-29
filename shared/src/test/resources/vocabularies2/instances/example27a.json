@@ -164,12 +164,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/v3#b"
+                    "@value": "http://a.ml/vocabularies/meta#declarationName"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,7)-(4,13)]"
+                    "@value": "[(3,2)-(3,3)]"
                   }
                 ]
               },
@@ -182,6 +182,18 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(4,0)-(6,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/v3#b"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(4,7)-(4,13)]"
                   }
                 ]
               }
@@ -222,12 +234,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/v3#a"
+                    "@value": "http://a.ml/vocabularies/meta#declarationName"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,7)-(7,15)]"
+                    "@value": "[(6,2)-(6,3)]"
                   }
                 ]
               },
@@ -240,6 +252,18 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(7,0)-(9,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/v3#a"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(7,7)-(7,15)]"
                   }
                 ]
               }

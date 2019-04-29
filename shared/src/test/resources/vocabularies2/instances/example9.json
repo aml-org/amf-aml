@@ -163,6 +163,18 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
+                        "@value": "http://a.ml/vocabularies/meta#declarationName"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,2)-(3,4)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
                         "@value": "http://test.com/tmp#a1"
                       }
                     ],
@@ -357,12 +369,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/tmp#a1"
+                    "@value": "http://a.ml/vocabularies/meta#declarationName"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,0)-(7,6)]"
+                    "@value": "[(5,2)-(5,5)]"
                   }
                 ]
               },
@@ -375,6 +387,18 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(6,0)-(7,0)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#a1"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(7,6)]"
                   }
                 ]
               }

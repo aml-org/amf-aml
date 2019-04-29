@@ -110,12 +110,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/v3#b"
+                        "@value": "http://a.ml/vocabularies/meta#declarationName"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(6,11)-(6,18)]"
+                        "@value": "[(5,6)-(5,20)]"
                       }
                     ]
                   },
@@ -128,6 +128,18 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(6,0)-(6,18)]"
+                      }
+                    ]
+                  },
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://test.com/v3#b"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(6,11)-(6,18)]"
                       }
                     ]
                   }

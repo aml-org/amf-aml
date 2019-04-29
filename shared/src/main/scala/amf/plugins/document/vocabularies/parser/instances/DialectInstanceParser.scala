@@ -453,7 +453,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
               parseNode(declarationsId, id, declarationEntry.value, nodeMapping, Map()) match {
                 case Some(node) =>
                   // lookup by ref name
-                  node.set(DialectDomainElementModel.DeclarationName, AmfScalar(declarationName), Annotations(declarationEntry.key))
+
+                  node.set(DialectDomainElementModel.DeclarationName, AmfScalar(declarationName, Annotations(declarationEntry.key)))
                   ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
                   // lookup by JSON pointer, absolute URI
                   ctx.registerJsonPointerDeclaration(id, node)
