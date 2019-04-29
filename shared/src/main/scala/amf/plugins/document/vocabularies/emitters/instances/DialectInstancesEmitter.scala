@@ -13,6 +13,7 @@ import amf.core.utils._
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
+import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import org.mulesoft.common.time.SimpleDateTime
@@ -347,7 +348,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         emitters ++= Seq(MapEntryEmitter("$id", customId))
       }
       node.meta.fields.foreach { field =>
-        findPropertyMapping(field) foreach { propertyMapping =>
+        findPropertyMapping(node, field) foreach { propertyMapping =>
           if (keyPropertyId.isEmpty || propertyMapping.nodePropertyMapping().value() != keyPropertyId.get) {
 
             val key                    = propertyMapping.name().value()
@@ -373,7 +374,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                   if entry.value
                     .isInstanceOf[DialectDomainElement] && propertyClassification == ObjectProperty && !propertyMapping.isUnion =>
                 val element = entry.value.asInstanceOf[DialectDomainElement]
-                emitObjectEntry(key, element, propertyMapping, Some(entry.annotations))
+                val result = emitObjectEntry(key, element, propertyMapping, Some(entry.annotations))
+                result
 
               case Some(entry)
                   if entry.value
@@ -509,7 +511,6 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       val keyPropertyId = propertyMapping.mapKeyProperty().option()
 
       override def emit(b: EntryBuilder): Unit = {
-
         // collect the emitters for each element, based on the available mappings
         val mappedElements: Map[DialectNodeEmitter, DialectDomainElement] =
           elements.foldLeft(Map[DialectNodeEmitter, DialectDomainElement]()) {
@@ -702,18 +703,22 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     emitters.getOrElse(Nil)
   }
 
-  protected def findPropertyMapping(field: Field): Option[PropertyMapping] = {
+  protected def findPropertyMapping(node: DialectDomainElement, field: Field): Option[PropertyMapping] = {
     val iri = field.value.iri()
     nodeMappable match {
-      case nodeMapping: NodeMapping => nodeMapping.propertiesMapping().find(_.nodePropertyMapping().value() == iri)
+      case nodeMapping: NodeMapping =>
+        nodeMapping.propertiesMapping().find(_.nodePropertyMapping().value() == iri)
       case unionMapping: UnionNodeMapping =>
         val rangeIds: Seq[String] = unionMapping.objectRange().map(_.value())
-        val nodeMappingsInRange = rangeIds.map { id: String =>
+        var nodeMappingsInRange = rangeIds.map { id: String =>
           findNodeMappingById(id) match {
             case (_, nodeMapping: NodeMapping) => Some(nodeMapping)
             case _                             => None
           }
         } collect { case Some(nodeMapping: NodeMapping) => nodeMapping }
+        // we need to do this because the same property (with different ranges) might be defined in multiple node mappings
+        val nodeMetaTypes = node.meta.asInstanceOf[DialectDomainElementModel].typeIri.map(_ -> true).toMap
+        nodeMappingsInRange = nodeMappingsInRange.filter { nodeMapping => nodeMetaTypes.contains(nodeMapping.id) }
         nodeMappingsInRange.flatMap(_.propertiesMapping()).find(_.nodePropertyMapping().value() == iri)
     }
   }
