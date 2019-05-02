@@ -77,7 +77,7 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
           case "$dialect" => // $dialect link
             val dialectRef = entry.value
             if (!registry.knowsHeader(s"%${dialectRef.as[String]}")) {
-              ramlInclude(dialectRef.split("#").head)
+              ramlIncludeText(dialectRef)
             }
 
           case "$include" => // !include as $include link
@@ -86,9 +86,7 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
 
           case "$ref" => // $ref link
             val includeRef = entry.value
-            entry.value.asScalar.map(_.text).foreach { t =>
-              ramlInclude(t.split("#").head)
-            }
+            entry.value.asScalar.map(_.text).foreach(ramlIncludeText)
 
           case _ => // no link, recur
             part.children.foreach(links)
@@ -96,6 +94,11 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
       case node: YNode if node.tagType == YType.Include => ramlInclude(node)
       case _                                            => part.children.foreach(links)
     }
+  }
+
+  private def ramlIncludeText(text:String): Unit = {
+    val link = text.split("#").head
+    if(link.nonEmpty) ramlInclude(link)
   }
 
   private def ramlInclude(node: YNode): Unit = {
