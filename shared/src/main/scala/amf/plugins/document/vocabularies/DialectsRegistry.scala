@@ -9,6 +9,7 @@ import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.{Aml, Cache, Context}
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.unsafe.PlatformSecrets
+import amf.core.validation.core.ValidationProfile
 import amf.core.vocabulary.ValueType
 import amf.internal.environment.Environment
 import amf.internal.resource.StringResourceLoader
@@ -22,8 +23,10 @@ import scala.concurrent.Future
 
 class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
-  protected var map: Map[String, Dialect] = Map()
-  protected var resolved: Map[String, Boolean] = Map()
+  protected var map: Map[String, Dialect]                               = Map()
+  protected var resolved: Map[String, Boolean]                          = Map()
+
+  private[vocabularies] var validations: Map[String, ValidationProfile] = Map()
 
   def findNode(dialectNode: String): Option[(Dialect, NodeMapping)] = {
     map.values.find(dialect => dialectNode.contains(dialect.id)) map { dialect =>
@@ -48,9 +51,9 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
       map += (header -> dialect)
       resolved -= header
     }
+    validations -= dialect.nameAndVersion()
     this
   }
-
 
   /**
     * Finds and resolve if unresolved a resolved dialect, the output of this invocation is a dialect ready to parse
@@ -65,12 +68,12 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
         if (!resolved.getOrElse(dialectId, false)) {
           val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
           resolved += (dialectId -> true)
-          map += (dialectId -> resolvedDialect)
+          map += (dialectId      -> resolvedDialect)
           k(resolvedDialect)
         } else {
           k(dialect)
         }
-      case _             => None
+      case _ => None
     }
   }
 
@@ -139,9 +142,9 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
         if (!resolved.getOrElse(dialectId, false)) {
           val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
           resolved += (dialectId -> true)
-          map += (dialectId -> resolvedDialect)
+          map += (dialectId      -> resolvedDialect)
         }
-      case _             =>
+      case _ =>
         throw new Exception(s"Cannot find register Dialect with header '$header'")
     }
   }
@@ -151,7 +154,12 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
       case Some(dialect) => Future { dialect }
       case _ =>
         RuntimeValidator.disableValidationsAsync() { reenable =>
-          RuntimeCompiler(uri, Some("application/yaml"), Some(Aml.name), Context(platform), env = environment, cache = Cache())
+          RuntimeCompiler(uri,
+                          Some("application/yaml"),
+                          Some(Aml.name),
+                          Context(platform),
+                          env = environment,
+                          cache = Cache())
             .map {
               case dialect: Dialect =>
                 reenable()
@@ -163,10 +171,12 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   }
 
   def unregisterDialect(uri: String): Unit = {
-    map.foreach { case (header, dialect) =>
-      if (dialect.id == uri) {
-        map -= header
-      }
+    map.foreach {
+      case (header, dialect) =>
+        if (dialect.id == uri) {
+          map -= header
+          validations -= dialect.nameAndVersion()
+        }
     }
   }
 

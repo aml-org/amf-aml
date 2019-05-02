@@ -278,9 +278,6 @@ object AMLPlugin
     }
   }
 
-  // Cache for the validation profiles
-  var validationsProfilesMap: Map[String, ValidationProfile] = Map()
-
   /**
     * Validation profiles supported by this plugin. Notice this will be called multiple times.
     */
@@ -294,12 +291,12 @@ object AMLPlugin
 
   protected def computeValidationProfile(dialect: Dialect): ValidationProfile = {
     val profileName = dialect.nameAndVersion()
-    validationsProfilesMap.get(profileName) match {
+    registry.validations.get(profileName) match {
       case Some(profile) => profile
       case _ =>
         val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
         val profile         = new AMFDialectValidations(resolvedDialect).profile()
-        validationsProfilesMap += (profileName -> profile)
+        registry.validations += (profileName -> profile)
         profile
     }
   }
