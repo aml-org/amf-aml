@@ -86,15 +86,16 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
       element: AmfObject,
       predicate: AmfObject => Boolean,
       transformation: (AmfObject, Boolean) => Option[AmfObject],
+      traversed: mutable.Set[String] = mutable.Set(),
       cycles: Set[String] = Set.empty,
       cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject]): AmfObject = {
-    if (!cycles.contains(element.id)) {
+    if (!traversed.contains(element.id)) {
       // not visited yet
       if (predicate(element)) { // matches predicate, we transform
         transformation(element, false).orNull
       } else {
         // not matches the predicate, we traverse
-
+        if (this.id != element.id) traversed += element.id
         element match {
           case dataNode: DialectDomainElement =>
             dataNode.objectProperties.foreach {
@@ -103,6 +104,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
                   transformByCondition(value,
                                        predicate,
                                        transformation,
+                                       traversed,
                                        cycles + element.id,
                                        cycleRecoverer = cycleRecoverer)) match {
                   case Some(transformed: DialectDomainElement) =>
@@ -120,6 +122,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
                     transformByCondition(value,
                                          predicate,
                                          transformation,
+                                         traversed,
                                          cycles + element.id,
                                          cycleRecoverer = cycleRecoverer)) match {
                     case Some(transformed: DialectDomainElement) => Some(transformed)
@@ -136,7 +139,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
             }
 
           case other =>
-            super.transformByCondition(other, predicate, transformation, cycles, cycleRecoverer = cycleRecoverer)
+            super.transformByCondition(other, predicate, transformation, traversed, cycles, cycleRecoverer = cycleRecoverer)
         }
         element
       }
