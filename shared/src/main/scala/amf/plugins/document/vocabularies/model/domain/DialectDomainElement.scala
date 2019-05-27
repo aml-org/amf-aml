@@ -356,7 +356,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       new DialectDomainElementModel(instanceTypes.distinct, dynamicFields, Some(definedBy))
     }
 
-  override def adopted(newId: String): DialectDomainElement.this.type =
+  override def adopted(newId: String, cycle: Seq[String] = Seq()): DialectDomainElement.this.type =
     if (Option(this.id).isEmpty) simpleAdoption(newId) else this
 
   override def linkCopy(): Linkable =

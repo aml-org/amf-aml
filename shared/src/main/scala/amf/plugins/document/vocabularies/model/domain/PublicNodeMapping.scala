@@ -24,7 +24,7 @@ case class PublicNodeMapping(fields: Fields, annotations: Annotations) extends D
 
   override def meta: Obj = PublicNodeMappingModel
 
-  override def adopted(parent: String): this.type = {
+  override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
     if (Option(id).isEmpty) {
       simpleAdoption(parent)
     }
@@ -54,7 +54,7 @@ case class DocumentMapping(fields: Fields, annotations: Annotations) extends Dom
 
   override def meta: Obj = DocumentMappingModel
 
-  override def adopted(parent: String): this.type = {
+  override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
     if (Option(id).isEmpty) {
       simpleAdoption(parent)
     }

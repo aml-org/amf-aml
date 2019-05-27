@@ -11,7 +11,7 @@ import org.yaml.model.YMap
 case class ClassTerm(fields: Fields, annotations: Annotations) extends DomainElement {
   override def meta: Obj = ClassTermModel
 
-  override def adopted(parent: String): this.type = {
+  override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
     if (Option(id).isEmpty) {
       simpleAdoption(parent)
     }

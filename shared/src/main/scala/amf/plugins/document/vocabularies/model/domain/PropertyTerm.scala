@@ -10,7 +10,7 @@ import org.yaml.model.YMap
 
 abstract class PropertyTerm extends DomainElement {
 
-  override def adopted(parent: String): PropertyTerm.this.type = {
+  override def adopted(parent: String, cycle: Seq[String] = Seq()): PropertyTerm.this.type = {
     if (Option(id).isEmpty) {
       simpleAdoption(parent)
     }

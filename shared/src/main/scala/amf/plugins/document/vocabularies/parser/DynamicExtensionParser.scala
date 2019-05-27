@@ -106,13 +106,13 @@ case class DynamicExtensionParser(node: YNode, parent: Option[String] = None, id
     }
     val node = ScalarNode(ast.text, finalDataType, Annotations(ast))
       .withName(idCounter.genId("scalar"))
-    parent.foreach(node.adopted)
+    parent.foreach(p => node.adopted(p))
     node
   }
 
   protected def parseArray(seq: Seq[YNode], ast: YPart): DataNode = {
     val node = DataArrayNode(Annotations(ast)).withName(idCounter.genId("array"))
-    parent.foreach(node.adopted)
+    parent.foreach(p => node.adopted(p))
     seq.foreach { v =>
       val element = DynamicExtensionParser(v, Some(node.id), idCounter).parse().forceAdopted(node.id)
       node.addMember(element)
@@ -122,7 +122,7 @@ case class DynamicExtensionParser(node: YNode, parent: Option[String] = None, id
 
   protected def parseObject(value: YMap): DataNode = {
     val node = DataObjectNode(Annotations(value)).withName(idCounter.genId("object"))
-    parent.foreach(node.adopted)
+    parent.foreach(p => node.adopted(p))
     value.entries.map { ast =>
       val key                 = ast.key.as[YScalar].text
       val value               = ast.value
