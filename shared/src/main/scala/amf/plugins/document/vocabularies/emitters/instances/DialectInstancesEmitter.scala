@@ -508,7 +508,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       }
 
       // val key property id, so we can pass it to the nested emitter and it is not emitted
-      val keyPropertyId = propertyMapping.mapKeyProperty().option()
+      val keyPropertyId = propertyMapping.mapTermKeyProperty().option()
 
       override def emit(b: EntryBuilder): Unit = {
         // collect the emitters for each element, based on the available mappings
@@ -555,7 +555,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
             ordering.sorted(mapElements.keys.toSeq).foreach { emitter =>
               val dialectDomainElement = mapElements(emitter)
               val mapKeyField =
-                dialectDomainElement.meta.fields.find(_.value.iri() == propertyMapping.mapKeyProperty().value()).get
+                dialectDomainElement.meta.fields.find(_.value.iri() == propertyMapping.mapTermKeyProperty().value()).get
               val mapKeyValue = dialectDomainElement.valueForField(mapKeyField).get.toString
               EntryPartEmitter(mapKeyValue, emitter).emit(b)
             }
@@ -595,8 +595,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                 array: AmfArray,
                                 propertyMapping: PropertyMapping,
                                 annotations: Option[Annotations] = None): Seq[EntryEmitter] = {
-    val keyProperty   = propertyMapping.mapKeyProperty().value()
-    val valueProperty = propertyMapping.mapValueProperty().value()
+    val keyProperty   = propertyMapping.mapTermKeyProperty().value()
+    val valueProperty = propertyMapping.mapTermValueProperty().value()
 
     Seq(new EntryEmitter() {
       override def emit(b: EntryBuilder): Unit = {

@@ -385,7 +385,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
           case Some(fieldValue) =>
             nodeMapping
               .propertiesMapping()
-              .find(_.nodePropertyMapping().option().getOrElse("") == patchField.value.iri()) match {
+              .find(_.nodePropertyMapping().value() == patchField.value.iri()) match {
               case Some(propertyMapping) =>
                 patchProperty(targetNode.get, patchField, fieldValue, propertyMapping, targetLocation, patchLocation)
               case _ => // ignore

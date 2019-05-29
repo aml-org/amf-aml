@@ -341,6 +341,11 @@
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#zz"
+              }
+            ],
             "http://schema.org/name": [
               {
                 "@value": "zz"
@@ -385,6 +390,11 @@
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#aaa"
+              }
             ],
             "http://schema.org/name": [
               {

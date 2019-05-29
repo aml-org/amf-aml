@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
+import amf.core.annotations.Aliases.{Alias, FullUrl}
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.SpecOrdering.Lexical
@@ -59,7 +60,7 @@ trait AliasesConsumer extends DialectEmitterHelper {
 }
 
 trait PosExtractor {
-  def fieldPos(element: DomainElement, field: Field) = {
+  def fieldPos(element: DomainElement, field: Field): Position = {
     element.fields
       .entry(field)
       .map {
@@ -163,10 +164,10 @@ case class DocumentsModelOptionsEmitter(dialect: Dialect,
   val mapping: DocumentsModel     = dialect.documents()
   var emitters: Seq[EntryEmitter] = Seq()
 
-  private def hasOptions(): Boolean =
+  private def hasOptions: Boolean =
     Seq(mapping.selfEncoded().option(), mapping.declarationsPath().option()).flatten.nonEmpty
 
-  val sortedNodes: Seq[MapEntryEmitter] = if (hasOptions()) {
+  val sortedNodes: Seq[MapEntryEmitter] = if (hasOptions) {
     val options =
       Map("selfEncoded" -> mapping.selfEncoded().option(), "declarationsPath" -> mapping.declarationsPath().option())
     val types = Map("selfEncoded" -> YType.Bool, "declarationsPath" -> YType.Str)
@@ -293,7 +294,7 @@ case class FragmentsDocumentModelEmitter(dialect: Dialect,
 case class DocumentsModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)])
     extends EntryEmitter
     with AliasesConsumer {
-  val documents                   = dialect.documents()
+  val documents: DocumentsModel = dialect.documents()
   var emitters: Seq[EntryEmitter] = Seq()
 
   override def emit(b: EntryBuilder): Unit = {
@@ -429,21 +430,31 @@ case class PropertyMappingEmitter(dialect: Dialect,
             })
         }
 
-        propertyMapping.mapKeyProperty().option().foreach { value =>
+        propertyMapping.mapKeyProperty().option().fold({
+          propertyMapping.mapTermKeyProperty().option().foreach{ term =>
+            val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermKeyProperty)
+            aliasFor(term) match {
+              case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapTermKey", propertyId, YType.Str, pos))
+              case _                =>
+            }
+          }
+        })({ value =>
           val pos = fieldPos(propertyMapping, PropertyMappingModel.MapKeyProperty)
-          aliasFor(value) match {
-            case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapKey", propertyId, YType.Str, pos))
-            case _                =>
-          }
-        }
+          emitters ++= Seq(MapEntryEmitter("mapKey", value, YType.Str, pos))
+        })
 
-        propertyMapping.mapValueProperty().option().foreach { value =>
-          val pos = fieldPos(propertyMapping, PropertyMappingModel.MapValueProperty)
-          aliasFor(value) match {
-            case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapValue", propertyId, YType.Str, pos))
-            case _                =>
+        propertyMapping.mapValueProperty().option().fold({
+          propertyMapping.mapTermValueProperty().option().foreach { term =>
+            val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermValueProperty)
+            aliasFor(term) match {
+              case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapTermValue", propertyId, YType.Str, pos))
+              case _                =>
+            }
           }
-        }
+        })({ value =>
+          val pos = fieldPos(propertyMapping, PropertyMappingModel.MapValueProperty)
+          emitters ++= Seq(MapEntryEmitter("mapValue", value, YType.Str, pos))
+        })
 
         propertyMapping.unique().option().foreach { value =>
           val pos = fieldPos(propertyMapping, PropertyMappingModel.Unique)
@@ -612,7 +623,7 @@ case class NodeMappingEmitter(dialect: Dialect,
 
 case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases: Map[String, (String, String)])
     extends EntryEmitter {
-  val modules = baseUnit.references.collect({ case m: DeclaresModel => m })
+  val modules: Seq[BaseUnit with DeclaresModel] = baseUnit.references.collect({ case m: DeclaresModel => m })
   override def emit(b: EntryBuilder): Unit = {
     if (modules.nonEmpty) {
       b.entry("uses", _.obj { b =>
@@ -689,7 +700,7 @@ trait DialectDocumentsEmitters {
     }
   }
 
-  def rootLevelEmitters(ordering: SpecOrdering) =
+  def rootLevelEmitters(ordering: SpecOrdering): Seq[EntryEmitter] =
     Seq(ReferencesEmitter(dialect, ordering, aliases)) ++
       nodeMappingDeclarationEmitters(dialect, ordering, aliases) ++
       externalEmitters(ordering)
@@ -760,7 +771,7 @@ trait DialectDocumentsEmitters {
 case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
   val ordering: SpecOrdering = Lexical
-  val aliases                = collectAliases()
+  val aliases: Map[String, (FullUrl, Alias)] = collectAliases()
 
   def emitDialect(): YDocument = {
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)
@@ -773,10 +784,10 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
     })
   }
 
-  def dialectEmitters(ordering: SpecOrdering) =
+  def dialectEmitters(ordering: SpecOrdering): Seq[EntryEmitter] =
     dialectPropertiesEmitter(ordering)
 
-  def dialectPropertiesEmitter(ordering: SpecOrdering) = {
+  def dialectPropertiesEmitter(ordering: SpecOrdering): Seq[EntryEmitter] = {
     var emitters: Seq[EntryEmitter] = Nil
 
     emitters ++= Seq(new EntryEmitter {
@@ -840,7 +851,7 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDoc
 
   val ordering: SpecOrdering    = Lexical
   override val dialect: Dialect = toDialect(library)
-  val aliases                   = collectAliases()
+  val aliases: Map[String, (FullUrl, Alias)] = collectAliases()
 
   def emitDialectLibrary(): YDocument = {
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)
@@ -856,10 +867,10 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDoc
   protected def toDialect(library: DialectLibrary): Dialect =
     Dialect(library.fields, library.annotations).withId(library.id)
 
-  def dialectEmitters(ordering: SpecOrdering) =
+  def dialectEmitters(ordering: SpecOrdering): Seq[EntryEmitter] =
     dialectPropertiesEmitter(ordering)
 
-  def dialectPropertiesEmitter(ordering: SpecOrdering) = {
+  def dialectPropertiesEmitter(ordering: SpecOrdering): Seq[EntryEmitter] = {
     var emitters: Seq[EntryEmitter] = Nil
 
     if (dialect.usage.nonEmpty) {

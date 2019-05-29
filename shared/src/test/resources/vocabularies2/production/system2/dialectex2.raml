@@ -60,7 +60,10 @@ nodeMappings:
         mapKey: security.name
         allowMultiple: true
         typeDiscriminator:
-          basic: BasicSecurityScheme
+          basic:
+            clas: BasicSecurityScheme
+            mapKey:
+            mapValue:
           apiKey: ApiKeySecurityScheme
           oauth2: Oauth2SecurityScheme
         typeDiscriminatorName: type

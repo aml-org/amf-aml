@@ -76,7 +76,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
   def iriToValue(iri: String) = ValueType(iri)
 
-  def loadAnnotationsFromParsedFields(propertyId: String) = {
+  def loadAnnotationsFromParsedFields(propertyId: String): Unit = {
     fields.fields().find(_.field.value.iri() == propertyId) match {
       case Some(loadedField) =>
         findPropertyMappingByTermPropertyId(propertyId) match {
@@ -100,7 +100,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     }
      */
 
-    (mapKeyProperties.keys ++ literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).flatMap {
+    (mapKeyProperties.keys ++ literalProperties.keys ++ linkProperties.keys ++ objectProperties.keys ++ objectCollectionProperties.keys).map {
       propertyId =>
         loadAnnotationsFromParsedFields(propertyId)
         instanceDefinedBy.get.propertiesMapping().find(_.id == propertyId) match {

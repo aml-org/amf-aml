@@ -25,14 +25,25 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
     SortedArray(Iri),
     Namespace.Shacl + "node",
     ModelDoc(ExternalModelVocabularies.Shacl, "range", "Object constraint over the type of the mapped property"))
+
   val MapKeyProperty = Field(
-    Iri,
+    Str,
     Namespace.Meta + "mapProperty",
-    ModelDoc(ModelVocabularies.Meta, "map property", "Marks the mapping as a 'map' mapping syntax"))
+    ModelDoc(ModelVocabularies.Meta, "map label property", "Marks the mapping as a 'map' mapping syntax. Directly related with mapTermKeyProperty"))
   val MapValueProperty = Field(
-    Iri,
+    Str,
     Namespace.Meta + "mapValueProperty",
-    ModelDoc(ModelVocabularies.Meta, "map value property", "Marks the mapping as a 'map value' mapping syntax"))
+    ModelDoc(ModelVocabularies.Meta, "map label value property", "Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty"))
+
+  val MapTermKeyProperty = Field(
+    Iri,
+    Namespace.Meta + "mapTermProperty",
+    ModelDoc(ModelVocabularies.Meta, "map term property uri", "Marks the mapping as a 'map' mapping syntax. "))
+  val MapTermValueProperty = Field(
+    Iri,
+    Namespace.Meta + "mapTermValueProperty",
+    ModelDoc(ModelVocabularies.Meta, "map term value property", "Marks the mapping as a 'map value' mapping syntax"))
+
   val Sorted = Field(Bool,
                      Namespace.Meta + "sorted",
                      ModelDoc(ModelVocabularies.Meta,
@@ -56,7 +67,7 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
     Namespace.Shacl + "maxInclusive",
     ModelDoc(ExternalModelVocabularies.Shacl,
              "max inclusive",
-             "Maximum inclusive constraint over the mappaed property")
+             "Maximum inclusive constraint over the mapped property")
   )
   val AllowMultiple = Field(
     Bool,
@@ -75,8 +86,9 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
   )
 
   override def fields: List[Field] =
-    NodePropertyMapping :: Name :: LiteralRange :: ObjectRange :: MapKeyProperty ::
-      MapValueProperty :: MinCount :: Pattern :: Minimum :: Maximum :: AllowMultiple :: Sorted :: Enum :: TypeDiscriminator ::
+    NodePropertyMapping :: Name :: LiteralRange :: ObjectRange ::
+      MapKeyProperty :: MapValueProperty :: MapTermKeyProperty :: MapTermValueProperty ::
+        MinCount :: Pattern :: Minimum :: Maximum :: AllowMultiple :: Sorted :: Enum :: TypeDiscriminator ::
       Unique :: TypeDiscriminatorName :: MergePolicy :: DomainElementModel.fields
 
   override def modelInstance: AmfObject = PropertyMapping()
