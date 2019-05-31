@@ -20,7 +20,7 @@ trait AliasMapper {
   def aliasFor(id: String, aliasMapping: Map[String, String]): String = {
     if (id.contains(Namespace.Xsd.base)) {
       id.split(Namespace.Xsd.base).last match {
-        case "anyUri"  => "uri"
+        case "anyURI"  => "uri"
         case "anyType" => "any"
         case v         => v
       }

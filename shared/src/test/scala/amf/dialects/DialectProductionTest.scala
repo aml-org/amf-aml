@@ -78,7 +78,7 @@ class DialectProductionTest extends DialectTests{
                 basePath + "ABOUT/github/")
   }
 
-  test("Can parse ABOUT-hosted dialectinstance") {
+  test("HERE_HERE Can parse ABOUT-hosted dialectinstance") {
     withDialect("ABOUT-hosted-vcs-dialect.yaml",
                 "ABOUT_hosted.yaml",
                 "ABOUT_hosted.jsonld",

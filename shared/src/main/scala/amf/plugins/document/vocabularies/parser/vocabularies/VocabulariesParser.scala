@@ -498,7 +498,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
           "range",
           entry => {
             val rangeId = entry.value.as[YScalar].text match {
-              case "uri" => Some((Namespace.Xsd + "anyUri").iri())
+              case "uri" => Some((Namespace.Xsd + "anyURI").iri())
               case "any" => Some((Namespace.Xsd + "anyType").iri())
               case "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" | "dateTime" =>
                 Some((Namespace.Xsd + entry.value.as[YScalar].text).iri())

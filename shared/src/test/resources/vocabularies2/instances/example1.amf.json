@@ -31,7 +31,7 @@
         "http://test.com/tmp#uriLiteral": [
           {
             "@value": "http://test.com/a-link4",
-            "@type": "http://www.w3.org/2001/XMLSchema#anyUri"
+            "@type": "http://www.w3.org/2001/XMLSchema#anyURI"
           }
         ],
         "http://test.com/tmp#str": [

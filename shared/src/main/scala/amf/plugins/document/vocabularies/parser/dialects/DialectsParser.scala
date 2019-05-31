@@ -647,11 +647,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             val range = value.string().toString
             range match {
               case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
-                  "time" | "date" | "anyUri" | "anyType" =>
+                  "time" | "date" | "anyType" =>
                 propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
+              case "anyUri"  => propertyMapping.withLiteralRange((Namespace.Xsd + "anyURI").iri())
               case "link"    => propertyMapping.withLiteralRange((Namespace.Shapes + "link").iri())
               case "number"  => propertyMapping.withLiteralRange((Namespace.Shapes + "number").iri())
-              case "uri"     => propertyMapping.withLiteralRange((Namespace.Xsd + "anyUri").iri())
+              case "uri"     => propertyMapping.withLiteralRange((Namespace.Xsd + "anyURI").iri())
               case "any"     => propertyMapping.withLiteralRange((Namespace.Xsd + "anyType").iri())
               case "anyNode" => propertyMapping.withObjectRange(Seq((Namespace.Meta + "anyNode").iri()))
               case nodeMappingId =>

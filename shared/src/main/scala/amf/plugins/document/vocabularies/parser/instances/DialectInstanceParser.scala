@@ -1044,7 +1044,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
           if property.literalRange().value() == (Namespace.Xsd + "string")
             .iri() || property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
         Some(value.as[YScalar].text)
-      case YType.Str if property.literalRange().value() == (Namespace.Xsd + "anyUri").iri() =>
+      case YType.Str if property.literalRange().value() == (Namespace.Xsd + "anyURI").iri() =>
         Some(value.as[YScalar].text)
       case YType.Str if property.literalRange().value() == (Namespace.Shapes + "link").iri() =>
         Some(("link", value.as[YScalar].text))
