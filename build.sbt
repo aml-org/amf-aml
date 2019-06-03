@@ -1,9 +1,7 @@
-import java.io.FileOutputStream
-import java.util.Properties
-
 import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
+
 val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns)
 
 name := "amf-aml"
@@ -15,7 +13,7 @@ version in ThisBuild := {
   lazy val build = sys.env.getOrElse("BUILD_NUMBER", "0")
   lazy val branch = sys.env.get("BRANCH_NAME")
 
-  if (branch.exists(_ == "master")) s"$major.$minor.$build" else s"$major.${minor + 1}.0-SNAPSHOT"
+  if (branch.contains("master")) s"$major.$minor.$build" else s"$major.${minor + 1}.0-SNAPSHOT"
 }
 
 publish := {}
@@ -48,7 +46,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "4.0.34"
+val amfCoreVersion = "4.0.35"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
