@@ -119,6 +119,7 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
       // has this been already dereferenced with some alias
       acc.get(nextPending.id) match {
         case Some(_) => // ignore already added, ignore
+          dereferencePendingDeclarations(pending.tail, acc, allDeclarations)
         case None    =>
           val effectiveNextPending = if (nextPending.isLink) {
             // if this is a link, we clone

@@ -336,56 +336,6 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/property/zz",
-            "@type": [
-              "http://a.ml/vocabularies/meta#NodePropertyMapping",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://www.w3.org/ns/shacl#path": [
-              {
-                "@id": "http://a.ml/vocabularies/data#zz"
-              }
-            ],
-            "http://schema.org/name": [
-              {
-                "@value": "zz"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#node": [
-              {
-                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/property/zz/list",
-                "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
-                "http://www.w3.org/2000/01/rdf-schema#_1": [
-                  {
-                    "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB"
-                  }
-                ]
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/property/zz/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/property/zz"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(9,0)-(10,0)]"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
             "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/property/aaa",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
@@ -428,6 +378,56 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(11,0)-(12,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/property/zz",
+            "@type": [
+              "http://a.ml/vocabularies/meta#NodePropertyMapping",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#zz"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "zz"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#node": [
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/property/zz/list",
+                "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+                "http://www.w3.org/2000/01/rdf-schema#_1": [
+                  {
+                    "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/property/zz/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/property/zz"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,0)-(10,0)]"
                       }
                     ]
                   }

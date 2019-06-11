@@ -154,19 +154,19 @@
         ],
         "http://www.w3.org/ns/shacl#property": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/a",
+            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/c",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
-                "@id": "http://test.com/v3#a"
+                "@id": "http://test.com/v3#c"
               }
             ],
             "http://schema.org/name": [
               {
-                "@value": "a"
+                "@value": "c"
               }
             ],
             "http://www.w3.org/ns/shacl#datatype": [
@@ -174,24 +174,14 @@
                 "@id": "http://www.w3.org/2001/XMLSchema#string"
               }
             ],
-            "http://www.w3.org/ns/shacl#minCount": [
-              {
-                "@value": 1
-              }
-            ],
-            "http://a.ml/vocabularies/meta#unique": [
-              {
-                "@value": true
-              }
-            ],
             "http://a.ml/vocabularies/meta#mergePolicy": [
               {
-                "@value": "insert"
+                "@value": "fail"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/a/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/c/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -199,12 +189,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/a"
+                        "@value": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/c"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(9,0)-(14,0)]"
+                        "@value": "[(21,0)-(24,0)]"
                       }
                     ]
                   }
@@ -272,19 +262,19 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/c",
+            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/a",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
-                "@id": "http://test.com/v3#c"
+                "@id": "http://test.com/v3#a"
               }
             ],
             "http://schema.org/name": [
               {
-                "@value": "c"
+                "@value": "a"
               }
             ],
             "http://www.w3.org/ns/shacl#datatype": [
@@ -292,14 +282,24 @@
                 "@id": "http://www.w3.org/2001/XMLSchema#string"
               }
             ],
+            "http://www.w3.org/ns/shacl#minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "http://a.ml/vocabularies/meta#unique": [
+              {
+                "@value": true
+              }
+            ],
             "http://a.ml/vocabularies/meta#mergePolicy": [
               {
-                "@value": "fail"
+                "@value": "insert"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/c/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/a/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
@@ -307,12 +307,12 @@
                   {
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/c"
+                        "@value": "file://shared/src/test/resources/vocabularies2/dialects/example17.raml#/declarations/Local/property/a"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(21,0)-(24,0)]"
+                        "@value": "[(9,0)-(14,0)]"
                       }
                     ]
                   }

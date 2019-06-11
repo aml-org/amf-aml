@@ -557,7 +557,7 @@ case class NodeMappingEmitter(dialect: Dialect,
                   pm: PropertyMapping =>
                     PropertyMappingEmitter(dialect, pm, ordering, aliases)
                 }
-                traverse(propertiesEmitters, b)
+                traverse(ordering.sorted(propertiesEmitters), b)
               }
             )
           case _ => // ignore

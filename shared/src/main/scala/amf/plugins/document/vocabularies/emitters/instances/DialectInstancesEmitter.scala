@@ -576,7 +576,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       }
 
       override def position(): Position = {
-        annotations.getOrElse(target.annotations).find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+
+        annotations.flatMap(_.find(classOf[LexicalInformation])).orElse(target.annotations.find(classOf[LexicalInformation])).map(_.range.start).getOrElse(ZERO)
       }
 
     })
@@ -630,7 +631,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       }
 
       override def position(): Position =
-        annotations.getOrElse(array.annotations).find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+        annotations.flatMap(_.find(classOf[LexicalInformation])).orElse(array.annotations.find(classOf[LexicalInformation])).map(_.range.start).getOrElse(ZERO)
     })
   }
 

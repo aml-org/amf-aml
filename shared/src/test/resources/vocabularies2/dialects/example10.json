@@ -257,7 +257,7 @@
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
-                "@id": "http://test.com/v2#a"
+                "@id": "http://test.com/v2#b"
               }
             ],
             "http://schema.org/name": [
@@ -444,50 +444,6 @@
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/b",
-            "@type": [
-              "http://a.ml/vocabularies/meta#NodePropertyMapping",
-              "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://www.w3.org/ns/shacl#path": [
-              {
-                "@id": "http://test.com/v2#t"
-              }
-            ],
-            "http://schema.org/name": [
-              {
-                "@value": "b"
-              }
-            ],
-            "http://www.w3.org/ns/shacl#datatype": [
-              {
-                "@id": "http://www.w3.org/2001/XMLSchema#string"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#sources": [
-              {
-                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/b/source-map",
-                "@type": [
-                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/b"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(33,0)-(35,0)]"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          },
-          {
             "@id": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/c",
             "@type": [
               "http://a.ml/vocabularies/meta#NodePropertyMapping",
@@ -524,6 +480,50 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(36,0)-(38,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/b",
+            "@type": [
+              "http://a.ml/vocabularies/meta#NodePropertyMapping",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://test.com/v2#t"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "b"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/b/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/b"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(33,0)-(35,0)]"
                       }
                     ]
                   }
