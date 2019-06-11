@@ -73,7 +73,7 @@ class DialectInstanceDeclarations(var dialectDomainElements: Map[String, Dialect
     }
   }
 
-  override def declarables: Seq[DialectDomainElement] = dialectDomainElements.values.toSet.toSeq
+  override def declarables(): Seq[DialectDomainElement] = dialectDomainElements.values.toSet.toSeq
 }
 
 class DialectInstanceContext(var dialect: Dialect,
@@ -109,7 +109,7 @@ class DialectInstanceContext(var dialect: Dialect,
     this
   }
 
-  def registerJsonPointerDeclaration(pointer: String, declared: DialectDomainElement) =
+  def registerJsonPointerDeclaration(pointer: String, declared: DialectDomainElement): Unit =
     globalSpace.update(pointer, declared)
 
   def findJsonPointer(pointer: String): Option[DialectDomainElement] = globalSpace.get(pointer) match {
@@ -120,7 +120,7 @@ class DialectInstanceContext(var dialect: Dialect,
   val declarations: DialectInstanceDeclarations =
     ds.getOrElse(new DialectInstanceDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
 
-  def withCurrentDialect[T](tmpDialect: Dialect)(k: => T) = {
+  def withCurrentDialect[T](tmpDialect: Dialect)(k: => T): T = {
     val oldDialect = dialect
     dialect = tmpDialect
     rootProps = computeRootProps
@@ -180,7 +180,10 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
   def +=(alias: String, unit: BaseUnit): Unit = {
     references += (alias -> unit)
     // useful for annotations
-    if (unit.isInstanceOf[Vocabulary]) ctx.declarations.registerUsedVocabulary(alias, unit.asInstanceOf[Vocabulary])
+    unit match {
+      case vocabulary: Vocabulary => ctx.declarations.registerUsedVocabulary(alias, vocabulary)
+      case _ =>
+    }
     // register declared units properly
     unit match {
       case m: DeclaresModel =>
@@ -335,8 +338,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
 
         dialectInstance.withEncodes(dialectDomainElement)
-        if (ctx.declarations.declarables.nonEmpty)
-          dialectInstance.withDeclares(ctx.declarations.declarables)
+        if (ctx.declarations.declarables().nonEmpty)
+          dialectInstance.withDeclares(ctx.declarations.declarables())
         if (references.baseUnitReferences().nonEmpty)
           dialectInstance.withReferences(references.baseUnitReferences())
         if (ctx.nestedDialects.nonEmpty)
@@ -400,8 +403,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     if (ctx.declarations.externals.nonEmpty)
       dialectInstance.withExternals(ctx.declarations.externals.values.toSeq)
 
-    if (ctx.declarations.declarables.nonEmpty)
-      dialectInstance.withDeclares(ctx.declarations.declarables)
+    if (ctx.declarations.declarables().nonEmpty)
+      dialectInstance.withDeclares(ctx.declarations.declarables())
 
     if (references.baseUnitReferences().nonEmpty)
       dialectInstance.withReferences(references.baseUnitReferences())
@@ -662,7 +665,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   }
 
   protected def findHashProperties(propertyMapping: PropertyMapping, propertyEntry: YMapEntry): Option[(String, Any)] = {
-    propertyMapping.mapKeyProperty().option() match {
+    propertyMapping.mapTermKeyProperty().option() match {
       case Some(propId) => Some((propId, propertyEntry.key.as[YScalar].text))
       case None         => None
     }
@@ -672,7 +675,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                                     propertyMapping: PropertyMapping,
                                     propertyEntry: YMapEntry): DialectDomainElement = {
     // TODO: check if the node already has a value and that it matches (maybe coming from a declaration)
-    propertyMapping.mapKeyProperty().option() match {
+    propertyMapping.mapTermKeyProperty().option() match {
       case Some(propId) =>
         try {
           node.setMapKeyField(propId, propertyEntry.key.as[YScalar].text, propertyEntry.key)
@@ -792,7 +795,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
               None
             } else if (mappings.size == 1) {
               val node: DialectDomainElement = DialectDomainElement(nodeMap).withDefinedBy(mappings.head)
-              val finalId                    = generateNodeId(node, nodeMap, path, defaultId, mappings.head, additionalProperties, false)
+              val finalId                    = generateNodeId(node, nodeMap, path, defaultId, mappings.head, additionalProperties, rootNode = false)
               node.withId(finalId)
               var instanceTypes: Seq[String] = Nil
               mappings.foreach { mapping =>
@@ -878,7 +881,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       val parsedNode = property.nodesInRange match {
         case range: Seq[String] if range.size > 1 =>
           // we also add the potential mapValue property
-          val keyValueAdditionalProperties = property.mapValueProperty().option() match {
+          val keyValueAdditionalProperties = property.mapTermValueProperty().option() match {
             case Some(mapValueProperty) => keyAdditionalProperties + (mapValueProperty -> "")
             case _                      => keyAdditionalProperties
           }
@@ -906,8 +909,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                                         propertyEntry: YMapEntry,
                                         property: PropertyMapping,
                                         node: DialectDomainElement): Unit = {
-    val propertyKeyMapping   = property.mapKeyProperty().option()
-    val propertyValueMapping = property.mapValueProperty().option()
+    val propertyKeyMapping   = property.mapTermKeyProperty().option()
+    val propertyValueMapping = property.mapTermValueProperty().option()
     if (propertyKeyMapping.isDefined && propertyValueMapping.isDefined) {
       val nested = ctx.dialect.declares.find(_.id == property.objectRange().head.value()) match {
         case Some(nodeMapping: NodeMapping) =>

@@ -94,7 +94,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(36,6)-(37,0)]"
+                            "@value": "[(42,6)-(43,0)]"
                           }
                         ]
                       }
@@ -118,7 +118,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(2,0)-(39,0)]"
+                        "@value": "[(2,0)-(45,0)]"
                       }
                     ]
                   }
@@ -156,7 +156,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(2,0)-(39,0)]"
+                "@value": "[(2,0)-(45,0)]"
               }
             ]
           },
@@ -221,7 +221,7 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/meta#mapProperty": [
+            "http://a.ml/vocabularies/meta#mapTermProperty": [
               {
                 "@id": "http://test.com/v2#t"
               }
@@ -257,7 +257,7 @@
             ],
             "http://www.w3.org/ns/shacl#path": [
               {
-                "@id": "http://test.com/v2#a"
+                "@id": "http://test.com/v2#b"
               }
             ],
             "http://schema.org/name": [
@@ -276,12 +276,12 @@
                 ]
               }
             ],
-            "http://a.ml/vocabularies/meta#mapProperty": [
+            "http://a.ml/vocabularies/meta#mapTermProperty": [
               {
                 "@id": "http://test.com/v2#t"
               }
             ],
-            "http://a.ml/vocabularies/meta#mapValueProperty": [
+            "http://a.ml/vocabularies/meta#mapTermValueProperty": [
               {
                 "@id": "http://test.com/v2#q"
               }
@@ -442,6 +442,94 @@
                 ]
               }
             ]
+          },
+          {
+            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/c",
+            "@type": [
+              "http://a.ml/vocabularies/meta#NodePropertyMapping",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://test.com/v2#q"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "c"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/c/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/c"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(36,0)-(38,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/b",
+            "@type": [
+              "http://a.ml/vocabularies/meta#NodePropertyMapping",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://www.w3.org/ns/shacl#path": [
+              {
+                "@id": "http://test.com/v2#t"
+              }
+            ],
+            "http://schema.org/name": [
+              {
+                "@value": "b"
+              }
+            ],
+            "http://www.w3.org/ns/shacl#datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/b/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://shared/src/test/resources/vocabularies2/dialects/example10.raml#/declarations/nodeA/property/b"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(33,0)-(35,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -459,7 +547,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(18,0)-(32,0)]"
+                    "@value": "[(18,0)-(38,0)]"
                   }
                 ]
               }

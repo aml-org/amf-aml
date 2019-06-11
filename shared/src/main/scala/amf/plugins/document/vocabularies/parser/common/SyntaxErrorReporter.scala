@@ -28,6 +28,29 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
     )
   }
 
+  def missingPropertyKeyViolation(node: String,field:String, label:String,annotations: Annotations): Unit = {
+    violation(
+      MissingPropertyRangeSpecification,
+      node,
+      Some(field),
+      s"Cannot find property $label in mapping range",
+      annotations.find(classOf[LexicalInformation]),
+      annotations.find(classOf[SourceLocation]).map(_.location)
+    )
+  }
+
+  def differentTermsInMapKey(node: String,field:String, label:String,annotations: Annotations): Unit = {
+    violation(
+      DifferentTermsInMapKey,
+      node,
+      Some(field),
+      s"Cannot find property $label in mapping range",
+      annotations.find(classOf[LexicalInformation]),
+      annotations.find(classOf[SourceLocation]).map(_.location)
+    )
+  }
+
+
   def inconsistentPropertyRangeValueViolation(node: String,
                                               property: PropertyMapping,
                                               expected: String,

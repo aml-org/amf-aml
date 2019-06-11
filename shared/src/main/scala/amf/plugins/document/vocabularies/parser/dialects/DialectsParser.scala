@@ -18,7 +18,7 @@ import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarati
 import amf.plugins.features.validation.ParserSideValidations.DialectError
 import org.yaml.model._
 
-import scala.collection.mutable
+import scala.collection.{immutable, mutable}
 
 class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
                           errorHandler: Option[ErrorHandler],
@@ -91,7 +91,7 @@ trait DialectSyntax { this: DialectContext =>
   )
 
   val nodeMapping: Map[String, Boolean] = Map(
-    "classTerm"  -> true,
+    "classTerm"  -> false,
     "mapping"    -> false,
     "idProperty" -> false,
     "idTemplate" -> false,
@@ -106,10 +106,12 @@ trait DialectSyntax { this: DialectContext =>
   ) ++ nodeMapping
 
   val propertyMapping: Map[String, Boolean] = Map(
-    "propertyTerm"          -> true,
+    "propertyTerm"          -> false,
     "range"                 -> false,
     "mapKey"                -> false,
     "mapValue"              -> false,
+    "mapTermKey"                -> false,
+    "mapTermValue"              -> false,
     "mandatory"             -> false,
     "pattern"               -> false,
     "sorted"                -> false,
@@ -372,12 +374,20 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     * label with a reference
     */
   protected def checkNodeMappableReferences[T <: DomainElement](mappable: NodeWithDiscriminator[T]) = {
-    val mapped = mappable.objectRange().map { nodeMappingRef =>
+    val mapped: Seq[Option[String]] = mappable.objectRange().map { nodeMappingRef =>
       if (nodeMappingRef.value() == (Namespace.Meta + "anyNode").iri()) {
         Some(nodeMappingRef.value())
       } else {
         ctx.declarations.findNodeMapping(nodeMappingRef.value(), All) match {
-          case Some(mapping) => Some(mapping.id)
+          case Some(mapping:NodeMapping) if mappable.isInstanceOf[PropertyMapping] =>
+
+            // I want to search or generate the uri (and check that the term is the same if is already set it) right know, so I can throw a violation if some is wrong before start parsing the instance.
+            // Also, If none instance will be parsed, but the dialect model is going to be serialized, I would be better has the terms already setting in the json ld. That way, the violation is collected now, and we don't need to do some particular, border case, logic in the json ld graph parser.
+
+            updateMapLabelReferences(mappable.asInstanceOf[PropertyMapping], mapping)
+            Some(mapping.id)
+          case Some(mapping) =>
+            Some(mapping.id)
           case _ =>
             ctx.missingPropertyRangeViolation(
               nodeMappingRef.value(),
@@ -415,6 +425,71 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         }
         mappable.withTypeDiscriminator(mapped)
       case _ => // ignore
+    }
+  }
+
+  def updateMapLabelReferences(propertyMapping: PropertyMapping, range:NodeMapping): Unit = {
+    // todo: if mapKey is not defined but mapTermKey is, should we validate that all ranges contains one property with that term and if not, throw a violation?
+
+    updateKeyMapReferences(propertyMapping, range)
+    updateValueMapReferences(propertyMapping, range)
+  }
+
+  private def updateValueMapReferences(propertyMapping:PropertyMapping, range:NodeMapping): Unit = {
+    propertyMapping.mapValueProperty().option().foreach { label =>
+      range.propertiesMapping().find(_.name().value() == label) match {
+        case Some(property) =>
+          val term = property.nodePropertyMapping().option().getOrElse((Namespace.Data + label).iri())
+          property.mapTermValueProperty().option() match {
+            case Some(actualTerm) if term!=actualTerm =>
+              property.fields.removeField(PropertyMappingModel.MapTermValueProperty)
+              propertyMapping.fields.removeField(PropertyMappingModel.MapValueProperty)
+              ctx.differentTermsInMapKey(
+                propertyMapping.id,
+                PropertyMappingModel.MapValueProperty.value.iri(),
+                label,
+                propertyMapping.mapValueProperty().annotations()
+              )
+            case _ => propertyMapping.withMapTermValueProperty(term)
+          }
+        case _ =>
+          propertyMapping.fields.removeField(PropertyMappingModel.MapValueProperty)
+          ctx.missingPropertyKeyViolation(
+            propertyMapping.id,
+            PropertyMappingModel.MapValueProperty.value.iri(),
+            label,
+            propertyMapping.mapValueProperty().annotations()
+          )
+      }
+    }
+  }
+
+  private def updateKeyMapReferences(propertyMapping: PropertyMapping, range:NodeMapping): Unit = {
+    propertyMapping.mapKeyProperty().option().foreach { label =>
+      range.propertiesMapping().find(_.name().value() == label) match {
+        case Some(property) =>
+          val term = property.nodePropertyMapping().option().getOrElse((Namespace.Data + label).iri())
+          property.mapTermKeyProperty().option() match {
+            case Some(actualTerm) if term!=actualTerm =>
+              propertyMapping.fields.removeField(PropertyMappingModel.MapTermKeyProperty)
+              propertyMapping.fields.removeField(PropertyMappingModel.MapKeyProperty)
+              ctx.differentTermsInMapKey(
+                propertyMapping.id,
+                PropertyMappingModel.MapKeyProperty.value.iri(),
+                label,
+                propertyMapping.mapKeyProperty().annotations()
+              )
+            case _ => propertyMapping.withMapTermKeyProperty(term)
+          }
+        case _ =>
+          propertyMapping.fields.removeField(PropertyMappingModel.MapKeyProperty)
+          ctx.missingPropertyKeyViolation(
+            propertyMapping.id,
+            PropertyMappingModel.MapKeyProperty.value.iri(),
+            label,
+            propertyMapping.mapKeyProperty().annotations()
+          )
+      }
     }
   }
 
@@ -532,7 +607,14 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                 .withName(entry.key)
                 .adopted(nodeMapping.id + "/property/" + entry.key.as[YScalar].text.urlComponentEncoded))
         }
-        nodeMapping.withPropertiesMapping(properties)
+        val (withTerm, withourTerm) = properties.partition(_.nodePropertyMapping().option().nonEmpty)
+        val filterProperties: immutable.Iterable[PropertyMapping] = withTerm.filter(_.nodePropertyMapping().option().nonEmpty).groupBy(p => p.nodePropertyMapping().value()).flatMap({
+          case (termKey, values) if values.length>1 =>
+            ctx.violation(DialectError,values.head.id, s"Property term value must be unique in a node mapping. Term $termKey repeated",values.head.annotations)
+            values.headOption
+          case other => other._2.headOption
+        })
+        nodeMapping.withPropertiesMapping(withourTerm ++ filterProperties.toSeq)
       }
     )
 
@@ -619,22 +701,22 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     adopt(propertyMapping)
     ctx.closedNode("propertyMapping", propertyMapping.id, map)
 
-    map.key(
-      "propertyTerm",
-      entry => {
-        val value          = ValueNode(entry.value)
+    map.key("propertyTerm") match {
+      case Some(e) =>
+        val value          = ValueNode(e.value)
         val propertyTermId = value.string().toString
         ctx.declarations.findPropertyTerm(propertyTermId, SearchScope.All) match {
           case Some(propertyTerm) =>
             propertyMapping.withNodePropertyMapping(propertyTerm.id)
           case _ =>
             ctx.violation(DialectError,
-                          propertyMapping.id,
-                          s"Cannot find property term with alias $propertyTermId",
-                          entry.value)
+              propertyMapping.id,
+              s"Cannot find property term with alias $propertyTermId",
+              e.value)
         }
-      }
-    )
+      case _ =>
+        propertyMapping.withNodePropertyMapping((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri())
+    }
 
     map.key(
       "range",
@@ -663,20 +745,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       }
     )
 
-    map.key(
-      "mapKey",
-      entry => {
-        val propertyTermId = ValueNode(entry.value).string().toString
-        ctx.declarations.findPropertyTerm(propertyTermId, All) match {
-          case Some(term) => propertyMapping.withMapKeyProperty(term.id)
-          case _ =>
-            ctx.violation(DialectError,
-                          propertyMapping.id,
-                          s"Cannot find property term with alias $propertyTermId",
-                          entry.value)
-        }
-      }
-    )
+    parseMapKey(map,propertyMapping)
+
+    parseMapValue(map, propertyMapping)
 
     map.key(
       "patch",
@@ -689,21 +760,6 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                         propertyMapping.id,
                         s"Unsupported property mapping patch operation '$patchMethod'",
                         entry.value)
-        }
-      }
-    )
-
-    map.key(
-      "mapValue",
-      entry => {
-        val propertyTermId = ValueNode(entry.value).string().toString
-        ctx.declarations.findPropertyTerm(propertyTermId, All) match {
-          case Some(term) => propertyMapping.withMapValueProperty(term.id)
-          case _ =>
-            ctx.violation(DialectError,
-                          propertyMapping.id,
-                          s"Cannot find property term with alias $propertyTermId",
-                          entry.value)
         }
       }
     )
@@ -808,6 +864,73 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     parseAnnotations(map, propertyMapping, ctx.declarations)
 
     propertyMapping
+  }
+
+  private def parseMapKey(map:YMap, propertyMapping: PropertyMapping) = {
+    val mapKey = map.key("mapKey")
+    val mapTermKey = map.key("mapTermKey")
+
+    for{
+      _ <- mapKey
+      mtk <- mapTermKey
+    } yield{
+      ctx.violation(DialectError,
+        propertyMapping.id,
+        s"mapKey and mapTermKey are mutually exclusive",
+        map)
+    }
+
+    mapTermKey.fold({
+      mapKey.foreach( entry => {
+        val propertyLabel = ValueNode(entry.value).string().toString
+        propertyMapping.withMapKeyProperty(propertyLabel)
+      })
+    })(entry => {
+      val propertyTermId = ValueNode(entry.value).string().toString
+      getTermIfValid(propertyTermId,propertyMapping.id, entry.value).foreach(propertyMapping.withMapTermKeyProperty)
+    })
+  }
+
+  private def parseMapValue(map:YMap, propertyMapping: PropertyMapping): Unit = {
+    val mapValu = map.key("mapValue")
+    val mapTermValue = map.key("mapTermValue")
+
+    for{
+      _ <- mapValu
+      mtk <- mapTermValue
+    } yield{
+      ctx.violation(DialectError,
+        propertyMapping.id,
+        s"mapValue and mapTermValue are mutually exclusive",
+        map)
+    }
+
+    mapTermValue.fold({
+      mapValu.foreach( entry => {
+        val propertyLabel = ValueNode(entry.value).string().toString
+        propertyMapping.withMapValueProperty(propertyLabel)
+      })
+    })(entry => {
+      val propertyTermId = ValueNode(entry.value).string().toString
+      getTermIfValid(propertyTermId, propertyMapping.id, entry.value).foreach(propertyMapping.withMapTermValueProperty)
+    })
+
+  }
+
+  private def getTermIfValid(iri: String, propertyMappingId:String, ast:YPart): Option[String] = {
+    Namespace(iri).base match {
+      case Namespace.Data.base => Some(iri)
+      case _ =>
+        ctx.declarations.findPropertyTerm(iri, All) match {
+          case Some(term) => Some(term.id)
+          case _ =>
+            ctx.violation(DialectError,
+              propertyMappingId,
+              s"Cannot find property term with alias $iri",
+              ast)
+            None
+        }
+    }
   }
 
   def validateTemplate(template: String, map: YMap, propMappings: Seq[PropertyMapping]): Unit = {
