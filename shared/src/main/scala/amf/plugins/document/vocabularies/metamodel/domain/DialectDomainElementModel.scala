@@ -2,7 +2,7 @@ package amf.plugins.document.vocabularies.metamodel.domain
 
 import amf.core.metamodel.Type.{Bool, Str}
 import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
-import amf.core.metamodel.{DynamicObj, Field}
+import amf.core.metamodel.Field
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
@@ -11,7 +11,6 @@ class DialectDomainElementModel(val typeIri: Seq[String] = Seq(),
                                 val typeFields: Seq[Field] = Nil,
                                 val nodeMapping: Option[NodeMapping] = None)
     extends DomainElementModel
-    with DynamicObj
     with LinkableElementModel {
 
 

@@ -60,20 +60,14 @@
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://test.com/tmp#date": [
+        "http://test.com/tmp#int": [
           {
-            "@value": "2017-09-18",
-            "@type": "http://www.w3.org/2001/XMLSchema#date"
+            "@value": 10
           }
         ],
         "http://test.com/tmp#str": [
           {
             "@value": "hey"
-          }
-        ],
-        "http://test.com/tmp#float": [
-          {
-            "@value": 12.35
           }
         ],
         "http://test.com/tmp#timestamp": [
@@ -82,9 +76,15 @@
             "@type": "http://www.w3.org/2001/XMLSchema#dateTime"
           }
         ],
-        "http://test.com/tmp#int": [
+        "http://test.com/tmp#float": [
           {
-            "@value": 10
+            "@value": 12.35
+          }
+        ],
+        "http://test.com/tmp#date": [
+          {
+            "@value": "2017-09-18",
+            "@type": "http://www.w3.org/2001/XMLSchema#date"
           }
         ],
         "http://test.com/tmp#boolean": [
@@ -106,8 +106,17 @@
           ],
           "http://a.ml/vocabularies/data#value": [
             {
-              "@value": "hey",
-              "@type": "http://www.w3.org/2001/XMLSchema#string"
+              "@value": "hey"
+            }
+          ],
+          "http://www.w3.org/ns/shacl#datatype": [
+            {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://schema.org/name": [
+            {
+              "@value": "scalar_1"
             }
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -147,8 +156,17 @@
           ],
           "http://a.ml/vocabularies/data#value": [
             {
-              "@value": "1",
-              "@type": "http://www.w3.org/2001/XMLSchema#integer"
+              "@value": "1"
+            }
+          ],
+          "http://www.w3.org/ns/shacl#datatype": [
+            {
+              "@id": "http://www.w3.org/2001/XMLSchema#integer"
+            }
+          ],
+          "http://schema.org/name": [
+            {
+              "@value": "scalar_1"
             }
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -188,8 +206,17 @@
           ],
           "http://a.ml/vocabularies/data#value": [
             {
-              "@value": "true",
-              "@type": "http://www.w3.org/2001/XMLSchema#boolean"
+              "@value": "true"
+            }
+          ],
+          "http://www.w3.org/ns/shacl#datatype": [
+            {
+              "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+            }
+          ],
+          "http://schema.org/name": [
+            {
+              "@value": "scalar_1"
             }
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -229,8 +256,17 @@
           ],
           "http://a.ml/vocabularies/data#value": [
             {
-              "@value": "2.3[",
-              "@type": "http://www.w3.org/2001/XMLSchema#string"
+              "@value": "2.3["
+            }
+          ],
+          "http://www.w3.org/ns/shacl#datatype": [
+            {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://schema.org/name": [
+            {
+              "@value": "scalar_1"
             }
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -270,8 +306,17 @@
           ],
           "http://a.ml/vocabularies/data#value": [
             {
-              "@value": "ho",
-              "@type": "http://www.w3.org/2001/XMLSchema#string"
+              "@value": "ho"
+            }
+          ],
+          "http://www.w3.org/ns/shacl#datatype": [
+            {
+              "@id": "http://www.w3.org/2001/XMLSchema#string"
+            }
+          ],
+          "http://schema.org/name": [
+            {
+              "@value": "scalar_1"
             }
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -311,8 +356,17 @@
           ],
           "http://a.ml/vocabularies/data#value": [
             {
-              "@value": "2",
-              "@type": "http://www.w3.org/2001/XMLSchema#integer"
+              "@value": "2"
+            }
+          ],
+          "http://www.w3.org/ns/shacl#datatype": [
+            {
+              "@id": "http://www.w3.org/2001/XMLSchema#integer"
+            }
+          ],
+          "http://schema.org/name": [
+            {
+              "@value": "scalar_1"
             }
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -380,12 +434,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/tmp#timestamp"
+                    "@value": "http://test.com/tmp#float"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(17,11)-(17,31)]"
+                    "@value": "[(11,7)-(11,12)]"
                   }
                 ]
               },
@@ -416,36 +470,36 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/tmp#date"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(15,6)-(15,16)]"
-                  }
-                ]
-              },
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://test.com/tmp#float"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(11,7)-(11,12)]"
-                  }
-                ]
-              },
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
                     "@value": "http://test.com/tmp#int"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(9,5)-(9,7)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#timestamp"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(17,11)-(17,31)]"
+                  }
+                ]
+              },
+              {
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#date"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(15,6)-(15,16)]"
                   }
                 ]
               }

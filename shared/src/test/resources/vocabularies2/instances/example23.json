@@ -22,11 +22,6 @@
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://test.com#a": [
-          {
-            "@value": "hey ho"
-          }
-        ],
         "http://test.com#lets": [
           {
             "@id": "file://shared/src/test/resources/vocabularies2/instances/example23.raml#/lets",
@@ -77,6 +72,11 @@
             ]
           }
         ],
+        "http://test.com#a": [
+          {
+            "@value": "hey ho"
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://shared/src/test/resources/vocabularies2/instances/example23.raml#/source-map",
@@ -87,12 +87,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com#lets"
+                    "@value": "http://test.com#a"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,0)-(5,0)]"
+                    "@value": "[(2,3)-(2,9)]"
                   }
                 ]
               },
@@ -111,12 +111,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com#a"
+                    "@value": "http://test.com#lets"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,3)-(2,9)]"
+                    "@value": "[(3,5)-(5,0)]"
                   }
                 ]
               }

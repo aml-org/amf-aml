@@ -129,8 +129,7 @@ case class DynamicExtensionParser(node: YNode, parent: Option[String] = None, id
       val propertyAnnotations = Annotations(ast)
 
       val propertyNode = DynamicExtensionParser(value, Some(node.id), idCounter).parse().forceAdopted(node.id)
-      node.addProperty(key.urlComponentEncoded, propertyNode, propertyAnnotations)
-      node.lexicalPropertiesAnnotation.map(a => node.annotations += a)
+      node.addProperty(key, propertyNode, propertyAnnotations)
     }
     node
   }

@@ -22,19 +22,9 @@
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://test.com/v3#a": [
-          {
-            "@value": "hey"
-          }
-        ],
         "http://test.com/v3#c": [
           {
             "@value": "let's go"
-          }
-        ],
-        "http://test.com/v3#b": [
-          {
-            "@value": "ho"
           }
         ],
         "http://test.com/v3#rel": [
@@ -87,6 +77,16 @@
             ]
           }
         ],
+        "http://test.com/v3#b": [
+          {
+            "@value": "ho"
+          }
+        ],
+        "http://test.com/v3#a": [
+          {
+            "@value": "hey"
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/hey_ho/source-map",
@@ -97,24 +97,24 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/v3#rel"
+                    "@value": "http://test.com/v3#a"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,0)-(6,6)]"
+                    "@value": "[(2,3)-(2,6)]"
                   }
                 ]
               },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/v3#c"
+                    "@value": "http://test.com/v3#rel"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,3)-(4,11)]"
+                    "@value": "[(5,4)-(6,6)]"
                   }
                 ]
               },
@@ -133,12 +133,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/v3#a"
+                    "@value": "http://test.com/v3#c"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,3)-(2,6)]"
+                    "@value": "[(4,3)-(4,11)]"
                   }
                 ]
               },

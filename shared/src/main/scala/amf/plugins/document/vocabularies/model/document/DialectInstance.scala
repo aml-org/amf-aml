@@ -9,6 +9,8 @@ import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
 import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceFragmentModel, DialectInstanceLibraryModel, DialectInstanceModel, DialectInstancePatchModel}
+import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
+import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceFragmentModel, DialectInstanceLibraryModel, DialectInstanceModel, DialectInstancePatchModel}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, External}
 
 import scala.collection.mutable
@@ -45,7 +47,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
     AMLPlugin.registry.dialectFor(this) match {
       case Some(dialect) =>
         if (dialect.documents().selfEncoded().value()) { // avoid top level cycle
-          val predicate = { (element: DomainElement) =>
+          val predicate = { element: DomainElement =>
             element.id == id
           }
           findModelByCondition(predicate, encodes, first = true, ListBuffer.empty, mutable.Set.empty).headOption.orElse(
@@ -82,82 +84,6 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
     this
   }
 
-  override protected def transformByCondition(
-      element: AmfObject,
-      predicate: AmfObject => Boolean,
-      transformation: (AmfObject, Boolean) => Option[AmfObject],
-      traversed: mutable.Set[String] = mutable.Set(),
-      cycles: Set[String] = Set.empty,
-      cycleRecoverer: (AmfObject, AmfObject) => Option[AmfObject]): AmfObject = {
-    if (!traversed.contains(element.id)) {
-      // not visited yet
-      if (predicate(element)) { // matches predicate, we transform
-        transformation(element, false).orNull
-      } else {
-        // not matches the predicate, we traverse
-        if (this.id != element.id) traversed += element.id
-        element match {
-          case dataNode: DialectDomainElement =>
-            dataNode.objectProperties.foreach {
-              case (prop, value) =>
-                Option(
-                  transformByCondition(value,
-                                       predicate,
-                                       transformation,
-                                       traversed,
-                                       cycles + element.id,
-                                       cycleRecoverer = cycleRecoverer)) match {
-                  case Some(transformed: DialectDomainElement) =>
-                    dataNode.objectProperties.put(prop, transformed)
-                    dataNode
-                  case _ =>
-                    dataNode.objectProperties.remove(prop)
-                    dataNode
-                }
-            }
-            dataNode.objectCollectionProperties.foreach {
-              case (prop, values: Seq[DialectDomainElement]) =>
-                val newValues = values.map { value =>
-                  Option(
-                    transformByCondition(value,
-                                         predicate,
-                                         transformation,
-                                         traversed,
-                                         cycles + element.id,
-                                         cycleRecoverer = cycleRecoverer)) match {
-                    case Some(transformed: DialectDomainElement) => Some(transformed)
-                    case _                                       => None
-                  }
-                } collect { case Some(x) => x }
-                if (newValues.isEmpty) {
-                  dataNode.objectCollectionProperties.remove(prop)
-                } else {
-                  dataNode.objectCollectionProperties.put(prop, newValues)
-                }
-                dataNode
-              case _ => dataNode
-            }
-
-          case other =>
-            super.transformByCondition(other, predicate, transformation, traversed, cycles, cycleRecoverer = cycleRecoverer)
-        }
-        element
-      }
-
-    } else
-      element match {
-        // target of the link has been traversed, we still visit the link in case a transformer wants to
-        // transform links/references, but we will not traverse to avoid loops
-        case linkable: Linkable if linkable.isLink =>
-          if (predicate(element)) {
-            transformation(element, true).orNull // passing the cycle boolean flat!
-          } else {
-            element
-          }
-        // traversed and not visited
-        case _ => element
-      }
-  }
 }
 
 object DialectInstance {

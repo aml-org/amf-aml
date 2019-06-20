@@ -22,11 +22,6 @@
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://test.com/v3#a": [
-          {
-            "@value": "hey ho"
-          }
-        ],
         "http://test.com/v3#rb": [
           {
             "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/rb",
@@ -35,16 +30,6 @@
               "file://shared/src/test/resources/vocabularies2/instances/dialect24.raml#/declarations/myDeclarations",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/document#link-target": [
-              {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/declarations/path/declarations/myDeclarations"
-              }
-            ],
-            "http://a.ml/vocabularies/document#link-label": [
-              {
-                "@value": "#/declarations/path/declarations/myDeclarations"
-              }
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
@@ -94,36 +79,27 @@
             ]
           }
         ],
+        "http://test.com/v3#a": [
+          {
+            "@value": "hey ho"
+          }
+        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/hey%20ho/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#json-pointer-ref": [
-              {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://test.com/v3#rb"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "true"
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/v3#rb"
+                    "@value": "http://test.com/v3#a"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(9,0)-(10,0)]"
+                    "@value": "[(7,3)-(7,9)]"
                   }
                 ]
               },
@@ -142,12 +118,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/v3#a"
+                    "@value": "http://test.com/v3#rb"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,3)-(7,9)]"
+                    "@value": "[(8,3)-(10,0)]"
                   }
                 ]
               }
@@ -197,11 +173,6 @@
             "@value": "lets go"
           }
         ],
-        "http://a.ml/vocabularies/meta#declarationName": [
-          {
-            "@value": "myDeclarations"
-          }
-        ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
             "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/declarations/path/declarations/myDeclarations/source-map",
@@ -212,12 +183,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/meta#declarationName"
+                    "@value": "http://test.com/v3#b"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(5,6)-(5,20)]"
+                    "@value": "[(6,11)-(6,18)]"
                   }
                 ]
               },
@@ -236,12 +207,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/v3#b"
+                    "@value": "http://a.ml/vocabularies/meta#declarationName"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,11)-(6,18)]"
+                    "@value": "[(5,6)-(5,20)]"
                   }
                 ]
               }

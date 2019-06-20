@@ -41,16 +41,6 @@
                 "@value": "Ho"
               }
             ],
-            "http://a.ml/vocabularies/document#link-target": [
-              {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/Bs/Ho"
-              }
-            ],
-            "http://a.ml/vocabularies/document#link-label": [
-              {
-                "@value": "Ho"
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/y/source-map",
@@ -83,16 +73,6 @@
               "file://shared/src/test/resources/vocabularies2/instances/dialect10.raml#/declarations/A",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
-            ],
-            "http://a.ml/vocabularies/document#link-target": [
-              {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example10b.raml#/As/Hey"
-              }
-            ],
-            "http://a.ml/vocabularies/document#link-label": [
-              {
-                "@value": "Hey"
-              }
             ],
             "http://a.ml/vocabularies/document#link-target": [
               {
@@ -212,19 +192,14 @@
             "@value": "Hey"
           }
         ],
-        "http://test.com/tmp#c": [
-          {
-            "@value": "ho"
-          }
-        ],
         "http://test.com/tmp#a": [
           {
             "@value": "hey"
           }
         ],
-        "http://a.ml/vocabularies/meta#declarationName": [
+        "http://test.com/tmp#c": [
           {
-            "@value": "Hey"
+            "@value": "ho"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -237,24 +212,24 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/meta#declarationName"
+                    "@value": "http://test.com/tmp#c"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(3,2)-(3,5)]"
+                    "@value": "[(5,7)-(5,9)]"
                   }
                 ]
               },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/tmp#a"
+                    "@value": "http://a.ml/vocabularies/meta#declarationName"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,7)-(4,10)]"
+                    "@value": "[(3,2)-(3,5)]"
                   }
                 ]
               },
@@ -273,12 +248,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/tmp#c"
+                    "@value": "http://test.com/tmp#a"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(5,7)-(5,9)]"
+                    "@value": "[(4,7)-(4,10)]"
                   }
                 ]
               }
@@ -299,19 +274,14 @@
             "@value": "Ho"
           }
         ],
-        "http://test.com/tmp#b": [
-          {
-            "@value": "lets"
-          }
-        ],
         "http://test.com/tmp#c": [
           {
             "@value": "go"
           }
         ],
-        "http://a.ml/vocabularies/meta#declarationName": [
+        "http://test.com/tmp#b": [
           {
-            "@value": "Ho"
+            "@value": "lets"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -324,24 +294,24 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/meta#declarationName"
+                    "@value": "http://test.com/tmp#b"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,2)-(7,4)]"
+                    "@value": "[(8,7)-(8,11)]"
                   }
                 ]
               },
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/tmp#c"
+                    "@value": "http://a.ml/vocabularies/meta#declarationName"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(9,7)-(9,9)]"
+                    "@value": "[(7,2)-(7,4)]"
                   }
                 ]
               },
@@ -360,12 +330,12 @@
               {
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.com/tmp#b"
+                    "@value": "http://test.com/tmp#c"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,7)-(8,11)]"
+                    "@value": "[(9,7)-(9,9)]"
                   }
                 ]
               }

@@ -46,16 +46,6 @@
                 "@value": "example16b.raml"
               }
             ],
-            "http://a.ml/vocabularies/document#link-target": [
-              {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example16b.raml#/"
-              }
-            ],
-            "http://a.ml/vocabularies/document#link-label": [
-              {
-                "@value": "example16b.raml"
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
                 "@id": "file://shared/src/test/resources/vocabularies2/instances/example16a.raml#/source-map",
@@ -203,7 +193,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(3,0)-(3,20)]"
+                        "@value": "[(2,2)-(3,20)]"
                       }
                     ]
                   },
