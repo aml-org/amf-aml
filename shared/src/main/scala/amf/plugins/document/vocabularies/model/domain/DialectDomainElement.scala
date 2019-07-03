@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, FieldEntry, Fields, Value}
 import amf.core.vocabulary.ValueType
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import org.mulesoft.common.time.SimpleDateTime
-import org.yaml.model.{YMap, YNode}
+import org.yaml.model.{YMap, YMapEntry, YNode}
 
 import scala.collection.mutable
 
@@ -181,38 +181,38 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     }
   }
 
-  def setProperty(property: PropertyMapping, value: String, node: YNode): DialectDomainElement = {
-    set(property.toField, AmfScalar(value), Annotations(node))
+  def setProperty(property: PropertyMapping, value: String, entry: YMapEntry): DialectDomainElement = {
+    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
     this
   }
 
-  def setProperty(property: PropertyMapping, value: Int, node: YNode): DialectDomainElement = {
-    set(property.toField, AmfScalar(value), Annotations(node))
+  def setProperty(property: PropertyMapping, value: Int, entry: YMapEntry): DialectDomainElement = {
+    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
     this
   }
 
-  def setProperty(property: PropertyMapping, value: SimpleDateTime, node: YNode): DialectDomainElement = {
-    set(property.toField, AmfScalar(value), Annotations(node))
+  def setProperty(property: PropertyMapping, value: SimpleDateTime, entry: YMapEntry): DialectDomainElement = {
+    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
     this
   }
 
-  def setProperty(property: PropertyMapping, value: Boolean, node: YNode): DialectDomainElement = {
-    set(property.toField, AmfScalar(value), Annotations(node))
+  def setProperty(property: PropertyMapping, value: Boolean, entry: YMapEntry): DialectDomainElement = {
+    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
     this
   }
 
-  def setProperty(property: PropertyMapping, value: Float, node: YNode): DialectDomainElement = {
-    set(property.toField, AmfScalar(value), Annotations(node))
+  def setProperty(property: PropertyMapping, value: Float, entry: YMapEntry): DialectDomainElement = {
+    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
     this
   }
 
-  def setProperty(property: PropertyMapping, value: Double, node: YNode): DialectDomainElement = {
-    set(property.toField, AmfScalar(value), Annotations(node))
+  def setProperty(property: PropertyMapping, value: Double, entry: YMapEntry): DialectDomainElement = {
+    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
     this
   }
 
-  def setProperty(property: PropertyMapping, value: Seq[Any], node: YNode): DialectDomainElement = {
-    set(property.toField, AmfArray(value.map(AmfScalar(_))), Annotations(node))
+  def setProperty(property: PropertyMapping, value: Seq[Any], entry: YMapEntry): DialectDomainElement = {
+    set(property.toField, AmfArray(value.map(AmfScalar(_)), Annotations(entry.value)), Annotations(entry))
     this
   }
 
