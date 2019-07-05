@@ -1,15 +1,13 @@
 package amf.plugins.document.vocabularies.model.domain
 
+import amf.client.model.DataTypes
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model._
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel._
-import amf.plugins.document.vocabularies.metamodel.domain.{
-  DialectDomainElementModel,
-  PropertyMappingModel
-}
+import amf.plugins.document.vocabularies.metamodel.domain.{DialectDomainElementModel, PropertyMappingModel}
 import org.yaml.model.YMap
 
 class PropertyClassification
@@ -123,20 +121,20 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     } else {
       val fieldType = literalRange().value() match {
         case literal if literal == (Namespace.Shapes + "link").iri() => Type.Iri
-        case literal if literal == (Namespace.Xsd + "anyURI").iri() =>
+        case literal if literal == DataTypes.AnyUri =>
           Type.LiteralUri
         case literal if literal.endsWith("anyType")                  => Type.Any
         case literal if literal.endsWith("number")                   => Type.Float
-        case literal if literal == (Namespace.Xsd + "integer").iri() => Type.Int
-        case literal if literal == (Namespace.Xsd + "float").iri()   => Type.Float
-        case literal if literal == (Namespace.Xsd + "double").iri() =>
+        case literal if literal == DataTypes.Integer => Type.Int
+        case literal if literal == DataTypes.Float   => Type.Float
+        case literal if literal == DataTypes.Double =>
           Type.Double
-        case literal if literal == (Namespace.Xsd + "boolean").iri() =>
+        case literal if literal == DataTypes.Boolean =>
           Type.Bool
-        case literal if literal == (Namespace.Xsd + "decimal").iri() => Type.Int
-        case literal if literal == (Namespace.Xsd + "time").iri()    => Type.Time
-        case literal if literal == (Namespace.Xsd + "date").iri()    => Type.Date
-        case literal if literal == (Namespace.Xsd + "dateTime").iri() =>
+        case literal if literal == DataTypes.Decimal   => Type.Int
+        case literal if literal == DataTypes.Time    => Type.Time
+        case literal if literal == DataTypes.Date => Type.Date
+        case literal if literal == DataTypes.DateTime =>
           Type.Date
         case _ => Type.Str
       }

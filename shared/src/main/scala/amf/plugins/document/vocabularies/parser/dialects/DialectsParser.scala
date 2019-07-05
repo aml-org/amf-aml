@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
+import amf.client.model.DataTypes
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.metamodel.document.FragmentModel
@@ -731,11 +732,11 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
                   "time" | "date" | "anyType" =>
                 propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
-              case "anyUri"  => propertyMapping.withLiteralRange((Namespace.Xsd + "anyURI").iri())
+              case "anyUri"  => propertyMapping.withLiteralRange(DataTypes.AnyUri)
               case "link"    => propertyMapping.withLiteralRange((Namespace.Shapes + "link").iri())
-              case "number"  => propertyMapping.withLiteralRange((Namespace.Shapes + "number").iri())
-              case "uri"     => propertyMapping.withLiteralRange((Namespace.Xsd + "anyURI").iri())
-              case "any"     => propertyMapping.withLiteralRange((Namespace.Xsd + "anyType").iri())
+              case "number"  => propertyMapping.withLiteralRange(DataTypes.Number)
+              case "uri"     => propertyMapping.withLiteralRange(DataTypes.AnyUri)
+              case "any"     => propertyMapping.withLiteralRange(DataTypes.Any)
               case "anyNode" => propertyMapping.withObjectRange(Seq((Namespace.Meta + "anyNode").iri()))
               case nodeMappingId =>
                 propertyMapping

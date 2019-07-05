@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.parser
 
+import amf.client.model.DataTypes
 import amf.core.model.domain.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, ParserContext}
 import amf.core.utils.{IdCounter, _}
@@ -99,11 +100,7 @@ case class DynamicExtensionParser(node: YNode, parent: Option[String] = None, id
   }
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
-    val finalDataType = if (dataType == "dateTimeOnly") {
-      Some((Namespace.Shapes + "dateTimeOnly").iri())
-    } else {
-      Some((Namespace.Xsd + dataType).iri())
-    }
+    val finalDataType = Some(DataTypes(dataType))
     val node = ScalarNode(ast.text, finalDataType, Annotations(ast))
       .withName(idCounter.genId("scalar"))
     parent.foreach(p => node.adopted(p))

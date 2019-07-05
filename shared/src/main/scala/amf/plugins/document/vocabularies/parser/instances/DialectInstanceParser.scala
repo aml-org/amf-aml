@@ -1,12 +1,24 @@
 package amf.plugins.document.vocabularies.parser.instances
 
+import amf.client.model.DataTypes
 import amf.core.Root
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfScalar, Annotation, DomainElement}
-import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
+import amf.core.parser.{
+  Annotations,
+  BaseSpecParser,
+  EmptyFutureDeclarations,
+  ErrorHandler,
+  FutureDeclarations,
+  ParsedReference,
+  ParserContext,
+  Reference,
+  SearchScope,
+  _
+}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -17,7 +29,11 @@ import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
-import amf.plugins.features.validation.ParserSideValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
+import amf.plugins.features.validation.ParserSideValidations.{
+  DialectAmbiguousRangeSpecification,
+  DialectError,
+  InvalidUnionType
+}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
 
@@ -92,11 +108,11 @@ class DialectInstanceContext(var dialect: Dialect,
   def computeRootProps: Set[String] = {
     val declarationProps: Set[String] = dialect.documents().declarationsPath().option() match {
       case Some(declarationsPath) => Set(declarationsPath.split("/").head)
-      case _                      =>
+      case _ =>
         (
           Option(dialect.documents().root()).map(_.declaredNodes().map(_.name().value())).getOrElse(Seq()) ++
             Option(dialect.documents().library()).map(_.declaredNodes().map(_.name().value())).getOrElse(Seq())
-          ).toSet
+        ).toSet
     }
     declarationProps ++ Seq("uses", "external").toSet
   }
@@ -184,7 +200,7 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
     // useful for annotations
     unit match {
       case vocabulary: Vocabulary => ctx.declarations.registerUsedVocabulary(alias, vocabulary)
-      case _ =>
+      case _                      =>
     }
     // register declared units properly
     unit match {
@@ -241,8 +257,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
       "uses",
       entry => {
         val annotation: Annotation =
-          AliasesLocation(
-            Annotations(entry.key).find(classOf[LexicalInformation]).map(_.range.start.line).getOrElse(0))
+          AliasesLocation(Annotations(entry.key).find(classOf[LexicalInformation]).map(_.range.start.line).getOrElse(0))
         dialectInstance.annotations += annotation
         entry.value
           .as[YMap]
@@ -426,10 +441,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             if (tail.nonEmpty) findDeclarationsMap(tail, m.value.as[YMap])
             else m.value.toOption[YMap]
           case Some(o) =>
-            ctx.violation(DialectError,
-                          "",
-                          s"Invalid node type for declarations path ${o.value.tagType.toString()}",
-                          o)
+            ctx.violation(DialectError, "", s"Invalid node type for declarations path ${o.value.tagType.toString()}", o)
             None
           case _ => None
         }
@@ -459,7 +471,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                 case Some(node) =>
                   // lookup by ref name
 
-                  node.set(DialectDomainElementModel.DeclarationName, AmfScalar(declarationName, Annotations(declarationEntry.key)),Annotations(declarationEntry.key))
+                  node.set(DialectDomainElementModel.DeclarationName,
+                           AmfScalar(declarationName, Annotations(declarationEntry.key)),
+                           Annotations(declarationEntry.key))
                   ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
                   // lookup by JSON pointer, absolute URI
                   ctx.registerJsonPointerDeclaration(id, node)
@@ -519,14 +533,22 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
   }
 
-  def checkClosedNode(id: String, nodetype: String, entries: Map[YNode, YNode], mapping: NodeMapping, ast: YPart, rootNode: Boolean): Unit = {
+  def checkClosedNode(id: String,
+                      nodetype: String,
+                      entries: Map[YNode, YNode],
+                      mapping: NodeMapping,
+                      ast: YPart,
+                      rootNode: Boolean): Unit = {
     val rootProps: Set[String] = if (rootNode) {
       ctx.rootProps
     } else {
       Set[String]()
     }
     val props = mapping.propertiesMapping().map(_.name().value()).toSet.union(rootProps)
-    val inNode = entries.keys.map(_.value.asInstanceOf[YScalar].text).filter(p => !p.startsWith("$") && !p.startsWith("(") && !p.startsWith("x-")).toSet
+    val inNode = entries.keys
+      .map(_.value.asInstanceOf[YScalar].text)
+      .filter(p => !p.startsWith("$") && !p.startsWith("(") && !p.startsWith("x-"))
+      .toSet
     val outside = inNode.diff(props)
     if (outside.nonEmpty) {
       outside.foreach { prop =>
@@ -550,8 +572,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             resolveJSONPointer(nodeMap, mappable, defaultId).map { ref =>
               ref.annotations += JsonPointerRef()
               mappable match {
-                case m:NodeMapping => ref.withDefinedBy(m)
-                case _ => // ignore
+                case m: NodeMapping => ref.withDefinedBy(m)
+                case _              => // ignore
               }
               ref
             }
@@ -665,7 +687,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
   }
 
-  protected def findHashProperties(propertyMapping: PropertyMapping, propertyEntry: YMapEntry): Option[(String, Any)] = {
+  protected def findHashProperties(propertyMapping: PropertyMapping,
+                                   propertyEntry: YMapEntry): Option[(String, Any)] = {
     propertyMapping.mapTermKeyProperty().option() match {
       case Some(propId) => Some((propId, propertyEntry.key.as[YScalar].text))
       case None         => None
@@ -679,7 +702,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     propertyMapping.mapTermKeyProperty().option() match {
       case Some(propId) =>
         try {
-          node.set(Field(Str,ValueType(propId)), AmfScalar(propertyEntry.key.as[YScalar].text), Annotations(propertyEntry.key))
+          node.set(Field(Str, ValueType(propId)),
+                   AmfScalar(propertyEntry.key.as[YScalar].text),
+                   Annotations(propertyEntry.key))
         } catch {
           case e: UnknownMapKeyProperty =>
             ctx.violation(DialectError, e.id, s"Cannot find mapping for key map property ${e.id}")
@@ -796,7 +821,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
               None
             } else if (mappings.size == 1) {
               val node: DialectDomainElement = DialectDomainElement(nodeMap).withDefinedBy(mappings.head)
-              val finalId                    = generateNodeId(node, nodeMap, path, defaultId, mappings.head, additionalProperties, rootNode = false)
+              val finalId =
+                generateNodeId(node, nodeMap, path, defaultId, mappings.head, additionalProperties, rootNode = false)
               node.withId(finalId)
               var instanceTypes: Seq[String] = Nil
               mappings.foreach { mapping =>
@@ -901,9 +927,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         case None                       => None
       }
     }
-    node.setObjectField(property,
-                        nested.collect { case Some(node: DialectDomainElement) => node },
-                        propertyEntry.value)
+    node.setObjectField(property, nested.collect { case Some(node: DialectDomainElement) => node }, propertyEntry.value)
   }
 
   protected def parseObjectPairProperty(id: String,
@@ -925,8 +949,12 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
               .withDefinedBy(nodeMapping)
               .withInstanceTypes(Seq(nodeMapping.nodetypeMapping.value(), nodeMapping.id))
             try {
-              nestedNode.set(Field(Str, ValueType(propertyKeyMapping.get)),AmfScalar( pair.key.as[YScalar].text), Annotations(pair.key))
-              nestedNode.set(Field(Str, ValueType(propertyValueMapping.get)),AmfScalar( pair.value.as[YScalar].text), Annotations(pair.value))
+              nestedNode.set(Field(Str, ValueType(propertyKeyMapping.get)),
+                             AmfScalar(pair.key.as[YScalar].text),
+                             Annotations(pair.key))
+              nestedNode.set(Field(Str, ValueType(propertyValueMapping.get)),
+                             AmfScalar(pair.value.as[YScalar].text),
+                             Annotations(pair.value))
             } catch {
               case e: UnknownMapKeyProperty =>
                 ctx.violation(DialectError, e.id, s"Cannot find mapping for key map property ${e.id}", pair)
@@ -1010,7 +1038,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
   protected def pathSegment(parent: String, nexts: List[String]): String = {
     var path = parent
     nexts.foreach { n =>
-      path = if (path.endsWith("/")){
+      path = if (path.endsWith("/")) {
         path + n.urlComponentEncoded
       } else {
         path + "/" + n.urlComponentEncoded
@@ -1023,77 +1051,77 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
 
     value.tagType match {
       case YType.Bool
-          if (property.literalRange().value() == (Namespace.Xsd + "boolean")
-            .iri()) || property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
+          if (property.literalRange().value() == DataTypes.Boolean) || property
+            .literalRange()
+            .value() == DataTypes.Any =>
         Some(value.as[Boolean])
       case YType.Bool =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
                                                     property.literalRange().value(),
-                                                    (Namespace.Xsd + "boolean").iri(),
+                                                    DataTypes.Boolean,
                                                     value)
         None
       case YType.Int
-          if property.literalRange().value() == (Namespace.Xsd + "integer")
-            .iri() || property.literalRange().value() == (Namespace.Shapes + "number")
-            .iri() || property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
+          if property.literalRange().value() == DataTypes.Integer || property
+            .literalRange()
+            .value() == DataTypes.Number || property.literalRange().value() == DataTypes.Any =>
         Some(value.as[Int])
       case YType.Int =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
                                                     property.literalRange().value(),
-                                                    (Namespace.Xsd + "integer").iri(),
+                                                    DataTypes.Integer,
                                                     value)
         None
       case YType.Str
-          if property.literalRange().value() == (Namespace.Xsd + "string")
-            .iri() || property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
+          if property.literalRange().value() == DataTypes.String || property.literalRange().value() == DataTypes.Any =>
         Some(value.as[YScalar].text)
-      case YType.Str if property.literalRange().value() == (Namespace.Xsd + "anyURI").iri() =>
+      case YType.Str if property.literalRange().value() == DataTypes.AnyUri =>
         Some(value.as[YScalar].text)
       case YType.Str if property.literalRange().value() == (Namespace.Shapes + "link").iri() =>
         Some(("link", value.as[YScalar].text))
       case YType.Str
-          if property.literalRange().value() == (Namespace.Xsd + "time").iri() ||
-            property.literalRange().value() == (Namespace.Xsd + "date").iri() ||
-            property.literalRange().value() == (Namespace.Xsd + "dateTime").iri() =>
+          if property.literalRange().value() == DataTypes.Time ||
+            property.literalRange().value() == DataTypes.Date ||
+            property.literalRange().value() == DataTypes.DateTime =>
         Some(YNode(value.value, YType.Timestamp).as[SimpleDateTime])
       case YType.Str =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
                                                     property.literalRange().value(),
-                                                    (Namespace.Xsd + "string").iri(),
+          DataTypes.String,
                                                     value)
         None
       case YType.Float
-          if property.literalRange().value() == (Namespace.Xsd + "float").iri() ||
-            property.literalRange().value() == (Namespace.Shapes + "number").iri() ||
-            property.literalRange().value() == (Namespace.Xsd + "double").iri() ||
-            property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
+          if property.literalRange().value() == DataTypes.Float ||
+            property.literalRange().value() == DataTypes.Number ||
+            property.literalRange().value() == DataTypes.Double ||
+            property.literalRange().value() == DataTypes.Any =>
         Some(value.as[Double])
       case YType.Float =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
                                                     property.literalRange().value(),
-                                                    (Namespace.Xsd + "float").iri(),
+          DataTypes.Float,
                                                     value)
         None
 
       case YType.Timestamp
-          if property.literalRange().value() == (Namespace.Xsd + "time").iri() ||
-            property.literalRange().value() == (Namespace.Xsd + "date").iri() ||
-            property.literalRange().value() == (Namespace.Xsd + "dateTime").iri() ||
-            property.literalRange().value() == (Namespace.Xsd + "anyType").iri() =>
+          if property.literalRange().value() == DataTypes.Time ||
+            property.literalRange().value() == DataTypes.Date ||
+            property.literalRange().value() == DataTypes.DateTime ||
+            property.literalRange().value() == DataTypes.Any =>
         Some(value.as[SimpleDateTime])
 
-      case YType.Timestamp if property.literalRange().value() == (Namespace.Xsd + "string").iri() =>
+      case YType.Timestamp if property.literalRange().value() == DataTypes.String =>
         Some(value.as[YScalar].text)
 
       case YType.Timestamp =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
                                                     property.literalRange().value(),
-                                                    (Namespace.Xsd + "dateTime").iri(),
+                                                    DataTypes.DateTime,
                                                     value)
         Some(value.as[String])
       case _ =>
@@ -1135,10 +1163,10 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             parseLiteralValue(elemValue, property, node)
           }
 
-          values.headOption match {
-            case Some(("link", _: String)) => values.collect { case (_, link) => link }.asInstanceOf[Seq[String]]
-            case _ => values
-          }
+        values.headOption match {
+          case Some(("link", _: String)) => values.collect { case (_, link) => link }.asInstanceOf[Seq[String]]
+          case _                         => values
+        }
 
       case _ =>
         parseLiteralValue(propertyEntry.value, property, node) match {

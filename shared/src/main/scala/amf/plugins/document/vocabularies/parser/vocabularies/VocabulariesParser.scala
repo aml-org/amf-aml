@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.parser.vocabularies
 
+import amf.client.model.DataTypes
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel}
@@ -498,10 +499,10 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
           "range",
           entry => {
             val rangeId = entry.value.as[YScalar].text match {
-              case "uri" => Some((Namespace.Xsd + "anyURI").iri())
-              case "any" => Some((Namespace.Xsd + "anyType").iri())
+              case "uri" => Some(DataTypes.AnyUri)
+              case "any" => Some(DataTypes.Any)
               case "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" | "dateTime" =>
-                Some((Namespace.Xsd + entry.value.as[YScalar].text).iri())
+                Some(DataTypes(entry.value.as[YScalar].text))
               case classAlias =>
                 ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
                   case Some(classTermId) => Some(classTermId)
