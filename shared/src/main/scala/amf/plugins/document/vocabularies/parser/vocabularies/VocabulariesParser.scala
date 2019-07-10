@@ -3,6 +3,7 @@ package amf.plugins.document.vocabularies.parser.vocabularies
 import amf.client.model.DataTypes
 import amf.core.Root
 import amf.core.annotations.Aliases
+import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{BaseSpecParser, ParserContext, _}
@@ -498,11 +499,10 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
         propertyTermMap.key(
           "range",
           entry => {
-            val rangeId = entry.value.as[YScalar].text match {
-              case "uri" => Some(DataTypes.AnyUri)
-              case "any" => Some(DataTypes.Any)
-              case "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" | "dateTime" =>
-                Some(DataTypes(entry.value.as[YScalar].text))
+            val text = entry.value.as[YScalar].text
+            val rangeId = text match {
+              case "any" | "uri" | "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" | "dateTime" =>
+                Some(DataType(text))
               case classAlias =>
                 ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
                   case Some(classTermId) => Some(classTermId)

@@ -1,10 +1,9 @@
 package amf.plugins.document.vocabularies.parser
 
-import amf.client.model.DataTypes
+import amf.core.model.DataType
 import amf.core.model.domain.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
 import amf.core.parser.{Annotations, ParserContext}
 import amf.core.utils.{IdCounter, _}
-import amf.core.vocabulary.Namespace
 import amf.plugins.features.validation.ParserSideValidations.DialectError
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
@@ -100,7 +99,7 @@ case class DynamicExtensionParser(node: YNode, parent: Option[String] = None, id
   }
 
   protected def parseScalar(ast: YScalar, dataType: String): DataNode = {
-    val finalDataType = Some(DataTypes(dataType))
+    val finalDataType = Some(DataType(dataType))
     val node = ScalarNode(ast.text, finalDataType, Annotations(ast))
       .withName(idCounter.genId("scalar"))
     parent.foreach(p => node.adopted(p))
