@@ -569,20 +569,19 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                 node.withId(finalId)
                 node.withInstanceTypes(Seq(mapping.nodetypeMapping.value(), mapping.id))
                 parseAnnotations(nodeMap, node, ctx.declarations)
-                val entries = nodeMap.map
                 mapping.propertiesMapping().foreach { propertyMapping =>
                   val propertyName = propertyMapping.name().value()
-                  entries.get(propertyName) match {
+                  nodeMap.key(propertyName) match {
                     case Some(entry) =>
                       val nestedId =
                         if (ctx.dialect.documents().selfEncoded().option().getOrElse(false) && rootNode)
                           defaultId + "#/"
                         else defaultId
-                      parseProperty(nestedId, YMapEntry(propertyName, entry), propertyMapping, node)
+                      parseProperty(nestedId, entry, propertyMapping, node)
                     case None => // ignore
                   }
                 }
-                checkClosedNode(finalId, mapping.id, entries, mapping, nodeMap, rootNode)
+                checkClosedNode(finalId, mapping.id, nodeMap.map, mapping, nodeMap, rootNode)
                 Some(node)
 
               case unionMapping: UnionNodeMapping =>
@@ -1096,23 +1095,22 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                                                     property.literalRange().value(),
                                                     (Namespace.Xsd + "dateTime").iri(),
                                                     value)
-        None
-
+        Some(value.as[String])
       case _ =>
         ctx.violation(DialectError, node.id, s"Unsupported scalar type ${value.tagType}", value)
-        None
+        Some(value.as[String])
     }
   }
 
-  protected def setLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement) = {
-    parseLiteralValue(value, property, node) match {
-      case Some(b: Boolean)          => node.setProperty(property, b, value)
-      case Some(i: Int)              => node.setProperty(property, i, value)
-      case Some(f: Float)            => node.setProperty(property, f, value)
-      case Some(d: Double)           => node.setProperty(property, d, value)
-      case Some(s: String)           => node.setProperty(property, s, value)
-      case Some(("link", l: String)) => node.setProperty(property, l, value)
-      case Some(d: SimpleDateTime)   => node.setProperty(property, d, value)
+  protected def setLiteralValue(entry: YMapEntry, property: PropertyMapping, node: DialectDomainElement) = {
+    parseLiteralValue(entry.value, property, node) match {
+      case Some(b: Boolean)          => node.setProperty(property, b, entry)
+      case Some(i: Int)              => node.setProperty(property, i, entry)
+      case Some(f: Float)            => node.setProperty(property, f, entry)
+      case Some(d: Double)           => node.setProperty(property, d, entry)
+      case Some(s: String)           => node.setProperty(property, s, entry)
+      case Some(("link", l: String)) => node.setProperty(property, l, entry)
+      case Some(d: SimpleDateTime)   => node.setProperty(property, d, entry)
       case _                         => // ignore
     }
   }
@@ -1121,7 +1119,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                                      propertyEntry: YMapEntry,
                                      property: PropertyMapping,
                                      node: DialectDomainElement): Unit = {
-    setLiteralValue(propertyEntry.value, property, node)
+    setLiteralValue(propertyEntry, property, node)
   }
 
   protected def parseLiteralCollectionProperty(id: String,
@@ -1150,7 +1148,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         }
 
     }
-    node.setProperty(property, finalValues, propertyEntry.value)
+    node.setProperty(property, finalValues, propertyEntry)
 
   }
 

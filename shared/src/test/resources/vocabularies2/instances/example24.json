@@ -42,7 +42,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,3)-(4,9)]"
+                    "@value": "[(4,0)-(4,9)]"
                   }
                 ]
               },
@@ -110,7 +110,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(6,11)-(6,18)]"
+                        "@value": "[(6,8)-(6,18)]"
                       }
                     ]
                   },
