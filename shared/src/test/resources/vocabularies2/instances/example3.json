@@ -48,7 +48,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,4)-(6,0)]"
+                    "@value": "[(2,0)-(6,0)]"
                   }
                 ]
               },

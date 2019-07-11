@@ -80,7 +80,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(4,8)-(4,10)]"
+                        "@value": "[(4,4)-(5,0)]"
                       }
                     ]
                   }
@@ -145,7 +145,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(6,8)-(6,10)]"
+                        "@value": "[(6,4)-(6,10)]"
                       }
                     ]
                   }

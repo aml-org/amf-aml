@@ -71,7 +71,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(8,10)-(8,20)]"
+                            "@value": "[(8,6)-(9,0)]"
                           }
                         ]
                       },
@@ -121,7 +121,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(11,10)-(11,16)]"
+                            "@value": "[(11,6)-(11,16)]"
                           }
                         ]
                       },
@@ -169,7 +169,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(9,15)-(9,34)]"
+                        "@value": "[(9,4)-(10,0)]"
                       }
                     ]
                   },
@@ -241,7 +241,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(3,7)-(3,8)]"
+                    "@value": "[(3,0)-(4,0)]"
                   }
                 ]
               }
