@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.client.model.DataTypes
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.metamodel.document.FragmentModel
+import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
@@ -732,11 +732,11 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
                   "time" | "date" | "anyType" =>
                 propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
-              case "anyUri"  => propertyMapping.withLiteralRange(DataTypes.AnyUri)
+              case "anyUri"  => propertyMapping.withLiteralRange(DataType.AnyUri)
               case "link"    => propertyMapping.withLiteralRange((Namespace.Shapes + "link").iri())
-              case "number"  => propertyMapping.withLiteralRange(DataTypes.Number)
-              case "uri"     => propertyMapping.withLiteralRange(DataTypes.AnyUri)
-              case "any"     => propertyMapping.withLiteralRange(DataTypes.Any)
+              case "number"  => propertyMapping.withLiteralRange(DataType.Number)
+              case "uri"     => propertyMapping.withLiteralRange(DataType.AnyUri)
+              case "any"     => propertyMapping.withLiteralRange(DataType.Any)
               case "anyNode" => propertyMapping.withObjectRange(Seq((Namespace.Meta + "anyNode").iri()))
               case nodeMappingId =>
                 propertyMapping

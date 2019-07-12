@@ -1,24 +1,13 @@
 package amf.plugins.document.vocabularies.parser.instances
 
-import amf.client.model.DataTypes
 import amf.core.Root
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
+import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfScalar, Annotation, DomainElement}
-import amf.core.parser.{
-  Annotations,
-  BaseSpecParser,
-  EmptyFutureDeclarations,
-  ErrorHandler,
-  FutureDeclarations,
-  ParsedReference,
-  ParserContext,
-  Reference,
-  SearchScope,
-  _
-}
+import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, ErrorHandler, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -29,11 +18,7 @@ import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
-import amf.plugins.features.validation.ParserSideValidations.{
-  DialectAmbiguousRangeSpecification,
-  DialectError,
-  InvalidUnionType
-}
+import amf.plugins.features.validation.ParserSideValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
 
@@ -1051,77 +1036,77 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
 
     value.tagType match {
       case YType.Bool
-          if (property.literalRange().value() == DataTypes.Boolean) || property
+          if (property.literalRange().value() == DataType.Boolean) || property
             .literalRange()
-            .value() == DataTypes.Any =>
+            .value() == DataType.Any =>
         Some(value.as[Boolean])
       case YType.Bool =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
                                                     property.literalRange().value(),
-                                                    DataTypes.Boolean,
+                                                    DataType.Boolean,
                                                     value)
         None
       case YType.Int
-          if property.literalRange().value() == DataTypes.Integer || property
+          if property.literalRange().value() == DataType.Integer || property
             .literalRange()
-            .value() == DataTypes.Number || property.literalRange().value() == DataTypes.Any =>
+            .value() == DataType.Number || property.literalRange().value() == DataType.Any =>
         Some(value.as[Int])
       case YType.Int =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
                                                     property.literalRange().value(),
-                                                    DataTypes.Integer,
+                                                    DataType.Integer,
                                                     value)
         None
       case YType.Str
-          if property.literalRange().value() == DataTypes.String || property.literalRange().value() == DataTypes.Any =>
+          if property.literalRange().value() == DataType.String || property.literalRange().value() == DataType.Any =>
         Some(value.as[YScalar].text)
-      case YType.Str if property.literalRange().value() == DataTypes.AnyUri =>
+      case YType.Str if property.literalRange().value() == DataType.AnyUri =>
         Some(value.as[YScalar].text)
       case YType.Str if property.literalRange().value() == (Namespace.Shapes + "link").iri() =>
         Some(("link", value.as[YScalar].text))
       case YType.Str
-          if property.literalRange().value() == DataTypes.Time ||
-            property.literalRange().value() == DataTypes.Date ||
-            property.literalRange().value() == DataTypes.DateTime =>
+          if property.literalRange().value() == DataType.Time ||
+            property.literalRange().value() == DataType.Date ||
+            property.literalRange().value() == DataType.DateTime =>
         Some(YNode(value.value, YType.Timestamp).as[SimpleDateTime])
       case YType.Str =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
                                                     property.literalRange().value(),
-          DataTypes.String,
+          DataType.String,
                                                     value)
         None
       case YType.Float
-          if property.literalRange().value() == DataTypes.Float ||
-            property.literalRange().value() == DataTypes.Number ||
-            property.literalRange().value() == DataTypes.Double ||
-            property.literalRange().value() == DataTypes.Any =>
+          if property.literalRange().value() == DataType.Float ||
+            property.literalRange().value() == DataType.Number ||
+            property.literalRange().value() == DataType.Double ||
+            property.literalRange().value() == DataType.Any =>
         Some(value.as[Double])
       case YType.Float =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
                                                     property.literalRange().value(),
-          DataTypes.Float,
+          DataType.Float,
                                                     value)
         None
 
       case YType.Timestamp
-          if property.literalRange().value() == DataTypes.Time ||
-            property.literalRange().value() == DataTypes.Date ||
-            property.literalRange().value() == DataTypes.DateTime ||
-            property.literalRange().value() == DataTypes.Any =>
+          if property.literalRange().value() == DataType.Time ||
+            property.literalRange().value() == DataType.Date ||
+            property.literalRange().value() == DataType.DateTime ||
+            property.literalRange().value() == DataType.Any =>
         Some(value.as[SimpleDateTime])
 
-      case YType.Timestamp if property.literalRange().value() == DataTypes.String =>
+      case YType.Timestamp if property.literalRange().value() == DataType.String =>
         Some(value.as[YScalar].text)
 
       case YType.Timestamp =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
                                                     property.literalRange().value(),
-                                                    DataTypes.DateTime,
+                                                    DataType.DateTime,
                                                     value)
         Some(value.as[String])
       case _ =>

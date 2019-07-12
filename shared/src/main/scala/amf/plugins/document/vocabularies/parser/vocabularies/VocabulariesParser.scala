@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.parser.vocabularies
 
-import amf.client.model.DataTypes
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.model.DataType
