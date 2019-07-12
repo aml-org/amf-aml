@@ -14,7 +14,7 @@ import amf.core.vocabulary.ValueType
 import amf.internal.environment.Environment
 import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceTrait}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
 
@@ -41,7 +41,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   def knowsDialectInstance(instance: DialectInstance): Boolean = dialectFor(instance).isDefined
 
-  def dialectFor(instance: DialectInstance): Option[Dialect] =
+  def dialectFor(instance: DialectInstanceTrait): Option[Dialect] =
     instance.definedBy().option().flatMap(id => map.values.find(_.id == id))
 
   def allDialects(): Seq[Dialect] = map.values.toSeq
