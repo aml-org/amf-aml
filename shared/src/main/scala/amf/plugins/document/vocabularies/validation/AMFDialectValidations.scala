@@ -118,7 +118,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
       )
     }
 
-    if (!prop.allowMultiple().value() && prop.mapKeyProperty().isNullOrEmpty) {
+    if (!prop.allowMultiple().value() && prop.mapTermKeyProperty().isNullOrEmpty) {
       val message = s"Property '${prop.name()}' cannot have more than 1 value"
       validations += new ValidationSpecification(
         name = validationId(node, prop.name().value(), "notCollection"),
