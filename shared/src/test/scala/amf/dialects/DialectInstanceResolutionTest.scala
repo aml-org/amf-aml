@@ -43,6 +43,19 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
     }
   }
 
+  protected def parseInstance(dialect: String,
+                            source: String,
+                            hint: Hint,
+                            directory: String = basePath): Future[BaseUnit] = {
+    for {
+      _         <- init()
+      dialect   <- new AMFCompiler(s"file://$directory/$dialect", platform, None, None,Some(Aml.name), cache = Cache()).build()
+      _         <- Future { AMLPlugin.resolve(dialect, UnhandledErrorHandler) }
+      b         <- new AMFCompiler(s"file://$directory/$source", platform, None, None,Some(hint.vendor.name), cache = Cache()).build()
+    } yield {
+      b
+    }
+  }
 
   def vendorToSyntax(vendor: Vendor) = {
 

@@ -29,7 +29,7 @@ trait DialectInstanceTrait extends BaseUnit {
 }
 
 case class DialectInstance(fields: Fields, annotations: Annotations)
-    extends BaseUnit
+    extends DialectInstanceTrait
     with ExternalContext[DialectInstance]
     with DeclaresModel
     with EncodesModel
