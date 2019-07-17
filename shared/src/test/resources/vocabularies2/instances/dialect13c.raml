@@ -1,0 +1,48 @@
+#%Dialect 1.0
+dialect: TestInstance
+version: 1.13c
+
+nodeMappings:
+
+  AssetNode:
+    classTerm: digital-repo.Asset
+    mapping:
+      name:
+        propertyTerm: schema-org.name
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: schema-org.description
+        range: string
+        mandatory: false
+
+  WebAPIAsset:
+    classTerm: digital-repo.WebAPIAsset
+    extends: AssetNode
+
+  MuleAsset:
+    classTerm: digital-repo.MuleAsset
+    extends: AssetNode
+
+  ConnectorAsset:
+    classTerm: digital-repo.ConnectorAsset
+    extends: AssetNode
+
+  AssetUnion:
+    union:
+      - WebAPIAsset
+      - MuleAsset
+      - ConnectorAsset
+    typeDiscriminator:
+      webapi: WebAPIAsset
+      mule: MuleAsset
+      connector: ConnectorAsset
+    typeDiscriminatorName: type
+
+documents:
+  root:
+    encodes: AssetUnion
+
+external:
+  digital-repo: http://anypoint.com/vocabs/digital-repository#
+  schema-org: http://anypoint.com/vocabs/schema-org#

@@ -199,8 +199,16 @@ case class DialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) 
     YDocument(b => {
       b.comment(s"%${dialect.name().value()} ${dialect.version().value()}")
       val (_, rootNodeMapping) = findNodeMappingById(dialect.documents().root().encoded().value())
+
+      val discriminator = rootNodeMapping match {
+        case mapping: UnionNodeMapping => Some(DiscriminatorHelper(mapping, this))
+        case _                         => None
+      }
+
+      val element = instance.encodes.asInstanceOf[DialectDomainElement]
+
       DialectNodeEmitter(
-        instance.encodes.asInstanceOf[DialectDomainElement],
+        element,
         rootNodeMapping,
         instance,
         dialect,
@@ -208,7 +216,8 @@ case class DialectInstancesEmitter(instance: DialectInstance, dialect: Dialect) 
         aliases,
         None,
         rootNode = true,
-        topLevelEmitters = externalEmitters(instance, ordering)
+        topLevelEmitters = externalEmitters(instance, ordering),
+        discriminator = discriminator.flatMap(_.compute(element))
       ).emit(b)
     })
   }
@@ -492,10 +501,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                 annotations: Option[Annotations] = None): Seq[EntryEmitter] = {
     // lets first extract the target values to emit, always as an array
     val elements: Seq[DialectDomainElement] = target match {
-      case amfArray: AmfArray if amfArray.values.forall(_.isInstanceOf[DialectDomainElement]) =>
-        amfArray.values.asInstanceOf[Seq[DialectDomainElement]]
-      case dialectDomainElement: DialectDomainElement =>
-        Seq(dialectDomainElement)
+      case array: AmfArray => array.values.asInstanceOf[Seq[DialectDomainElement]]
+      case element: DialectDomainElement => Seq(element)
     }
 
     val isArray                            = target.isInstanceOf[AmfArray]

@@ -111,8 +111,16 @@ trait DialectInstancesParsingTest extends DialectTests {
     withInlineDialect("example12.raml", "example12.json", VocabularyYamlHint, Amf)
   }
 
-  test("parse 13 test") {
-    withDialect("dialect13.raml", "example13.raml", "example13.json", VocabularyYamlHint, Amf)
+  test("parse 13a (test union inline)") {
+    withDialect("dialect13a.raml", "example13a.raml", "example13a.json", VocabularyYamlHint, Amf)
+  }
+
+  test("parse 13b (test union)") {
+    withDialect("dialect13b.raml", "example13b.raml", "example13b.json", VocabularyYamlHint, Amf)
+  }
+
+  test("parse 13c (test union with extends)") {
+    withDialect("dialect13c.raml", "example13c.raml", "example13c.json", VocabularyYamlHint, Amf)
   }
 
   test("parse 14 test") {
@@ -286,8 +294,16 @@ trait DialectInstancesParsingTest extends DialectTests {
     withDialect("dialect11.raml", "example11.json", "example11.raml", AmfJsonHint, Aml)
   }
 
-  test("generate 13 test") {
-    withDialect("dialect13.raml", "example13.json", "example13.raml", AmfJsonHint, Aml)
+  ignore("generate 13a test") {
+    withDialect("dialect13a.raml", "example13a.json", "example13a.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 13b test") {
+    withDialect("dialect13b.raml", "example13b.json", "example13b.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 13c test") {
+    withDialect("dialect13c.raml", "example13c.json", "example13c.raml", AmfJsonHint, Aml)
   }
 
   test("generate 14 test") {

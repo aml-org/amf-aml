@@ -32,7 +32,7 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
                             hint: Hint,
                             target: Vendor,
                             directory: String = basePath,
-                            useAmfJsonldSerialization: Boolean = true) = {
+                            useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
     for {
       _         <- init()
       dialect   <- new AMFCompiler(s"file://$directory/$dialect", platform, None, None,Some(Aml.name), cache = Cache()).build()
@@ -57,7 +57,7 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
     }
   }
 
-  def vendorToSyntax(vendor: Vendor) = {
+  def vendorToSyntax(vendor: Vendor): String = {
 
     vendor match {
       case Amf                          => "application/ld+json"

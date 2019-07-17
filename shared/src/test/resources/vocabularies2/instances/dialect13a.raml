@@ -1,0 +1,28 @@
+#%Dialect 1.0
+dialect: TestInstance
+version: 1.13a
+nodeMappings:
+  File:
+    classTerm: v2.File
+    mapping:
+      name:
+        propertyTerm: v2.name
+        range: string
+  Folder:
+    classTerm: v2.Folder
+    mapping:
+      name:
+        propertyTerm: v2.name
+        range: string
+      ls:
+        propertyTerm: v2.ls
+        allowMultiple: true
+        typeDiscriminatorName: type
+        typeDiscriminator:
+          file: File
+          folder: Folder
+documents:
+  root:
+    encodes: Folder
+external:
+  v2: http://test.com/vocab#
