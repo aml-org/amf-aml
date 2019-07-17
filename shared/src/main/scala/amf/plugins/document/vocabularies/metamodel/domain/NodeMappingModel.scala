@@ -15,7 +15,7 @@ object NodeMappingModel extends DomainElementModel with LinkableElementModel wit
   val ResolvedExtends   = Field(Array(Iri), Namespace.Meta + "resolvedExtends")
 
 
-  override def fields: List[Field] = NodeTypeMapping :: Name :: PropertiesMapping :: IdTemplate :: MergePolicy :: ResolvedExtends :: LinkableElementModel.fields ++ DomainElementModel.fields
+  override val fields: List[Field] = NodeTypeMapping :: Name :: PropertiesMapping :: IdTemplate :: MergePolicy :: ResolvedExtends :: LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance: AmfObject = NodeMapping()
 

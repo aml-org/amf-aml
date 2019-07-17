@@ -25,7 +25,7 @@ object VocabularyModel extends ModuleModel with ExternalContextModel {
   override val `type`: List[ValueType] =
     Namespace.Meta + "Vocabulary" :: Namespace.Owl + "Ontology" :: BaseUnitModel.`type`
 
-  override def fields: List[Field] =
+  override val fields: List[Field] =
     Name :: Imports :: Externals :: Declares :: Base :: BaseUnitModel.Location :: BaseUnitModel.fields
 
   override val doc: ModelDoc = ModelDoc(

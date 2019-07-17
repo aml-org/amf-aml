@@ -17,7 +17,7 @@ object DialectInstanceModel extends DocumentModel with ExternalContextModel {
   override val `type`: List[ValueType] =
     Namespace.Meta + "DialectInstance" :: DocumentModel.`type`
 
-  override def fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: DocumentModel.fields
+  override val fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: DocumentModel.fields
 }
 
 object DialectInstanceLibraryModel extends DocumentModel with ExternalContextModel {
@@ -30,7 +30,7 @@ object DialectInstanceLibraryModel extends DocumentModel with ExternalContextMod
   override val `type`: List[ValueType] =
     Namespace.Meta + "DialectInstanceLibrary" :: ModuleModel.`type`
 
-  override def fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: ModuleModel.fields
+  override val fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: ModuleModel.fields
 }
 
 object DialectInstanceFragmentModel extends DocumentModel with ExternalContextModel {
@@ -43,7 +43,7 @@ object DialectInstanceFragmentModel extends DocumentModel with ExternalContextMo
   override val `type`: List[ValueType] =
     Namespace.Meta + "DialectInstanceFragment" :: FragmentModel.`type`
 
-  override def fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: FragmentModel.fields
+  override val fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: FragmentModel.fields
 }
 
 object DialectInstancePatchModel extends DocumentModel with ExternalContextModel with ExtensionLikeModel {
@@ -55,5 +55,5 @@ object DialectInstancePatchModel extends DocumentModel with ExternalContextModel
   override val `type`: List[ValueType] =
     Namespace.Meta + "DialectInstancePatch" :: Namespace.Document + "DocumentExtension" :: BaseUnitModel.`type`
 
-  override def fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: Extends :: FragmentModel.fields
+  override val fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: Extends :: FragmentModel.fields
 }

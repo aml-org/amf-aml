@@ -14,7 +14,7 @@ object UnionNodeMappingModel extends DomainElementModel with LinkableElementMode
     ModelDoc(ExternalModelVocabularies.Shacl, "range", "Object constraint over the type of the mapped property"))
 
 
-  override def fields: List[Field] = Name :: TypeDiscriminator :: TypeDiscriminatorName :: ObjectRange :: LinkableElementModel.fields ++ DomainElementModel.fields
+  override val fields: List[Field] = Name :: TypeDiscriminator :: TypeDiscriminatorName :: ObjectRange :: LinkableElementModel.fields ++ DomainElementModel.fields
 
   override  val `type`: List[ValueType] = Namespace.Meta + "UnionNodeMapping" :: Namespace.Shacl + "Shape" :: DomainElementModel.`type`
 

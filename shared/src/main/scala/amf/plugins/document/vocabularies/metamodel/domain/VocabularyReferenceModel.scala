@@ -15,7 +15,7 @@ object VocabularyReferenceModel extends DomainElementModel {
 
   override def modelInstance: AmfObject = VocabularyReference()
 
-  override def fields: List[Field] = Alias :: Reference :: Base :: DomainElementModel.fields
+  override val fields: List[Field] = Alias :: Reference :: Base :: DomainElementModel.fields
 
   override val `type`: List[ValueType] = Namespace.Meta + "VocabularyReference" :: DomainElementModel.`type`
 }

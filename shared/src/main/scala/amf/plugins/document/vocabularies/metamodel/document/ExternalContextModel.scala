@@ -10,7 +10,7 @@ trait ExternalContextModel extends Obj {
 }
 
 object ExternalContextModelFields extends ExternalContextModel {
-  override def fields: List[Field] = Externals :: Nil
+  override val fields: List[Field] = Externals :: Nil
 
   override val `type`: List[ValueType] = Nil
 }

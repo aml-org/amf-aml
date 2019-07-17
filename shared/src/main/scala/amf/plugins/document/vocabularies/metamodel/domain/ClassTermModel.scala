@@ -17,7 +17,7 @@ object ClassTermModel extends DomainElementModel {
 
   override def modelInstance: AmfObject = ClassTerm()
 
-  override def fields: List[Field] = DisplayName :: Description :: Properties :: SubClassOf :: DomainElementModel.fields
+  override val fields: List[Field] = DisplayName :: Description :: Properties :: SubClassOf :: DomainElementModel.fields
 
   override val `type`: List[ValueType] = Namespace.Owl + "Class" :: DomainElementModel.`type`
 }

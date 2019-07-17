@@ -25,7 +25,7 @@ object DialectModel extends DocumentModel with ExternalContextModel {
   override val `type`: List[ValueType] =
     Namespace.Meta + "Dialect" :: DocumentModel.`type`
 
-  override def fields: List[Field] = Name :: Version :: Externals :: Documents :: DocumentModel.fields
+  override val fields: List[Field] = Name :: Version :: Externals :: Documents :: DocumentModel.fields
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Meta,
@@ -40,7 +40,7 @@ object DialectLibraryModel extends ModuleModel with ExternalContextModel {
   override val `type`: List[ValueType] =
     Namespace.Meta + "DialectLibrary" :: DocumentModel.`type`
 
-  override def fields: List[Field] = Externals :: Location :: ModuleModel.fields
+  override val fields: List[Field] = Externals :: Location :: ModuleModel.fields
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Meta,
@@ -55,7 +55,7 @@ object DialectFragmentModel extends FragmentModel with ExternalContextModel {
   override val `type`: List[ValueType] =
     Namespace.Meta + "DialectFragment" :: FragmentModel.`type`
 
-  override def fields: List[Field] = Externals :: Location :: FragmentModel.fields
+  override val fields: List[Field] = Externals :: Location :: FragmentModel.fields
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Meta,
