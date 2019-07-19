@@ -46,7 +46,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "4.0.59"
+val amfCoreVersion = "4.0.60"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
