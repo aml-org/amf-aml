@@ -5,8 +5,7 @@ import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.parser.{Annotations, ParserContext}
 import amf.plugins.document.vocabularies.parser.DynamicExtensionParser
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
-import amf.plugins.features.validation.ParserSideValidations
-import amf.plugins.features.validation.ParserSideValidations.MissingVocabulary
+import amf.validation.DialectValidations.MissingVocabulary
 import org.yaml.model.{YMap, YNode}
 
 import scala.util.{Failure, Success}

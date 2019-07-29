@@ -12,7 +12,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.{ClassTermModel, Objec
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
-import amf.plugins.features.validation.ParserSideValidations.ExpectedVocabularyModule
+import amf.validation.DialectValidations.ExpectedVocabularyModule
 import org.yaml.model._
 
 import scala.collection.mutable

@@ -5,8 +5,9 @@ import amf.core.parser.{Annotations, ErrorHandler, Range}
 import amf.core.utils.Strings
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
-import amf.plugins.features.validation.ParserSideValidations._
+import amf.validation.DialectValidations._
 import org.yaml.model.{YNode, YPart}
+
 trait SyntaxErrorReporter { this: ErrorHandler =>
 
   def missingTermViolation(term: String, node: String, ast: YPart): Unit = {

@@ -16,7 +16,7 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragmen
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
-import amf.plugins.features.validation.ParserSideValidations.DialectError
+import amf.validation.DialectValidations.DialectError
 import org.yaml.model._
 
 import scala.collection.{immutable, mutable}

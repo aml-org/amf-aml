@@ -18,7 +18,7 @@ import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
-import amf.plugins.features.validation.ParserSideValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
+import amf.validation.DialectValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
 
