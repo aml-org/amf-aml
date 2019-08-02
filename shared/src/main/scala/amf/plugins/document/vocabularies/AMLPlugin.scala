@@ -223,7 +223,7 @@ object AMLPlugin
         dialectByKeyProperty(ydoc) ++
         dialectForDoc(ydoc).flatMap(registry.dialectById)
     possibles match {
-      case Nil if header.isDefined => throw new Exception(s"Unknown type of dialect header $header")
+      case Nil if header.isDefined => None
       case Nil  => throw new Exception(s"Unknown type of dialect for doc: ${document.location}")
       case other =>
         if(other.size > 1)
