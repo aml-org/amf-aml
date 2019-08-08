@@ -369,11 +369,12 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
   }
 
-  def parseFragment(): Option[DialectInstanceFragment] = {
+  def parseFragment(name: String): Option[DialectInstanceFragment] = {
     val dialectInstanceFragment: DialectInstanceFragment = DialectInstanceFragment(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
       .withDefinedBy(ctx.dialect.id)
+      .withFragment(name)
 
     DialectInstanceReferencesParser(dialectInstanceFragment, map, root.references).parse(root.location)
 

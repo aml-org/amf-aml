@@ -173,6 +173,11 @@
             "@id": "file://shared/src/test/resources/vocabularies2/instances/dialect8.raml"
           }
         ],
+        "http://a.ml/vocabularies/meta#fragment": [
+          {
+            "@value": "AFragment"
+          }
+        ],
         "http://a.ml/vocabularies/document#encodes": [
           {
             "@id": "file://shared/src/test/resources/vocabularies2/instances/fragment8.raml#/",

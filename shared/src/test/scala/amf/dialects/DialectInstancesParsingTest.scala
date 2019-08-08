@@ -83,6 +83,10 @@ trait DialectInstancesParsingTest extends DialectTests {
     withDialect("dialect8.raml", "example8c.yaml", "example8c.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 8 (fragment) test") {
+    withDialect("dialect8.raml", "fragment8.raml", "fragment8.json", VocabularyYamlHint, Amf)
+  }
+
   test("parse 9 test") {
     withDialect("dialect9.raml", "example9.raml", "example9.json", VocabularyYamlHint, Amf)
   }
@@ -268,6 +272,10 @@ trait DialectInstancesParsingTest extends DialectTests {
 
   test("generate 8c $ref test") {
     withDialect("dialect8.raml", "example8c.json", "example8c.yaml", AmfJsonHint, Aml)
+  }
+
+  test("generate 8 (fragment) test") {
+    withDialect("dialect8.raml", "fragment8.json", "fragment8.raml", AmfJsonHint, Aml)
   }
 
   test("generate 9 test") {

@@ -6,13 +6,9 @@ import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.{Annotations, ErrorHandler, Fields}
 import amf.core.unsafe.PlatformSecrets
+import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceFragmentModel.Fragment
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
-import amf.plugins.document.vocabularies.metamodel.document.{
-  DialectInstanceFragmentModel,
-  DialectInstanceLibraryModel,
-  DialectInstanceModel,
-  DialectInstancePatchModel
-}
+import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceFragmentModel, DialectInstanceLibraryModel, DialectInstanceModel, DialectInstancePatchModel}
 
 trait ComposedInstancesSupport {
   var composedDialects: Map[String, Dialect] = Map()
@@ -21,8 +17,7 @@ trait ComposedInstancesSupport {
     composedDialects += (dialect.id -> dialect)
 }
 
-trait DialectInstanceTrait extends BaseUnit {
-
+trait DialectInstanceTrait extends BaseUnit with ExternalContext[DialectInstanceTrait] {
   def references: Seq[BaseUnit]
   def graphDependencies: Seq[StrField]
   def definedBy(): StrField
@@ -30,7 +25,6 @@ trait DialectInstanceTrait extends BaseUnit {
 
 case class DialectInstance(fields: Fields, annotations: Annotations)
     extends DialectInstanceTrait
-    with ExternalContext[DialectInstance]
     with DeclaresModel
     with EncodesModel
     with ComposedInstancesSupport
@@ -86,7 +80,6 @@ object DialectInstance {
 
 case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
     extends DialectInstanceTrait
-    with ExternalContext[DialectInstanceFragment]
     with EncodesModel
     with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceFragmentModel
@@ -95,11 +88,14 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
   def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
   def encodes: DomainElement = fields.field(Encodes)
   def definedBy(): StrField = fields.field(DefinedBy)
+  def fragment(): StrField = fields.field(Fragment)
 
   override def componentId: String = ""
 
   def withDefinedBy(dialectId: String): DialectInstanceFragment =
     set(DefinedBy, dialectId)
+  def withFragment(fragmentId: String): DialectInstanceFragment =
+    set(Fragment, fragmentId)
   def withGraphDepencies(ids: Seq[String]): DialectInstanceFragment =
     set(GraphDependencies, ids)
 }
@@ -112,7 +108,6 @@ object DialectInstanceFragment {
 
 case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
     extends DialectInstanceTrait
-    with ExternalContext[DialectInstanceLibrary]
     with DeclaresModel
     with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceLibraryModel
@@ -138,7 +133,6 @@ object DialectInstanceLibrary {
 
 case class DialectInstancePatch(fields: Fields, annotations: Annotations)
     extends DialectInstanceTrait
-    with ExternalContext[DialectInstancePatch]
     with DeclaresModel
     with EncodesModel {
 

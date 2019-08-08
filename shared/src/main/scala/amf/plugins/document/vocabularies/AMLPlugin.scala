@@ -15,7 +15,12 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
-import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
+import amf.core.validation.{
+  AMFValidationReport,
+  EffectiveValidations,
+  SeverityLevels,
+  ValidationResultProcessor
+}
 import amf.internal.environment.Environment
 import amf.plugins.document.vocabularies.AMLPlugin.registry
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
@@ -151,9 +156,10 @@ object AMLPlugin
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+  override def resolve(
+      unit: BaseUnit,
+      errorHandler: ErrorHandler,
+      pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
     unit match {
       case patch: DialectInstancePatch =>
         new DialectInstancePatchResolutionPipeline(errorHandler).resolve(patch)
@@ -233,17 +239,14 @@ object AMLPlugin
   }
 
 
-  protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = {
+  protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderOptions: RenderOptions): Option[YDocument] = {
     unit match {
-      case vocabulary: Vocabulary =>
-        Some(VocabularyEmitter(vocabulary).emitVocabulary())
+      case vocabulary: Vocabulary => Some(VocabularyEmitter(vocabulary).emitVocabulary())
       case dialect: Dialect => Some(DialectEmitter(dialect).emitDialect())
-      case library: DialectLibrary =>
-        Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
-      case instance: DialectInstance =>
-        Some(
-          DialectInstancesEmitter(instance, registry.dialectFor(instance).get)
-            .emitInstance())
+      case library: DialectLibrary => Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
+      case instance: DialectInstanceTrait => Some(DialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
       case _ => None
     }
   }
@@ -264,11 +267,12 @@ object AMLPlugin
     * the instance type and properties
     */
   override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case _: Vocabulary             => true
-    case _: Dialect                => true
-    case _: DialectLibrary         => true
-    case instance: DialectInstance => registry.knowsDialectInstance(instance)
-    case _                         => false
+    case _: Vocabulary     => true
+    case _: Dialect        => true
+    case _: DialectLibrary => true
+    case instance: DialectInstanceTrait =>
+      registry.knowsDialectInstance(instance)
+    case _ => false
   }
 
   override def referenceHandler(eh: ErrorHandler): ReferenceHandler =
@@ -292,8 +296,10 @@ object AMLPlugin
   protected def parseDocumentWithDialect(document:Root, parentContext: ParserContext, dialect: Dialect, header:Option[String]):Option[DialectInstanceTrait]  = {
     registry.withRegisteredDialect(dialect){ resolvedDialect =>
       header match {
-        case Some(headerKey) if resolvedDialect.isFragmentHeader(headerKey) =>
-          new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parseFragment()
+        case Some(headerKey) if resolvedDialect.isFragmentHeader(headerKey) => {
+          val name = headerKey.substring(1, headerKey.indexOf("/"))
+          new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parseFragment(name)
+        }
         case Some(headerKey) if resolvedDialect.isLibraryHeader(headerKey) =>
           new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parseLibrary()
         case Some(headerKey) if resolvedDialect.isPatchHeader(headerKey) =>
@@ -308,7 +314,8 @@ object AMLPlugin
   /**
     * Validation profiles supported by this plugin. Notice this will be called multiple times.
     */
-  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] = {
+  override def domainValidationProfiles(
+      platform: Platform): Map[String, () => ValidationProfile] = {
     registry.allDialects().foldLeft(Map[String, () => ValidationProfile]()) {
       case (acc, dialect) if !dialect.nameAndVersion().contains("Validation Profile") =>
         acc.updated(dialect.nameAndVersion(), () => {
@@ -318,20 +325,23 @@ object AMLPlugin
     }
   }
 
-  protected def computeValidationProfile(dialect: Dialect): ValidationProfile = {
+  protected def computeValidationProfile(
+      dialect: Dialect): ValidationProfile = {
     val profileName = dialect.nameAndVersion()
     registry.validations.get(profileName) match {
       case Some(profile) => profile
       case _ =>
-        val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
-        val profile         = new AMFDialectValidations(resolvedDialect).profile()
+        val resolvedDialect = new DialectResolutionPipeline(
+          DefaultParserSideErrorHandler(dialect)).resolve(dialect)
+        val profile = new AMFDialectValidations(resolvedDialect).profile()
         registry.validations += (profileName -> profile)
         profile
     }
   }
 
-  def aggregateValidations(validations: EffectiveValidations,
-                           dependenciesValidations: Seq[ValidationProfile]): EffectiveValidations = {
+  def aggregateValidations(
+      validations: EffectiveValidations,
+      dependenciesValidations: Seq[ValidationProfile]): EffectiveValidations = {
     dependenciesValidations.foldLeft(validations) {
       case (effective, profile) => effective.someEffective(profile)
     }
@@ -340,19 +350,21 @@ object AMLPlugin
   /**
     * Request for validation of a particular model, profile and list of effective validations for that profile
     */
-  override def validationRequest(baseUnit: BaseUnit,
-                                 profile: ProfileName,
-                                 validations: EffectiveValidations,
-                                 platform: Platform,
-                                 env: Environment,
-                                 resolved: Boolean): Future[AMFValidationReport] = {
+  override def validationRequest(
+      baseUnit: BaseUnit,
+      profile: ProfileName,
+      validations: EffectiveValidations,
+      platform: Platform,
+      env: Environment,
+      resolved: Boolean): Future[AMFValidationReport] = {
     baseUnit match {
       case dialectInstance: DialectInstance =>
         val resolvedModel =
-          new DialectInstanceResolutionPipeline(DefaultParserSideErrorHandler(baseUnit)).resolve(dialectInstance)
+          new DialectInstanceResolutionPipeline(
+            DefaultParserSideErrorHandler(baseUnit)).resolve(dialectInstance)
 
-        val dependenciesValidations: Future[Seq[ValidationProfile]] = Future.sequence(
-          dialectInstance.graphDependencies.map { instance =>
+        val dependenciesValidations: Future[Seq[ValidationProfile]] = Future
+          .sequence(dialectInstance.graphDependencies.map { instance =>
             registry.registerDialect(instance.value())
           }) map { dialects =>
           dialects.map(computeValidationProfile)
@@ -360,14 +372,18 @@ object AMLPlugin
 
         for {
           validationsFromDeps <- dependenciesValidations
-          shaclReport <- RuntimeValidator.shaclValidation(resolvedModel,
-                                                          aggregateValidations(validations, validationsFromDeps),
-                                                          options = new ValidationOptions().withFullValidation())
+          shaclReport <- RuntimeValidator.shaclValidation(
+            resolvedModel,
+            aggregateValidations(validations, validationsFromDeps),
+            options = new ValidationOptions().withFullValidation())
         } yield {
 
           // adding model-side validations
           val results = shaclReport.results.flatMap { r =>
-            buildValidationResult(baseUnit, r, RamlProfile.messageStyle, validations)
+            buildValidationResult(baseUnit,
+                                  r,
+                                  RamlProfile.messageStyle,
+                                  validations)
           }
 
           AMFValidationReport(
@@ -379,7 +395,8 @@ object AMLPlugin
         }
 
       case _ =>
-        throw new Exception(s"Cannot resolve base unit of type ${baseUnit.getClass}")
+        throw new Exception(
+          s"Cannot resolve base unit of type ${baseUnit.getClass}")
     }
   }
 
@@ -388,9 +405,10 @@ object AMLPlugin
     */
   override val allowRecursiveReferences: Boolean = false
 
-  def shapesForDialect(dialect: Dialect, validationFunctionsUrl: String): RdfModel = {
+  def shapesForDialect(dialect: Dialect,
+                       validationFunctionsUrl: String): RdfModel = {
     val validationProfile = computeValidationProfile(dialect)
-    val validations       = validationProfile.validations
+    val validations = validationProfile.validations
 
     RuntimeValidator.shaclModel(validations, validationFunctionsUrl)
   }

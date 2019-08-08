@@ -133,6 +133,11 @@
             "@id": "file://shared/src/test/resources/vocabularies2/instances/dialect16b.raml"
           }
         ],
+        "http://a.ml/vocabularies/meta#fragment": [
+          {
+            "@value": "Fragment"
+          }
+        ],
         "http://a.ml/vocabularies/document#encodes": [
           {
             "@id": "file://shared/src/test/resources/vocabularies2/instances/example16b.raml#/",

@@ -39,7 +39,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
       .contains(headerKey(header))
   }
 
-  def knowsDialectInstance(instance: DialectInstance): Boolean = dialectFor(instance).isDefined
+  def knowsDialectInstance(instance: DialectInstanceTrait): Boolean = dialectFor(instance).isDefined
 
   def dialectFor(instance: DialectInstanceTrait): Option[Dialect] =
     instance.definedBy().option().flatMap(id => map.values.find(_.id == id))

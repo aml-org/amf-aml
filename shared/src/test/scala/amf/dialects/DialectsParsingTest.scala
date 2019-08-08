@@ -4,7 +4,7 @@ import amf.core.remote._
 
 import scala.concurrent.ExecutionContext
 
-class DialectsParsingTest extends DialectTests {
+trait DialectsParsingTest extends DialectTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
