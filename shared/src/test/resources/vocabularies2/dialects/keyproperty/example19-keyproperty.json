@@ -8,12 +8,12 @@
       "http://a.ml/vocabularies/document#Module",
       "http://a.ml/vocabularies/document#Unit"
     ],
-    "http://a.ml/vocabularies/core#name": [
+    "http://schema.org/name": [
       {
         "@value": "Test"
       }
     ],
-    "http://a.ml/vocabularies/core#version": [
+    "http://schema.org/version": [
       {
         "@value": "1.0"
       }
@@ -26,7 +26,7 @@
           "http://a.ml/vocabularies/meta#ExternalVocabulary",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
-        "http://a.ml/vocabularies/core#displayName": [
+        "http://schema.org/alias": [
           {
             "@value": "v3"
           }
@@ -52,7 +52,7 @@
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/core#name": [
+            "http://a.ml/vocabularies/meta#name": [
               {
                 "@value": "Test 1.0"
               }
@@ -93,7 +93,7 @@
               "http://a.ml/vocabularies/meta#DocumentMapping",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://a.ml/vocabularies/core#name": [
+            "http://a.ml/vocabularies/meta#name": [
               {
                 "@value": "Test 1.0 / Library"
               }
@@ -105,7 +105,7 @@
                   "http://a.ml/vocabularies/meta#PublicNodeMapping",
                   "http://a.ml/vocabularies/document#DomainElement"
                 ],
-                "http://a.ml/vocabularies/core#name": [
+                "http://schema.org/name": [
                   {
                     "@value": "declarations"
                   }
@@ -219,7 +219,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://a.ml/vocabularies/core#version"
+                "@value": "http://schema.org/version"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -243,7 +243,7 @@
           {
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://a.ml/vocabularies/core#name"
+                "@value": "http://schema.org/name"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
@@ -268,7 +268,7 @@
             "@id": "http://test.com/v3#Local"
           }
         ],
-        "http://a.ml/vocabularies/core#name": [
+        "http://schema.org/name": [
           {
             "@value": "Local"
           }
@@ -285,7 +285,7 @@
                 "@id": "http://test.com/v3#a"
               }
             ],
-            "http://a.ml/vocabularies/core#name": [
+            "http://schema.org/name": [
               {
                 "@value": "a"
               }
@@ -369,7 +369,7 @@
             "@id": "http://test.com/v3#Decla"
           }
         ],
-        "http://a.ml/vocabularies/core#name": [
+        "http://schema.org/name": [
           {
             "@value": "myDeclarations"
           }
@@ -386,7 +386,7 @@
                 "@id": "http://test.com/v3#b"
               }
             ],
-            "http://a.ml/vocabularies/core#name": [
+            "http://schema.org/name": [
               {
                 "@value": "b"
               }

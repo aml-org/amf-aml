@@ -358,7 +358,7 @@ object AMLPlugin
       env: Environment,
       resolved: Boolean): Future[AMFValidationReport] = {
     baseUnit match {
-      case dialectInstance: DialectInstance =>
+      case dialectInstance: DialectInstanceTrait =>
         val resolvedModel =
           new DialectInstanceResolutionPipeline(
             DefaultParserSideErrorHandler(baseUnit)).resolve(dialectInstance)
