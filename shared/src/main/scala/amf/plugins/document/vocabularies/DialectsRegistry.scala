@@ -14,7 +14,7 @@ import amf.core.vocabulary.ValueType
 import amf.internal.environment.Environment
 import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceTrait}
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceUnit}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
 
@@ -39,9 +39,9 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
       .contains(headerKey(header))
   }
 
-  def knowsDialectInstance(instance: DialectInstanceTrait): Boolean = dialectFor(instance).isDefined
+  def knowsDialectInstance(instance: DialectInstanceUnit): Boolean = dialectFor(instance).isDefined
 
-  def dialectFor(instance: DialectInstanceTrait): Option[Dialect] =
+  def dialectFor(instance: DialectInstanceUnit): Option[Dialect] =
     instance.definedBy().option().flatMap(id => map.values.find(_.id == id))
 
   def allDialects(): Seq[Dialect] = map.values.toSeq
@@ -68,7 +68,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   def dialectById(id:String):Option[Dialect] = map.values.find(_.id == id)
 
-  def withRegisteredDialect(header: String)(k: Dialect => Option[DialectInstanceTrait]): Option[DialectInstanceTrait] = {
+  def withRegisteredDialect(header: String)(k: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
     val dialectId = headerKey(header.split("\\|").head)
     map.get(dialectId) match {
       case Some(dialect) => withRegisteredDialect(dialect)(k)
@@ -76,7 +76,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     }
   }
 
-  def withRegisteredDialect(dialect: Dialect)(k: Dialect => Option[DialectInstanceTrait]): Option[DialectInstanceTrait] = {
+  def withRegisteredDialect(dialect: Dialect)(k: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
 
     if (!resolved.getOrElse(dialect.id, false)) {
       val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)

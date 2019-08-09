@@ -246,7 +246,7 @@ object AMLPlugin
       case vocabulary: Vocabulary => Some(VocabularyEmitter(vocabulary).emitVocabulary())
       case dialect: Dialect => Some(DialectEmitter(dialect).emitDialect())
       case library: DialectLibrary => Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
-      case instance: DialectInstanceTrait => Some(DialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
+      case instance: DialectInstanceUnit => Some(DialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
       case _ => None
     }
   }
@@ -270,7 +270,7 @@ object AMLPlugin
     case _: Vocabulary     => true
     case _: Dialect        => true
     case _: DialectLibrary => true
-    case instance: DialectInstanceTrait =>
+    case instance: DialectInstanceUnit =>
       registry.knowsDialectInstance(instance)
     case _ => false
   }
@@ -293,7 +293,7 @@ object AMLPlugin
     }
   }
 
-  protected def parseDocumentWithDialect(document:Root, parentContext: ParserContext, dialect: Dialect, header:Option[String]):Option[DialectInstanceTrait]  = {
+  protected def parseDocumentWithDialect(document:Root, parentContext: ParserContext, dialect: Dialect, header:Option[String]):Option[DialectInstanceUnit]  = {
     registry.withRegisteredDialect(dialect){ resolvedDialect =>
       header match {
         case Some(headerKey) if resolvedDialect.isFragmentHeader(headerKey) => {
@@ -358,7 +358,7 @@ object AMLPlugin
       env: Environment,
       resolved: Boolean): Future[AMFValidationReport] = {
     baseUnit match {
-      case dialectInstance: DialectInstanceTrait =>
+      case dialectInstance: DialectInstanceUnit =>
         val resolvedModel =
           new DialectInstanceResolutionPipeline(
             DefaultParserSideErrorHandler(baseUnit)).resolve(dialectInstance)

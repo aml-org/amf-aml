@@ -17,14 +17,14 @@ trait ComposedInstancesSupport {
     composedDialects += (dialect.id -> dialect)
 }
 
-trait DialectInstanceTrait extends BaseUnit with ExternalContext[DialectInstanceTrait] {
+trait DialectInstanceUnit extends BaseUnit with ExternalContext[DialectInstanceUnit] {
   def references: Seq[BaseUnit]
   def graphDependencies: Seq[StrField]
   def definedBy(): StrField
 }
 
 case class DialectInstance(fields: Fields, annotations: Annotations)
-    extends DialectInstanceTrait
+    extends DialectInstanceUnit
     with DeclaresModel
     with EncodesModel
     with ComposedInstancesSupport
@@ -79,7 +79,7 @@ object DialectInstance {
 }
 
 case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
-    extends DialectInstanceTrait
+    extends DialectInstanceUnit
     with EncodesModel
     with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceFragmentModel
@@ -107,7 +107,7 @@ object DialectInstanceFragment {
 }
 
 case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
-    extends DialectInstanceTrait
+    extends DialectInstanceUnit
     with DeclaresModel
     with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceLibraryModel
@@ -132,7 +132,7 @@ object DialectInstanceLibrary {
 }
 
 case class DialectInstancePatch(fields: Fields, annotations: Annotations)
-    extends DialectInstanceTrait
+    extends DialectInstanceUnit
     with DeclaresModel
     with EncodesModel {
 

@@ -187,7 +187,7 @@ case class DiscriminatorHelper(mapping: NodeWithDiscriminator[_],
   }
 }
 
-case class DialectInstancesEmitter(instance: DialectInstanceTrait, dialect: Dialect) extends DialectEmitterHelper {
+case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Dialect) extends DialectEmitterHelper {
   val ordering: SpecOrdering                 = Lexical
   val aliases: Map[String, (String, String)] = collectAliases()
 
@@ -286,7 +286,7 @@ case class DialectInstancesEmitter(instance: DialectInstanceTrait, dialect: Dial
 case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                     publicNodeMapping: PublicNodeMapping,
                                     nodeMappable: NodeMappable,
-                                    instance: DialectInstanceTrait,
+                                    instance: DialectInstanceUnit,
                                     dialect: Dialect,
                                     ordering: SpecOrdering,
                                     declarationsPath: Seq[String],
@@ -382,7 +382,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
 
 case class DialectNodeEmitter(node: DialectDomainElement,
                               nodeMappable: NodeMappable,
-                              instance: DialectInstanceTrait,
+                              instance: DialectInstanceUnit,
                               dialect: Dialect,
                               ordering: SpecOrdering,
                               aliases: Map[String, (String, String)],
@@ -802,7 +802,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     })
   }
 
-  def isFragment(elem: DialectDomainElement, instance: DialectInstanceTrait): Boolean = {
+  def isFragment(elem: DialectDomainElement, instance: DialectInstanceUnit): Boolean = {
     elem.linkTarget match {
       case Some(domainElement) =>
         instance.references.exists {
@@ -816,7 +816,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     }
   }
 
-  def isLibrary(elem: DialectDomainElement, instance: DialectInstanceTrait): Boolean = {
+  def isLibrary(elem: DialectDomainElement, instance: DialectInstanceUnit): Boolean = {
     instance.references.exists {
       case lib: DeclaresModel =>
         lib.declares.exists(_.id == elem.linkTarget.get.id)
@@ -824,7 +824,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     }
   }
 
-  def emitLibrarRef(elem: DialectDomainElement, instance: DialectInstanceTrait, b: PartBuilder): Unit = {
+  def emitLibrarRef(elem: DialectDomainElement, instance: DialectInstanceUnit, b: PartBuilder): Unit = {
     if (elem.annotations.contains(classOf[JsonPointerRef])) {
       b.obj { m =>
         m.entry("$ref",
