@@ -7,7 +7,14 @@ import amf.core.emitter.RenderOptions
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{DefaultParserSideErrorHandler, ErrorHandler, ParserContext, ReferenceHandler, SyamlParsedDocument, _}
+import amf.core.parser.{
+  DefaultParserSideErrorHandler,
+  ErrorHandler,
+  ParserContext,
+  ReferenceHandler,
+  SyamlParsedDocument,
+  _
+}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.{Aml, Platform}
@@ -25,12 +32,15 @@ import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.document._
-import amf.plugins.document.vocabularies.parser.ExtensionHeader
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DialectInstancePatchResolutionPipeline,
+  DialectInstanceResolutionPipeline,
+  DialectResolutionPipeline
+}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.{ProfileName, RamlProfile}
 import org.yaml.model._
@@ -47,20 +57,24 @@ trait RamlHeaderExtractor {
 
   }
 
-  def comment(document: YDocument): Option[YComment] = document.children.collectFirst({case c:YComment => c})
+  def comment(document: YDocument): Option[YComment] = document.children.collectFirst({ case c: YComment => c })
 }
 
 trait JsonHeaderExtractor {
   def dialect(root: Root): Option[String] = {
     root.parsed match {
       case parsedInput: SyamlParsedDocument => dialectForDoc(parsedInput.document)
-      case _ => None
+      case _                                => None
     }
   }
 
-  private def dialectForDoc(document:YDocument): Option[String] = {
-    document.node.toOption[YMap].map(_.entries).getOrElse(Nil)
-      .collectFirst({ case e if e.key.asScalar.exists(_.text == "$dialect") => e}).flatMap(e => e.value.asScalar.map(_.text))
+  private def dialectForDoc(document: YDocument): Option[String] = {
+    document.node
+      .toOption[YMap]
+      .map(_.entries)
+      .getOrElse(Nil)
+      .collectFirst({ case e if e.key.asScalar.exists(_.text == "$dialect") => e })
+      .flatMap(e => e.value.asScalar.map(_.text))
   }
 }
 
@@ -73,32 +87,54 @@ trait KeyPropertyHeaderExtractor {
   def dialectInKey(root: Root): Option[Dialect] =
     root.parsed match {
       case parsedInput: SyamlParsedDocument => dialectByKeyProperty(parsedInput.document)
-      case _ => None
+      case _                                => None
     }
 
   private def containsVersion(document: YDocument, d: Dialect): Boolean =
     document.node
-      .toOption[YMap].map(_.entries)
+      .toOption[YMap]
+      .map(_.entries)
       .getOrElse(Nil)
-      .collectFirst({ case e if e.key.asScalar.exists(scalar => d.name().is(scalar.text)) => e})
-      .exists(e => {e.value.asScalar.exists(_.text ==  d.version().value())})
+      .collectFirst({ case e if e.key.asScalar.exists(scalar => d.name().is(scalar.text)) => e })
+      .exists(e => { e.value.asScalar.exists(_.text == d.version().value()) })
 }
+
+protected object ExtensionHeader {
+
+  val VocabularyHeader = "%Vocabulary1.0"
+
+  val DialectHeader = "%Dialect1.0"
+
+  val DialectLibraryHeader = "%Library/Dialect1.0"
+
+  val DialectFragmentHeader = "%NodeMapping/Dialect1.0"
+}
+
 
 object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor with KeyPropertyHeaderExtractor {
   def apply(root: Root): Boolean = {
-    val header = dialectHeaderDirective(root)
+    val text = dialectHeaderDirective(root)
 
-    header match {
-      case Some(ExtensionHeader.DialectHeader) | Some(ExtensionHeader.DialectFragmentHeader) | Some(ExtensionHeader.DialectLibraryHeader) | Some(ExtensionHeader.VocabularyHeader) => true
-      case Some(other) => registry.findDialectForHeader(other).isDefined
-      case _ => dialectInKey(root).isDefined
+    if (isExternal(text)) true
+    else {
+      val header = text.map(h => h.split("\\|").head)
+
+      header match {
+        case Some(ExtensionHeader.DialectHeader) | Some(ExtensionHeader.DialectFragmentHeader) | Some(
+                ExtensionHeader.DialectLibraryHeader) | Some(ExtensionHeader.VocabularyHeader) =>
+          true
+        case Some(other) => registry.findDialectForHeader(other).isDefined
+        case _           => dialectInKey(root).isDefined
+      }
     }
   }
+
+  private def isExternal(header: Option[String]) = header.exists(h => h.endsWith(">") && h.contains("|<"))
 }
 
 object ReferenceStyles {
-  val RAML = "RamlStyle"
-  val JSONSCHEMA = "JsonSchemaStyle"
+  val RAML             = "RamlStyle"
+  val JSONSCHEMA       = "JsonSchemaStyle"
   val all: Seq[String] = Seq(RAML, JSONSCHEMA)
 }
 
@@ -120,42 +156,41 @@ object AMLPlugin
   override def init(): Future[AMFPlugin] = Future { this }
 
   override def modelEntities: Seq[Obj] = Seq(
-    VocabularyModel,
-    ExternalModel,
-    VocabularyReferenceModel,
-    ClassTermModel,
-    ObjectPropertyTermModel,
-    DatatypePropertyTermModel,
-    DialectModel,
-    NodeMappingModel,
-    UnionNodeMappingModel,
-    PropertyMappingModel,
-    DocumentsModelModel,
-    PublicNodeMappingModel,
-    DocumentMappingModel,
-    DialectLibraryModel,
-    DialectFragmentModel,
-    DialectInstanceModel,
-    DialectInstanceLibraryModel,
-    DialectInstanceFragmentModel,
-    DialectInstancePatchModel
+      VocabularyModel,
+      ExternalModel,
+      VocabularyReferenceModel,
+      ClassTermModel,
+      ObjectPropertyTermModel,
+      DatatypePropertyTermModel,
+      DialectModel,
+      NodeMappingModel,
+      UnionNodeMappingModel,
+      PropertyMappingModel,
+      DocumentsModelModel,
+      PublicNodeMappingModel,
+      DocumentMappingModel,
+      DialectLibraryModel,
+      DialectFragmentModel,
+      DialectInstanceModel,
+      DialectInstanceLibraryModel,
+      DialectInstanceFragmentModel,
+      DialectInstancePatchModel
   )
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] =
     Map(
-      "aliases-location" -> AliasesLocation,
-      "custom-id"        -> CustomId,
-      "ref-include"      -> RefInclude,
-      "json-pointer-ref" -> JsonPointerRef
+        "aliases-location" -> AliasesLocation,
+        "custom-id"        -> CustomId,
+        "ref-include"      -> RefInclude,
+        "json-pointer-ref" -> JsonPointerRef
     )
 
   /**
     * Resolves the provided base unit model, according to the semantics of the domain of the document
     */
-  override def resolve(
-      unit: BaseUnit,
-      errorHandler: ErrorHandler,
-      pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+  override def resolve(unit: BaseUnit,
+                       errorHandler: ErrorHandler,
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
     unit match {
       case patch: DialectInstancePatch =>
         new DialectInstancePatchResolutionPipeline(errorHandler).resolve(patch)
@@ -171,16 +206,16 @@ object AMLPlugin
     * this domain
     */
   override def documentSyntaxes: Seq[String] = Seq(
-    "application/aml+json",
-    "application/aml+yaml",
-    "application/raml",
-    "application/raml+json",
-    "application/raml+yaml",
-    "text/yaml",
-    "text/x-yaml",
-    "application/yaml",
-    "application/x-yaml",
-    "application/json"
+      "application/aml+json",
+      "application/aml+yaml",
+      "application/raml",
+      "application/raml+json",
+      "application/raml+yaml",
+      "text/yaml",
+      "text/x-yaml",
+      "application/yaml",
+      "application/x-yaml",
+      "application/json"
   )
 
   /**
@@ -194,47 +229,45 @@ object AMLPlugin
     val header = dialectHeaderDirective(document)
 
     header match {
-        case Some(ExtensionHeader.VocabularyHeader) =>
-          Some(new VocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
-        case Some(ExtensionHeader.DialectLibraryHeader) =>
-          Some(new DialectsParser(document)(new DialectContext(parentContext)).parseLibrary())
-        case Some(ExtensionHeader.DialectFragmentHeader) =>
-          Some(new DialectsParser(document)(new DialectContext(parentContext)).parseFragment())
-        case Some(ExtensionHeader.DialectHeader) =>
-          parseAndRegisterDialect(document, parentContext)
-        case _ => parseDialectInstance(document, header, parentContext)
+      case Some(ExtensionHeader.VocabularyHeader) =>
+        Some(new VocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
+      case Some(ExtensionHeader.DialectLibraryHeader) =>
+        Some(new DialectsParser(document)(new DialectContext(parentContext)).parseLibrary())
+      case Some(ExtensionHeader.DialectFragmentHeader) =>
+        Some(new DialectsParser(document)(new DialectContext(parentContext)).parseFragment())
+      case Some(ExtensionHeader.DialectHeader) =>
+        parseAndRegisterDialect(document, parentContext)
+      case _ => parseDialectInstance(document, header, parentContext)
     }
   }
 
   /** Fetch header or $dialect directive. */
   def dialectHeaderDirective(document: Root): Option[String] = {
-    val header = comment(document) match {
+    val text = comment(document) match {
       case Some(comment) => Some(comment.metaText)
-      case _ => dialect(document).map(metaText => s"%$metaText")
+      case _             => dialect(document).map(metaText => s"%$metaText")
     }
-    header.map(h => h.split("\\|").head.replace(" ", ""))
+    text.map(_.replace(" ", ""))
   }
 
   private def parseDialectInstance(root: Root, header: Option[String], parentContext: ParserContext) = {
-    val headerKey = header.map(h =>  h.split("\\|").head.replace(" ", ""))
+    val h = header.map(h => h.split("\\|").head)
 
-    val dialect = headerKey.flatMap(registry.findDialectForHeader).orElse(dialectInKey(root))
+    val dialect = h.flatMap(registry.findDialectForHeader).orElse(dialectInKey(root))
 
     dialect match {
-      case Some(d) => parseDocumentWithDialect(root,parentContext, d, headerKey)
-      case _ => throw new Exception(s"Unknown Dialect for document: ${root.location}")
+      case Some(d) => parseDocumentWithDialect(root, parentContext, d, h)
+      case _       => throw new Exception(s"Unknown Dialect for document: ${root.location}")
     }
   }
 
-
-  protected def unparseAsYDocument(
-      unit: BaseUnit,
-      renderOptions: RenderOptions): Option[YDocument] = {
+  protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = {
     unit match {
-      case vocabulary: Vocabulary => Some(VocabularyEmitter(vocabulary).emitVocabulary())
-      case dialect: Dialect => Some(DialectEmitter(dialect).emitDialect())
+      case vocabulary: Vocabulary  => Some(VocabularyEmitter(vocabulary).emitVocabulary())
+      case dialect: Dialect        => Some(DialectEmitter(dialect).emitDialect())
       case library: DialectLibrary => Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
-      case instance: DialectInstanceUnit => Some(DialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
+      case instance: DialectInstanceUnit =>
+        Some(DialectInstancesEmitter(instance, registry.dialectFor(instance).get).emitInstance())
       case _ => None
     }
   }
@@ -281,19 +314,24 @@ object AMLPlugin
     }
   }
 
-  protected def parseDocumentWithDialect(document:Root, parentContext: ParserContext, dialect: Dialect, header:Option[String]):Option[DialectInstanceUnit]  = {
-    registry.withRegisteredDialect(dialect){ resolvedDialect =>
+  protected def parseDocumentWithDialect(document: Root,
+                                         parentContext: ParserContext,
+                                         dialect: Dialect,
+                                         header: Option[String]): Option[DialectInstanceUnit] = {
+    registry.withRegisteredDialect(dialect) { resolvedDialect =>
       header match {
         case Some(headerKey) if resolvedDialect.isFragmentHeader(headerKey) =>
           val name = headerKey.substring(1, headerKey.indexOf("/"))
-          new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parseFragment(name)
+          new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
+            .parseFragment(name)
         case Some(headerKey) if resolvedDialect.isLibraryHeader(headerKey) =>
           new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parseLibrary()
         case Some(headerKey) if resolvedDialect.isPatchHeader(headerKey) =>
           new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
             .parsePatch()
         case _ =>
-          new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parseDocument()
+          new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
+            .parseDocument()
       }
     }
   }
@@ -301,8 +339,7 @@ object AMLPlugin
   /**
     * Validation profiles supported by this plugin. Notice this will be called multiple times.
     */
-  override def domainValidationProfiles(
-      platform: Platform): Map[String, () => ValidationProfile] = {
+  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] = {
     registry.allDialects().foldLeft(Map[String, () => ValidationProfile]()) {
       case (acc, dialect) if !dialect.nameAndVersion().contains("Validation Profile") =>
         acc.updated(dialect.nameAndVersion(), () => {
@@ -312,23 +349,20 @@ object AMLPlugin
     }
   }
 
-  protected def computeValidationProfile(
-      dialect: Dialect): ValidationProfile = {
+  protected def computeValidationProfile(dialect: Dialect): ValidationProfile = {
     val header = dialect.header
     registry.validations.get(header) match {
       case Some(profile) => profile
       case _ =>
-        val resolvedDialect = new DialectResolutionPipeline(
-          DefaultParserSideErrorHandler(dialect)).resolve(dialect)
-        val profile = new AMFDialectValidations(resolvedDialect).profile()
+        val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
+        val profile         = new AMFDialectValidations(resolvedDialect).profile()
         registry.validations += (header -> profile)
         profile
     }
   }
 
-  def aggregateValidations(
-      validations: EffectiveValidations,
-      dependenciesValidations: Seq[ValidationProfile]): EffectiveValidations = {
+  def aggregateValidations(validations: EffectiveValidations,
+                           dependenciesValidations: Seq[ValidationProfile]): EffectiveValidations = {
     dependenciesValidations.foldLeft(validations) {
       case (effective, profile) => effective.someEffective(profile)
     }
@@ -337,18 +371,16 @@ object AMLPlugin
   /**
     * Request for validation of a particular model, profile and list of effective validations for that profile
     */
-  override def validationRequest(
-      baseUnit: BaseUnit,
-      profile: ProfileName,
-      validations: EffectiveValidations,
-      platform: Platform,
-      env: Environment,
-      resolved: Boolean): Future[AMFValidationReport] = {
+  override def validationRequest(baseUnit: BaseUnit,
+                                 profile: ProfileName,
+                                 validations: EffectiveValidations,
+                                 platform: Platform,
+                                 env: Environment,
+                                 resolved: Boolean): Future[AMFValidationReport] = {
     baseUnit match {
       case dialectInstance: DialectInstanceUnit =>
         val resolvedModel =
-          new DialectInstanceResolutionPipeline(
-            DefaultParserSideErrorHandler(baseUnit)).resolve(dialectInstance)
+          new DialectInstanceResolutionPipeline(DefaultParserSideErrorHandler(baseUnit)).resolve(dialectInstance)
 
         val dependenciesValidations: Future[Seq[ValidationProfile]] = Future
           .sequence(dialectInstance.graphDependencies.map { instance =>
@@ -359,31 +391,26 @@ object AMLPlugin
 
         for {
           validationsFromDeps <- dependenciesValidations
-          shaclReport <- RuntimeValidator.shaclValidation(
-            resolvedModel,
-            aggregateValidations(validations, validationsFromDeps),
-            options = new ValidationOptions().withFullValidation())
+          shaclReport <- RuntimeValidator.shaclValidation(resolvedModel,
+                                                          aggregateValidations(validations, validationsFromDeps),
+                                                          options = new ValidationOptions().withFullValidation())
         } yield {
 
           // adding model-side validations
           val results = shaclReport.results.flatMap { r =>
-            buildValidationResult(baseUnit,
-                                  r,
-                                  RamlProfile.messageStyle,
-                                  validations)
+            buildValidationResult(baseUnit, r, RamlProfile.messageStyle, validations)
           }
 
           AMFValidationReport(
-            conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-            model = baseUnit.id,
-            profile = profile,
-            results = results
+              conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
+              model = baseUnit.id,
+              profile = profile,
+              results = results
           )
         }
 
       case _ =>
-        throw new Exception(
-          s"Cannot resolve base unit of type ${baseUnit.getClass}")
+        throw new Exception(s"Cannot resolve base unit of type ${baseUnit.getClass}")
     }
   }
 
@@ -392,10 +419,9 @@ object AMLPlugin
     */
   override val allowRecursiveReferences: Boolean = false
 
-  def shapesForDialect(dialect: Dialect,
-                       validationFunctionsUrl: String): RdfModel = {
+  def shapesForDialect(dialect: Dialect, validationFunctionsUrl: String): RdfModel = {
     val validationProfile = computeValidationProfile(dialect)
-    val validations = validationProfile.validations
+    val validations       = validationProfile.validations
 
     RuntimeValidator.shaclModel(validations, validationFunctionsUrl)
   }
