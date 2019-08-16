@@ -2,11 +2,8 @@ package amf.client.model.document
 
 import amf.client.convert.VocabulariesClientConverter._
 import amf.client.model.StrField
-import amf.client.model.domain.{DocumentsModel, DomainElement, External, NodeMapping}
-import amf.plugins.document.vocabularies.model.document.{
-  Dialect => InternalDialect,
-  DialectLibrary => InternalDialectLibrary
-}
+import amf.client.model.domain.{DocumentsModel, External}
+import amf.plugins.document.vocabularies.model.document.{Dialect => InternalDialect}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -22,7 +19,7 @@ case class Dialect(private[amf] val _internal: InternalDialect) extends BaseUnit
   def header: String                            = _internal.header
   def isLibraryHeader(header: String): Boolean  = _internal.isLibraryHeader(header)
   def isFragmentHeader(header: String): Boolean = _internal.isFragmentHeader(header)
-  def libraryHeaders: ClientList[String]        = _internal.libraryHeaders.asClient
+  def libraryHeader: ClientOption[String]      = _internal.libraryHeader.asClient
   def fragmentHeaders: ClientList[String]       = _internal.fragmentHeaders.asClient
   def allHeaders: ClientList[String]            = _internal.allHeaders.asClient
   def externals: ClientList[External]           = _internal.externals.asClient

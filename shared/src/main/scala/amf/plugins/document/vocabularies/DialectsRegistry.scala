@@ -2,7 +2,6 @@ package amf.plugins.document.vocabularies
 
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.metamodel.{Field, Obj, Type}
-import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.{Annotations, DefaultParserSideErrorHandler}
 import amf.core.registries.AMFDomainEntityResolver
@@ -14,7 +13,7 @@ import amf.core.vocabulary.ValueType
 import amf.internal.environment.Environment
 import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceUnit}
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
 
@@ -23,8 +22,8 @@ import scala.concurrent.Future
 
 class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
-  protected var map: Map[String, Dialect]                               = Map()
-  protected var resolved: Map[String, Boolean]                          = Map()
+  protected var map: Map[String, Dialect] = Map()
+  protected var resolved: Set[String]     = Set()
 
   private[vocabularies] var validations: Map[String, ValidationProfile] = Map()
 
@@ -44,48 +43,43 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   def dialectFor(instance: DialectInstanceUnit): Option[Dialect] =
     instance.definedBy().option().flatMap(id => map.values.find(_.id == id))
 
-  def allDialects(): Seq[Dialect] = map.values.toSeq
+  def allDialects(): Iterable[Dialect] = map.values
 
   def register(dialect: Dialect): DialectsRegistry = {
     dialect.allHeaders foreach { header =>
       map += (header -> dialect)
-      resolved -= header
     }
-    validations -= dialect.nameAndVersion()
+    resolved -= dialect.header
+    validations -= dialect.header
     this
   }
 
-  def findDialectForHeader(header:String):Option[Dialect] = {
-    val dialectId = headerKey(header.split("\\|").head)
-    map.get(dialectId).filter(d => !d.documents().keyProperty().value())
-  }
-  /**
-    * Finds and resolve if unresolved a resolved dialect, the output of this invocation is a dialect ready to parse
-    * @param header
-    * @param k
-    * @return
-    */
+  def findDialectForHeader(header: String): Option[Dialect] = map.get(header)
 
-  def dialectById(id:String):Option[Dialect] = map.values.find(_.id == id)
+  def dialectById(id: String): Option[Dialect] = map.values.find(_.id == id)
 
   def withRegisteredDialect(header: String)(k: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
     val dialectId = headerKey(header.split("\\|").head)
     map.get(dialectId) match {
       case Some(dialect) => withRegisteredDialect(dialect)(k)
-      case _ => None
+      case _             => None
     }
   }
 
-  def withRegisteredDialect(dialect: Dialect)(k: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
+  def withRegisteredDialect(dialect: Dialect)(fn: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
+    if (!resolved.contains(dialect.header))
+      fn(resolveDialect(dialect))
+    else
+      fn(dialect)
+  }
 
-    if (!resolved.getOrElse(dialect.id, false)) {
-      val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
-      resolved += (dialect.id -> true)
-      map += (dialect.id      -> resolvedDialect)
-      k(resolvedDialect)
-    } else {
-      k(dialect)
+  private def resolveDialect(dialect: Dialect) = {
+    val solved = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
+    dialect.allHeaders foreach { header =>
+      map += (header -> solved)
     }
+    resolved += dialect.header
+    solved
   }
 
   protected def headerKey(header: String): String = header.trim.replace(" ", "")
@@ -147,16 +141,10 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   }
 
   def resolveRegisteredDialect(header: String): Unit = {
-    val dialectId = headerKey(header.split("\\|").head)
-    map.get(dialectId) match {
-      case Some(dialect) =>
-        if (!resolved.getOrElse(dialectId, false)) {
-          val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
-          resolved += (dialectId -> true)
-          map += (dialectId      -> resolvedDialect)
-        }
-      case _ =>
-        throw new Exception(s"Cannot find register Dialect with header '$header'")
+    val h = headerKey(header.split("\\|").head)
+    map.get(h) match {
+      case Some(dialect) => resolveDialect(dialect)
+      case _ => throw new Exception(s"Cannot find Dialect with header '$header'")
     }
   }
 
@@ -186,7 +174,8 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
       case (header, dialect) =>
         if (dialect.id == uri) {
           map -= header
-          validations -= dialect.nameAndVersion()
+          validations -= dialect.header
+          resolved -= dialect.header
         }
     }
   }

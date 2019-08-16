@@ -45,7 +45,8 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def documents(): DocumentsModel  = fields.field(Documents)
 
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
-  def header: String           = s"%${name().value()} ${version().value()}".replace(" ", "")
+
+  def header: String = s"%${nameAndVersion()}".replace(" ", "")
 
   override def componentId: String = ""
 
@@ -53,24 +54,21 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def withVersion(version: String): Dialect                    = set(Version, version)
   def withDocuments(documentsMapping: DocumentsModel): Dialect = set(Documents, documentsMapping)
 
-  def libraryHeaders: Seq[String] = Option(documents().library()) match {
-    case Some(library) => Seq(s"%Library/${header.replaceFirst("%", "")}")
-    case None          => Nil
-  }
+  def libraryHeader: Option[String] = Option(documents().library()).map(_ => s"%Library/${header.stripPrefix("%")}")
 
-  def patchHeaders: Seq[String] = Seq(s"%Patch/${header.replaceFirst("%", "")}")
+  def patchHeader: String = s"%Patch/${header.stripPrefix("%")}"
 
-  def isLibraryHeader(header: String): Boolean = libraryHeaders.contains(header.replace(" ", ""))
+  def isLibraryHeader(h: String): Boolean = libraryHeader.contains(h.replace(" ", ""))
 
-  def isPatchHeader(header: String): Boolean = patchHeaders.contains(header.replace(" ", ""))
+  def isPatchHeader(h: String): Boolean = patchHeader == h.replace(" ", "")
 
   def fragmentHeaders: Seq[String] = documents().fragments().map { fragment =>
-    s"%${fragment.documentName().value()}/${header.replaceFirst("%", "")}".replace(" ", "")
+    s"%${fragment.documentName().value().replace(" ", "")}/${header.stripPrefix("%")}"
   }
 
-  def isFragmentHeader(header: String): Boolean = fragmentHeaders.contains(header.replace(" ", ""))
+  def isFragmentHeader(h: String): Boolean = fragmentHeaders.contains(h.replace(" ", ""))
 
-  def allHeaders: Seq[String] = Seq(header) ++ libraryHeaders ++ fragmentHeaders ++ patchHeaders
+  def allHeaders: Seq[String] = Seq(header) ++ libraryHeader ++ fragmentHeaders ++ Seq(patchHeader)
 
   def meta: Obj = DialectModel
 }
@@ -101,14 +99,17 @@ object DialectLibrary {
   def apply(annotations: Annotations): DialectLibrary = DialectLibrary(Fields(), annotations)
 }
 
-case class DialectFragment(fields: Fields, annotations: Annotations) extends BaseUnit with EncodesModel with ExternalContext[DialectFragment] {
+case class DialectFragment(fields: Fields, annotations: Annotations)
+    extends BaseUnit
+    with EncodesModel
+    with ExternalContext[DialectFragment] {
 
   def references: Seq[BaseUnit]     = fields.field(References)
   override def encodes: NodeMapping = fields.field(Encodes)
 
   override def componentId: String = ""
 
-  def withEncodes(nodeMapping: NodeMapping): DialectFragment   = set(Encodes, nodeMapping)
+  def withEncodes(nodeMapping: NodeMapping): DialectFragment = set(Encodes, nodeMapping)
 
   def meta: Obj = DialectFragmentModel
 }
