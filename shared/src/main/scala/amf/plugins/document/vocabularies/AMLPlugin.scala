@@ -15,14 +15,9 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
-import amf.core.validation.{
-  AMFValidationReport,
-  EffectiveValidations,
-  SeverityLevels,
-  ValidationResultProcessor
-}
+import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
 import amf.internal.environment.Environment
-import amf.plugins.document.vocabularies.AMLPlugin.registry
+import amf.plugins.document.vocabularies.AMLPlugin.{dialectHeaderDirective, registry}
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
@@ -37,7 +32,6 @@ import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContex
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.validation.DialectValidations
 import amf.{ProfileName, RamlProfile}
 import org.yaml.model._
 
@@ -64,8 +58,9 @@ trait JsonHeaderExtractor {
     }
   }
 
-  def dialectForDoc(document:YDocument): Option[String] = {
-    document.node.toOption[YMap].map(_.entries).getOrElse(Nil).collectFirst({ case e if e.key.asScalar.exists(_.text == "$dialect") => e}).flatMap(e => e.value.asScalar.map(_.text))
+  private def dialectForDoc(document:YDocument): Option[String] = {
+    document.node.toOption[YMap].map(_.entries).getOrElse(Nil)
+      .collectFirst({ case e if e.key.asScalar.exists(_.text == "$dialect") => e}).flatMap(e => e.value.asScalar.map(_.text))
   }
 }
 
@@ -75,11 +70,10 @@ trait KeyPropertyHeaderExtractor {
       .allDialects()
       .find(d => d.documents().keyProperty().value() && containsVersion(root, d))
 
-  def dialectInKey(root: Root): Boolean =
+  def dialectInKey(root: Root): Option[Dialect] =
     root.parsed match {
-      case parsedInput: SyamlParsedDocument =>
-        dialectByKeyProperty(parsedInput.document).isDefined
-      case _ => false
+      case parsedInput: SyamlParsedDocument => dialectByKeyProperty(parsedInput.document)
+      case _ => None
     }
 
   private def containsVersion(document: YDocument, d: Dialect): Boolean =
@@ -91,25 +85,21 @@ trait KeyPropertyHeaderExtractor {
 }
 
 object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor with KeyPropertyHeaderExtractor {
-  def apply(root: Root): Boolean = comment(root) match {
-    case Some(comment: YComment) =>
-      comment.metaText match {
-        case t if t.startsWith("%Vocabulary 1.0") => true
-        case t if t.startsWith("%Dialect 1.0")    => true
-        case t if t.startsWith("%RAML 1.0")       => false
-        case t if t.startsWith("%RAML 0.8")       => false
-        case t if t.startsWith("%")               => true
-        case _                                    => false
-      }
-    case _ =>
-      dialect(root).isDefined || dialectInKey(root)
+  def apply(root: Root): Boolean = {
+    val header = dialectHeaderDirective(root)
+
+    header match {
+      case Some(ExtensionHeader.DialectHeader) | Some(ExtensionHeader.DialectFragmentHeader) | Some(ExtensionHeader.DialectLibraryHeader) | Some(ExtensionHeader.VocabularyHeader) => true
+      case Some(other) => registry.findDialectForHeader(other).isDefined
+      case _ => dialectInKey(root).isDefined
+    }
   }
 }
 
 object ReferenceStyles {
   val RAML = "RamlStyle"
   val JSONSCHEMA = "JsonSchemaStyle"
-  val all = Seq(RAML, JSONSCHEMA)
+  val all: Seq[String] = Seq(RAML, JSONSCHEMA)
 }
 
 object AMLPlugin
@@ -201,10 +191,7 @@ object AMLPlugin
                      platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
 
-    val header: Option[String] = comment(document) match {
-      case Some(comment) => Some(comment.metaText)
-      case _ => dialect(document).map(metaText => s"%$metaText")
-    }
+    val header = dialectHeaderDirective(document)
 
     header match {
         case Some(ExtensionHeader.VocabularyHeader) =>
@@ -219,20 +206,23 @@ object AMLPlugin
     }
   }
 
-  private def parseDialectInstance(root: Root, header: Option[String], parentContext: ParserContext) = {
-    val document = root.parsed match {
-      case a: SyamlParsedDocument => a.document
-      case _ => throw new Exception(s"Cannot parse as dialect a document of kind: ${root.parsed.getClass.getSimpleName}")
+  /** Fetch header or $dialect directive. */
+  def dialectHeaderDirective(document: Root): Option[String] = {
+    val header = comment(document) match {
+      case Some(comment) => Some(comment.metaText)
+      case _ => dialect(document).map(metaText => s"%$metaText")
     }
+    header.map(h => h.split("\\|").head.replace(" ", ""))
+  }
 
+  private def parseDialectInstance(root: Root, header: Option[String], parentContext: ParserContext) = {
     val headerKey = header.map(h =>  h.split("\\|").head.replace(" ", ""))
 
-    val dialect = headerKey.flatMap(registry.findDialectForHeader)
-      .orElse(dialectByKeyProperty(document))
+    val dialect = headerKey.flatMap(registry.findDialectForHeader).orElse(dialectInKey(root))
 
     dialect match {
       case Some(d) => parseDocumentWithDialect(root,parentContext, d, headerKey)
-      case _ => throw new Exception(s"Unknown type of dialect for doc: ${root.location}")
+      case _ => throw new Exception(s"Unknown Dialect for document: ${root.location}")
     }
   }
 
