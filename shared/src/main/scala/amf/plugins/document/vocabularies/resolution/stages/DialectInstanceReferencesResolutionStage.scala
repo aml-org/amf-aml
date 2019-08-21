@@ -4,6 +4,7 @@ import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.ErrorHandler
+import amf.core.resolution.stages.selectors.LinkSelector
 import amf.core.resolution.stages.{ModelReferenceResolver, ResolutionStage}
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
@@ -16,14 +17,8 @@ class DialectInstanceReferencesResolutionStage()(override implicit val errorHand
   override def resolve[T <: BaseUnit](model: T): T = {
     this.model = Some(model)
     this.modelResolver = Some(new ModelReferenceResolver(model))
-    model.transform(findLinkPredicates, transform).asInstanceOf[T]
+    model.transform(LinkSelector, transform).asInstanceOf[T]
   }
-
-  def findLinkPredicates(element: DomainElement): Boolean =
-    element match {
-      case l: Linkable => l.isLink
-      case _           => false
-    }
 
   // Internal request that checks for mutually recursive types
   protected def recursiveResolveInvocation(model: BaseUnit,
@@ -32,7 +27,7 @@ class DialectInstanceReferencesResolutionStage()(override implicit val errorHand
     this.mutuallyRecursive = mutuallyRecursive
     this.model = Some(model)
     this.modelResolver = Some(modelResolver.getOrElse(new ModelReferenceResolver(model)))
-    model.transform(findLinkPredicates, transform)
+    model.transform(LinkSelector, transform)
   }
 
   def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
