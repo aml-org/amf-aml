@@ -35,7 +35,7 @@ sonarProperties ++= Map(
   "sonar.github.repository" -> "mulesoft/amf-aml",
   "sonar.sources" -> "shared/src/main/scala",
   "sonar.tests" -> "shared/src/test/scala",
-  "sonar.scala.scoverage.reportPath" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml"
+  "sonar.scala.coverage.reportPaths" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml"
 )
 
 lazy val workspaceDirectory: File =
@@ -44,7 +44,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "4.0.84"
+val amfCoreVersion = "4.0.86"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
