@@ -17,6 +17,7 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanc
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
 
+import scala.collection.immutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -184,4 +185,10 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   def registerDialect(url: String, code: String, env: Environment): Future[Dialect] =
     registerDialect(url, env.add(StringResourceLoader(url, code)))
+
+  def remove(uri:String): Unit = {
+    val headers = map.filter(_._2.id == uri).keys.toList
+    resolved = resolved.filter(l => !headers.contains(l))
+    map = map.filter(_._2.id != uri)
+  }
 }
