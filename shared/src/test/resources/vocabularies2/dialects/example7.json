@@ -68,6 +68,11 @@
         ]
       }
     ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "1.0.0"
+      }
+    ],
     "http://a.ml/vocabularies/document#references": [
       {
         "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml",
@@ -189,6 +194,11 @@
                 ]
               }
             ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#version": [
+          {
+            "@value": "1.0.0"
           }
         ],
         "http://a.ml/vocabularies/document#references": [],

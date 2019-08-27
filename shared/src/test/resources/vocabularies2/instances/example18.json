@@ -159,6 +159,11 @@
         ]
       }
     ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "1.0.0"
+      }
+    ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
         "@id": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/source-map",
