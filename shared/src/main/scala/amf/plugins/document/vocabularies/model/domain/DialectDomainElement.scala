@@ -157,13 +157,18 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     value match {
       case Nil if !fields.exists(f) => set(f, AmfArray(Nil), Annotations(node))
       case _ =>
-        value.foreach {
+        val (unresolved, normal) = value.partition({
+          case l:Linkable if l.isUnresolved => true
+          case _ => false
+        })
+        set(f, AmfArray(normal), Annotations(node))
+        unresolved.foreach {
           case linkable: Linkable if linkable.isUnresolved =>
             linkable.toFutureRef {
               case d: DialectDomainElement => setObjInCollection(f, node, d)
               case _                       => // ignore
             }
-          case other => setObjInCollection(f, node, other)
+          case other => // ignore
         }
     }
     this
@@ -171,14 +176,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
   private def setObjInCollection(f: Field, node: YNode, newObj: DialectDomainElement) = {
     val objs: Seq[DialectDomainElement] = fields.field(f)
-    objs.partition(_.id == newObj.id) match {
-      case (_ :: Nil, others) =>
-        set(f, AmfArray(others :+ newObj), Annotations(node))
-      case (_, others) =>
-        set(f, AmfArray(others :+ newObj), Annotations(node))
-      case _ => // already set it
-        set(f, AmfArray(Nil), Annotations(node))
-    }
+    set(f, AmfArray(objs :+ newObj), Annotations(node))
   }
 
   def setProperty(property: PropertyMapping, value: String, entry: YMapEntry): DialectDomainElement = {
