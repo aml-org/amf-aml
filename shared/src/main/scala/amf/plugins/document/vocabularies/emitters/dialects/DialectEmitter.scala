@@ -33,7 +33,9 @@ trait AliasesConsumer extends DialectEmitterHelper {
           if (id.startsWith(dialect.id)) {
             Some(nodeMapping.name.value())
           } else {
-            aliases.keySet.find(id.contains(_)).map { key =>
+            val matchingAliases = aliases.keySet.filter(id.contains(_))
+            // we pick the most specific (longer) matching URI
+            matchingAliases.toList.sorted.reverse.headOption.map { key =>
               val alias = aliases(key)._1
               alias + "." + nodeMapping.name.value()
             } orElse {
