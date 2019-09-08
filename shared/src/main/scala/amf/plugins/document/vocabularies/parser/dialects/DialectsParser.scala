@@ -732,6 +732,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             val value = ValueNode(entry.value)
             val range = value.string().toString
             range match {
+              case "guid" =>
+                propertyMapping.withLiteralRange((Namespace.AmfAml + "guid").iri)
               case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
                   "time" | "date" | "anyType" =>
                 propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
