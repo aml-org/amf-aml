@@ -117,7 +117,7 @@
         ],
         "http://www.w3.org/2000/01/rdf-schema#range": [
           {
-            "@id": "http://a.ml/vocabularies/amf/aml#guid"
+            "@id": "http://a.ml/vocabularies/shapes#guid"
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

@@ -138,7 +138,8 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
         .distinct
         .map(iri => Field(Type.Str, ValueType(iri.value()), ModelDoc(ModelVocabularies.Parser, "custom", iri.value())))
 
-    new DialectDomainElementModel(Seq(nodeType.value()), fields ++ mapPropertiesFields, Some(nodeMapping))
+    val nodeTypes = nodeType.option().map(Seq(_)).getOrElse(Nil)
+    new DialectDomainElementModel(nodeTypes, fields ++ mapPropertiesFields, Some(nodeMapping))
   }
 
   def resolveRegisteredDialect(header: String): Unit = {

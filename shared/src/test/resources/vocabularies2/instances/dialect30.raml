@@ -1,0 +1,16 @@
+#%Dialect 1.0
+
+dialect: Test
+version: "1.30"
+
+documents:
+  root:
+    encodes: RootNode
+
+nodeMappings:
+
+  RootNode:
+    mapping:
+      id:
+        range: guid
+        unique: true

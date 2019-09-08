@@ -617,7 +617,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         if (ctx.isPatch) node.withAbstract(true)
         mappable match {
           case mapping:NodeMapping =>
-            node.withDefinedBy(mapping).withInstanceTypes(Seq(mapping.nodetypeMapping.value(), mapping.id))
+            node.withDefinedBy(mapping).withInstanceTypes(Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).collect { case Some(t) => t})
           case _ => // ignore
         }
       case other => other
@@ -1085,6 +1085,8 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             property.literalRange().value() == DataType.Date ||
             property.literalRange().value() == DataType.DateTime =>
         Some(YNode(value.value, YType.Timestamp).as[SimpleDateTime])
+      case YType.Str if property.literalRange().value() == (Namespace.Shapes + "guid").iri() =>
+        Some(value.as[YScalar].text)
       case YType.Str =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,

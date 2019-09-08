@@ -18,7 +18,7 @@ import org.yaml.model.{YDocument, YType}
 
 trait AliasMapper {
   def aliasFor(id: String, aliasMapping: Map[String, String]): String = {
-    if (id == (Namespace.AmfAml + "guid").iri()) {
+    if (id == (Namespace.Shapes + "guid").iri()) {
       "guid"
     }else if (id.contains(Namespace.Xsd.base)) {
       id.split(Namespace.Xsd.base).last match {

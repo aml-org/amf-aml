@@ -176,7 +176,7 @@
             ],
             "http://www.w3.org/ns/shacl#datatype": [
               {
-                "@id": "http://a.ml/vocabularies/amf/aml#guid"
+                "@id": "http://a.ml/vocabularies/shapes#guid"
               }
             ],
             "http://a.ml/vocabularies/meta#unique": [
