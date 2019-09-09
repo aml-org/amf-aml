@@ -82,6 +82,11 @@ object DialectValidations extends Validations {
     "Invalid dialect patch"
   )
 
+  val GuidRangeWithoutUnique = validation(
+    "guid-scalar-non-unique",
+    "GUID scalar type declared without unique constraint"
+  )
+
   override val levels: Map[String, Map[ProfileName, String]] = Map()
 
   override val validations: List[ValidationSpecification] = List(
@@ -97,6 +102,7 @@ object DialectValidations extends Validations {
     MissingVocabulary,
     InvalidUnionType,
     InvalidDialectPatch,
-    DialectError
+    DialectError,
+    GuidRangeWithoutUnique
   )
 }

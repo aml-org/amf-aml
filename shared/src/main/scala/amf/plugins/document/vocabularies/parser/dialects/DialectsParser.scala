@@ -17,6 +17,7 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragmen
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
+import amf.validation.DialectValidations
 import amf.validation.DialectValidations.DialectError
 import org.yaml.model._
 
@@ -698,6 +699,19 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
+  def checkGuidUniqueContraint(propertyMapping: PropertyMapping, ast: YPart): Unit = {
+    propertyMapping.literalRange().option() foreach  { case literal =>
+      if (literal == (Namespace.Shapes + "guid").iri() && !propertyMapping.unique().option().getOrElse(false)) {
+        ctx.warning(
+          DialectValidations.GuidRangeWithoutUnique,
+          propertyMapping.id,
+          s"Declaration of property '${propertyMapping.name().value()}' with range GUID and without unique constraint",
+          ast
+        )
+      }
+    }
+  }
+
   def parsePropertyMapping(entry: YMapEntry, adopt: PropertyMapping => Any): PropertyMapping = {
     val map             = entry.value.as[YMap]
     val propertyMapping = PropertyMapping(map)
@@ -732,6 +746,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             val value = ValueNode(entry.value)
             val range = value.string().toString
             range match {
+              case "guid" =>
+                propertyMapping.withLiteralRange((Namespace.Shapes + "guid").iri)
               case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
                   "time" | "date" | "anyType" =>
                 propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
@@ -866,6 +882,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     // TODO: check dependencies among properties
 
     parseAnnotations(map, propertyMapping, ctx.declarations)
+
+    // We check that if this is a GUID it also has the unique contraint
+    checkGuidUniqueContraint(propertyMapping, map)
 
     propertyMapping
   }

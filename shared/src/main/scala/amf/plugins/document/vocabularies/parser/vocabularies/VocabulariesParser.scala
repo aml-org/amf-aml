@@ -500,6 +500,8 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
           entry => {
             val text = entry.value.as[YScalar].text
             val rangeId = text match {
+              case "guid" =>
+                Some((Namespace.Shapes + "guid").iri())
               case "any" | "uri" | "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" | "dateTime" =>
                 Some(DataType(text))
               case classAlias =>

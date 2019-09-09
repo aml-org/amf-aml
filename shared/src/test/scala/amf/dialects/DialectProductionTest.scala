@@ -57,6 +57,7 @@ class DialectProductionTest extends DialectTests{
                 basePath + "cfg/")
   }
 
+
   test("Can parse ABOUT dialect") {
     cycle("ABOUT-dialect.raml", "ABOUT-dialect.jsonld", VocabularyYamlHint, Amf, basePath + "ABOUT/")
   }
@@ -109,6 +110,10 @@ class DialectProductionTest extends DialectTests{
 
   test("Can parse activity deployments demo") {
     withDialect("dialect.yaml", "deployment.yaml", "deployment.json", VocabularyYamlHint, Amf, basePath + "deployments_demo/")
+  }
+
+  test("Can parse guids example") {
+    withDialect("guids_dialect.yaml", "guids_instance.yaml", "guids_instance.json", VocabularyYamlHint, Amf, basePath + "guids/")
   }
 
 }

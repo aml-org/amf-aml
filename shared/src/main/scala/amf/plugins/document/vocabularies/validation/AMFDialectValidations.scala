@@ -265,6 +265,22 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
               ))
           )
 
+        case literal if literal.endsWith("guid") =>
+          val message = s"Property '${prop.name()}'  value must be of type xsd:string > $dataRange"
+          validations += new ValidationSpecification(
+            name = validationId(node, prop.name().value(), "dataRange"),
+            message = message,
+            ramlMessage = Some(message),
+            oasMessage = Some(message),
+            targetClass = Seq(node.id),
+            propertyConstraints = Seq(
+              PropertyConstraint(
+                ramlPropertyId = prop.nodePropertyMapping().value(),
+                name = validationId(node, prop.name().value(), "dataRange") + "/prop",
+                message = Some(message),
+                datatype = Some((Namespace.Xsd + "string").iri())
+              ))
+          )
         case literal =>
           val message = s"Property '${prop.name()}'  value must be of type $dataRange"
           validations += new ValidationSpecification(

@@ -378,6 +378,10 @@ case class PropertyMappingEmitter(dialect: Dialect,
         }
 
         propertyMapping.literalRange().option().foreach {
+          case literal if literal == (Namespace.Shapes + "guid").iri() =>
+            val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
+            emitters ++= Seq(MapEntryEmitter("range", "guid", YType.Str, pos))
+
           case literal if literal.endsWith("anyURI") =>
             val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
             emitters ++= Seq(MapEntryEmitter("range", "uri", YType.Str, pos))
