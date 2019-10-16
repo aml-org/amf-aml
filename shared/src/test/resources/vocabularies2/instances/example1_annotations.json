@@ -93,7 +93,7 @@
           }
         ],
         "http://test.com/a#hey": {
-          "http://a.ml/vocabularies/core#name": [
+          "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "(a.hey)"
             }
@@ -143,7 +143,7 @@
           ]
         },
         "http://test.com/a#hey2": {
-          "http://a.ml/vocabularies/core#name": [
+          "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "x-a-hey2"
             }
@@ -193,7 +193,7 @@
           ]
         },
         "http://a.ml/vocabularies/data#anon1": {
-          "http://a.ml/vocabularies/core#name": [
+          "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "(anon1)"
             }
@@ -243,7 +243,7 @@
           ]
         },
         "http://a.ml/vocabularies/data#anon2": {
-          "http://a.ml/vocabularies/core#name": [
+          "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "x-anon2"
             }
@@ -293,7 +293,7 @@
           ]
         },
         "http://test.com/b#ho": {
-          "http://a.ml/vocabularies/core#name": [
+          "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "(b.ho)"
             }
@@ -343,7 +343,7 @@
           ]
         },
         "http://test.com/b#ho2": {
-          "http://a.ml/vocabularies/core#name": [
+          "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "x-b-ho2"
             }

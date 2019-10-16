@@ -377,7 +377,7 @@
               }
             ],
             "http://schema.org/za": {
-              "http://a.ml/vocabularies/core#name": [
+              "http://a.ml/vocabularies/core#extensionName": [
                 {
                   "@value": "(schema-org.za)"
                 }
@@ -456,7 +456,7 @@
           }
         ],
         "http://schema.org/nodeB": {
-          "http://a.ml/vocabularies/core#name": [
+          "http://a.ml/vocabularies/core#extensionName": [
             {
               "@value": "(schema-org.nodeB)"
             }
@@ -573,7 +573,7 @@
               }
             ],
             "http://a.ml/vocabularies/vocab2#a": {
-              "http://a.ml/vocabularies/core#name": [
+              "http://a.ml/vocabularies/core#extensionName": [
                 {
                   "@value": "(vocab2.a)"
                 }
