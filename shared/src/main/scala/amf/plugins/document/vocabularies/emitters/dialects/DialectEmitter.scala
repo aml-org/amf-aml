@@ -45,6 +45,7 @@ trait AliasesConsumer extends DialectEmitterHelper {
 
         case _ =>
           if (id.startsWith(dialect.id)) {
+            // local reference
             Some(id.split(dialect.id).last.replace("/declarations/", ""))
           } else {
             aliases.keySet.find(id.contains(_)) map { key =>
@@ -53,7 +54,11 @@ trait AliasesConsumer extends DialectEmitterHelper {
                 case i if i.contains("/declarations/") => i.replace("/declarations/", "")
                 case nonLibraryDeclaration => nonLibraryDeclaration
               }
-              alias + "." + postfix
+              if (postfix.startsWith("#")) {
+                alias + "." + postfix.drop(1) // recursive references
+              } else {
+                alias + "." + postfix
+              }
             }
           }
       }

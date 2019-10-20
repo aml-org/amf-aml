@@ -417,7 +417,7 @@ object AMLPlugin
   /**
     * Does references in this type of documents be recursive?
     */
-  override val allowRecursiveReferences: Boolean = false
+  override val allowRecursiveReferences: Boolean = true
 
   def shapesForDialect(dialect: Dialect, validationFunctionsUrl: String): RdfModel = {
     val validationProfile = computeValidationProfile(dialect)

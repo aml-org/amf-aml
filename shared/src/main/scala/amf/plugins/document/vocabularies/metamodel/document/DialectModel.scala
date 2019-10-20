@@ -2,7 +2,7 @@ package amf.plugins.document.vocabularies.metamodel.document
 
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
-import amf.core.metamodel.document.{DocumentModel, FragmentModel, ModuleModel}
+import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, FragmentModel, ModuleModel}
 import amf.core.metamodel.domain.{ExternalModelVocabularies, ModelDoc, ModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -25,7 +25,7 @@ object DialectModel extends DocumentModel with ExternalContextModel {
   override val `type`: List[ValueType] =
     Namespace.Meta + "Dialect" :: DocumentModel.`type`
 
-  override val fields: List[Field] = Name :: Version :: Externals :: Documents :: DocumentModel.fields
+  override val fields: List[Field] = Name :: Version :: Externals :: Documents :: BaseUnitModel.Location ::  DocumentModel.fields
 
   override val doc: ModelDoc = ModelDoc(
     ModelVocabularies.Meta,

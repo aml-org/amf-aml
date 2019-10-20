@@ -102,6 +102,14 @@ trait DialectsParsingTest extends DialectTests {
     init().flatMap(_ => cycle("example22.raml", "example22.json", VocabularyYamlHint, Amf))
   }
 
+  test("parse 23a test") {
+    init().flatMap(_ => cycle("example23a.raml", "example23a.json", VocabularyYamlHint, Amf))
+  }
+
+  test("parse 23b test") {
+    init().flatMap(_ => cycle("example23b.raml", "example23b.json", VocabularyYamlHint, Amf))
+  }
+
   test("parse mappings_lib test") {
     init().flatMap(_ => cycle("mappings_lib.raml", "mappings_lib.json", VocabularyYamlHint, Amf))
   }
@@ -192,6 +200,14 @@ trait DialectsParsingTest extends DialectTests {
 
   test("generate 22 test") {
     init().flatMap(_ => cycle("example22.json", "example22.raml", AmfJsonHint, Aml))
+  }
+
+  test("generate 23a test") {
+    init().flatMap(_ => cycle("example23a.json", "example23a.raml", AmfJsonHint, Aml))
+  }
+
+  test("generate 23b test") {
+    init().flatMap(_ => cycle("example23b.json", "example23b.raml", AmfJsonHint, Aml))
   }
 
   test("generate mappings_lib test") {

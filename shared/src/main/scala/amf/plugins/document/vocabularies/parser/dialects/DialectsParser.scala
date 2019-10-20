@@ -4,7 +4,7 @@ import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.metamodel.document.FragmentModel
 import amf.core.model.DataType
-import amf.core.model.document.{BaseUnit, DeclaresModel}
+import amf.core.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
 import amf.core.parser.{Annotations, BaseSpecParser, ErrorHandler, FutureDeclarations, ParserContext, _}
@@ -190,6 +190,20 @@ class DialectContext(private val wrapped: ParserContext, private val ds: Option[
     with DialectSyntax
     with SyntaxErrorReporter {
 
+  def findInRecursiveShapes(key: String) = {
+    val qname = QName(key)
+    if (qname.isQualified) {
+      recursiveDeclarations.get(qname.qualification) match {
+        case Some(u) => Some(u.id + "#/declarations/" + qname.name)
+        case _       => None
+      }
+    } else {
+      None
+    }
+  }
+
+  var recursiveDeclarations: Map[String,RecursiveUnit] = Map()
+
   val declarations: DialectDeclarations =
     ds.getOrElse(new DialectDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
 
@@ -215,6 +229,9 @@ case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.
         }
       case f: DialectFragment =>
         ctx.declarations.fragments += (alias -> FragmentRef(f.encodes, f.location()))
+
+      case r: RecursiveUnit =>
+        ctx.recursiveDeclarations = ctx.recursiveDeclarations.updated(alias, r)
     }
   }
 
@@ -232,14 +249,15 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
 
   def parse(location: String): ReferenceDeclarations = {
     val result = ReferenceDeclarations()
-    parseLibraries(dialect, result, location)
-    parseExternals(result, location)
 
     references.foreach {
       case ParsedReference(f: DialectFragment, origin: Reference, None) => result += (origin.url, f)
+      case ParsedReference(r: RecursiveUnit, origin: Reference, _)      => result += (origin.url, r)
       case _                                                            =>
     }
 
+    parseLibraries(dialect, result, location)
+    parseExternals(result, location)
     result
   }
 
@@ -261,7 +279,12 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
                 collectAlias(dialect, alias -> (module.id, url))
                 result += (alias, module)
               case other =>
-                ctx.violation(DialectError, id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
+                ctx.recursiveDeclarations.get(url) match {
+                  case Some(r: RecursiveUnit) =>
+                    result += (alias, r)
+                  case None                   =>
+                    ctx.violation(DialectError, id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
+                }
             }
           })
     )
@@ -394,15 +417,20 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           case Some(mapping) =>
             Some(mapping.id)
           case _ =>
-            ctx.missingPropertyRangeViolation(
-              nodeMappingRef.value(),
-              mappable.id,
-              mappable.fields
-                .entry(PropertyMappingModel.ObjectRange)
-                .map(_.value.annotations)
-                .getOrElse(mappable.annotations)
-            )
-            None
+            ctx.findInRecursiveShapes(nodeMappingRef.value()) match {
+              case Some(recursiveId) =>
+                Some(recursiveId)
+              case _                 =>
+                ctx.missingPropertyRangeViolation(
+                  nodeMappingRef.value(),
+                  mappable.id,
+                  mappable.fields
+                    .entry(PropertyMappingModel.ObjectRange)
+                    .map(_.value.annotations)
+                    .getOrElse(mappable.annotations)
+                )
+                None
+            }
         }
       }
     }
