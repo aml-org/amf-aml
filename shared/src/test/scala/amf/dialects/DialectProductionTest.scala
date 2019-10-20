@@ -92,15 +92,6 @@ class DialectProductionTest extends DialectTests{
     cycle("dialect.raml", "dialect.json", VocabularyYamlHint, Amf, basePath + "Instagram/")
   }
 
-  /*
-  test("HERE_HERE Can parse and generate the Instagram dialect") {
-    println("HERE...")
-    init().flatMap { _ =>
-      println("HO...")
-      cycle("schema.yaml", "out.jsonld", VocabularyYamlHint, Amf, "/home/agarrote/Development/cloudinformationmodel/cim-temp/src/subjectAreas/Party/Party")
-    }
-  }
-*/
   test("Can parse and generate Instance dialect instance 1") {
     withDialect("dialect.raml", "instance1.raml", "instance1.json", VocabularyYamlHint, Amf, basePath + "Instagram/")
   }

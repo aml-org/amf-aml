@@ -232,11 +232,11 @@ object AMLPlugin
       case Some(ExtensionHeader.VocabularyHeader) =>
         Some(new VocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
       case Some(ExtensionHeader.DialectLibraryHeader) =>
-        Some(new DialectsParser(document)(new DialectContext(parentContext)).parseLibrary())
+        Some(new DialectsParser(document)(cleanDialectContext(parentContext, document)).parseLibrary())
       case Some(ExtensionHeader.DialectFragmentHeader) =>
         Some(new DialectsParser(document)(new DialectContext(parentContext)).parseFragment())
       case Some(ExtensionHeader.DialectHeader) =>
-        parseAndRegisterDialect(document, parentContext)
+        parseAndRegisterDialect(document, cleanDialectContext(parentContext, document))
       case _ => parseDialectInstance(document, header, parentContext)
     }
   }
@@ -424,5 +424,11 @@ object AMLPlugin
     val validations       = validationProfile.validations
 
     RuntimeValidator.shaclModel(validations, validationFunctionsUrl)
+  }
+
+  // context that opens a new context for declarations and copies the global JSON Schema declarations
+  protected def cleanDialectContext(wrapped: ParserContext, root: Root): DialectContext = {
+    val cleanNested = ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = wrapped.parserCount)
+    new DialectContext(cleanNested)
   }
 }

@@ -538,7 +538,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                 ctx.violation(DialectError, parent, s"Error only valid node mapping or union mapping can be declared", entry)
                 None
             }) match {
-              case Some(nodeMapping: NodeMapping)      => ctx.declarations += nodeMapping
+              case Some(nodeMapping: NodeMapping)      =>
+                ctx.declarations += nodeMapping
               case Some(nodeMapping: UnionNodeMapping) => ctx.declarations += nodeMapping
               case None                                => ctx.violation(DialectError, parent, s"Error parsing shape '$entry'", entry)
             }
