@@ -11,7 +11,11 @@ import org.yaml.model.{YNode, YPart}
 trait SyntaxErrorReporter { this: ErrorHandler =>
 
   def missingTermViolation(term: String, node: String, ast: YPart): Unit = {
-    violation(MissingTermSpecification, node, s"Cannot find vocabulary term $term", ast)
+    violation(MissingTermSpecification, node, s"Cannot find class vocabulary term $term", ast)
+  }
+
+  def missingTermWarning(term: String, node: String, ast: YPart): Unit = {
+    warning(MissingPropertyTermSpecification, node, s"Cannot find property vocabulary term $term", ast)
   }
 
   def missingFragmentViolation(fragment: String, node: String, ast: YPart): Unit = {

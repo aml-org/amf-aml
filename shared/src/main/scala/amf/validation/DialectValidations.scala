@@ -27,6 +27,11 @@ object DialectValidations extends Validations {
     "Missing vocabulary term"
   )
 
+  val MissingPropertyTermSpecification = validation(
+    "missing-property-vocabulary-term",
+    "Missing property vocabulary term"
+  )
+
   val MissingFragmentSpecification = validation(
     "missing-dialect-fragment",
     "Missing dialect fragment"

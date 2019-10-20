@@ -144,7 +144,7 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
     imported += (alias -> vocabulary)
   }
 
-  var pendingLocal: Seq[(String, String, YPart)] = Nil
+  var pendingLocal: Seq[(String, String, YPart, Boolean)] = Nil
 
   def register(alias: String, classTerm: ClassTerm): Unit = {
     pendingLocal = pendingLocal.filter(_._1 != classTerm.id)
@@ -175,7 +175,7 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
       val local = s"$base$propertyTermAlias"
       declarations.getPropertyTermId(propertyTermAlias) match {
         case Some(_) => // ignore
-        case None    => if (strictLocal) { pendingLocal ++= Seq((local, propertyTermAlias, where)) }
+        case None    => if (strictLocal) { pendingLocal ++= Seq((local, propertyTermAlias, where, true)) }
       }
       Some(local)
     }
@@ -197,7 +197,7 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
       val local = s"$base$classTermAlias"
       declarations.getClassTermId(classTermAlias) match {
         case Some(_) => // ignore
-        case None    => if (strictLocal) { pendingLocal ++= Seq((local, classTermAlias, where)) }
+        case None    => if (strictLocal) { pendingLocal ++= Seq((local, classTermAlias, where, false)) }
       }
       Some(local)
     }
@@ -338,8 +338,12 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     if (references.references.nonEmpty) vocabulary.withReferences(references.baseUnitReferences())
     // we raise exceptions for missing terms
     ctx.pendingLocal.foreach {
-      case (term, alias, location) =>
-        ctx.missingTermViolation(term, vocabulary.id, location)
+      case (term, alias, location, isProperty) =>
+        if (isProperty) {
+          ctx.missingTermWarning(term, vocabulary.id, location)
+        } else {
+          ctx.missingTermViolation(term, vocabulary.id, location)
+        }
     }
 
     vocabulary
