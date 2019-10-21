@@ -3,7 +3,7 @@ package amf.plugins.document.vocabularies
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.RenderOptions
+import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
@@ -110,7 +110,6 @@ protected object ExtensionHeader {
   val DialectFragmentHeader = "%NodeMapping/Dialect1.0"
 }
 
-
 object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor with KeyPropertyHeaderExtractor {
   def apply(root: Root): Boolean = {
     val text = dialectHeaderDirective(root)
@@ -121,7 +120,7 @@ object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor with K
 
       header match {
         case Some(ExtensionHeader.DialectHeader) | Some(ExtensionHeader.DialectFragmentHeader) | Some(
-                ExtensionHeader.DialectLibraryHeader) | Some(ExtensionHeader.VocabularyHeader) =>
+              ExtensionHeader.DialectLibraryHeader) | Some(ExtensionHeader.VocabularyHeader) =>
           true
         case Some(other) => registry.findDialectForHeader(other).isDefined
         case _           => dialectInKey(root).isDefined
@@ -156,33 +155,33 @@ object AMLPlugin
   override def init(): Future[AMFPlugin] = Future { this }
 
   override def modelEntities: Seq[Obj] = Seq(
-      VocabularyModel,
-      ExternalModel,
-      VocabularyReferenceModel,
-      ClassTermModel,
-      ObjectPropertyTermModel,
-      DatatypePropertyTermModel,
-      DialectModel,
-      NodeMappingModel,
-      UnionNodeMappingModel,
-      PropertyMappingModel,
-      DocumentsModelModel,
-      PublicNodeMappingModel,
-      DocumentMappingModel,
-      DialectLibraryModel,
-      DialectFragmentModel,
-      DialectInstanceModel,
-      DialectInstanceLibraryModel,
-      DialectInstanceFragmentModel,
-      DialectInstancePatchModel
+    VocabularyModel,
+    ExternalModel,
+    VocabularyReferenceModel,
+    ClassTermModel,
+    ObjectPropertyTermModel,
+    DatatypePropertyTermModel,
+    DialectModel,
+    NodeMappingModel,
+    UnionNodeMappingModel,
+    PropertyMappingModel,
+    DocumentsModelModel,
+    PublicNodeMappingModel,
+    DocumentMappingModel,
+    DialectLibraryModel,
+    DialectFragmentModel,
+    DialectInstanceModel,
+    DialectInstanceLibraryModel,
+    DialectInstanceFragmentModel,
+    DialectInstancePatchModel
   )
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] =
     Map(
-        "aliases-location" -> AliasesLocation,
-        "custom-id"        -> CustomId,
-        "ref-include"      -> RefInclude,
-        "json-pointer-ref" -> JsonPointerRef
+      "aliases-location" -> AliasesLocation,
+      "custom-id"        -> CustomId,
+      "ref-include"      -> RefInclude,
+      "json-pointer-ref" -> JsonPointerRef
     )
 
   /**
@@ -206,16 +205,16 @@ object AMLPlugin
     * this domain
     */
   override def documentSyntaxes: Seq[String] = Seq(
-      "application/aml+json",
-      "application/aml+yaml",
-      "application/raml",
-      "application/raml+json",
-      "application/raml+yaml",
-      "text/yaml",
-      "text/x-yaml",
-      "application/yaml",
-      "application/x-yaml",
-      "application/json"
+    "application/aml+json",
+    "application/aml+yaml",
+    "application/raml",
+    "application/raml+json",
+    "application/raml+yaml",
+    "text/yaml",
+    "text/x-yaml",
+    "application/yaml",
+    "application/x-yaml",
+    "application/json"
   )
 
   /**
@@ -261,7 +260,9 @@ object AMLPlugin
     }
   }
 
-  protected def unparseAsYDocument(unit: BaseUnit, renderOptions: RenderOptions): Option[YDocument] = {
+  protected def unparseAsYDocument(unit: BaseUnit,
+                                   renderOptions: RenderOptions,
+                                   shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] = {
     unit match {
       case vocabulary: Vocabulary  => Some(VocabularyEmitter(vocabulary).emitVocabulary())
       case dialect: Dialect        => Some(DialectEmitter(dialect).emitDialect())
@@ -402,10 +403,10 @@ object AMLPlugin
           }
 
           AMFValidationReport(
-              conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-              model = baseUnit.id,
-              profile = profile,
-              results = results
+            conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
+            model = baseUnit.id,
+            profile = profile,
+            results = results
           )
         }
 
