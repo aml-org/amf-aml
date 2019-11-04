@@ -240,7 +240,7 @@ object AMLPlugin
     }
   }
 
-  /** Fetch header or $dialect directive. */
+  /** Fetch header or dialect directive. */
   def dialectHeaderDirective(document: Root): Option[String] = {
     val text = comment(document) match {
       case Some(comment) => Some(comment.metaText)
