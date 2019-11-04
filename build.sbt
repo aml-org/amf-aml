@@ -44,7 +44,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "4.0.112"
+val amfCoreVersion = "4.0.115"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
@@ -87,7 +87,8 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js"
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js",
+    scalacOptions += "-P:scalajs:suppressExportDeprecations"
   ).disablePlugins(SonarPlugin)
 
 lazy val amlJVM =

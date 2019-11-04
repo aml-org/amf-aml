@@ -14,7 +14,7 @@ case class Vocabulary(fields: Fields, annotations: Annotations) extends BaseUnit
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   override def references: Seq[BaseUnit] = fields.field(References)
 
-  /** Declared [[DomainElement]]s that can be re-used from other documents. */
+  /** Declared DomainElements that can be re-used from other documents. */
   override def declares: Seq[DomainElement] = fields.field(Declares)
 
   // Vocabulary specific fields
