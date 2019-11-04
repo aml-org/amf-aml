@@ -192,7 +192,7 @@ case class DocumentsModelOptionsEmitter(dialect: Dialect,
           val position: Position = pos(annotations(optionName))
           MapEntryEmitter(optionName, value.toString, nodetype, position)
         }
-    } collect { case Some(node) => node } toSeq
+    }.collect({ case Some(node) => node }).toSeq
     val sorted: Seq[MapEntryEmitter] = ordering.sorted(optionNodes)
     sorted
   } else
@@ -334,7 +334,7 @@ case class DocumentsModelEmitter(dialect: Dialect, ordering: SpecOrdering, alias
 
   override def position(): Position = {
     val rootEncodedPosition: Seq[Position] = Option(documents.root())
-      .flatMap { root =>
+      .flatMap { _ =>
         documents.root().fields.entry(DocumentMappingModel.EncodedNode).flatMap { enc =>
           enc.value.annotations.find(classOf[LexicalInformation]).map(_.range.start)
         }

@@ -519,17 +519,17 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     }
   }
 
-  protected def uniqueFields(meta: DialectDomainElementModel) = {
+  protected def uniqueFields(meta: DialectDomainElementModel): Iterable[Field] = {
     val allFields = meta.fields
     var acc = Map[String,Field]()
-    allFields.foreach { case f =>
-        acc.get(f.value.iri()) match {
-          case Some(_) => // ignore
-          case _       =>
-            acc = acc.updated(f.value.iri(), f)
-        }
+    allFields.foreach { f =>
+      acc.get(f.value.iri()) match {
+        case Some(_) => // ignore
+        case _ =>
+          acc = acc.updated(f.value.iri(), f)
+      }
     }
-    acc values
+    acc.values
   }
   override def position(): Position =
     node.annotations

@@ -39,7 +39,8 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
     } getOrElse Nil
   }
 
-  protected def emitEntityValidations(node: NodeMapping, recursion: mutable.Set[String]): List[ValidationSpecification] = {
+  protected def emitEntityValidations(node: NodeMapping,
+                                      recursion: mutable.Set[String]): List[ValidationSpecification] = {
     node
       .propertiesMapping()
       .flatMap { propertyMapping =>
@@ -48,15 +49,16 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
       .toList
   }
 
-  protected def emitRootUnionNodeMapping(nodeMapping: UnionNodeMapping, recursion: mutable.Set[String]): List[ValidationSpecification] = {
+  protected def emitRootUnionNodeMapping(nodeMapping: UnionNodeMapping,
+                                         recursion: mutable.Set[String]): List[ValidationSpecification] = {
     val validations: ListBuffer[ValidationSpecification] = ListBuffer.empty
-    val range = nodeMapping.objectRange().map(_.value())
+    val range                                            = nodeMapping.objectRange().map(_.value())
     range.foreach { rangeId =>
       findNodeMappingById(rangeId) match {
         case (_, nodeMapping: NodeMapping) =>
           validations ++= emitEntityValidations(nodeMapping, recursion += nodeMapping.id)
-        case _                             =>
-          // ignore
+        case _ =>
+        // ignore
       }
     }
     validations.toList
@@ -196,19 +198,17 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
                 ramlPropertyId = prop.nodePropertyMapping().value(),
                 name = validationId(node, prop.name().value(), "dialectRange") + "/prop",
                 message = Some(message),
-                custom = Some((b: EntryBuilder, parentId: String) => {
+                custom = Some((b: EntryBuilder, _: String) => {
                   b.entry(
                     (Namespace.Shacl + "or").iri(),
                     _.obj(_.entry(
                       "@list",
                       _.list { l =>
                         l.obj { v =>
-                          v.entry((Namespace.Shacl + "datatype").iri(),
-                                  _.obj(_.entry("@id", DataType.Integer.trim)))
+                          v.entry((Namespace.Shacl + "datatype").iri(), _.obj(_.entry("@id", DataType.Integer.trim)))
                         }
                         l.obj { v =>
-                          v.entry((Namespace.Shacl + "datatype").iri(),
-                                  _.obj(_.entry("@id", DataType.Double.trim)))
+                          v.entry((Namespace.Shacl + "datatype").iri(), _.obj(_.entry("@id", DataType.Double.trim)))
                         }
                       }
                     ))
@@ -226,9 +226,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
                                      (Namespace.Shacl + "datatype").iri(),
                                      DataType.Integer.trim)
                   rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
-                  rdfModel.addTriple(nextConstraintListId,
-                                     (Namespace.Rdf + "first").iri(),
-                                     nextConstraintListId + "_v")
+                  rdfModel.addTriple(nextConstraintListId, (Namespace.Rdf + "first").iri(), nextConstraintListId + "_v")
                   rdfModel.addTriple(nextConstraintListId + "_v",
                                      (Namespace.Shacl + "datatype").iri(),
                                      DataType.Double.trim)
@@ -252,14 +250,14 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
                 ramlPropertyId = prop.nodePropertyMapping().value(),
                 name = validationId(node, prop.name().value(), "dialectRange") + "/prop",
                 message = Some(message),
-                custom = Some((b: EntryBuilder, parentId: String) => {
+                custom = Some((b: EntryBuilder, _: String) => {
                   b.entry(
                     (Namespace.Shacl + "nodeKind").iri(),
                     _.obj(_.entry("@id", (Namespace.Shacl + "IRI").iri()))
                   )
                 }),
                 customRdf = Some((rdfModel: RdfModel, subject: String) => {
-                  val propId = rdfModel.nextAnonId()
+                  rdfModel.nextAnonId()
                   rdfModel.addTriple(subject, (Namespace.Shacl + "nodeKind").iri(), (Namespace.Shacl + "IRI").iri())
                 })
               ))
@@ -305,13 +303,16 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
           .objectRange()
           .nonEmpty && !prop.objectRange().map(_.value()).contains((Namespace.Meta + "anyNode").iri())) {
 
-      val effectiveRange: Set[String] = prop.objectRange() flatMap { rangeId =>
-        val id = rangeId.value()
-        findNodeMappingById(id) match {
-          case (_, nodeMapping: NodeMapping)       => Seq(nodeMapping.id)
-          case (_, unionMapping: UnionNodeMapping) => unionMapping.objectRange().map(_.value())
-        }
-      } toSet
+      val effectiveRange: Set[String] = prop
+        .objectRange()
+        .flatMap({ rangeId =>
+          findNodeMappingById(rangeId.value()) match {
+            case (_, nodeMapping: NodeMapping)       => Seq(nodeMapping.id)
+            case (_, unionMapping: UnionNodeMapping) => unionMapping.objectRange().map(_.value())
+            case _                                   => Seq.empty
+          }
+        })
+        .toSet
 
       val message = s"Property '${prop.name()}'  value must be of type ${prop.objectRange()}"
       validations += new ValidationSpecification(
