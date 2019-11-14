@@ -13,8 +13,8 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
     parsedDoc match {
       case parsed: SyamlParsedDocument =>
         if (parsed.comment.isDefined) {
-          if (referencesDialect(parsed.comment.get.metaText)) {
-            collector += (dialectDefinitionUrl(parsed.comment.get.metaText), SchemaReference, parsed.document.node)
+          if (referencesDialect(parsed.comment.getOrElse(""))) {
+            collector += (dialectDefinitionUrl(parsed.comment.getOrElse("")), SchemaReference, parsed.document.node)
           }
         }
         libraries(parsed.document, ctx)

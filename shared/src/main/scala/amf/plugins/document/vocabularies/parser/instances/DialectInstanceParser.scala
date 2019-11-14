@@ -506,8 +506,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         root.parsed
           .asInstanceOf[SyamlParsedDocument]
           .comment
-          .get
-          .metaText
+          .getOrElse("")
           .replace(" ", "")
           .contains(documentMapping.documentName().value())
       } match {

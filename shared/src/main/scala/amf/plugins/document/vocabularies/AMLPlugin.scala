@@ -49,7 +49,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait RamlHeaderExtractor {
-  def comment(root: Root): Option[YComment] = {
+  def comment(root: Root): Option[String] = {
     root.parsed match {
       case parsed: SyamlParsedDocument => parsed.comment
       case _                           => None
@@ -242,11 +242,9 @@ object AMLPlugin
 
   /** Fetch header or dialect directive. */
   def dialectHeaderDirective(document: Root): Option[String] = {
-    val text = comment(document) match {
-      case Some(comment) => Some(comment.metaText)
-      case _             => dialect(document).map(metaText => s"%$metaText")
-    }
-    text.map(_.replace(" ", ""))
+    comment(document)
+      .orElse(dialect(document).map(metaText => s"%$metaText"))
+      .map(_.replace(" ", ""))
   }
 
   private def parseDialectInstance(root: Root, header: Option[String], parentContext: ParserContext) = {
