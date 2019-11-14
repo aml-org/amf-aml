@@ -63,7 +63,7 @@ case class Dialect(fields: Fields, annotations: Annotations)
 
   def isPatchHeader(h: String): Boolean = patchHeader == h.stripSpaces
 
-  def fragmentHeaders: Seq[String] = documents().fragments().map(f => s"%${f.documentName().value().stripSpaces}")
+  def fragmentHeaders: Seq[String] = documents().fragments().map(f => s"%${f.documentName().value().stripSpaces}/${header.stripPrefix("%")}")
 
   def isFragmentHeader(h: String): Boolean = fragmentHeaders.contains(h.stripSpaces)
 
