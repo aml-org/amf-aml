@@ -915,8 +915,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
           }
         } collect { case Some(nodeMapping: NodeMapping) => nodeMapping }
         // we need to do this because the same property (with different ranges) might be defined in multiple node mappings
-        val nodeMetaTypes = node.meta.typeIri.map(_ -> true).toMap
-        nodeMappingsInRange = nodeMappingsInRange.filter { nodeMapping => nodeMetaTypes.contains(nodeMapping.id) }
+//        val nodeMetaTypes = node.meta.typeIri.map(_ -> true).toMap
+//        nodeMappingsInRange = nodeMappingsInRange.filter { nodeMapping => nodeMetaTypes.contains(nodeMapping.id) }
         nodeMappingsInRange.flatMap(_.propertiesMapping()).find(_.nodePropertyMapping().value() == iri)
     }
   }

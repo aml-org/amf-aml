@@ -837,7 +837,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                   }
                 }
                 val afterValues = node.fields.fields().size
-                if (afterValues != beforeValues) {
+                if (afterValues != beforeValues && mapping.nodetypeMapping.nonEmpty) {
                   instanceTypes ++= Seq(mapping.nodetypeMapping.value())
                 }
               }
@@ -1125,6 +1125,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                                                     DataType.DateTime,
                                                     value)
         Some(value.as[String])
+
+      case YType.Null =>
+        None
       case _ =>
         ctx.violation(DialectError, node.id, s"Unsupported scalar type ${value.tagType}", value)
         Some(value.as[String])
