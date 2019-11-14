@@ -119,22 +119,22 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
         Field(DialectDomainElementModel(), propertyIdValue)
       }
     } else {
-      val fieldType = literalRange().value() match {
-        case literal if literal == (Namespace.Shapes + "link").iri() => Type.Iri
-        case literal if literal == DataType.AnyUri =>
+      val fieldType = literalRange().option() match {
+        case Some(literal) if literal == (Namespace.Shapes + "link").iri() => Type.Iri
+        case Some(literal) if literal == DataType.AnyUri =>
           Type.LiteralUri
-        case literal if literal.endsWith("anyType")                  => Type.Any
-        case literal if literal.endsWith("number")                   => Type.Float
-        case literal if literal == DataType.Integer => Type.Int
-        case literal if literal == DataType.Float   => Type.Float
-        case literal if literal == DataType.Double =>
+        case Some(literal) if literal.endsWith("anyType")                  => Type.Any
+        case Some(literal) if literal.endsWith("number")                   => Type.Float
+        case Some(literal) if literal == DataType.Integer => Type.Int
+        case Some(literal) if literal == DataType.Float   => Type.Float
+        case Some(literal) if literal == DataType.Double =>
           Type.Double
-        case literal if literal == DataType.Boolean =>
+        case Some(literal) if literal == DataType.Boolean =>
           Type.Bool
-        case literal if literal == DataType.Decimal   => Type.Int
-        case literal if literal == DataType.Time    => Type.Time
-        case literal if literal == DataType.Date => Type.Date
-        case literal if literal == DataType.DateTime =>
+        case Some(literal) if literal == DataType.Decimal   => Type.Int
+        case Some(literal) if literal == DataType.Time    => Type.Time
+        case Some(literal) if literal == DataType.Date => Type.Date
+        case Some(literal) if literal == DataType.DateTime =>
           Type.Date
         case _ => Type.Str
       }

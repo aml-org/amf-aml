@@ -1,0 +1,41 @@
+#%Dialect 1.0
+
+dialect: Test
+version: "1.31"
+
+documents:
+  root:
+    encodes: A
+    declares:
+      decs: Union
+
+
+nodeMappings:
+
+  Union:
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      B: B
+      C: C
+    union:
+      - B
+      - C
+
+  A:
+    mapping:
+      a:
+        range: string
+
+  B:
+    mapping:
+      b:
+        range: string
+      type:
+        range: string
+
+  C:
+    mapping:
+      c:
+        range: string
+      type:
+        range: string

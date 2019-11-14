@@ -12,15 +12,6 @@ trait DialectInstancesParsingTest extends DialectTests {
   val basePath = "shared/src/test/resources/vocabularies2/instances/"
 
   if (platform.name == "jvm") {
-    ignore("parse 1 test") {
-      withDialect("dialect1.raml",
-                  "example1.raml",
-                  "example1.json",
-                  VocabularyYamlHint,
-                  Amf,
-        useAmfJsonldSerialization = false)
-    }
-
     ignore("parse 1b test") {
       withDialect("dialect1.raml",
                   "example1b.raml",
@@ -210,6 +201,10 @@ trait DialectInstancesParsingTest extends DialectTests {
     withDialect("dialect30.raml", "example30.raml", "example30.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 31 test") {
+    withDialect("dialect31.raml", "example31.raml", "example31.json", VocabularyYamlHint, Amf)
+  }
+
 
   if (platform.name == "jvm") {
     ignore("generate 1 test") {
@@ -396,6 +391,10 @@ trait DialectInstancesParsingTest extends DialectTests {
 
   test("generate 30 test") {
     withDialect("dialect30.raml", "example30.json", "example30.raml", AmfJsonHint, Aml)
+  }
+
+  test("generate 31 test") {
+    withDialect("dialect31.raml", "example31.json", "example31.raml", AmfJsonHint, Aml)
   }
 
   test("Generate instance with invalid property terms") {
