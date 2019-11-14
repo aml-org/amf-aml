@@ -4,7 +4,7 @@ import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.vocabularies.metamodel.domain.ExternalModel
 import amf.plugins.document.vocabularies.metamodel.domain.ExternalModel._
 import org.yaml.model.YMap

@@ -16,8 +16,8 @@ import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementMo
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
+import org.mulesoft.common.core._
 
-import scala.collection.immutable
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -67,7 +67,8 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     }
   }
 
-  def withRegisteredDialect(dialect: Dialect)(fn: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
+  def withRegisteredDialect(dialect: Dialect)(
+      fn: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
     if (!resolved.contains(dialect.header))
       fn(resolveDialect(dialect))
     else
@@ -83,7 +84,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     solved
   }
 
-  protected def headerKey(header: String): String = header.trim.replace(" ", "")
+  protected def headerKey(header: String): String = header.stripSpaces
 
   override def findType(typeString: String): Option[Obj] = {
     val foundMapping: Option[(Dialect, DomainElement)] = map.values.toSeq.distinct
@@ -146,7 +147,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     val h = headerKey(header.split("\\|").head)
     map.get(h) match {
       case Some(dialect) => resolveDialect(dialect)
-      case _ => throw new Exception(s"Cannot find Dialect with header '$header'")
+      case _             => throw new Exception(s"Cannot find Dialect with header '$header'")
     }
   }
 
@@ -154,7 +155,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     map.get(uri) match {
       case Some(dialect) => Future { dialect }
       case _ =>
-        RuntimeValidator.disableValidationsAsync() { reenable =>
+        RuntimeValidator.disableValidationsAsync() { reEnable =>
           RuntimeCompiler(uri,
                           Some("application/yaml"),
                           Some(Aml.name),
@@ -163,7 +164,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
                           cache = Cache())
             .map {
               case dialect: Dialect =>
-                reenable()
+                reEnable()
                 register(dialect)
                 dialect
             }
@@ -187,7 +188,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   def registerDialect(url: String, code: String, env: Environment): Future[Dialect] =
     registerDialect(url, env.add(StringResourceLoader(url, code)))
 
-  def remove(uri:String): Unit = {
+  def remove(uri: String): Unit = {
     val headers = map.filter(_._2.id == uri).keys.toList
     resolved = resolved.filter(l => !headers.contains(l))
     map = map.filter(_._2.id != uri)

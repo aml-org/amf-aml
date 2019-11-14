@@ -12,11 +12,11 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
   override def collect(parsedDoc: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
     parsedDoc match {
       case parsed: SyamlParsedDocument =>
-        if (parsed.comment.isDefined) {
-          if (referencesDialect(parsed.comment.getOrElse(""))) {
-            collector += (dialectDefinitionUrl(parsed.comment.getOrElse("")), SchemaReference, parsed.document.node)
-          }
-        }
+
+        for (comment <- parsed.comment)
+          if (referencesDialect(comment))
+            collector += (dialectDefinitionUrl(comment), SchemaReference, parsed.document.node)
+
         libraries(parsed.document, ctx)
         links(parsed.document)
 
@@ -86,7 +86,6 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
             ramlInclude(includeRef)
 
           case "$ref" => // $ref link
-            val includeRef = entry.value
             entry.value.asScalar.map(_.text).foreach(ramlIncludeText)
 
           case _ => // no link, recur
@@ -97,9 +96,9 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
     }
   }
 
-  private def ramlIncludeText(text:String): Unit = {
+  private def ramlIncludeText(text: String): Unit = {
     val link = text.split("#").head
-    if(link.nonEmpty) ramlInclude(link)
+    if (link.nonEmpty) ramlInclude(link)
   }
 
   private def ramlInclude(node: YNode): Unit = {

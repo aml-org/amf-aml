@@ -2,7 +2,7 @@ package amf.plugins.document.vocabularies.parser.common
 
 import amf.core.annotations.{LexicalInformation, SourceLocation}
 import amf.core.parser.{Annotations, ErrorHandler, Range}
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
 import amf.validation.DialectValidations._

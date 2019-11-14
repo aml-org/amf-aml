@@ -3,7 +3,7 @@ package amf.plugins.document.vocabularies.validation
 import amf.ProfileName
 import amf.core.model.DataType
 import amf.core.rdf.RdfModel
-import amf.core.utils.Strings
+import amf.core.utils.AmfStrings
 import amf.core.validation.core.{PropertyConstraint, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper

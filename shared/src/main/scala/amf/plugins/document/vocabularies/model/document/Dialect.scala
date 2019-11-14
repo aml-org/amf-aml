@@ -8,6 +8,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel._
 import amf.plugins.document.vocabularies.metamodel.document.{DialectFragmentModel, DialectLibraryModel, DialectModel}
 import amf.plugins.document.vocabularies.model.domain.{DocumentsModel, NodeMapping}
+import org.mulesoft.common.core._
 
 trait MappingDeclarer { this: BaseUnit with DeclaresModel =>
 
@@ -46,7 +47,7 @@ case class Dialect(fields: Fields, annotations: Annotations)
 
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
 
-  def header: String = s"%${nameAndVersion()}".replace(" ", "")
+  def header: String = s"%${nameAndVersion()}".stripSpaces
 
   override def componentId: String = ""
 
@@ -58,15 +59,13 @@ case class Dialect(fields: Fields, annotations: Annotations)
 
   def patchHeader: String = s"%Patch/${header.stripPrefix("%")}"
 
-  def isLibraryHeader(h: String): Boolean = libraryHeader.contains(h.replace(" ", ""))
+  def isLibraryHeader(h: String): Boolean = libraryHeader.contains(h.stripSpaces)
 
-  def isPatchHeader(h: String): Boolean = patchHeader == h.replace(" ", "")
+  def isPatchHeader(h: String): Boolean = patchHeader == h.stripSpaces
 
-  def fragmentHeaders: Seq[String] = documents().fragments().map { fragment =>
-    s"%${fragment.documentName().value().replace(" ", "")}/${header.stripPrefix("%")}"
-  }
+  def fragmentHeaders: Seq[String] = documents().fragments().map(f => s"%${f.documentName().value().stripSpaces}")
 
-  def isFragmentHeader(h: String): Boolean = fragmentHeaders.contains(h.replace(" ", ""))
+  def isFragmentHeader(h: String): Boolean = fragmentHeaders.contains(h.stripSpaces)
 
   def allHeaders: Seq[String] = Seq(header) ++ libraryHeader ++ fragmentHeaders ++ Seq(patchHeader)
 

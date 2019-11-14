@@ -578,7 +578,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       scalar: AmfScalar,
       annotations: Option[Annotations] = None): Seq[EntryEmitter] = {
     val formatted = scalar.value match {
-      case date: SimpleDateTime => date.rfc3339
+      case date: SimpleDateTime => date.toString
       case other                => other
     }
 

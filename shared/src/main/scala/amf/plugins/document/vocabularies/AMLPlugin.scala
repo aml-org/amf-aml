@@ -43,20 +43,14 @@ import amf.plugins.document.vocabularies.resolution.pipelines.{
 }
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.{ProfileName, RamlProfile}
+import org.mulesoft.common.core._
 import org.yaml.model._
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 trait RamlHeaderExtractor {
-  def comment(root: Root): Option[String] = {
-    root.parsed match {
-      case parsed: SyamlParsedDocument => parsed.comment
-      case _                           => None
-    }
-
-  }
-
+  def comment(root: Root): Option[String]            = root.parsed.comment
   def comment(document: YDocument): Option[YComment] = document.children.collectFirst({ case c: YComment => c })
 }
 
@@ -242,9 +236,7 @@ object AMLPlugin
 
   /** Fetch header or dialect directive. */
   def dialectHeaderDirective(document: Root): Option[String] = {
-    comment(document)
-      .orElse(dialect(document).map(metaText => s"%$metaText"))
-      .map(_.replace(" ", ""))
+    comment(document).orElse(dialect(document).map(metaText => s"%$metaText")).map(_.stripSpaces)
   }
 
   private def parseDialectInstance(root: Root, header: Option[String], parentContext: ParserContext) = {
@@ -427,7 +419,8 @@ object AMLPlugin
 
   // context that opens a new context for declarations and copies the global JSON Schema declarations
   protected def cleanDialectContext(wrapped: ParserContext, root: Root): DialectContext = {
-    val cleanNested = ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = wrapped.parserCount)
+    val cleanNested =
+      ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = wrapped.parserCount)
     new DialectContext(cleanNested)
   }
 }
