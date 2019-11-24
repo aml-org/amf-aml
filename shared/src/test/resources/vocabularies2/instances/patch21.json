@@ -38,9 +38,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/patch21.raml#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://test.coma"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/patch21.raml#/"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -50,9 +51,10 @@
                 ]
               },
               {
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/patch21.raml#/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies2/instances/patch21.raml#/"
+                    "@value": "http://test.coma"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -79,6 +81,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/patch21.raml#/source-map/lexical/element_0",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "file://shared/src/test/resources/vocabularies2/instances/patch21.raml"

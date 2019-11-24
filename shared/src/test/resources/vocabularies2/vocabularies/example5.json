@@ -46,7 +46,6 @@
         "@value": "2.0.0"
       }
     ],
-    "http://a.ml/vocabularies/document#references": [],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
         "@id": "file://shared/src/test/resources/vocabularies2/vocabularies/example5.raml#/source-map",
@@ -55,6 +54,20 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
+            "@id": "file://shared/src/test/resources/vocabularies2/vocabularies/example5.raml#/source-map/lexical/element_2",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://a.ml/vocabularies/core#name"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(5,0)-(6,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "file://shared/src/test/resources/vocabularies2/vocabularies/example5.raml#/source-map/lexical/element_0",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "http://a.ml/vocabularies/meta#base"
@@ -67,6 +80,7 @@
             ]
           },
           {
+            "@id": "file://shared/src/test/resources/vocabularies2/vocabularies/example5.raml#/source-map/lexical/element_1",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "file://shared/src/test/resources/vocabularies2/vocabularies/example5.raml"
@@ -75,18 +89,6 @@
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
                 "@value": "[(2,0)-(19,0)]"
-              }
-            ]
-          },
-          {
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "http://a.ml/vocabularies/core#name"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "[(5,0)-(6,0)]"
               }
             ]
           }
@@ -118,6 +120,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "http://a.ml/vocabularies/test5#D/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/test5#D"
@@ -168,6 +171,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "http://a.ml/vocabularies/test5#c/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/test5#c"
@@ -213,6 +217,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "http://a.ml/vocabularies/test5#d/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/test5#d"

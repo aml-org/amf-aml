@@ -58,6 +58,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
+                        "@id": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/b/a/source-map/lexical/element_0",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
                             "@value": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/b/a"
@@ -82,18 +83,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://test.com/tmp#a1"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(3,5)-(3,28)]"
-                      }
-                    ]
-                  },
-                  {
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/b/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/b"
@@ -102,6 +92,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(3,0)-(3,28)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/b/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://test.com/tmp#a1"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,5)-(3,28)]"
                       }
                     ]
                   }
@@ -118,18 +121,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "http://test.com/tmp#b"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "[(2,2)-(3,28)]"
-                  }
-                ]
-              },
-              {
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/"
@@ -138,6 +130,19 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(2,0)-(3,28)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#b"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,2)-(3,28)]"
                   }
                 ]
               }
@@ -149,6 +154,29 @@
     "http://a.ml/vocabularies/document#version": [
       {
         "@value": "2.0.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/source-map/lexical/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://shared/src/test/resources/vocabularies2/instances/example8.raml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(3,28)]"
+              }
+            ]
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document#references": [
@@ -196,6 +224,20 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/fragment8.raml#/source-map/lexical/element_2",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://test.com/tmp#a2"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,0)-(3,6)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/fragment8.raml#/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://test.com/tmp#a1"
@@ -208,6 +250,7 @@
                     ]
                   },
                   {
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/fragment8.raml#/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://shared/src/test/resources/vocabularies2/instances/fragment8.raml#/"
@@ -216,18 +259,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(2,0)-(3,6)]"
-                      }
-                    ]
-                  },
-                  {
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://test.com/tmp#a2"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(3,0)-(3,6)]"
                       }
                     ]
                   }
@@ -249,6 +280,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/fragment8.raml#/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://shared/src/test/resources/vocabularies2/instances/fragment8.raml"
@@ -259,28 +291,6 @@
                     "@value": "[(2,0)-(3,6)]"
                   }
                 ]
-              }
-            ]
-          }
-        ]
-      }
-    ],
-    "http://a.ml/vocabularies/document-source-maps#sources": [
-      {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example8.raml#/source-map",
-        "@type": [
-          "http://a.ml/vocabularies/document-source-maps#SourceMap"
-        ],
-        "http://a.ml/vocabularies/document-source-maps#lexical": [
-          {
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://shared/src/test/resources/vocabularies2/instances/example8.raml"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "[(2,0)-(3,28)]"
               }
             ]
           }

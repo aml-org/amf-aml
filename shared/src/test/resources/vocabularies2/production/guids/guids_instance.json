@@ -34,9 +34,10 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://shared/src/test/resources/vocabularies2/production/guids/guids_instance.yaml#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "http://a.ml/vocabularies/data#id"
+                    "@value": "file://shared/src/test/resources/vocabularies2/production/guids/guids_instance.yaml#/"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -46,9 +47,10 @@
                 ]
               },
               {
+                "@id": "file://shared/src/test/resources/vocabularies2/production/guids/guids_instance.yaml#/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies2/production/guids/guids_instance.yaml#/"
+                    "@value": "http://a.ml/vocabularies/data#id"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -75,6 +77,7 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
+            "@id": "file://shared/src/test/resources/vocabularies2/production/guids/guids_instance.yaml#/source-map/lexical/element_0",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "file://shared/src/test/resources/vocabularies2/production/guids/guids_instance.yaml"
