@@ -129,6 +129,11 @@
         "@value": "2.0.0"
       }
     ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
         "@id": "file://shared/src/test/resources/vocabularies2/instances/example16c.yaml#/source-map",
@@ -272,6 +277,11 @@
         "http://a.ml/vocabularies/document#version": [
           {
             "@value": "2.0.0"
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

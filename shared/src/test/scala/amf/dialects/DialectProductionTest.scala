@@ -4,11 +4,14 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote._
 import amf.plugins.document.vocabularies.AMLPlugin
+import org.scalatest.BeforeAndAfterAll
 
 import scala.concurrent.ExecutionContext
 
 
-class DialectProductionTest extends DialectTests{
+class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
+
+  override protected def beforeAll(): Unit = init()
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -19,7 +22,7 @@ class DialectProductionTest extends DialectTests{
   }
 
   test("Can parse validation dialect eee") {
-    init().flatMap(_ => cycle("validation_dialect.raml", "validation_dialect.json", VocabularyYamlHint, Amf))
+    cycle("validation_dialect.raml", "validation_dialect.json", VocabularyYamlHint, Amf)
   }
 
   test("Can parse validation dialect instance") {

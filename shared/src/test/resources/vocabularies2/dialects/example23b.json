@@ -99,6 +99,11 @@
         "@value": "2.0.0"
       }
     ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
         "@id": "file://shared/src/test/resources/vocabularies2/dialects/example23b.raml#/source-map",
@@ -600,7 +605,17 @@
               {
                 "@value": "2.0.0"
               }
+            ],
+            "http://a.ml/vocabularies/document#root": [
+              {
+                "@value": false
+              }
             ]
+          }
+        ],
+        "http://a.ml/vocabularies/document#root": [
+          {
+            "@value": false
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
