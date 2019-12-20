@@ -1,10 +1,11 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
 import amf.core.annotations.LexicalInformation
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
-import amf.core.parser.{ErrorHandler, Value}
+import amf.core.parser.Value
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.model.document.{DialectInstance, DialectInstancePatch}

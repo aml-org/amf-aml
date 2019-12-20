@@ -1,10 +1,11 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.parser.{Annotations, ErrorHandler, Fields}
+import amf.core.parser.{Annotations, Fields}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
-import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping}
+import amf.plugins.document.vocabularies.model.domain.{NodeMapping, PropertyMapping}
 
 import scala.collection.mutable
 
@@ -23,7 +24,7 @@ class DialectNodeExtensionStage()(override implicit val errorHandler: ErrorHandl
     model
   }
 
-  def cloneNodeMapping(target: NodeMapping) = {
+  def cloneNodeMapping(target: NodeMapping): NodeMapping = {
     val fields = Fields()
     target.fields.fields().foreach { entry =>
       fields.setWithoutId(entry.field, entry.value.value, entry.value.annotations)

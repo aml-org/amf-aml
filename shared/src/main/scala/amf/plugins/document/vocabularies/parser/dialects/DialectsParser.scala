@@ -2,12 +2,13 @@ package amf.plugins.document.vocabularies.parser.dialects
 
 import amf.core.Root
 import amf.core.annotations.Aliases
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.document.FragmentModel
 import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
-import amf.core.parser.{Annotations, BaseSpecParser, ErrorHandler, FutureDeclarations, ParserContext, _}
+import amf.core.parser.{Annotations, BaseSpecParser, FutureDeclarations, ParserContext, _}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.ReferenceStyles
@@ -24,7 +25,7 @@ import org.yaml.model._
 import scala.collection.{immutable, mutable}
 
 class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
-                          errorHandler: Option[ErrorHandler],
+                          errorHandler: ErrorHandler,
                           futureDeclarations: FutureDeclarations)
     extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
 
@@ -186,7 +187,7 @@ trait DialectSyntax { this: DialectContext =>
 }
 
 class DialectContext(private val wrapped: ParserContext, private val ds: Option[DialectDeclarations] = None)
-    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.parserCount)
+    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.eh)
     with DialectSyntax
     with SyntaxErrorReporter {
 
@@ -205,7 +206,7 @@ class DialectContext(private val wrapped: ParserContext, private val ds: Option[
   var recursiveDeclarations: Map[String, RecursiveUnit] = Map()
 
   val declarations: DialectDeclarations =
-    ds.getOrElse(new DialectDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
+    ds.getOrElse(new DialectDeclarations(errorHandler = eh, futureDeclarations = futureDeclarations))
 
 }
 
@@ -283,7 +284,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
                   case Some(r: RecursiveUnit) =>
                     result += (alias, r)
                   case None =>
-                    ctx.violation(DialectError, id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
+                    ctx.eh.violation(DialectError, id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
                 }
             }
           })
@@ -535,7 +536,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                 case nodeMapping: NodeMapping      => nodeMapping.withName(entry.key).adopted(parent)
                 case nodeMapping: UnionNodeMapping => nodeMapping.withName(entry.key).adopted(parent)
                 case _ =>
-                  ctx.violation(DialectError,
+                  ctx.eh.violation(DialectError,
                                 parent,
                                 s"Error only valid node mapping or union mapping can be declared",
                                 entry)
@@ -545,11 +546,11 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               case Some(nodeMapping: NodeMapping) =>
                 ctx.declarations += nodeMapping
               case Some(nodeMapping: UnionNodeMapping) => ctx.declarations += nodeMapping
-              case _                                   => ctx.violation(DialectError, parent, s"Error parsing shape '$entry'", entry)
+              case _                                   => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry)
             }
           }
         case YType.Null =>
-        case t          => ctx.violation(DialectError, parent, s"Invalid type $t for 'nodeMappings' node.", e.value)
+        case t          => ctx.eh.violation(DialectError, parent, s"Invalid type $t for 'nodeMappings' node.", e.value)
       }
     }
   }
@@ -570,13 +571,13 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               unionNodeMapping.withObjectRange(entry.value.as[Seq[String]])
             } catch {
               case _: Exception =>
-                ctx.violation(DialectError,
+                ctx.eh.violation(DialectError,
                               unionNodeMapping.id,
                               s"Union node mappings must be declared as lists of node mapping references",
                               entry.value)
             }
           case _ =>
-            ctx.violation(DialectError,
+            ctx.eh.violation(DialectError,
                           unionNodeMapping.id,
                           s"Union node mappings must be declared as lists of node mapping references",
                           entry.value)
@@ -622,7 +623,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           case Some(classTerm) =>
             nodeMapping.withNodeTypeMapping(classTerm.id)
           case _ =>
-            ctx.violation(DialectError, nodeMapping.id, s"Cannot find class term with alias $classTermId", entry.value)
+            ctx.eh.violation(DialectError, nodeMapping.id, s"Cannot find class term with alias $classTermId", entry.value)
         }
       }
     )
@@ -634,7 +635,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         if (NodeMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethod)) {
           nodeMapping.withMergePolicy(patchMethod)
         } else {
-          ctx.violation(DialectError,
+          ctx.eh.violation(DialectError,
                         nodeMapping.id,
                         s"Unsupported node mapping patch operation '$patchMethod'",
                         entry.value)
@@ -659,7 +660,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           .groupBy(p => p.nodePropertyMapping().value())
           .flatMap({
             case (termKey, values) if values.length > 1 =>
-              ctx.violation(DialectError,
+              ctx.eh.violation(DialectError,
                             values.head.id,
                             s"Property term value must be unique in a node mapping. Term $termKey repeated",
                             values.head.annotations)
@@ -682,7 +683,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           case Some(resolvedNodeMapping: NodeMapping) =>
             nodeMapping.withExtends(Seq(resolvedNodeMapping))
           case _ =>
-            ctx.violation(
+            ctx.eh.violation(
               DialectError,
               nodeMapping.id,
               s"Cannot find extended node mapping with reference '${reference.map(_.toString()).getOrElse("")}'",
@@ -755,7 +756,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   def checkGuidUniqueContraint(propertyMapping: PropertyMapping, ast: YPart): Unit = {
     propertyMapping.literalRange().option() foreach { literal =>
       if (literal == (Namespace.Shapes + "guid").iri() && !propertyMapping.unique().option().getOrElse(false)) {
-        ctx.warning(
+        ctx.eh.warning(
           DialectValidations.GuidRangeWithoutUnique,
           propertyMapping.id,
           s"Declaration of property '${propertyMapping.name().value()}' with range GUID and without unique constraint",
@@ -780,7 +781,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           case Some(propertyTerm) =>
             propertyMapping.withNodePropertyMapping(propertyTerm.id)
           case _ =>
-            ctx.violation(DialectError,
+            ctx.eh.violation(DialectError,
                           propertyMapping.id,
                           s"Cannot find property term with alias $propertyTermId",
                           e.value)
@@ -829,7 +830,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         if (PropertyMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethod)) {
           propertyMapping.withMergePolicy(patchMethod)
         } else {
-          ctx.violation(DialectError,
+          ctx.eh.violation(DialectError,
                         propertyMapping.id,
                         s"Unsupported property mapping patch operation '$patchMethod'",
                         entry.value)
@@ -870,7 +871,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             val booleanValue = ValueNode(entry.value).boolean().toBool
             propertyMapping.withUnique(booleanValue)
           case _ =>
-            ctx.violation(DialectError, "Unique property in a property mapping must be a boolean value", entry.value)
+            ctx.eh.violation(DialectError, "Unique property in a property mapping must be a boolean value", entry.value)
         }
       }
     )
@@ -906,7 +907,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           node.value match {
             case scalar: YScalar => Some(scalar.value)
             case _ =>
-              ctx.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
+              ctx.eh.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
               None
           }
         }
@@ -950,7 +951,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       _ <- mapKey
       _ <- mapTermKey
     } yield {
-      ctx.violation(DialectError, propertyMapping.id, s"mapKey and mapTermKey are mutually exclusive", map)
+      ctx.eh.violation(DialectError, propertyMapping.id, s"mapKey and mapTermKey are mutually exclusive", map)
     }
 
     mapTermKey.fold({
@@ -972,7 +973,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       _ <- mapValu
       _ <- mapTermValue
     } yield {
-      ctx.violation(DialectError, propertyMapping.id, s"mapValue and mapTermValue are mutually exclusive", map)
+      ctx.eh.violation(DialectError, propertyMapping.id, s"mapValue and mapTermValue are mutually exclusive", map)
     }
 
     mapTermValue.fold({
@@ -994,7 +995,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         ctx.declarations.findPropertyTerm(iri, All) match {
           case Some(term) => Some(term.id)
           case _ =>
-            ctx.violation(DialectError, propertyMappingId, s"Cannot find property term with alias $iri", ast)
+            ctx.eh.violation(DialectError, propertyMappingId, s"Cannot find property term with alias $iri", ast)
             None
         }
     }
@@ -1007,12 +1008,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       propMappings.find(_.name().value() == variable) match {
         case Some(prop) =>
           if (prop.minCount().option().getOrElse(0) != 1)
-            ctx.violation(DialectError,
+            ctx.eh.violation(DialectError,
                           prop.id,
                           s"PropertyMapping for idTemplate variable '$variable' must be mandatory",
                           map)
         case None =>
-          ctx.violation(DialectError, "", s"Missing propertyMapping for idTemplate variable '$variable'", map)
+          ctx.eh.violation(DialectError, "", s"Missing propertyMapping for idTemplate variable '$variable'", map)
       }
     }
   }
@@ -1136,7 +1137,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             ctx.closedNode("documentsMappingOptions", documentsMapping.id, optionsMap)
             parseOptions(optionsMap, documentsMapping)
           case _ =>
-            ctx.violation(DialectError,
+            ctx.eh.violation(DialectError,
                           documentsMapping.id,
                           "Options for a documents mapping must be a map",
                           entry.value)
@@ -1158,7 +1159,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         val selfEncoded = ValueNode(entry.value).boolean()
         documentsModel.set(DocumentsModelModel.SelfEncoded, selfEncoded, Annotations(entry))
       case _ =>
-        ctx.violation(DialectError,
+        ctx.eh.violation(DialectError,
                       documentsModel.id,
                       "'selfEncoded' Option for a documents mapping must be a boolean",
                       entry)
@@ -1171,7 +1172,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         val keyProperty = ValueNode(entry.value).boolean()
         documentsModel.set(DocumentsModelModel.KeyProperty, keyProperty, Annotations(entry))
       case _ =>
-        ctx.violation(DialectError,
+        ctx.eh.violation(DialectError,
                       documentsModel.id,
                       "'keyProperty' Option for a documents mapping must be a boolean",
                       entry)
@@ -1183,7 +1184,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       case YType.Str =>
         documentsModel.set(DocumentsModelModel.DeclarationsPath, ValueNode(entry.value).string(), Annotations(entry))
       case _ =>
-        ctx.violation(DialectError,
+        ctx.eh.violation(DialectError,
                       documentsModel.id,
                       "'declarationsPath' Option for a documents mapping must be a String",
                       entry)
@@ -1195,7 +1196,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       case YType.Str if ReferenceStyles.all.contains(entry.value.asScalar.map(_.text).getOrElse("")) =>
         documentsModel.set(DocumentsModelModel.ReferenceStyle, ValueNode(entry.value).string(), Annotations(entry))
       case _ =>
-        ctx.violation(DialectError,
+        ctx.eh.violation(DialectError,
                       documentsModel.id,
                       "'referenceStyle' Option for a documents mapping must be a String [RamlStyle, JsonSchemaStyle]",
                       entry)

@@ -1,9 +1,6 @@
 package amf.dialects
 
-import amf.core.model.document.BaseUnit
-import amf.core.parser.UnhandledErrorHandler
-import amf.core.remote.{Amf, AmfJsonHint, Aml, VocabularyYamlHint}
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.core.remote.{Amf, Aml, VocabularyYamlHint}
 
 import scala.concurrent.ExecutionContext
 

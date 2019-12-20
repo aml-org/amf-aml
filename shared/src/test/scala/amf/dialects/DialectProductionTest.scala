@@ -1,9 +1,6 @@
 package amf.dialects
 
-import amf.core.model.document.BaseUnit
-import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote._
-import amf.plugins.document.vocabularies.AMLPlugin
 import org.scalatest.BeforeAndAfterAll
 
 import scala.concurrent.ExecutionContext

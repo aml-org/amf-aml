@@ -1,8 +1,9 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
 import amf.core.annotations.Aliases
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.parser.{Annotations, ErrorHandler, Fields}
+import amf.core.parser.{Annotations, Fields}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
@@ -14,12 +15,11 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
 
   def findDeclarations(model: BaseUnit, acc: Map[String, NodeMappable] = Map()): Map[String, NodeMappable] = {
     val updateDeclarations = model match {
-      case lib: DeclaresModel => {
+      case lib: DeclaresModel =>
         lib.declares.collect { case nodeMapping: NodeMappable => nodeMapping }.foldLeft(acc) {
           case (acc, mapping) =>
             acc.updated(mapping.id, mapping)
         }
-      }
       case _ => acc
     }
 
