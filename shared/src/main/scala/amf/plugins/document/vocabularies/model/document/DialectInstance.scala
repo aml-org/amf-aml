@@ -1,10 +1,11 @@
 package amf.plugins.document.vocabularies.model.document
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement}
-import amf.core.parser.{Annotations, ErrorHandler, Fields}
+import amf.core.parser.{Annotations, Fields}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceFragmentModel.Fragment
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._

@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.parser.common
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.parser.{LibraryReference, LinkReference, ReferenceHandler, _}
 import amf.plugins.document.vocabularies.DialectsRegistry
 import amf.plugins.features.validation.CoreValidations.InvalidInclude
@@ -45,7 +46,7 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
           .foreach { entry =>
             entry.value.to[YMap] match {
               case Right(m) => m.entries.foreach(library)
-              case _        => ctx.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value)
+              case _        => ctx.eh.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value)
             }
           }
       case _ =>

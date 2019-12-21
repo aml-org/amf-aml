@@ -1,12 +1,15 @@
 package amf.plugins.document.vocabularies
 
+import amf.client.parse.DefaultErrorHandler
+import amf.core.CompilerContextBuilder
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain.{AmfObject, DomainElement}
-import amf.core.parser.{Annotations, DefaultParserSideErrorHandler}
+import amf.core.parser.Annotations
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.registries.AMFDomainEntityResolver
-import amf.core.remote.{Aml, Cache, Context}
-import amf.core.services.{RuntimeCompiler, RuntimeValidator}
+import amf.core.remote.Aml
+import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.vocabulary.ValueType
@@ -76,7 +79,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   }
 
   private def resolveDialect(dialect: Dialect) = {
-    val solved = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
+    val solved = new DialectResolutionPipeline(DefaultErrorHandler()).resolve(dialect)
     dialect.allHeaders foreach { header =>
       map += (header -> solved)
     }
@@ -155,21 +158,17 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     map.get(uri) match {
       case Some(dialect) => Future { dialect }
       case _ =>
-        RuntimeValidator.disableValidationsAsync() { reEnable =>
-          RuntimeCompiler(uri,
-                          Some("application/yaml"),
-                          Some(Aml.name),
-                          Context(platform),
-                          env = environment,
-                          cache = Cache())
-            .map {
-              case dialect: Dialect =>
-                reEnable()
-                register(dialect)
-                dialect
-            }
-        }
+        val context = new CompilerContextBuilder(uri, platform, UnhandledParserErrorHandler).withEnvironment(environment).build()
+        RuntimeCompiler.forContext(context,
+                        Some("application/yaml"),
+                        Some(Aml.name))
+          .map {
+            case dialect: Dialect =>
+              register(dialect)
+              dialect
+          }
     }
+
   }
 
   def unregisterDialect(uri: String): Unit = {

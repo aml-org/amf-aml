@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.parser.ErrorHandler
 import amf.core.resolution.stages.selectors.LinkSelector
 import amf.core.resolution.stages.{ModelReferenceResolver, ResolutionStage}
 import amf.plugins.document.vocabularies.model.document.DialectInstance

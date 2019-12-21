@@ -2,6 +2,7 @@ package amf.plugins.document.vocabularies.parser.vocabularies
 
 import amf.core.Root
 import amf.core.annotations.Aliases
+import amf.core.errorhandling.ErrorHandler
 import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.DomainElement
@@ -23,23 +24,23 @@ class VocabularyDeclarations(var externals: Map[String, External] = Map(),
                              var propertyTerms: Map[String, PropertyTerm] = Map(),
                              var usedVocabs: Map[String, Vocabulary] = Map(),
                              libs: Map[String, VocabularyDeclarations] = Map(),
-                             errorHandler: Option[ErrorHandler],
+                             errorHandler: ErrorHandler,
                              futureDeclarations: FutureDeclarations)
     extends Declarations(libs, Map(), Map(), errorHandler, futureDeclarations) {
 
-  def registerTerm(term: PropertyTerm) = {
+  def registerTerm(term: PropertyTerm): Unit = {
     if (!term.name.value().contains(".")) {
       propertyTerms += (term.name.value() -> term)
     }
   }
 
-  def registerTerm(term: ClassTerm) = {
+  def registerTerm(term: ClassTerm): Unit = {
     if (!term.name.value().contains(".")) {
       classTerms += (term.name.value() -> term)
     }
   }
 
-  def registerUsedVocabulary(alias: String, vocab: Vocabulary) = usedVocabs += (alias -> vocab)
+  def registerUsedVocabulary(alias: String, vocab: Vocabulary): Unit = usedVocabs += (alias -> vocab)
 
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): VocabularyDeclarations = {
@@ -134,7 +135,7 @@ trait VocabularySyntax { this: VocabularyContext =>
 }
 
 class VocabularyContext(private val wrapped: ParserContext, private val ds: Option[VocabularyDeclarations] = None)
-    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.parserCount)
+    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.eh)
     with VocabularySyntax
     with SyntaxErrorReporter {
 
@@ -204,7 +205,7 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
   }
 
   val declarations: VocabularyDeclarations =
-    ds.getOrElse(new VocabularyDeclarations(errorHandler = Some(this), futureDeclarations = futureDeclarations))
+    ds.getOrElse(new VocabularyDeclarations(errorHandler = eh, futureDeclarations = futureDeclarations))
 
   def terms(): Seq[DomainElement] = declarations.classTerms.values.toSeq ++ declarations.propertyTerms.values.toSeq
 }
@@ -257,7 +258,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
             target(url).foreach {
               case module: DeclaresModel => result += (alias, collectAlias(module, alias -> (module.id, url)))
               case other =>
-                ctx.violation(ExpectedVocabularyModule, id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
+                ctx.eh.violation(ExpectedVocabularyModule, id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
             }
           })
     )

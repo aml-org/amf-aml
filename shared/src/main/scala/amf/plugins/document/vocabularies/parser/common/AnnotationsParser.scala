@@ -69,7 +69,7 @@ trait AnnotationsParser {
                   .add(Annotations(v))
                 Some(extension)
               case None =>
-                ctx.violation(MissingVocabulary, node.id, ex.getMessage, v)
+                ctx.eh.violation(MissingVocabulary, node.id, ex.getMessage, v)
                 None
             }
         }

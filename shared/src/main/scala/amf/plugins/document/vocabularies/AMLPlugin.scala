@@ -4,17 +4,11 @@ import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{
-  DefaultParserSideErrorHandler,
-  ErrorHandler,
-  ParserContext,
-  ReferenceHandler,
-  SyamlParsedDocument,
-  _
-}
+import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument, _}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.{Aml, Platform}
@@ -36,11 +30,7 @@ import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReference
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{
-  DialectInstancePatchResolutionPipeline,
-  DialectInstanceResolutionPipeline,
-  DialectResolutionPipeline
-}
+import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.{ProfileName, RamlProfile}
 import org.mulesoft.common.core._
@@ -345,7 +335,7 @@ object AMLPlugin
     registry.validations.get(header) match {
       case Some(profile) => profile
       case _ =>
-        val resolvedDialect = new DialectResolutionPipeline(DefaultParserSideErrorHandler(dialect)).resolve(dialect)
+        val resolvedDialect = new DialectResolutionPipeline(dialect.errorHandler()).resolve(dialect)
         val profile         = new AMFDialectValidations(resolvedDialect).profile()
         registry.validations += (header -> profile)
         profile
@@ -371,7 +361,7 @@ object AMLPlugin
     baseUnit match {
       case dialectInstance: DialectInstanceUnit =>
         val resolvedModel =
-          new DialectInstanceResolutionPipeline(DefaultParserSideErrorHandler(baseUnit)).resolve(dialectInstance)
+          new DialectInstanceResolutionPipeline(baseUnit.errorHandler()).resolve(dialectInstance)
 
         val dependenciesValidations: Future[Seq[ValidationProfile]] = Future
           .sequence(dialectInstance.graphDependencies.map { instance =>
@@ -420,7 +410,7 @@ object AMLPlugin
   // context that opens a new context for declarations and copies the global JSON Schema declarations
   protected def cleanDialectContext(wrapped: ParserContext, root: Root): DialectContext = {
     val cleanNested =
-      ParserContext(root.location, root.references, EmptyFutureDeclarations(), parserCount = wrapped.parserCount)
+      ParserContext(root.location, root.references, EmptyFutureDeclarations(), eh = wrapped.eh)
     new DialectContext(cleanNested)
   }
 }

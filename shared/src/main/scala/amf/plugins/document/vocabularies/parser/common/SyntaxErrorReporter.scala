@@ -1,29 +1,29 @@
 package amf.plugins.document.vocabularies.parser.common
 
 import amf.core.annotations.{LexicalInformation, SourceLocation}
-import amf.core.parser.{Annotations, ErrorHandler, Range}
+import amf.core.parser.{Annotations, ParserContext, Range}
 import amf.core.utils.AmfStrings
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
 import amf.validation.DialectValidations._
 import org.yaml.model.{YNode, YPart}
 
-trait SyntaxErrorReporter { this: ErrorHandler =>
+trait SyntaxErrorReporter { this: ParserContext =>
 
   def missingTermViolation(term: String, node: String, ast: YPart): Unit = {
-    violation(MissingTermSpecification, node, s"Cannot find class vocabulary term $term", ast)
+    eh.violation(MissingTermSpecification, node, s"Cannot find class vocabulary term $term", ast)
   }
 
   def missingTermWarning(term: String, node: String, ast: YPart): Unit = {
-    warning(MissingPropertyTermSpecification, node, s"Cannot find property vocabulary term $term", ast)
+    eh.warning(MissingPropertyTermSpecification, node, s"Cannot find property vocabulary term $term", ast)
   }
 
   def missingFragmentViolation(fragment: String, node: String, ast: YPart): Unit = {
-    violation(MissingFragmentSpecification, node, s"Cannot find fragment $fragment", ast)
+    eh.violation(MissingFragmentSpecification, node, s"Cannot find fragment $fragment", ast)
   }
 
   def missingPropertyRangeViolation(term: String, node: String, annotations: Annotations): Unit = {
-    violation(
+    eh.violation(
       MissingPropertyRangeSpecification,
       node,
       Some(PropertyMappingModel.ObjectRange.value.iri()),
@@ -34,7 +34,7 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
   }
 
   def missingPropertyKeyViolation(node: String,field:String, label:String,annotations: Annotations): Unit = {
-    violation(
+    eh.violation(
       MissingPropertyRangeSpecification,
       node,
       Some(field),
@@ -45,7 +45,7 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
   }
 
   def differentTermsInMapKey(node: String,field:String, label:String,annotations: Annotations): Unit = {
-    violation(
+    eh.violation(
       DifferentTermsInMapKey,
       node,
       Some(field),
@@ -61,7 +61,7 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
                                               expected: String,
                                               found: String,
                                               valueNode: YNode): Unit = {
-    violation(
+    eh.violation(
       InconsistentPropertyRangeValueSpecification,
       node,
       Some(property.nodePropertyMapping().value()),
@@ -73,7 +73,7 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
   }
 
   def closedNodeViolation(id: String, property: String, nodeType: String, ast: YPart): Unit = {
-    violation(
+    eh.violation(
       ClosedShapeSpecification,
       id,
       s"Property: '$property' not supported in a $nodeType node",
@@ -82,7 +82,7 @@ trait SyntaxErrorReporter { this: ErrorHandler =>
   }
 
   def missingPropertyViolation(id: String, property: String, nodeType: String, ast: YPart): Unit = {
-    violation(
+    eh.violation(
       MissingPropertySpecification,
       id,
       s"Property: '$property' mandatory in a $nodeType node",

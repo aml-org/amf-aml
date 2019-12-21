@@ -1,13 +1,14 @@
 package amf.dialects
 
+import amf.client.parse.DefaultParserErrorHandler
 import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.io.FileAssertionTest
-import amf.core.{AMFCompiler, AMFSerializer}
 import amf.core.model.document.BaseUnit
-import amf.core.parser.UnhandledErrorHandler
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
+import amf.core.{AMFCompiler, AMFSerializer, CompilerContextBuilder}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -33,9 +34,10 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
                             target: Vendor,
                             directory: String = basePath,
                             useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
+    val context = new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
       _         <- init()
-      dialect   <- new AMFCompiler(s"file://$directory/$dialect", platform, None, None,Some(Aml.name), cache = Cache()).build()
+      dialect   <- new AMFCompiler(context, None,Some(Aml.name)).build()
       _         <- Future { AMLPlugin.resolve(dialect, UnhandledErrorHandler) }
       res       <- cycle(source, golden, hint, target, useAmfJsonldSerialization = useAmfJsonldSerialization, directory = directory)
     } yield {
@@ -49,9 +51,9 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
                             directory: String = basePath): Future[BaseUnit] = {
     for {
       _         <- init()
-      dialect   <- new AMFCompiler(s"file://$directory/$dialect", platform, None, None,Some(Aml.name), cache = Cache()).build()
+      dialect   <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build(), None,Some(Aml.name)).build()
       _         <- Future { AMLPlugin.resolve(dialect, UnhandledErrorHandler) }
-      b         <- new AMFCompiler(s"file://$directory/$source", platform, None, None,Some(hint.vendor.name), cache = Cache()).build()
+      b         <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$source", platform, DefaultParserErrorHandler.withRun()).build(),None,Some(hint.vendor.name)).build()
     } yield {
       b
     }
@@ -77,9 +79,9 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
                   syntax: Option[Syntax] = None): Future[Assertion] = {
     val options = RenderOptions().withPrettyPrint.withSourceMaps
     if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
-
+    val context = new CompilerContextBuilder(s"file://$directory/$source", platform, DefaultParserErrorHandler.withRun()).build()
     for {
-      b <- new AMFCompiler(s"file://$directory/$source", platform, None, None,Some(hint.vendor.name), cache = Cache()).build()
+      b <- new AMFCompiler(context,  None,Some(hint.vendor.name)).build()
       t <- Future{transform(b)}
       s <- new AMFSerializer(t,  vendorToSyntax(target), target.name, options)
         .renderToString(scala.concurrent.ExecutionContext.Implicits.global)
