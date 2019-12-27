@@ -1,0 +1,17 @@
+#%Dialect 1.0
+dialect: エア
+version: エアエア
+nodeMappings:
+  ここに: 図書館.ノードB
+  Other:
+    mapping:
+      zz:
+        range: 図書館.ノードB
+      aaa:
+        range: ここに
+  地元: 図書館.ノードB
+uses:
+  図書館: mappings_lib.raml
+documents:
+  root:
+    encodes: 地元
