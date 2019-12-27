@@ -1,0 +1,23 @@
+#%Dialect 1.0
+dialect: エア
+version: エアエア
+nodeMappings:
+  ノードB:
+    classTerm: 使用する.エアウェイ
+    mapping:
+      za:
+        propertyTerm: 使用する.エア
+        range: ノードA
+  ノードA:
+    classTerm: 使用する.エアウェイ
+    mapping:
+      エア:
+        propertyTerm: 使用する.エア
+        range: string
+documents:
+  root:
+    encodes: ノードA
+    declares:
+      ーB: ノードB
+external:
+   使用する: http://test.com/v2#
