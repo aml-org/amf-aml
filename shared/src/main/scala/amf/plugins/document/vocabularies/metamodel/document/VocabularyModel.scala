@@ -12,7 +12,7 @@ import amf.plugins.document.vocabularies.model.document.Vocabulary
 object VocabularyModel extends ModuleModel with ExternalContextModel {
 
   val Name =
-    Field(Str, Namespace.Core + "name", ModelDoc(ModelVocabularies.Core, "name", "name for an entity"))
+    Field(Str, Namespace.Core + "name", ModelDoc(ModelVocabularies.Core, "name", "Name for an entity"))
   val Base = Field(Str,
                    Namespace.Meta + "base",
                    ModelDoc(ModelVocabularies.Meta, "base", "Base URI prefix for definitions in this vocabulary"))
