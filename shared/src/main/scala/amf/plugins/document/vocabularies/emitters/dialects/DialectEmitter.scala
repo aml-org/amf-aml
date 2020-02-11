@@ -70,7 +70,7 @@ trait AliasesConsumer extends DialectEmitterHelper {
 trait PosExtractor {
   def fieldPos(element: DomainElement, field: Field): Position = {
     element.fields
-      .entry(field).startPosition
+      .entry(field).flatMap(_.startPosition).getOrElse(ZERO)
   }
 }
 
@@ -805,7 +805,7 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
       override def position(): Position =
         dialect.fields
-          .entry(DialectModel.Name).startPosition
+          .entry(DialectModel.Name).flatMap(_.startPosition).getOrElse(ZERO)
 
     })
 
@@ -815,7 +815,7 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
       override def position(): Position =
         dialect.fields
-          .entry(DialectModel.Version).startPosition
+          .entry(DialectModel.Version).flatMap(_.startPosition).getOrElse(ZERO)
     })
 
     if (dialect.usage.nonEmpty) {
@@ -824,7 +824,7 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
         override def position(): Position =
           dialect.fields
-            .entry(DialectModel.Usage).startPosition
+            .entry(DialectModel.Usage).flatMap(_.startPosition).getOrElse(ZERO)
       })
     }
 
@@ -868,7 +868,7 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDoc
 
         override def position(): Position =
           dialect.fields
-            .entry(DialectModel.Usage).startPosition
+            .entry(DialectModel.Usage).flatMap(_.startPosition).getOrElse(ZERO)
       })
     }
     emitters
@@ -876,14 +876,12 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDoc
 
 }
 
-object FieldEntryImplicit {
-  implicit class FieldEntryWithPosition(entry: Option[FieldEntry]) {
-    def startPosition: Position =
-      entry.flatMap(_.value
+private object FieldEntryImplicit {
+  implicit class FieldEntryWithPosition(entry: FieldEntry) {
+    def startPosition: Option[Position] =
+      entry.value
         .annotations
         .find(classOf[LexicalInformation])
         .map(_.range.start)
-      )
-        .getOrElse(ZERO)
   }
 }
