@@ -288,7 +288,7 @@ object AMLPlugin
   private def parseAndRegisterDialect(document: Root, parentContext: ParserContext) = {
     new DialectsParser(document)(new DialectContext(parentContext))
       .parseDocument() match {
-      case dialect: Dialect =>
+      case dialect: Dialect if dialect.hasValidHeader =>
         registry.register(dialect)
         Some(dialect)
       case unit => Some(unit)

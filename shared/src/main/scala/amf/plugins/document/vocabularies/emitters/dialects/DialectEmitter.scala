@@ -8,7 +8,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.metamodel.Field
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.{AmfScalar, DomainElement, Linkable}
-import amf.core.parser.Position
+import amf.core.parser.{FieldEntry, Position}
 import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.annotations.AliasesLocation
@@ -20,6 +20,7 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragmen
 import amf.plugins.document.vocabularies.model.domain._
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YType}
+import FieldEntryImplicit._
 
 trait AliasesConsumer extends DialectEmitterHelper {
   val dialect: Dialect
@@ -69,11 +70,7 @@ trait AliasesConsumer extends DialectEmitterHelper {
 trait PosExtractor {
   def fieldPos(element: DomainElement, field: Field): Position = {
     element.fields
-      .entry(field)
-      .map {
-        _.value.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
-      }
-      .getOrElse(ZERO)
+      .entry(field).flatMap(_.startPosition).getOrElse(ZERO)
   }
 }
 
@@ -729,9 +726,7 @@ trait DialectDocumentsEmitters {
 
         override def position(): Position = {
           dialect.externals
-            .map(e => e.annotations.find(classOf[LexicalInformation]).map(_.range.start))
-            .filter(_.nonEmpty)
-            .map(_.get)
+            .flatMap(e => e.annotations.find(classOf[LexicalInformation]).map(_.range.start))
             .sortBy(_.line)
             .headOption
             .getOrElse(ZERO)
@@ -810,13 +805,7 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
       override def position(): Position =
         dialect.fields
-          .entry(DialectModel.Name)
-          .get
-          .value
-          .annotations
-          .find(classOf[LexicalInformation])
-          .map(_.range.start)
-          .getOrElse(ZERO)
+          .entry(DialectModel.Name).flatMap(_.startPosition).getOrElse(ZERO)
 
     })
 
@@ -826,13 +815,7 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
       override def position(): Position =
         dialect.fields
-          .entry(DialectModel.Version)
-          .get
-          .value
-          .annotations
-          .find(classOf[LexicalInformation])
-          .map(_.range.start)
-          .getOrElse(ZERO)
+          .entry(DialectModel.Version).flatMap(_.startPosition).getOrElse(ZERO)
     })
 
     if (dialect.usage.nonEmpty) {
@@ -841,13 +824,7 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
         override def position(): Position =
           dialect.fields
-            .entry(DialectModel.Usage)
-            .get
-            .value
-            .annotations
-            .find(classOf[LexicalInformation])
-            .map(_.range.start)
-            .getOrElse(ZERO)
+            .entry(DialectModel.Usage).flatMap(_.startPosition).getOrElse(ZERO)
       })
     }
 
@@ -857,7 +834,6 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
     emitters
   }
-
 }
 
 case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDocumentsEmitters {
@@ -892,17 +868,20 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDoc
 
         override def position(): Position =
           dialect.fields
-            .entry(DialectModel.Usage)
-            .get
-            .value
-            .annotations
-            .find(classOf[LexicalInformation])
-            .map(_.range.start)
-            .getOrElse(ZERO)
+            .entry(DialectModel.Usage).flatMap(_.startPosition).getOrElse(ZERO)
       })
     }
-
     emitters
   }
 
+}
+
+private object FieldEntryImplicit {
+  implicit class FieldEntryWithPosition(entry: FieldEntry) {
+    def startPosition: Option[Position] =
+      entry.value
+        .annotations
+        .find(classOf[LexicalInformation])
+        .map(_.range.start)
+  }
 }

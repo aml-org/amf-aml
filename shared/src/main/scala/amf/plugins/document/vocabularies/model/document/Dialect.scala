@@ -67,6 +67,8 @@ case class Dialect(fields: Fields, annotations: Annotations)
 
   def isFragmentHeader(h: String): Boolean = fragmentHeaders.contains(h.stripSpaces)
 
+  def hasValidHeader: Boolean = !name().isNullOrEmpty && !version().isNullOrEmpty
+
   def allHeaders: Seq[String] = Seq(header) ++ libraryHeader ++ fragmentHeaders ++ Seq(patchHeader)
 
   def meta: Obj = DialectModel

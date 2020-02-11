@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.core.remote._
+import amf.plugins.document.vocabularies.AMLPlugin
 
 import scala.concurrent.ExecutionContext
 
@@ -225,10 +226,31 @@ trait DialectsParsingTest extends DialectTests {
 
   // Reference Style tests
   test("parse 19 test - with reference style") {
-    init().flatMap(_ => cycle("referencestyle/example19-referencestyle.raml", "referencestyle/example19-referencestyle.json", VocabularyYamlHint, Amf))
+      init().flatMap(_ => cycle("referencestyle/example19-referencestyle.raml", "referencestyle/example19-referencestyle.json", VocabularyYamlHint, Amf))
   }
 
   test("generate 19 test - with reference style") {
     init().flatMap(_ => cycle("referencestyle/example19-referencestyle.json", "referencestyle/example19-referencestyle.raml", AmfJsonHint, Aml))
+  }
+
+  test("generate 20 test - without version") {
+    val preRegistry = AMLPlugin.registry.allDialects().size
+    for {
+      b <- parseAndRegisterDialect(s"file://$basePath/invalid/example20-no-version.raml", platform, VocabularyYamlHint)
+    } yield {
+      assert(AMLPlugin.registry.allDialects().size == preRegistry)
+      assert(AMLPlugin.registry.dialectById(b.id).isEmpty)
+    }
+  }
+
+  test("generate 21 test - without name") {
+
+    val preRegistry = AMLPlugin.registry.allDialects().size
+    for {
+      b <- parseAndRegisterDialect(s"file://$basePath/invalid/example21-no-name.raml", platform, VocabularyYamlHint)
+    } yield {
+      assert(AMLPlugin.registry.allDialects().size == preRegistry)
+      assert(AMLPlugin.registry.dialectById(b.id).isEmpty)
+    }
   }
 }
