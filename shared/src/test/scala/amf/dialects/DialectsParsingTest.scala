@@ -229,6 +229,10 @@ trait DialectsParsingTest extends DialectTests {
       init().flatMap(_ => cycle("referencestyle/example19-referencestyle.raml", "referencestyle/example19-referencestyle.json", VocabularyYamlHint, Amf))
   }
 
+  test("generate 19 test - with reference style") {
+    init().flatMap(_ => cycle("referencestyle/example19-referencestyle.json", "referencestyle/example19-referencestyle.raml", AmfJsonHint, Aml))
+  }
+
   test("generate 20 test - without version") {
     val preRegistry = AMLPlugin.registry.allDialects().size
     for {
