@@ -163,7 +163,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
                         Some("application/yaml"),
                         Some(Aml.name))
           .map {
-            case dialect: Dialect =>
+            case dialect: Dialect if dialect.hasValidHeader =>
               register(dialect)
               dialect
           }

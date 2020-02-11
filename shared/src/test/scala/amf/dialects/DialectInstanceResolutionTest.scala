@@ -70,6 +70,18 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
     }
   }
 
+  final def parseAndRegisterDialect(uri: String, platform: Platform, hint: Hint): Future[BaseUnit] =
+    for {
+      _ <- init()
+      r <- new AMFCompiler(
+        new CompilerContextBuilder(uri, platform, DefaultParserErrorHandler.withRun()).build(),
+        None,
+        Some(hint.vendor.name))
+        .build()
+    } yield {
+      r
+    }
+
   final def cycle(source: String,
                   golden: String,
                   hint: Hint,
@@ -79,9 +91,8 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
                   syntax: Option[Syntax] = None): Future[Assertion] = {
     val options = RenderOptions().withPrettyPrint.withSourceMaps
     if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
-    val context = new CompilerContextBuilder(s"file://$directory/$source", platform, DefaultParserErrorHandler.withRun()).build()
     for {
-      b <- new AMFCompiler(context,  None,Some(hint.vendor.name)).build()
+      b <- parseAndRegisterDialect(s"file://$directory/$source", platform, hint)
       t <- Future{transform(b)}
       s <- new AMFSerializer(t,  vendorToSyntax(target), target.name, options)
         .renderToString(scala.concurrent.ExecutionContext.Implicits.global)
