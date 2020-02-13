@@ -1172,7 +1172,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       case Some(s: String)           => node.setProperty(property, s, entry)
       case Some(("link", l: String)) => node.setProperty(property, l, entry)
       case Some(d: SimpleDateTime)   => node.setProperty(property, d, entry)
-      case _                         => // ignore
+      case _                         => node.setProperty(property, entry)
     }
   }
 
