@@ -205,6 +205,9 @@ trait DialectInstancesParsingTest extends DialectTests {
     withDialect("dialect31.raml", "example31.raml", "example31.json", VocabularyYamlHint, Amf)
   }
 
+  test("parse 32 test") {
+    withDialect("dialect32.raml", "example32.raml", "example32.json", VocabularyYamlHint, Amf)
+  }
 
   if (platform.name == "jvm") {
     ignore("generate 1 test") {

@@ -8,7 +8,17 @@ import amf.core.metamodel.Type.Str
 import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfScalar, Annotation, DomainElement}
-import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
+import amf.core.parser.{
+  Annotations,
+  BaseSpecParser,
+  EmptyFutureDeclarations,
+  FutureDeclarations,
+  ParsedReference,
+  ParserContext,
+  Reference,
+  SearchScope,
+  _
+}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -430,7 +440,10 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             if (tail.nonEmpty) findDeclarationsMap(tail, m.value.as[YMap])
             else m.value.toOption[YMap]
           case Some(o) =>
-            ctx.eh.violation(DialectError, "", s"Invalid node type for declarations path ${o.value.tagType.toString()}", o)
+            ctx.eh.violation(DialectError,
+                             "",
+                             s"Invalid node type for declarations path ${o.value.tagType.toString()}",
+                             o)
             None
           case _ => None
         }
@@ -473,9 +486,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                   ctx.registerJsonPointerDeclaration(id, node)
                 case _ =>
                   ctx.eh.violation(DialectError,
-                                id,
-                                s"Cannot parse declaration for node with key '$declarationName'",
-                                entry.value)
+                                   id,
+                                   s"Cannot parse declaration for node with key '$declarationName'",
+                                   entry.value)
               }
             }
           }
@@ -680,9 +693,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                 }
               case None =>
                 ctx.eh.violation(DialectError,
-                              id,
-                              s"Cannot find dialect for nested anyNode mapping $dialectNode",
-                              nested.value)
+                                 id,
+                                 s"Cannot find dialect for nested anyNode mapping $dialectNode",
+                                 nested.value)
             }
           case None =>
             dispatchNodeMap(map) match {
@@ -741,9 +754,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
           case Some(nodeMapping) => Seq(nodeMapping)
           case None =>
             ctx.eh.violation(DialectError,
-                          id,
-                          s"Cannot find discriminator value for discriminator '$propertyName'",
-                          nodeMap)
+                             id,
+                             s"Cannot find discriminator value for discriminator '$propertyName'",
+                             nodeMap)
             Nil
         }
       // Inferring based on properties
@@ -778,9 +791,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
         case Some(nodeMapping) => Some(nodeMapping)
         case None =>
           ctx.eh.violation(DialectError,
-                        defaultId,
-                        s"Cannot find mapping for property ${mappableWithDiscriminator.id} in union",
-                        ast)
+                           defaultId,
+                           s"Cannot find mapping for property ${mappableWithDiscriminator.id} in union",
+                           ast)
           None
       }
     } collect { case Some(mapping: NodeMapping) => mapping }
@@ -792,9 +805,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             case Some(nodeMapping: NodeMapping) => acc + (alias -> nodeMapping)
             case _ =>
               ctx.eh.violation(DialectError,
-                            defaultId,
-                            s"Cannot find mapping for property $mappingId in discriminator value '$alias' in union",
-                            ast)
+                               defaultId,
+                               s"Cannot find mapping for property $mappingId in discriminator value '$alias' in union",
+                               ast)
               acc
           }
       }
@@ -986,9 +999,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
 
     } else {
       ctx.eh.violation(DialectError,
-                    id,
-                    s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
-                    propertyEntry)
+                       id,
+                       s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
+                       propertyEntry)
     }
   }
 
@@ -1040,9 +1053,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       case None => idsMap.update(dialectDomainElement.id, true)
       case _ =>
         ctx.eh.violation(DialectError,
-                      dialectDomainElement.id,
-                      s"Duplicated element in collection ${dialectDomainElement.id}",
-                      elementNode)
+                         dialectDomainElement.id,
+                         s"Duplicated element in collection ${dialectDomainElement.id}",
+                         elementNode)
     }
   }
 
@@ -1078,6 +1091,10 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             .literalRange()
             .value() == DataType.Number || property.literalRange().value() == DataType.Any =>
         Some(value.as[Int])
+      case YType.Int
+          if property.literalRange().value() == DataType.Float ||
+            property.literalRange().value() == DataType.Double =>
+        Some(value.as[Double])
       case YType.Int =>
         ctx.inconsistentPropertyRangeValueViolation(node.id,
                                                     property,
@@ -1371,9 +1388,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
             node.setObjectField(mapping, linkedExternal, propertyEntry.value)
           case None =>
             ctx.eh.violation(DialectError,
-                          id,
-                          s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
-                          propertyEntry.value)
+                             id,
+                             s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
+                             propertyEntry.value)
         }
       case _ =>
         ctx.eh.violation(
