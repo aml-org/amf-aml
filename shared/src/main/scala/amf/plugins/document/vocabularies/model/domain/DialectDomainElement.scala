@@ -209,6 +209,11 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
+  def setProperty(property: PropertyMapping, entry: YMapEntry): DialectDomainElement = {
+    set(property.toField, AmfScalar(entry.value,Annotations(entry.value)), Annotations(entry))
+    this
+  }
+
   def setProperty(property: PropertyMapping, value: Seq[Any], entry: YMapEntry): DialectDomainElement = {
     set(property.toField, AmfArray(value.map(AmfScalar(_)), Annotations(entry.value)), Annotations(entry))
     this
