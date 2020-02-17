@@ -39,9 +39,6 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         v.values.collect({case s:AmfScalar => s.value})
       }).getOrElse(Nil)
 
-  private def classifiedField(classification: PropertyClassification): Iterable[FieldEntry] =
-    fieldsToProperties.filter(_._1.classification() == classification).map(_._2)
-
   def fieldsToProperties: Iterable[(PropertyMapping, FieldEntry)] =
     fields
       .fields()
