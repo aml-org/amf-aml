@@ -1,6 +1,10 @@
 package amf.dialects
 
+import amf.client.parse.DefaultParserErrorHandler
+import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.remote._
+import amf.plugins.document.vocabularies.AMLPlugin
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -407,6 +411,21 @@ trait DialectInstancesParsingTest extends DialectTests {
       "/invalids/schema-uri/instance.json",
       VocabularyYamlHint,
       Amf)
+  }
+
+  test("Clone instance from dialect") {
+    val context1 = new CompilerContextBuilder(s"file://$basePath/dialect31.raml", platform, DefaultParserErrorHandler.withRun()).build()
+    val context2 = new CompilerContextBuilder(s"file://$basePath/example31.raml", platform, DefaultParserErrorHandler.withRun()).build()
+    for {
+      _         <- init()
+      _         <- new AMFCompiler(context1, None,Some(Aml.name)).build()
+      bu        <- new AMFCompiler(context2, None,Some(Aml.name)).build()
+    } yield {
+      val clone = bu.cloneUnit()
+      clone.fields.foreach(f => assert(bu.fields.exists(f._1)))
+      bu.fields.foreach(f => assert(clone.fields.exists(f._1)))
+      assert(bu != clone) // not the SAME object
+    }
   }
 
 
