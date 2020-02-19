@@ -32,6 +32,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'new_model'
+          bransh 'support/*'
         }
       }
       steps {
