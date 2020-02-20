@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies
 
+import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
@@ -30,14 +31,17 @@ import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReference
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DialectInstancePatchResolutionPipeline,
+  DialectInstanceResolutionPipeline,
+  DialectResolutionPipeline
+}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.{ProfileName, RamlProfile}
 import org.mulesoft.common.core._
 import org.yaml.model._
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 trait RamlHeaderExtractor {
   def comment(root: Root): Option[String]            = root.parsed.comment
@@ -104,7 +108,7 @@ object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor with K
 
       header match {
         case Some(ExtensionHeader.DialectHeader) | Some(ExtensionHeader.DialectFragmentHeader) | Some(
-              ExtensionHeader.DialectLibraryHeader) | Some(ExtensionHeader.VocabularyHeader) =>
+                ExtensionHeader.DialectLibraryHeader) | Some(ExtensionHeader.VocabularyHeader) =>
           true
         case Some(other) => registry.findDialectForHeader(other).isDefined
         case _           => dialectInKey(root).isDefined
@@ -136,36 +140,36 @@ object AMLPlugin
 
   override val vendors: Seq[String] = Seq(Aml.name)
 
-  override def init(): Future[AMFPlugin] = Future { this }
+  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future { this }
 
   override def modelEntities: Seq[Obj] = Seq(
-    VocabularyModel,
-    ExternalModel,
-    VocabularyReferenceModel,
-    ClassTermModel,
-    ObjectPropertyTermModel,
-    DatatypePropertyTermModel,
-    DialectModel,
-    NodeMappingModel,
-    UnionNodeMappingModel,
-    PropertyMappingModel,
-    DocumentsModelModel,
-    PublicNodeMappingModel,
-    DocumentMappingModel,
-    DialectLibraryModel,
-    DialectFragmentModel,
-    DialectInstanceModel,
-    DialectInstanceLibraryModel,
-    DialectInstanceFragmentModel,
-    DialectInstancePatchModel
+      VocabularyModel,
+      ExternalModel,
+      VocabularyReferenceModel,
+      ClassTermModel,
+      ObjectPropertyTermModel,
+      DatatypePropertyTermModel,
+      DialectModel,
+      NodeMappingModel,
+      UnionNodeMappingModel,
+      PropertyMappingModel,
+      DocumentsModelModel,
+      PublicNodeMappingModel,
+      DocumentMappingModel,
+      DialectLibraryModel,
+      DialectFragmentModel,
+      DialectInstanceModel,
+      DialectInstanceLibraryModel,
+      DialectInstanceFragmentModel,
+      DialectInstancePatchModel
   )
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] =
     Map(
-      "aliases-location" -> AliasesLocation,
-      "custom-id"        -> CustomId,
-      "ref-include"      -> RefInclude,
-      "json-pointer-ref" -> JsonPointerRef
+        "aliases-location" -> AliasesLocation,
+        "custom-id"        -> CustomId,
+        "ref-include"      -> RefInclude,
+        "json-pointer-ref" -> JsonPointerRef
     )
 
   /**
@@ -189,16 +193,16 @@ object AMLPlugin
     * this domain
     */
   override def documentSyntaxes: Seq[String] = Seq(
-    "application/aml+json",
-    "application/aml+yaml",
-    "application/raml",
-    "application/raml+json",
-    "application/raml+yaml",
-    "text/yaml",
-    "text/x-yaml",
-    "application/yaml",
-    "application/x-yaml",
-    "application/json"
+      "application/aml+json",
+      "application/aml+yaml",
+      "application/raml",
+      "application/raml+json",
+      "application/raml+yaml",
+      "text/yaml",
+      "text/x-yaml",
+      "application/yaml",
+      "application/x-yaml",
+      "application/json"
   )
 
   /**
@@ -352,12 +356,17 @@ object AMLPlugin
   /**
     * Request for validation of a particular model, profile and list of effective validations for that profile
     */
-  override def validationRequest(baseUnit: BaseUnit,
-                                 profile: ProfileName,
-                                 validations: EffectiveValidations,
-                                 platform: Platform,
-                                 env: Environment,
-                                 resolved: Boolean): Future[AMFValidationReport] = {
+  override def validationRequest(
+      baseUnit: BaseUnit,
+      profile: ProfileName,
+      validations: EffectiveValidations,
+      platform: Platform,
+      env: Environment,
+      resolved: Boolean,
+      executionEnv: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
+
+    implicit val executionContext: ExecutionContext = executionEnv.executionContext
+
     baseUnit match {
       case dialectInstance: DialectInstanceUnit =>
         val resolvedModel =
@@ -383,10 +392,10 @@ object AMLPlugin
           }
 
           AMFValidationReport(
-            conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-            model = baseUnit.id,
-            profile = profile,
-            results = results
+              conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
+              model = baseUnit.id,
+              profile = profile,
+              results = results
           )
         }
 
