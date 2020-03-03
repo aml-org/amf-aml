@@ -7,7 +7,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-version in ThisBuild := "4.1.34-0"
+version in ThisBuild := "4.1.34-1"
 //version in ThisBuild := {
 //  val major = 4
 //  val minor = 1
@@ -45,7 +45,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "4.1.34"
+val amfCoreVersion = "4.1.34-0"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
