@@ -18,8 +18,10 @@ pipeline {
         bash '''#!/bin/bash
                 VERSION=$(sbt version | tail -n 1 | grep -o '[0-9].[0-9].[0-9].*')
                 COMMIT=$(git log -1 | grep -o '[a-zA-Z0-9]\\{40\\}')
-                git tag -a $VERSION $COMMIT
-                git push origin $VERSION
+                echo $VERSION
+                echo $COMMIT
+                &2 echo `git tag -a $VERSION $COMMIT`
+                &2 echo `git push origin $VERSION`
          '''
       }
     }
