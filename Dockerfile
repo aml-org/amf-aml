@@ -17,7 +17,7 @@ RUN mkdir -p /usr/share/man/man1 && \
     apt-get install -y openjdk-8-jdk
 
 RUN apt-get install unzip -y && \
-    apt-get autoremove -y \
+    apt-get autoremove -y && \
     apt-get install git -y
 
 # Install Scala
