@@ -15,10 +15,18 @@ pipeline {
                 commit=$(git log -1 | grep -o '[a-zA-Z0-9]\\{40\\}')
                 msg="tagging release commit with it's release version"
                 url="https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mulesoft/amf-aml"
+                
+                echo "remote:"
                 git remote show origin
+                
+                echo "configure credentials"
                 git config user.email 'amirra@mulesoft.com\'
                 git config user.name 'arielmirra\'
+                
+                echo "tag"
                 git tag -fa -m $msg $version $commit
+                
+                echo "push"
                 git push $url refs/tags/$version
          '''
       }
