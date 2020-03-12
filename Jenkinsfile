@@ -11,10 +11,15 @@ pipeline {
     stage('autotag') {
       steps {
         sh '''#!/bin/bash
-                VERSION=$(sbt version | tail -n 1 | grep -o '[0-9].[0-9].[0-9].*')
-                COMMIT=$(git log -1 | grep -o '[a-zA-Z0-9]\\{40\\}')
-                git tag -a -m "tagging release ${VERSION}" $VERSION $COMMIT
-                git push origin $VERSION
+                version=$(sbt version | tail -n 1 | grep -o '[0-9].[0-9].[0-9].*')
+                commit=$(git log -1 | grep -o '[a-zA-Z0-9]\\{40\\}')
+                msg="tagging release commit with it's release version"
+                url="https://\\${GIT_USERNAME}:\\${GIT_PASSWORD}@github.com/${mulesoft}/${amf-aml}"
+                
+                git config user.email 'amirra@mulesoft.com\'
+                git config user.name 'Ariel Mirra\'
+                git tag -f -a $version -m $msg
+                git push ${url} refs/tags/${version}
          '''
       }
     }
