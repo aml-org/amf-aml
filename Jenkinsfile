@@ -20,8 +20,8 @@ pipeline {
                 COMMIT=$(git log -1 | grep -o '[a-zA-Z0-9]\\{40\\}')
                 echo $VERSION
                 echo $COMMIT
-                &2 echo `git tag -a $VERSION $COMMIT`
-                &2 echo `git push origin $VERSION`
+                1>&2 echo `git tag -a $VERSION $COMMIT`
+                1>&2 echo `git push origin $VERSION`
          '''
       }
     }
