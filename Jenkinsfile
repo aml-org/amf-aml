@@ -15,8 +15,6 @@ pipeline {
                 COMMIT=$(git log -1 | grep -o '[a-zA-Z0-9]\\{40\\}')
                 1>&2 echo $VERSION
                 echo $COMMIT
-                git tag -a $VERSION $COMMIT
-                git push origin $VERSION
          '''
       }
     }
