@@ -15,7 +15,7 @@ pipeline {
                 COMMIT=$(git log -1 | grep -o '[a-zA-Z0-9]\\{40\\}')
                 echo $VERSION
                 echo $COMMIT
-                git tag -a $VERSION $COMMIT
+                git tag -a -m "tagging release ${VERSION}" $VERSION $COMMIT
                 git push origin $VERSION
          '''
       }
