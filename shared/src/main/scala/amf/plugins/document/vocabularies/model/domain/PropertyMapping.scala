@@ -113,7 +113,10 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     val isObjectRange = objectRange().nonEmpty || Option(typeDiscriminator()).isDefined
 
     if (isObjectRange) {
-      if (allowMultiple().value() || mapTermKeyProperty().nonNull) {
+      if(allowMultiple().value() && sorted().value()) {
+        Field(Type.SortedArray(DialectDomainElementModel()), propertyIdValue)
+      }
+      else if (allowMultiple().value() || mapTermKeyProperty().nonNull) {
         Field(Type.Array(DialectDomainElementModel()), propertyIdValue)
       } else {
         Field(DialectDomainElementModel(), propertyIdValue)
