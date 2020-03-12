@@ -19,12 +19,12 @@ pipeline {
                 echo "remote:"
                 git remote show origin
                 
-                echo "configure credentials"
+                echo "configure credentials:"
                 git config user.email 'amirra@mulesoft.com\'
                 git config user.name 'arielmirra\'
                 
                 echo "tag"
-                git tag -fa -m $msg $version $commit
+                git tag -fa -m "$msg" $version $commit
                 
                 echo "push"
                 git push $url refs/tags/$version
