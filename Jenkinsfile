@@ -18,7 +18,7 @@ pipeline {
                 
                 git config user.email 'amirra@mulesoft.com\'
                 git config user.name 'Ariel Mirra\'
-                git tag -f -a $version -m $msg
+                git tag -f -a -m $msg $version $commit
                 git push ${url} refs/tags/${version}
          '''
       }
