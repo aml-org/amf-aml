@@ -23,10 +23,10 @@ pipeline {
                 git config user.email 'amirra@mulesoft.com\'
                 git config user.name 'arielmirra\'
                 
-                echo "tag"
+                echo "tag:"
                 git tag -fa -m "$msg" $version $commit
                 
-                echo "push"
+                echo "push:"
                 git push $url refs/tags/$version
          '''
       }
