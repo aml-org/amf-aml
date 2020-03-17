@@ -10,7 +10,8 @@ pipeline {
   stages {
     stage('autotag') {
       steps {
-        sh '''#!/bin/bash
+        withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'github-exchange', passwordVariable: 'GITHUB_PASS', usernameVariable: 'GITHUB_USER']]) {
+          sh '''#!/bin/bash
                 version=$(sbt version | tail -n 1 | grep -o '[0-9].[0-9].[0-9].*')
                 commit=$(git log -1 | grep -o '[a-zA-Z0-9]\\{40\\}')
                 msg="tagging release commit with it's release version"
@@ -29,6 +30,7 @@ pipeline {
                 echo "push:"
                 git push $url refs/tags/$version
          '''
+        }
       }
     }
   }
