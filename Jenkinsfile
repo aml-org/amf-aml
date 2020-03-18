@@ -6,6 +6,7 @@ pipeline {
   }
   environment {
     NEXUS = credentials('exchange-nexus')
+    GITHUB = credentials('github-exchange')
   }
   stages {
     stage('autotag') {
