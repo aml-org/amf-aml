@@ -21,7 +21,7 @@ pipeline {
                 git config user.name 'arielmirra\'
                 
                 echo "delete remote tag:"
-                git push $url -d $version
+                git push $url --delete $version
                 
                 echo "tag:"
                 git tag -f $version
