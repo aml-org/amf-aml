@@ -20,10 +20,13 @@ pipeline {
                 git config user.email 'amirra@mulesoft.com\'
                 git config user.name 'arielmirra\'
                 
+                echo "delete remote tag:"
+                git push $url -d $version
+                
                 echo "tag:"
                 git tag -f $version
                 
-                echo "push:"
+                echo "push tag:"
                 git push $url $version
          '''
         }
