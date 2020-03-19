@@ -6,7 +6,6 @@ pipeline {
   }
   environment {
     NEXUS = credentials('exchange-nexus')
-    GITHUB = credentials('github-exchange')
   }
   stages {
     stage('autotag') {
@@ -16,7 +15,7 @@ pipeline {
                 version=$(sbt version | tail -n 1 | grep -o '[0-9].[0-9].[0-9].*')
                 commit=$(git log -1 | grep -o '[a-zA-Z0-9]\\{40\\}')
                 msg="tagging release commit with it's release version"
-                url="https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/mulesoft/amf-aml"
+                url="https://${GITHUB_USER}:${GITHUB_PASS}@github.com/mulesoft/amf-aml"
                 
                 echo "remote:"
                 git remote show origin
