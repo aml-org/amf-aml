@@ -17,18 +17,14 @@ pipeline {
                 msg="tagging release commit with it's release version"
                 url="https://${GITHUB_USER}:${GITHUB_PASS}@github.com/mulesoft/amf-aml"
                 
-                echo "remote:"
-                git remote show origin
-                
-                echo "configure credentials:"
                 git config user.email 'amirra@mulesoft.com\'
                 git config user.name 'arielmirra\'
                 
                 echo "tag:"
-                git tag -fa -m "$msg" $version $commit
+                git tag -f $version
                 
                 echo "push:"
-                git push $url refs/tags/$version
+                git push $url $version
          '''
         }
       }
