@@ -378,7 +378,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     if (declarables.nonEmpty) dialect.withDeclares(declarables)
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
 
-    parseDocumentsMapping(map, dialect.id)
+    parseDocumentsMapping(map)
 
     // resolve unresolved references
     dialect.declares.foreach {
@@ -1018,190 +1018,14 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
-  private def parseDocumentsMapping(map: YMap, parent: String): Unit = {
-    val documentsMapping = DocumentsModel().withId(parent + "#/documents")
+  private def parseDocumentsMapping(map: YMap): Unit = {
     map.key("documents").foreach { e =>
-      ctx.closedNode("documentsMapping", documentsMapping.id, e.value.as[YMap])
-      parseRootDocumentMapping(e.value, documentsMapping.id) foreach { rootMapping: DocumentMapping =>
-        documentsMapping.withRoot(rootMapping)
-      }
-      parseFragmentsMapping(e.value, documentsMapping.id) map { fragmentMappings: Seq[DocumentMapping] =>
-        documentsMapping.withFragments(fragmentMappings)
-      }
-      parseLibraries(e.value, documentsMapping.id).foreach(documentsMapping.withLibrary)
-      parseDocumentsOptions(e.value, documentsMapping)
-    }
-
-    dialect.withDocuments(documentsMapping)
-  }
-
-  def parseRootDocumentMapping(value: YNode, parent: String): Option[DocumentMapping] = {
-    value.as[YMap].key("root") match {
-      case Some(entry: YMapEntry) if entry.value.tagType == YType.Map =>
-        val name             = s"${dialect.name().value()} ${dialect.version().value()}"
-        val rootMap          = entry.value.as[YMap]
-        val documentsMapping = DocumentMapping(map).withDocumentName(name).withId(parent + "/root")
-        rootMap.key(
-          "encodes",
-          entry => {
-            val nodeId = entry.value.as[YScalar].text
-            ctx.declarations.findNodeMapping(nodeId, SearchScope.All) match {
-              case Some(nodeMapping) => Some(documentsMapping.withEncoded(nodeMapping.id))
-              case _                 => None // TODO: violation here
-            }
-          }
-        )
-        rootMap.key(
-          "declares",
-          entry => {
-            val declaresMap = entry.value.as[YMap]
-            val declarations: Seq[Option[PublicNodeMapping]] = declaresMap.entries.map {
-              declarationEntry =>
-                val declarationId   = declarationEntry.value.as[YScalar].text
-                val declarationName = declarationEntry.key.as[YScalar].text
-                val declarationMapping = PublicNodeMapping(declarationEntry)
-                  .withName(declarationName)
-                  .withId(parent + "/declaration/" + declarationName.urlComponentEncoded)
-                ctx.declarations.findNodeMapping(declarationId, SearchScope.All) match {
-                  case Some(nodeMapping) => Some(declarationMapping.withMappedNode(nodeMapping.id))
-                  case _                 => None // TODO: violation here
-                }
-            }
-            documentsMapping.withDeclaredNodes(declarations.collect { case m: Some[PublicNodeMapping] => m.get })
-          }
-        )
-        Some(documentsMapping)
-      case _ => None
+      val doc = DocumentsModelParser(e.value.as[YMap],dialect.id, s"${dialect.name().value()} ${dialect.version().value()}" ).parse()
+      dialect.set(DialectModel.Documents,doc, Annotations(e))
     }
   }
 
-  def parseFragmentsMapping(value: YNode, parent: String): Option[Seq[DocumentMapping]] = {
-    value.as[YMap].key("fragments") match {
-      case Some(entry: YMapEntry) =>
-        entry.value.as[YMap].key("encodes") match {
-          case Some(entry: YMapEntry) =>
-            val docs = entry.value.as[YMap].entries.map { fragmentEntry =>
-              val fragmentName = fragmentEntry.key.as[YScalar].text
-              val nodeId       = fragmentEntry.value.as[YScalar].text
-              val documentsMapping = DocumentMapping(fragmentEntry.value)
-                .withDocumentName(fragmentName)
-                .withId(parent + s"/fragments/${fragmentName.urlComponentEncoded}")
-              ctx.declarations.findNodeMapping(nodeId, SearchScope.All) match {
-                case Some(nodeMapping) => Some(documentsMapping.withEncoded(nodeMapping.id))
-                case _ =>
-                  ctx.missingTermViolation(nodeId, parent, fragmentEntry)
-                  None
-              }
-            }
-            Some(docs.filter(_.isDefined).map(_.get).asInstanceOf[Seq[DocumentMapping]])
-          case _ => None
-        }
-      case _ => None
-    }
-  }
 
-  def parseLibraries(value: YNode, parent: String): Option[DocumentMapping] = {
-    value.as[YMap].key("library") match {
-      case Some(entry: YMapEntry) =>
-        val name             = s"${dialect.name().value()} ${dialect.version().value()} / Library"
-        val documentsMapping = DocumentMapping(map).withDocumentName(name).withId(parent + "/modules")
-        entry.value.as[YMap].key("declares") match {
-          case Some(libraryEntry) =>
-            val declaresMap = libraryEntry.value.as[YMap]
-            val declarations: Seq[Option[PublicNodeMapping]] = declaresMap.entries.map { declarationEntry =>
-              val declarationId   = declarationEntry.value.as[YScalar].text
-              val declarationName = declarationEntry.key.as[YScalar].text
-              val declarationMapping = PublicNodeMapping(declarationEntry)
-                .withName(declarationName)
-                .withId(parent + "/modules/" + declarationName.urlComponentEncoded)
-              ctx.declarations.findNodeMapping(declarationId, SearchScope.All) match {
-                case Some(nodeMapping) => Some(declarationMapping.withMappedNode(nodeMapping.id))
-                case _ =>
-                  ctx.missingTermViolation(declarationId, parent, libraryEntry)
-                  None
-              }
-            }
-            Some(documentsMapping.withDeclaredNodes(declarations.collect { case m: Some[PublicNodeMapping] => m.get }))
-          case _ => None
-        }
-
-      case _ => None
-    }
-  }
-
-  def parseDocumentsOptions(value: YNode, documentsMapping: DocumentsModel): Unit = {
-    value.as[YMap].key("options") match {
-      case Some(entry: YMapEntry) =>
-        entry.value.toOption[YMap] match {
-          case Some(optionsMap) =>
-            ctx.closedNode("documentsMappingOptions", documentsMapping.id, optionsMap)
-            parseOptions(optionsMap, documentsMapping)
-          case _ =>
-            ctx.eh.violation(DialectError,
-                          documentsMapping.id,
-                          "Options for a documents mapping must be a map",
-                          entry.value)
-        }
-      case _ => // ignore
-    }
-  }
-
-  def parseOptions(map: YMap, documentsModel: DocumentsModel): Option[Any] = {
-    map.key("selfEncoded").map(v => parseSelfEncoded(v, documentsModel))
-    map.key("declarationsPath").map(v => parseDeclarationsPath(v, documentsModel))
-    map.key("keyProperty").map(v => parseKeyProperty(v, documentsModel))
-    map.key("referenceStyle").map(v => parseReferenceStyle(v, documentsModel))
-  }
-
-  private def parseSelfEncoded(entry: YMapEntry, documentsModel: DocumentsModel) = {
-    entry.value.tagType match {
-      case YType.Bool =>
-        val selfEncoded = ValueNode(entry.value).boolean()
-        documentsModel.set(DocumentsModelModel.SelfEncoded, selfEncoded, Annotations(entry))
-      case _ =>
-        ctx.eh.violation(DialectError,
-                      documentsModel.id,
-                      "'selfEncoded' Option for a documents mapping must be a boolean",
-                      entry)
-    }
-  }
-
-  private def parseKeyProperty(entry: YMapEntry, documentsModel: DocumentsModel) = {
-    entry.value.tagType match {
-      case YType.Bool =>
-        val keyProperty = ValueNode(entry.value).boolean()
-        documentsModel.set(DocumentsModelModel.KeyProperty, keyProperty, Annotations(entry))
-      case _ =>
-        ctx.eh.violation(DialectError,
-                      documentsModel.id,
-                      "'keyProperty' Option for a documents mapping must be a boolean",
-                      entry)
-    }
-  }
-
-  private def parseDeclarationsPath(entry: YMapEntry, documentsModel: DocumentsModel) = {
-    entry.value.tagType match {
-      case YType.Str =>
-        documentsModel.set(DocumentsModelModel.DeclarationsPath, ValueNode(entry.value).string(), Annotations(entry))
-      case _ =>
-        ctx.eh.violation(DialectError,
-                      documentsModel.id,
-                      "'declarationsPath' Option for a documents mapping must be a String",
-                      entry)
-    }
-  }
-
-  private def parseReferenceStyle(entry: YMapEntry, documentsModel: DocumentsModel) = {
-    entry.value.tagType match {
-      case YType.Str if ReferenceStyles.all.contains(entry.value.asScalar.map(_.text).getOrElse("")) =>
-        documentsModel.set(DocumentsModelModel.ReferenceStyle, ValueNode(entry.value).string(), Annotations(entry))
-      case _ =>
-        ctx.eh.violation(DialectError,
-                      documentsModel.id,
-                      "'referenceStyle' Option for a documents mapping must be a String [RamlStyle, JsonSchemaStyle]",
-                      entry)
-    }
-  }
 
   def parseLibrary(): BaseUnit = {
     map.key("usage", entry => {

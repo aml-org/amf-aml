@@ -70,7 +70,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/root/source-map/lexical/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/root/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/root"
@@ -78,7 +78,20 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(2,0)-(32,0)]"
+                        "@value": "[(22,7)-(24,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/root/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/meta#encodedNode"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(23,4)-(24,0)]"
                       }
                     ]
                   }
@@ -101,7 +114,7 @@
             ],
             "http://a.ml/vocabularies/meta#declaredNode": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/declarations",
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/declaration/declarations",
                 "@type": [
                   "http://a.ml/vocabularies/meta#PublicNodeMapping",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -118,16 +131,42 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/declarations/source-map",
+                    "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/declaration/declarations/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/declarations/source-map/lexical/element_0",
+                        "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/declaration/declarations/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/declarations"
+                            "@value": "http://a.ml/vocabularies/core#name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(26,6)-(26,18)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/declaration/declarations/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/meta#mappedNode"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(26,20)-(26,34)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/declaration/declarations/source-map/lexical/element_1",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/declaration/declarations"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -149,7 +188,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/source-map/lexical/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules"
@@ -157,7 +196,20 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(2,0)-(32,0)]"
+                        "@value": "[(24,2)-(27,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/documents/modules/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/meta#declaredNode"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(25,4)-(27,0)]"
                       }
                     ]
                   }
@@ -184,7 +236,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml/documents#/source-map/lexical/element_1",
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml/documents#/source-map/lexical/element_4",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/meta#declarationsPath"
@@ -193,6 +245,19 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(28,4)-(29,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml/documents#/source-map/lexical/element_2",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml/documents"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(22,0)-(30,0)]"
                   }
                 ]
               },
@@ -206,6 +271,32 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(29,4)-(30,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml/documents#/source-map/lexical/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/meta#library"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(24,2)-(27,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml/documents#/source-map/lexical/element_3",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/meta#rootDocument"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(22,2)-(24,0)]"
                   }
                 ]
               }
@@ -237,7 +328,20 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/source-map/lexical/element_2",
+            "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/source-map/lexical/element_3",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://a.ml/vocabularies/core#version"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(4,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/source-map/lexical/element_1",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "http://a.ml/vocabularies/core#name"
@@ -253,17 +357,17 @@
             "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/source-map/lexical/element_0",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://a.ml/vocabularies/core#version"
+                "@value": "http://a.ml/vocabularies/meta#documents"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(3,0)-(4,0)]"
+                "@value": "[(21,0)-(30,0)]"
               }
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/source-map/lexical/element_1",
+            "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml#/source-map/lexical/element_2",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.raml"

@@ -39,7 +39,7 @@
             ],
             "http://a.ml/vocabularies/meta#declaredNode": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/%E3%83%8EA",
+                "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EA",
                 "@type": [
                   "http://a.ml/vocabularies/meta#PublicNodeMapping",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -56,16 +56,42 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/%E3%83%8EA/source-map",
+                    "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EA/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/%E3%83%8EA/source-map/lexical/element_0",
+                        "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EA/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/%E3%83%8EA"
+                            "@value": "http://a.ml/vocabularies/core#name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(20,6)-(20,8)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EA/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/meta#mappedNode"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(20,10)-(20,14)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EA/source-map/lexical/element_1",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EA"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -79,7 +105,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/%E3%83%8EB",
+                "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EB",
                 "@type": [
                   "http://a.ml/vocabularies/meta#PublicNodeMapping",
                   "http://a.ml/vocabularies/document#DomainElement"
@@ -96,16 +122,42 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#sources": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/%E3%83%8EB/source-map",
+                    "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EB/source-map",
                     "@type": [
                       "http://a.ml/vocabularies/document-source-maps#SourceMap"
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
-                        "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/%E3%83%8EB/source-map/lexical/element_0",
+                        "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EB/source-map/lexical/element_2",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
-                            "@value": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/%E3%83%8EB"
+                            "@value": "http://a.ml/vocabularies/core#name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(21,6)-(21,8)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EB/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/meta#mappedNode"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(21,10)-(21,14)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EB/source-map/lexical/element_1",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/declaration/%E3%83%8EB"
                           }
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
@@ -127,7 +179,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/source-map/lexical/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules"
@@ -135,9 +187,58 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(2,0)-(25,0)]"
+                        "@value": "[(18,2)-(23,0)]"
                       }
                     ]
+                  },
+                  {
+                    "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/documents/modules/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/meta#declaredNode"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(19,4)-(23,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml/documents#/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml/documents#/source-map/lexical/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml/documents"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(18,0)-(23,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml/documents#/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/meta#library"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(18,2)-(23,0)]"
                   }
                 ]
               }
@@ -184,7 +285,20 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/source-map/lexical/element_2",
+            "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/source-map/lexical/element_3",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://a.ml/vocabularies/core#version"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(4,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/source-map/lexical/element_1",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "http://a.ml/vocabularies/core#name"
@@ -200,17 +314,17 @@
             "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/source-map/lexical/element_0",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "http://a.ml/vocabularies/core#version"
+                "@value": "http://a.ml/vocabularies/meta#documents"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(3,0)-(4,0)]"
+                "@value": "[(17,0)-(23,0)]"
               }
             ]
           },
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/source-map/lexical/element_1",
+            "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml#/source-map/lexical/element_2",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "file://shared/src/test/resources/vocabularies2/japanese/dialects/example3.raml"
