@@ -117,7 +117,6 @@ class DialectInstanceContext(var dialect: Dialect,
   var rootProps: Set[String] = computeRootProps
 
   globalSpace = wrapped.globalSpace
-  reportDisambiguation = wrapped.reportDisambiguation
 
   def forPatch(): DialectInstanceContext = {
     isPatch = true
