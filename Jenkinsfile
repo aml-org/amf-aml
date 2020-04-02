@@ -46,18 +46,18 @@ pipeline {
         }
       }
     }
-  }
-  stage('Publish') {
-    when {
-      branch 'master'
-    }
-    steps {
-      wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-        sh '''
-            echo "about to publish in sbt"
-            sbt publish
-            echo "sbt publishing successful"
-        '''
+    stage('Publish') {
+      when {
+        branch 'master'
+      }
+      steps {
+        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+          sh '''
+              echo "about to publish in sbt"
+              sbt publish
+              echo "sbt publishing successful"
+          '''
+        }
       }
     }
   }
