@@ -29,6 +29,20 @@ pipeline {
         }
       }
     }
+    stage('Publish') {
+      when {
+        branch 'master'
+      }
+      steps {
+        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+          sh '''
+              echo "about to publish in sbt"
+              sbt publish
+              echo "sbt publishing successful"
+          '''
+        }
+      }
+    }
     stage('Tag version') {
       when {
         branch 'master'
@@ -42,20 +56,6 @@ pipeline {
                 git tag $version
                 git push $url $version
                 echo "tagging successful"
-          '''
-        }
-      }
-    }
-    stage('Publish') {
-      when {
-        branch 'master'
-      }
-      steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-          sh '''
-              echo "about to publish in sbt"
-              sbt publish
-              echo "sbt publishing successful"
           '''
         }
       }
