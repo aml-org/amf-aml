@@ -1,23 +1,22 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
 import amf.core.Root
-import amf.core.annotations.Aliases
+import amf.core.annotations.{Aliases, ErrorDeclaration => DeclaredErrorDeclaration}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.document.FragmentModel
 import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
-import DialectAstOps._
-import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, FragmentRef, FutureDeclarations, ParsedReference, ParserContext, Reference, ScalarNode, SearchScope, SyamlParsedDocument, ValueNode, YNodeLikeOps}
+import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, Fields, FragmentRef, FutureDeclarations, ParsedReference, ParserContext, Reference, ScalarNode, SearchScope, SyamlParsedDocument, ValueNode, YNodeLikeOps}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.vocabularies.ReferenceStyles
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.{NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
+import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
 import amf.validation.DialectValidations
 import amf.validation.DialectValidations.DialectError
@@ -60,6 +59,13 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
       case nm: NodeMappable => nm
     }
 
+  def findNodeMappingOrError(ast:YPart)(key: String, scope: SearchScope.Scope): NodeMappable =
+    findNodeMapping(key, scope) match {
+      case Some(result) => result
+      case _ =>
+        error(s"NodeMappable $key not found", ast)
+        ErrorNodeMapabble(key, ast)
+    }
   def findClassTerm(key: String, scope: SearchScope.Scope): Option[ClassTerm] =
     findForType(key, _.asInstanceOf[DialectDeclarations].classTerms, scope) match {
       case Some(ct: ClassTerm) => Some(ct)
@@ -74,6 +80,13 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
 
   override def declarables(): Seq[DomainElement] = nodeMappings.values.toSeq
 
+  case class ErrorNodeMapabble(idPart: String, part: YPart) extends NodeMapping(Fields(), Annotations(part)) with DeclaredErrorDeclaration {
+      override val namespace: String = "http://amferror.com/#errorNodeMappable/"
+
+      withId(idPart)
+
+      override def newErrorInstance: DeclaredErrorDeclaration = ErrorNodeMapabble(idPart, part)
+    }
 }
 
 trait DialectSyntax { this: DialectContext =>
@@ -520,8 +533,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           e.value.as[YMap].entries.foreach { entry =>
             parseNodeMapping(
               entry, {
-                case nodeMapping: NodeMapping      => nodeMapping.withName(entry.key).adopted(parent)
-                case nodeMapping: UnionNodeMapping => nodeMapping.withName(entry.key).adopted(parent)
+                case nodeMapping: NodeMappable      =>
+                  val name = ScalarNode(entry.key).string()
+                  nodeMapping.set(NodeMappingModel.Name, name, Annotations(entry.key)).adopted(parent)
                 case _ =>
                   ctx.eh.violation(DialectError,
                                 parent,
@@ -635,7 +649,6 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             entry,
             propertyMapping =>
               propertyMapping
-                .withName(entry.key)
                 .adopted(nodeMapping.id + "/property/" + entry.key.as[YScalar].text.urlComponentEncoded))
         }
         val (withTerm, withourTerm) = properties.partition(_.nodePropertyMapping().option().nonEmpty)
@@ -651,7 +664,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               values.headOption
             case other => other._2.headOption
           })
-        nodeMapping.withPropertiesMapping(withourTerm ++ filterProperties.toSeq)
+        nodeMapping.setArrayWithoutId(NodeMappingModel.PropertiesMapping, withourTerm ++ filterProperties.toSeq, Annotations(entry))
       }
     )
 
@@ -746,7 +759,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   def parsePropertyMapping(entry: YMapEntry, adopt: PropertyMapping => Any): PropertyMapping = {
     val map             = entry.value.as[YMap]
-    val propertyMapping = PropertyMapping(map)
+    val name = ScalarNode(entry.key).string()
+
+    val propertyMapping = PropertyMapping(map).set(PropertyMappingModel.Name, name, Annotations(entry.key))
 
     adopt(propertyMapping)
     ctx.closedNode("propertyMapping", propertyMapping.id, map)

@@ -9,7 +9,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel._
 import org.yaml.model.YMap
 
-case class NodeMapping(fields: Fields, annotations: Annotations) extends DomainElement with Linkable with MergeableMapping with NodeMappable {
+class NodeMapping(override val fields: Fields,override val annotations: Annotations) extends DomainElement with Linkable with MergeableMapping with NodeMappable {
 
   override def meta: Obj = NodeMappingModel
 
@@ -66,4 +66,7 @@ object NodeMapping {
   def apply(ast: YMap): NodeMapping = apply(Annotations(ast))
 
   def apply(annotations: Annotations): NodeMapping = NodeMapping(Fields(), annotations)
+
+  def apply(fields:Fields, annotations: Annotations): NodeMapping = new NodeMapping(fields, annotations)
+
 }

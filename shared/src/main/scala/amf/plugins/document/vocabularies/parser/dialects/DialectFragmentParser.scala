@@ -16,18 +16,14 @@ case class DialectFragmentParser(into:DocumentsModel)(override implicit val ctx:
 
   private val parseFragmentEncodesParser = new DialectEntryParser() {
     override def parse(entry: YMapEntry): Unit = {
-      val docs = entry.value.as[YMap].entries.flatMap { fragmentEntry =>
+      val docs = entry.value.as[YMap].entries.map { fragmentEntry =>
         val fragmentName = fragmentEntry.key.as[YScalar].text
         val nodeId       = fragmentEntry.value.as[YScalar].text
         val documentsMapping = DocumentMapping(fragmentEntry.value)
           .withDocumentName(fragmentName)
           .withId(into.id + s"/fragments/${fragmentName.urlComponentEncoded}")
-        ctx.declarations.findNodeMapping(nodeId, SearchScope.All) match {
-          case Some(nodeMapping) => Some(documentsMapping.withEncoded(nodeMapping.id))
-          case _ =>
-            ctx.missingTermViolation(nodeId, into.id, fragmentEntry)
-            None
-        }
+        val nodeMapping = ctx.declarations.findNodeMappingOrError(entry.value)(nodeId, SearchScope.All)
+        documentsMapping.set(DocumentMappingModel.EncodedNode,AmfScalar(nodeMapping.id, Annotations(entry.value)), Annotations(entry))
       }
       into.set(DocumentsModelModel.Fragments, AmfArray(docs, Annotations(entry.value)), Annotations(entry))
     }
