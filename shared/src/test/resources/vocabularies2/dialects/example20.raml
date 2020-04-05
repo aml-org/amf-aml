@@ -6,26 +6,26 @@ nodeMappings:
     classTerm: v3.Local
     mapping:
       a:
-        propertyTerm: v3.a
-        range: string
         patch: insert
         unique: true
         mandatory: true
+        propertyTerm: v3.a
+        range: string
   Declarations:
     classTerm: v3.Decla
     mapping:
       b:
+        mandatory: true
         propertyTerm: v3.b
         range: string
-        mandatory: true
   UnionNode:
+    typeDiscriminatorName: lala
     union:
       - Local
       - Declarations
     typeDiscriminator:
       local: Local
       decls: Declarations
-    typeDiscriminatorName: lala
   Root:
     classTerm: v3.Root
     mapping:

@@ -501,7 +501,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode/property/id/source-map/lexical/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode/property/id/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode/property/id"
@@ -510,6 +510,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(25,0)-(29,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/PersonNode/property/id/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(27,8)-(29,0)]"
                       }
                     ]
                   }
@@ -600,7 +613,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode/property/second/source-map/lexical/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode/property/second/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode/property/second"
@@ -609,6 +622,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(33,0)-(37,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/FirstLevelNode/property/second/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(35,8)-(37,0)]"
                       }
                     ]
                   }
@@ -704,7 +730,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode/property/container/source-map/lexical/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode/property/container/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode/property/container"
@@ -713,6 +739,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(41,0)-(45,23)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.raml#/declarations/ContainerNode/property/container/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/ns/shacl#minCount"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(45,8)-(45,23)]"
                       }
                     ]
                   }

@@ -6,14 +6,15 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.document.FragmentModel
 import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
-import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
-import amf.core.parser.{Annotations, BaseSpecParser, FutureDeclarations, ParserContext, _}
+import DialectAstOps._
+import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, FragmentRef, FutureDeclarations, ParsedReference, ParserContext, Reference, ScalarNode, SearchScope, SyamlParsedDocument, ValueNode, YNodeLikeOps}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.ReferenceStyles
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, NodeMappingModel, PropertyMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
@@ -334,24 +335,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(root.location)
 
   def parseDocument(): BaseUnit = {
-    map.key("dialect", entry => {
-      val value = ValueNode(entry.value)
-      dialect.set(DialectModel.Name, value.string(), Annotations(entry))
-    })
 
-    map.key("usage", entry => {
-      val value = ValueNode(entry.value)
-      dialect.set(DialectModel.Usage, value.string(), Annotations(entry))
-    })
-
-    map.key(
-      "version",
-      entry => {
-        val value   = ValueNode(entry.value)
-        val version = value.text().value.toString
-        dialect.set(DialectModel.Version, AmfScalar(version, Annotations(entry.value)), Annotations(entry))
-      }
-    )
+    map.parse("dialect", dialect setParsing DialectModel.Name)
+    map.parse("usage", dialect setParsing DialectModel.Usage)
+    map.parse("version", dialect setParsing DialectModel.Version)
 
     // closed node validation
     ctx.closedNode("dialect", dialect.id, map)
@@ -598,10 +585,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       }
     )
 
-    map.key("typeDiscriminatorName", entry => {
-      val name = ValueNode(entry.value).string().toString
-      unionNodeMapping.withTypeDiscriminatorName(name)
-    })
+    map.parse("typeDiscriminatorName",unionNodeMapping setParsing UnionNodeMappingModel.TypeDiscriminatorName)
 
     Some(unionNodeMapping)
   }
@@ -631,10 +615,11 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     map.key(
       "patch",
       entry => {
-        val patchMethod = ValueNode(entry.value).string().toString
-        if (NodeMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethod)) {
-          nodeMapping.withMergePolicy(patchMethod)
-        } else {
+        val patchMethod = ScalarNode(entry.value).string()
+        nodeMapping.set(NodeMappingModel.MergePolicy,patchMethod, Annotations(entry))
+        val patchMethodValue = patchMethod.toString
+        if (!NodeMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethodValue)){
+          nodeMapping.withMergePolicy(patchMethodValue)
           ctx.eh.violation(DialectError,
                         nodeMapping.id,
                         s"Unsupported node mapping patch operation '$patchMethod'",
@@ -692,14 +677,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       }
     )
 
-    map.key(
-      "idTemplate",
-      entry => {
-        val template = entry.value.as[String]
-        validateTemplate(template, map, nodeMapping.propertiesMapping())
-        nodeMapping.withIdTemplate(template)
-      }
-    )
+    map.parse("idTemplate", nodeMapping setParsing NodeMappingModel.IdTemplate)
+    nodeMapping.nodetypeMapping.option().foreach(validateTemplate(_, map, nodeMapping.propertiesMapping()))
 
     parseAnnotations(map, nodeMapping, ctx.declarations)
 
@@ -826,92 +805,46 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     map.key(
       "patch",
       entry => {
-        val patchMethod = ValueNode(entry.value).string().toString
-        if (PropertyMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethod)) {
-          propertyMapping.withMergePolicy(patchMethod)
-        } else {
+        val patchMethod = ScalarNode(entry.value).string()
+        propertyMapping.set(PropertyMappingModel.MergePolicy,patchMethod, Annotations(entry))
+        val patchMethodValue = patchMethod.toString
+        if (!PropertyMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethodValue)){
+          propertyMapping.withMergePolicy(patchMethodValue)
           ctx.eh.violation(DialectError,
-                        propertyMapping.id,
-                        s"Unsupported property mapping patch operation '$patchMethod'",
-                        entry.value)
+            propertyMapping.id,
+            s"Unsupported propertu mapping patch operation '$patchMethod'",
+            entry.value)
         }
       }
     )
 
     map.key("mandatory", entry => {
-      val required = ValueNode(entry.value).boolean().toBool
+      val required = ScalarNode(entry.value).boolean().toBool
       val value    = if (required) 1 else 0
-      propertyMapping.withMinCount(value)
+      propertyMapping.set(PropertyMappingModel.MinCount, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
     })
 
-    map.key("pattern", entry => {
-      val value = ValueNode(entry.value).string().toString
-      propertyMapping.withPattern(value)
-    })
+    map.parse("pattern", propertyMapping setParsing PropertyMappingModel.Pattern)
+    map.parse("minimum", new FromTagDialectScalarValueEntryParser(PropertyMappingModel.Minimum, propertyMapping))
+    map.parse("unique", propertyMapping setParsing PropertyMappingModel.Unique)
+    map.parse("maximum", new FromTagDialectScalarValueEntryParser(PropertyMappingModel.Maximum, propertyMapping))
 
-    map.key(
-      "minimum",
-      entry => {
-        entry.value.tagType match {
-          case YType.Int =>
-            val value = ValueNode(entry.value).integer().value
-            propertyMapping.withMinimum(value.asInstanceOf[Int].toDouble)
-          case _ =>
-            val value = ValueNode(entry.value).float().value
-            propertyMapping.withMinimum(value.asInstanceOf[Double])
-        }
-      }
-    )
-
-    map.key(
-      "unique",
-      entry => {
-        entry.value.tagType match {
-          case YType.Bool =>
-            val booleanValue = ValueNode(entry.value).boolean().toBool
-            propertyMapping.withUnique(booleanValue)
-          case _ =>
-            ctx.eh.violation(DialectError, "Unique property in a property mapping must be a boolean value", entry.value)
-        }
-      }
-    )
-
-    map.key(
-      "maximum",
-      entry => {
-        entry.value.tagType match {
-          case YType.Int =>
-            val value = ValueNode(entry.value).integer().value
-            propertyMapping.withMaximum(value.asInstanceOf[Int].toFloat)
-          case _ =>
-            val value = ValueNode(entry.value).float().value
-            propertyMapping.withMaximum(value.asInstanceOf[Double])
-        }
-      }
-    )
-
-    map.key("allowMultiple", entry => {
-      val value = ValueNode(entry.value).boolean().toBool
-      propertyMapping.withAllowMultiple(value)
-    })
-
-    map.key("sorted", entry => {
-      val sorted = ValueNode(entry.value).boolean().toBool
-      propertyMapping.withSorted(sorted)
-    })
+    map.parse("allowMultiple", propertyMapping setParsing PropertyMappingModel.AllowMultiple )
+    map.parse("sorted", propertyMapping setParsing PropertyMappingModel.Sorted )
 
     map.key(
       "enum",
       entry => {
-        val values = entry.value.as[YSequence].nodes.map { node =>
+        val seq = entry.value.as[YSequence]
+        val values = seq.nodes.flatMap { node =>
           node.value match {
-            case scalar: YScalar => Some(scalar.value)
+            case scalar: YScalar => Some(ScalarNode(node).string())
             case _ =>
               ctx.eh.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
               None
           }
         }
-        propertyMapping.withEnum(values.collect { case Some(v) => v })
+        propertyMapping.set(PropertyMappingModel.Enum, AmfArray(values, Annotations(seq)), Annotations(entry))
       }
     )
 
@@ -928,10 +861,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       }
     )
 
-    map.key("typeDiscriminatorName", entry => {
-      val name = ValueNode(entry.value).string().toString
-      propertyMapping.withTypeDiscriminatorName(name)
-    })
+    map.parse("typeDiscriminatorName", propertyMapping setParsing PropertyMappingModel.TypeDiscriminatorName )
 
     // TODO: check dependencies among properties
 
@@ -1028,10 +958,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
 
   def parseLibrary(): BaseUnit = {
-    map.key("usage", entry => {
-      val value = ValueNode(entry.value)
-      dialect.set(DialectModel.Usage, value.string(), Annotations(entry))
-    })
+    map.parse("usage", dialect setParsing DialectModel.Usage )
 
     // closed node validation
     ctx.closedNode("library", dialect.id, map)
@@ -1089,10 +1016,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   def parseFragment(): BaseUnit = {
 
-    map.key("usage", entry => {
-      val value = ValueNode(entry.value)
-      dialect.set(DialectModel.Usage, value.string(), Annotations(entry))
-    })
+    map.parse("usage", dialect setParsing DialectModel.Usage )
 
     // closed node validation
     ctx.closedNode("fragment", dialect.id, map)
