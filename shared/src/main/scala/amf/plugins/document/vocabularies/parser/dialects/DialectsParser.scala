@@ -619,7 +619,6 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         nodeMapping.set(NodeMappingModel.MergePolicy,patchMethod, Annotations(entry))
         val patchMethodValue = patchMethod.toString
         if (!NodeMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethodValue)){
-          nodeMapping.withMergePolicy(patchMethodValue)
           ctx.eh.violation(DialectError,
                         nodeMapping.id,
                         s"Unsupported node mapping patch operation '$patchMethod'",
@@ -809,7 +808,6 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         propertyMapping.set(PropertyMappingModel.MergePolicy,patchMethod, Annotations(entry))
         val patchMethodValue = patchMethod.toString
         if (!PropertyMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethodValue)){
-          propertyMapping.withMergePolicy(patchMethodValue)
           ctx.eh.violation(DialectError,
             propertyMapping.id,
             s"Unsupported propertu mapping patch operation '$patchMethod'",
