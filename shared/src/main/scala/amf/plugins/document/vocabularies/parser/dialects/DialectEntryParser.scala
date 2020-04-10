@@ -40,15 +40,3 @@ class DialectScalarValueEntryParser(f: Field, target: AmfObject)(override implic
     }
   }
 }
-
-class FromTagDialectScalarValueEntryParser(f: Field, target: AmfObject)(override implicit val ctx: DialectContext)
-    extends DialectScalarValueEntryParser(f, target) {
-  override protected def buildScalarNode(node: YNode): AmfScalar = {
-    if (f.`type` == Type.Double)
-      node.tagType match {
-        case YType.Int => ScalarNode(node).integer()
-        case _         => ScalarNode(node).double()
-      }
-    else super.buildScalarNode(node)
-  }
-}

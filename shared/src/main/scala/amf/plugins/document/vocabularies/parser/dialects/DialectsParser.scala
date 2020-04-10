@@ -841,9 +841,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     })
 
     map.parse("pattern", propertyMapping setParsing PropertyMappingModel.Pattern)
-    map.parse("minimum", new FromTagDialectScalarValueEntryParser(PropertyMappingModel.Minimum, propertyMapping))
+    map.parse("minimum", propertyMapping setParsing PropertyMappingModel.Minimum)
     map.parse("unique", propertyMapping setParsing PropertyMappingModel.Unique)
-    map.parse("maximum", new FromTagDialectScalarValueEntryParser(PropertyMappingModel.Maximum, propertyMapping))
+    map.parse("maximum", propertyMapping setParsing PropertyMappingModel.Maximum)
 
     map.parse("allowMultiple", propertyMapping setParsing PropertyMappingModel.AllowMultiple )
     map.parse("sorted", propertyMapping setParsing PropertyMappingModel.Sorted )
