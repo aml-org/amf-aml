@@ -18,8 +18,6 @@ nodeMappings:
     classTerm: v2.A
     mapping:
       a:
-        propertyTerm: v2.a
-        range: string
         mandatory: true
         pattern: a-z
         minimum: 1.5
@@ -29,6 +27,8 @@ nodeMappings:
         enum:
           - hey
           - ho
+        propertyTerm: v2.a
+        range: string
       b:
         propertyTerm: v2.t
         range: string
