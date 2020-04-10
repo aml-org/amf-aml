@@ -3,6 +3,7 @@ package amf.plugins.document.vocabularies.parser.dialects
 import amf.core.Root
 import amf.core.annotations.{Aliases, ErrorDeclaration => DeclaredErrorDeclaration}
 import amf.core.errorhandling.ErrorHandler
+import amf.core.metamodel.Obj
 import amf.core.metamodel.document.FragmentModel
 import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
@@ -86,7 +87,9 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
       withId(idPart)
 
       override def newErrorInstance: DeclaredErrorDeclaration = ErrorNodeMapabble(idPart, part)
-    }
+
+    override protected def originalMeta: Obj = NodeMappingModel
+  }
 }
 
 trait DialectSyntax { this: DialectContext =>
