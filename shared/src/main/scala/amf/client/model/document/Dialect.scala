@@ -13,9 +13,9 @@ case class Dialect(private[amf] val _internal: InternalDialect) extends BaseUnit
   @JSExportTopLevel("model.document.Dialect")
   def this() = this(InternalDialect())
 
-  def name(): StrField                          = _internal.name()
-  def version(): StrField                       = _internal.version()
-  def nameAndVersion(): String                  = _internal.nameAndVersion()
+  def name: StrField                          = _internal.name()
+  def version: StrField                       = _internal.version()
+  def nameAndVersion: String                  = _internal.nameAndVersion()
   def header: String                            = _internal.header
   def isLibraryHeader(header: String): Boolean  = _internal.isLibraryHeader(header)
   def isFragmentHeader(header: String): Boolean = _internal.isFragmentHeader(header)
