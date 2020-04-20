@@ -15,7 +15,7 @@ class DialectDomainElementModel(val typeIri: Seq[String] = Seq(),
 
 
   override val fields: List[Field] =
-    DialectDomainElementModel.Abstract :: DialectDomainElementModel.DeclarationName :: DomainElementModel.fields ++ LinkableElementModel.fields ++ typeFields
+    (DialectDomainElementModel.Abstract :: DialectDomainElementModel.DeclarationName :: DomainElementModel.fields ++ LinkableElementModel.fields ++ typeFields).distinct
   override val `type`: List[ValueType] = typeIri
     .map(iriToValue)
     .toList ++ ((Namespace.Meta + "DialectDomainElement") :: DomainElementModel.`type`)
