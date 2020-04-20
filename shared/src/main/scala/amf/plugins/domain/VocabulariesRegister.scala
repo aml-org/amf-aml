@@ -7,6 +7,7 @@ import amf.core.remote.Platform
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
+
 import amf.plugins.document.vocabularies.model.{document, domain}
 
 object VocabulariesRegister {
@@ -32,6 +33,9 @@ object VocabulariesRegister {
     }
     platform.registerWrapper(ObjectPropertyTermModel) {
       case s: domain.ObjectPropertyTerm => ObjectPropertyTerm(s)
+    }
+    platform.registerWrapper(UnionNodeMappingModel) {
+      case s: domain.UnionNodeMapping => UnionNodeMapping(s)
     }
     platform.registerWrapper(DatatypePropertyTermModel) {
       case s: domain.DatatypePropertyTerm => DatatypePropertyTerm(s)
