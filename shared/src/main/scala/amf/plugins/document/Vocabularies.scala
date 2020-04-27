@@ -2,7 +2,6 @@ package amf.plugins.document
 
 import amf.client.convert.VocabulariesClientConverter._
 import amf.client.environment.Environment
-import amf.client.execution.BaseExecutionEnvironment
 import amf.client.model.document.Dialect
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -25,8 +24,8 @@ object Vocabularies extends PlatformSecrets {
   }
 
   def registerDialect(url: String, env: Environment): ClientFuture[Dialect] = {
-    implicit val executionContext: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
-    AMLPlugin.registry.registerDialect(url, env._internal).asClient
+    implicit val executionContext: ExecutionContext = env.executionEnvironment.executionContext
+    AMLPlugin.registry.registerDialect(url, env._internal, env.executionEnvironment).asClient
   }
 
   def registerDialect(url: String, dialectText: String): ClientFuture[Dialect] = {
@@ -35,27 +34,7 @@ object Vocabularies extends PlatformSecrets {
   }
 
   def registerDialect(url: String, dialectText: String, env: Environment): ClientFuture[Dialect] = {
-    implicit val executionContext: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
-    AMLPlugin.registry.registerDialect(url, dialectText, env._internal).asClient
-  }
-
-  def registerDialect(url: String, exec: BaseExecutionEnvironment): ClientFuture[Dialect] = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
-    AMLPlugin.registry.registerDialect(url, exec).asClient
-  }
-
-  def registerDialect(url: String, env: Environment, exec: BaseExecutionEnvironment): ClientFuture[Dialect] = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
-    AMLPlugin.registry.registerDialect(url, env._internal, exec).asClient
-  }
-
-  def registerDialect(url: String, dialectText: String, exec: BaseExecutionEnvironment): ClientFuture[Dialect] = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
-    AMLPlugin.registry.registerDialect(url, dialectText, exec).asClient
-  }
-
-  def registerDialect(url: String, dialectText: String, env: Environment, exec: BaseExecutionEnvironment): ClientFuture[Dialect] = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
-    AMLPlugin.registry.registerDialect(url, dialectText, env._internal, exec).asClient
+    implicit val executionContext: ExecutionContext = env.executionEnvironment.executionContext
+    AMLPlugin.registry.registerDialect(url, dialectText, env._internal, env.executionEnvironment).asClient
   }
 }
