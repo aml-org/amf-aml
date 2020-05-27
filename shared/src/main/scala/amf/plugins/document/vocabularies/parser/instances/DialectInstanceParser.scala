@@ -103,12 +103,12 @@ class DialectInstanceContext(var dialect: Dialect,
   val rootDeclarationsNodeMappings: Map[String, NodeMappable]    = parseDeclaredNodeMappings("root")
 
   def computeRootProps: Set[String] = {
-    val declarationProps: Set[String] = dialect.documents().declarationsPath().option() match {
+    val declarationProps: Set[String] = Option(dialect.documents()).flatMap(_.declarationsPath().option()) match {
       case Some(declarationsPath) => Set(declarationsPath.split("/").head)
       case _ =>
         (
-          Option(dialect.documents().root()).map(_.declaredNodes().map(_.name().value())).getOrElse(Seq()) ++
-            Option(dialect.documents().library()).map(_.declaredNodes().map(_.name().value())).getOrElse(Seq())
+          Option(dialect.documents()).flatMap(d => Option(d.root())).map(_.declaredNodes().map(_.name().value())).getOrElse(Seq()) ++
+            Option(dialect.documents()).flatMap(d => Option(d.library())).map(_.declaredNodes().map(_.name().value())).getOrElse(Seq())
         ).toSet
     }
     declarationProps ++ Seq("uses", "external").toSet
@@ -456,7 +456,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
       ctx.libraryDeclarationsNodeMappings
     }
 
-    val pathOption = ctx.dialect.documents().declarationsPath().option()
+    val pathOption = Option(ctx.dialect.documents()).flatMap(d => d.declarationsPath().option())
     val normalizedPath =
       pathOption.map(p => if (p.startsWith("/")) p else "/" + p).map(p => if (p.endsWith("/")) p else p + "/")
     val paths: List[String] = pathOption.map(_.split("/").toList).getOrElse(Nil)
@@ -495,13 +495,11 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
   }
 
-  protected def encodedElementDefaultId(dialectInstance: EncodesModel): String = {
-    if (ctx.dialect.documents().selfEncoded().option().getOrElse(false)) {
+  protected def encodedElementDefaultId(dialectInstance: EncodesModel): String =
+    if (Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false))
       dialectInstance.location().getOrElse(dialectInstance.id)
-    } else {
+    else
       dialectInstance.id + "#/"
-    }
-  }
 
   protected def parseEncoded(dialectInstance: EncodesModel): Option[DialectDomainElement] = {
     Option(ctx.dialect.documents()) flatMap { documents: DocumentsModel =>
@@ -611,7 +609,7 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                   nodeMap.key(propertyName) match {
                     case Some(entry) =>
                       val nestedId =
-                        if (ctx.dialect.documents().selfEncoded().option().getOrElse(false) && rootNode)
+                        if (Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false) && rootNode)
                           defaultId + "#/"
                         else defaultId
                       parseProperty(nestedId, entry, propertyMapping, node)
@@ -1459,9 +1457,9 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                                mapping: NodeMapping,
                                additionalProperties: Map[String, Any],
                                rootNode: Boolean): String = {
-    if (rootNode && ctx.dialect.documents().selfEncoded().option().getOrElse(false)) {
+    if (rootNode && Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false))
       defaultId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
-    } else {
+    else {
       if (nodeMap.key("$id").isDefined) {
         explicitNodeId(node, nodeMap, path, defaultId, mapping)
       } else if (mapping.idTemplate.nonEmpty) {

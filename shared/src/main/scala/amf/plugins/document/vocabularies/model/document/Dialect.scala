@@ -55,7 +55,7 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def withVersion(version: String): Dialect                    = set(Version, version)
   def withDocuments(documentsMapping: DocumentsModel): Dialect = set(Documents, documentsMapping)
 
-  def libraryHeader: Option[String] = Option(documents().library()).map(_ => s"%Library/${header.stripPrefix("%")}")
+  def libraryHeader: Option[String] = Option(documents()).map(d => Option(d.library())).map(_ => s"%Library/${header.stripPrefix("%")}")
 
   def patchHeader: String = s"%Patch/${header.stripPrefix("%")}"
 
@@ -63,7 +63,9 @@ case class Dialect(fields: Fields, annotations: Annotations)
 
   def isPatchHeader(h: String): Boolean = patchHeader == h.stripSpaces
 
-  def fragmentHeaders: Seq[String] = documents().fragments().map(f => s"%${f.documentName().value().stripSpaces}/${header.stripPrefix("%")}")
+  def fragmentHeaders: Seq[String] = Option(documents())
+    .map(_.fragments().map(f => s"%${f.documentName().value().stripSpaces}/${header.stripPrefix("%")}"))
+    .getOrElse(Seq.empty)
 
   def isFragmentHeader(h: String): Boolean = fragmentHeaders.contains(h.stripSpaces)
 

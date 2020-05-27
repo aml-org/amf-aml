@@ -70,7 +70,7 @@ trait KeyPropertyHeaderExtractor {
   def dialectByKeyProperty(root: YDocument): Option[Dialect] =
     registry
       .allDialects()
-      .find(d => d.documents().keyProperty().value() && containsVersion(root, d))
+      .find(d => Option(d.documents()).exists(_.keyProperty().value()) && containsVersion(root, d))
 
   def dialectInKey(root: Root): Option[Dialect] =
     root.parsed match {
