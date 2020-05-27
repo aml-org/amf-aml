@@ -6,6 +6,7 @@ import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.{Annotations, Fields}
+import amf.core.traversal.{DomainElementSelectorAdapter, DomainElementTransformationAdapter, TransformationData, TransformationTraversal}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceFragmentModel.Fragment
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
@@ -51,22 +52,9 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
       selector: DomainElement => Boolean,
       transformation: (DomainElement, Boolean) => Option[DomainElement])(
       implicit errorHandler: ErrorHandler): BaseUnit = {
-    val domainElementAdapter = (o: AmfObject) => {
-      o match {
-        case e: DomainElement => selector(e)
-        case _                => false
-      }
-    }
-    val transformationAdapter = (o: AmfObject, isCycle: Boolean) => {
-      o match {
-        case e: DomainElement => transformation(e, isCycle)
-        case _                => Some(o)
-      }
-    }
-    transformByCondition(this,
-                         domainElementAdapter,
-                         transformationAdapter,
-                         cycleRecoverer = defaultCycleRecoverer(errorHandler))
+    val domainElementAdapter = new DomainElementSelectorAdapter(selector)
+    val transformationAdapter = new DomainElementTransformationAdapter(transformation)
+    new TransformationTraversal(TransformationData(domainElementAdapter, transformationAdapter)).traverse(this)
     this
   }
 
