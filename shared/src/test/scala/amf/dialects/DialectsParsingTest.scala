@@ -211,6 +211,14 @@ trait DialectsParsingTest extends DialectTests {
     init().flatMap(_ => cycle("example23b.json", "example23b.raml", AmfJsonHint, Aml))
   }
 
+  test("no documents on dialect (raml -> json)") {
+    init().flatMap(_ => cycle("no-documents.raml", "no-documents.json", VocabularyYamlHint, Amf))
+  }
+
+  test("no documents on dialect (json -> raml)") {
+    init().flatMap(_ => cycle("no-documents.json", "no-documents.raml", AmfJsonHint, Aml))
+  }
+
   test("generate mappings_lib test") {
     init().flatMap(_ => cycle("mappings_lib.json", "mappings_lib.raml", AmfJsonHint, Aml))
   }
