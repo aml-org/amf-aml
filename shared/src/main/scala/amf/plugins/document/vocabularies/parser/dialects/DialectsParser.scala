@@ -128,7 +128,7 @@ trait DialectSyntax { this: DialectContext =>
 
   val propertyMapping: Map[String, Boolean] = Map(
     "propertyTerm"          -> false,
-    "range"                 -> false,
+    "range"                 -> true,
     "mapKey"                -> false,
     "mapValue"              -> false,
     "mapTermKey"            -> false,
