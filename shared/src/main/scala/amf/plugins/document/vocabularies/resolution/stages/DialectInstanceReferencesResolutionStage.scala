@@ -4,8 +4,9 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.resolution.stages.helpers.ModelReferenceResolver
 import amf.core.resolution.stages.selectors.LinkSelector
-import amf.core.resolution.stages.{ModelReferenceResolver, ResolutionStage}
+import amf.core.resolution.stages.{ResolutionStage}
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
 class DialectInstanceReferencesResolutionStage()(override implicit val errorHandler: ErrorHandler)
