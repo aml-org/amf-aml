@@ -36,11 +36,12 @@ import org.yaml.model._
 
 import scala.collection.mutable
 
-class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstanceContext)
-    extends BaseSpecParser
-    with PlatformSecrets
-    with AnnotationsParser
-    with NodeMappableHelper {
+// TODO: needs further breakup of parts. This components of this class are untestable the current way.
+// TODO: find out why all these methods are protected.
+// TODO:
+class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectInstanceContext)
+    extends AnnotationsParser
+    with JsonPointerResolver {
 
   val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
@@ -81,66 +82,6 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     ctx.futureDeclarations.resolve()
 
     document
-  }
-
-  def parsePatch(): Option[DialectInstancePatch] = {
-    parseDocument() match {
-      case Some(dialectInstance) =>
-        val patch = DialectInstancePatch(dialectInstance.fields, dialectInstance.annotations)
-        patch.withId(dialectInstance.id)
-        Some(checkTarget(patch))
-      case _ =>
-        None
-    }
-  }
-
-  def parseFragment(name: String): Option[DialectInstanceFragment] = {
-    val dialectInstanceFragment: DialectInstanceFragment = DialectInstanceFragment(Annotations(map))
-      .withLocation(root.location)
-      .withId(root.location)
-      .withDefinedBy(ctx.dialect.id)
-      .withFragment(name)
-
-    DialectInstanceReferencesParser(dialectInstanceFragment, map, root.references).parse(root.location)
-
-    if (ctx.declarations.externals.nonEmpty)
-      dialectInstanceFragment.withExternals(ctx.declarations.externals.values.toSeq)
-
-    parseEncodedFragment(dialectInstanceFragment) match {
-      case Some(dialectDomainElement) =>
-        // registering JSON pointer
-        ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
-
-        Some(dialectInstanceFragment.withEncodes(dialectDomainElement))
-      case _ => None
-    }
-  }
-
-  def parseLibrary(): Option[DialectInstanceLibrary] = {
-    val dialectInstance: DialectInstanceLibrary = DialectInstanceLibrary(Annotations(map))
-      .withLocation(root.location)
-      .withId(root.location)
-      .withDefinedBy(ctx.dialect.id)
-
-    parseDeclarations("library")
-
-    val references =
-      DialectInstanceReferencesParser(dialectInstance, map, root.references)
-        .parse(dialectInstance.location().getOrElse(dialectInstance.id))
-
-    if (ctx.declarations.externals.nonEmpty)
-      dialectInstance.withExternals(ctx.declarations.externals.values.toSeq)
-
-    if (ctx.declarations.declarables().nonEmpty)
-      dialectInstance.withDeclares(ctx.declarations.declarables())
-
-    if (references.baseUnitReferences().nonEmpty)
-      dialectInstance.withReferences(references.baseUnitReferences())
-
-    // resolve unresolved references
-    ctx.futureDeclarations.resolve()
-
-    Some(dialectInstance)
   }
 
   @scala.annotation.tailrec
@@ -235,23 +176,6 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
                       additionalKey)
           case _ => None
         }
-      }
-    }
-  }
-
-  protected def parseEncodedFragment(dialectInstanceFragment: DialectInstanceFragment): Option[DialectDomainElement] = {
-    Option(ctx.dialect.documents()) flatMap { documents: DocumentsModel =>
-      documents
-        .fragments()
-        .find(dm => root.parsed.comment.getOrElse("").stripSpaces.contains(dm.documentName().value())) match {
-        case Some(documentMapping) =>
-          ctx.findNodeMapping(documentMapping.encoded().value()) match {
-            case Some(nodeMapping) =>
-              val path = dialectInstanceFragment.id + "#"
-              parseNode(path, path + "/", map, nodeMapping, Map(), givenAnnotations = None)
-            case _ => None
-          }
-        case None => None
       }
     }
   }
@@ -967,55 +891,6 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
   }
 
-  protected def resolvedPath(str: String): String = {
-    val base = root.location
-    val fullPath =
-      if (str.startsWith("/")) str
-      else if (str.contains("://")) str
-      else if (str.startsWith("#")) base.split("#").head + str
-      else basePath(base) + str
-    if (fullPath.contains("#")) {
-      val parts = fullPath.split("#")
-      platform.resolvePath(parts.head) + "#" + parts.last
-    } else {
-      platform.resolvePath(fullPath)
-    }
-  }
-
-  protected def basePath(path: String): String = {
-    val withoutHash = if (path.contains("#")) path.split("#").head else path
-    withoutHash.splitAt(withoutHash.lastIndexOf("/"))._1 + "/"
-  }
-
-  protected def resolveJSONPointer(map: YMap, mapping: NodeMappable, id: String): Option[DialectDomainElement] = {
-    val mappingIds = allNodeMappingIds(mapping)
-    val entry      = map.key("$ref").get
-    val pointer    = entry.value.as[String]
-    val fullPointer = if (pointer.startsWith("#")) {
-      root.location + pointer
-    } else {
-      resolvedPath(pointer)
-    }
-
-    ctx.findJsonPointer(fullPointer) map { node =>
-      if (mappingIds.contains(node.definedBy.id)) {
-        node
-          .link(pointer, Annotations(map))
-          .asInstanceOf[DialectDomainElement]
-          .withId(id)
-          .withInstanceTypes(Seq(mapping.id))
-      } else {
-        val linkedNode = DialectDomainElement(map).withId(id).withInstanceTypes(Seq(mapping.id))
-        linkedNode.unresolved(fullPointer, map)
-        linkedNode
-      }
-    } orElse {
-      val linkedNode = DialectDomainElement(map).withId(id).withInstanceTypes(Seq(mapping.id))
-      linkedNode.unresolved(fullPointer, map)
-      Some(linkedNode)
-    }
-  }
-
   protected def resolveLinkUnion(ast: YNode,
                                  allPossibleMappings: Seq[NodeMapping],
                                  id: String): Some[DialectDomainElement] = {
@@ -1261,18 +1136,4 @@ class DialectInstanceParser(root: Root)(implicit override val ctx: DialectInstan
     }
     if (allFound) { path.map(_.urlEncoded).mkString("/") + "/" + keyId.mkString("_").urlEncoded } else { defaultId }
   }
-
-  private def checkTarget(patch: DialectInstancePatch): DialectInstancePatch = {
-    map.key("$target") match {
-      case Some(entry) if entry.value.tagType == YType.Str =>
-        patch.withExtendsModel(platform.resolvePath(entry.value.as[String]))
-
-      case Some(entry) =>
-        ctx.eh.violation(DialectError, patch.id, "Patch $target must be a valid URL", entry.value)
-
-      case _ => // ignore
-    }
-    patch
-  }
-
 }
