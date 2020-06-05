@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/encodes",
         "@type": [
           "http://test.com/v3#Root",
           "file://shared/src/test/resources/vocabularies2/instances/dialect27.raml#/declarations/Root",
@@ -24,7 +24,7 @@
         ],
         "http://test.com/v3#union": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/union",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/encodes/union",
             "@type": [
               "http://test.com/v3#Decla",
               "file://shared/src/test/resources/vocabularies2/instances/dialect27.raml#/declarations/Declarations",
@@ -38,16 +38,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/union/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/encodes/union/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/union/source-map/lexical/element_1",
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/encodes/union/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/union"
+                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/encodes/union"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -57,7 +57,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/union/source-map/lexical/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/encodes/union/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://test.com/v3#b"
@@ -76,16 +76,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/encodes/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/source-map/lexical/element_1",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/encodes/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/encodes"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -95,7 +95,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/source-map/lexical/element_0",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.raml#/encodes/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://test.com/v3#union"

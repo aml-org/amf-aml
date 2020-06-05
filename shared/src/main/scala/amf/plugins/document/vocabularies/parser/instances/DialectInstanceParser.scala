@@ -154,7 +154,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     if (Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false))
       dialectInstance.location().getOrElse(dialectInstance.id)
     else
-      dialectInstance.id + "#/"
+      dialectInstance.id + "#/encodes"
 
   protected def parseEncoded(dialectInstance: EncodesModel): Option[DialectDomainElement] = {
     Option(ctx.dialect.documents()) flatMap { documents: DocumentsModel =>

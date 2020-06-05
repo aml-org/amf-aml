@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/encodes",
         "@type": [
           "http://a.ml/vocabularies/ex1vocab20#Test",
           "file://shared/src/test/resources/vocabularies2/instances/dialect20.raml#/declarations/RootNode",
@@ -29,16 +29,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/encodes/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/source-map/lexical/element_1",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/encodes/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/encodes"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -48,7 +48,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/source-map/lexical/element_0",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/encodes/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/ex1vocab20#a"

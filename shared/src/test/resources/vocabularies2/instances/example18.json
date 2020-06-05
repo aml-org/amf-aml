@@ -29,7 +29,7 @@
         ],
         "http://test.com/v3#rel": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/rel/res_y/other",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/encodes/rel/res_y/other",
             "@type": [
               "http://test.com/v3#nestedAbs",
               "file://shared/src/test/resources/vocabularies2/instances/dialect18.raml#/declarations/NestedRel",
@@ -43,16 +43,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/rel/res_y/other/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/encodes/rel/res_y/other/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/rel/res_y/other/source-map/lexical/element_1",
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/encodes/rel/res_y/other/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/rel/res_y/other"
+                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/encodes/rel/res_y/other"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -62,7 +62,7 @@
                     ]
                   },
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/rel/res_y/other/source-map/lexical/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example18.raml#/encodes/rel/res_y/other/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://test.com/v3#a"
