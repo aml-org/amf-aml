@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/encodes",
         "@type": [
           "http://anypoint.com/vocabs/digital-repository#WebAPIAsset",
           "file://shared/src/test/resources/vocabularies2/instances/dialect13c.raml#/declarations/WebAPIAsset",
@@ -34,13 +34,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/encodes/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/source-map/lexical/element_2",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/encodes/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://anypoint.com/vocabs/schema-org#description"
@@ -53,7 +53,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/source-map/lexical/element_0",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/encodes/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://anypoint.com/vocabs/schema-org#name"
@@ -66,10 +66,10 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/source-map/lexical/element_1",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/encodes/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example13c.raml#/encodes"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

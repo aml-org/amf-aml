@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example24.raml#/hey%20ho",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example24.raml#/encodes/hey%20ho",
         "@type": [
           "http://test.com/v3#Local",
           "file://shared/src/test/resources/vocabularies2/instances/dialect24.raml#/declarations/Local",
@@ -29,16 +29,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example24.raml#/hey%20ho/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example24.raml#/encodes/hey%20ho/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24.raml#/hey%20ho/source-map/lexical/element_1",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24.raml#/encodes/hey%20ho/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example24.raml#/hey%20ho"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example24.raml#/encodes/hey%20ho"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -48,7 +48,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24.raml#/hey%20ho/source-map/lexical/element_0",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24.raml#/encodes/hey%20ho/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://test.com/v3#a"

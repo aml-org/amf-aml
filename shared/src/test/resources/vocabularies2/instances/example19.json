@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/10_hey",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/encodes/10_hey",
         "@type": [
           "http://test.com/tmp#Test",
           "file://shared/src/test/resources/vocabularies2/instances/dialect19.raml#/declarations/RootNode",
@@ -56,13 +56,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/10_hey/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/encodes/10_hey/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/10_hey/source-map/lexical/element_6",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/encodes/10_hey/source-map/lexical/element_6",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://test.com/tmp#date"
@@ -75,7 +75,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/10_hey/source-map/lexical/element_4",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/encodes/10_hey/source-map/lexical/element_4",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://test.com/tmp#int"
@@ -88,7 +88,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/10_hey/source-map/lexical/element_2",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/encodes/10_hey/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://test.com/tmp#str"
@@ -101,7 +101,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/10_hey/source-map/lexical/element_0",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/encodes/10_hey/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://test.com/tmp#boolean"
@@ -114,7 +114,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/10_hey/source-map/lexical/element_1",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/encodes/10_hey/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://test.com/tmp#float"
@@ -127,10 +127,10 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/10_hey/source-map/lexical/element_3",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/encodes/10_hey/source-map/lexical/element_3",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/10_hey"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/encodes/10_hey"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -140,7 +140,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/10_hey/source-map/lexical/element_5",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example19.raml#/encodes/10_hey/source-map/lexical/element_5",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://test.com/tmp#timestamp"

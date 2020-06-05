@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/hey%20ho",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/hey%20ho",
         "@type": [
           "http://test.com/v3#Local",
           "file://shared/src/test/resources/vocabularies2/instances/dialect24.raml#/declarations/Local",
@@ -24,7 +24,7 @@
         ],
         "http://test.com/v3#rb": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/rb",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/rb",
             "@type": [
               "http://test.com/v3#Decla",
               "file://shared/src/test/resources/vocabularies2/instances/dialect24.raml#/declarations/myDeclarations",
@@ -43,16 +43,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/rb/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/rb/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#json-pointer-ref": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/rb/source-map/json-pointer-ref/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/rb/source-map/json-pointer-ref/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/rb"
+                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/rb"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -64,10 +64,10 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/rb/source-map/lexical/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/rb/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/rb"
+                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/rb"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
@@ -88,13 +88,13 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/hey%20ho/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/hey%20ho/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/hey%20ho/source-map/lexical/element_2",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/hey%20ho/source-map/lexical/element_2",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://test.com/v3#rb"
@@ -107,7 +107,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/hey%20ho/source-map/lexical/element_0",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/hey%20ho/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://test.com/v3#a"
@@ -120,10 +120,10 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/hey%20ho/source-map/lexical/element_1",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/hey%20ho/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/hey%20ho"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example24c.raml#/encodes/hey%20ho"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

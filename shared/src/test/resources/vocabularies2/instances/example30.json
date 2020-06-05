@@ -15,7 +15,7 @@
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example30.raml#/unique-node",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example30.raml#/encodes/unique-node",
         "@type": [
           "file://shared/src/test/resources/vocabularies2/instances/dialect30.raml#/declarations/RootNode",
           "http://a.ml/vocabularies/meta#DialectDomainElement",
@@ -28,16 +28,16 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example30.raml#/unique-node/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example30.raml#/encodes/unique-node/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example30.raml#/unique-node/source-map/lexical/element_1",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example30.raml#/encodes/unique-node/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example30.raml#/unique-node"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example30.raml#/encodes/unique-node"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
@@ -47,7 +47,7 @@
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example30.raml#/unique-node/source-map/lexical/element_0",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example30.raml#/encodes/unique-node/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/data#id"

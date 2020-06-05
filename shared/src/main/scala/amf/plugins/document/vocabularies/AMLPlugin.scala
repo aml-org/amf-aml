@@ -29,13 +29,9 @@ import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
-import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceParser}
+import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceFragmentParser, DialectInstanceLibraryParser, DialectInstanceParser, DialectInstancePatchParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.plugins.document.vocabularies.resolution.pipelines.{
-  DialectInstancePatchResolutionPipeline,
-  DialectInstanceResolutionPipeline,
-  DialectResolutionPipeline
-}
+import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.{ProfileName, RamlProfile}
 import org.mulesoft.common.core._
@@ -307,13 +303,13 @@ object AMLPlugin
       header match {
         case Some(headerKey) if resolvedDialect.isFragmentHeader(headerKey) =>
           val name = headerKey.substring(1, headerKey.indexOf("/"))
-          new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
-            .parseFragment(name)
+          new DialectInstanceFragmentParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
+            .parse(name)
         case Some(headerKey) if resolvedDialect.isLibraryHeader(headerKey) =>
-          new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parseLibrary()
+          new DialectInstanceLibraryParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parse()
         case Some(headerKey) if resolvedDialect.isPatchHeader(headerKey) =>
-          new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
-            .parsePatch()
+          new DialectInstancePatchParser(document)(new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
+            .parse()
         case _ =>
           new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
             .parseDocument()
