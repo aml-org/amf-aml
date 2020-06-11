@@ -29,7 +29,7 @@
         ],
         "http://test.com/v2#extension": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example16a.raml#/encodes",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example16a.raml#/encodes/za",
             "@type": [
               "http://test.com/v3#Y",
               "file://shared/src/test/resources/vocabularies2/instances/dialect16b.raml#/declarations/nodeY",
@@ -48,16 +48,16 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example16a.raml#/encodes/source-map",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example16a.raml#/encodes/za/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example16a.raml#/encodes/source-map/lexical/element_0",
+                    "@id": "file://shared/src/test/resources/vocabularies2/instances/example16a.raml#/encodes/za/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example16a.raml#/encodes"
+                        "@value": "file://shared/src/test/resources/vocabularies2/instances/example16a.raml#/encodes/za"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [

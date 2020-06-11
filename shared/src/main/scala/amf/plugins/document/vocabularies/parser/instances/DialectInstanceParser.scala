@@ -309,9 +309,10 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                                       propertyEntry: YMapEntry,
                                       property: PropertyMapping,
                                       node: DialectDomainElement): Unit = {
+    val nestedObjectId = pathSegment(id, List(propertyEntry.key.as[YScalar].text))
     propertyEntry.value.tagType match {
       case YType.Str | YType.Include =>
-        resolveLinkProperty(propertyEntry, property, id, node)
+        resolveLinkProperty(propertyEntry, property, nestedObjectId, node)
       case YType.Map =>
         val map = propertyEntry.value.as[YMap]
         map.key("$dialect") match {
@@ -322,7 +323,6 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               case Some((dialect, nodeMapping)) =>
                 ctx.nestedDialects ++= Seq(dialect)
                 ctx.withCurrentDialect(dialect) {
-                  val nestedObjectId = pathSegment(id, List(propertyEntry.key.as[YScalar].text))
                   parseNestedNode(id, nestedObjectId, propertyEntry.value, nodeMapping, Map()) match {
                     case Some(dialectDomainElement) =>
                       node.setObjectField(property, dialectDomainElement, propertyEntry.value)
@@ -339,9 +339,9 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
             dispatchNodeMap(map) match {
               case "$include" =>
                 val includeEntry = map.key("$include").get
-                resolveLinkProperty(includeEntry, property, id, node, isRef = true)
+                resolveLinkProperty(includeEntry, property, nestedObjectId, node, isRef = true)
               case "$ref" =>
-                resolveJSONPointerProperty(map, property, id, node)
+                resolveJSONPointerProperty(map, property, nestedObjectId, node)
               case _ =>
                 ctx.eh.violation(DialectError, id, "$dialect key without string value or link", map)
             }
