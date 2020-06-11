@@ -15,7 +15,11 @@ import amf.plugins.document.vocabularies.annotations.AliasesLocation
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.{DocumentMappingModel, PropertyMappingModel, UnionNodeMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.{
+  DocumentMappingModel,
+  PropertyMappingModel,
+  UnionNodeMappingModel
+}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import org.yaml.model.YDocument.EntryBuilder
@@ -28,12 +32,14 @@ trait AliasesConsumer extends DialectEmitterHelper {
   def aliasFor(id: String): Option[String] = {
     if (Option(id).isEmpty) {
       None
-    } else {
+    }
+    else {
       maybeFindNodeMappingById(id) match {
         case Some((_, nodeMapping: NodeMappable)) =>
           if (id.startsWith(dialect.id)) {
             Some(nodeMapping.name.value())
-          } else {
+          }
+          else {
             val matchingAliases = aliases.keySet.filter(id.contains(_))
             // we pick the most specific (longer) matching URI
             matchingAliases.toList.sorted.reverse.headOption.map { key =>
@@ -48,16 +54,18 @@ trait AliasesConsumer extends DialectEmitterHelper {
           if (id.startsWith(dialect.id)) {
             // local reference
             Some(id.split(dialect.id).last.replace("/declarations/", ""))
-          } else {
+          }
+          else {
             aliases.keySet.find(id.contains(_)) map { key =>
               val alias = aliases(key)._1
               val postfix = id.split(key).last match {
                 case i if i.contains("/declarations/") => i.replace("/declarations/", "")
-                case nonLibraryDeclaration => nonLibraryDeclaration
+                case nonLibraryDeclaration             => nonLibraryDeclaration
               }
               if (postfix.startsWith("#")) {
                 alias + "." + postfix.drop(1) // recursive references
-              } else {
+              }
+              else {
                 alias + "." + postfix
               }
             }
@@ -70,22 +78,22 @@ trait AliasesConsumer extends DialectEmitterHelper {
 trait PosExtractor {
   def fieldPos(element: DomainElement, field: Field): Position = {
     element.fields
-      .entry(field).flatMap(_.startPosition).getOrElse(ZERO)
+      .entry(field)
+      .flatMap(_.startPosition)
+      .getOrElse(ZERO)
   }
 }
-
 
 trait DiscriminatorEmitter extends PosExtractor with AliasesConsumer {
 
   def emitDiscriminator[T <: DomainElement](nodeWithDiscriminator: NodeWithDiscriminator[T]): Seq[EntryEmitter] = {
     var emitters: Seq[EntryEmitter] = Seq()
-    nodeWithDiscriminator.fields.entry(UnionNodeMappingModel.TypeDiscriminator) foreach {
-      entry =>
-        val pos          = fieldPos(nodeWithDiscriminator, entry.field)
-        val typesMapping = nodeWithDiscriminator.typeDiscriminator()
-        emitters ++= Seq(new EntryEmitter {
-          override def emit(b: EntryBuilder): Unit =
-            b.entry(
+    nodeWithDiscriminator.fields.entry(UnionNodeMappingModel.TypeDiscriminator) foreach { entry =>
+      val pos          = fieldPos(nodeWithDiscriminator, entry.field)
+      val typesMapping = nodeWithDiscriminator.typeDiscriminator()
+      emitters ++= Seq(new EntryEmitter {
+        override def emit(b: EntryBuilder): Unit =
+          b.entry(
               "typeDiscriminator",
               _.obj { b =>
                 typesMapping.foreach {
@@ -96,10 +104,10 @@ trait DiscriminatorEmitter extends PosExtractor with AliasesConsumer {
                     }
                 }
               }
-            )
+          )
 
-          override def position(): Position = pos
-        })
+        override def position(): Position = pos
+      })
     }
 
     nodeWithDiscriminator.fields.entry(UnionNodeMappingModel.TypeDiscriminatorName) foreach { entry =>
@@ -112,9 +120,7 @@ trait DiscriminatorEmitter extends PosExtractor with AliasesConsumer {
 
 }
 
-case class LibraryDocumentModelEmitter(dialect: Dialect,
-                                       ordering: SpecOrdering,
-                                       aliases: Map[String, (String, String)])
+case class LibraryDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)])
     extends EntryEmitter
     with AliasesConsumer {
   val mapping: DocumentMapping    = dialect.documents().library()
@@ -173,26 +179,39 @@ case class DocumentsModelOptionsEmitter(dialect: Dialect,
 
   val sortedNodes: Seq[MapEntryEmitter] = if (hasOptions) {
     val options =
-      Map("selfEncoded" -> mapping.selfEncoded().option(), "declarationsPath" -> mapping.declarationsPath().option(),
-        "keyProperty" -> mapping.keyProperty().option(), "referenceStyle" -> mapping.referenceStyle().option())
-    val types = Map("selfEncoded" -> YType.Bool, "keyProperty" -> YType.Bool, "declarationsPath" -> YType.Str, "referenceStyle" -> YType.Str)
-    val annotations = Map("selfEncoded" -> mapping.selfEncoded().annotations(),
-                          "declarationsPath" -> mapping.declarationsPath().annotations(),
-                          "keyProperty" -> mapping.keyProperty().annotations(),
-                          "referenceStyle" -> mapping.referenceStyle().annotations())
+      Map(
+          "selfEncoded"      -> mapping.selfEncoded().option(),
+          "declarationsPath" -> mapping.declarationsPath().option(),
+          "keyProperty"      -> mapping.keyProperty().option(),
+          "referenceStyle"   -> mapping.referenceStyle().option()
+      )
+    val types = Map("selfEncoded" -> YType.Bool,
+                    "keyProperty"      -> YType.Bool,
+                    "declarationsPath" -> YType.Str,
+                    "referenceStyle"   -> YType.Str)
+    val annotations = Map(
+        "selfEncoded"      -> mapping.selfEncoded().annotations(),
+        "declarationsPath" -> mapping.declarationsPath().annotations(),
+        "keyProperty"      -> mapping.keyProperty().annotations(),
+        "referenceStyle"   -> mapping.referenceStyle().annotations()
+    )
 
-    val optionNodes: Seq[MapEntryEmitter] = options.map {
-      case (optionName, maybeValue) =>
-        maybeValue map { value =>
-          val key                = optionName
-          val nodetype           = types(optionName)
-          val position: Position = pos(annotations(optionName))
-          MapEntryEmitter(optionName, value.toString, nodetype, position)
-        }
-    }.collect({ case Some(node) => node }).toSeq
+    val optionNodes: Seq[MapEntryEmitter] = options
+      .map {
+        case (optionName, maybeValue) =>
+          maybeValue map { value =>
+            val key                = optionName
+            val nodetype           = types(optionName)
+            val position: Position = pos(annotations(optionName))
+            MapEntryEmitter(optionName, value.toString, nodetype, position)
+          }
+      }
+      .collect({ case Some(node) => node })
+      .toSeq
     val sorted: Seq[MapEntryEmitter] = ordering.sorted(optionNodes)
     sorted
-  } else
+  }
+  else
     Nil
 
   override def emit(b: EntryBuilder): Unit = {
@@ -300,32 +319,32 @@ case class FragmentsDocumentModelEmitter(dialect: Dialect,
 case class DocumentsModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)])
     extends EntryEmitter
     with AliasesConsumer {
-  val documents: DocumentsModel = dialect.documents()
+  val documents: DocumentsModel   = dialect.documents()
   var emitters: Seq[EntryEmitter] = Seq()
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      "documents",
-      _.obj { b =>
-        // Root Emitter
-        if (Option(documents.root()).isDefined) {
-          emitters ++= Seq(RootDocumentModelEmitter(dialect, ordering, aliases))
+        "documents",
+        _.obj { b =>
+          // Root Emitter
+          if (Option(documents.root()).isDefined) {
+            emitters ++= Seq(RootDocumentModelEmitter(dialect, ordering, aliases))
+          }
+
+          // Fragments emitter
+          if (documents.fragments().nonEmpty) {
+            emitters ++= Seq(FragmentsDocumentModelEmitter(dialect, ordering, aliases))
+          }
+
+          // Module emitter
+          if (Option(documents.library()).isDefined) {
+            emitters ++= Seq(LibraryDocumentModelEmitter(dialect, ordering, aliases))
+          }
+
+          emitters ++= Seq(DocumentsModelOptionsEmitter(dialect, ordering))
+
+          traverse(ordering.sorted(emitters), b)
         }
-
-        // Fragments emitter
-        if (documents.fragments().nonEmpty) {
-          emitters ++= Seq(FragmentsDocumentModelEmitter(dialect, ordering, aliases))
-        }
-
-        // Module emitter
-        if (Option(documents.library()).isDefined) {
-          emitters ++= Seq(LibraryDocumentModelEmitter(dialect, ordering, aliases))
-        }
-
-        emitters ++= Seq(DocumentsModelOptionsEmitter(dialect, ordering))
-
-        traverse(ordering.sorted(emitters), b)
-      }
     )
   }
 
@@ -368,156 +387,163 @@ case class PropertyMappingEmitter(dialect: Dialect,
     with PosExtractor {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-      propertyMapping.name().value(),
-      _.obj { b =>
-        var emitters: Seq[EntryEmitter] = Seq()
+        propertyMapping.name().value(),
+        _.obj { b =>
+          var emitters: Seq[EntryEmitter] = Seq()
 
-        aliasFor(propertyMapping.nodePropertyMapping().value()) match {
-          case Some(propertyTermAlias) =>
-            val pos = fieldPos(propertyMapping, PropertyMappingModel.NodePropertyMapping)
-            emitters ++= Seq(MapEntryEmitter("propertyTerm", propertyTermAlias, YType.Str, pos))
-          case None =>
-        }
+          aliasFor(propertyMapping.nodePropertyMapping().value()) match {
+            case Some(propertyTermAlias) =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.NodePropertyMapping)
+              emitters ++= Seq(MapEntryEmitter("propertyTerm", propertyTermAlias, YType.Str, pos))
+            case None =>
+          }
 
-        propertyMapping.literalRange().option().foreach {
-          case literal if literal == (Namespace.Shapes + "guid").iri() =>
-            val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
-            emitters ++= Seq(MapEntryEmitter("range", "guid", YType.Str, pos))
+          propertyMapping.literalRange().option().foreach {
+            case literal if literal == (Namespace.Shapes + "guid").iri() =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
+              emitters ++= Seq(MapEntryEmitter("range", "guid", YType.Str, pos))
 
-          case literal if literal.endsWith("anyURI") =>
-            val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
-            emitters ++= Seq(MapEntryEmitter("range", "uri", YType.Str, pos))
+            case literal if literal.endsWith("anyURI") =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
+              emitters ++= Seq(MapEntryEmitter("range", "uri", YType.Str, pos))
 
-          case literal if literal.endsWith("link") =>
-            val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
-            emitters ++= Seq(MapEntryEmitter("range", "link", YType.Str, pos))
+            case literal if literal.endsWith("link") =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
+              emitters ++= Seq(MapEntryEmitter("range", "link", YType.Str, pos))
 
-          case literal if literal.endsWith("anyType") =>
-            val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
-            emitters ++= Seq(MapEntryEmitter("range", "any", YType.Str, pos))
+            case literal if literal.endsWith("anyType") =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
+              emitters ++= Seq(MapEntryEmitter("range", "any", YType.Str, pos))
 
-          case literal if literal.endsWith("number") =>
-            val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
-            emitters ++= Seq(MapEntryEmitter("range", "number", YType.Str, pos))
+            case literal if literal.endsWith("number") =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
+              emitters ++= Seq(MapEntryEmitter("range", "number", YType.Str, pos))
 
-          case literal =>
-            val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
-            emitters ++= Seq(MapEntryEmitter("range", literal.split(Namespace.Xsd.base).last, YType.Str, pos))
-        }
+            case literal =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.LiteralRange)
+              emitters ++= Seq(MapEntryEmitter("range", literal.split(Namespace.Xsd.base).last, YType.Str, pos))
+          }
 
-        propertyMapping.mergePolicy.option().foreach { policy =>
-          val pos = fieldPos(propertyMapping, PropertyMappingModel.MergePolicy)
-          emitters ++= Seq(
-            new MapEntryEmitter("patch", policy, YType.Str, pos)
-          )
-        }
+          propertyMapping.mergePolicy.option().foreach { policy =>
+            val pos = fieldPos(propertyMapping, PropertyMappingModel.MergePolicy)
+            emitters ++= Seq(
+                new MapEntryEmitter("patch", policy, YType.Str, pos)
+            )
+          }
 
-        val nodes = propertyMapping.objectRange()
-        if (nodes.nonEmpty) {
-          val pos = fieldPos(propertyMapping, PropertyMappingModel.ObjectRange)
-          val targets = nodes
-            .map { nodeId =>
-              if (nodeId.value() == (Namespace.Meta + "anyNode").iri()) {
-                Some("anyNode")
-              } else {
-                aliasFor(nodeId.value()) match {
-                  case Some(nodeMappingAlias) => Some(nodeMappingAlias)
-                  case _                      => None
+          val nodes = propertyMapping.objectRange()
+          if (nodes.nonEmpty) {
+            val pos = fieldPos(propertyMapping, PropertyMappingModel.ObjectRange)
+            val targets = nodes
+              .map { nodeId =>
+                if (nodeId.value() == (Namespace.Meta + "anyNode").iri()) {
+                  Some("anyNode")
+                }
+                else {
+                  aliasFor(nodeId.value()) match {
+                    case Some(nodeMappingAlias) => Some(nodeMappingAlias)
+                    case _                      => None
+                  }
                 }
               }
-            }
-            .collect { case Some(alias) => alias }
+              .collect { case Some(alias) => alias }
 
-          if (targets.size == 1)
-            emitters ++= Seq(MapEntryEmitter("range", targets.head, YType.Str, pos))
-          else if (targets.size > 1)
-            emitters ++= Seq(new EntryEmitter {
-              override def emit(b: EntryBuilder): Unit =
-                b.entry("range", _.list { b =>
-                  targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
-                })
-              override def position(): Position = pos
+            if (targets.size == 1)
+              emitters ++= Seq(MapEntryEmitter("range", targets.head, YType.Str, pos))
+            else if (targets.size > 1)
+              emitters ++= Seq(new EntryEmitter {
+                override def emit(b: EntryBuilder): Unit =
+                  b.entry("range", _.list { b =>
+                    targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
+                  })
+                override def position(): Position = pos
+              })
+          }
+
+          propertyMapping
+            .mapKeyProperty()
+            .option()
+            .fold({
+              propertyMapping.mapTermKeyProperty().option().foreach { term =>
+                val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermKeyProperty)
+                aliasFor(term) match {
+                  case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapTermKey", propertyId, YType.Str, pos))
+                  case _                =>
+                }
+              }
+            })({ value =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.MapKeyProperty)
+              emitters ++= Seq(MapEntryEmitter("mapKey", value, YType.Str, pos))
             })
-        }
 
-        propertyMapping.mapKeyProperty().option().fold({
-          propertyMapping.mapTermKeyProperty().option().foreach{ term =>
-            val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermKeyProperty)
-            aliasFor(term) match {
-              case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapTermKey", propertyId, YType.Str, pos))
-              case _                =>
+          propertyMapping
+            .mapValueProperty()
+            .option()
+            .fold({
+              propertyMapping.mapTermValueProperty().option().foreach { term =>
+                val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermValueProperty)
+                aliasFor(term) match {
+                  case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapTermValue", propertyId, YType.Str, pos))
+                  case _                =>
+                }
+              }
+            })({ value =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.MapValueProperty)
+              emitters ++= Seq(MapEntryEmitter("mapValue", value, YType.Str, pos))
+            })
+
+          propertyMapping.unique().option().foreach { value =>
+            val pos = fieldPos(propertyMapping, PropertyMappingModel.Unique)
+            emitters ++= Seq(MapEntryEmitter("unique", value.toString, YType.Bool, pos))
+          }
+
+          propertyMapping.fields.entry(PropertyMappingModel.MinCount) foreach { entry =>
+            val value = entry.value.value.asInstanceOf[AmfScalar].value
+            val pos   = fieldPos(propertyMapping, entry.field)
+            value match {
+              case 0 => emitters ++= Seq(MapEntryEmitter("mandatory", "false", YType.Bool, pos))
+              case 1 => emitters ++= Seq(MapEntryEmitter("mandatory", "true", YType.Bool, pos))
             }
           }
-        })({ value =>
-          val pos = fieldPos(propertyMapping, PropertyMappingModel.MapKeyProperty)
-          emitters ++= Seq(MapEntryEmitter("mapKey", value, YType.Str, pos))
-        })
 
-        propertyMapping.mapValueProperty().option().fold({
-          propertyMapping.mapTermValueProperty().option().foreach { term =>
-            val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermValueProperty)
-            aliasFor(term) match {
-              case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapTermValue", propertyId, YType.Str, pos))
-              case _                =>
-            }
+          propertyMapping.fields.entry(PropertyMappingModel.Pattern) foreach { entry =>
+            val value = entry.value.value.asInstanceOf[AmfScalar].value.toString
+            val pos   = fieldPos(propertyMapping, entry.field)
+            emitters ++= Seq(MapEntryEmitter("pattern", value, YType.Str, pos))
           }
-        })({ value =>
-          val pos = fieldPos(propertyMapping, PropertyMappingModel.MapValueProperty)
-          emitters ++= Seq(MapEntryEmitter("mapValue", value, YType.Str, pos))
-        })
 
-        propertyMapping.unique().option().foreach { value =>
-          val pos = fieldPos(propertyMapping, PropertyMappingModel.Unique)
-          emitters ++= Seq(MapEntryEmitter("unique", value.toString, YType.Bool, pos))
-        }
-
-        propertyMapping.fields.entry(PropertyMappingModel.MinCount) foreach { entry =>
-          val value = entry.value.value.asInstanceOf[AmfScalar].value
-          val pos   = fieldPos(propertyMapping, entry.field)
-          value match {
-            case 0 => emitters ++= Seq(MapEntryEmitter("mandatory", "false", YType.Bool, pos))
-            case 1 => emitters ++= Seq(MapEntryEmitter("mandatory", "true", YType.Bool, pos))
+          propertyMapping.fields.entry(PropertyMappingModel.Minimum) foreach { entry =>
+            val value = entry.value.value.asInstanceOf[AmfScalar].value
+            val pos   = fieldPos(propertyMapping, entry.field)
+            emitters ++= Seq(MapEntryEmitter("minimum", value.toString, YType.Int, pos))
           }
+
+          propertyMapping.fields.entry(PropertyMappingModel.Maximum) foreach { entry =>
+            val value = entry.value.value.asInstanceOf[AmfScalar].value
+            val pos   = fieldPos(propertyMapping, entry.field)
+            emitters ++= Seq(MapEntryEmitter("maximum", value.toString, YType.Int, pos))
+          }
+
+          propertyMapping.fields.entry(PropertyMappingModel.AllowMultiple) foreach { entry =>
+            val value = entry.value.value.asInstanceOf[AmfScalar].value
+            val pos   = fieldPos(propertyMapping, entry.field)
+            emitters ++= Seq(MapEntryEmitter("allowMultiple", value.toString, YType.Bool, pos))
+          }
+
+          propertyMapping.fields.entry(PropertyMappingModel.Sorted) foreach { entry =>
+            val value = entry.value.value.asInstanceOf[AmfScalar].value
+            val pos   = fieldPos(propertyMapping, entry.field)
+            emitters ++= Seq(MapEntryEmitter("sorted", value.toString, YType.Bool, pos))
+          }
+
+          propertyMapping.fields.entry(PropertyMappingModel.Enum) foreach { entry =>
+            emitters ++= Seq(ArrayEmitter("enum", entry, ordering))
+          }
+
+          emitters ++= emitDiscriminator(propertyMapping)
+
+          ordering.sorted(emitters).foreach(_.emit(b))
         }
-
-        propertyMapping.fields.entry(PropertyMappingModel.Pattern) foreach { entry =>
-          val value = entry.value.value.asInstanceOf[AmfScalar].value.toString
-          val pos   = fieldPos(propertyMapping, entry.field)
-          emitters ++= Seq(MapEntryEmitter("pattern", value, YType.Str, pos))
-        }
-
-        propertyMapping.fields.entry(PropertyMappingModel.Minimum) foreach { entry =>
-          val value = entry.value.value.asInstanceOf[AmfScalar].value
-          val pos   = fieldPos(propertyMapping, entry.field)
-          emitters ++= Seq(MapEntryEmitter("minimum", value.toString, YType.Int, pos))
-        }
-
-        propertyMapping.fields.entry(PropertyMappingModel.Maximum) foreach { entry =>
-          val value = entry.value.value.asInstanceOf[AmfScalar].value
-          val pos   = fieldPos(propertyMapping, entry.field)
-          emitters ++= Seq(MapEntryEmitter("maximum", value.toString, YType.Int, pos))
-        }
-
-        propertyMapping.fields.entry(PropertyMappingModel.AllowMultiple) foreach { entry =>
-          val value = entry.value.value.asInstanceOf[AmfScalar].value
-          val pos   = fieldPos(propertyMapping, entry.field)
-          emitters ++= Seq(MapEntryEmitter("allowMultiple", value.toString, YType.Bool, pos))
-        }
-
-        propertyMapping.fields.entry(PropertyMappingModel.Sorted) foreach { entry =>
-          val value = entry.value.value.asInstanceOf[AmfScalar].value
-          val pos   = fieldPos(propertyMapping, entry.field)
-          emitters ++= Seq(MapEntryEmitter("sorted", value.toString, YType.Bool, pos))
-        }
-
-        propertyMapping.fields.entry(PropertyMappingModel.Enum) foreach { entry =>
-          emitters ++= Seq(ArrayEmitter("enum", entry, ordering))
-        }
-
-        emitters ++= emitDiscriminator(propertyMapping)
-
-        ordering.sorted(emitters).foreach(_.emit(b))
-      }
     )
   }
 
@@ -529,7 +555,7 @@ case class NodeMappingEmitter(dialect: Dialect,
                               nodeMappable: NodeMappable,
                               ordering: SpecOrdering,
                               aliases: Map[String, (String, String)])
-  extends EntryEmitter
+    extends EntryEmitter
     with DiscriminatorEmitter
     with AliasesConsumer
     with PosExtractor {
@@ -539,10 +565,12 @@ case class NodeMappingEmitter(dialect: Dialect,
     if (nodeMappable.isLink) {
       if (isFragment(nodeMappable.linkTarget.get, dialect)) {
         b.entry(nodeMappable.name.value(), YNode.include(nodeMappable.linkLabel.value()))
-      } else {
+      }
+      else {
         b.entry(nodeMappable.name.value(), nodeMappable.linkLabel.value())
       }
-    } else {
+    }
+    else {
       nodeMappable match {
         case nodeMapping: NodeMapping           => emitSingleNode(b, nodeMapping)
         case unionNodeMapping: UnionNodeMapping => emitUnioNode(b, unionNodeMapping)
@@ -552,71 +580,70 @@ case class NodeMappingEmitter(dialect: Dialect,
 
   protected def emitSingleNode(b: EntryBuilder, nodeMapping: NodeMapping): Unit = {
     b.entry(
-      nodeMapping.name.value(),
-      _.obj { b =>
-        aliasFor(nodeMapping.nodetypeMapping.value()) match {
-          case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
-          case None                 => nodeMapping.nodetypeMapping
+        nodeMapping.name.value(),
+        _.obj { b =>
+          aliasFor(nodeMapping.nodetypeMapping.value()) match {
+            case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
+            case None                 => nodeMapping.nodetypeMapping
+          }
+          nodeMapping.propertiesMapping() match {
+            case properties: Seq[PropertyMapping] if properties.nonEmpty =>
+              b.entry(
+                  "mapping",
+                  _.obj { b =>
+                    val propertiesEmitters: Seq[PropertyMappingEmitter] = properties.map { pm: PropertyMapping =>
+                      PropertyMappingEmitter(dialect, pm, ordering, aliases)
+                    }
+                    traverse(ordering.sorted(propertiesEmitters), b)
+                  }
+              )
+            case _ => // ignore
+          }
+          nodeMapping.extend.headOption match {
+            case Some(link: Linkable) =>
+              b.entry("extends", link.linkLabel.value())
+            case _ => // ignore
+          }
+          nodeMapping.idTemplate.option().foreach { idTemplate =>
+            b.entry("idTemplate", idTemplate)
+          }
+          nodeMapping.mergePolicy.option().foreach { policy =>
+            b.entry("patch", policy)
+          }
         }
-        nodeMapping.propertiesMapping() match {
-          case properties: Seq[PropertyMapping] if properties.nonEmpty =>
-            b.entry(
-              "mapping",
-              _.obj { b =>
-                val propertiesEmitters: Seq[PropertyMappingEmitter] = properties.map {
-                  pm: PropertyMapping =>
-                    PropertyMappingEmitter(dialect, pm, ordering, aliases)
-                }
-                traverse(ordering.sorted(propertiesEmitters), b)
-              }
-            )
-          case _ => // ignore
-        }
-        nodeMapping.extend.headOption match {
-          case Some(link: Linkable) =>
-            b.entry("extends", link.linkLabel.value())
-          case _                    => // ignore
-        }
-        nodeMapping.idTemplate.option().foreach { idTemplate =>
-          b.entry("idTemplate", idTemplate)
-        }
-        nodeMapping.mergePolicy.option().foreach { policy =>
-          b.entry("patch", policy)
-        }
-      }
     )
   }
 
   protected def emitUnioNode(b: EntryBuilder, unionNodeMapping: UnionNodeMapping): Unit = {
     b.entry(
-      unionNodeMapping.name.value(),
-      _.obj { b =>
-        var emitters: Seq[EntryEmitter] = Seq()
-        val nodes = unionNodeMapping.objectRange()
-        if (nodes.nonEmpty) {
-          val pos = fieldPos(unionNodeMapping, UnionNodeMappingModel.ObjectRange)
-          val targets = nodes
-            .map { nodeId =>
-              aliasFor(nodeId.value()) match {
-                case Some(nodeMappingAlias) => Some(nodeMappingAlias)
-                case _                      => None
+        unionNodeMapping.name.value(),
+        _.obj { b =>
+          var emitters: Seq[EntryEmitter] = Seq()
+          val nodes                       = unionNodeMapping.objectRange()
+          if (nodes.nonEmpty) {
+            val pos = fieldPos(unionNodeMapping, UnionNodeMappingModel.ObjectRange)
+            val targets = nodes
+              .map { nodeId =>
+                aliasFor(nodeId.value()) match {
+                  case Some(nodeMappingAlias) => Some(nodeMappingAlias)
+                  case _                      => None
+                }
               }
-            }
-            .collect { case Some(alias) => alias }
+              .collect { case Some(alias) => alias }
 
-          emitters ++= Seq(new EntryEmitter {
-            override def emit(b: EntryBuilder): Unit =
-              b.entry("union", _.list { b =>
-                targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
-              })
-            override def position(): Position = pos
-          })
+            emitters ++= Seq(new EntryEmitter {
+              override def emit(b: EntryBuilder): Unit =
+                b.entry("union", _.list { b =>
+                  targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
+                })
+              override def position(): Position = pos
+            })
 
-          emitters ++= emitDiscriminator(unionNodeMapping)
+            emitters ++= emitDiscriminator(unionNodeMapping)
 
-          ordering.sorted(emitters).foreach(_.emit(b))
+            ordering.sorted(emitters).foreach(_.emit(b))
+          }
         }
-      }
     )
   }
 
@@ -628,7 +655,12 @@ case class NodeMappingEmitter(dialect: Dialect,
   }
 
   override def position(): Position =
-    nodeMappable.asInstanceOf[DomainElement].annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+    nodeMappable
+      .asInstanceOf[DomainElement]
+      .annotations
+      .find(classOf[LexicalInformation])
+      .map(_.range.start)
+      .getOrElse(ZERO)
 }
 
 case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases: Map[String, (String, String)])
@@ -687,7 +719,8 @@ trait DialectDocumentsEmitters {
       case (acc: Map[String, (String, String)], m: DeclaresModel) =>
         val importLocation: String = if (m.location().exists(_.contains(vocabFilePrefix))) {
           m.location().getOrElse(m.id).replace(vocabFilePrefix, "")
-        } else {
+        }
+        else {
           m.location().getOrElse(m.id).replace("file://", "")
         }
 
@@ -698,7 +731,8 @@ trait DialectDocumentsEmitters {
         if (maps.get(aliasKey).isDefined) {
           val alias = maps(aliasKey)
           acc + (aliasKey -> (alias, importLocation))
-        } else {
+        }
+        else {
           val nextAlias = idCounter.genId("uses_")
           acc + (aliasKey -> (nextAlias, importLocation))
         }
@@ -732,7 +766,8 @@ trait DialectDocumentsEmitters {
             .getOrElse(ZERO)
         }
       })
-    } else {
+    }
+    else {
       Nil
     }
   }
@@ -741,36 +776,37 @@ trait DialectDocumentsEmitters {
                                      ordering: SpecOrdering,
                                      aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
     val nodeMappingDeclarations: Seq[NodeMappable] = dialect.declares.collect {
-      case nm: NodeMappable       => nm
+      case nm: NodeMappable => nm
     }
     if (nodeMappingDeclarations.nonEmpty) {
       Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
           b.entry(
-            "nodeMappings",
-            _.obj { b =>
-              val nodeMappingEmitters: Seq[EntryEmitter] = nodeMappingDeclarations.map { n: NodeMappable =>
-                NodeMappingEmitter(dialect, n, ordering, aliases)
+              "nodeMappings",
+              _.obj { b =>
+                val nodeMappingEmitters: Seq[EntryEmitter] = nodeMappingDeclarations.map { n: NodeMappable =>
+                  NodeMappingEmitter(dialect, n, ordering, aliases)
+                }
+                traverse(ordering.sorted(nodeMappingEmitters), b)
               }
-              traverse(ordering.sorted(nodeMappingEmitters), b)
-            }
           )
         }
 
         override def position(): Position = {
           nodeMappingDeclarations
             .map(
-              _.annotations
-               .find(classOf[LexicalInformation])
-               .map(_.range.start)
-               .getOrElse(ZERO))
+                _.annotations
+                  .find(classOf[LexicalInformation])
+                  .map(_.range.start)
+                  .getOrElse(ZERO))
             .filter(_ != ZERO)
             .sorted
             .headOption
             .getOrElse(ZERO)
         }
       })
-    } else {
+    }
+    else {
       Nil
     }
   }
@@ -778,7 +814,7 @@ trait DialectDocumentsEmitters {
 
 case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
-  val ordering: SpecOrdering = Lexical
+  val ordering: SpecOrdering                 = Lexical
   val aliases: Map[String, (FullUrl, Alias)] = collectAliases()
 
   def emitDialect(): YDocument = {
@@ -805,7 +841,9 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
       override def position(): Position =
         dialect.fields
-          .entry(DialectModel.Name).flatMap(_.startPosition).getOrElse(ZERO)
+          .entry(DialectModel.Name)
+          .flatMap(_.startPosition)
+          .getOrElse(ZERO)
 
     })
 
@@ -815,7 +853,9 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
       override def position(): Position =
         dialect.fields
-          .entry(DialectModel.Version).flatMap(_.startPosition).getOrElse(ZERO)
+          .entry(DialectModel.Version)
+          .flatMap(_.startPosition)
+          .getOrElse(ZERO)
     })
 
     if (dialect.usage.nonEmpty) {
@@ -824,7 +864,9 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
         override def position(): Position =
           dialect.fields
-            .entry(DialectModel.Usage).flatMap(_.startPosition).getOrElse(ZERO)
+            .entry(DialectModel.Usage)
+            .flatMap(_.startPosition)
+            .getOrElse(ZERO)
       })
     }
 
@@ -838,8 +880,8 @@ case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
 case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDocumentsEmitters {
 
-  val ordering: SpecOrdering    = Lexical
-  override val dialect: Dialect = toDialect(library)
+  val ordering: SpecOrdering                 = Lexical
+  override val dialect: Dialect              = toDialect(library)
   val aliases: Map[String, (FullUrl, Alias)] = collectAliases()
 
   def emitDialectLibrary(): YDocument = {
@@ -868,7 +910,9 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDoc
 
         override def position(): Position =
           dialect.fields
-            .entry(DialectModel.Usage).flatMap(_.startPosition).getOrElse(ZERO)
+            .entry(DialectModel.Usage)
+            .flatMap(_.startPosition)
+            .getOrElse(ZERO)
       })
     }
     emitters
@@ -879,8 +923,7 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDoc
 private object FieldEntryImplicit {
   implicit class FieldEntryWithPosition(entry: FieldEntry) {
     def startPosition: Option[Position] =
-      entry.value
-        .annotations
+      entry.value.annotations
         .find(classOf[LexicalInformation])
         .map(_.range.start)
   }

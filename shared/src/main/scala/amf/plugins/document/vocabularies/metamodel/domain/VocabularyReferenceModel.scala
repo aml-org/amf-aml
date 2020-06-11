@@ -7,11 +7,10 @@ import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.VocabularyReference
 
-
 object VocabularyReferenceModel extends DomainElementModel {
-  val Alias       = Field(Str, Namespace.Document + "alias")
-  val Reference   = Field(Str, Namespace.Document + "reference")
-  val Base        = Field(Str, Namespace.Meta + "base" )
+  val Alias     = Field(Str, Namespace.Document + "alias")
+  val Reference = Field(Str, Namespace.Document + "reference")
+  val Base      = Field(Str, Namespace.Meta + "base")
 
   override def modelInstance: AmfObject = VocabularyReference()
 

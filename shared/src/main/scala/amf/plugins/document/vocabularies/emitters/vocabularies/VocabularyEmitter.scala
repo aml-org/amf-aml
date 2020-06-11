@@ -20,13 +20,15 @@ trait AliasMapper {
   def aliasFor(id: String, aliasMapping: Map[String, String]): String = {
     if (id == (Namespace.Shapes + "guid").iri()) {
       "guid"
-    }else if (id.contains(Namespace.Xsd.base)) {
+    }
+    else if (id.contains(Namespace.Xsd.base)) {
       id.split(Namespace.Xsd.base).last match {
         case "anyURI"  => "uri"
         case "anyType" => "any"
         case v         => v
       }
-    } else {
+    }
+    else {
       aliasMapping.keys.find(k => id.contains(k)) match {
         case Some(k) =>
           val alias = aliasMapping(k)
@@ -69,7 +71,8 @@ private case class ClassTermEmitter(classTerm: ClassTerm, ordering: SpecOrdering
         override def emit(b: EntryBuilder): Unit = {
           if (classTerm.subClassOf.length == 1) {
             b.entry("extends", aliasFor(classTerm.subClassOf.head.value(), aliasMapping))
-          } else {
+          }
+          else {
             b.entry("extends", _.list({ l =>
               classTerm.subClassOf.foreach { extended =>
                 l += aliasFor(extended.value(), aliasMapping)
@@ -107,7 +110,8 @@ private case class ClassTermEmitter(classTerm: ClassTerm, ordering: SpecOrdering
     }
     if (ctEmitters.isEmpty) {
       MapEntryEmitter(classAlias, "", YType.Null).emit(b)
-    } else {
+    }
+    else {
       b.entry(classAlias, _.obj({ ct =>
         traverse(ordering.sorted(ctEmitters), ct)
       }))
@@ -140,7 +144,8 @@ private case class PropertyTermEmitter(propertyTerm: PropertyTerm,
         override def emit(b: EntryBuilder): Unit = {
           if (propertyTerm.subPropertyOf.size == 1) {
             b.entry("extends", aliasFor(propertyTerm.subPropertyOf.head.value(), aliasMapping))
-          } else {
+          }
+          else {
             b.entry("extends", _.list({ l =>
               propertyTerm.subPropertyOf.foreach { extended =>
                 l += aliasFor(extended.value(), aliasMapping)
@@ -174,7 +179,8 @@ private case class PropertyTermEmitter(propertyTerm: PropertyTerm,
     }
     if (ptEmitters.isEmpty) {
       MapEntryEmitter(propertyAlias, "", YType.Null).emit(b)
-    } else {
+    }
+    else {
       b.entry(propertyAlias, _.obj({ ct =>
         traverse(ordering.sorted(ptEmitters), ct)
       }))
@@ -200,7 +206,8 @@ private case class ImportEmitter(vocabularyReference: VocabularyReference,
 
     val importLocation = if (vocabularyReferenceFile.contains(vocabFilePrefix)) {
       vocabularyReferenceFile.replace(vocabFilePrefix, "")
-    } else {
+    }
+    else {
       vocabularyReferenceFile.replace("file://", "")
     }
 
@@ -250,7 +257,8 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
             .getOrElse(ZERO)
         }
       })
-    } else {
+    }
+    else {
       Nil
     }
   }
@@ -261,7 +269,7 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
         override def emit(b: EntryBuilder): Unit = {
           b.entry("uses", _.obj({ b =>
             traverse(ordering.sorted(
-                       vocabulary.imports.map(vocabularyRef => ImportEmitter(vocabularyRef, vocabulary, ordering))),
+                         vocabulary.imports.map(vocabularyRef => ImportEmitter(vocabularyRef, vocabulary, ordering))),
                      b)
           }))
         }
@@ -276,7 +284,8 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
             .getOrElse(ZERO)
         }
       })
-    } else {
+    }
+    else {
       Nil
     }
   }
@@ -326,21 +335,22 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
     val classTerms = vocabulary.declares.filter(_.isInstanceOf[ClassTerm]).asInstanceOf[Seq[ClassTerm]]
     if (classTerms.nonEmpty) {
       Seq(
-        new EntryEmitter {
-          override def emit(b: EntryBuilder): Unit =
-            b.entry("classTerms", _.obj({ b =>
-              traverse(ordering.sorted(classTerms.map(ct => ClassTermEmitter(ct, ordering, aliasMapping))), b)
-            }))
+          new EntryEmitter {
+            override def emit(b: EntryBuilder): Unit =
+              b.entry("classTerms", _.obj({ b =>
+                traverse(ordering.sorted(classTerms.map(ct => ClassTermEmitter(ct, ordering, aliasMapping))), b)
+              }))
 
-          override def position(): Position =
-            classTerms
-              .map(_.annotations.find(classOf[LexicalInformation]).map(_.range.start))
-              .find(_.isDefined)
-              .flatten
-              .getOrElse(ZERO)
-        }
+            override def position(): Position =
+              classTerms
+                .map(_.annotations.find(classOf[LexicalInformation]).map(_.range.start))
+                .find(_.isDefined)
+                .flatten
+                .getOrElse(ZERO)
+          }
       )
-    } else {
+    }
+    else {
       Nil
     }
   }
@@ -349,21 +359,22 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
     val propertyTerms = vocabulary.declares.filter(_.isInstanceOf[PropertyTerm]).asInstanceOf[Seq[PropertyTerm]]
     if (propertyTerms.nonEmpty) {
       Seq(
-        new EntryEmitter {
-          override def emit(b: EntryBuilder): Unit =
-            b.entry("propertyTerms", _.obj({ b =>
-              traverse(ordering.sorted(propertyTerms.map(pt => PropertyTermEmitter(pt, ordering, aliasMapping))), b)
-            }))
+          new EntryEmitter {
+            override def emit(b: EntryBuilder): Unit =
+              b.entry("propertyTerms", _.obj({ b =>
+                traverse(ordering.sorted(propertyTerms.map(pt => PropertyTermEmitter(pt, ordering, aliasMapping))), b)
+              }))
 
-          override def position(): Position =
-            propertyTerms
-              .map(_.annotations.find(classOf[LexicalInformation]).map(_.range.start))
-              .find(_.isDefined)
-              .flatten
-              .getOrElse(ZERO)
-        }
+            override def position(): Position =
+              propertyTerms
+                .map(_.annotations.find(classOf[LexicalInformation]).map(_.range.start))
+                .find(_.isDefined)
+                .flatten
+                .getOrElse(ZERO)
+          }
       )
-    } else {
+    }
+    else {
       Nil
     }
   }

@@ -6,10 +6,11 @@ import amf.plugins.document.vocabularies.model.domain.{DocumentMapping, Document
 import org.yaml.model.{YMap, YMapEntry}
 import DialectAstOps._
 
-case class RootDocumentParser(into:DocumentsModel,name:String)(override implicit val ctx:DialectContext) extends DialectEntryParser{
+case class RootDocumentParser(into: DocumentsModel, name: String)(override implicit val ctx: DialectContext)
+    extends DialectEntryParser {
 
   override def parse(entry: YMapEntry): Unit = {
-    val rootMap = entry.value.as[YMap]
+    val rootMap          = entry.value.as[YMap]
     val documentsMapping = DocumentMapping(Annotations(entry.value)).withDocumentName(name).withId(into.id + "/root")
     rootMap.parse("encodes", DialectEncodesParser(documentsMapping))
     DialectDeclaresParser(documentsMapping).parse(rootMap)

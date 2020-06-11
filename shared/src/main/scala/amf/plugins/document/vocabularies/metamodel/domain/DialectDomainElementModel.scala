@@ -13,7 +13,6 @@ class DialectDomainElementModel(val typeIri: Seq[String] = Seq(),
     extends DomainElementModel
     with LinkableElementModel {
 
-
   override val fields: List[Field] =
     DialectDomainElementModel.Abstract :: DialectDomainElementModel.DeclarationName :: DomainElementModel.fields ++ LinkableElementModel.fields ++ typeFields
   override val `type`: List[ValueType] = typeIri
@@ -36,5 +35,5 @@ object DialectDomainElementModel {
   def apply(typeIri: String)             = new DialectDomainElementModel(Seq(typeIri))
 
   val DeclarationName: Field = Field(Str, Namespace.Meta + "declarationName")
-  val Abstract: Field = Field(Bool, Namespace.Meta + "abstract")
+  val Abstract: Field        = Field(Bool, Namespace.Meta + "abstract")
 }

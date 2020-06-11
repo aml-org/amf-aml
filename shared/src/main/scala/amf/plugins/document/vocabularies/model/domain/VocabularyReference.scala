@@ -12,8 +12,8 @@ import org.yaml.model.YMap
 case class VocabularyReference(fields: Fields, annotations: Annotations) extends DomainElement {
 
   def alias: StrField     = fields.field(Alias)
-  def reference: StrField   = fields.field(Reference)
-  def base: StrField        = fields.field(Base)
+  def reference: StrField = fields.field(Reference)
+  def base: StrField      = fields.field(Base)
 
   def withAlias(alias: String): VocabularyReference         = set(Alias, alias)
   def withReference(reference: String): VocabularyReference = set(Reference, reference)

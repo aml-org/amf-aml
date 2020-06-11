@@ -51,7 +51,7 @@ class DialectNodeExtensionStage()(override implicit val errorHandler: ErrorHandl
         merged.fields.removeField(NodeMappingModel.Extends)
         // return the final node
         merged
-      case _                     =>
+      case _ =>
         nodeMapping
     }
     nodeMapping
@@ -59,17 +59,18 @@ class DialectNodeExtensionStage()(override implicit val errorHandler: ErrorHandl
 
   def mergeNodeMapping(nodeMapping: NodeMapping, superMerged: NodeMapping): NodeMapping = {
     val acc = mutable.Map[String, PropertyMapping]()
-    nodeMapping.propertiesMapping().foreach {  prop =>
+    nodeMapping.propertiesMapping().foreach { prop =>
       acc += (prop.name().value() -> prop)
     }
 
     superMerged.propertiesMapping().foreach { property =>
       acc.get(property.name().value()) match {
         case Some(existingProperty) => // ignore
-        case None                   => acc += (property.name().value() -> PropertyMapping(property.fields.copy(), property.annotations.copy()).withId(property.id))
+        case None =>
+          acc += (property.name().value() -> PropertyMapping(property.fields.copy(), property.annotations.copy())
+            .withId(property.id))
       }
     }
-
 
     nodeMapping.withPropertiesMapping(acc.values.toList)
   }

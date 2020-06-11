@@ -12,12 +12,9 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragmen
 object DialectModel extends DocumentModel with ExternalContextModel {
 
   val Name =
-    Field(Str,
-      Namespace.Core + "name",
-      ModelDoc(ModelVocabularies.Core, "name", "Name of the dialect"))
-  val Version = Field(Str,
-                      Namespace.Core + "version",
-                      ModelDoc(ModelVocabularies.Core, "version", "Version of the dialect"))
+    Field(Str, Namespace.Core + "name", ModelDoc(ModelVocabularies.Core, "name", "Name of the dialect"))
+  val Version =
+    Field(Str, Namespace.Core + "version", ModelDoc(ModelVocabularies.Core, "version", "Version of the dialect"))
   val Documents = Field(DocumentsModelModel,
                         Namespace.Meta + "documents",
                         ModelDoc(ModelVocabularies.Meta, "documents", "Document mapping for the the dialect"))
@@ -27,12 +24,13 @@ object DialectModel extends DocumentModel with ExternalContextModel {
   override val `type`: List[ValueType] =
     Namespace.Meta + "Dialect" :: DocumentModel.`type`
 
-  override val fields: List[Field] = Name :: Version :: Externals :: Documents :: BaseUnitModel.Location ::  DocumentModel.fields
+  override val fields
+    : List[Field] = Name :: Version :: Externals :: Documents :: BaseUnitModel.Location :: DocumentModel.fields
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Meta,
-    "Dialect",
-    "Definition of an AML dialect, mapping AST nodes from dialect documents into an output semantic graph"
+      ModelVocabularies.Meta,
+      "Dialect",
+      "Definition of an AML dialect, mapping AST nodes from dialect documents into an output semantic graph"
   )
 }
 
@@ -45,9 +43,9 @@ object DialectLibraryModel extends ModuleModel with ExternalContextModel {
   override val fields: List[Field] = Externals :: Location :: ModuleModel.fields
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Meta,
-    "Dialect Library",
-    "Library of AML mappings that can be reused in different AML dialects"
+      ModelVocabularies.Meta,
+      "Dialect Library",
+      "Library of AML mappings that can be reused in different AML dialects"
   )
 }
 
@@ -60,8 +58,8 @@ object DialectFragmentModel extends FragmentModel with ExternalContextModel {
   override val fields: List[Field] = Externals :: Location :: FragmentModel.fields
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Meta,
-    "Dialect Fragment",
-    "AML dialect mapping fragment that can be included in multiple AML dialects"
+      ModelVocabularies.Meta,
+      "Dialect Fragment",
+      "AML dialect mapping fragment that can be included in multiple AML dialects"
   )
 }

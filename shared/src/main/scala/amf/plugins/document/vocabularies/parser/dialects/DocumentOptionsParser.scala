@@ -9,7 +9,8 @@ import amf.validation.DialectValidations.DialectError
 import DialectAstOps._
 import amf.plugins.document.vocabularies.ReferenceStyles
 import amf.plugins.document.vocabularies.metamodel.domain
-case class DocumentOptionsParser(into:DocumentsModel)(override implicit val ctx:DialectContext) extends DialectEntryParser{
+case class DocumentOptionsParser(into: DocumentsModel)(override implicit val ctx: DialectContext)
+    extends DialectEntryParser {
 
   override def parse(entry: YMapEntry): Unit = {
     entry.value.toOption[YMap] match {
@@ -17,10 +18,7 @@ case class DocumentOptionsParser(into:DocumentsModel)(override implicit val ctx:
         ctx.closedNode("documentsMappingOptions", into.id, optionsMap)
         parseOptions(optionsMap)
       case _ =>
-        ctx.eh.violation(DialectError,
-          into.id,
-          "Options for a documents mapping must be a map",
-          entry.value)
+        ctx.eh.violation(DialectError, into.id, "Options for a documents mapping must be a map", entry.value)
     }
   }
 

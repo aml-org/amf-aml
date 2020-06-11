@@ -72,12 +72,12 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
         targetNode
       case "fail" =>
         errorHandler.violation(
-          InvalidDialectPatch,
-          patchNode.id,
-          None,
-          s"Node ${patchNode.meta.`type`.map(_.iri()).mkString(",")} cannot be patched",
-          patchNode.annotations.find(classOf[LexicalInformation]),
-          None
+            InvalidDialectPatch,
+            patchNode.id,
+            None,
+            s"Node ${patchNode.meta.`type`.map(_.iri()).mkString(",")} cannot be patched",
+            patchNode.annotations.find(classOf[LexicalInformation]),
+            None
         )
         None
     }
@@ -103,7 +103,8 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                               patchLocation: String): Option[DialectDomainElement] = {
     if (targetNode.nonEmpty && sameNodeIdentity(targetNode.get, targetLocation, patchNode, patchLocation)) {
       None
-    } else {
+    }
+    else {
       targetNode
     }
   }
@@ -150,8 +151,8 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
         targetNode.graph.patchField(patchField, patchValue)
       case "delete" if targetNode.graph.containsField(patchField) =>
         try {
-          if(targetNode.fields.getValue(patchField).value.asInstanceOf[AmfScalar].value
-            == patchValue.value.asInstanceOf[AmfScalar].value)
+          if (targetNode.fields.getValue(patchField).value.asInstanceOf[AmfScalar].value
+                == patchValue.value.asInstanceOf[AmfScalar].value)
             targetNode.graph.removeField(patchField.toString)
         } catch {
           case _: Exception => // ignore
@@ -164,12 +165,12 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
       // ignore
       case "fail" =>
         errorHandler.violation(
-          InvalidDialectPatch,
-          targetNode.id,
-          None,
-          s"Property ${patchField.value.iri()} cannot be patched",
-          targetNode.fields.getValue(patchField).annotations.find(classOf[LexicalInformation]),
-          None
+            InvalidDialectPatch,
+            targetNode.id,
+            None,
+            s"Property ${patchField.value.iri()} cannot be patched",
+            targetNode.fields.getValue(patchField).annotations.find(classOf[LexicalInformation]),
+            None
         )
       case _ =>
       // ignore
@@ -183,7 +184,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                                              targetLocation: String,
                                              patchLocation: String): Unit = {
     val targetPropertyValueSeq: Seq[AmfElement] = targetNode.fields.getValueAsOption(patchField) match {
-      case Some(v ) if v.value.isInstanceOf[AmfArray] => v.value.asInstanceOf[AmfArray].values
+      case Some(v) if v.value.isInstanceOf[AmfArray] => v.value.asInstanceOf[AmfArray].values
       case Some(v)                                   => Seq(v.value)
       case _                                         => Nil
     }
@@ -208,12 +209,12 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
       // ignore
       case "fail" =>
         errorHandler.violation(
-          InvalidDialectPatch,
-          targetNode.id,
-          None,
-          s"Property ${patchField.value.iri()} cannot be patched",
-          patchValue.annotations.find(classOf[LexicalInformation]),
-          None
+            InvalidDialectPatch,
+            targetNode.id,
+            None,
+            s"Property ${patchField.value.iri()} cannot be patched",
+            patchValue.annotations.find(classOf[LexicalInformation]),
+            None
         )
       case _ =>
       // ignore
@@ -262,7 +263,8 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
               case None    => Some(elem)
             }
         } collect { case Some(elem) => elem } toSeq
-        val unionElements: Seq[DialectDomainElement] = targetPropertyValue.collect { case d: DialectDomainElement => d } union newDialectDomainElements
+        val unionElements
+          : Seq[DialectDomainElement] = targetPropertyValue.collect { case d: DialectDomainElement => d } union newDialectDomainElements
         targetNode.graph.patchSeqField(patchField, unionElements)
       case "delete" =>
         val newDialectDomainElements = patchPropertyValueIds.collect {
@@ -338,12 +340,12 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
       // ignore
       case "fail" =>
         errorHandler.violation(
-          InvalidDialectPatch,
-          targetNode.id,
-          None,
-          s"Property ${patchField.value.iri()} cannot be patched",
-          patchValue.annotations.find(classOf[LexicalInformation]),
-          None
+            InvalidDialectPatch,
+            targetNode.id,
+            None,
+            s"Property ${patchField.value.iri()} cannot be patched",
+            patchValue.annotations.find(classOf[LexicalInformation]),
+            None
         )
       case _ =>
       // ignore

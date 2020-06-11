@@ -15,8 +15,8 @@ trait NodeWithDiscriminator[T] extends DomainElement {
       }
     }.orNull
 
-  def withObjectRange(range: Seq[String]): T         = set(ObjectRange, range).asInstanceOf[T]
-  def withTypeDiscriminatorName(name: String): T     = set(TypeDiscriminatorName, name).asInstanceOf[T]
+  def withObjectRange(range: Seq[String]): T     = set(ObjectRange, range).asInstanceOf[T]
+  def withTypeDiscriminatorName(name: String): T = set(TypeDiscriminatorName, name).asInstanceOf[T]
   def withTypeDiscriminator(typesMapping: Map[String, String]): T =
     set(TypeDiscriminator, typesMapping.map { case (a, b) => s"$a->$b" }.mkString(",")).asInstanceOf[T]
 }

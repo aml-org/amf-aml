@@ -75,7 +75,8 @@ class VocabularyDeclarations(var externals: Map[String, External] = Map(),
       val prefix = key.split("\\.").head
       val value  = key.split("\\.").last
       externals.get(prefix).map(external => s"${external.base.value()}$value")
-    } else {
+    }
+    else {
       None
     }
   }
@@ -95,28 +96,28 @@ class VocabularyDeclarations(var externals: Map[String, External] = Map(),
 trait VocabularySyntax { this: VocabularyContext =>
 
   val vocabulary: Map[String, String] = Map(
-    "$dialect"      -> "string",
-    "base"          -> "string",
-    "usage"         -> "string",
-    "vocabulary"    -> "string",
-    "uses"          -> "libraries",
-    "external"      -> "libraries",
-    "classTerms"    -> "ClassTerm[]",
-    "propertyTerms" -> "PropertyTerm[]"
+      "$dialect"      -> "string",
+      "base"          -> "string",
+      "usage"         -> "string",
+      "vocabulary"    -> "string",
+      "uses"          -> "libraries",
+      "external"      -> "libraries",
+      "classTerms"    -> "ClassTerm[]",
+      "propertyTerms" -> "PropertyTerm[]"
   )
 
   val classTerm: Map[String, String] = Map(
-    "displayName" -> "string",
-    "description" -> "string",
-    "properties"  -> "string[]",
-    "extends"     -> "string[]"
+      "displayName" -> "string",
+      "description" -> "string",
+      "properties"  -> "string[]",
+      "extends"     -> "string[]"
   )
 
   val propertyTerm: Map[String, String] = Map(
-    "displayName" -> "string",
-    "description" -> "string",
-    "range"       -> "string[]",
-    "extends"     -> "string[]"
+      "displayName" -> "string",
+      "description" -> "string",
+      "range"       -> "string[]",
+      "extends"     -> "string[]"
   )
 
   def closedNode(nodeType: String, id: String, map: YMap): Unit = {
@@ -172,7 +173,8 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
             case _                                   => None
           }
       }
-    } else {
+    }
+    else {
       val local = s"$base$propertyTermAlias"
       declarations.getPropertyTermId(propertyTermAlias) match {
         case Some(_) => // ignore
@@ -182,7 +184,10 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
     }
   }
 
-  def resolveClassTermAlias(base: String, classTermAlias: String, where: YPart, strictLocal: Boolean): Option[String] = {
+  def resolveClassTermAlias(base: String,
+                            classTermAlias: String,
+                            where: YPart,
+                            strictLocal: Boolean): Option[String] = {
     if (classTermAlias.contains(".")) {
       val prefix = classTermAlias.split("\\.").head
       val value  = classTermAlias.split("\\.").last
@@ -194,7 +199,8 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
             case _                                   => None
           }
       }
-    } else {
+    }
+    else {
       val local = s"$base$classTermAlias"
       declarations.getClassTermId(classTermAlias) match {
         case Some(_) => // ignore
@@ -210,7 +216,8 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
   def terms(): Seq[DomainElement] = declarations.classTerms.values.toSeq ++ declarations.propertyTerms.values.toSeq
 }
 
-case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.Map())(implicit ctx: VocabularyContext) {
+case class ReferenceDeclarations(references: mutable.Map[String, Any] = mutable.Map())(
+    implicit ctx: VocabularyContext) {
   def +=(alias: String, unit: BaseUnit): Unit = {
     references += (alias -> unit)
     val library = ctx.declarations.getOrCreateLibrary(alias)
@@ -247,36 +254,41 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
 
   private def parseLibraries(result: ReferenceDeclarations, id: String): Unit = {
     map.key(
-      "uses",
-      entry =>
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            val alias: String = e.key.as[YScalar].text
-            val url: String   = e.value.as[YScalar].text
-            target(url).foreach {
-              case module: DeclaresModel => result += (alias, collectAlias(module, alias -> (module.id, url)))
-              case other =>
-                ctx.eh.violation(ExpectedVocabularyModule, id, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
-            }
-          })
+        "uses",
+        entry =>
+          entry.value
+            .as[YMap]
+            .entries
+            .foreach(
+                e => {
+                  val alias: String = e.key.as[YScalar].text
+                  val url: String   = e.value.as[YScalar].text
+                  target(url)
+                    .foreach {
+                      case module: DeclaresModel => result += (alias, collectAlias(module, alias -> (module.id, url)))
+                      case other =>
+                        ctx.eh.violation(ExpectedVocabularyModule,
+                                         id,
+                                         s"Expected vocabulary module but found: $other",
+                                         e) // todo Uses should only reference modules...
+                    }
+                })
     )
   }
 
   private def parseExternals(result: ReferenceDeclarations, id: String): Unit = {
     map.key(
-      "external",
-      entry =>
-        entry.value
-          .as[YMap]
-          .entries
-          .foreach(e => {
-            val alias: String = e.key.as[YScalar].text
-            val base: String  = e.value.as[YScalar].text
-            val external      = External()
-            result += external.withAlias(alias).withBase(base)
-          })
+        "external",
+        entry =>
+          entry.value
+            .as[YMap]
+            .entries
+            .foreach(e => {
+              val alias: String = e.key.as[YScalar].text
+              val base: String  = e.value.as[YScalar].text
+              val external      = External()
+              result += external.withAlias(alias).withBase(base)
+            })
     )
   }
 
@@ -342,7 +354,8 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
       case (term, alias, location, isProperty) =>
         if (isProperty) {
           ctx.missingTermWarning(term, vocabulary.id, location)
-        } else {
+        }
+        else {
           ctx.missingTermViolation(term, vocabulary.id, location)
         }
     }
@@ -352,13 +365,13 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
 
   def parseClassTerms(map: YMap) = {
     map.key(
-      "classTerms",
-      entry => {
-        val classDeclarations = entry.value.as[YMap]
-        classDeclarations.entries.foreach { classTermDeclaration =>
-          parseClassTerm(classTermDeclaration)
+        "classTerms",
+        entry => {
+          val classDeclarations = entry.value.as[YMap]
+          classDeclarations.entries.foreach { classTermDeclaration =>
+            parseClassTerm(classTermDeclaration)
+          }
         }
-      }
     )
   }
 
@@ -389,57 +402,57 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
         })
 
         classTermMap.key(
-          "properties",
-          entry => {
-            val refs: Seq[String] = entry.value.tagType match {
-              case YType.Str => Seq(ValueNode(entry.value).string().toString)
-              case YType.Seq =>
-                DefaultArrayNode(entry.value).nodes._1
-                  .map(_.value.toString) // ArrayNode(entry.value).strings().scalars.map(_.toString)
-            }
-
-            val properties: Seq[String] = refs
-              .map { term: String =>
-                ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
-                  case Some(v) => Some(v)
-                  case None =>
-                    ctx.missingTermViolation(term, vocabulary.id, entry.value)
-                    None
-                }
+            "properties",
+            entry => {
+              val refs: Seq[String] = entry.value.tagType match {
+                case YType.Str => Seq(ValueNode(entry.value).string().toString)
+                case YType.Seq =>
+                  DefaultArrayNode(entry.value).nodes._1
+                    .map(_.value.toString) // ArrayNode(entry.value).strings().scalars.map(_.toString)
               }
-              .filter(_.nonEmpty)
-              .map(_.get)
 
-            if (properties.nonEmpty)
-              classTerm.set(ClassTermModel.Properties, properties)
-          }
+              val properties: Seq[String] = refs
+                .map { term: String =>
+                  ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
+                    case Some(v) => Some(v)
+                    case None =>
+                      ctx.missingTermViolation(term, vocabulary.id, entry.value)
+                      None
+                  }
+                }
+                .filter(_.nonEmpty)
+                .map(_.get)
+
+              if (properties.nonEmpty)
+                classTerm.set(ClassTermModel.Properties, properties)
+            }
         )
 
         classTermMap.key(
-          "extends",
-          entry => {
-            val refs: Seq[String] = entry.value.tagType match {
-              case YType.Str => Seq(ValueNode(entry.value).string().toString)
-              case YType.Seq => {
-                // ArrayNode(entry.value).strings().scalars.map(_.toString)
-                DefaultArrayNode(node = entry.value).nodes._1.map(_.value.toString)
-              }
-            }
-
-            val superClasses: Seq[String] = refs
-              .map { term: String =>
-                ctx.resolveClassTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
-                  case Some(v) => Some(v)
-                  case None =>
-                    ctx.missingTermViolation(term, vocabulary.id, entry.value)
-                    None
+            "extends",
+            entry => {
+              val refs: Seq[String] = entry.value.tagType match {
+                case YType.Str => Seq(ValueNode(entry.value).string().toString)
+                case YType.Seq => {
+                  // ArrayNode(entry.value).strings().scalars.map(_.toString)
+                  DefaultArrayNode(node = entry.value).nodes._1.map(_.value.toString)
                 }
               }
-              .filter(_.nonEmpty)
-              .map(_.get)
 
-            classTerm.set(ClassTermModel.SubClassOf, superClasses)
-          }
+              val superClasses: Seq[String] = refs
+                .map { term: String =>
+                  ctx.resolveClassTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
+                    case Some(v) => Some(v)
+                    case None =>
+                      ctx.missingTermViolation(term, vocabulary.id, entry.value)
+                      None
+                  }
+                }
+                .filter(_.nonEmpty)
+                .map(_.get)
+
+              classTerm.set(ClassTermModel.SubClassOf, superClasses)
+            }
         )
     }
 
@@ -448,13 +461,13 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
 
   def parsePropertyTerms(map: YMap) = {
     map.key(
-      "propertyTerms",
-      entry => {
-        val classDeclarations = entry.value.as[YMap]
-        classDeclarations.entries.foreach { propertyTermDeclaration =>
-          parsePropertyTerm(propertyTermDeclaration)
+        "propertyTerms",
+        entry => {
+          val classDeclarations = entry.value.as[YMap]
+          classDeclarations.entries.foreach { propertyTermDeclaration =>
+            parsePropertyTerm(propertyTermDeclaration)
+          }
         }
-      }
     )
   }
 
@@ -466,7 +479,8 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
           case None => DatatypePropertyTerm(Annotations(propertyTermDeclaration))
           case Some(value) =>
             value.value.as[YScalar].text match {
-              case "string" | "integer" | "float" | "double" | "long" | "boolean" | "uri" | "any" | "time" | "date" | "dateTime" =>
+              case "string" | "integer" | "float" | "double" | "long" | "boolean" | "uri" | "any" | "time" | "date" |
+                  "dateTime" =>
                 DatatypePropertyTerm(Annotations(propertyTermDeclaration))
               case _ => ObjectPropertyTerm(Annotations(propertyTermDeclaration))
             }
@@ -501,54 +515,56 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
         })
 
         propertyTermMap.key(
-          "range",
-          entry => {
-            val text = entry.value.as[YScalar].text
-            val rangeId = text match {
-              case "guid" =>
-                Some((Namespace.Shapes + "guid").iri())
-              case "any" | "uri" | "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" | "dateTime" =>
-                Some(DataType(text))
-              case classAlias =>
-                ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
-                  case Some(classTermId) => Some(classTermId)
-                  case None =>
-                    ctx.missingTermViolation(classAlias, vocabulary.id, entry.value)
-                    None
-                }
-            }
+            "range",
+            entry => {
+              val text = entry.value.as[YScalar].text
+              val rangeId = text match {
+                case "guid" =>
+                  Some((Namespace.Shapes + "guid").iri())
+                case "any" | "uri" | "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" |
+                    "dateTime" =>
+                  Some(DataType(text))
+                case classAlias =>
+                  ctx
+                    .resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
+                    case Some(classTermId) => Some(classTermId)
+                    case None =>
+                      ctx.missingTermViolation(classAlias, vocabulary.id, entry.value)
+                      None
+                  }
+              }
 
-            rangeId match {
-              case Some(id: String) => propertyTerm.withRange(id)
-              case None             => // ignore
+              rangeId match {
+                case Some(id: String) => propertyTerm.withRange(id)
+                case None             => // ignore
+              }
             }
-          }
         )
 
         propertyTermMap.key(
-          "extends",
-          entry => {
-            val refs: Seq[String] = entry.value.tagType match {
-              case YType.Str => Seq(ValueNode(entry.value).string().toString)
-              case YType.Seq =>
-                DefaultArrayNode(entry.value).nodes._1.map(_.as[YScalar].text)
-              // ArrayNode(entry.value).strings().scalars.map(_.toString)
-            }
-
-            val superClasses: Seq[String] = refs
-              .map { term: String =>
-                ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
-                  case Some(v) => Some(v)
-                  case None =>
-                    ctx.missingTermViolation(term, vocabulary.id, entry.value)
-                    None
-                }
+            "extends",
+            entry => {
+              val refs: Seq[String] = entry.value.tagType match {
+                case YType.Str => Seq(ValueNode(entry.value).string().toString)
+                case YType.Seq =>
+                  DefaultArrayNode(entry.value).nodes._1.map(_.as[YScalar].text)
+                // ArrayNode(entry.value).strings().scalars.map(_.toString)
               }
-              .filter(_.nonEmpty)
-              .map(_.get)
 
-            propertyTerm.set(ObjectPropertyTermModel.SubPropertyOf, superClasses)
-          }
+              val superClasses: Seq[String] = refs
+                .map { term: String =>
+                  ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
+                    case Some(v) => Some(v)
+                    case None =>
+                      ctx.missingTermViolation(term, vocabulary.id, entry.value)
+                      None
+                  }
+                }
+                .filter(_.nonEmpty)
+                .map(_.get)
+
+              propertyTerm.set(ObjectPropertyTermModel.SubPropertyOf, superClasses)
+            }
         )
     }
 
