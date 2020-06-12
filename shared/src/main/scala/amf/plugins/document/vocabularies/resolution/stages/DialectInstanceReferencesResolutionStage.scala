@@ -49,7 +49,8 @@ class DialectInstanceReferencesResolutionStage()(override implicit val errorHand
   def resolveLinked(element: DomainElement): DomainElement = {
     if (mutuallyRecursive.contains(element.id)) {
       element
-    } else {
+    }
+    else {
       val nested = DialectInstance()
       nested.fields.setWithoutId(DocumentModel.Encodes, element)
       val result = new DialectInstanceReferencesResolutionStage()

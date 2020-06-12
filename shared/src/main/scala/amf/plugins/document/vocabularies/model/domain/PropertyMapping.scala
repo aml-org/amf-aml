@@ -10,38 +10,38 @@ import amf.plugins.document.vocabularies.metamodel.domain.{DialectDomainElementM
 import org.yaml.model.YMap
 
 class PropertyClassification
-object ExtensionPointProperty extends PropertyClassification
-object LiteralProperty extends PropertyClassification
-object ObjectProperty extends PropertyClassification
-object ObjectPropertyCollection extends PropertyClassification
-object ObjectMapProperty extends PropertyClassification
+object ExtensionPointProperty       extends PropertyClassification
+object LiteralProperty              extends PropertyClassification
+object ObjectProperty               extends PropertyClassification
+object ObjectPropertyCollection     extends PropertyClassification
+object ObjectMapProperty            extends PropertyClassification
 object ObjectMapInheritanceProperty extends PropertyClassification
-object ObjectPairProperty extends PropertyClassification
-object LiteralPropertyCollection extends PropertyClassification
+object ObjectPairProperty           extends PropertyClassification
+object LiteralPropertyCollection    extends PropertyClassification
 
 case class PropertyMapping(fields: Fields, annotations: Annotations)
     extends DomainElement
     with MergeableMapping
     with NodeWithDiscriminator[PropertyMapping] {
 
-  def name(): StrField = fields.field(Name)
+  def name(): StrField                = fields.field(Name)
   def nodePropertyMapping(): StrField = fields.field(NodePropertyMapping)
 
-  def literalRange(): StrField = fields.field(LiteralRange)
-  def mapKeyProperty(): StrField = fields.field(MapKeyProperty)
+  def literalRange(): StrField     = fields.field(LiteralRange)
+  def mapKeyProperty(): StrField   = fields.field(MapKeyProperty)
   def mapValueProperty(): StrField = fields.field(MapValueProperty)
 
-  def mapTermKeyProperty(): StrField = fields.field(MapTermKeyProperty)
+  def mapTermKeyProperty(): StrField   = fields.field(MapTermKeyProperty)
   def mapTermValueProperty(): StrField = fields.field(MapTermValueProperty)
 
-  def minCount(): IntField = fields.field(MinCount)
-  def pattern(): StrField = fields.field(Pattern)
-  def minimum(): DoubleField = fields.field(Minimum)
-  def maximum(): DoubleField = fields.field(Maximum)
+  def minCount(): IntField       = fields.field(MinCount)
+  def pattern(): StrField        = fields.field(Pattern)
+  def minimum(): DoubleField     = fields.field(Minimum)
+  def maximum(): DoubleField     = fields.field(Maximum)
   def allowMultiple(): BoolField = fields.field(AllowMultiple)
-  def sorted(): BoolField = fields.field(Sorted)
-  def enum(): Seq[AnyField] = fields.field(PropertyMappingModel.Enum)
-  def unique(): BoolField = fields.field(Unique)
+  def sorted(): BoolField        = fields.field(Sorted)
+  def enum(): Seq[AnyField]      = fields.field(PropertyMappingModel.Enum)
+  def unique(): BoolField        = fields.field(Unique)
 
   def withName(name: String): PropertyMapping = set(Name, name)
   def withNodePropertyMapping(propertyId: String): PropertyMapping =
@@ -56,10 +56,10 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     set(MapTermKeyProperty, key)
   def withMapTermValueProperty(value: String): PropertyMapping =
     set(MapTermValueProperty, value)
-  def withMinCount(minCount: Int): PropertyMapping = set(MinCount, minCount)
+  def withMinCount(minCount: Int): PropertyMapping  = set(MinCount, minCount)
   def withPattern(pattern: String): PropertyMapping = set(Pattern, pattern)
-  def withMinimum(min: Double): PropertyMapping = set(Minimum, min)
-  def withMaximum(max: Double): PropertyMapping = set(Maximum, max)
+  def withMinimum(min: Double): PropertyMapping     = set(Minimum, min)
+  def withMaximum(max: Double): PropertyMapping     = set(Maximum, max)
   def withAllowMultiple(allow: Boolean): PropertyMapping =
     set(AllowMultiple, allow)
   def withEnum(values: Seq[Any]): PropertyMapping =
@@ -71,10 +71,10 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     val isAnyNode = objectRange().exists { obj =>
       obj.value() == (Namespace.Meta + "anyNode").iri()
     }
-    val isLiteral = literalRange().nonNull
-    val isObject = objectRange().nonEmpty
-    val multiple = allowMultiple().option().getOrElse(false)
-    val isMap = mapTermKeyProperty().nonNull
+    val isLiteral  = literalRange().nonNull
+    val isObject   = objectRange().nonEmpty
+    val multiple   = allowMultiple().option().getOrElse(false)
+    val isMap      = mapTermKeyProperty().nonNull
     val isMapValue = mapTermValueProperty().nonNull
 
     if (isAnyNode)
@@ -97,7 +97,8 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     val range = objectRange()
     if (range.isEmpty) {
       Option(typeDiscriminator()).getOrElse(Map()).values.toSeq
-    } else {
+    }
+    else {
       range.map(_.value())
     }
   }
@@ -110,33 +111,35 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
       .getOrElse((Namespace.Data + name().value()).iri())
 
     val propertyIdValue = ValueType(iri)
-    val isObjectRange = objectRange().nonEmpty || Option(typeDiscriminator()).isDefined
+    val isObjectRange   = objectRange().nonEmpty || Option(typeDiscriminator()).isDefined
 
     if (isObjectRange) {
-      if(allowMultiple().value() && sorted().value()) {
+      if (allowMultiple().value() && sorted().value()) {
         Field(Type.SortedArray(DialectDomainElementModel()), propertyIdValue)
       }
       else if (allowMultiple().value() || mapTermKeyProperty().nonNull) {
         Field(Type.Array(DialectDomainElementModel()), propertyIdValue)
-      } else {
+      }
+      else {
         Field(DialectDomainElementModel(), propertyIdValue)
       }
-    } else {
+    }
+    else {
       val fieldType = literalRange().option() match {
         case Some(literal) if literal == (Namespace.Shapes + "link").iri() => Type.Iri
         case Some(literal) if literal == DataType.AnyUri =>
           Type.LiteralUri
-        case Some(literal) if literal.endsWith("anyType")                  => Type.Any
-        case Some(literal) if literal.endsWith("number")                   => Type.Float
+        case Some(literal) if literal.endsWith("anyType") => Type.Any
+        case Some(literal) if literal.endsWith("number")  => Type.Float
         case Some(literal) if literal == DataType.Integer => Type.Int
         case Some(literal) if literal == DataType.Float   => Type.Float
         case Some(literal) if literal == DataType.Double =>
           Type.Double
         case Some(literal) if literal == DataType.Boolean =>
           Type.Bool
-        case Some(literal) if literal == DataType.Decimal   => Type.Int
+        case Some(literal) if literal == DataType.Decimal => Type.Int
         case Some(literal) if literal == DataType.Time    => Type.Time
-        case Some(literal) if literal == DataType.Date => Type.Date
+        case Some(literal) if literal == DataType.Date    => Type.Date
         case Some(literal) if literal == DataType.DateTime =>
           Type.Date
         case _ => Type.Str
@@ -144,7 +147,8 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
 
       if (allowMultiple().value()) {
         Field(Type.Array(fieldType), propertyIdValue)
-      } else {
+      }
+      else {
         Field(fieldType, propertyIdValue)
       }
     }

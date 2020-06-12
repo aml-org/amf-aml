@@ -25,13 +25,17 @@ case class DynamicExtensionParser(node: YNode,
     val rest = text.split("t").last
     val time = if (rest.contains("+")) {
       rest.split("\\+").head
-    } else if (rest.contains("-")) {
+    }
+    else if (rest.contains("-")) {
       rest.split("-").head
-    } else if (rest.contains("z")) {
+    }
+    else if (rest.contains("z")) {
       rest.split("z").head
-    } else if (rest.contains(".")) {
+    }
+    else if (rest.contains(".")) {
       rest.split(".").head
-    } else {
+    }
+    else {
       rest
     }
     val dateParts = date.split("-")
@@ -40,23 +44,23 @@ case class DynamicExtensionParser(node: YNode,
   }
 
   def parse(): DataNode = {
-    if(aliasCounter.exceedsThreshold(node)){
+    if (aliasCounter.exceedsThreshold(node)) {
       ctx.violation(
-        CoreValidations.SyamlError,
-        parent.getOrElse(""),
-        "Exceeded maximum yaml references threshold"
+          CoreValidations.SyamlError,
+          parent.getOrElse(""),
+          "Exceeded maximum yaml references threshold"
       )
       DataObjectNode()
     }
     else {
       node.tag.tagType match {
-        case YType.Str => parseScalar(node.as[YScalar], "string") // Date/time types are evaluated with patterns
-        case YType.Int => parseScalar(node.as[YScalar], "integer")
-        case YType.Float => parseScalar(node.as[YScalar], "double")
-        case YType.Bool => parseScalar(node.as[YScalar], "boolean")
-        case YType.Null => parseScalar(node.as[YScalar], "nil")
-        case YType.Seq => parseArray(node.as[Seq[YNode]], node)
-        case YType.Map => parseObject(node.as[YMap])
+        case YType.Str       => parseScalar(node.as[YScalar], "string") // Date/time types are evaluated with patterns
+        case YType.Int       => parseScalar(node.as[YScalar], "integer")
+        case YType.Float     => parseScalar(node.as[YScalar], "double")
+        case YType.Bool      => parseScalar(node.as[YScalar], "boolean")
+        case YType.Null      => parseScalar(node.as[YScalar], "nil")
+        case YType.Seq       => parseArray(node.as[Seq[YNode]], node)
+        case YType.Map       => parseObject(node.as[YMap])
         case YType.Timestamp =>
           // TODO add time-only type in syaml and amf
           SimpleDateTime.parse(node.toString()).toOption match {
@@ -89,7 +93,8 @@ case class DynamicExtensionParser(node: YNode,
       val path      = url.split("://").last
       val remaining = path.split("/").dropRight(1)
       s"$protocol://${remaining.mkString("/")}"
-    } else {
+    }
+    else {
       url.split("/").dropRight(1).mkString("/")
     }
   }
@@ -106,7 +111,8 @@ case class DynamicExtensionParser(node: YNode,
         case other => stack += other
       }
       s"$protocol://${stack.mkString("/")}"
-    } else {
+    }
+    else {
       url
     }
   }
@@ -137,7 +143,8 @@ case class DynamicExtensionParser(node: YNode,
       val value               = ast.value
       val propertyAnnotations = Annotations(ast)
 
-      val propertyNode = DynamicExtensionParser(value, Some(node.id), idCounter, aliasCounter).parse().forceAdopted(node.id)
+      val propertyNode =
+        DynamicExtensionParser(value, Some(node.id), idCounter, aliasCounter).parse().forceAdopted(node.id)
       node.addProperty(key, propertyNode, propertyAnnotations)
     }
     node

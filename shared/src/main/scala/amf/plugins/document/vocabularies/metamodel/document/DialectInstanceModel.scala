@@ -5,11 +5,16 @@ import amf.core.metamodel.Type.{Array, Iri, Str}
 import amf.core.metamodel.document._
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.vocabularies.model.document.{DialectInstance, DialectInstanceFragment, DialectInstanceLibrary, DialectInstancePatch}
+import amf.plugins.document.vocabularies.model.document.{
+  DialectInstance,
+  DialectInstanceFragment,
+  DialectInstanceLibrary,
+  DialectInstancePatch
+}
 
 object DialectInstanceModel extends DocumentModel with ExternalContextModel {
 
-  val DefinedBy = Field(Iri, Namespace.Meta + "definedBy")
+  val DefinedBy         = Field(Iri, Namespace.Meta + "definedBy")
   val GraphDependencies = Field(Array(Iri), Namespace.Document + "graphDependencies")
 
   override def modelInstance: AmfObject = DialectInstance()
@@ -22,7 +27,7 @@ object DialectInstanceModel extends DocumentModel with ExternalContextModel {
 
 object DialectInstanceLibraryModel extends DocumentModel with ExternalContextModel {
 
-  val DefinedBy = Field(Iri, Namespace.Meta + "definedBy")
+  val DefinedBy         = Field(Iri, Namespace.Meta + "definedBy")
   val GraphDependencies = Field(Array(Iri), Namespace.Document + "graphDependencies")
 
   override def modelInstance: AmfObject = DialectInstanceLibrary()
@@ -35,8 +40,8 @@ object DialectInstanceLibraryModel extends DocumentModel with ExternalContextMod
 
 object DialectInstanceFragmentModel extends DocumentModel with ExternalContextModel {
 
-  val DefinedBy = Field(Iri, Namespace.Meta + "definedBy")
-  val Fragment = Field(Str, Namespace.Meta + "fragment")
+  val DefinedBy         = Field(Iri, Namespace.Meta + "definedBy")
+  val Fragment          = Field(Str, Namespace.Meta + "fragment")
   val GraphDependencies = Field(Array(Iri), Namespace.Document + "graphDependencies")
 
   override def modelInstance: AmfObject = DialectInstanceFragment()
@@ -48,7 +53,7 @@ object DialectInstanceFragmentModel extends DocumentModel with ExternalContextMo
 }
 
 object DialectInstancePatchModel extends DocumentModel with ExternalContextModel with ExtensionLikeModel {
-  val DefinedBy = Field(Iri, Namespace.Meta + "definedBy")
+  val DefinedBy         = Field(Iri, Namespace.Meta + "definedBy")
   val GraphDependencies = Field(Array(Iri), Namespace.Document + "graphDependencies")
 
   override def modelInstance: AmfObject = DialectInstancePatch()

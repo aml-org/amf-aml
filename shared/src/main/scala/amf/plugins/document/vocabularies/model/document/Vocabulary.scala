@@ -9,7 +9,10 @@ import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel
 import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel._
 import amf.plugins.document.vocabularies.model.domain.{External, VocabularyReference}
 
-case class Vocabulary(fields: Fields, annotations: Annotations) extends BaseUnit with DeclaresModel with ExternalContext[Vocabulary] {
+case class Vocabulary(fields: Fields, annotations: Annotations)
+    extends BaseUnit
+    with DeclaresModel
+    with ExternalContext[Vocabulary] {
 
   /** Returns the list document URIs referenced from the document that has been parsed to generate this model */
   override def references: Seq[BaseUnit] = fields.field(References)
@@ -22,8 +25,8 @@ case class Vocabulary(fields: Fields, annotations: Annotations) extends BaseUnit
   def base: StrField                    = fields.field(Base)
   def imports: Seq[VocabularyReference] = fields.field(Imports)
 
-  def withName(name: String): Vocabulary = set(Name, name)
-  def withBase(base: String): Vocabulary = set(Base, base)
+  def withName(name: String): Vocabulary                              = set(Name, name)
+  def withBase(base: String): Vocabulary                              = set(Base, base)
   def withImports(vocabularies: Seq[VocabularyReference]): Vocabulary = setArray(Imports, vocabularies)
 
   /** Meta data for the document */

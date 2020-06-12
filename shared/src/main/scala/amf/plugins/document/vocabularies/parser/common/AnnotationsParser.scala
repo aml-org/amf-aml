@@ -24,14 +24,16 @@ trait AnnotationsParser {
             case Array(suffix)         => Some(((None, suffix), key, v))
             case _                     => None
           }
-        } else if (key.startsWith("x-")) {
+        }
+        else if (key.startsWith("x-")) {
           val base = key.replace("x-", "")
           base.split("-") match {
             case Array(prefix, suffix) => Some(((Some(prefix), suffix), key, v))
             case Array(suffix)         => Some(((None, suffix), key, v))
             case _                     => None
           }
-        } else {
+        }
+        else {
           None
         }
     } collect {

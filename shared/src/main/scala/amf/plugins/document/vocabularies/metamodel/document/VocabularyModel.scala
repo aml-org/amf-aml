@@ -29,8 +29,8 @@ object VocabularyModel extends ModuleModel with ExternalContextModel {
     Name :: Imports :: Externals :: Declares :: Base :: BaseUnitModel.Location :: BaseUnitModel.fields
 
   override val doc: ModelDoc = ModelDoc(
-    ModelVocabularies.Meta,
-    "Vocabulary",
-    "Basic primitives for the declaration of vocabularies."
+      ModelVocabularies.Meta,
+      "Vocabulary",
+      "Basic primitives for the declaration of vocabularies."
   )
 }

@@ -6,11 +6,21 @@ import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.{Annotations, Fields}
-import amf.core.traversal.{DomainElementSelectorAdapter, DomainElementTransformationAdapter, TransformationData, TransformationTraversal}
+import amf.core.traversal.{
+  DomainElementSelectorAdapter,
+  DomainElementTransformationAdapter,
+  TransformationData,
+  TransformationTraversal
+}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceFragmentModel.Fragment
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
-import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceFragmentModel, DialectInstanceLibraryModel, DialectInstanceModel, DialectInstancePatchModel}
+import amf.plugins.document.vocabularies.metamodel.document.{
+  DialectInstanceFragmentModel,
+  DialectInstanceLibraryModel,
+  DialectInstanceModel,
+  DialectInstancePatchModel
+}
 
 trait ComposedInstancesSupport {
   var composedDialects: Map[String, Dialect] = Map()
@@ -34,11 +44,11 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
 
   override def meta: Obj = DialectInstanceModel
 
-  def encodes: DomainElement = fields.field(Encodes)
-  def references: Seq[BaseUnit] = fields.field(References)
+  def encodes: DomainElement           = fields.field(Encodes)
+  def references: Seq[BaseUnit]        = fields.field(References)
   def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
-  def definedBy(): StrField = fields.field(DefinedBy)
-  def declares: Seq[DomainElement] = fields.field(Declares)
+  def definedBy(): StrField            = fields.field(DefinedBy)
+  def declares: Seq[DomainElement]     = fields.field(Declares)
 
   override def componentId: String = ""
 
@@ -48,11 +58,10 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   def withGraphDependencies(ids: Seq[String]): DialectInstance =
     set(GraphDependencies, ids)
 
-  override def transform(
-      selector: DomainElement => Boolean,
-      transformation: (DomainElement, Boolean) => Option[DomainElement])(
+  override def transform(selector: DomainElement => Boolean,
+                         transformation: (DomainElement, Boolean) => Option[DomainElement])(
       implicit errorHandler: ErrorHandler): BaseUnit = {
-    val domainElementAdapter = new DomainElementSelectorAdapter(selector)
+    val domainElementAdapter  = new DomainElementSelectorAdapter(selector)
     val transformationAdapter = new DomainElementTransformationAdapter(transformation)
     new TransformationTraversal(TransformationData(domainElementAdapter, transformationAdapter)).traverse(this)
     this
@@ -73,11 +82,11 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
     with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceFragmentModel
 
-  def references: Seq[BaseUnit] = fields.field(References)
+  def references: Seq[BaseUnit]        = fields.field(References)
   def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
-  def encodes: DomainElement = fields.field(Encodes)
-  def definedBy(): StrField = fields.field(DefinedBy)
-  def fragment(): StrField = fields.field(Fragment)
+  def encodes: DomainElement           = fields.field(Encodes)
+  def definedBy(): StrField            = fields.field(DefinedBy)
+  def fragment(): StrField             = fields.field(Fragment)
 
   override def componentId: String = ""
 
@@ -101,10 +110,10 @@ case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
     with ComposedInstancesSupport {
   override def meta: Obj = DialectInstanceLibraryModel
 
-  def references: Seq[BaseUnit] = fields.field(References)
+  def references: Seq[BaseUnit]        = fields.field(References)
   def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
-  def declares: Seq[DomainElement] = fields.field(Declares)
-  def definedBy(): StrField = fields.field(DefinedBy)
+  def declares: Seq[DomainElement]     = fields.field(Declares)
+  def definedBy(): StrField            = fields.field(DefinedBy)
 
   override def componentId: String = ""
 
@@ -127,12 +136,12 @@ case class DialectInstancePatch(fields: Fields, annotations: Annotations)
 
   override def meta: Obj = DialectInstancePatchModel
 
-  def references: Seq[BaseUnit] = fields.field(References)
+  def references: Seq[BaseUnit]        = fields.field(References)
   def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
-  def declares: Seq[DomainElement] = fields.field(Declares)
-  def definedBy(): StrField = fields.field(DefinedBy)
-  def extendsModel: StrField = fields.field(DialectInstancePatchModel.Extends)
-  override def encodes: DomainElement = fields.field(Encodes)
+  def declares: Seq[DomainElement]     = fields.field(Declares)
+  def definedBy(): StrField            = fields.field(DefinedBy)
+  def extendsModel: StrField           = fields.field(DialectInstancePatchModel.Extends)
+  override def encodes: DomainElement  = fields.field(Encodes)
 
   override def componentId: String = ""
 

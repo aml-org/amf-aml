@@ -13,7 +13,6 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
   override def collect(parsedDoc: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
     parsedDoc match {
       case parsed: SyamlParsedDocument =>
-
         for (comment <- parsed.comment)
           if (referencesDialect(comment))
             collector += (dialectDefinitionUrl(comment), SchemaReference, parsed.document.node)
@@ -34,7 +33,8 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
       val si  = msk.indexOf("<")
       val se  = msk.lastIndexOf(">")
       msk.substring(si + 1, se)
-    } else
+    }
+    else
       ""
   }
 
@@ -60,7 +60,8 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
       val si  = msk.indexOf("<")
       val se  = msk.lastIndexOf(">")
       si > 0 && se > si
-    } else
+    }
+    else
       false
   }
 

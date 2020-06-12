@@ -30,14 +30,17 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   def objectProperty(f: Field): Option[DialectDomainElement] =
     fields.getValueAsOption(f).collect({ case Value(d: DialectDomainElement, _) => d })
 
-  def literalProperty(f: Field): Option[Any] = fields.getValueAsOption(f).collect({ case Value(v:AmfScalar, _) => v.value })
+  def literalProperty(f: Field): Option[Any] =
+    fields.getValueAsOption(f).collect({ case Value(v: AmfScalar, _) => v.value })
 
   def literalProperties(f: Field): Seq[Any] =
     fields
       .getValueAsOption(f)
-      .collect({ case Value(v:AmfArray, _) =>
-        v.values.collect({case s:AmfScalar => s.value})
-      }).getOrElse(Nil)
+      .collect({
+        case Value(v: AmfArray, _) =>
+          v.values.collect({ case s: AmfScalar => s.value })
+      })
+      .getOrElse(Nil)
 
   def fieldsToProperties: Iterable[(PropertyMapping, FieldEntry)] =
     fields
@@ -85,7 +88,8 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     if (isLink)
       linkTarget.map(_.id.split("#").last.split("/").last).getOrElse {
         throw new Exception(s"Cannot produce local reference without linked element at elem $id")
-      } else id.split("#").last.split("/").last
+      }
+    else id.split("#").last.split("/").last
   }
 
   def includeName: String = {
@@ -93,9 +97,9 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       linkLabel
         .option()
         .getOrElse(
-          linkTarget
-            .map(_.id.split("#").head)
-            .getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id")))
+            linkTarget
+              .map(_.id.split("#").head)
+              .getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id")))
     else
       throw new Exception(s"Cannot produce include reference without linked element at elem $id")
   }
@@ -129,7 +133,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       value.toFutureRef {
         case resolvedDialectDomainElement: DialectDomainElement =>
           val f = property.toField
-            set(
+          set(
               f,
               resolveUnreferencedLink(value.refName,
                                       value.annotations,
@@ -137,11 +141,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
                                       value.supportsRecursion.option().getOrElse(false))
                 .withId(value.id),
               Annotations(node)
-            )
+          )
         case resolved =>
           throw new Exception(s"Cannot resolve reference with not dialect domain element value ${resolved.id}")
       }
-    } else {
+    }
+    else {
       val f = property.toField
       set(f, value, Annotations(node))
     }
@@ -155,8 +160,8 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       case Nil if !fields.exists(f) => set(f, AmfArray(Nil), Annotations(node))
       case _ =>
         val (unresolved, normal) = value.partition({
-          case l:Linkable if l.isUnresolved => true
-          case _ => false
+          case l: Linkable if l.isUnresolved => true
+          case _                             => false
         })
         set(f, AmfArray(normal), Annotations(node))
         unresolved.foreach {
@@ -177,37 +182,37 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   }
 
   def setProperty(property: PropertyMapping, value: String, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
+    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
   def setProperty(property: PropertyMapping, value: Int, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
+    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
   def setProperty(property: PropertyMapping, value: SimpleDateTime, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
+    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
   def setProperty(property: PropertyMapping, value: Boolean, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
+    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
   def setProperty(property: PropertyMapping, value: Float, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
+    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
   def setProperty(property: PropertyMapping, value: Double, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value,Annotations(entry.value)), Annotations(entry))
+    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
   def setProperty(property: PropertyMapping, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(entry.value,Annotations(entry.value)), Annotations(entry))
+    set(property.toField, AmfScalar(entry.value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
@@ -219,7 +224,8 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   override def meta: DialectDomainElementModel =
     if (instanceTypes.isEmpty) {
       DialectDomainElementModel()
-    } else {
+    }
+    else {
       new DialectDomainElementModel(instanceTypes.distinct,
                                     definedBy.propertiesMapping().map(_.toField),
                                     Some(definedBy))
