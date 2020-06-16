@@ -112,7 +112,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,0)-(10,35)]"
+                    "@value": "[(2,0)-(11,0)]"
                   }
                 ]
               },
@@ -151,7 +151,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(10,0)-(10,35)]"
+                    "@value": "[(10,0)-(11,0)]"
                   }
                 ]
               },
@@ -238,7 +238,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(2,0)-(10,35)]"
+                "@value": "[(2,0)-(11,0)]"
               }
             ]
           }

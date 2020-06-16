@@ -162,7 +162,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(21,6)-(23,0)]"
+                            "@value": "[(21,6)-(22,0)]"
                           }
                         ]
                       }
@@ -187,7 +187,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(18,2)-(23,0)]"
+                        "@value": "[(18,2)-(22,0)]"
                       }
                     ]
                   },
@@ -200,7 +200,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(19,4)-(23,0)]"
+                        "@value": "[(19,4)-(22,0)]"
                       }
                     ]
                   }
@@ -225,7 +225,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(18,0)-(23,0)]"
+                    "@value": "[(18,0)-(22,0)]"
                   }
                 ]
               },
@@ -238,7 +238,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(18,2)-(23,0)]"
+                    "@value": "[(18,2)-(22,0)]"
                   }
                 ]
               }
@@ -319,7 +319,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(17,0)-(23,0)]"
+                "@value": "[(17,0)-(22,0)]"
               }
             ]
           },
@@ -332,7 +332,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(2,0)-(25,0)]"
+                "@value": "[(2,0)-(24,0)]"
               }
             ]
           }
