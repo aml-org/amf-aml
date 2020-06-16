@@ -146,12 +146,12 @@ object Tests {
   def checkDiff(a: AsyncFile, e: AsyncFile, encoding: String = Utf8): Future[Assertion] = {
     a.read(encoding).zip(e.read(encoding)).map {
       case (actual, expected) =>
-        val diffs = Diff.ignoreAllSpace.diff(actual.toString, expected.toString)
-        if (diffs.nonEmpty) {
+//        val diffs = Diff.ignoreAllSpace.diff(actual.toString, expected.toString)
+        if (true) {
           if (goldenOverride) {
             a.read(encoding).map(content => e.write(content.toString, encoding))
           } else {
-            fail(s"\ndiff -y -W 150 $a $e \n\n${makeString(diffs)}")
+            fail()
           }
         }
         succeed
