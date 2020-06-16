@@ -2,7 +2,7 @@ package amf.client.model.domain
 
 import amf.client.convert.VocabulariesClientConverter._
 import amf.core.model.BoolField
-import amf.core.model.domain.AmfArray
+import amf.core.model.domain.{AmfArray, AmfObject}
 import amf.core.parser.Value
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement => InternalDialectDomainElement}
@@ -68,6 +68,28 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
         _internal.fields.getValueAsOption(mapping) match {
           case Some(res: Seq[_]) => res
           case Some(value)       => Seq(value)
+          case None =>
+            _internal.fields.getValueAsOption(mapping).map(Seq(_)).getOrElse(Nil)
+        }
+      case _ =>
+        Nil
+    }
+    res.asClient
+  }
+
+  def getScalarValueByPropertyUri(propertyId: String): ClientList[Any] = {
+    val expanded = Namespace.expand(propertyId).iri()
+    val res: Seq[Any] = _internal.findPropertyMappingByTermPropertyId(expanded).map(_.toField) match {
+      case Some(mapping) =>
+        _internal.fields.getValueAsOption(mapping) match {
+          case Some(value)       =>  value.value match {
+            case amfScalar: amf.core.model.domain.AmfScalar =>
+              Seq(amfScalar.value)
+            case amfArray: amf.core.model.domain.AmfArray =>
+              amfArray.scalars.map(_.value)
+            case _: AmfObject =>
+              Nil
+          }
           case None =>
             _internal.fields.getValueAsOption(mapping).map(Seq(_)).getOrElse(Nil)
         }
