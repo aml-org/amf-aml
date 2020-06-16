@@ -233,7 +233,9 @@ class DialectContext(private val wrapped: ParserContext, private val ds: Option[
     val qname = QName(key)
     if (qname.isQualified) {
       recursiveDeclarations.get(qname.qualification) match {
-        case Some(u) => Some(u.id + "#/declarations/" + qname.name)
+        case Some(recursiveUnit) =>
+          val unitId = recursiveUnit.id.stripSuffix(recursiveUnit.componentId)
+          Some(unitId + "#/declarations/" + qname.name)
         case _       => None
       }
     }

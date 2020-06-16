@@ -850,7 +850,7 @@
         ],
         "http://a.ml/vocabularies/document#references": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example23b.raml",
+            "@id": "file://shared/src/test/resources/vocabularies2/dialects/example23b.raml/recursive",
             "@type": [
               "http://a.ml/vocabularies/document#Fragment",
               "http://a.ml/vocabularies/document#Unit"
