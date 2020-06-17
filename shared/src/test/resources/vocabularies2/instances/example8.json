@@ -91,7 +91,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(3,0)-(3,28)]"
+                        "@value": "[(3,0)-(4,0)]"
                       }
                     ]
                   },
@@ -129,7 +129,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,0)-(3,28)]"
+                    "@value": "[(2,0)-(4,0)]"
                   }
                 ]
               },
@@ -142,7 +142,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,2)-(3,28)]"
+                    "@value": "[(2,2)-(4,0)]"
                   }
                 ]
               }
@@ -177,7 +177,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(2,0)-(3,28)]"
+                "@value": "[(2,0)-(4,0)]"
               }
             ]
           }
@@ -237,7 +237,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(3,0)-(3,6)]"
+                        "@value": "[(3,0)-(4,0)]"
                       }
                     ]
                   },
@@ -263,7 +263,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(2,0)-(3,6)]"
+                        "@value": "[(2,0)-(4,0)]"
                       }
                     ]
                   }
@@ -298,7 +298,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,0)-(3,6)]"
+                    "@value": "[(2,0)-(4,0)]"
                   }
                 ]
               }
