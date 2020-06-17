@@ -22,6 +22,8 @@ class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: Diale
 
     parseEncodedFragment(dialectInstanceFragment) match {
       case Some(dialectDomainElement) =>
+        val defaultId = encodedElementDefaultId(dialectInstanceFragment)
+        dialectDomainElement.withId(defaultId)
         // registering JSON pointer
         ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
 
