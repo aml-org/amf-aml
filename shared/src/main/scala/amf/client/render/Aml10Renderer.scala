@@ -2,7 +2,7 @@ package amf.client.render
 
 import amf.client.environment.Environment
 import amf.core.registries.AMFPluginsRegistry
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.plugin.AMLPlugin
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

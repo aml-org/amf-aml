@@ -4,11 +4,10 @@ import amf.client.model.document._
 import amf.client.model.domain._
 import amf.core.metamodel.Obj
 import amf.core.remote.Platform
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
-
 import amf.plugins.document.vocabularies.model.{document, domain}
+import amf.plugins.document.vocabularies.plugin.AMLPlugin
 
 object VocabulariesRegister {
 
