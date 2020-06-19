@@ -10,7 +10,7 @@ import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.{AMFCompiler, AMFSerializer, CompilerContextBuilder}
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.plugin.AMLPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.{Assertion, AsyncFunSuite}
 

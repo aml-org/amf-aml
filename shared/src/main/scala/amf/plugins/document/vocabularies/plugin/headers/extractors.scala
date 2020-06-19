@@ -3,9 +3,9 @@ package amf.plugins.document.vocabularies.plugin.headers
 import amf.core.Root
 import amf.core.parser.SyamlParsedDocument
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.document.vocabularies.plugin.AMLPlugin
 import org.yaml.model.{YComment, YDocument, YMap}
 import amf.core.parser._
+import amf.plugins.document.vocabularies.AMLPlugin
 
 trait RamlHeaderExtractor {
   def comment(root: Root): Option[String]            = root.parsed.comment

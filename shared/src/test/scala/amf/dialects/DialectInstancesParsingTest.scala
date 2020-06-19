@@ -4,7 +4,7 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.remote._
-import amf.plugins.document.vocabularies.plugin.AMLPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}

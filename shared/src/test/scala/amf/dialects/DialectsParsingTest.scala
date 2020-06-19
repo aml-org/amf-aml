@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.core.remote._
-import amf.plugins.document.vocabularies.plugin.AMLPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 
 import scala.concurrent.ExecutionContext
 
