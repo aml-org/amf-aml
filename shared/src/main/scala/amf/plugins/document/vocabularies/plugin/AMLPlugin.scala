@@ -1,4 +1,4 @@
-package amf.plugins.document.vocabularies
+package amf.plugins.document.vocabularies.plugin
 
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
@@ -19,7 +19,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
 import amf.internal.environment.Environment
-import amf.plugins.document.vocabularies.AMLPlugin.{dialectHeaderDirective, registry}
+import amf.plugins.document.vocabularies.DialectsRegistry
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
@@ -29,99 +29,19 @@ import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
-import amf.plugins.document.vocabularies.parser.instances.{DialectInstanceContext, DialectInstanceFragmentParser, DialectInstanceLibraryParser, DialectInstanceParser, DialectInstancePatchParser}
+import amf.plugins.document.vocabularies.parser.instances._
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
+import amf.plugins.document.vocabularies.plugin.headers._
 import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.{ProfileName, RamlProfile}
-import org.mulesoft.common.core._
 import org.yaml.model._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait RamlHeaderExtractor {
-  def comment(root: Root): Option[String]            = root.parsed.comment
-  def comment(document: YDocument): Option[YComment] = document.children.collectFirst({ case c: YComment => c })
-}
+object AMLPlugin extends AMLPlugin
 
-trait JsonHeaderExtractor {
-  def dialect(root: Root): Option[String] = {
-    root.parsed match {
-      case parsedInput: SyamlParsedDocument => dialectForDoc(parsedInput.document)
-      case _                                => None
-    }
-  }
-
-  private def dialectForDoc(document: YDocument): Option[String] = {
-    document.node
-      .toOption[YMap]
-      .map(_.entries)
-      .getOrElse(Nil)
-      .collectFirst({ case e if e.key.asScalar.exists(_.text == "$dialect") => e })
-      .flatMap(e => e.value.asScalar.map(_.text))
-  }
-}
-
-trait KeyPropertyHeaderExtractor {
-  def dialectByKeyProperty(root: YDocument): Option[Dialect] =
-    registry
-      .allDialects()
-      .find(d => Option(d.documents()).exists(_.keyProperty().value()) && containsVersion(root, d))
-
-  def dialectInKey(root: Root): Option[Dialect] =
-    root.parsed match {
-      case parsedInput: SyamlParsedDocument => dialectByKeyProperty(parsedInput.document)
-      case _                                => None
-    }
-
-  private def containsVersion(document: YDocument, d: Dialect): Boolean =
-    document.node
-      .toOption[YMap]
-      .map(_.entries)
-      .getOrElse(Nil)
-      .collectFirst({ case e if e.key.asScalar.exists(scalar => d.name().is(scalar.text)) => e })
-      .exists(e => { e.value.asScalar.exists(_.text == d.version().value()) })
-}
-
-protected object ExtensionHeader {
-
-  val VocabularyHeader = "%Vocabulary1.0"
-
-  val DialectHeader = "%Dialect1.0"
-
-  val DialectLibraryHeader = "%Library/Dialect1.0"
-
-  val DialectFragmentHeader = "%NodeMapping/Dialect1.0"
-}
-
-object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor with KeyPropertyHeaderExtractor {
-  def apply(root: Root): Boolean = {
-    val text = dialectHeaderDirective(root)
-
-    if (isExternal(text)) true
-    else {
-      val header = text.map(h => h.split("\\|").head)
-
-      header match {
-        case Some(ExtensionHeader.DialectHeader) | Some(ExtensionHeader.DialectFragmentHeader) | Some(
-                ExtensionHeader.DialectLibraryHeader) | Some(ExtensionHeader.VocabularyHeader) =>
-          true
-        case Some(other) => registry.findDialectForHeader(other).isDefined
-        case _           => dialectInKey(root).isDefined
-      }
-    }
-  }
-
-  private def isExternal(header: Option[String]) = header.exists(h => h.endsWith(">") && h.contains("|<"))
-}
-
-object ReferenceStyles {
-  val RAML             = "RamlStyle"
-  val JSONSCHEMA       = "JsonSchemaStyle"
-  val all: Seq[String] = Seq(RAML, JSONSCHEMA)
-}
-
-object AMLPlugin
+trait AMLPlugin
     extends AMFDocumentPlugin
     with RamlHeaderExtractor
     with JsonHeaderExtractor
@@ -209,7 +129,7 @@ object AMLPlugin
                      platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
 
-    val header = dialectHeaderDirective(document)
+    val header = DialectHeader.dialectHeaderDirective(document)
 
     header match {
       case Some(ExtensionHeader.VocabularyHeader) =>
@@ -222,11 +142,6 @@ object AMLPlugin
         parseAndRegisterDialect(document, cleanDialectContext(parentContext, document))
       case _ => parseDialectInstance(document, header, parentContext)
     }
-  }
-
-  /** Fetch header or dialect directive. */
-  def dialectHeaderDirective(document: Root): Option[String] = {
-    comment(document).orElse(dialect(document).map(metaText => s"%$metaText")).map(_.stripSpaces)
   }
 
   private def parseDialectInstance(root: Root, header: Option[String], parentContext: ParserContext) = {

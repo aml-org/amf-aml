@@ -8,27 +8,17 @@ import amf.core.metamodel.Type.Str
 import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.{AmfScalar, Annotation, DomainElement}
-import amf.core.parser.{
-  Annotations,
-  BaseSpecParser,
-  EmptyFutureDeclarations,
-  FutureDeclarations,
-  ParsedReference,
-  ParserContext,
-  Reference,
-  SearchScope,
-  _
-}
+import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
+import amf.plugins.document.vocabularies.plugin.AMLPlugin
 import amf.validation.DialectValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
 import org.mulesoft.common.core._
 import org.mulesoft.common.time.SimpleDateTime

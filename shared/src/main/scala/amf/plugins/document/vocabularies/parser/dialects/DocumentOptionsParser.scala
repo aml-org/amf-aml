@@ -7,8 +7,8 @@ import amf.plugins.document.vocabularies.metamodel.domain.DocumentsModelModel
 import amf.plugins.document.vocabularies.model.domain.DocumentsModel
 import amf.validation.DialectValidations.DialectError
 import DialectAstOps._
-import amf.plugins.document.vocabularies.ReferenceStyles
 import amf.plugins.document.vocabularies.metamodel.domain
+import amf.plugins.document.vocabularies.plugin.ReferenceStyles
 case class DocumentOptionsParser(into: DocumentsModel)(override implicit val ctx: DialectContext)
     extends DialectEntryParser {
 

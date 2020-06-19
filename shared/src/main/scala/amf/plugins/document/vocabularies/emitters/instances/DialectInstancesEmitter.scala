@@ -10,12 +10,12 @@ import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import amf.core.utils._
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
+import amf.plugins.document.vocabularies.plugin.AMLPlugin
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
 import org.yaml.model.{YDocument, YNode}
