@@ -242,23 +242,23 @@ trait DialectsParsingTest extends DialectTests {
   }
 
   test("generate 20 test - without version") {
-    val preRegistry = AMLPlugin.registry.allDialects().size
+    val preRegistry = AMLPlugin().registry.allDialects().size
     for {
       b <- parseAndRegisterDialect(s"file://$basePath/invalid/example20-no-version.raml", platform, VocabularyYamlHint)
     } yield {
-      assert(AMLPlugin.registry.allDialects().size == preRegistry)
-      assert(AMLPlugin.registry.dialectById(b.id).isEmpty)
+      assert(AMLPlugin().registry.allDialects().size == preRegistry)
+      assert(AMLPlugin().registry.dialectById(b.id).isEmpty)
     }
   }
 
   test("generate 21 test - without name") {
 
-    val preRegistry = AMLPlugin.registry.allDialects().size
+    val preRegistry = AMLPlugin().registry.allDialects().size
     for {
       b <- parseAndRegisterDialect(s"file://$basePath/invalid/example21-no-name.raml", platform, VocabularyYamlHint)
     } yield {
-      assert(AMLPlugin.registry.allDialects().size == preRegistry)
-      assert(AMLPlugin.registry.dialectById(b.id).isEmpty)
+      assert(AMLPlugin().registry.allDialects().size == preRegistry)
+      assert(AMLPlugin().registry.dialectById(b.id).isEmpty)
     }
   }
 }

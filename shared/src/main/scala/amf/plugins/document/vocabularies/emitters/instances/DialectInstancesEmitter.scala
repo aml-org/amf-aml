@@ -84,7 +84,7 @@ trait DialectEmitterHelper {
   }
 
   def findNodeInRegistry(nodeMappingId: String): Option[(Dialect, NodeMappable)] =
-    AMLPlugin.registry.findNode(nodeMappingId)
+    AMLPlugin().registry.findNode(nodeMappingId)
 }
 
 case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases: Map[String, (String, String)])
