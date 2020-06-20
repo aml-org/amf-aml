@@ -38,7 +38,7 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
     for {
       _         <- init()
       dialect   <- new AMFCompiler(context, None,Some(Aml.name)).build()
-      _         <- Future { AMLPlugin.resolve(dialect, UnhandledErrorHandler) }
+      _         <- Future { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
       res       <- cycle(source, golden, hint, target, useAmfJsonldSerialization = useAmfJsonldSerialization, directory = directory)
     } yield {
       res
@@ -52,7 +52,7 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
     for {
       _         <- init()
       dialect   <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build(), None,Some(Aml.name)).build()
-      _         <- Future { AMLPlugin.resolve(dialect, UnhandledErrorHandler) }
+      _         <- Future { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
       b         <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$source", platform, DefaultParserErrorHandler.withRun()).build(),None,Some(hint.vendor.name)).build()
     } yield {
       b
@@ -106,7 +106,7 @@ trait DialectTests extends AsyncFunSuite with FileAssertionTest{
 
 abstract class DialectInstanceResolutionCycleTests extends DialectTests {
   override def transform(unit: BaseUnit): BaseUnit =
-    AMLPlugin.resolve(unit, UnhandledErrorHandler)
+    AMLPlugin().resolve(unit, UnhandledErrorHandler)
 }
 
 class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests with PlatformSecrets {

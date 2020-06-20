@@ -11,7 +11,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument, _}
 import amf.core.rdf.RdfModel
-import amf.core.registries.AMFDomainEntityResolver
+import amf.core.registries.{AMFDomainEntityResolver, AMFPluginsRegistry}
 import amf.core.remote.{Aml, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.{RuntimeValidator, ValidationOptions}
@@ -38,7 +38,9 @@ import org.yaml.model._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object AMLPlugin extends AMLPlugin
+object AMLPlugin extends AMLPlugin{
+  def apply():AMLPlugin = AMFPluginsRegistry.documentPluginForID(this.ID).collect({case a:AMLPlugin => a}).getOrElse(this)
+}
 
 trait AMLPlugin
     extends AMFDocumentPlugin
@@ -146,7 +148,7 @@ trait AMLPlugin
   private def parseDialectInstance(root: Root, header: Option[String], parentContext: ParserContext) = {
     val h = header.map(h => h.split("\\|").head)
 
-    val dialect = h.flatMap(registry.findDialectForHeader).orElse(dialectInKey(root))
+    val dialect = h.flatMap(registry.findDialectForHeader).orElse(dialectInKey(root, registry))
 
     dialect match {
       case Some(d) => parseDocumentWithDialect(root, parentContext, d, h)
@@ -174,7 +176,7 @@ trait AMLPlugin
     * the document structure
     */
   override def canParse(document: Root): Boolean =
-    document.parsed.isInstanceOf[SyamlParsedDocument] && DialectHeader(document)
+    document.parsed.isInstanceOf[SyamlParsedDocument] && DialectHeader(document, registry)
 
   /**
     * Decides if this plugin can unparse the provided model document instance.

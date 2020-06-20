@@ -1,15 +1,16 @@
 package amf.plugins.document.vocabularies.plugin.headers
 
 import amf.core.Root
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.DialectsRegistry
 import org.mulesoft.common.core._
+
 object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor with KeyPropertyHeaderExtractor {
   /** Fetch header or dialect directive. */
   def dialectHeaderDirective(document: Root): Option[String] = {
     comment(document).orElse(dialect(document).map(metaText => s"%$metaText")).map(_.stripSpaces)
   }
 
-  def apply(root: Root): Boolean = {
+  def apply(root: Root, registry:DialectsRegistry): Boolean = {
     val text = dialectHeaderDirective(root)
 
     if (isExternal(text)) true
@@ -20,8 +21,8 @@ object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor with K
         case Some(ExtensionHeader.DialectHeader) | Some(ExtensionHeader.DialectFragmentHeader) | Some(
         ExtensionHeader.DialectLibraryHeader) | Some(ExtensionHeader.VocabularyHeader) =>
           true
-        case Some(other) => AMLPlugin.registry.findDialectForHeader(other).isDefined
-        case _           => dialectInKey(root).isDefined
+        case Some(other) => registry.findDialectForHeader(other).isDefined
+        case _           => dialectInKey(root, registry).isDefined
       }
     }
   }

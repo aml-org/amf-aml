@@ -1,11 +1,10 @@
 package amf.plugins.document.vocabularies.plugin.headers
 
 import amf.core.Root
-import amf.core.parser.SyamlParsedDocument
+import amf.core.parser.{SyamlParsedDocument, _}
+import amf.plugins.document.vocabularies.DialectsRegistry
 import amf.plugins.document.vocabularies.model.document.Dialect
 import org.yaml.model.{YComment, YDocument, YMap}
-import amf.core.parser._
-import amf.plugins.document.vocabularies.AMLPlugin
 
 trait RamlHeaderExtractor {
   def comment(root: Root): Option[String]            = root.parsed.comment
@@ -31,14 +30,14 @@ trait JsonHeaderExtractor {
 }
 
 trait KeyPropertyHeaderExtractor {
-  def dialectByKeyProperty(root: YDocument): Option[Dialect] =
-    AMLPlugin.registry
+  def dialectByKeyProperty(root: YDocument, registry: DialectsRegistry): Option[Dialect] =
+    registry
       .allDialects()
       .find(d => Option(d.documents()).exists(_.keyProperty().value()) && containsVersion(root, d))
 
-  def dialectInKey(root: Root): Option[Dialect] =
+  def dialectInKey(root: Root, registry:DialectsRegistry): Option[Dialect] =
     root.parsed match {
-      case parsedInput: SyamlParsedDocument => dialectByKeyProperty(parsedInput.document)
+      case parsedInput: SyamlParsedDocument => dialectByKeyProperty(parsedInput.document, registry)
       case _                                => None
     }
 
