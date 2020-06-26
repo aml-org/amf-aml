@@ -31,7 +31,10 @@ pipeline {
     }
     stage('Publish') {
       when {
-        branch 'master'
+        anyOf {
+          branch 'master'
+          branch '4.1.2-INTERNAL-custom-validations-SNAPSHOT'
+        }
       }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
