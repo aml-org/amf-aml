@@ -1,0 +1,2979 @@
+{
+  "@graph": [
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/schema-org",
+      "@type": [
+        "http://www.w3.org/2002/07/owl#Ontology",
+        "http://a.ml/vocabularies/meta#ExternalVocabulary",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#displayName": "schema-org",
+      "http://a.ml/vocabularies/meta#base": "http://schema.org/"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/shacl",
+      "@type": [
+        "http://www.w3.org/2002/07/owl#Ontology",
+        "http://a.ml/vocabularies/meta#ExternalVocabulary",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#displayName": "shacl",
+      "http://a.ml/vocabularies/meta#base": "http://www.w3.org/ns/shacl#"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/validation",
+      "@type": [
+        "http://www.w3.org/2002/07/owl#Ontology",
+        "http://a.ml/vocabularies/meta#ExternalVocabulary",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#displayName": "validation",
+      "http://a.ml/vocabularies/meta#base": "http://a.ml/vocabularies/amf-validation#"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DocumentsModel",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/meta#rootDocument": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root"
+      },
+      "http://a.ml/vocabularies/meta#fragments": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#library": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules"
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DocumentMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "Validation Profile Copy 1.0",
+      "http://a.ml/vocabularies/meta#encodedNode": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DocumentMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "ShapeValidation",
+      "http://a.ml/vocabularies/meta#encodedNode": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DocumentMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "FunctionValidation",
+      "http://a.ml/vocabularies/meta#encodedNode": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DocumentMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "Validation Profile Copy 1.0 / Library",
+      "http://a.ml/vocabularies/meta#declaredNode": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents#/source-map/lexical/element_3"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents#/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes",
+      "@type": [
+        "http://a.ml/vocabularies/meta#PublicNodeMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "shapes",
+      "http://a.ml/vocabularies/meta#mappedNode": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#PublicNodeMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "functions",
+      "http://a.ml/vocabularies/meta#mappedNode": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents#/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#fragments",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(173,4)-(177,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#rootDocument",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(182,2)-(183,24)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#library",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(177,2)-(182,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents#/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(172,0)-(183,24)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(182,7)-(183,24)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/root/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#encodedNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(183,4)-(183,24)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(174,23)-(174,42)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/ShapeValidation/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#encodedNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(173,4)-(177,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(175,26)-(175,48)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/fragments/FunctionValidation/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#encodedNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(173,4)-(177,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(177,2)-(182,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#declaredNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(178,4)-(182,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(179,6)-(179,12)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#mappedNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(179,14)-(179,33)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/shapes",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(179,6)-(180,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(180,6)-(180,15)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#mappedNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(180,17)-(180,39)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/documents/modules/declaration/functions",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(180,6)-(182,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml",
+      "http://a.ml/vocabularies/document#declares": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
+        }
+      ],
+      "@type": [
+        "http://a.ml/vocabularies/meta#Dialect",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/core#name": "Validation Profile Copy",
+      "http://a.ml/vocabularies/core#version": "1.0",
+      "http://a.ml/vocabularies/meta#externals": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/schema-org"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/shacl"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/externals/validation"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#documents": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml/documents"
+      },
+      "http://a.ml/vocabularies/document#location": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml",
+      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#usage": "Dialect to describe validations over RAML documents",
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodeMapping",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#targetClass": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#PropertyShape"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "propertyConstraintNode",
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodeMapping",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#targetClass": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#Profile"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "profileNode",
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodeMapping",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#targetClass": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#FunctionValidation"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "functionValidationNode",
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodeMapping",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#targetClass": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#JSConstraint"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "functionConstraintNode",
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodeMapping",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#targetClass": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#RamlPrefix"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "ramlPrefixNode",
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodeMapping",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#targetClass": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ShapeValidation"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "shapeValidationNode",
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodeMapping",
+        "http://www.w3.org/ns/shacl#Shape",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#targetClass": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#QueryValidation"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "queryValidationNode",
+      "http://www.w3.org/ns/shacl#property": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map/lexical/element_4"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map/lexical/element_3"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#minExclusive"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "minExclusive",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#message"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "message",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#maxInclusive"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "maxInclusive",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#maxCount"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "maxCount",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#pattern"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "pattern",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#minCount"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "minCount",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#integer"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#minInclusive"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "minInclusive",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ramlPropertyId"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "name",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#minCount": 1,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#maxExclusive"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "maxExclusive",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#datatype"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "datatype",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#in"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "in",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#allowMultiple": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#setSeverityInfo"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "info",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#allowMultiple": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://schema.org/description"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "description",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#extendsProfile"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "extends",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#setSeverityWarning"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "warning",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#allowMultiple": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ramlPrefixes"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "prefixes",
+      "http://www.w3.org/ns/shacl#node": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/list"
+      },
+      "http://a.ml/vocabularies/meta#mapProperty": "prefix",
+      "http://a.ml/vocabularies/meta#mapTermProperty": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ramlPrefixName"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#disableValidation"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "disabled",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#allowMultiple": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://schema.org/name"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "profile",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#minCount": 1,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#setSeverityViolation"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "violation",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#allowMultiple": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#validations"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "validations",
+      "http://www.w3.org/ns/shacl#node": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/list"
+      },
+      "http://a.ml/vocabularies/meta#mapProperty": "name",
+      "http://a.ml/vocabularies/meta#mapTermProperty": [
+        {
+          "@id": "http://schema.org/name"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://schema.org/name"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "name",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#js"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "functionConstraint",
+      "http://www.w3.org/ns/shacl#node": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/list"
+      },
+      "http://www.w3.org/ns/shacl#minCount": 1,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#message"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "message",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ramlClassId"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "targetClass",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#allowMultiple": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#jsFunctionName"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "functionName",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#jsCode"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "code",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#jsLibrary"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "libraries",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#allowMultiple": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#message"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "message",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ramlPrefixUri"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "uri",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ramlPrefixName"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "prefix",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://schema.org/name"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "name",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#message"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "message",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ramlClassId"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "targetClass",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#allowMultiple": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#property"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "propertyConstraints",
+      "http://www.w3.org/ns/shacl#node": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/list"
+      },
+      "http://a.ml/vocabularies/meta#mapProperty": "name",
+      "http://a.ml/vocabularies/meta#mapTermProperty": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ramlPropertyId"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#minCount": 1,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#message"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "message",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ramlClassId"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "targetClass",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/meta#allowMultiple": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#targetQuery"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "targetQuery",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://www.w3.org/ns/shacl#minCount": 1,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://schema.org/name"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "name",
+      "http://www.w3.org/ns/shacl#datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodePropertyMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://www.w3.org/ns/shacl#path": [
+        {
+          "@id": "http://www.w3.org/ns/shacl#property"
+        }
+      ],
+      "http://a.ml/vocabularies/core#name": "propertyConstraints",
+      "http://www.w3.org/ns/shacl#node": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/list"
+      },
+      "http://a.ml/vocabularies/meta#mapProperty": "name",
+      "http://a.ml/vocabularies/meta#mapTermProperty": [
+        {
+          "@id": "http://a.ml/vocabularies/amf-validation#ramlPropertyId"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map/lexical/element_4",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#documents",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(171,0)-(183,24)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(183,24)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#usage",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(6,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#version",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(5,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(4,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(28,2)-(28,24)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(30,4)-(66,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(29,0)-(66,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/list",
+      "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+      "http://www.w3.org/2000/01/rdf-schema#_1": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode"
+      }
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/list",
+      "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+      "http://www.w3.org/2000/01/rdf-schema#_1": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#_2": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode"
+      },
+      "http://www.w3.org/2000/01/rdf-schema#_3": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode"
+      }
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(133,2)-(133,13)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(135,4)-(171,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(134,0)-(171,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/list",
+      "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+      "http://www.w3.org/2000/01/rdf-schema#_1": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode"
+      }
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(66,2)-(66,24)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(68,4)-(83,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(67,0)-(83,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(11,2)-(11,24)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(13,4)-(28,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(12,0)-(28,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(123,2)-(123,16)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(125,4)-(133,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(124,0)-(133,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/list",
+      "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+      "http://www.w3.org/2000/01/rdf-schema#_1": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode"
+      }
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(83,2)-(83,21)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(85,4)-(101,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(84,0)-(101,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/list",
+      "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
+      "http://www.w3.org/2000/01/rdf-schema#_1": {
+        "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode"
+      }
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(101,2)-(101,21)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(103,4)-(123,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(102,0)-(123,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(48,0)-(50,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minExclusive/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(47,6)-(47,18)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(32,0)-(34,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/message/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(31,6)-(31,13)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(57,0)-(59,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxInclusive/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(56,6)-(56,18)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(42,0)-(44,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxCount/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(41,6)-(41,14)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(39,0)-(41,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/pattern/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(38,6)-(38,13)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(45,0)-(47,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minCount/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(44,6)-(44,14)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(54,0)-(56,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/minInclusive/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(53,6)-(53,18)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(34,6)-(34,10)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(36,8)-(37,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(35,0)-(38,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(51,0)-(53,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/maxExclusive/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(50,6)-(50,18)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(60,0)-(62,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/datatype/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(59,6)-(59,14)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(62,6)-(62,8)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#allowMultiple",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(64,8)-(65,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/propertyConstraintNode/property/in",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(63,0)-(66,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(155,6)-(155,10)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#allowMultiple",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(158,8)-(159,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/info",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(156,0)-(159,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(146,0)-(148,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/description/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(145,6)-(145,17)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(149,0)-(151,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/extends/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(148,6)-(148,13)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(159,6)-(159,13)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#allowMultiple",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(162,8)-(163,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/warning",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(160,0)-(163,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(137,0)-(141,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/prefixes/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(136,6)-(136,14)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(163,6)-(163,14)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#allowMultiple",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(166,8)-(167,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/disabled",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(164,0)-(167,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(141,6)-(141,13)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(143,8)-(144,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/profile",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(142,0)-(145,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(151,6)-(151,15)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#allowMultiple",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(154,8)-(155,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/violation",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(152,0)-(155,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(168,0)-(171,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/profileNode/property/validations/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(167,6)-(167,17)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(70,0)-(72,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/name/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(69,6)-(69,10)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(79,6)-(79,24)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(80,8)-(81,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/functionConstraint",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(80,0)-(83,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(73,0)-(75,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/message/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(72,6)-(72,13)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(75,6)-(75,17)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#allowMultiple",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(78,8)-(79,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionValidationNode/property/targetClass",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(76,0)-(79,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(26,0)-(28,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/functionName/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(25,6)-(25,18)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(18,0)-(21,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/code/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(17,6)-(17,10)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(21,6)-(21,15)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#allowMultiple",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(24,8)-(25,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/libraries",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(22,0)-(25,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(15,0)-(17,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/functionConstraintNode/property/message/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(14,6)-(14,13)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(130,0)-(133,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/uri/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(129,6)-(129,9)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(127,0)-(129,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/ramlPrefixNode/property/prefix/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(126,6)-(126,12)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(87,0)-(89,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/name/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(86,6)-(86,10)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(90,0)-(92,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/message/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(89,6)-(89,13)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(92,6)-(92,17)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#allowMultiple",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(95,8)-(96,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/targetClass",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(93,0)-(96,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(96,6)-(96,25)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(97,8)-(98,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/shapeValidationNode/property/propertyConstraints",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(97,0)-(101,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(108,0)-(110,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/message/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(107,6)-(107,13)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(110,6)-(110,17)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#allowMultiple",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(113,8)-(114,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetClass",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(111,0)-(114,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(118,6)-(118,17)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#minCount",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(119,8)-(120,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/targetQuery",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(119,0)-(123,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(105,0)-(107,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/name/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(104,6)-(104,10)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(115,0)-(118,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/production/validation_dialect.raml#/declarations/queryValidationNode/property/propertyConstraints/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(114,6)-(114,25)]"
+    }
+  ]
+}
