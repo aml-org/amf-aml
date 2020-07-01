@@ -11,234 +11,234 @@ trait DialectsParsingTest extends DialectTests {
 
   val basePath = "shared/src/test/resources/vocabularies2/dialects/"
 
-  test("parse 1 test") {
-    init().flatMap(_ => cycle("example1.raml", "example1.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 1 test", "example1.%s") { config =>
+    init().flatMap(_ => cycle("example1.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 1b test") {
-    init().flatMap(_ => cycle("example1b.raml", "example1b.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 1b test", "example1b.%s") { config =>
+    init().flatMap(_ => cycle("example1b.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 2 test") {
-    init().flatMap(_ => cycle("example2.raml", "example2.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 2 test", "example2.%s") { config =>
+    init().flatMap(_ => cycle("example2.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 3 test") {
-    init().flatMap(_ => cycle("example3.raml", "example3.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 3 test", "example3.%s") { config =>
+    init().flatMap(_ => cycle("example3.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 4 test") {
-    init().flatMap(_ => cycle("example4.raml", "example4.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 4 test", "example4.%s") { config =>
+    init().flatMap(_ => cycle("example4.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 5 test") {
-    init().flatMap(_ => cycle("example5.raml", "example5.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 5 test", "example5.%s") { config =>
+    init().flatMap(_ => cycle("example5.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 6 test") {
-    init().flatMap(_ => cycle("example6.raml", "example6.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 6 test", "example6.%s") { config =>
+    init().flatMap(_ => cycle("example6.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 7 test") {
-    init().flatMap(_ => cycle("example7.raml", "example7.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 7 test", "example7.%s") { config =>
+    init().flatMap(_ => cycle("example7.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 8 test") {
-    init().flatMap(_ => cycle("example8.raml", "example8.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 8 test", "example8.%s") { config =>
+    init().flatMap(_ => cycle("example8.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 9 test") {
-    init().flatMap(_ => cycle("example9.raml", "example9.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 9 test", "example9.%s") { config =>
+    init().flatMap(_ => cycle("example9.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 10 test") {
-    init().flatMap(_ => cycle("example10.raml", "example10.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 10 test", "example10.%s") { config =>
+    init().flatMap(_ => cycle("example10.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 11 test") {
-    init().flatMap(_ => cycle("example11.raml", "example11.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 11 test", "example11.%s") { config =>
+    init().flatMap(_ => cycle("example11.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 12 test") {
-    init().flatMap(_ => cycle("example12.raml", "example12.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 12 test", "example12.%s") { config =>
+    init().flatMap(_ => cycle("example12.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 13 test") {
-    init().flatMap(_ => cycle("example13.raml", "example13.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 13 test", "example13.%s") { config =>
+    init().flatMap(_ => cycle("example13.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 14 test") {
-    init().flatMap(_ => cycle("example14.raml", "example14.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 14 test", "example14.%s") { config =>
+    init().flatMap(_ => cycle("example14.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 15 test") {
-    init().flatMap(_ => cycle("example15.raml", "example15.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 15 test", "example15.%s") { config =>
+    init().flatMap(_ => cycle("example15.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 16 test") {
-    init().flatMap(_ => cycle("example16.raml", "example16.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 16 test", "example16.%s") { config =>
+    init().flatMap(_ => cycle("example16.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 17 test") {
-    init().flatMap(_ => cycle("example17.raml", "example17.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 17 test", "example17.%s") { config =>
+    init().flatMap(_ => cycle("example17.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 18 test") {
-    init().flatMap(_ => cycle("example18.raml", "example18.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 18 test", "example18.%s") { config =>
+    init().flatMap(_ => cycle("example18.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 19 test") {
-    init().flatMap(_ => cycle("example19.raml", "example19.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 19 test", "example19.%s") { config =>
+    init().flatMap(_ => cycle("example19.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 20 test") {
-    init().flatMap(_ => cycle("example20.raml", "example20.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 20 test", "example20.%s") { config =>
+    init().flatMap(_ => cycle("example20.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 21 test") {
-    init().flatMap(_ => cycle("example21.raml", "example21.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 21 test", "example21.%s") { config =>
+    init().flatMap(_ => cycle("example21.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 22 test") {
-    init().flatMap(_ => cycle("example22.raml", "example22.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 22 test", "example22.%s") { config =>
+    init().flatMap(_ => cycle("example22.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 23a test") {
-    init().flatMap(_ => cycle("example23a.raml", "example23a.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 23a test", "example23a.%s") { config =>
+    init().flatMap(_ => cycle("example23a.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse 23b test") {
-    init().flatMap(_ => cycle("example23b.raml", "example23b.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 23b test", "example23b.%s") { config =>
+    init().flatMap(_ => cycle("example23b.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("parse mappings_lib test") {
-    init().flatMap(_ => cycle("mappings_lib.raml", "mappings_lib.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse mappings_lib test", "mappings_lib.%s") { config =>
+    init().flatMap(_ => cycle("mappings_lib.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("generate 1 test") {
-    init().flatMap(_ => cycle("example1.json", "example1.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 1 test", "example1.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example1.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 2 test") {
-    init().flatMap(_ => cycle("example2.json", "example2.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 2 test", "example2.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example2.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 3 test") {
-    init().flatMap(_ => cycle("example3.json", "example3.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 3 test", "example3.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example3.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 4 test") {
-    init().flatMap(_ => cycle("example4.json", "example4.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 4 test", "example4.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example4.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 5 test") {
-    init().flatMap(_ => cycle("example5.json", "example5.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 5 test", "example5.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example5.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 6 test") {
-    init().flatMap(_ => cycle("example6.json", "example6.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 6 test", "example6.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example6.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 7 test") {
-    init().flatMap(_ => cycle("example7.json", "example7.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 7 test", "example7.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example7.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 8 test") {
-    init().flatMap(_ => cycle("example8.json", "example8.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 8 test", "example8.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example8.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 9 test") {
-    init().flatMap(_ => cycle("example9.json", "example9.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 9 test", "example9.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example9.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 10 test") {
-    init().flatMap(_ => cycle("example10.json", "example10.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 10 test", "example10.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example10.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 11 test") {
-    init().flatMap(_ => cycle("example11.json", "example11.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 11 test", "example11.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example11.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 12 test") {
-    init().flatMap(_ => cycle("example12.json", "example12.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 12 test", "example12.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example12.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 13 test") {
-    init().flatMap(_ => cycle("example13.json", "example13.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 13 test", "example13.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example13.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 14 test") {
-    init().flatMap(_ => cycle("example14.json", "example14.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 14 test", "example14.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example14.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 15 test") {
-    init().flatMap(_ => cycle("example15.json", "example15.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 15 test", "example15.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example15.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 16 test") {
-    init().flatMap(_ => cycle("example16.json", "example16.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 16 test", "example16.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example16.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 17 test") {
-    init().flatMap(_ => cycle("example17.json", "example17.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 17 test", "example17.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example17.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 18 test") {
-    init().flatMap(_ => cycle("example18.json", "example18.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 18 test", "example18.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example18.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 19 test") {
-    init().flatMap(_ => cycle("example19.json", "example19.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 19 test", "example19.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example19.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 20 test") {
-    init().flatMap(_ => cycle("example20.json", "example20.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 20 test", "example20.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example20.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 21 test") {
-    init().flatMap(_ => cycle("example21.json", "example21.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 21 test", "example21.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example21.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 22 test") {
-    init().flatMap(_ => cycle("example22.json", "example22.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 22 test", "example22.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example22.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 23a test") {
-    init().flatMap(_ => cycle("example23a.json", "example23a.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 23a test", "example23a.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example23a.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate 23b test") {
-    init().flatMap(_ => cycle("example23b.json", "example23b.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 23b test", "example23b.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "example23b.raml", AmfJsonHint, target = Aml))
   }
 
-  test("no documents on dialect (raml -> json)") {
-    init().flatMap(_ => cycle("no-documents.raml", "no-documents.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("no documents on dialect (raml -> json)", "no-documents.%s") { config =>
+    init().flatMap(_ => cycle("no-documents.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("no documents on dialect (json -> raml)") {
-    init().flatMap(_ => cycle("no-documents.json", "no-documents.raml", AmfJsonHint, Aml))
+  multiSourceTest("no documents on dialect (json -> raml)", "no-documents.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "no-documents.raml", AmfJsonHint, target = Aml))
   }
 
-  test("generate mappings_lib test") {
-    init().flatMap(_ => cycle("mappings_lib.json", "mappings_lib.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate mappings_lib test", "mappings_lib.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "mappings_lib.raml", AmfJsonHint, target = Aml))
   }
 
   // Key Property tests
-  test("parse 19 test - with key property") {
-    init().flatMap(_ => cycle("keyproperty/example19-keyproperty.raml", "keyproperty/example19-keyproperty.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 19 test - with key property", "keyproperty/example19-keyproperty.%s") { config =>
+    init().flatMap(_ => cycle("keyproperty/example19-keyproperty.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("generate 19 test - with key property") {
-    init().flatMap(_ => cycle("keyproperty/example19-keyproperty.json", "keyproperty/example19-keyproperty.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 19 test - with key property", "keyproperty/example19-keyproperty.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "keyproperty/example19-keyproperty.raml", AmfJsonHint, target = Aml))
   }
 
   // Reference Style tests
-  test("parse 19 test - with reference style") {
-      init().flatMap(_ => cycle("referencestyle/example19-referencestyle.raml", "referencestyle/example19-referencestyle.json", VocabularyYamlHint, Amf))
+  multiGoldenTest("parse 19 test - with reference style", "referencestyle/example19-referencestyle.%s") { config =>
+      init().flatMap(_ => cycle("referencestyle/example19-referencestyle.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions)))
   }
 
-  test("generate 19 test - with reference style") {
-    init().flatMap(_ => cycle("referencestyle/example19-referencestyle.json", "referencestyle/example19-referencestyle.raml", AmfJsonHint, Aml))
+  multiSourceTest("generate 19 test - with reference style", "referencestyle/example19-referencestyle.%s") { config =>
+    init().flatMap(_ => cycle(config.source, "referencestyle/example19-referencestyle.raml", AmfJsonHint, target = Aml))
   }
 
   test("generate 20 test - without version") {
