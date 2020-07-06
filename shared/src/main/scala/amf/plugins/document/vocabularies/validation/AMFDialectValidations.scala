@@ -184,8 +184,10 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
     if (prop.literalRange().nonNull) {
       val dataRange = prop.literalRange().value()
       dataRange match {
+        case DataType.Any =>
+        // Ignore, AnyTypes ranges are not validated
 
-        case literal if literal.endsWith("number") || literal.endsWith("float") || literal.endsWith("double") =>
+        case DataType.Number | DataType.Float | DataType.Double =>
           val message = s"Property '${prop.name()}'  value must be of type ${DataType.Integer} or ${DataType.Float}"
           validations += new ValidationSpecification(
               name = validationId(node, prop.name().value(), "dialectRange"),
@@ -241,7 +243,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
                   ))
           )
 
-        case literal if literal.endsWith("link") =>
+        case DataType.Link =>
           val message = s"Property '${prop.name()}'  value must be of a link"
           validations += new ValidationSpecification(
               name = validationId(node, prop.name().value(), "dialectRange"),
