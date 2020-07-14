@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.core.validation.SeverityLevels._
 import amf.ProfileName
 import amf.core.validation.core.ValidationSpecification
 import amf.core.validation.core.ValidationSpecification.AML_VALIDATION
@@ -57,6 +58,11 @@ object DialectValidations extends Validations {
     "Invalid property for node"
   )
 
+  val ClosedShapeSpecificationWarning = validation(
+    "closed-shape-warning",
+    "Invalid property for node"
+  )
+
   val MissingPropertySpecification = validation(
     "mandatory-property-shape",
     "Missing mandatory property"
@@ -92,7 +98,9 @@ object DialectValidations extends Validations {
     "GUID scalar type declared without unique constraint"
   )
 
-  override val levels: Map[String, Map[ProfileName, String]] = Map()
+  override val levels: Map[String, Map[ProfileName, String]] = Map(
+    ClosedShapeSpecificationWarning.id -> all(WARNING)
+  )
 
   override val validations: List[ValidationSpecification] = List(
     ClosedShapeSpecification,
