@@ -4,6 +4,7 @@ import amf.core.parser.ParserContext
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.model.domain.{ClassTerm, PropertyTerm}
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
+import amf.validation.DialectValidations
 import org.yaml.model.YPart
 
 class VocabularyContext(private val wrapped: ParserContext, private val ds: Option[VocabularyDeclarations] = None)
@@ -19,14 +20,26 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
 
   var pendingLocal: Seq[(String, String, YPart, Boolean)] = Nil
 
+  private def isDuplicated(iri: String): Boolean = {
+    val isDuplicate = terms().exists(_.id == iri)
+    if (isDuplicate) {
+      eh.violation(DialectValidations.DuplicateTerm, iri, s"'$iri' term cannot be both a class term and property term")
+    }
+    isDuplicate
+  }
+
   def register(alias: String, classTerm: ClassTerm): Unit = {
-    pendingLocal = pendingLocal.filter(_._1 != classTerm.id)
-    declarations.classTerms += (alias -> classTerm)
+    if (!isDuplicated(classTerm.id)) {
+      pendingLocal = pendingLocal.filter(_._1 != classTerm.id)
+      declarations.classTerms += (alias -> classTerm)
+    }
   }
 
   def register(alias: String, propertyTerm: PropertyTerm): Unit = {
-    pendingLocal = pendingLocal.filter(_._1 != propertyTerm.id)
-    declarations.propertyTerms += (alias -> propertyTerm)
+    if (!isDuplicated(propertyTerm.id)) {
+      pendingLocal = pendingLocal.filter(_._1 != propertyTerm.id)
+      declarations.propertyTerms += (alias -> propertyTerm)
+    }
   }
 
   def resolvePropertyTermAlias(base: String,

@@ -98,6 +98,8 @@ object DialectValidations extends Validations {
     "GUID scalar type declared without unique constraint"
   )
 
+  val DuplicateTerm = validation("duplicate-term", "Vocabulary defines duplicate terms")
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ClosedShapeSpecificationWarning.id -> all(WARNING)
   )
@@ -116,6 +118,7 @@ object DialectValidations extends Validations {
     InvalidUnionType,
     InvalidDialectPatch,
     DialectError,
-    GuidRangeWithoutUnique
+    GuidRangeWithoutUnique,
+    DuplicateTerm
   )
 }
