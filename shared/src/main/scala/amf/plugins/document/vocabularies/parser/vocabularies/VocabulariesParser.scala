@@ -61,9 +61,9 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     ctx.pendingLocal.foreach {
       case (term, alias, location, isProperty) =>
         if (isProperty) {
-          ctx.missingTermWarning(term, vocabulary.id, location)
+          ctx.missingPropertyTermWarning(term, vocabulary.id, location)
         } else {
-          ctx.missingTermViolation(term, vocabulary.id, location)
+          ctx.missingClassTermWarning(term, vocabulary.id, location)
         }
     }
 
@@ -88,7 +88,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     classTerm.withName(classTermAlias)
 
     ctx.resolveClassTermAlias(vocabulary.base.value(), classTermAlias, classTermDeclaration.key, strictLocal = false) match {
-      case None     => ctx.missingTermViolation(classTermAlias, vocabulary.id, classTermDeclaration.key)
+      case None     => ctx.missingClassTermWarning(classTermAlias, vocabulary.id, classTermDeclaration.key)
       case Some(id) => classTerm.id = id
     }
 
@@ -123,7 +123,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
                 ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
                   case Some(v) => Some(v)
                   case None =>
-                    ctx.missingTermViolation(term, vocabulary.id, entry.value)
+                    ctx.missingPropertyTermWarning(term, classTerm.id, entry.value)
                     None
                 }
               }
@@ -150,7 +150,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
                 ctx.resolveClassTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
                   case Some(v) => Some(v)
                   case None =>
-                    ctx.missingTermViolation(term, vocabulary.id, entry.value)
+                    ctx.missingClassTermWarning(term, classTerm.id, entry.value)
                     None
                 }
               }
@@ -200,7 +200,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
                                  propertyTermAlias,
                                  propertyTermDeclaration.key,
                                  strictLocal = false) match {
-      case None     => ctx.missingTermViolation(propertyTermAlias, vocabulary.id, propertyTermDeclaration.key)
+      case None     => ctx.missingPropertyTermWarning(propertyTermAlias, vocabulary.id, propertyTermDeclaration.key)
       case Some(id) => propertyTerm.id = id
     }
 
@@ -234,7 +234,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
                 ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
                   case Some(classTermId) => Some(classTermId)
                   case None =>
-                    ctx.missingTermViolation(classAlias, vocabulary.id, entry.value)
+                    ctx.missingClassTermWarning(classAlias, propertyTerm.id, entry.value)
                     None
                 }
             }
@@ -261,7 +261,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
                 ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
                   case Some(v) => Some(v)
                   case None =>
-                    ctx.missingTermViolation(term, vocabulary.id, entry.value)
+                    ctx.missingPropertyTermWarning(term, propertyTerm.id, entry.value)
                     None
                 }
               }

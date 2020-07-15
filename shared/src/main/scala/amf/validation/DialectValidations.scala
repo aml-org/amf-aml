@@ -23,14 +23,14 @@ object DialectValidations extends Validations {
     "Missing vocabulary"
   )
 
-  val MissingTermSpecification = validation(
-    "missing-vocabulary-term",
-    "Missing vocabulary term"
+  val MissingClassTermSpecification = validation(
+    "missing-class-term",
+    "Missing class term"
   )
 
   val MissingPropertyTermSpecification = validation(
-    "missing-property-vocabulary-term",
-    "Missing property vocabulary term"
+    "missing-property-term",
+    "Missing property term"
   )
 
   val MissingFragmentSpecification = validation(
@@ -101,7 +101,9 @@ object DialectValidations extends Validations {
   val DuplicateTerm = validation("duplicate-term", "Vocabulary defines duplicate terms")
 
   override val levels: Map[String, Map[ProfileName, String]] = Map(
-    ClosedShapeSpecificationWarning.id -> all(WARNING)
+    ClosedShapeSpecificationWarning.id  -> all(WARNING),
+    MissingClassTermSpecification.id    -> all(WARNING),
+    MissingPropertyTermSpecification.id -> all(WARNING)
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -109,7 +111,8 @@ object DialectValidations extends Validations {
     DialectAmbiguousRangeSpecification,
     InconsistentPropertyRangeValueSpecification,
     MissingPropertyRangeSpecification,
-    MissingTermSpecification,
+    MissingClassTermSpecification,
+    MissingPropertyTermSpecification,
     DifferentTermsInMapKey,
     MissingFragmentSpecification,
     MissingPropertySpecification,
