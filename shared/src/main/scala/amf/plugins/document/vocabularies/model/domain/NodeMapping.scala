@@ -37,7 +37,7 @@ class NodeMapping(override val fields: Fields, override val annotations: Annotat
       .filter(_.unique().option().getOrElse(false))
       .sortBy(_.nodePropertyMapping().value())
 
-  override def linkCopy(): Linkable = NodeMapping().withId(id)
+  override def linkCopy(): NodeMapping = NodeMapping().withId(id)
 
   override def resolveUnreferencedLink[T](label: String,
                                           annotations: Annotations,

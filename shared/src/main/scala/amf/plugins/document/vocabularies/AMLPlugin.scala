@@ -324,7 +324,6 @@ trait AMLPlugin
   def shapesForDialect(dialect: Dialect, validationFunctionsUrl: String): RdfModel = {
     val validationProfile = computeValidationProfile(dialect)
     val validations       = validationProfile.validations
-
     RuntimeValidator.shaclModel(validations, validationFunctionsUrl)
   }
 
