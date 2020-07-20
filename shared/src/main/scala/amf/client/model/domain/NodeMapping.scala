@@ -7,7 +7,7 @@ import amf.plugins.document.vocabularies.model.domain.{NodeMapping => InternalNo
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class NodeMapping(override private[amf] val _internal: InternalNodeMapping) extends DomainElement {
+case class NodeMapping(override private[amf] val _internal: InternalNodeMapping) extends DomainElement with Linkable {
 
   @JSExportTopLevel("model.domain.NodeMapping")
   def this() = this(InternalNodeMapping())
@@ -42,4 +42,6 @@ case class NodeMapping(override private[amf] val _internal: InternalNodeMapping)
     _internal.withMergePolicy(mergePolicy)
     this
   }
+
+  override def linkCopy(): NodeMapping = _internal.linkCopy()
 }
