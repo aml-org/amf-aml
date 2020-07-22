@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies.validation
 
 import amf.ProfileName
+import amf.client.model.DataTypes
 import amf.core.model.DataType
 import amf.core.rdf.RdfModel
 import amf.core.utils.AmfStrings
@@ -287,7 +288,7 @@ class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
                       datatype = Some((Namespace.Xsd + "string").iri())
                   ))
           )
-        case literal =>
+        case literal if literal != DataType.Any =>
           val message = s"Property '${prop.name()}'  value must be of type $dataRange"
           validations += new ValidationSpecification(
               name = validationId(node, prop.name().value(), "dataRange"),
