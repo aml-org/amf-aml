@@ -7,76 +7,13 @@ import amf.core.io.FileAssertionTest
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
-import amf.core.unsafe.PlatformSecrets
 import amf.core.{AMFCompiler, AMFSerializer, CompilerContextBuilder}
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import org.scalactic.Fail
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
 
-import scala.concurrent.{ExecutionContext, Future}
-
-abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite {
-  def testedForms: Seq[JsonLdDocumentForm] = Seq(FlattenedForm, ExpandedForm)
-
-  def defaultRenderOptions: RenderOptions = RenderOptions()
-
-  def renderOptionsFor(documentForm: JsonLdDocumentForm): RenderOptions = {
-    documentForm match {
-      case FlattenedForm => defaultRenderOptions.withFlattenedJsonLd
-      case ExpandedForm  => defaultRenderOptions.withoutFlattenedJsonLd
-      case _             => defaultRenderOptions
-
-    }
-  }
-
-  private def validatePattern(pattern: String, patternName: String): Unit = {
-    if (!pattern.contains("%s")) {
-      Fail(s"$pattern is not a valid $patternName pattern. Must contain %s as the handled JSON-LD extension")
-    }
-  }
-
-  // Single source, multiple JSON-LD outputs
-  def multiGoldenTest(testText: String, goldenNamePattern: String)(
-      testFn: MultiGoldenTestConfig => Future[Assertion]): Unit = {
-    testedForms.foreach { form =>
-      validatePattern(goldenNamePattern, "goldenNamePattern")
-      val golden = goldenNamePattern.format(form.extension)
-      val config = MultiGoldenTestConfig(golden, renderOptionsFor(form))
-      test(s"$testText for ${form.name} JSON-LD golden")(testFn(config))
-    }
-  }
-
-  // Multiple JSON-LD sources, single output
-  def multiSourceTest(testText: String, sourceNamePattern: String)(
-      testFn: MultiSourceTestConfig => Future[Assertion]): Unit = {
-    testedForms.foreach { form =>
-      validatePattern(sourceNamePattern, "sourceNamePattern")
-      val source = sourceNamePattern.format(form.extension)
-      val config = MultiSourceTestConfig(source)
-      test(s"$testText for ${form.name} JSON-LD source")(testFn(config))
-    }
-  }
-
-  // Multiple JSON-LD sources, multiple JSON-LD outputs. Each source matches exactly one output
-  def multiTest(testText: String, sourceNamePattern: String, goldenNamePattern: String)(
-      testFn: MultiTestConfig => Future[Assertion]): Unit = {
-    testedForms.foreach { form =>
-      validatePattern(sourceNamePattern, "sourceNamePattern")
-      validatePattern(goldenNamePattern, "goldenNamePattern")
-      val source = sourceNamePattern.format(form.extension)
-      val golden = goldenNamePattern.format(form.extension)
-      val config = MultiTestConfig(source, golden, renderOptionsFor(form))
-      test(s"$testText for ${form.name} JSON-LD")(testFn(config))
-    }
-  }
-}
-
-case class MultiGoldenTestConfig(golden: String, renderOptions: RenderOptions)
-case class MultiSourceTestConfig(source: String)
-case class MultiTestConfig(source: String, golden: String, renderOptions: RenderOptions)
+import scala.concurrent.Future
 
 trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest {
   val basePath: String
@@ -188,5 +125,3 @@ abstract class DialectInstanceResolutionCycleTests extends DialectTests {
   override def transform(unit: BaseUnit): BaseUnit =
     AMLPlugin().resolve(unit, UnhandledErrorHandler)
 }
-
-

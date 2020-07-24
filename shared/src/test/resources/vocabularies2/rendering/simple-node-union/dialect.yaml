@@ -1,0 +1,29 @@
+#%Dialect 1.0
+dialect: Flix
+version: "1.0"
+nodeMappings:
+  Movie:
+    classTerm: flix.Movie
+    mapping:
+      title:
+        propertyTerm: flix.title
+        range: string
+  Show:
+    classTerm: flix.Show
+    mapping:
+      title:
+        propertyTerm: flix.title
+        range: string
+      seasons:
+        propertyTerm: flix.seasons
+        range: integer
+  StreamContent:
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      show: Show
+      movie: Movie
+documents:
+  root:
+    encodes: StreamContent
+external:
+  flix: http://schema.org/flix/
