@@ -284,6 +284,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
       case ObjectMapProperty         => parseObjectMapProperty(id, propertyEntry, property, node)
       case ObjectPairProperty        => parseObjectPairProperty(id, propertyEntry, property, node)
+      case ExternalLinkProperty      => parseExternalLinkProperty(id, propertyEntry, property, node)
       case _ =>
         ctx.eh.violation(DialectError, id, s"Unknown type of node property ${property.id}", propertyEntry)
     }
@@ -332,6 +333,91 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         }
     }
   }
+
+  protected def expandNodeReference(map: YMap): String = {
+    val entry      = map.key("$id").get
+    val pointer    = entry.value.as[String]
+    if (pointer.startsWith("#")) {
+      root.location + pointer
+    } else {
+      pointer
+    }
+  }
+
+  private def generateExternalLink(id: String, node: YNode, mapping: NodeMapping): Option[DialectDomainElement] = {
+    node.tagType match {
+      case YType.Str => // plain link -> we generate an anonymous node and set the id to the ref and correct type information
+        val elem = DialectDomainElement().withDefinedBy(mapping).withId(node).withIsExternalLink(true)
+        elem.withInstanceTypes(Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).collect { case Some(t) => t })
+        Some(elem)
+      case YType.Map => // reference
+        val refMap = node.as[YMap]
+        if (refMap.key("$id").isDefined) {
+          val id = expandNodeReference(refMap)
+          val elem = DialectDomainElement().withDefinedBy(mapping).withId(id).withIsExternalLink(true)
+          elem.withInstanceTypes(Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).collect { case Some(t) => t })
+          elem.annotations += JsonPointerRef()
+          Some(elem)
+        } else {
+          ctx.eh.violation(DialectError, id, "Map link references must contain a '$ref' property")
+          None
+        }
+      case _         => // error
+        ctx.eh.violation(DialectError, id, "Links must be strings or $ref maps")
+        None
+    }
+  }
+
+  private def parseExternalLinkProperty(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
+    // First extract the mapping information
+    // External links only work over single ranges, not unions or literal ranges
+    val maybeMapping: Option[NodeMapping] = property.objectRange() match {
+      case range if range.length == 1 =>
+        ctx.dialect.declares.find(_.id == range.head.value()) match {
+          case Some(nodeMapping: NodeMapping) =>
+            Some(nodeMapping)
+          case _                              =>
+            ctx.eh.violation(DialectError, id, s"Cannot find object range ${range.head.value()}", propertyEntry)
+            None
+        }
+      case _                          =>
+        ctx.eh.violation(DialectError, id, s"Individual object range required for external link property", propertyEntry)
+        None
+    }
+
+    val allowMultiple = property.allowMultiple().option().getOrElse(false)
+
+    // now we parse the link
+    maybeMapping match {
+      case Some(mapping) =>
+        val rangeNode = propertyEntry.value
+        rangeNode.tagType match {
+          case YType.Str if !allowMultiple =>
+            // plain link -> we generate an anonymous node and set the id to the ref and correct type information
+            generateExternalLink(id, rangeNode, mapping).foreach { elem =>
+              node.setObjectField(property, elem, propertyEntry.value)
+            }
+          case YType.Map if !allowMultiple => // reference
+            val refMap = rangeNode.as[YMap]
+            generateExternalLink(id, refMap, mapping) foreach { elem =>
+              node.setObjectField(property, elem, propertyEntry.value)
+            }
+          case YType.Seq if allowMultiple => // sequence of links or references
+            val seq = rangeNode.as[YSequence]
+            val elems = seq.nodes.map { node =>
+              generateExternalLink(id, node, mapping)
+            } collect { case Some(e) => e }
+            if (elems.nonEmpty)
+              node.setObjectField(property, elems, propertyEntry.value)
+          case YType.Seq if !allowMultiple => // error
+            ctx.eh.violation(DialectError, id, s"AllowMultiple not enable, sequence of external links not supported", propertyEntry)
+          case _                           =>
+            ctx.eh.violation(DialectError, id, s"Not supported external link range", propertyEntry)
+        }
+      case _             => // ignore
+    }
+  }
+
 
   protected def findHashProperties(propertyMapping: PropertyMapping,
                                    propertyEntry: YMapEntry): Option[(String, Any)] = {
@@ -602,10 +688,11 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               .as[YScalar]
               .text
               .urlComponentEncoded
+            val effectiveTypes = Seq(nodeMapping.nodetypeMapping.option(), Some(nodeMapping.id)).collect { case Some(t) => t }
             val nestedNode = DialectDomainElement(Annotations(pair))
               .withId(nestedId)
               .withDefinedBy(nodeMapping)
-              .withInstanceTypes(Seq(nodeMapping.nodetypeMapping.value(), nodeMapping.id))
+              .withInstanceTypes(effectiveTypes)
             try {
               nestedNode.set(Field(Str, ValueType(propertyKeyMapping.get)),
                              AmfScalar(pair.key.as[YScalar].text),
@@ -1098,7 +1185,10 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       val variable = varMatch.replace("{", "").replace("}", "")
       nodeMap.key(variable) match {
         case Some(entry) =>
-          val value = entry.value.value.toString
+          val value = entry.value.tagType match {
+            case YType.Str => entry.value.as[String]
+            case _         => entry.value.value.toString
+          }
           template = template.replace(varMatch, value)
         case None =>
           ctx.eh.violation(DialectError, node.id, s"Missing ID template variable '$variable' in node", nodeMap)

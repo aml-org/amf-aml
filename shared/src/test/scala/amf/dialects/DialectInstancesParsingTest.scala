@@ -10,6 +10,18 @@ import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
+trait DialectInstancesParsingTest2 extends DialectTests {
+
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  val basePath = "shared/src/test/resources/vocabularies2/instances/"
+
+  multiGoldenTest("parse 33b test", "example33b.%s") { config =>
+    withDialect("dialect33.raml", "example33b.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+  }
+
+}
+
 trait DialectInstancesParsingTest extends DialectTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
@@ -433,6 +445,18 @@ trait DialectInstancesParsingTest extends DialectTests {
                 renderOptions = Some(config.renderOptions))
   }
 
+  multiGoldenTest("parse 33 test", "example33.%s") { config =>
+    withDialect("dialect33.raml", "example33.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("HERE_HERE parse 33b test", "example33b.%s") { config =>
+    withDialect("dialect33.raml", "example33b.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("parse 34 test", "example34.%s") { config =>
+    withDialect("dialect34.raml", "example34.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+  }
+
   if (platform.name == "jvm") {
     ignore("generate 1 test") {
       withDialect("dialect1.yaml",
@@ -632,6 +656,18 @@ trait DialectInstancesParsingTest extends DialectTests {
 
   multiSourceTest("generate 31 test", "example31.%s") { config =>
     withDialect("dialect31.yaml", config.source, "example31.yaml", AmfJsonHint, target = Aml)
+  }
+
+  multiSourceTest("generate 33 test", "example33.%s") { config =>
+    withDialect("dialect33.raml", config.source, "example33.raml", AmfJsonHint, target = Aml)
+  }
+
+  multiSourceTest("generate 33b test", "example33b.%s") { config =>
+    withDialect("dialect33.raml", config.source, "example33b.raml", AmfJsonHint, target = Aml)
+  }
+
+  multiSourceTest("HERE_HERE generate 34 test", "example34.%s") { config =>
+    withDialect("dialect34.raml", config.source, "example34.raml", AmfJsonHint, target = Aml)
   }
 
   multiGoldenTest("Generate instance with invalid property terms", "/invalids/schema-uri/instance.%s") { config =>

@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.annotations.Aliases.{Alias, FullUrl, ImportLocation}
+import amf.core.annotations.Aliases.{Alias, ImportLocation}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.SpecOrdering.Lexical
 import amf.core.emitter.{EntryEmitter, SpecOrdering}

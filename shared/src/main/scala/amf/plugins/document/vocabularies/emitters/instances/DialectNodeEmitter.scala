@@ -121,11 +121,23 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                     emitExternalObject(key, element, propertyMapping)
 
                   case Some(entry)
+                    if entry.value
+                      .isInstanceOf[DialectDomainElement] && propertyClassification == ExternalLinkProperty =>
+                    val element = entry.value.asInstanceOf[DialectDomainElement]
+                    emitExternalLink(key, element, propertyMapping)
+
+                  case Some(entry)
                       if entry.value
                         .isInstanceOf[DialectDomainElement] && propertyClassification == ObjectProperty && !propertyMapping.isUnion =>
                     val element = entry.value.asInstanceOf[DialectDomainElement]
                     val result  = emitObjectEntry(key, element, propertyMapping, Some(entry.annotations))
                     result
+
+                  case Some(entry)
+                    if entry.value
+                      .isInstanceOf[AmfArray] && propertyClassification == ExternalLinkProperty =>
+                    val array = entry.value.asInstanceOf[AmfArray]
+                    emitExternalLink(key, array, propertyMapping, Some(entry.annotations))
 
                   case Some(entry)
                       if entry.value
@@ -257,6 +269,48 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         mappables.collect { case nodeMapping: NodeMapping => nodeMapping }
       case _ => Nil
     }
+  }
+
+  protected def emitExternalLink(key: String,
+                                 target: AmfElement,
+                                 propertyMapping: PropertyMapping,
+                                 annotations: Option[Annotations] = None): Seq[EntryEmitter] = {
+    Seq(new EntryEmitter {
+      override def emit(b: EntryBuilder): Unit = {
+        b.entry(key, (e) => {
+          target match {
+            case array: AmfArray =>
+              e.list(l => {
+                array.values.asInstanceOf[Seq[DialectDomainElement]].foreach { elem =>
+                  if (elem.annotations.contains(classOf[JsonPointerRef])) {
+                    l.obj { m =>
+                      m.entry("$id", elem.id)
+                    }
+                  } else {
+                    l += elem.id
+                  }
+                }
+              })
+            case element: DialectDomainElement =>
+              if (element.annotations.contains(classOf[JsonPointerRef])) {
+                e.obj { m =>
+                  m.entry("$id", element.id)
+                }
+              } else {
+                e += element.id
+              }
+          }
+        })
+      }
+
+      override def position(): Position = {
+        annotations
+          .flatMap(_.find(classOf[LexicalInformation]))
+          .orElse(target.annotations.find(classOf[LexicalInformation]))
+          .map(_.range.start)
+          .getOrElse(ZERO)
+      }
+    })
   }
 
   protected def emitObjectEntry(key: String,
