@@ -334,36 +334,105 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     }
   }
 
-  protected def expandNodeReference(map: YMap): String = {
-    val entry      = map.key("$id").get
-    val pointer    = entry.value.as[String]
-    if (pointer.startsWith("#")) {
-      root.location + pointer
-    } else {
-      pointer
-    }
-  }
-
   private def generateExternalLink(id: String, node: YNode, mapping: NodeMapping): Option[DialectDomainElement] = {
     node.tagType match {
       case YType.Str => // plain link -> we generate an anonymous node and set the id to the ref and correct type information
         val elem = DialectDomainElement().withDefinedBy(mapping).withId(node).withIsExternalLink(true)
-        elem.withInstanceTypes(Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).collect { case Some(t) => t })
+          .withInstanceTypes(Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).collect { case Some(t) => t })
         Some(elem)
-      case YType.Map => // reference
+
+      case YType.Map if node.as[YMap].entries.length == 1 && node.as[YMap].key("$id").isDefined => // simple link in a reference map
         val refMap = node.as[YMap]
         if (refMap.key("$id").isDefined) {
-          val id = expandNodeReference(refMap)
+          val id = explicitNodeId(None, refMap, Nil, "", mapping)
           val elem = DialectDomainElement().withDefinedBy(mapping).withId(id).withIsExternalLink(true)
           elem.withInstanceTypes(Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).collect { case Some(t) => t })
-          elem.annotations += JsonPointerRef()
+          elem.annotations += CustomId()
           Some(elem)
         } else {
-          ctx.eh.violation(DialectError, id, "Map link references must contain a '$ref' property")
+          ctx.eh.violation(DialectError, id, "Map link references must contain a '$id' property")
           None
         }
+
+      case YType.Map => // complex reference with mandatory idTemplate
+        val refMap = node.as[YMap]
+        var base: Option[String] = None // we store here any base URI for the node ID so we can generate the right customId annotation
+
+        val computedNodeId: String = mapping.idTemplate.option() match {
+          case Some(idTemplate) =>
+
+            // Check if it also has an $id overwriting the base URL
+            base = refMap.key("$id") match {
+              case Some(baseId) if baseId.value.tagType == YType.Str && (baseId.value.as[String].contains("://") ||  baseId.value.as[String].startsWith("//")) =>
+                Some(baseId.value.as[String]) // I will overwrite wthatever might be in the ID template
+              case Some(_)  =>
+                ctx.eh.violation(DialectError, id, "External link with map values and relative $id, $id must be absolute if provided with a link map $id")
+                None
+              case _ =>
+                None
+            }
+
+            // compute a relative template
+            var template = if (idTemplate.contains("://")) {
+              idTemplate.split("://").last
+            } else {
+              idTemplate
+            }
+            if (template.startsWith("//")) {
+              template = template.drop(2)
+            }
+
+            // now generate the final template
+            var separator = ""
+            template = if (base.isEmpty) { // no idTemplate -> use all the template
+              idTemplate
+            } else if (template.contains("/")) { // idTemplate base/path/to/endpoint(#optionalFragment), I need a relative path
+              val parts = template.split("/")
+              separator = "/"
+              parts.drop(1).mkString("/")
+            } else if (template.contains("#")) {  // idTemplate baseWithoutPath#fragment , I need a relative path
+              val parts = template.split("#")
+              separator = "#"
+              parts.drop(1).mkString("#")
+            } else { // default case, Is this an error?
+              template
+            }
+            val finalPath = templateNodeId(id, refMap, template)
+            if (base.isEmpty) {
+              finalPath
+            } else {
+              base.getOrElse(root.location) ++ separator ++ finalPath
+            }
+
+          case None             =>
+            ctx.eh.violation(DialectError, id, "External link with map values and no idTemplate defined for the node in the dialect")
+            "/anon-node-error"
+        }
+
+        // Now we actually parse the provided properties for the node
+        val linkReference: DialectDomainElement = DialectDomainElement(Annotations(refMap)).withDefinedBy(mapping).withId(computedNodeId)
+        linkReference.withInstanceTypes(Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).collect { case Some(t) => t })
+        linkReference.withIsExternalLink(true) // this is a linkReference
+
+        // explicit $id
+        if (base.isDefined) {
+          linkReference.annotations += CustomId(base.get)
+        }
+
+        mapping.propertiesMapping().foreach { propertyMapping =>
+          val propertyName = propertyMapping.name().value()
+          refMap.key(propertyName) match {
+            case Some(entry) =>
+              parseProperty(computedNodeId, entry, propertyMapping, linkReference)
+            case None => // ignore
+          }
+        }
+
+        // return the parsed reference
+        Some(linkReference)
+
       case _         => // error
-        ctx.eh.violation(DialectError, id, "Links must be strings or $ref maps")
+        ctx.eh.violation(DialectError, id, "External Links must be strings or maps with idTemplate and optional $id for the base URL")
         None
     }
   }
@@ -1141,10 +1210,11 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       defaultId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
     else {
       if (nodeMap.key("$id").isDefined) {
-        explicitNodeId(node, nodeMap, path, defaultId, mapping)
+        explicitNodeId(Some(node), nodeMap, path, defaultId, mapping)
       }
       else if (mapping.idTemplate.nonEmpty) {
-        templateNodeId(node, nodeMap, path, defaultId, mapping)
+        val template = templateNodeId(node.id, nodeMap, mapping.idTemplate.value())
+        finalTemplateId(template, path)
       }
       else if (mapping.primaryKey().nonEmpty) {
         primaryKeyNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties)
@@ -1155,7 +1225,26 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     }
   }
 
-  protected def explicitNodeId(node: DialectDomainElement,
+  protected def finalTemplateId(template: String, path: Seq[String]): String = {
+    val templateRoot = root.location
+    if (template.contains("://"))
+      template
+    else if (template.startsWith("/"))
+      templateRoot + "#" + template
+    else if (template.startsWith("#"))
+      templateRoot + template
+    else {
+      val pathLocation = (path ++ template.split("/")).mkString("/")
+      if (pathLocation.startsWith(templateRoot) || pathLocation.contains("#")) {
+        pathLocation
+      }
+      else {
+        templateRoot + "#" + pathLocation
+      }
+    }
+  }
+
+  protected def explicitNodeId(node: Option[DialectDomainElement],
                                nodeMap: YMap,
                                path: Seq[String],
                                defaultId: String,
@@ -1169,17 +1258,15 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     else {
       (ctx.dialect.location().getOrElse(ctx.dialect.id).split("#").head + s"#$rawId").replace("##", "#")
     }
-    node.annotations += CustomId()
+    node.foreach((n) => n.annotations += CustomId())
     externalId
   }
 
-  protected def templateNodeId(node: DialectDomainElement,
+  protected def templateNodeId(nodeId: String,
                                nodeMap: YMap,
-                               path: Seq[String],
-                               defaultId: String,
-                               mapping: NodeMapping): String = {
+                               originalTemplate: String): String = {
+    var template = originalTemplate
     // template resolution
-    var template = mapping.idTemplate.value()
     val regex    = "(\\{[^}]+\\})".r
     regex.findAllIn(template).foreach { varMatch =>
       val variable = varMatch.replace("{", "").replace("}", "")
@@ -1191,24 +1278,10 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
           }
           template = template.replace(varMatch, value)
         case None =>
-          ctx.eh.violation(DialectError, node.id, s"Missing ID template variable '$variable' in node", nodeMap)
+          ctx.eh.violation(DialectError, nodeId, s"Missing ID template variable '$variable' in node", nodeMap)
       }
     }
-    if (template.contains("://"))
-      template
-    else if (template.startsWith("/"))
-      root.location + "#" + template
-    else if (template.startsWith("#"))
-      root.location + template
-    else {
-      val pathLocation = (path ++ template.split("/")).mkString("/")
-      if (pathLocation.startsWith(root.location) || pathLocation.contains("#")) {
-        pathLocation
-      }
-      else {
-        root.location + "#" + pathLocation
-      }
-    }
+    template
   }
 
   protected def primaryKeyNodeId(node: DialectDomainElement,

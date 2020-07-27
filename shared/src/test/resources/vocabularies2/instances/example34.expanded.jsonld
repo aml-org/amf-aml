@@ -28,7 +28,7 @@
         ],
         "http://a.ml/vocabularies/data#links": [
           {
-            "@id": "http://test/a",
+            "@id": "http://test/simple",
             "@type": [
               "file://shared/src/test/resources/vocabularies2/instances/dialect34.raml#/declarations/B",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
@@ -36,11 +36,147 @@
             ]
           },
           {
-            "@id": "http://test/other",
+            "@id": "http://test/simpleAlt",
             "@type": [
               "file://shared/src/test/resources/vocabularies2/instances/dialect34.raml#/declarations/B",
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "http://test/simpleAlt#/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#custom-id": [
+                  {
+                    "@id": "http://test/simpleAlt#/source-map/custom-id/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://test/simpleAlt"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "http://test/embed",
+            "@type": [
+              "file://shared/src/test/resources/vocabularies2/instances/dialect34.raml#/declarations/B",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/data#id": [
+              {
+                "@value": "embed"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "http://test/embed#/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "http://test/embed#/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://test/embed"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(12,0)-(13,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://test/embed#/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/data#id"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(12,4)-(13,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "http://defined.by.me/embedOverwritten",
+            "@type": [
+              "file://shared/src/test/resources/vocabularies2/instances/dialect34.raml#/declarations/B",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/data#id": [
+              {
+                "@value": "embedOverwritten"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "http://defined.by.me/embedOverwritten#/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#custom-id": [
+                  {
+                    "@id": "http://defined.by.me/embedOverwritten#/source-map/custom-id/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://defined.by.me/embedOverwritten"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "http://defined.by.me"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "http://defined.by.me/embedOverwritten#/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://defined.by.me/embedOverwritten"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(14,0)-(16,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://defined.by.me/embedOverwritten#/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/data#id"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(14,4)-(15,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
         ],
@@ -60,7 +196,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,0)-(9,0)]"
+                    "@value": "[(6,0)-(7,0)]"
                   }
                 ]
               },
@@ -73,7 +209,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(9,6)-(12,0)]"
+                    "@value": "[(7,6)-(16,0)]"
                   }
                 ]
               },
@@ -86,7 +222,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(3,0)-(12,0)]"
+                    "@value": "[(2,0)-(16,0)]"
                   }
                 ]
               }
@@ -121,7 +257,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(3,0)-(12,0)]"
+                "@value": "[(2,0)-(16,0)]"
               }
             ]
           }
@@ -167,7 +303,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(5,4)-(6,0)]"
+                    "@value": "[(4,4)-(5,0)]"
                   }
                 ]
               },
@@ -180,7 +316,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,2)-(4,4)]"
+                    "@value": "[(3,2)-(3,4)]"
                   }
                 ]
               },
@@ -193,7 +329,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,4)-(8,0)]"
+                    "@value": "[(5,4)-(6,0)]"
                   }
                 ]
               },
@@ -206,7 +342,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,2)-(8,0)]"
+                    "@value": "[(3,2)-(6,0)]"
                   }
                 ]
               }

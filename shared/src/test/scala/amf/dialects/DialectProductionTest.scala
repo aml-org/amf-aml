@@ -184,19 +184,6 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
                 renderOptions = Some(config.renderOptions))
   }
 
-  multiGoldenTest("can parse validation dialect service mesh gateway instance", "gateway_instance.%s") { config =>
-    withDialect(
-      "istio.yaml",
-      "gateway_instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      directory = s"${basePath}istio/",
-      renderOptions = Some(config.renderOptions)
-    )
-  }
-
-
 }
 
 class DialectProductionResolutionTest extends DialectInstanceResolutionCycleTests {

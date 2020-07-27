@@ -54,14 +54,18 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         emitters ++= Seq(MapEntryEmitter(discriminatorName, discriminatorValue))
       }
       if (node.annotations.find(classOf[CustomId]).isDefined || renderOptions.isEmitNodeIds) {
-        val customId = if (node.id.contains(dialect.location().getOrElse(""))) {
-          node.id.replace(dialect.id, "")
-        } else {
-          node.id
+        val baseId = node.annotations.find(classOf[CustomId]) match {
+          case Some(customId) if customId.value != "true" => customId.value
+          case _                                          => node.id
+        }
+        val customId = if (baseId.contains(dialect.location().getOrElse(""))) {
+          baseId.replace(dialect.id, "")
+        }
+        else {
+          baseId
         }
         emitters ++= Seq(MapEntryEmitter("$id", customId))
       }
-
       uniqueFields(node.meta).foreach {
         case DomainElementModel.CustomDomainProperties =>
           node.fields.get(DomainElementModel.CustomDomainProperties) match {
@@ -282,23 +286,29 @@ case class DialectNodeEmitter(node: DialectDomainElement,
             case array: AmfArray =>
               e.list(l => {
                 array.values.asInstanceOf[Seq[DialectDomainElement]].foreach { elem =>
-                  if (elem.annotations.contains(classOf[JsonPointerRef])) {
-                    l.obj { m =>
-                      m.entry("$id", elem.id)
+                  if (elem.fields.nonEmpty) { // map reference
+                    nodeMappingForObjectProperty(propertyMapping, elem) match {
+                      case Some(rangeMapping) =>
+                        DialectNodeEmitter(
+                          elem,
+                          rangeMapping,
+                          instance,
+                          dialect,
+                          ordering,
+                          references,
+                          discriminator = None,
+                          keyPropertyId = keyPropertyId,
+                          renderOptions = renderOptions
+                        ).emit(l)
+                      case _ => // ignore, error
                     }
-                  } else {
-                    l += elem.id
+                  } else { // just link
+                    emitCustomId(elem, l)
                   }
                 }
               })
             case element: DialectDomainElement =>
-              if (element.annotations.contains(classOf[JsonPointerRef])) {
-                e.obj { m =>
-                  m.entry("$id", element.id)
-                }
-              } else {
-                e += element.id
-              }
+              emitCustomId(element, e)
           }
         })
       }
@@ -311,6 +321,28 @@ case class DialectNodeEmitter(node: DialectDomainElement,
           .getOrElse(ZERO)
       }
     })
+  }
+
+  def emitCustomId(elem: DialectDomainElement, b: PartBuilder): Unit = {
+    elem.annotations.find(classOf[CustomId]) match {
+      case Some(customId) if customId.value != "true" => b.obj { m => m.entry("$id", customId.value) }
+      case Some(_)                                    => b.obj { m => m.entry("$id", elem.id) }
+      case _                                          => b += elem.id
+    }
+  }
+
+
+  protected def nodeMappingForObjectProperty(propertyMapping: PropertyMapping, dialectDomainElement: DialectDomainElement): Option[NodeMappable] = {
+    // this can be multiple mappings if we have a union in the range or a range pointing to a union mapping
+    val nodeMappings: Seq[NodeMapping] =
+      propertyMapping.objectRange().flatMap { rangeNodeMapping =>
+        findAllNodeMappings(rangeNodeMapping.value())
+      }
+    nodeMappings.find(
+      nodeMapping =>
+        dialectDomainElement.meta.`type`
+          .map(_.iri())
+          .exists(i => i == nodeMapping.nodetypeMapping.value() || i == nodeMapping.id))
   }
 
   protected def emitObjectEntry(key: String,
