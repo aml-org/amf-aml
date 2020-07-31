@@ -11,6 +11,8 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectLibrary
 import amf.plugins.document.vocabularies.model.domain.NodeMappable
 import org.yaml.model.YDocument.EntryBuilder
 
+import scala.collection.mutable
+
 trait DialectEmitterHelper {
   val dialect: Dialect
 
@@ -26,10 +28,10 @@ trait DialectEmitterHelper {
         override def position(): Position = {
           model.externals
             .map(
-                e =>
-                  e.annotations
-                    .find(classOf[LexicalInformation])
-                    .map(_.range.start))
+              e =>
+                e.annotations
+                  .find(classOf[LexicalInformation])
+                  .map(_.range.start))
             .filter(_.nonEmpty)
             .map(_.get)
             .sortBy(_.line)
@@ -37,19 +39,27 @@ trait DialectEmitterHelper {
             .getOrElse(ZERO)
         }
       })
-    }
-    else {
+    } else {
       Nil
     }
   }
 
-  def findNodeMappingById(nodeMappingId: String): (Dialect, NodeMappable) = {
-    maybeFindNodeMappingById(nodeMappingId).getOrElse {
-      throw new Exception(s"Cannot find node mapping $nodeMappingId")
+  type NodeMappingId = String
+  val nodeMappingCache: mutable.HashMap[NodeMappingId, (Dialect, NodeMappable)] = mutable.HashMap.empty
+
+  def findNodeMappingById(nodeMappingId: NodeMappingId): (Dialect, NodeMappable) = {
+    nodeMappingCache
+      .get(nodeMappingId)
+      .orElse(maybeFindNodeMappingById(nodeMappingId)) match {
+      case Some(result) =>
+        nodeMappingCache(nodeMappingId) = result
+        result
+      case None =>
+        throw new Exception(s"Cannot find node mapping $nodeMappingId")
     }
   }
 
-  def maybeFindNodeMappingById(nodeMappingId: String): Option[(Dialect, NodeMappable)] = {
+  def maybeFindNodeMappingById(nodeMappingId: NodeMappingId): Option[(Dialect, NodeMappable)] = {
     val inDialectMapping = dialect.declares
       .find {
         case nodeMapping: NodeMappable => nodeMapping.id == nodeMappingId
