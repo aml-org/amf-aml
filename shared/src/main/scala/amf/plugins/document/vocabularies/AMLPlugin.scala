@@ -31,15 +31,20 @@ import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, Dialec
 import amf.plugins.document.vocabularies.parser.instances._
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.plugin.headers._
-import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
-import amf.plugins.document.vocabularies.validation.AMFDialectValidations
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DialectInstancePatchResolutionPipeline,
+  DialectInstanceResolutionPipeline,
+  DialectResolutionPipeline
+}
+import amf.plugins.document.vocabularies.validation.DialectValidationsEmitter
 import amf.{ProfileName, RamlProfile}
 import org.yaml.model._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object AMLPlugin extends AMLPlugin{
-  def apply():AMLPlugin = AMFPluginsRegistry.documentPluginForID(this.ID).collect({case a:AMLPlugin => a}).getOrElse(this)
+object AMLPlugin extends AMLPlugin {
+  def apply(): AMLPlugin =
+    AMFPluginsRegistry.documentPluginForID(this.ID).collect({ case a: AMLPlugin => a }).getOrElse(this)
 }
 
 trait AMLPlugin
@@ -60,33 +65,33 @@ trait AMLPlugin
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future { this }
 
   override def modelEntities: Seq[Obj] = Seq(
-      VocabularyModel,
-      ExternalModel,
-      VocabularyReferenceModel,
-      ClassTermModel,
-      ObjectPropertyTermModel,
-      DatatypePropertyTermModel,
-      DialectModel,
-      NodeMappingModel,
-      UnionNodeMappingModel,
-      PropertyMappingModel,
-      DocumentsModelModel,
-      PublicNodeMappingModel,
-      DocumentMappingModel,
-      DialectLibraryModel,
-      DialectFragmentModel,
-      DialectInstanceModel,
-      DialectInstanceLibraryModel,
-      DialectInstanceFragmentModel,
-      DialectInstancePatchModel
+    VocabularyModel,
+    ExternalModel,
+    VocabularyReferenceModel,
+    ClassTermModel,
+    ObjectPropertyTermModel,
+    DatatypePropertyTermModel,
+    DialectModel,
+    NodeMappingModel,
+    UnionNodeMappingModel,
+    PropertyMappingModel,
+    DocumentsModelModel,
+    PublicNodeMappingModel,
+    DocumentMappingModel,
+    DialectLibraryModel,
+    DialectFragmentModel,
+    DialectInstanceModel,
+    DialectInstanceLibraryModel,
+    DialectInstanceFragmentModel,
+    DialectInstancePatchModel
   )
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] =
     Map(
-        "aliases-location" -> AliasesLocation,
-        "custom-id"        -> CustomId,
-        "ref-include"      -> RefInclude,
-        "json-pointer-ref" -> JsonPointerRef
+      "aliases-location" -> AliasesLocation,
+      "custom-id"        -> CustomId,
+      "ref-include"      -> RefInclude,
+      "json-pointer-ref" -> JsonPointerRef
     )
 
   /**
@@ -110,16 +115,16 @@ trait AMLPlugin
     * this domain
     */
   override def documentSyntaxes: Seq[String] = Seq(
-      "application/aml+json",
-      "application/aml+yaml",
-      "application/raml",
-      "application/raml+json",
-      "application/raml+yaml",
-      "text/yaml",
-      "text/x-yaml",
-      "application/yaml",
-      "application/x-yaml",
-      "application/json"
+    "application/aml+json",
+    "application/aml+yaml",
+    "application/raml",
+    "application/raml+json",
+    "application/raml+yaml",
+    "text/yaml",
+    "text/x-yaml",
+    "application/yaml",
+    "application/x-yaml",
+    "application/json"
   )
 
   /**
@@ -224,7 +229,8 @@ trait AMLPlugin
         case Some(headerKey) if resolvedDialect.isLibraryHeader(headerKey) =>
           new DialectInstanceLibraryParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parse()
         case Some(headerKey) if resolvedDialect.isPatchHeader(headerKey) =>
-          new DialectInstancePatchParser(document)(new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
+          new DialectInstancePatchParser(document)(
+            new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
             .parse()
         case _ =>
           new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
@@ -252,7 +258,7 @@ trait AMLPlugin
       case Some(profile) => profile
       case _ =>
         val resolvedDialect = new DialectResolutionPipeline(dialect.errorHandler()).resolve(dialect)
-        val profile         = new AMFDialectValidations(resolvedDialect).profile()
+        val profile         = new DialectValidationsEmitter(resolvedDialect).profile()
         registry.validations += (header -> profile)
         profile
     }
@@ -304,10 +310,10 @@ trait AMLPlugin
           }
 
           AMFValidationReport(
-              conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-              model = baseUnit.id,
-              profile = profile,
-              results = results
+            conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
+            model = baseUnit.id,
+            profile = profile,
+            results = results
           )
         }
 

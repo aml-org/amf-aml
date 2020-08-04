@@ -16,7 +16,7 @@ import org.yaml.model.YDocument.EntryBuilder
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
+class DialectValidationsEmitter(val dialect: Dialect) extends DialectEmitterHelper {
 
   def profile(): ValidationProfile = {
     val parsedValidations = validations()
