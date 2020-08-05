@@ -236,7 +236,7 @@ class DialectContext(private val wrapped: ParserContext, private val ds: Option[
         case Some(recursiveUnit) =>
           val unitId = recursiveUnit.id.stripSuffix(recursiveUnit.componentId)
           Some(unitId + "#/declarations/" + qname.name)
-        case _       => None
+        case _ => None
       }
     }
     else {
@@ -890,7 +890,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           val seq = entry.value.as[YSequence]
           val values = seq.nodes.flatMap { node =>
             node.value match {
-              case scalar: YScalar => Some(ScalarNode(node).string())
+              case scalar: YScalar =>
+                Some(AmfScalar(scalar.text, Annotations.valueNode(node)))
               case _ =>
                 ctx.eh.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
                 None

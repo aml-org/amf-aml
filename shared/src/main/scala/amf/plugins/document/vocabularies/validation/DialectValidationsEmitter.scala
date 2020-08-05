@@ -173,6 +173,19 @@ class DialectValidationsEmitter(val dialect: Dialect) extends DialectEmitterHelp
             ramlPropertyId = prop.nodePropertyMapping().value(),
             name = validationId(node, prop.name().value(), "enum") + "/prop",
             message = Some(message),
+            datatype = prop
+              .literalRange()
+              .option()
+              .filter {
+                case DataType.Any    => false
+                case DataType.Number => false
+                case _               => true
+              }
+              .map {
+                case DataType.Float   => DataType.Double
+                case DataType.Integer => DataType.Long
+                case d                => d
+              },
             in = values.map { v =>
               s"$v"
             }
