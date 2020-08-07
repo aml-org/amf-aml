@@ -6,18 +6,18 @@ import scala.concurrent.ExecutionContext
 
 class DialectInstanceRenderTest extends DialectTests {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  override val basePath: String = "shared/src/test/resources/vocabularies2/rendering"
-  val instances                 = "shared/src/test/resources/vocabularies2/instances/"
+  override val basePath: String                            = "shared/src/test/resources/vocabularies2/rendering"
+  val instances                                            = "shared/src/test/resources/vocabularies2/instances/"
 
   test("Simple instance rendering") {
     withDialect(
-        "dialect.yaml",
-        "instance.yaml",
-        "instance-golden.yaml",
-        VocabularyYamlHint,
-        target = Vendor.AML,
-        renderOptions = Some(RenderOptions().withNodeIds),
-        directory = s"$basePath/simple-dialect"
+      "dialect.yaml",
+      "instance.yaml",
+      "instance-golden.yaml",
+      VocabularyYamlHint,
+      target = Vendor.AML,
+      renderOptions = Some(RenderOptions().withNodeIds),
+      directory = s"$basePath/simple-dialect"
     )
   }
 
@@ -27,17 +27,16 @@ class DialectInstanceRenderTest extends DialectTests {
                 "instance-golden.yaml",
                 VocabularyYamlHint,
                 target = Vendor.AML,
-                directory = s"$basePath/simple-node-union")
+                directory = s"$basePath/simple-nesting")
   }
 
-  // TODO un-ignore after fixing APIMF-2327
-  ignore("Simple node union rendering") {
+  test("Simple node union rendering") {
     withDialect("dialect.yaml",
-      "instance.yaml",
-      "instance-golden.yaml",
-      VocabularyYamlHint,
-      target = Vendor.AML,
-      directory = s"$basePath/simple-nesting")
+                "instance.yaml",
+                "instance-golden.yaml",
+                VocabularyYamlHint,
+                target = Vendor.AML,
+                directory = s"$basePath/simple-node-union")
   }
 
   test("render 1 (AMF) test") {
@@ -222,8 +221,7 @@ class DialectInstanceRenderTest extends DialectTests {
                 directory = instances)
   }
 
-  // TODO un-ignore after fixing APIMF-2327
-  ignore("render 13a (test union inline)") {
+  test("render 13a (test union inline)") {
     withDialect("dialect13a.raml",
                 "example13a.raml",
                 "example13a.raml",

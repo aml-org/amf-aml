@@ -18,6 +18,9 @@ nodeMappings:
         propertyTerm: flix.seasons
         range: integer
   StreamContent:
+    union:
+      - Show
+      - Movie
     typeDiscriminatorName: type
     typeDiscriminator:
       show: Show
