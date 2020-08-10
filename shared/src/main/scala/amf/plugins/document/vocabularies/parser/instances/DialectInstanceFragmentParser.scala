@@ -20,7 +20,7 @@ class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: Diale
     if (ctx.declarations.externals.nonEmpty)
       dialectInstanceFragment.withExternals(ctx.declarations.externals.values.toSeq)
 
-    parseEncodedFragment(dialectInstanceFragment) match {
+    parseEncodedFragment(dialectInstanceFragment, name) match {
       case Some(dialectDomainElement) =>
         val defaultId = encodedElementDefaultId(dialectInstanceFragment)
         dialectDomainElement.withId(defaultId)
@@ -32,11 +32,13 @@ class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: Diale
     }
   }
 
-  private def parseEncodedFragment(dialectInstanceFragment: DialectInstanceFragment): Option[DialectDomainElement] = {
+  private def parseEncodedFragment(dialectInstanceFragment: DialectInstanceFragment, fragmentName: String): Option[DialectDomainElement] = {
     Option(ctx.dialect.documents()) flatMap { documents: DocumentsModel =>
       documents
         .fragments()
-        .find(dm => root.parsed.comment.getOrElse("").stripSpaces.contains(dm.documentName().value())) match {
+        .find(dm => {
+          fragmentName == dm.documentName().value()
+        }) match {
         case Some(documentMapping) =>
           ctx.findNodeMapping(documentMapping.encoded().value()) match {
             case Some(nodeMapping) =>

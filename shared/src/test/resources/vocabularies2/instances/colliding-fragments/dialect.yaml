@@ -1,0 +1,31 @@
+#%Dialect 1.0
+dialect: Asset
+version: 1.0
+nodeMappings:
+  RootNode:
+    classTerm: tmp.RootNode
+    mapping:
+      rootProp:
+        propertyTerm: tmp.rootProp
+        range: string
+  MinorNode:
+    classTerm: tmp.MinorNode
+    mapping:
+      minorProp:
+        propertyTerm: tmp.minorProp
+        range: string
+  PublicMinorNode:
+    classTerm: tmp.PublicMinorNode
+    mapping:
+      publicMinorProp:
+        propertyTerm: tmp.publicMinorProp
+        range: string
+documents:
+  root:
+    encodes: RootNode
+  fragments:
+    encodes:
+      Minor: MinorNode
+      PublicMinor: PublicMinorNode
+external:
+  tmp: http://test.com/tmp#
