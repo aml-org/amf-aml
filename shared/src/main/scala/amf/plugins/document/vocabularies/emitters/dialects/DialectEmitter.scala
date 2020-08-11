@@ -13,7 +13,7 @@ import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.annotations.AliasesLocation
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
-import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper
+import amf.plugins.document.vocabularies.emitters.instances.AmlEmittersHelper
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies.metamodel.domain.{
   DocumentMappingModel,
@@ -26,7 +26,7 @@ import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YNode, YType}
 import FieldEntryImplicit._
 
-trait AliasesConsumer extends DialectEmitterHelper {
+trait AliasesConsumer extends AmlEmittersHelper {
   val dialect: Dialect
   val aliases: Map[String, (String, String)]
   def aliasFor(id: String): Option[String] = {

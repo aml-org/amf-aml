@@ -7,7 +7,7 @@ import amf.core.utils.AmfStrings
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core.{PropertyConstraint, SeverityMapping, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.vocabularies.emitters.instances.DialectEmitterHelper
+import amf.plugins.document.vocabularies.emitters.instances.AmlEmittersHelper
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
 import amf.plugins.features.validation.Validations
@@ -16,7 +16,7 @@ import org.yaml.model.YDocument.EntryBuilder
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class AMFDialectValidations(val dialect: Dialect) extends DialectEmitterHelper {
+class AMFDialectValidations(val dialect: Dialect) extends AmlEmittersHelper {
 
   def profile(): ValidationProfile = {
     val parsedValidations = validations()
