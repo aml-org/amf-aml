@@ -58,7 +58,7 @@ class DialectInstanceRenderTest extends DialectTests {
   }
 
   // TODO un-ignore after fixing APIMF-2326
-  ignore("render 1 with annotations test") {
+  test("render 1 with annotations test") {
     withDialect("dialect1.raml",
                 "example1_annotations.yaml",
                 "example1_annotations.yaml",
