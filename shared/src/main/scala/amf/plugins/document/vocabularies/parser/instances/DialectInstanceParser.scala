@@ -1,26 +1,22 @@
 package amf.plugins.document.vocabularies.parser.instances
 
 import amf.core.Root
-import amf.core.annotations.{Aliases, LexicalInformation, SourceAST}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.annotations.SourceAST
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
 import amf.core.model.DataType
-import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
-import amf.core.model.domain.{AmfScalar, Annotation, DomainElement}
-import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, FutureDeclarations, ParsedReference, ParserContext, Reference, SearchScope, _}
-import amf.core.unsafe.PlatformSecrets
+import amf.core.model.document.EncodesModel
+import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.parser.{Annotations, SearchScope, _}
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
+import amf.plugins.document.vocabularies.annotations.{CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
-import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
-import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
+import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
 import amf.validation.DialectValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
-import org.mulesoft.common.core._
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
 

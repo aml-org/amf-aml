@@ -202,7 +202,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "uses__1->http://a.ml/vocabularies/vocab2#::vocab2.raml"
+                "@value": "vocab2->http://a.ml/vocabularies/vocab2#::vocab2.raml"
               }
             ]
           }

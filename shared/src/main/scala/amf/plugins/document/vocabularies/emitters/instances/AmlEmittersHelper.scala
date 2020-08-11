@@ -21,28 +21,27 @@ trait AmlEmittersHelper {
 
   type RefKey = String
 
-  protected def buildReferenceIndexFrom(unit: BaseUnit): Map[RefKey, (Alias, ImportLocation)] = {
-    val urlAliases = extractURLAliasesFrom(unit)
-    val idCounter  = new IdCounter()
+  protected def buildReferenceAliasIndexFrom(unit: BaseUnit): Map[RefKey, (Alias, ImportLocation)] = {
+    val aliases   = extractAliasesFrom(unit)
+    val idCounter = new IdCounter()
     unit.references.toStream
       .filter(_.isInstanceOf[DeclaresModel])
       .map {
         case m: DeclaresModel =>
           val key            = referenceIndexKeyFor(m)
           val importLocation = getImportLocation(unit, m)
-
-          urlAliases.get(m.id) match {
+          aliases.get(key) match {
             case Some(alias) =>
               key -> (alias, importLocation)
             case None =>
-              val generatedAlias = idCounter.genId("uses_")
+              val generatedAlias = idCounter.genId("uses")
               key -> (generatedAlias, importLocation)
           }
       }
       .toMap
   }
 
-  protected def extractURLAliasesFrom(unit: BaseUnit): Map[FullUrl, Alias] = {
+  protected def extractAliasesFrom(unit: BaseUnit): Map[FullUrl, Alias] = {
     unit.annotations
       .find(classOf[Aliases])
       .map { aliasesAnnotation =>

@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.annotations.Aliases.{Alias, FullUrl}
+import amf.core.annotations.Aliases.{Alias, FullUrl, ImportLocation}
 import amf.core.emitter.BaseEmitters.{MapEntryEmitter, traverse}
 import amf.core.emitter.SpecOrdering.Lexical
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
@@ -14,9 +14,9 @@ import amf.plugins.document.vocabularies.emitters.dialects.FieldEntryImplicit.Fi
 
 case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDocumentsEmitters {
 
-  val ordering: SpecOrdering                 = Lexical
-  override val dialect: Dialect              = toDialect(library)
-  val aliases: Map[String, (FullUrl, Alias)] = collectAliases()
+  val ordering: SpecOrdering                        = Lexical
+  override val dialect: Dialect                     = toDialect(library)
+  val aliases: Map[RefKey, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(dialect) ++ buildExternalsAliasIndexFrom(dialect)
 
   def emitDialectLibrary(): YDocument = {
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)

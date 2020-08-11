@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.annotations.Aliases.{Alias, FullUrl}
+import amf.core.annotations.Aliases.{Alias, FullUrl, ImportLocation}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.SpecOrdering.Lexical
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
@@ -14,8 +14,9 @@ import org.yaml.model.YDocument.EntryBuilder
 
 case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
 
-  val ordering: SpecOrdering                 = Lexical
-  val aliases: Map[String, (FullUrl, Alias)] = collectAliases()
+  val ordering: SpecOrdering = Lexical
+  val aliases: Map[RefKey, (Alias, ImportLocation)] =
+    buildReferenceAliasIndexFrom(dialect) ++ buildExternalsAliasIndexFrom(dialect)
 
   def emitDialect(): YDocument = {
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)

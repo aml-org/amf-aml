@@ -15,7 +15,7 @@ case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Diale
     extends AmlEmittersHelper {
 
   val ordering: SpecOrdering                           = Lexical
-  val references: Map[RefKey, (Alias, ImportLocation)] = buildReferenceIndexFrom(instance)
+  val references: Map[RefKey, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(instance)
 
   override protected def sanitize(importLocation: ImportLocation): ImportLocation =
     importLocation.replace("#", "")

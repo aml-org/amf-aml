@@ -1,62 +1,32 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.annotations.{Aliases, LexicalInformation}
+import amf.core.annotations.Aliases.{Alias, ImportLocation}
+import amf.core.annotations.LexicalInformation
 import amf.core.emitter.BaseEmitters.traverse
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.DeclaresModel
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
-import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
+import amf.plugins.document.vocabularies.emitters.common.ExternalEmitter
+import amf.plugins.document.vocabularies.emitters.instances.AmlEmittersHelper
 import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
-import amf.plugins.document.vocabularies.model.domain.{External, NodeMappable}
+import amf.plugins.document.vocabularies.model.domain.NodeMappable
 import org.yaml.model.YDocument.EntryBuilder
 
-trait DialectDocumentsEmitters {
+trait DialectDocumentsEmitters extends AmlEmittersHelper {
 
   val dialect: Dialect
-  val aliases: Map[String, (String, String)]
+  val aliases: Map[RefKey, (Alias, ImportLocation)]
 
-  def collectAliases(): Map[String, (Aliases.FullUrl, Aliases.Alias)] = {
-    val vocabFile       = dialect.location().getOrElse(dialect.id).split("/").last
-    val vocabFilePrefix = dialect.location().getOrElse(dialect.id).replace(vocabFile, "")
+  override protected def referenceIndexKeyFor(unit: DeclaresModel): RefKey = unit match {
+    case v: Vocabulary => v.base.value()
+    case _             => unit.id
+  }
 
-    val maps = dialect.annotations
-      .find(classOf[Aliases])
-      .map { aliases =>
-        aliases.aliases.foldLeft(Map[String, String]()) {
-          case (acc, (alias, (id, _))) =>
-            acc + (id -> alias)
-        }
-      }
-      .getOrElse(Map())
-    val idCounter = new IdCounter()
-    val dialectReferences = dialect.references.foldLeft(Map[String, (String, String)]()) {
-      case (acc: Map[String, (String, String)], m: DeclaresModel) =>
-        val importLocation: String = if (m.location().exists(_.contains(vocabFilePrefix))) {
-          m.location().getOrElse(m.id).replace(vocabFilePrefix, "")
-        }
-        else {
-          m.location().getOrElse(m.id).replace("file://", "")
-        }
-
-        val aliasKey = m match {
-          case v: Vocabulary => v.base.value()
-          case _             => m.id
-        }
-        if (maps.get(aliasKey).isDefined) {
-          val alias = maps(aliasKey)
-          acc + (aliasKey -> (alias, importLocation))
-        }
-        else {
-          val nextAlias = idCounter.genId("uses_")
-          acc + (aliasKey -> (nextAlias, importLocation))
-        }
-      case (acc: Map[String, (String, String)], _) => acc
-    }
-    dialect.externals.foldLeft(dialectReferences) {
-      case (acc: Map[String, (String, String)], e: External) =>
-        acc + (e.base.value() -> (e.alias.value(), ""))
-    }
+  protected def buildExternalsAliasIndexFrom(dialect: Dialect): Map[RefKey, (Alias, ImportLocation)] = {
+    dialect.externals.map { e =>
+      e.base.value() -> (e.alias.value(), "")
+    }.toMap
   }
 
   def rootLevelEmitters(ordering: SpecOrdering): Seq[EntryEmitter] =
