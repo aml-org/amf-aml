@@ -20,7 +20,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                     keyPropertyId: Option[String] = None,
                                     renderOptions: RenderOptions)
     extends EntryEmitter
-    with DialectEmitterHelper {
+    with AmlEmittersHelper {
 
   def computeIdentifier(decl: DialectDomainElement): String = {
     decl.declarationName.option() match {

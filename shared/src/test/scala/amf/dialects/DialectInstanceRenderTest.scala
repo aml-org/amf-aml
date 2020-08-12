@@ -57,7 +57,6 @@ class DialectInstanceRenderTest extends DialectTests {
                 directory = instances)
   }
 
-  // TODO un-ignore after fixing APIMF-2326
   test("render 1 with annotations test") {
     withDialect("dialect1.raml",
                 "example1_annotations.yaml",
@@ -175,11 +174,10 @@ class DialectInstanceRenderTest extends DialectTests {
                 directory = instances)
   }
 
-  // TODO un-ignore after fixing APIMF-2328
-  ignore("render 9b $ref test") {
+  test("render 9b $ref test") {
     withDialect("dialect9.raml",
                 "example9b.raml",
-                "example9b.raml",
+                "example9b-golden.raml",
                 VocabularyYamlHint,
                 target = Aml,
                 directory = instances)

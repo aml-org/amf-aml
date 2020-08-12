@@ -1,58 +1,24 @@
 package amf.plugins.document.vocabularies.emitters.instances
 
-import amf.core.annotations.Aliases
+import amf.core.annotations.Aliases.{Alias, ImportLocation, RefId}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.SpecOrdering.Lexical
 import amf.core.emitter.{RenderOptions, SpecOrdering}
 import amf.core.model.document.{DeclaresModel, EncodesModel}
 import amf.core.parser.Position
-import amf.plugins.document.vocabularies.emitters.common.IdCounter
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.PartBuilder
 
 case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Dialect, renderOptions: RenderOptions)
-    extends DialectEmitterHelper {
-  val ordering: SpecOrdering                 = Lexical
-  val aliases: Map[String, (String, String)] = collectAliases()
+    extends AmlEmittersHelper {
 
-  def collectAliases(): Map[String, (String, String)] = {
-    val vocabFile = instance.location().getOrElse(instance.id).split("/").last
-    val vocabFilePrefix =
-      instance.location().getOrElse(instance.id).replace(vocabFile, "")
+  val ordering: SpecOrdering                           = Lexical
+  val references: Map[RefKey, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(instance)
 
-    val maps = instance.annotations
-      .find(classOf[Aliases])
-      .map { aliases =>
-        aliases.aliases.foldLeft(Map[String, String]()) {
-          case (acc, (alias, (fullUrl, _))) =>
-            acc + (fullUrl -> alias)
-        }
-      }
-      .getOrElse(Map())
-    val idCounter = new IdCounter()
-    instance.references.foldLeft(Map[String, (String, String)]()) {
-      case (acc: Map[String, (String, String)], m: DeclaresModel) =>
-        val location = m.location().getOrElse(m.id).replace("#", "")
-        val importLocation: String = if (location.contains(vocabFilePrefix)) {
-          location.replace(vocabFilePrefix, "")
-        }
-        else {
-          location.replace("file://", "")
-        }
-
-        if (maps.get(m.id).isDefined) {
-          val alias = maps(m.id)
-          acc + (m.id -> (alias, importLocation))
-        }
-        else {
-          val nextAlias = idCounter.genId("uses_")
-          acc + (m.id -> (nextAlias, importLocation))
-        }
-      case (acc: Map[String, (String, String)], _) => acc
-    }
-  }
+  override protected def sanitize(importLocation: ImportLocation): ImportLocation =
+    importLocation.replace("#", "")
 
   def emitInstance(): YDocument = {
     YDocument(b => {
@@ -96,7 +62,7 @@ case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Diale
         instance,
         dialect,
         ordering,
-        aliases,
+        references,
         None,
         rootNode = true,
         topLevelEmitters = externalEmitters(instance, ordering) ++ entry,

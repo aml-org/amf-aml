@@ -1,4 +1,5 @@
 package amf.plugins.document.vocabularies.emitters.instances
+import amf.core.annotations.Aliases.{Alias, ImportLocation, RefId}
 import amf.core.annotations.LexicalInformation
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, RenderOptions, SpecOrdering}
@@ -23,7 +24,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               instance: DialectInstanceUnit,
                               dialect: Dialect,
                               ordering: SpecOrdering,
-                              aliases: Map[String, (String, String)],
+                              references: Map[RefId, (Alias, ImportLocation)],
                               keyPropertyId: Option[String] = None,
                               rootNode: Boolean = false,
                               discriminatorMappable: Option[NodeWithDiscriminator[Any]] = None,
@@ -32,7 +33,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               topLevelEmitters: Seq[EntryEmitter] = Nil,
                               renderOptions: RenderOptions)
     extends PartEmitter
-    with DialectEmitterHelper {
+    with AmlEmittersHelper {
 
   override def emit(b: PartBuilder): Unit = {
     if (node.isLink) {
@@ -168,7 +169,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
       // and also for use of libraries
       if (rootNode)
-        emitters ++= Seq(ReferencesEmitter(instance, ordering, aliases))
+        emitters ++= Seq(ReferencesEmitter(instance, ordering, references))
 
       // finally emit the object
       b.obj { b =>
@@ -301,7 +302,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                     instance,
                     dialect,
                     ordering,
-                    aliases,
+                    references,
                     discriminator = discriminator.compute(dialectDomainElement),
                     keyPropertyId = keyPropertyId,
                     renderOptions = renderOptions
@@ -379,7 +380,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                           instance,
                                           externalDialect,
                                           ordering,
-                                          aliases,
+                                          references,
                                           emitDialect = true,
                                           renderOptions = renderOptions)))
   }
@@ -471,7 +472,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
           lib.declares.exists(_.id == elem.linkTarget.get.id)
         case _ => false
       }
-      val alias = aliases(lib.get.id)._1
+      val alias = references(lib.get.id)._1
       TextScalarEmitter(s"$alias.${elem.localRefName}", elem.annotations)
         .emit(b)
     }
@@ -513,7 +514,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                         .option()
                         .getOrElse("/")
                         .split("/"),
-                      aliases,
+                      references,
                       renderOptions = renderOptions
                     ))
               }
