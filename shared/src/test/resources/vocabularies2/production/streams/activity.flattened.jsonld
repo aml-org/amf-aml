@@ -175,9 +175,6 @@
           "@id": "http://crm.com/vocabularies/core#Ethnicity"
         },
         {
-          "@id": "http://crm.com/vocabularies/core#Occupation"
-        },
-        {
           "@id": "http://crm.com/vocabularies/core#Individual"
         },
         {
@@ -1041,24 +1038,6 @@
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "http://crm.com/vocabularies/core#Ethnicity/source-map"
-        }
-      ]
-    },
-    {
-      "@id": "http://crm.com/vocabularies/core#Occupation",
-      "@type": [
-        "http://www.w3.org/2002/07/owl#Class",
-        "http://a.ml/vocabularies/document#DomainElement"
-      ],
-      "http://a.ml/vocabularies/core#name": "Occupation",
-      "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
-        {
-          "@id": "http://crm.com/vocabularies/core#CanonicalEntity"
-        }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#sources": [
-        {
-          "@id": "http://crm.com/vocabularies/core#Occupation/source-map"
         }
       ]
     },
@@ -2052,6 +2031,26 @@
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "http://crm.com/vocabularies/core#LastKnownLocation/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "http://crm.com/vocabularies/core#Occupation",
+      "@type": [
+        "http://www.w3.org/2002/07/owl#DatatypeProperty",
+        "http://a.ml/vocabularies/meta#Property",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#displayName": "Occupation",
+      "http://a.ml/vocabularies/core#description": "Self declared information what occupation the person has",
+      "http://www.w3.org/2000/01/rdf-schema#range": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "http://crm.com/vocabularies/core#Occupation/source-map"
         }
       ]
     },
@@ -5545,17 +5544,6 @@
       ]
     },
     {
-      "@id": "http://crm.com/vocabularies/core#Occupation/source-map",
-      "@type": [
-        "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "http://crm.com/vocabularies/core#Occupation/source-map/lexical/element_0"
-        }
-      ]
-    },
-    {
       "@id": "http://crm.com/vocabularies/core#Individual/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -5992,6 +5980,17 @@
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "http://crm.com/vocabularies/core#LastKnownLocation/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "http://crm.com/vocabularies/core#Occupation/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://crm.com/vocabularies/core#Occupation/source-map/lexical/element_0"
         }
       ]
     },
@@ -6657,7 +6656,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/production/streams/crm.yaml#/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/streams/crm.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(568,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(565,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeightUnitofMeasure/source-map",
@@ -8183,17 +8182,12 @@
     {
       "@id": "http://crm.com/vocabularies/core#Hobby/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#Hobby",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(174,2)-(177,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(171,2)-(174,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#Ethnicity/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#Ethnicity",
       "http://a.ml/vocabularies/document-source-maps#value": "[(156,2)-(159,0)]"
-    },
-    {
-      "@id": "http://crm.com/vocabularies/core#Occupation/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#Occupation",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(168,2)-(171,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#Individual/source-map/lexical/element_0",
@@ -8233,7 +8227,7 @@
     {
       "@id": "http://crm.com/vocabularies/core#MilitaryStatus/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MilitaryStatus",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(171,2)-(174,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(168,2)-(171,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#Language/source-map/lexical/element_0",
@@ -8308,387 +8302,392 @@
     {
       "@id": "http://crm.com/vocabularies/core#MainDietaryHabitType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MainDietaryHabitType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(434,4)-(439,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(431,4)-(436,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#NameSuffix/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#NameSuffix",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(244,4)-(249,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(241,4)-(246,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#YearlyIncome/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#YearlyIncome",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(389,4)-(394,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(386,4)-(391,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#Id/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#Id",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(179,4)-(184,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(176,4)-(181,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#MiddleName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MiddleName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(229,4)-(234,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(226,4)-(231,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DeletionCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DeletionCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(369,4)-(374,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(366,4)-(371,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#GenderCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#GenderCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(514,4)-(519,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(511,4)-(516,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#YearlyIncomeCurrencyCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#YearlyIncomeCurrencyCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(394,4)-(399,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(391,4)-(396,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#WebSiteURL/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#WebSiteURL",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(564,4)-(568,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(561,4)-(565,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#MainDisabilityType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MainDisabilityType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(439,4)-(444,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(436,4)-(441,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PrimaryHouseholdId/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PrimaryHouseholdId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(504,4)-(509,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(501,4)-(506,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#NetWorth/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#NetWorth",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(384,4)-(389,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(381,4)-(386,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#HasOptedOutProfiling/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#HasOptedOutProfiling",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(309,4)-(314,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(306,4)-(311,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#NoMergeReasonCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#NoMergeReasonCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(194,4)-(199,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(191,4)-(196,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#ReligionCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#ReligionCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(519,4)-(524,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(516,4)-(521,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#MainPersonalityType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MainPersonalityType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(414,4)-(419,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(411,4)-(416,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#OccupationTypeCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#OccupationTypeCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(539,4)-(544,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(536,4)-(541,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#LastKnownLocation/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#LastKnownLocation",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(484,4)-(489,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(481,4)-(486,0)]"
+    },
+    {
+      "@id": "http://crm.com/vocabularies/core#Occupation/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#Occupation",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(551,4)-(556,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#FirstName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#FirstName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(224,4)-(229,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(221,4)-(226,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#MaritalStatusCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MaritalStatusCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(489,4)-(494,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(486,4)-(491,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#HasOptedOutTracking/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#HasOptedOutTracking",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(279,4)-(284,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(276,4)-(281,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#ResidenceCaptureMethodCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#ResidenceCaptureMethodCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(274,4)-(279,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(271,4)-(276,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#EthnicityCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#EthnicityCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(499,4)-(504,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(496,4)-(501,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DoNotTrackLocationUpdateDate/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DoNotTrackLocationUpdateDate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(294,4)-(299,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(291,4)-(296,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PrimaryHobbyCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PrimaryHobbyCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(559,4)-(564,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(556,4)-(561,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#SourceSystemId/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#SourceSystemId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(199,4)-(204,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(196,4)-(201,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PersonName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PersonName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(214,4)-(219,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(211,4)-(216,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#BirthDate/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#BirthDate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(359,4)-(364,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(356,4)-(361,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#ConsumerCreditScoreProviderName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#ConsumerCreditScoreProviderName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(409,4)-(414,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(406,4)-(411,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DoNotProcessFromUpdateDate/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DoNotProcessFromUpdateDate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(324,4)-(329,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(321,4)-(326,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#Salutation/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#Salutation",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(219,4)-(224,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(216,4)-(221,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#OfficialName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#OfficialName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(249,4)-(254,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(246,4)-(251,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DeathDate/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DeathDate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(509,4)-(514,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(506,4)-(511,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DoNotProcessReasonCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DoNotProcessReasonCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(329,4)-(334,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(326,4)-(331,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#MailingName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MailingName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(254,4)-(259,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(251,4)-(256,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PrimaryLanguageCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PrimaryLanguageCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(379,4)-(384,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(376,4)-(381,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PartyType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PartyType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(184,4)-(189,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(181,4)-(186,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PersonHeight/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PersonHeight",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(444,4)-(449,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(441,4)-(446,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PersonWeightUnitofMeasure/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PersonWeightUnitofMeasure",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(459,4)-(464,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(456,4)-(461,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#HasOptedOutSolicit/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#HasOptedOutSolicit",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(299,4)-(304,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(296,4)-(301,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#ConsumerCreditScore/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#ConsumerCreditScore",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(404,4)-(409,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(401,4)-(406,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DoNotTrackUpdateDate/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DoNotTrackUpdateDate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(284,4)-(289,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(281,4)-(286,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#ChildrenCount/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#ChildrenCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(534,4)-(539,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(531,4)-(536,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#MainPersonalValueType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MainPersonalValueType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(419,4)-(424,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(416,4)-(421,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DoNotProfileFromUpdateDate/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DoNotProfileFromUpdateDate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(314,4)-(319,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(311,4)-(316,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PersonHeightUnitofMeasure/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PersonHeightUnitofMeasure",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(449,4)-(454,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(446,4)-(451,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#MilitaryStatusCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MilitaryStatusCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(549,4)-(554,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(546,4)-(551,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#InfluencerRating/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#InfluencerRating",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(374,4)-(379,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(371,4)-(376,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#SecondFamilyName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#SecondFamilyName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(239,4)-(244,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(236,4)-(241,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#HasOptedOutGeoTracking/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#HasOptedOutGeoTracking",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(289,4)-(294,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(286,4)-(291,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#BirthPlace/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#BirthPlace",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(474,4)-(479,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(471,4)-(476,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#CountryofOrigin/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#CountryofOrigin",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(469,4)-(474,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(466,4)-(471,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#MainLifeAttitudeType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MainLifeAttitudeType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(429,4)-(434,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(426,4)-(431,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#ResidenceCountryCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#ResidenceCountryCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(269,4)-(274,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(266,4)-(271,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#IsHomeOwner/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#IsHomeOwner",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(529,4)-(534,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(526,4)-(531,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#ShouldForget/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#ShouldForget",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(334,4)-(339,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(331,4)-(336,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#NickName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#NickName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(264,4)-(269,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(261,4)-(266,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#FamilyName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#FamilyName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(234,4)-(239,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(231,4)-(236,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#OrderingName/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#OrderingName",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(259,4)-(264,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(256,4)-(261,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#SourceRecordId/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#SourceRecordId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(204,4)-(209,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(201,4)-(206,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#OverAgeNumber/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#OverAgeNumber",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(364,4)-(369,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(361,4)-(366,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#SendIndividualData/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#SendIndividualData",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(344,4)-(349,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(341,4)-(346,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#GlobalPartyId/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#GlobalPartyId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(189,4)-(194,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(186,4)-(191,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DoExtractMyDataUpdateDate/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DoExtractMyDataUpdateDate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(349,4)-(354,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(346,4)-(351,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DoNotMarketFromUpdateDate/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DoNotMarketFromUpdateDate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(304,4)-(309,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(301,4)-(306,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#YearlyIncomeRangeCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#YearlyIncomeRangeCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(399,4)-(404,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(396,4)-(401,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DoForgetMeFromUpdateDate/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DoForgetMeFromUpdateDate",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(339,4)-(344,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(336,4)-(341,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PhotoURL/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PhotoURL",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(209,4)-(214,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(206,4)-(211,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#HasOptedOutProcessing/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#HasOptedOutProcessing",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(319,4)-(324,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(316,4)-(321,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PrimaryCitizenshipCountryCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PrimaryCitizenshipCountryCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(464,4)-(469,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(461,4)-(466,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PersonWeight/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PersonWeight",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(454,4)-(459,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(451,4)-(456,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#PersonLifeStageCode/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#PersonLifeStageCode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(494,4)-(499,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(491,4)-(496,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#ConvictionsCount/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#ConvictionsCount",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(524,4)-(529,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(521,4)-(526,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#MilitaryServiceFlag/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MilitaryServiceFlag",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(544,4)-(549,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(541,4)-(546,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#MainLifeStyleType/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#MainLifeStyleType",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(424,4)-(429,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(421,4)-(426,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#DeathPlace/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#DeathPlace",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(479,4)-(484,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(476,4)-(481,0)]"
     },
     {
       "@id": "http://crm.com/vocabularies/core#CanStorePIIElsewhere/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://crm.com/vocabularies/core#CanStorePIIElsewhere",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(354,4)-(359,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(351,4)-(356,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/declarations/CanonicalIndividualChangeSetNode/property/PersonHeightUnitofMeasure/source-map/lexical/element_1",

@@ -1,5 +1,6 @@
 package amf.validation
 
+import amf.core.validation.SeverityLevels._
 import amf.ProfileName
 import amf.core.validation.core.ValidationSpecification
 import amf.core.validation.core.ValidationSpecification.AML_VALIDATION
@@ -22,14 +23,14 @@ object DialectValidations extends Validations {
     "Missing vocabulary"
   )
 
-  val MissingTermSpecification = validation(
-    "missing-vocabulary-term",
-    "Missing vocabulary term"
+  val MissingClassTermSpecification = validation(
+    "missing-class-term",
+    "Missing class term"
   )
 
   val MissingPropertyTermSpecification = validation(
-    "missing-property-vocabulary-term",
-    "Missing property vocabulary term"
+    "missing-property-term",
+    "Missing property term"
   )
 
   val MissingFragmentSpecification = validation(
@@ -54,6 +55,11 @@ object DialectValidations extends Validations {
 
   val ClosedShapeSpecification = validation(
     "closed-shape",
+    "Invalid property for node"
+  )
+
+  val ClosedShapeSpecificationWarning = validation(
+    "closed-shape-warning",
     "Invalid property for node"
   )
 
@@ -92,14 +98,21 @@ object DialectValidations extends Validations {
     "GUID scalar type declared without unique constraint"
   )
 
-  override val levels: Map[String, Map[ProfileName, String]] = Map()
+  val DuplicateTerm = validation("duplicate-term", "Vocabulary defines duplicate terms")
+
+  override val levels: Map[String, Map[ProfileName, String]] = Map(
+    ClosedShapeSpecificationWarning.id  -> all(WARNING),
+    MissingClassTermSpecification.id    -> all(WARNING),
+    MissingPropertyTermSpecification.id -> all(WARNING)
+  )
 
   override val validations: List[ValidationSpecification] = List(
     ClosedShapeSpecification,
     DialectAmbiguousRangeSpecification,
     InconsistentPropertyRangeValueSpecification,
     MissingPropertyRangeSpecification,
-    MissingTermSpecification,
+    MissingClassTermSpecification,
+    MissingPropertyTermSpecification,
     DifferentTermsInMapKey,
     MissingFragmentSpecification,
     MissingPropertySpecification,
@@ -108,6 +121,7 @@ object DialectValidations extends Validations {
     InvalidUnionType,
     InvalidDialectPatch,
     DialectError,
-    GuidRangeWithoutUnique
+    GuidRangeWithoutUnique,
+    DuplicateTerm
   )
 }

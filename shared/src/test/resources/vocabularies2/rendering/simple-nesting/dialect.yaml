@@ -1,0 +1,28 @@
+#%Dialect 1.0
+dialect: Movie
+version: "1.0"
+nodeMappings:
+  Movie:
+    classTerm: movies.Movie
+    mapping:
+      title:
+        propertyTerm: movies.title
+        range: string
+      directedBy:
+        propertyTerm: movies.directedBy
+        range: Director
+  Director:
+    classTerm: movies.Director
+    mapping:
+      name:
+        propertyTerm: schema.name
+        range: string
+      surname:
+        propertyTerm: schema.surname
+        range: string
+documents:
+  root:
+    encodes: Movie
+external:
+  movies: http://schema.org/movies/
+  schema: http://schema.org/

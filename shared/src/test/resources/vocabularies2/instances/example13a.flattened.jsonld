@@ -121,7 +121,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/instances/example13a.raml#/encodes/ls/0/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/vocab#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(7,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(6,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/instances/example13a.raml#/encodes/ls/1/source-map/lexical/element_1",
@@ -131,7 +131,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/instances/example13a.raml#/encodes/ls/1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/vocab#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(10,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(9,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/instances/example13a.raml",

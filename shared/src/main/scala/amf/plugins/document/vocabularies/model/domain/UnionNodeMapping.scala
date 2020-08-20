@@ -17,7 +17,7 @@ case class UnionNodeMapping(fields: Fields, annotations: Annotations)
 
   override def meta: Obj = UnionNodeMappingModel
 
-  override def linkCopy(): Linkable                                                             = UnionNodeMapping().withId(id)
+  override def linkCopy(): UnionNodeMapping                                                             = UnionNodeMapping().withId(id)
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = UnionNodeMapping.apply
   override def componentId: String                                                              = "/" + name.value().urlComponentEncoded
 }
