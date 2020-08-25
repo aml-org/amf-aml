@@ -636,24 +636,24 @@ trait DialectInstancesParsingTest extends DialectTests {
 
   multiGoldenTest("Generate instance with invalid property terms", "/invalids/schema-uri/instance.%s") { config =>
     withDialect(
-        "/invalids/schema-uri/dialect.yaml",
-        "/invalids/schema-uri/instance.yaml",
-        config.golden,
-        VocabularyYamlHint,
-        target = Amf,
-        renderOptions = Some(config.renderOptions)
+      "/invalids/schema-uri/dialect.yaml",
+      "/invalids/schema-uri/instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions)
     )
   }
 
   multiGoldenTest("Instance with similar fragment names minor", "minor.%s") { config =>
     withDialect(
-        "dialect.yaml",
-        "minor.yaml",
-        config.golden,
-        VocabularyYamlHint,
-        target = Amf,
-        renderOptions = Some(config.renderOptions),
-        directory = "shared/src/test/resources/vocabularies2/instances/colliding-fragments"
+      "dialect.yaml",
+      "minor.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = "shared/src/test/resources/vocabularies2/instances/colliding-fragments"
     )
   }
 
@@ -666,6 +666,18 @@ trait DialectInstancesParsingTest extends DialectTests {
       target = Amf,
       renderOptions = Some(config.renderOptions),
       directory = "shared/src/test/resources/vocabularies2/instances/colliding-fragments"
+    )
+  }
+
+  multiGoldenTest("Parse mapKey and mapValue", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = "shared/src/test/resources/vocabularies2/instances/map-key-value"
     )
   }
 
