@@ -1,0 +1,5 @@
+#%Validation 1.0
+profile: RAML
+validations:
+  invalidDiscriminator: Must define a valid discriminator
+  illegalInheritance: Illegal inheritance defined between types A & B

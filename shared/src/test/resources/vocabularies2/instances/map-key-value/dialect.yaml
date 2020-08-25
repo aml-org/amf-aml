@@ -1,0 +1,30 @@
+#%Dialect 1.0
+dialect: Validation
+version: 1.0
+nodeMappings:
+  Report:
+    classTerm: validation.Report
+    mapping:
+      profile:
+        propertyTerm: validation.profile
+        range: string
+      validations:
+        propertyTerm: validation.validations
+        range: Validation
+        allowMultiple: true
+        mapKey: name
+        mapValue: message
+  Validation:
+    classTerm: validation.Validation
+    mapping:
+      name:
+        propertyTerm: validation.name
+        range: string
+      message:
+        propertyTerm: validation.value
+        range: string
+documents:
+  root:
+    encodes: Report
+external:
+  validation: http://test.com/validation#
