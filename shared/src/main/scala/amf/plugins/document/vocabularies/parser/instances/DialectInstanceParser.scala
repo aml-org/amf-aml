@@ -367,7 +367,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                                       discriminatorMapping: Map[String, NodeMapping],
                                       discriminator: Option[String],
                                       nodeMap: YMap,
-                                      mapProperties: Seq[String]): Seq[NodeMapping] = {
+                                      additionalProperties: Seq[String]): Seq[NodeMapping] = {
     discriminator match {
       // Using explicit discriminator
       case Some(propertyName) =>
@@ -388,7 +388,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         val properties: Set[String] = nodeMap.entries.map(_.key.as[YScalar].text).toSet
         unionMappings.filter { mapping =>
           val baseProperties =
-            mapping.propertiesMapping().filter(pm => !mapProperties.contains(pm.nodePropertyMapping().value()))
+            mapping.propertiesMapping().filter(pm => !additionalProperties.contains(pm.nodePropertyMapping().value()))
           val mappingRequiredSet: Set[String] = baseProperties
             .filter(_.minCount().value() > 0)
             .map(_.name().value())
@@ -407,36 +407,46 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       defaultId: String,
       path: Seq[String],
       ast: YNode,
-      mappableWithDiscriminator: NodeWithDiscriminator[T],
+      unionMapping: NodeWithDiscriminator[T],
       additionalProperties: Map[String, Any]): Option[DialectDomainElement] = {
+
     // potential node range based in the objectRange
-    val unionMappings = mappableWithDiscriminator.objectRange().map { nodeMappingId =>
-      ctx.dialect.declares.find(_.id == nodeMappingId.value()) match {
-        case Some(nodeMapping) => Some(nodeMapping)
-        case None =>
-          ctx.eh.violation(DialectError,
-                           defaultId,
-                           s"Cannot find mapping for property ${mappableWithDiscriminator.id} in union",
-                           ast)
+    val unionMembers: Seq[NodeMapping] = unionMapping.objectRange().flatMap { memberId =>
+      ctx.dialect.declares.find(_.id == memberId.value()) match {
+        case Some(nodeMapping: NodeMapping) => Some(nodeMapping)
+        case _ =>
+          ctx.eh
+            .violation(DialectError, defaultId, s"Cannot find mapping for property ${unionMapping.id} in union", ast)
           None
       }
-    } collect { case Some(mapping: NodeMapping) => mapping }
+    }
+
     // potential node range based in discriminators map
-    val discriminatorsMapping =
-      Option(mappableWithDiscriminator.typeDiscriminator()).getOrElse(Map()).foldLeft(Map[String, NodeMapping]()) {
-        case (acc, (alias, mappingId)) =>
-          ctx.dialect.declares.find(_.id == mappingId) match {
-            case Some(nodeMapping: NodeMapping) => acc + (alias -> nodeMapping)
-            case _ =>
-              ctx.eh.violation(DialectError,
-                               defaultId,
-                               s"Cannot find mapping for property $mappingId in discriminator value '$alias' in union",
-                               ast)
-              acc
+    val discriminatorsMapping: Map[String, NodeMapping] = {
+      Option(unionMapping.typeDiscriminator()) match {
+        case Some(discriminatorValueMapping) =>
+          discriminatorValueMapping.flatMap {
+            case (discriminatorValue, nodeMappingId) =>
+              ctx.dialect.declares.find(_.id == nodeMappingId) match {
+                case Some(nodeMapping: NodeMapping) => Some(discriminatorValue -> nodeMapping)
+                case _ =>
+                  ctx.eh.violation(
+                      DialectError,
+                      defaultId,
+                      s"Cannot find mapping for property $nodeMappingId in discriminator value '$discriminatorValue' in union",
+                      ast)
+                  None
+              }
           }
+        case None =>
+          Map.empty
       }
+    }
+
     // all possible mappings combining objectRange and type discriminator
-    val allPossibleMappings = (unionMappings ++ discriminatorsMapping.values).distinct
+    // TODO: we should choose either of these, not both
+    // TODO: if these sets are non-equal we should throw a validation at dialect definition time
+    val allPossibleMappings = (unionMembers ++ discriminatorsMapping.values).distinct
 
     ast.tagType match {
       case YType.Map =>
@@ -454,9 +464,9 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
             }
           case _ =>
             val mappings = findCompatibleMapping(defaultId,
-                                                 unionMappings,
+                                                 unionMembers,
                                                  discriminatorsMapping,
-                                                 mappableWithDiscriminator.typeDiscriminatorName().option(),
+                                                 unionMapping.typeDiscriminatorName().option(),
                                                  nodeMap,
                                                  additionalProperties.keys.toSeq)
             if (mappings.isEmpty) {
