@@ -681,6 +681,18 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("Parse node with different terms", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = "shared/src/test/resources/vocabularies2/instances/node-with-different-class-terms"
+    )
+  }
+
   test("Clone instance from dialect") {
     val context1 = new CompilerContextBuilder(s"file://$basePath/dialect31.raml",
                                               platform,

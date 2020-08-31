@@ -1,0 +1,23 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+nodeMappings:
+  RootNode:
+    classTerm: vocab.RootTerm
+    mapping:
+      myTerm:
+        propertyTerm: vocab.myTerm
+        range: Term
+        # myTerm [property]   -(property term)->    vocab.myTerm    -(range)->        vocab.Term1
+        # myTerm [property]   -(range)->            Term [node]     -(class term)->   vocab.Term2
+  Term:
+    classTerm: vocab.Term2
+    mapping:
+      name:
+        propertyTerm: vocab.name
+        range: string
+documents:
+  root:
+    encodes: RootNode
+uses:
+  vocab: vocabulary.yaml

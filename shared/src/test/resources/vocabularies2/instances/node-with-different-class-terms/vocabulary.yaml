@@ -1,0 +1,36 @@
+#%Vocabulary 1.0
+
+vocabulary: Node with different class terms
+
+usage: Test
+
+base: http://a.ml/
+
+external:
+  schema-org: http://schema.org/
+
+classTerms:
+  RootTerm:
+    displayName: VocabularyClassTerm
+    description: This is the class term as defined by the vocabulary
+    properties:
+      - myTerm
+  Term1:
+    displayName: Term1
+    description: This is Term1
+    properties:
+      - name
+  Term2:
+    displayName: Term2
+    description: This is Term2
+    properties:
+      - name
+propertyTerms:
+  name:
+    displayName: Name
+    description: A free text name for the asset.
+    range: string
+  myTerm:
+    displayName: myTerm
+    description: myTerm property in the root term
+    range: Term1
