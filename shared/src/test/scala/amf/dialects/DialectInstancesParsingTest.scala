@@ -10,18 +10,6 @@ import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DialectInstancesParsingTest2 extends DialectTests {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
-  val basePath = "shared/src/test/resources/vocabularies2/instances/"
-
-  multiGoldenTest("parse 33b test", "example33b.%s") { config =>
-    withDialect("dialect33.raml", "example33b.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
-  }
-
-}
-
 trait DialectInstancesParsingTest extends DialectTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
@@ -445,16 +433,28 @@ trait DialectInstancesParsingTest extends DialectTests {
                 renderOptions = Some(config.renderOptions))
   }
 
-  multiGoldenTest("parse 33 test", "example33.%s") { config =>
-    withDialect("dialect33.raml", "example33.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+  multiGoldenTest("Parse instance with simple native link", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/simple-native-links/"
+    )
   }
 
-  multiGoldenTest("parse 33b test", "example33b.%s") { config =>
-    withDialect("dialect33.raml", "example33b.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
-  }
-
-  multiGoldenTest("parse 34 test", "example34.%s") { config =>
-    withDialect("dialect34.raml", "example34.raml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+  multiGoldenTest("Parse instance with native links and template ids", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/native-links-with-template-ids/"
+    )
   }
 
   if (platform.name == "jvm") {
@@ -658,16 +658,22 @@ trait DialectInstancesParsingTest extends DialectTests {
     withDialect("dialect31.yaml", config.source, "example31.yaml", AmfJsonHint, target = Aml)
   }
 
-  multiSourceTest("generate 33 test", "example33.%s") { config =>
-    withDialect("dialect33.raml", config.source, "example33.raml", AmfJsonHint, target = Aml)
+  multiSourceTest("Generate instance with simple native link", "instance.%s") { config =>
+    withDialect("dialect.yaml",
+                config.source,
+                "instance.yaml",
+                AmfJsonHint,
+                target = Aml,
+                directory = s"$basePath/simple-native-links/")
   }
 
-  multiSourceTest("generate 33b test", "example33b.%s") { config =>
-    withDialect("dialect33.raml", config.source, "example33b.raml", AmfJsonHint, target = Aml)
-  }
-
-  multiSourceTest("generate 34 test", "example34.%s") { config =>
-    withDialect("dialect34.raml", config.source, "example34.raml", AmfJsonHint, target = Aml)
+  multiSourceTest("Generate instance with native links and template ids", "instance.%s") { config =>
+    withDialect("dialect.yaml",
+                config.source,
+                "instance.yaml",
+                AmfJsonHint,
+                target = Aml,
+                directory = s"$basePath/native-links-with-template-ids/")
   }
 
   multiGoldenTest("Generate instance with invalid property terms", "/invalids/schema-uri/instance.%s") { config =>
@@ -677,7 +683,7 @@ trait DialectInstancesParsingTest extends DialectTests {
       config.golden,
       VocabularyYamlHint,
       target = Amf,
-      renderOptions = Some(config.renderOptions)
+     renderOptions = Some(config.renderOptions)
     )
   }
 
@@ -699,8 +705,8 @@ trait DialectInstancesParsingTest extends DialectTests {
       "publicMinor.yaml",
       config.golden,
       VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
+      target = Amf, renderOptions = Some(config.renderOptions)
+    ,
       directory = "shared/src/test/resources/vocabularies2/instances/colliding-fragments"
     )
   }
