@@ -59,7 +59,6 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                        instance,
                                        dialect,
                                        ordering,
-                                       aliases,
                                        discriminator = discriminatorProperty,
                                        renderOptions = renderOptions).emit(b)
                   }

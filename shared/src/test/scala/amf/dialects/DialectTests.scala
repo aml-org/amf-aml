@@ -13,18 +13,10 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.Assertion
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest {
+trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with DialectHelper {
   val basePath: String
-
-  def init(): Future[Unit] = {
-    amf.core.AMF.init().map { _ =>
-      amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
-    }
-  }
 
   protected def withDialect(dialect: String,
                             source: String,
@@ -85,17 +77,6 @@ trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest {
     }
   }
 
-  final def parseAndRegisterDialect(uri: String, platform: Platform, hint: Hint): Future[BaseUnit] =
-    for {
-      _ <- init()
-      r <- new AMFCompiler(new CompilerContextBuilder(uri, platform, DefaultParserErrorHandler.withRun()).build(),
-                           None,
-                           Some(hint.vendor.name))
-        .build()
-    } yield {
-      r
-    }
-
   override def defaultRenderOptions: RenderOptions = RenderOptions().withPrettyPrint.withSourceMaps
 
   final def cycle(source: String,
@@ -119,6 +100,28 @@ trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest {
 
   }
   def transform(unit: BaseUnit): BaseUnit = unit
+}
+
+trait DialectHelper {
+
+  def init()(implicit ec: ExecutionContext): Future[Unit] = {
+    amf.core.AMF.init().map { _ =>
+      amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
+      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
+    }
+  }
+
+  final def parseAndRegisterDialect(uri: String, platform: Platform, hint: Hint)(implicit ec: ExecutionContext): Future[BaseUnit] =
+    for {
+      _ <- init()
+      r <- new AMFCompiler(new CompilerContextBuilder(uri, platform, DefaultParserErrorHandler.withRun()).build(),
+        None,
+        Some(hint.vendor.name))
+        .build()
+    } yield {
+      r
+    }
 }
 
 abstract class DialectInstanceResolutionCycleTests extends DialectTests {

@@ -6,12 +6,12 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
 import amf.core.model.DataType
 import amf.core.model.document.EncodesModel
-import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfScalar, Annotation, DomainElement}
 import amf.core.parser.{Annotations, SearchScope, _}
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.annotations.{CustomId, JsonPointerRef, RefInclude}
+import amf.plugins.document.vocabularies.annotations.{CustomId, DiscriminatorField, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
@@ -401,6 +401,14 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     }
   }
 
+  private def discriminatorAnnotation(discriminatorName: Option[String], nodeMap: YMap): Option[Annotation] = {
+    discriminatorName.flatMap { propertyName =>
+      nodeMap.entries.find(_.key.as[YScalar].text == propertyName).map { entry =>
+        DiscriminatorField(propertyName,entry.value.as[YScalar].text)
+      }
+    }
+  }
+
   protected def parseObjectUnion[T <: DomainElement](
       defaultId: String,
       path: Seq[String],
@@ -461,10 +469,11 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               ref
             }
           case _ =>
+            val discriminatorName = unionMapping.typeDiscriminatorName().option()
             val mappings = findCompatibleMapping(defaultId,
                                                  unionMembers,
                                                  discriminatorsMapping,
-                                                 unionMapping.typeDiscriminatorName().option(),
+                                                 discriminatorName,
                                                  nodeMap,
                                                  additionalProperties.keys.toSeq)
             if (mappings.isEmpty) {
@@ -500,6 +509,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                 }
               }
               node.withInstanceTypes(instanceTypes ++ Seq(mappings.head.id))
+              discriminatorAnnotation(discriminatorName, nodeMap).foreach(node.add)
               Some(node)
             }
             else {

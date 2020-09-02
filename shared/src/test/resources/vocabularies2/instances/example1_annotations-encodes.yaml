@@ -1,0 +1,12 @@
+str: hey
+(a.hey): hey
+int: 10
+(b.ho): ho
+float: 12.35
+x-a-hey2: 1
+boolean: true
+x-b-ho2: 2
+date: 2017-09-18
+(anon1): true
+timestamp: 2018-08-30T09:00:00Z
+x-anon2: 2.3[
