@@ -62,7 +62,6 @@ case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Diale
         instance,
         dialect,
         ordering,
-        references,
         None,
         rootNode = true,
         topLevelEmitters = externalEmitters(instance, ordering) ++ entry,

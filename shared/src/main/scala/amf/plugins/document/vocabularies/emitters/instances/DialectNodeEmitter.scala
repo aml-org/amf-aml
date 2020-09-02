@@ -24,16 +24,16 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               instance: DialectInstanceUnit,
                               dialect: Dialect,
                               ordering: SpecOrdering,
-                              references: Map[RefId, (Alias, ImportLocation)],
                               keyPropertyId: Option[String] = None,
                               rootNode: Boolean = false,
-                              discriminatorMappable: Option[NodeWithDiscriminator[Any]] = None,
                               discriminator: Option[(String, String)] = None,
                               emitDialect: Boolean = false,
                               topLevelEmitters: Seq[EntryEmitter] = Nil,
                               renderOptions: RenderOptions)
     extends PartEmitter
     with AmlEmittersHelper {
+
+  lazy val references: Map[RefId, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(instance)
 
   override def emit(b: PartBuilder): Unit = {
     if (node.isLink) {
@@ -302,7 +302,6 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                     instance,
                     dialect,
                     ordering,
-                    references,
                     discriminator = discriminator.compute(dialectDomainElement),
                     keyPropertyId = keyPropertyId,
                     renderOptions = renderOptions
@@ -380,7 +379,6 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                           instance,
                                           externalDialect,
                                           ordering,
-                                          references,
                                           emitDialect = true,
                                           renderOptions = renderOptions)))
   }

@@ -1,0 +1,5 @@
+a:
+  hey:
+    a2: ho
+  lets:
+    $ref: "#/As/Go"

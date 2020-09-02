@@ -1,0 +1,3 @@
+b:
+  a:
+    $ref: fragment8.yaml#/
