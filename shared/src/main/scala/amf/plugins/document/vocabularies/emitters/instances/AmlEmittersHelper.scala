@@ -10,7 +10,7 @@ import amf.core.parser.Position.ZERO
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectLibrary, ExternalContext}
-import amf.plugins.document.vocabularies.model.domain.NodeMappable
+import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, UnionNodeMapping}
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.Regexes.Path
 
@@ -118,6 +118,18 @@ trait AmlEmittersHelper {
         result
       case None =>
         throw new Exception(s"Cannot find node mapping $nodeMappingId")
+    }
+  }
+
+  protected def findAllNodeMappings(mappableId: String): Seq[NodeMapping] = {
+    findNodeMappingById(mappableId) match {
+      case (_, nodeMapping: NodeMapping) => Seq(nodeMapping)
+      case (_, unionMapping: UnionNodeMapping) =>
+        val mappables = unionMapping.objectRange() map { rangeId =>
+          findNodeMappingById(rangeId.value())._2
+        }
+        mappables.collect { case nodeMapping: NodeMapping => nodeMapping }
+      case _ => Nil
     }
   }
 
