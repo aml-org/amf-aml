@@ -1,0 +1,25 @@
+#%Dialect 1.0
+dialect: エア
+version: エアエア
+nodeMappings:
+  ノードB:
+    classTerm: 使2.エアウェイ
+    mapping:
+      za:
+        propertyTerm: 使用する.エア
+        range: ノードA
+  ノードA:
+    classTerm: 使用する.エアウェイ
+    mapping:
+      エア:
+        propertyTerm: 使2.エア
+        range: string
+documents:
+  root:
+    encodes: ノードA
+    declares:
+      ーB: ノードB
+uses:
+  使2: vocab2.yaml
+external:
+  使用する: http://test.com/v2#

@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml/externals/v2",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml/externals/v2",
       "@type": [
         "http://www.w3.org/2002/07/owl#Ontology",
         "http://a.ml/vocabularies/meta#ExternalVocabulary",
@@ -11,10 +11,10 @@
       "http://a.ml/vocabularies/meta#base": "http://test.com/v2#"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB"
         }
       ],
       "@type": [
@@ -26,20 +26,20 @@
       ],
       "http://a.ml/vocabularies/meta#externals": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml/externals/v2"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml/externals/v2"
         }
       ],
-      "http://a.ml/vocabularies/document#location": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml",
+      "http://a.ml/vocabularies/document#location": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml",
       "http://a.ml/vocabularies/document#version": "2.1.0",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/source-map"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/source-map"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB",
       "@type": [
         "http://a.ml/vocabularies/meta#NodeMapping",
         "http://www.w3.org/ns/shacl#Shape",
@@ -53,28 +53,28 @@
       "http://a.ml/vocabularies/core#name": "nodeB",
       "http://www.w3.org/ns/shacl#property": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/property/za"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/source-map"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/source-map"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/source-map",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/source-map/lexical/element_0"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/property/za",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za",
       "@type": [
         "http://a.ml/vocabularies/meta#NodePropertyMapping",
         "http://a.ml/vocabularies/document#DomainElement"
@@ -92,68 +92,68 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/property/za/source-map"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za/source-map"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/source-map",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/source-map/lexical/element_2"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/source-map/lexical/element_2"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/source-map/lexical/element_0"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/source-map/lexical/element_0"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/source-map/lexical/element_1"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(11,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/property/za/source-map",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/property/za/source-map/lexical/element_1"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za/source-map/lexical/element_1"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/property/za/source-map/lexical/element_0"
+          "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/source-map/lexical/element_2",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,7)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/source-map/lexical/element_0",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(9,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(9,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/property/za/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/property/za",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,0)-(9,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.raml#/declarations/nodeB/property/za/source-map/lexical/element_0",
+      "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,6)-(6,8)]"
     }
