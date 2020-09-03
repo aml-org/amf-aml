@@ -56,7 +56,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                       discriminator.flatMap(_.compute(decl))
                     DialectNodeEmitter(decl,
                                        nodeMappable,
-                                       instance,
+                                       instance.references,
                                        dialect,
                                        ordering,
                                        discriminator = discriminatorProperty,

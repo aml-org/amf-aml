@@ -56,14 +56,13 @@ case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Diale
 
     val element = encoded.encodes.asInstanceOf[DialectDomainElement]
 
-    DialectNodeEmitter(
+    new RootDialectNodeEmitter(
         element,
         rootNodeMapping,
         instance,
         dialect,
         ordering,
         None,
-        rootNode = true,
         topLevelEmitters = externalEmitters(instance, ordering) ++ entry,
         discriminator = discriminator.flatMap(_.compute(element)),
         renderOptions = renderOptions
