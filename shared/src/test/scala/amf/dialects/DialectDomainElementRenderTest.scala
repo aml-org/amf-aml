@@ -3,7 +3,7 @@ package amf.dialects
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.io.FileAssertionTest
-import amf.core.model.document.{BaseUnit, EncodesModel}
+import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.SyamlParsedDocument
 import amf.core.remote.{Aml, Hint, VocabularyYamlHint}
@@ -27,6 +27,12 @@ class DialectDomainElementRenderTest extends DialectElementTests {
   val encodes: BaseUnit => Option[DomainElement] = {
     case e: EncodesModel =>
       Some(e.encodes)
+    case _ => None
+  }
+
+  def declares(i: Int): BaseUnit => Option[DomainElement] = {
+    case d: DeclaresModel =>
+      Some(d.declares.head)
     case _ => None
   }
 
@@ -60,6 +66,10 @@ class DialectDomainElementRenderTest extends DialectElementTests {
 
   test("render 8c $ref test") {
     renderElement("dialect8.yaml", "example8c.yaml", encodes, "example8c-encodes.yaml")
+  }
+
+  test("render 9 test library reference using alias") {
+    renderElement("dialect9.yaml", "example9.yaml", declares(0), "example9-encodes.yaml")
   }
 
   test("render 10a test") {
@@ -140,7 +150,7 @@ trait DialectElementTests extends AsyncFunSuite with FileAssertionTest with Dial
   private def renderDomainElement(shape: Option[DomainElement],
                                   instance: DialectInstanceUnit,
                                   dialect: Dialect): String = {
-    val node     = shape.map(DomainElementEmitter.emit(_, instance, dialect)).getOrElse(YNode.Empty)
+    val node     = shape.map(DomainElementEmitter.emit(_, dialect, UnhandledErrorHandler)).getOrElse(YNode.Empty)
     val document = SyamlParsedDocument(document = YDocument(node))
     SYamlSyntaxPlugin.unparse("application/yaml", document).getOrElse("").toString
   }
