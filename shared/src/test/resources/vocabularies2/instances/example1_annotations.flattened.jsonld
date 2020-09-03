@@ -24,7 +24,7 @@
       "@id": "file://shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes",
       "@type": [
         "http://test.com/tmp#Test",
-        "file://shared/src/test/resources/vocabularies2/instances/dialect1.raml#/declarations/RootNode",
+        "file://shared/src/test/resources/vocabularies2/instances/dialect1.yaml#/declarations/RootNode",
         "http://a.ml/vocabularies/meta#DialectDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -385,7 +385,7 @@
       ],
       "http://a.ml/vocabularies/meta#definedBy": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/dialect1.raml"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/dialect1.yaml"
         }
       ],
       "http://a.ml/vocabularies/meta#externals": [

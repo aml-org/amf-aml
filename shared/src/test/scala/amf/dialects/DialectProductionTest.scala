@@ -18,7 +18,7 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
   }
 
   multiGoldenTest("Can parse validation dialect eee", "validation_dialect.%s") { config =>
-    cycle("validation_dialect.raml",
+    cycle("validation_dialect.yaml",
           config.golden,
           VocabularyYamlHint,
           target = Amf,
@@ -26,51 +26,51 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
   }
 
   test("Can parse validation dialect instance") {
-    withDialect("validation_dialect.raml",
-                "validation_instance1.raml",
-                "validation_instance1.raml.raml",
+    withDialect("validation_dialect.yaml",
+                "validation_instance1.yaml",
+                "validation_instance1.yaml.yaml",
                 VocabularyYamlHint,
                 target = Aml)
   }
 
   multiGoldenTest("Can parse validation dialect cfg1 instance", "example1_instance.%s") { config =>
     withDialect(
-        "example1.raml",
-        "example1_instance.raml",
-        config.golden,
-        VocabularyYamlHint,
-        target = Amf,
-        directory = s"${basePath}cfg/",
-        renderOptions = Some(config.renderOptions)
+      "example1.yaml",
+      "example1_instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"${basePath}cfg/",
+      renderOptions = Some(config.renderOptions)
     )
   }
 
   multiGoldenTest("Can parse validation dialect cfg2 instance", "example2_instance.%s") { config =>
     withDialect(
-        "example2.raml",
-        "example2_instance.raml",
-        config.golden,
-        VocabularyYamlHint,
-        target = Amf,
-        directory = s"${basePath}cfg/",
-        renderOptions = Some(config.renderOptions)
+      "example2.yaml",
+      "example2_instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"${basePath}cfg/",
+      renderOptions = Some(config.renderOptions)
     )
   }
 
   multiGoldenTest("Can parse validation dialect cfg3 instance", "example3_instance.%s") { config =>
     withDialect(
-        "example3.raml",
-        "example3_instance.raml",
-        config.golden,
-        VocabularyYamlHint,
-        target = Amf,
-        directory = s"${basePath}cfg/",
-        renderOptions = Some(config.renderOptions)
+      "example3.yaml",
+      "example3_instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"${basePath}cfg/",
+      renderOptions = Some(config.renderOptions)
     )
   }
 
   multiGoldenTest("Can parse ABOUT dialect", "ABOUT-dialect.%s") { config =>
-    cycle("ABOUT-dialect.raml",
+    cycle("ABOUT-dialect.yaml",
           config.golden,
           VocabularyYamlHint,
           target = Amf,
@@ -79,26 +79,26 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
   }
 
   test("Can parse and generated ABOUT dialect") {
-    cycle("ABOUT-dialect.raml",
-          "ABOUT-dialect.raml.raml",
+    cycle("ABOUT-dialect.yaml",
+          "ABOUT-dialect.yaml.yaml",
           VocabularyYamlHint,
           target = Aml,
           directory = s"${basePath}ABOUT/")
   }
 
   test("Can parse and generate ABOUT dialect instance") {
-    withDialect("ABOUT-dialect.raml",
+    withDialect("ABOUT-dialect.yaml",
                 "ABOUT.yaml",
-                "ABOUT.yaml.raml",
+                "ABOUT.yaml.yaml",
                 VocabularyYamlHint,
                 target = Aml,
                 directory = s"${basePath}ABOUT/")
   }
 
   test("Can parse and generate ABOUT-github dialect instance") {
-    withDialect("ABOUT-GitHub-dialect.raml",
+    withDialect("ABOUT-GitHub-dialect.yaml",
                 "example.yaml",
-                "example.yaml.raml",
+                "example.yaml.yaml",
                 VocabularyYamlHint,
                 target = Aml,
                 directory = s"${basePath}ABOUT/github/")
@@ -106,18 +106,18 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
 
   multiGoldenTest("Can parse ABOUT-hosted dialect instance", "ABOUT_hosted.%s") { config =>
     withDialect(
-        "ABOUT-hosted-vcs-dialect.yaml",
-        "ABOUT_hosted.yaml",
-        config.golden,
-        VocabularyYamlHint,
-        target = Amf,
-        directory = s"${basePath}ABOUT/",
-        renderOptions = Some(config.renderOptions)
+      "ABOUT-hosted-vcs-dialect.yaml",
+      "ABOUT_hosted.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"${basePath}ABOUT/",
+      renderOptions = Some(config.renderOptions)
     )
   }
 
   multiGoldenTest("Can parse and generate the Instagram dialect", "dialect.%s") { config =>
-    cycle("dialect.raml",
+    cycle("dialect.yaml",
           config.golden,
           VocabularyYamlHint,
           target = Amf,
@@ -126,8 +126,8 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
   }
 
   multiGoldenTest("Can parse and generate Instance dialect instance 1", "instance1.%s") { config =>
-    withDialect("dialect.raml",
-                "instance1.raml",
+    withDialect("dialect.yaml",
+                "instance1.yaml",
                 config.golden,
                 VocabularyYamlHint,
                 target = Amf,
@@ -136,8 +136,8 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
   }
 
   multiGoldenTest("Can parse and generate Instance dialect instance 2", "instance2.%s") { config =>
-    withDialect("dialect.raml",
-                "instance2.raml",
+    withDialect("dialect.yaml",
+                "instance2.yaml",
                 config.golden,
                 VocabularyYamlHint,
                 target = Amf,

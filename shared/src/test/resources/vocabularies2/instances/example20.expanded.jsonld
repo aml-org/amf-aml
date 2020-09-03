@@ -1,6 +1,6 @@
 [
   {
-    "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml",
+    "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.yaml",
     "@type": [
       "http://a.ml/vocabularies/meta#DialectInstance",
       "http://a.ml/vocabularies/document#Document",
@@ -10,15 +10,15 @@
     ],
     "http://a.ml/vocabularies/meta#definedBy": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/dialect20.raml"
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/dialect20.yaml"
       }
     ],
     "http://a.ml/vocabularies/document#encodes": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/encodes",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.yaml#/encodes",
         "@type": [
           "http://a.ml/vocabularies/ex1vocab20#Test",
-          "file://shared/src/test/resources/vocabularies2/instances/dialect20.raml#/declarations/RootNode",
+          "file://shared/src/test/resources/vocabularies2/instances/dialect20.yaml#/declarations/RootNode",
           "http://a.ml/vocabularies/meta#DialectDomainElement",
           "http://a.ml/vocabularies/document#DomainElement"
         ],
@@ -29,26 +29,26 @@
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/encodes/source-map",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.yaml#/encodes/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/encodes/source-map/lexical/element_1",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.yaml#/encodes/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/encodes"
+                    "@value": "file://shared/src/test/resources/vocabularies2/instances/example20.yaml#/encodes"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,0)-(2,18)]"
+                    "@value": "[(2,0)-(3,0)]"
                   }
                 ]
               },
               {
-                "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/encodes/source-map/lexical/element_0",
+                "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.yaml#/encodes/source-map/lexical/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "http://a.ml/vocabularies/ex1vocab20#a"
@@ -56,7 +56,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,0)-(2,18)]"
+                    "@value": "[(2,0)-(3,0)]"
                   }
                 ]
               }
@@ -77,21 +77,21 @@
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
       {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/source-map",
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.yaml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
-            "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.raml#/source-map/lexical/element_0",
+            "@id": "file://shared/src/test/resources/vocabularies2/instances/example20.yaml#/source-map/lexical/element_0",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
-                "@value": "file://shared/src/test/resources/vocabularies2/instances/example20.raml"
+                "@value": "file://shared/src/test/resources/vocabularies2/instances/example20.yaml"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "[(2,0)-(2,18)]"
+                "@value": "[(2,0)-(3,0)]"
               }
             ]
           }

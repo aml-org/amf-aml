@@ -1,32 +1,32 @@
 {
   "@graph": [
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes",
       "@type": [
         "http://test.com/tmp#Test",
-        "file://shared/src/test/resources/vocabularies2/instances/dialect6.raml#/declarations/RootNode",
+        "file://shared/src/test/resources/vocabularies2/instances/dialect6.yaml#/declarations/RootNode",
         "http://a.ml/vocabularies/meta#DialectDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://test.com/tmp#a": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/source-map"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/source-map"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey",
       "@type": [
         "http://test.com/tmp#A",
-        "file://shared/src/test/resources/vocabularies2/instances/dialect6.raml#/declarations/A",
+        "file://shared/src/test/resources/vocabularies2/instances/dialect6.yaml#/declarations/A",
         "http://a.ml/vocabularies/meta#DialectDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -34,126 +34,126 @@
       "http://test.com/tmp#a1": "hey",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey/source-map"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey/source-map"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets",
       "@type": [
         "http://test.com/tmp#A",
-        "file://shared/src/test/resources/vocabularies2/instances/dialect6.raml#/declarations/A",
+        "file://shared/src/test/resources/vocabularies2/instances/dialect6.yaml#/declarations/A",
         "http://a.ml/vocabularies/meta#DialectDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/document#link-target": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go"
         }
       ],
       "http://a.ml/vocabularies/document#link-label": "#/As/Go",
       "http://test.com/tmp#a1": "lets",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets/source-map"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/source-map",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/source-map/lexical/element_1"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/source-map/lexical/element_1"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/source-map/lexical/element_0"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey/source-map",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey/source-map/lexical/element_2"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey/source-map/lexical/element_2"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey/source-map/lexical/element_0"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey/source-map/lexical/element_0"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey/source-map/lexical/element_1"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey/source-map/lexical/element_1"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets/source-map",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#json-pointer-ref": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets/source-map/json-pointer-ref/element_0"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/json-pointer-ref/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets/source-map/lexical/element_1"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/lexical/element_1"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets/source-map/lexical/element_0"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(11,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/source-map/lexical/element_0",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#a",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(11,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey/source-map/lexical/element_2",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#a2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(9,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey/source-map/lexical/element_0",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#a1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(7,5)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/hey",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey",
       "http://a.ml/vocabularies/document-source-maps#value": "[(8,0)-(9,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets/source-map/json-pointer-ref/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/json-pointer-ref/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets",
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,0)-(11,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes/a/lets/source-map/lexical/element_0",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#a1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(9,6)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml",
       "http://a.ml/vocabularies/document#declares": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go"
         }
       ],
       "@type": [
@@ -165,25 +165,25 @@
       ],
       "http://a.ml/vocabularies/meta#definedBy": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/dialect6.raml"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/dialect6.yaml"
         }
       ],
       "http://a.ml/vocabularies/document#encodes": {
-        "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/encodes"
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes"
       },
       "http://a.ml/vocabularies/document#version": "2.1.0",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/source-map"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/source-map"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go",
       "@type": [
         "http://test.com/tmp#A",
-        "file://shared/src/test/resources/vocabularies2/instances/dialect6.raml#/declarations/A",
+        "file://shared/src/test/resources/vocabularies2/instances/dialect6.yaml#/declarations/A",
         "http://a.ml/vocabularies/meta#DialectDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
@@ -192,64 +192,64 @@
       "http://test.com/tmp#a1": "lets",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go/source-map"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go/source-map"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/source-map",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/source-map/lexical/element_0"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/source-map/lexical/element_0"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go/source-map",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go/source-map/lexical/element_3"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go/source-map/lexical/element_3"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go/source-map/lexical/element_1"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go/source-map/lexical/element_1"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go/source-map/lexical/element_0"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go/source-map/lexical/element_0"
         },
         {
-          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go/source-map/lexical/element_2"
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go/source-map/lexical/element_2"
         }
       ]
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(11,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go/source-map/lexical/element_3",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#a2",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(5,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go/source-map/lexical/element_1",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#declarationName",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,4)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go/source-map/lexical/element_0",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#a1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(6,0)]"
     },
     {
-      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.raml#/As/Go",
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/example6b.yaml#/As/Go",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(6,0)]"
     }
   ]
