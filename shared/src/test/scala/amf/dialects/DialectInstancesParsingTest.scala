@@ -5,6 +5,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.remote._
+import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm}
 import amf.plugins.document.vocabularies.AMLPlugin
 import org.scalatest.Assertion
 
@@ -435,25 +436,37 @@ trait DialectInstancesParsingTest extends DialectTests {
 
   multiGoldenTest("Parse instance with simple native link", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = s"$basePath/simple-native-links/"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/simple-native-links/"
     )
   }
 
   multiGoldenTest("Parse instance with native links and template ids", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = s"$basePath/native-links-with-template-ids/"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/native-links-with-template-ids/"
+    )
+  }
+
+  multiGoldenTest("Parse instance with native links and native targets", "instance.%s") { config =>
+    withDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/native-links-with-native-target/"
     )
   }
 
@@ -676,50 +689,66 @@ trait DialectInstancesParsingTest extends DialectTests {
                 directory = s"$basePath/native-links-with-template-ids/")
   }
 
+  multiSourceTest("Generate instance with native links and native targets", "instance.%s") { config =>
+    val golden = config.jsonLdDocumentForm match {
+      case FlattenedForm => "instance.flattened.yaml"
+      case ExpandedForm  => "instance.expanded.yaml"
+      case _             => "instance.flattened.yaml"
+    }
+    withDialect(
+        "dialect.yaml",
+        config.source,
+        golden,
+        AmfJsonHint,
+        target = Aml,
+        directory = s"$basePath/native-links-with-native-target/"
+    )
+  }
+
   multiGoldenTest("Generate instance with invalid property terms", "/invalids/schema-uri/instance.%s") { config =>
     withDialect(
-      "/invalids/schema-uri/dialect.yaml",
-      "/invalids/schema-uri/instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-     renderOptions = Some(config.renderOptions)
+        "/invalids/schema-uri/dialect.yaml",
+        "/invalids/schema-uri/instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions)
     )
   }
 
   multiGoldenTest("Instance with similar fragment names minor", "minor.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "minor.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "shared/src/test/resources/vocabularies2/instances/colliding-fragments"
+        "dialect.yaml",
+        "minor.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "shared/src/test/resources/vocabularies2/instances/colliding-fragments"
     )
   }
 
   multiGoldenTest("Instance with similar fragment names publicMinor", "publicMinor.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "publicMinor.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf, renderOptions = Some(config.renderOptions)
-    ,
-      directory = "shared/src/test/resources/vocabularies2/instances/colliding-fragments"
+        "dialect.yaml",
+        "publicMinor.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "shared/src/test/resources/vocabularies2/instances/colliding-fragments"
     )
   }
 
   multiGoldenTest("Parse mapKey and mapValue", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "shared/src/test/resources/vocabularies2/instances/map-key-value"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "shared/src/test/resources/vocabularies2/instances/map-key-value"
     )
   }
 
