@@ -458,6 +458,18 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("Parse instance with native links and extra properties", "instance.%s") { config =>
+    withDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/native-link-with-extra-properties/"
+    )
+  }
+
   multiGoldenTest("Parse instance with native links and native targets", "instance.%s") { config =>
     withDialect(
         "dialect.yaml",

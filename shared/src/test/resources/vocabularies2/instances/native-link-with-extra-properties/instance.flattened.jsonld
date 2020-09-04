@@ -1,0 +1,150 @@
+{
+  "@graph": [
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes",
+      "@type": [
+        "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/dialect.yaml#/declarations/A",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#link": {
+        "@id": "http://test.com/Jorge"
+      },
+      "http://a.ml/vocabularies/data#description": "this is node A",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#link",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,5)-(8,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#description",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(8,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(8,0)]"
+    },
+    {
+      "@id": "http://test.com/Jorge",
+      "@type": [
+        "file://shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/dialect.yaml#/declarations/B",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#b": 2,
+      "http://a.ml/vocabularies/data#myVar": "Jorge",
+      "http://a.ml/vocabularies/data#a": 2,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "http://test.com/Jorge#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "http://test.com/Jorge#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://test.com/Jorge#/source-map/lexical/element_3"
+        },
+        {
+          "@id": "http://test.com/Jorge#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "http://test.com/Jorge#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://test.com/Jorge#/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "http://test.com/Jorge#/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#myVar",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
+    },
+    {
+      "@id": "http://test.com/Jorge#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#b",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(8,0)]"
+    },
+    {
+      "@id": "http://test.com/Jorge#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#a",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(6,0)]"
+    },
+    {
+      "@id": "http://test.com/Jorge#/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/Jorge",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(8,0)]"
+    }
+  ]
+}
