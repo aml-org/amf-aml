@@ -1,19 +1,22 @@
 package amf.plugins.document.vocabularies.emitters.instances
 
-import amf.core.emitter.{DomainElementEmitterHelper, RenderOptions, SpecOrdering}
+import amf.core.emitter.{DomainElementEmitter, RenderOptions, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.plugins.document.vocabularies.annotations.DiscriminatorField
-import amf.plugins.document.vocabularies.model.document.{Dialect}
+import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import org.yaml.model.YNode
 
-object DomainElementEmitter extends DomainElementEmitterHelper {
+object AmlDomainElementEmitter extends DomainElementEmitter[Dialect] {
 
-  def emit(element: DomainElement, dialect: Dialect, eh: ErrorHandler, references: Seq[BaseUnit] = Nil): YNode = {
+  /**
+    * @param references : optional parameter which will improve emission of references defined in element
+    */
+  override def emit(element: DomainElement, emissionStructure: Dialect, eh: ErrorHandler, references: Seq[BaseUnit] = Nil): YNode = {
     val partEmitter = element match {
-      case element: DialectDomainElement => Some(dialectDomainElementEmitter(dialect, references, element))
+      case element: DialectDomainElement => Some(dialectDomainElementEmitter(emissionStructure, references, element))
       case _ => None
     }
     nodeOrError(partEmitter, element.id, eh)

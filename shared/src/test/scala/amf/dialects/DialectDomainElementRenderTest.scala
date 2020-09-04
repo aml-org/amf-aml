@@ -9,7 +9,7 @@ import amf.core.parser.SyamlParsedDocument
 import amf.core.remote.{Aml, Hint, VocabularyYamlHint}
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.emitters.instances.DomainElementEmitter
+import amf.plugins.document.vocabularies.emitters.instances.AmlDomainElementEmitter
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -150,7 +150,7 @@ trait DialectElementTests extends AsyncFunSuite with FileAssertionTest with Dial
   private def renderDomainElement(shape: Option[DomainElement],
                                   instance: DialectInstanceUnit,
                                   dialect: Dialect): String = {
-    val node     = shape.map(DomainElementEmitter.emit(_, dialect, UnhandledErrorHandler)).getOrElse(YNode.Empty)
+    val node     = shape.map(AmlDomainElementEmitter.emit(_, dialect, UnhandledErrorHandler)).getOrElse(YNode.Empty)
     val document = SyamlParsedDocument(document = YDocument(node))
     SYamlSyntaxPlugin.unparse("application/yaml", document).getOrElse("").toString
   }
