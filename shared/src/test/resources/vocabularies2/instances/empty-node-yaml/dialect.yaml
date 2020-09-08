@@ -1,0 +1,18 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+external:
+  schema: http://schema.org
+
+documents:
+  root:
+    encodes: RootNode
+
+nodeMappings:
+  EmptyNode:
+    classTerm: schema.Empty # Does not work when not declaring class term
+  RootNode:
+    mapping:
+      emptyProp:
+        range: EmptyNode

@@ -681,6 +681,31 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("Parse YAML instance with empty node", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = "shared/src/test/resources/vocabularies2/instances/empty-node-yaml"
+    )
+  }
+
+  multiGoldenTest("Parse JSON instance with empty node", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.json",
+      config.golden,
+      VocabularyJsonHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = "shared/src/test/resources/vocabularies2/instances/empty-node-json"
+    )
+  }
+
+
   test("Clone instance from dialect") {
     val context1 = new CompilerContextBuilder(s"file://$basePath/dialect31.yaml",
                                               platform,
