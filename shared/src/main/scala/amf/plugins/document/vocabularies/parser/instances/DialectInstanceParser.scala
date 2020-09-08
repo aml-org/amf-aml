@@ -897,7 +897,13 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         val linkedNode = DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast)))
           .withId(id)
           .withInstanceTypes(Seq(mapping.id))
-        linkedNode.unresolved(text, givenAnnotations.flatMap(_.find(classOf[SourceAST])).map(_.ast).getOrElse(ast))
+        if(!text.trim.isEmpty)
+          linkedNode.unresolved(text, givenAnnotations.flatMap(_.find(classOf[SourceAST])).map(_.ast).getOrElse(ast))
+        else
+          ctx.eh.warning(DialectError,
+            id,
+            s"Empty map, expected: ${linkedNode.definedBy.id}",
+            ast)
         Some(linkedNode)
     }
   }
