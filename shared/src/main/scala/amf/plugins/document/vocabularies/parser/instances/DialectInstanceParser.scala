@@ -250,8 +250,10 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
         }
 
-      case YType.Str | YType.Null => resolveLink(ast, mappable, defaultId, givenAnnotations)
+      case YType.Str => resolveLink(ast, mappable, defaultId, givenAnnotations)
       case YType.Include          => resolveLink(ast, mappable, defaultId, givenAnnotations)
+      case YType.Null =>
+        emptyElement(defaultId, ast, mappable, givenAnnotations)
       case _ =>
         ctx.eh.violation(DialectError, defaultId, "Cannot parse AST node for node in dialect instance", ast)
         None
@@ -270,6 +272,21 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       case other => other
     }
     result
+  }
+
+  private def emptyElement(defaultId: String, ast: YNode, mappable: NodeMappable, givenAnnotations: Option[Annotations]) = {
+    val mappings = mappable match {
+      case m: NodeMapping => Seq(m.nodetypeMapping.value(), mappable.id)
+      case _ => Seq(mappable.id)
+    }
+    val element = DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast)))
+      .withId(defaultId)
+      .withInstanceTypes(mappings)
+    ctx.eh.warning(DialectError,
+      defaultId,
+      s"Empty map: ${mappings.head}",
+      ast)
+    Some(element)
   }
 
   protected def parseProperty(id: String,
@@ -897,13 +914,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         val linkedNode = DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast)))
           .withId(id)
           .withInstanceTypes(Seq(mapping.id))
-        if(!text.trim.isEmpty)
-          linkedNode.unresolved(text, givenAnnotations.flatMap(_.find(classOf[SourceAST])).map(_.ast).getOrElse(ast))
-        else
-          ctx.eh.warning(DialectError,
-            id,
-            s"Empty map, expected: ${linkedNode.definedBy.id}",
-            ast)
+        linkedNode.unresolved(text, givenAnnotations.flatMap(_.find(classOf[SourceAST])).map(_.ast).getOrElse(ast))
         Some(linkedNode)
     }
   }
