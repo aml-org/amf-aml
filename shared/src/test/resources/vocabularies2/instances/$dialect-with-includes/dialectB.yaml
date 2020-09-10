@@ -1,0 +1,15 @@
+#%Dialect 1.0
+dialect: TestB
+version: 1.0
+
+documents:
+  root:
+    encodes: NodeB
+
+nodeMappings:
+  NodeB:
+    mapping:
+      x:
+        range: string
+      y:
+        range: string
