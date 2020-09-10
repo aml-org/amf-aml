@@ -1,0 +1,4 @@
+#%Test 1.0
+a: Hello A
+b: Hello B
+c: !include fragment.yaml

@@ -706,6 +706,42 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
 
+  multiGoldenTest("Parse instance with $dialect", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = "shared/src/test/resources/vocabularies2/instances/$dialect"
+    )
+  }
+
+  multiGoldenTest("Parse instance with includes", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = "shared/src/test/resources/vocabularies2/instances/includes"
+    )
+  }
+
+  multiGoldenTest("Parse instance with $dialect and includes", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = "shared/src/test/resources/vocabularies2/instances/$dialect-with-includes"
+    )
+  }
+
   test("Clone instance from dialect") {
     val context1 = new CompilerContextBuilder(s"file://$basePath/dialect31.yaml",
                                               platform,
