@@ -14,7 +14,7 @@ class DialectsResolutionTest extends DialectInstanceResolutionCycleTests {
   }
 
   test("resolve library test") {
-    init().flatMap(_ => cycle("example7.raml", "example7.resolved.raml", VocabularyYamlHint, target = Aml))
+    init().flatMap(_ => cycle("example7.yaml", "example7.resolved.yaml", VocabularyYamlHint, target = Aml))
   }
 
   test("resolve 13 test") {
@@ -22,13 +22,13 @@ class DialectsResolutionTest extends DialectInstanceResolutionCycleTests {
   }
 
   test("resolve 21 test") {
-    init().flatMap(_ => cycle("example21.raml", "example21.resolved.raml", VocabularyYamlHint, target = Aml))
+    init().flatMap(_ => cycle("example21.yaml", "example21.resolved.yaml", VocabularyYamlHint, target = Aml))
   }
 
   multiGoldenTest("resolve 21 test JSON-LD", "example21.resolved.%s") { config =>
     init().flatMap(
         _ =>
-          cycle("example21.raml",
+          cycle("example21.yaml",
                 config.golden,
                 VocabularyYamlHint,
                 target = Amf,

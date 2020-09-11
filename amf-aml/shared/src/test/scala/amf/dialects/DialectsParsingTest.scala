@@ -84,7 +84,7 @@ trait DialectsParsingTest extends DialectTests {
   multiGoldenTest("parse 7 test", "example7.%s") { config =>
     init().flatMap(
         _ =>
-          cycle("example7.raml",
+          cycle("example7.yaml",
                 config.golden,
                 VocabularyYamlHint,
                 target = Amf,
@@ -224,7 +224,7 @@ trait DialectsParsingTest extends DialectTests {
   multiGoldenTest("parse 21 test", "example21.%s") { config =>
     init().flatMap(
         _ =>
-          cycle("example21.raml",
+          cycle("example21.yaml",
                 config.golden,
                 VocabularyYamlHint,
                 target = Amf,
@@ -296,7 +296,7 @@ trait DialectsParsingTest extends DialectTests {
   }
 
   multiSourceTest("generate 7 test", "example7.%s") { config =>
-    init().flatMap(_ => cycle(config.source, "example7.raml", AmfJsonHint, target = Aml))
+    init().flatMap(_ => cycle(config.source, "example7.yaml", AmfJsonHint, target = Aml))
   }
 
   multiSourceTest("generate 8 test", "example8.%s") { config =>
@@ -352,7 +352,7 @@ trait DialectsParsingTest extends DialectTests {
   }
 
   multiSourceTest("generate 21 test", "example21.%s") { config =>
-    init().flatMap(_ => cycle(config.source, "example21.raml", AmfJsonHint, target = Aml))
+    init().flatMap(_ => cycle(config.source, "example21.yaml", AmfJsonHint, target = Aml))
   }
 
   multiSourceTest("generate 22 test", "example22.%s") { config =>
