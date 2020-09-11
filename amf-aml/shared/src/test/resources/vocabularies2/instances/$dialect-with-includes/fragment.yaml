@@ -1,0 +1,4 @@
+#%TestB 1.0
+$dialect: file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect-with-includes/dialectB.yaml#/declarations/NodeB
+x: Hello x
+y: Hello y

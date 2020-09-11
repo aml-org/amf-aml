@@ -1,0 +1,105 @@
+[
+  {
+    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/publicMinor.yaml",
+    "@type": [
+      "http://a.ml/vocabularies/meta#DialectInstanceFragment",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/dialect.yaml"
+      }
+    ],
+    "http://a.ml/vocabularies/meta#fragment": [
+      {
+        "@value": "PublicMinor"
+      }
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/publicMinor.yaml#/encodes",
+        "@type": [
+          "http://test.com/tmp#PublicMinorNode",
+          "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/dialect.yaml#/declarations/PublicMinorNode",
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://test.com/tmp#publicMinorProp": [
+          {
+            "@value": "Hello public minor"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/publicMinor.yaml#/encodes/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/publicMinor.yaml#/encodes/source-map/lexical/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/publicMinor.yaml#/encodes"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(2,35)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/publicMinor.yaml#/encodes/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#publicMinorProp"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(2,35)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "2.1.2"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/publicMinor.yaml#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/publicMinor.yaml#/source-map/lexical/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/publicMinor.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(2,35)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

@@ -77,7 +77,7 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
     Seq(
       name := "amf-aml"
     ))
-  .in(file("."))
+  .in(file("./amf-aml"))
   .settings(settings)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
@@ -93,7 +93,7 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
   .disablePlugins(SonarPlugin)
 
 lazy val amlJVM =
-  aml.jvm.in(file("./jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
+  aml.jvm.in(file("./amf-aml/jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
 
 lazy val amlJS =
-  aml.js.in(file("./js")).sourceDependency(amfCoreJSRef, amfCoreLibJS).disablePlugins(SonarPlugin)
+  aml.js.in(file("./amf-aml/js")).sourceDependency(amfCoreJSRef, amfCoreLibJS).disablePlugins(SonarPlugin)

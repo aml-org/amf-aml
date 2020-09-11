@@ -1,0 +1,196 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes",
+      "@type": [
+        "http://test.com/validation#Report",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/dialect.yaml#/declarations/Report",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://test.com/validation#validations": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance"
+        }
+      ],
+      "http://test.com/validation#profile": "RAML",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator",
+      "@type": [
+        "http://test.com/validation#Validation",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/dialect.yaml#/declarations/Validation",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://test.com/validation#value": "Must define a valid discriminator",
+      "http://test.com/validation#name": "invalidDiscriminator",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance",
+      "@type": [
+        "http://test.com/validation#Validation",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/dialect.yaml#/declarations/Validation",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://test.com/validation#value": "Illegal inheritance defined between types A & B",
+      "http://test.com/validation#name": "illegalInheritance",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/validation#validations",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(3,11)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/validation#profile",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(5,69)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/validation#value",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,24)-(4,57)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/validation#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(4,22)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/invalidDiscriminator",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/validation#value",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,22)-(5,69)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/validation#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,20)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes/validations/illegalInheritance",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,69)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/encodes"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.2",
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value/instance.yaml",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(5,69)]"
+    }
+  ]
+}
