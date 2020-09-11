@@ -1,0 +1,19 @@
+#%Dialect 1.0
+dialect: Resource
+version: 1.0
+
+documents:
+  root:
+    encodes: ResourceNode
+
+nodeMappings:
+  ResourceNode:
+    mapping:
+      resourceName:
+        unique: true
+        range: string
+      resourceCode:
+        unique: true
+        range: string
+      version:
+        range: string

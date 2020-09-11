@@ -1,0 +1,5 @@
+#%Resource 1.0
+protocol: https
+domain: a.ml
+path: domain/elements
+element: DialectDomainElement

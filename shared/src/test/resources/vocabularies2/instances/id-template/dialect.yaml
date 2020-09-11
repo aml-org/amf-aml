@@ -1,0 +1,20 @@
+#%Dialect 1.0
+dialect: Resource
+version: 1.0
+
+documents:
+  root:
+    encodes: ResourceNode
+
+nodeMappings:
+  ResourceNode:
+    mapping:
+      protocol:
+        range: string
+      domain:
+        range: string
+      path:
+        range: string
+      element:
+        range: string
+    idTemplate: "{protocol}://{domain}/{path}#{element}"
