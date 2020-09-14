@@ -33,9 +33,9 @@ sonarProperties ++= Map(
   "sonar.projectVersion"             -> "4.0.0",
   "sonar.sourceEncoding"             -> "UTF-8",
   "sonar.github.repository"          -> "mulesoft/amf-aml",
-  "sonar.sources"                    -> "shared/src/main/scala",
-  "sonar.tests"                      -> "shared/src/test/scala",
-  "sonar.scala.coverage.reportPaths" -> "jvm/target/scala-2.12/scoverage-report/scoverage.xml"
+  "sonar.sources"                    -> "amf-aml/shared/src/main/scala",
+  "sonar.tests"                      -> "amf-aml/shared/src/test/scala",
+  "sonar.scala.coverage.reportPaths" -> "aml-aml/jvm/target/scala-2.12/scoverage-report/scoverage.xml"
 )
 
 lazy val workspaceDirectory: File =
@@ -79,6 +79,7 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
     ))
   .in(file("./amf-aml"))
   .settings(settings)
+  .dependsOn(validation)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
@@ -92,8 +93,37 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
   )
   .disablePlugins(SonarPlugin)
 
-lazy val amlJVM =
-  aml.jvm.in(file("./amf-aml/jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
+/** **********************************************
+  * AMF-Validation
+  * ********************************************* */
+lazy val validation = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-validation"
+    ))
+  .in(file("./amf-validation"))
+  .settings(settings)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js"               %% "scalajs-stubs"          % scalaJSVersion % "provided",
+    libraryDependencies += "org.scala-lang.modules"     % "scala-java8-compat_2.12" % "0.8.0",
+    libraryDependencies += "org.json4s"                 %% "json4s-native"          % "3.5.4",
+    libraryDependencies += "org.apache.jena"            % "apache-jena-libs"        % "3.14.0" pomOnly (),
+    libraryDependencies += "org.apache.jena"            % "jena-shacl"              % "3.14.0",
+    libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.19",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.9.8",
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
+  )
+  .jsSettings(
+    jsDependencies += ProvidedJS / "shacl.js",
+    jsDependencies += ProvidedJS / "ajv.min.js",
+    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
+  )
+  .disablePlugins(SonarPlugin)
 
-lazy val amlJS =
-  aml.js.in(file("./amf-aml/js")).sourceDependency(amfCoreJSRef, amfCoreLibJS).disablePlugins(SonarPlugin)
+lazy val validationJVM = validation.jvm.in(file("./amf-validation/jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
+lazy val validationJS = validation.js
+  .in(file("./amf-validation/js"))
+  .sourceDependency(amfCoreJSRef, amfCoreLibJS)
+  .disablePlugins(SonarPlugin)
