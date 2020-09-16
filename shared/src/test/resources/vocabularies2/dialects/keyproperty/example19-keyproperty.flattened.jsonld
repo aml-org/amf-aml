@@ -456,7 +456,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml#/declarations/Local/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml#/declarations/Local",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(14,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(14,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml#/declarations/myDeclarations/property/b/source-map",
@@ -488,7 +488,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml#/declarations/myDeclarations/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml#/declarations/myDeclarations",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(15,0)-(21,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(21,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml#/declarations/Local/property/a/source-map/lexical/element_4",

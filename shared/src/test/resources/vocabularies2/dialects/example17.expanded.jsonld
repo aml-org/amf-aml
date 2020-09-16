@@ -574,7 +574,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,0)-(26,0)]"
+                    "@value": "[(5,2)-(26,0)]"
                   }
                 ]
               },

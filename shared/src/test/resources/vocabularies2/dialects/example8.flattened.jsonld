@@ -265,7 +265,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example8.yaml#/declarations/Local/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example8.yaml#/declarations/Local",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(17,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example8.yaml#/declarations/Other/property/za/source-map",
@@ -294,7 +294,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example8.yaml#/declarations/Other/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example8.yaml#/declarations/Other",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(10,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(10,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example8.yaml#/declarations/Other/property/za/source-map/lexical/element_1",

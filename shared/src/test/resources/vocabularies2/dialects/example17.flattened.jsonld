@@ -366,7 +366,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example17.yaml#/declarations/Local/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example17.yaml#/declarations/Local",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(26,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(26,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example17.yaml#/declarations/Local/source-map/lexical/element_0",

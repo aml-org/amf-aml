@@ -352,7 +352,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example15.yaml#/declarations/Local/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example15.yaml#/declarations/Local",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(20,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(20,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example15.yaml#/declarations/Local/property/c/source-map/lexical/element_1",
