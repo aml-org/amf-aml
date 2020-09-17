@@ -1,0 +1,7 @@
+#%Test 1.0
+a:
+  $id: file://a.ml/NodeA
+  nameA: Hello A
+b:
+  $id: file://a.ml/NodeB
+  nameB: Hello B
