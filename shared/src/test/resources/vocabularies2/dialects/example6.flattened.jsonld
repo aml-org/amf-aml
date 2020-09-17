@@ -305,7 +305,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(9,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(9,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za/source-map/lexical/element_1",

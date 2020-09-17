@@ -635,7 +635,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Other/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Other",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(29,0)-(35,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(28,2)-(35,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Root/property/c/source-map",
@@ -692,7 +692,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Root/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Root",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(19,0)-(28,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(18,2)-(28,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Forward/property/e/source-map",
@@ -721,7 +721,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Forward/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Forward",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(36,0)-(41,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(35,2)-(41,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Simple/property/a/source-map",
@@ -750,7 +750,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Simple/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Simple",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(11,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(11,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Base/property/b/source-map",
@@ -793,7 +793,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Base/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Base",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,0)-(18,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(11,2)-(18,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Other/property/d/source-map/lexical/element_1",
@@ -808,7 +808,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Other/Other/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Other/Other",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(46,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(28,2)-(35,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Root/property/c/source-map/lexical/element_1",
@@ -833,7 +833,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Root/Root/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Root/Root",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(27,13)-(27,17)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(18,2)-(28,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Root/Root/source-map/lexical/element_0",
@@ -873,7 +873,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Base/Base/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Base/Base",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(17,13)-(17,19)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(11,2)-(18,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example21.raml#/declarations/Base/Base/source-map/lexical/element_0",

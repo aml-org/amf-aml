@@ -578,7 +578,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeB/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeB",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,0)-(13,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(13,0)]"
     },
     {
       "http://a.ml/vocabularies/core#extensionName": "(vocab2.a)",
@@ -628,7 +628,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeA/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeA",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,0)-(20,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(13,2)-(20,0)]"
     },
     {
       "@id": "http://a.ml/vocabularies/vocab2#A/source-map/lexical/element_0",

@@ -548,7 +548,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/declarations/PersonNode/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/declarations/PersonNode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(22,0)-(29,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(21,2)-(29,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/declarations/FirstLevelNode/property/second/list",
@@ -587,7 +587,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/declarations/FirstLevelNode/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/declarations/FirstLevelNode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(30,0)-(37,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(29,2)-(37,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/declarations/ContainerNode/property/container/list",
@@ -629,7 +629,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/declarations/ContainerNode/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/declarations/ContainerNode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(38,0)-(45,23)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(37,2)-(45,23)]"
     },
     {
       "@id": "http://mulesoft.com/vocabularies/amf-learning#Person/source-map/lexical/element_0",

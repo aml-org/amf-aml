@@ -441,7 +441,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Here/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Here",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,8)-(5,17)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(6,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Here/source-map/lexical/element_0",
@@ -503,12 +503,12 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,0)-(12,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(12,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Local/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Local",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,9)-(12,18)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(13,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Local/source-map/lexical/element_0",
@@ -542,7 +542,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(9,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(9,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example7.raml#/declarations/Other/property/aaa/source-map/lexical/element_1",

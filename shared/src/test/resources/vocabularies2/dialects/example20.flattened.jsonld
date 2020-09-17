@@ -512,7 +512,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(14,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(14,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/property/b/source-map",
@@ -544,7 +544,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(15,0)-(21,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(21,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/UnionNode/source-map/lexical/element_2",
@@ -559,7 +559,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/UnionNode/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/UnionNode",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(22,0)-(29,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(21,2)-(29,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root/property/union/list",
@@ -595,7 +595,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(30,0)-(35,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(29,2)-(35,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/property/a/source-map/lexical/element_4",

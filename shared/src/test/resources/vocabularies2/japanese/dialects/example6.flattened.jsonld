@@ -300,7 +300,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/mappings_lib.yaml#/declarations/%E3%83%8E%E3%83%BC%E3%83%89B/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/japanese/dialects/mappings_lib.yaml#/declarations/%E3%83%8E%E3%83%BC%E3%83%89B",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(9,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(9,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/japanese/dialects/mappings_lib.yaml#/declarations/%E3%83%8E%E3%83%BC%E3%83%89B/property/%E6%9E%97%E6%AA%8E/source-map/lexical/element_1",

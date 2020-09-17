@@ -259,7 +259,7 @@
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example22.yaml#/declarations/Simple/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/dialects/example22.yaml#/declarations/Simple",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(12,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(12,0)]"
     },
     {
       "@id": "file://shared/src/test/resources/vocabularies2/dialects/example22.yaml#/declarations/Simple/property/a/source-map/lexical/element_2",

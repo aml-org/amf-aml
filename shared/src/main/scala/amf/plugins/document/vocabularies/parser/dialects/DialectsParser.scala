@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
 import amf.core.Root
-import amf.core.annotations.{Aliases, ErrorDeclaration => DeclaredErrorDeclaration}
+import amf.core.annotations.{Aliases, LexicalInformation, SourceAST, SourceLocation, SourceNode, ErrorDeclaration => DeclaredErrorDeclaration}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.metamodel.document.FragmentModel
@@ -9,30 +9,11 @@ import amf.core.model.DataType
 import amf.core.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
-import amf.core.parser.{
-  Annotations,
-  BaseSpecParser,
-  EmptyFutureDeclarations,
-  Fields,
-  FragmentRef,
-  FutureDeclarations,
-  ParsedReference,
-  ParserContext,
-  Reference,
-  ScalarNode,
-  SearchScope,
-  SyamlParsedDocument,
-  ValueNode,
-  YNodeLikeOps
-}
+import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, Fields, FragmentRef, FutureDeclarations, ParsedReference, ParserContext, Reference, ScalarNode, SearchScope, SyamlParsedDocument, ValueNode, YNodeLikeOps}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.{
-  NodeMappingModel,
-  PropertyMappingModel,
-  UnionNodeMappingModel
-}
+import amf.plugins.document.vocabularies.metamodel.domain.{NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
@@ -564,6 +545,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                   case nodeMapping: NodeMappable =>
                     val name = ScalarNode(entry.key).string()
                     nodeMapping.set(NodeMappingModel.Name, name, Annotations(entry.key)).adopted(parent)
+                    nodeMapping.annotations.reject(a => a.isInstanceOf[SourceAST] || a.isInstanceOf[LexicalInformation] || a.isInstanceOf[SourceLocation] || a.isInstanceOf[SourceNode])
+                    nodeMapping.annotations ++= Annotations(entry)
                   case _ =>
                     ctx.eh.violation(DialectError,
                                      parent,
