@@ -1,4 +1,6 @@
 #%Container Configuration 0.2
+pattern:
+  template: $container/anyId/$uuid
 mapping:
   -
     variable: name
@@ -10,7 +12,5 @@ mapping:
     variable: propertyName
     property: http://www.w3.org/ns/shacl#name
 namespace: api_specs
-pattern:
-  template: $container/anyId/$uuid
 schema: http://aml.og/schema/xyz
 pageSize: 10

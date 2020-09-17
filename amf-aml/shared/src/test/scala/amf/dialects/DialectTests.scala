@@ -3,13 +3,14 @@ package amf.dialects
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.io.FileAssertionTest
+import amf.core.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
 import amf.core.{AMFCompiler, AMFSerializer, CompilerContextBuilder}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.Assertion
 
@@ -56,11 +57,10 @@ trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with 
                                  None,
                                  Some(Aml.name)).build()
       _ <- Future { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
-      b <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$source",
-                                                      platform,
-                                                      DefaultParserErrorHandler.withRun()).build(),
-                           None,
-                           Some(hint.vendor.name)).build()
+      b <- new AMFCompiler(
+        new CompilerContextBuilder(s"file://$directory/$source", platform, DefaultParserErrorHandler.withRun()).build(),
+        None,
+        Some(hint.vendor.name)).build()
     } yield {
       b
     }
@@ -109,15 +109,18 @@ trait DialectHelper {
       amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
       amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
+      amf.core.AMF.registerPlugin(AMFValidatorPlugin)
+      AMFValidatorPlugin.init()
     }
   }
 
-  final def parseAndRegisterDialect(uri: String, platform: Platform, hint: Hint)(implicit ec: ExecutionContext): Future[BaseUnit] =
+  final def parseAndRegisterDialect(uri: String, platform: Platform, hint: Hint)(
+      implicit ec: ExecutionContext): Future[BaseUnit] =
     for {
       _ <- init()
       r <- new AMFCompiler(new CompilerContextBuilder(uri, platform, DefaultParserErrorHandler.withRun()).build(),
-        None,
-        Some(hint.vendor.name))
+                           None,
+                           Some(hint.vendor.name))
         .build()
     } yield {
       r

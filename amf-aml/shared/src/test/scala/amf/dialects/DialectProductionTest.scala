@@ -1,36 +1,91 @@
 package amf.dialects
 
+import amf.client.parse.DefaultParserErrorHandler
+import amf.core.{AMFCompiler, CompilerContextBuilder}
+import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.model.document.BaseUnit
 import amf.core.remote._
-import org.scalatest.BeforeAndAfterAll
+import amf.core.io.FunSuiteCycleTests
+import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.features.validation.AMFValidatorPlugin
+import org.scalatest.Assertion
 
-import scala.concurrent.ExecutionContext
+import scala.concurrent.{ExecutionContext, Future}
 
-class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
+trait DialectInstanceTester { this: FunSuiteCycleTests =>
 
-  override protected def beforeAll(): Unit = init()
+  protected def withDialect(dialect: String,
+                            source: String,
+                            golden: String,
+                            hint: Hint,
+                            target: Vendor,
+                            directory: String = basePath,
+                            renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
+
+    val context =
+      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
+    for {
+      _ <- Future.successful {
+        amf.core.AMF.registerPlugin(plugin = AMLPlugin)
+        amf.core.AMF.registerPlugin(AMFValidatorPlugin)
+      }
+      _ <- new AMFCompiler(context, None, Some(Aml.name))
+        .build()
+      res <- cycle(source, golden, hint, target, directory, renderOptions)
+    } yield {
+      res
+    }
+  }
+
+}
+
+class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTester {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  override val basePath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
+  override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
+
+  val basePath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
+
+  test("Can parse and generated ABOUT dialect") {
+    cycle("ABOUT-dialect.yaml", "ABOUT-dialect.raml.yaml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
+  }
 
   ignore("Can parse the canonical webapi dialect") {
     cycle("canonical_webapi.yaml", "canonical_webapi.json", VocabularyYamlHint, target = Amf, "vocabularies/dialects/")
   }
 
-  multiGoldenTest("Can parse validation dialect eee", "validation_dialect.%s") { config =>
-    cycle("validation_dialect.yaml",
+  multiGoldenTest("Can parse ABOUT dialect", "ABOUT-dialect.%s") { config =>
+    cycle("ABOUT-dialect.yaml",
           config.golden,
           VocabularyYamlHint,
           target = Amf,
+          directory = basePath + "ABOUT/",
           renderOptions = Some(config.renderOptions))
+  }
+
+  // TODO migrate to multiGoldenTest
+  test("Can parse validation dialect") {
+    cycle("validation_dialect.yaml", "validation_dialect.json", VocabularyYamlHint, target = Amf)
+  }
+
+  // TODO migrate to multiGoldenTest
+  test("Can parse and generate the Instagram dialect") {
+    cycle("dialect.yaml", "dialect.json", VocabularyYamlHint, target = Amf, basePath + "Instagram/")
+  }
+
+  // TODO migrate to multiGoldenTest
+  test("Can parse and generate the activity dialect") {
+    cycle("activity.yaml", "activity.json", VocabularyYamlHint, target = Amf, basePath + "streams/")
   }
 
   test("Can parse validation dialect instance") {
     withDialect("validation_dialect.yaml",
                 "validation_instance1.yaml",
-                "validation_instance1.yaml.yaml",
+                "validation_instance1.raml.yaml",
                 VocabularyYamlHint,
-                target = Aml)
+                Aml)
   }
 
   multiGoldenTest("Can parse validation dialect cfg1 instance", "example1_instance.%s") { config =>
@@ -52,7 +107,7 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
       config.golden,
       VocabularyYamlHint,
       target = Amf,
-      directory = s"${basePath}cfg/",
+      directory = basePath + "cfg/",
       renderOptions = Some(config.renderOptions)
     )
   }
@@ -64,35 +119,13 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
       config.golden,
       VocabularyYamlHint,
       target = Amf,
-      directory = s"${basePath}cfg/",
+      directory = basePath + "cfg/",
       renderOptions = Some(config.renderOptions)
     )
   }
 
-  multiGoldenTest("Can parse ABOUT dialect", "ABOUT-dialect.%s") { config =>
-    cycle("ABOUT-dialect.yaml",
-          config.golden,
-          VocabularyYamlHint,
-          target = Amf,
-          s"${basePath}ABOUT/",
-          renderOptions = Some(config.renderOptions))
-  }
-
-  test("Can parse and generated ABOUT dialect") {
-    cycle("ABOUT-dialect.yaml",
-          "ABOUT-dialect.yaml.yaml",
-          VocabularyYamlHint,
-          target = Aml,
-          directory = s"${basePath}ABOUT/")
-  }
-
   test("Can parse and generate ABOUT dialect instance") {
-    withDialect("ABOUT-dialect.yaml",
-                "ABOUT.yaml",
-                "ABOUT.yaml.yaml",
-                VocabularyYamlHint,
-                target = Aml,
-                directory = s"${basePath}ABOUT/")
+    withDialect("ABOUT-dialect.yaml", "ABOUT.yaml", "ABOUT.yaml.yaml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
   }
 
   test("Can parse and generate ABOUT-github dialect instance") {
@@ -100,11 +133,11 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
                 "example.yaml",
                 "example.yaml.yaml",
                 VocabularyYamlHint,
-                target = Aml,
-                directory = s"${basePath}ABOUT/github/")
+                Aml,
+                basePath + "ABOUT/github/")
   }
 
-  multiGoldenTest("Can parse ABOUT-hosted dialect instance", "ABOUT_hosted.%s") { config =>
+  multiGoldenTest("Can parse ABOUT-hosted dialectinstance", "ABOUT_hosted.%s") { config =>
     withDialect(
       "ABOUT-hosted-vcs-dialect.yaml",
       "ABOUT_hosted.yaml",
@@ -116,87 +149,56 @@ class DialectProductionTest extends DialectTests with BeforeAndAfterAll {
     )
   }
 
-  multiGoldenTest("Can parse and generate the Instagram dialect", "dialect.%s") { config =>
-    cycle("dialect.yaml",
-          config.golden,
-          VocabularyYamlHint,
-          target = Amf,
-          s"${basePath}Instagram/",
-          renderOptions = Some(config.renderOptions))
-  }
-
-  multiGoldenTest("Can parse and generate Instance dialect instance 1", "instance1.%s") { config =>
+  // TODO migrate to multiGoldenTest
+  test("Can parse and generate Instance dialect instance 1") {
     withDialect("dialect.yaml",
                 "instance1.yaml",
-                config.golden,
+                "instance1.json",
                 VocabularyYamlHint,
                 target = Amf,
-                s"${basePath}Instagram/",
-                renderOptions = Some(config.renderOptions))
+                basePath + "Instagram/")
   }
 
-  multiGoldenTest("Can parse and generate Instance dialect instance 2", "instance2.%s") { config =>
+  test("Can parse and generate Instance dialect instance 2") {
     withDialect("dialect.yaml",
                 "instance2.yaml",
-                config.golden,
+                "instance2.json",
                 VocabularyYamlHint,
                 target = Amf,
-                s"${basePath}Instagram/",
-                renderOptions = Some(config.renderOptions))
+                basePath + "Instagram/")
   }
 
-  multiGoldenTest("Can parse and generate the activity dialect", "activity.%s") { config =>
-    cycle("activity.yaml",
-          config.golden,
-          VocabularyYamlHint,
-          target = Amf,
-          s"${basePath}streams/",
-          renderOptions = Some(config.renderOptions))
-  }
-
-  multiGoldenTest("Can parse activity instances", "stream1.%s") { config =>
+  test("Can parse activity instances") {
     withDialect("activity.yaml",
                 "stream1.yaml",
-                config.golden,
+                "stream1.json",
                 VocabularyYamlHint,
                 target = Amf,
-                s"${basePath}streams/",
-                renderOptions = Some(config.renderOptions))
+                basePath + "streams/")
   }
 
-  multiGoldenTest("Can parse activity deployments demo", "deployment.%s") { config =>
+  test("Can parse activity deployments demo") {
     withDialect("dialect.yaml",
                 "deployment.yaml",
-                config.golden,
+                "deployment.json",
                 VocabularyYamlHint,
                 target = Amf,
-                s"${basePath}deployments_demo/",
-                renderOptions = Some(config.renderOptions))
+                basePath + "deployments_demo/")
   }
-
-  multiGoldenTest("Can parse guids example", "guids_instance.%s") { config =>
-    withDialect("guids_dialect.yaml",
-                "guids_instance.yaml",
-                config.golden,
-                VocabularyYamlHint,
-                target = Amf,
-                s"${basePath}guids/",
-                renderOptions = Some(config.renderOptions))
-  }
-
 }
 
-class DialectProductionResolutionTest extends DialectInstanceResolutionCycleTests {
+class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectInstanceTester {
 
-  override val basePath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
+    AMLPlugin().resolve(unit, UnhandledErrorHandler)
+
+  val basePath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
 
   // Order is not predictable
   ignore("Can parse asyncapi overlay instances") {
-    withDialect("dialect6.yaml",
-                "patch6.yaml",
-                "patch6.resolved.yaml",
-                VocabularyYamlHint,
-                target = Aml,
-                directory = s"${basePath}asyncapi/")
+    withDialect("dialect6.yaml", "patch6.yaml", "patch6.resolved.yaml", VocabularyYamlHint, Aml, basePath + "asyncapi/")
   }
+
 }
