@@ -8,8 +8,8 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 name := "amf-aml"
 
 version in ThisBuild := {
-  val major = 4
-  val minor = 1
+  val major = 5
+  val minor = 0
 
   lazy val build  = sys.env.getOrElse("BUILD_NUMBER", "0")
   lazy val branch = sys.env.get("BRANCH_NAME")
