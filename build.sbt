@@ -70,6 +70,43 @@ lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "Generates the validation dialect documents for the standard profiles")
 
 /** **********************************************
+  * AMF-Custom-Validation
+  * ********************************************* */
+lazy val customValidation = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-custom-validation"
+    ))
+  .in(file("./amf-custom-validation"))
+  .dependsOn(aml)
+  .settings(settings)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js"               %% "scalajs-stubs"          % scalaJSVersion % "provided",
+    libraryDependencies += "org.scala-lang.modules"     % "scala-java8-compat_2.12" % "0.8.0",
+    libraryDependencies += "org.json4s"                 %% "json4s-native"          % "3.5.4",
+    libraryDependencies += "org.apache.jena"            % "apache-jena-libs"        % "3.14.0" pomOnly (),
+    libraryDependencies += "org.apache.jena"            % "jena-shacl"              % "3.14.0",
+    libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.19",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.9.8",
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-custom-validation-javadoc.jar"
+  )
+  .jsSettings(
+    jsDependencies += ProvidedJS / "shacl.js",
+    jsDependencies += ProvidedJS / "ajv.min.js",
+    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-custom-validation-module.js"
+  )
+  .disablePlugins(SonarPlugin)
+
+lazy val customValidationJVM =
+  customValidation.jvm.in(file("./amf-custom-validation/jvm"))
+
+lazy val customValidationJS = customValidation.js
+  .in(file("./amf-custom-validation/js"))
+  .disablePlugins(SonarPlugin)
+
+/** **********************************************
   * AMF-AML
   * ********************************************* */
 lazy val aml = crossProject(JSPlatform, JVMPlatform)
