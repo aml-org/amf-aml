@@ -8,6 +8,7 @@ import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.core.parser.Value
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
+import amf.plugins.document.vocabularies.metamodel.domain.MergePolicies._
 import amf.plugins.document.vocabularies.model.document.{DialectInstance, DialectInstancePatch}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.validation.DialectValidations.InvalidDialectPatch
@@ -60,17 +61,17 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                         patchNode: DialectDomainElement,
                         patchLocation: String): Option[DialectDomainElement] = {
     findNodeMergePolicy(patchNode) match {
-      case "insert" =>
+      case INSERT =>
         patchNodeInsert(targetNode, targetLocation, patchNode, patchLocation)
-      case "delete" =>
+      case DELETE =>
         patchNodeDelete(targetNode, targetLocation, patchNode, patchLocation)
-      case "update" =>
+      case UPDATE =>
         patchNodeUpdate(targetNode, targetLocation, patchNode, patchLocation)
-      case "upsert" =>
+      case UPSERT =>
         patchNodeUpsert(targetNode, targetLocation, patchNode, patchLocation)
-      case "ignore" =>
+      case IGNORE =>
         targetNode
-      case "fail" =>
+      case FAIL =>
         errorHandler.violation(
             InvalidDialectPatch,
             patchNode.id,
@@ -147,9 +148,9 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                                    targetLocation: String,
                                    patchLocation: String): Unit = {
     findPropertyMappingMergePolicy(propertyMapping) match {
-      case "insert" if !targetNode.graph.containsField(patchField) =>
+      case INSERT if !targetNode.graph.containsField(patchField) =>
         targetNode.graph.patchField(patchField, patchValue)
-      case "delete" if targetNode.graph.containsField(patchField) =>
+      case DELETE if targetNode.graph.containsField(patchField) =>
         try {
           if (targetNode.fields.getValue(patchField).value.asInstanceOf[AmfScalar].value
                 == patchValue.value.asInstanceOf[AmfScalar].value)
@@ -157,13 +158,13 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
         } catch {
           case _: Exception => // ignore
         }
-      case "update" if targetNode.graph.containsField(patchField) =>
+      case UPDATE if targetNode.graph.containsField(patchField) =>
         targetNode.graph.patchField(patchField, patchValue)
-      case "upsert" =>
+      case UPSERT =>
         targetNode.graph.patchField(patchField, patchValue)
-      case "ignore" =>
+      case IGNORE =>
       // ignore
-      case "fail" =>
+      case FAIL =>
         errorHandler.violation(
             InvalidDialectPatch,
             targetNode.id,
@@ -197,17 +198,17 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
     val patchPropertyValue = Set[AmfElement](patchPropertyValueSeq: _*)
 
     findPropertyMappingMergePolicy(propertyMapping) match {
-      case "insert" =>
+      case INSERT =>
         targetNode.graph.patchSeqField(patchField, targetPropertyValue.union(patchPropertyValue).toSeq)
-      case "delete" =>
+      case DELETE =>
         targetNode.graph.patchSeqField(patchField, targetPropertyValue.diff(patchPropertyValue).toSeq)
-      case "update" =>
+      case UPDATE =>
         targetNode.graph.patchSeqField(patchField, patchPropertyValue.toSeq)
-      case "upsert" =>
+      case UPSERT =>
         targetNode.graph.patchSeqField(patchField, targetPropertyValue.union(patchPropertyValue).toSeq)
-      case "ignore" =>
+      case IGNORE =>
       // ignore
-      case "fail" =>
+      case FAIL =>
         errorHandler.violation(
             InvalidDialectPatch,
             targetNode.id,
@@ -255,7 +256,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
       }
 
     findPropertyMappingMergePolicy(propertyMapping) match {
-      case "insert" =>
+      case INSERT =>
         val newDialectDomainElements = patchPropertyValueIds.collect {
           case (id, elem) =>
             targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
@@ -266,14 +267,14 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
         val unionElements
           : Seq[DialectDomainElement] = targetPropertyValue.collect { case d: DialectDomainElement => d } union newDialectDomainElements
         targetNode.graph.patchSeqField(patchField, unionElements)
-      case "delete" =>
+      case DELETE =>
         val newDialectDomainElements = patchPropertyValueIds.collect {
           case (id, _) =>
             targetPropertyValueIds.get(neutralId(id, patchLocation))
         } collect { case Some(elem) => elem } toSeq
         val unionElements = targetPropertyValue.collect { case d: DialectDomainElement => d } diff newDialectDomainElements
         targetNode.graph.patchSeqField(patchField, unionElements)
-      case "update" =>
+      case UPDATE =>
         val computedDomainElements: Seq[(DialectDomainElement, Option[DialectDomainElement])] =
           patchPropertyValueIds.collect {
             case (id, elem) =>
@@ -294,7 +295,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
             }
         }
         targetNode.graph.patchSeqField(patchField, newDomainElements.values.toSeq)
-      case "upsert" =>
+      case UPSERT =>
         val existingElems = patchPropertyValueIds.toSeq.map {
           case (id, elem) =>
             targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
@@ -336,9 +337,9 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
             }
         }
         targetNode.graph.patchSeqField(patchField, newDomainElements.values.toSeq)
-      case "ignore" =>
+      case IGNORE =>
       // ignore
-      case "fail" =>
+      case FAIL =>
         errorHandler.violation(
             InvalidDialectPatch,
             targetNode.id,
