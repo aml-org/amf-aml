@@ -1,5 +1,5 @@
 package amf.dialects
-import amf.core.remote.{Aml, VocabularyYamlHint}
+import amf.core.remote.{Amf, Aml, VocabularyYamlHint}
 import amf.core.unsafe.PlatformSecrets
 
 import scala.concurrent.ExecutionContext
@@ -32,6 +32,27 @@ class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests 
 
   test("resolve patch 22d test") {
     withDialect("dialect22.yaml", "patch22d.yaml", "patch22d.resolved.yaml", VocabularyYamlHint, Aml)
+  }
+
+  test("Resolve patch properties to AML") {
+    withDialect("dialect.yaml",
+                "patch.yaml",
+                "patch.resolved.yaml",
+                VocabularyYamlHint,
+                target = Aml,
+                directory = s"$basePath/patch-properties/")
+  }
+
+  multiGoldenTest("Resolve patch properties to AMF Graph", "patch.resolved.%s") { config =>
+    withDialect(
+        "dialect.yaml",
+        "patch.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/patch-properties/"
+    )
   }
 
 }

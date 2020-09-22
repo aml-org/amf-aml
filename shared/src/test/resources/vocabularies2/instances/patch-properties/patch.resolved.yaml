@@ -1,0 +1,6 @@
+#%Test 1.0
+insertProp: Orginal property
+deleteProp: Orginal property
+updateProp: Patch property
+upsertProp: Patch property
+ignoreProp: Orginal property

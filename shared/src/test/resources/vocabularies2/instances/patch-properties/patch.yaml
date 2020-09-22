@@ -1,0 +1,7 @@
+#%Patch/Test 1.0
+$target: instance.yaml
+insertProp: Patch property
+deleteProp: Patch property
+updateProp: Patch property
+upsertProp: Patch property
+ignoreProp: Patch property

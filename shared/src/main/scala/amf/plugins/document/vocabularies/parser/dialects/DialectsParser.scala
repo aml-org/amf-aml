@@ -13,7 +13,7 @@ import amf.core.parser.{Annotations, BaseSpecParser, EmptyFutureDeclarations, Fi
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.{NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.{MergePolicies, NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, SyntaxErrorReporter}
@@ -646,7 +646,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           val patchMethod = ScalarNode(entry.value).string()
           nodeMapping.set(NodeMappingModel.MergePolicy, patchMethod, Annotations(entry))
           val patchMethodValue = patchMethod.toString
-          if (!NodeMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethodValue)) {
+          if (!MergePolicies.isAllowed(patchMethodValue)) {
             ctx.eh.violation(DialectError,
                              nodeMapping.id,
                              s"Unsupported node mapping patch operation '$patchMethod'",
@@ -841,7 +841,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             val patchMethod = ScalarNode(entry.value).string()
             propertyMapping.set(PropertyMappingModel.MergePolicy, patchMethod, Annotations(entry))
             val patchMethodValue = patchMethod.toString
-            if (!PropertyMappingModel.ALLOWED_MERGE_POLICY.contains(patchMethodValue)) {
+            if (!MergePolicies.isAllowed(patchMethodValue)) {
               ctx.eh.violation(DialectError,
                 propertyMapping.id,
                 s"Unsupported propertu mapping patch operation '$patchMethod'",

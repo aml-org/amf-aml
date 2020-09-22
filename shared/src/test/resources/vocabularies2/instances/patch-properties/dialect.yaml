@@ -1,0 +1,25 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+nodeMappings:
+  RootNode:
+    mapping:
+      insertProp:
+        patch: insert
+        range: string
+      deleteProp:
+        patch: delete
+        range: string
+      updateProp:
+        patch: update
+        range: string
+      upsertProp:
+        patch: upsert
+        range: string
+      ignoreProp:
+        patch: ignore
+        range: string
+documents:
+  root:
+    encodes: RootNode
