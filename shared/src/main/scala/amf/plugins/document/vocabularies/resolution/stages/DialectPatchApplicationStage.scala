@@ -16,6 +16,11 @@ import amf.validation.DialectValidations.InvalidDialectPatch
 import scala.language.postfixOps
 
 class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
+  // Define types for better readability
+  type TargetDomainElement = DialectDomainElement // Domain element from target
+  type PatchDomainElement  = DialectDomainElement // Domain element from patch
+  type MergedDomainElement = DialectDomainElement // Domain element resulting from target-patch merge
+  type NeutralId           = String               // ID relative to a location
 
   override def resolve[T <: BaseUnit](model: T): T = {
     model match {
@@ -120,12 +125,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
       case LiteralProperty =>
         patchLiteralProperty(targetNode, patchField, patchValue, propertyMapping, targetLocation, patchLocation)
       case LiteralPropertyCollection =>
-        patchLiteralCollectionProperty(targetNode,
-                                       patchField,
-                                       patchValue,
-                                       propertyMapping,
-                                       targetLocation,
-                                       patchLocation)
+        patchLiteralCollectionProperty(targetNode, patchField, patchValue, propertyMapping)
       case ObjectProperty =>
         patchObjectProperty(targetNode, patchField, patchValue, propertyMapping, targetLocation, patchLocation)
       case ObjectPropertyCollection | ObjectMapProperty | ObjectPairProperty =>
@@ -178,24 +178,28 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
     }
   }
 
-  private def patchLiteralCollectionProperty(targetNode: DialectDomainElement,
-                                             patchField: Field,
-                                             patchValue: Value,
-                                             propertyMapping: PropertyMapping,
-                                             targetLocation: String,
-                                             patchLocation: String): Unit = {
-    val targetPropertyValueSeq: Seq[AmfElement] = targetNode.fields.getValueAsOption(patchField) match {
+  private def getCollectionFrom(element: DialectDomainElement, field: Field) = {
+    element.fields.getValueAsOption(field) match {
       case Some(v) if v.value.isInstanceOf[AmfArray] => v.value.asInstanceOf[AmfArray].values
       case Some(v)                                   => Seq(v.value)
       case _                                         => Nil
     }
-    val targetPropertyValue = Set[AmfElement](targetPropertyValueSeq: _*)
+  }
 
-    val patchPropertyValueSeq: Seq[AmfElement] = patchValue.value match {
+  private def getCollectionFrom(value: Value): Seq[AmfElement] = {
+    value.value match {
       case arr: AmfArray => arr.values
       case elm           => Seq(elm)
     }
-    val patchPropertyValue = Set[AmfElement](patchPropertyValueSeq: _*)
+  }
+
+  private def patchLiteralCollectionProperty(targetNode: DialectDomainElement,
+                                             patchField: Field,
+                                             patchValue: Value,
+                                             propertyMapping: PropertyMapping): Unit = {
+
+    val targetPropertyValue = getCollectionFrom(targetNode, patchField).toSet
+    val patchPropertyValue  = getCollectionFrom(patchValue).toSet
 
     findPropertyMappingMergePolicy(propertyMapping) match {
       case INSERT =>
@@ -226,119 +230,83 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
     id.replace(location, "")
   }
 
+  private def onlyDomainElements(elements: Seq[AmfElement]): Seq[DialectDomainElement] = {
+    val dialectDomainElements   = (element: AmfElement) => element.isInstanceOf[DialectDomainElement]
+    val asDialectDomainElements = (element: AmfElement) => element.asInstanceOf[DialectDomainElement]
+    elements
+      .filter(dialectDomainElements)
+      .map(asDialectDomainElements)
+  }
+
+  private def idIndex(elements: Seq[DialectDomainElement],
+                      targetLocation: String): Map[NeutralId, DialectDomainElement] = {
+    val indexById = (element: DialectDomainElement) => neutralId(element.id, targetLocation) -> element
+    elements
+      .map(indexById)
+      .toMap
+  }
+
   private def patchObjectCollectionProperty(targetNode: DialectDomainElement,
                                             patchField: Field,
                                             patchValue: Value,
                                             propertyMapping: PropertyMapping,
                                             targetLocation: String,
                                             patchLocation: String): Unit = {
-    val targetPropertyValue: Seq[AmfElement] = targetNode.fields.getValueAsOption(patchField) match {
-      case Some(v) if v.value.isInstanceOf[AmfArray] => v.value.asInstanceOf[AmfArray].values
-      case Some(v)                                   => Seq(v.value)
-      case _                                         => Nil
-    }
-    val targetPropertyValueIds = targetPropertyValue
-      .collect { case elm: DialectDomainElement => elm }
-      .foldLeft(Map[String, DialectDomainElement]()) {
-        (acc: Map[String, DialectDomainElement], elm: DialectDomainElement) =>
-          acc + (neutralId(elm.id, targetLocation) -> elm)
-      }
 
-    val patchPropertyValue: Seq[AmfElement] = patchValue.value match {
-      case arr: AmfArray => arr.values
-      case elm           => Seq(elm)
-    }
-    val patchPropertyValueIds = patchPropertyValue
-      .collect { case elm: DialectDomainElement => elm }
-      .foldLeft(Map[String, DialectDomainElement]()) {
-        (acc: Map[String, DialectDomainElement], elm: DialectDomainElement) =>
-          acc + (neutralId(elm.id, patchLocation) -> elm)
-      }
+    val targetElements: Seq[TargetDomainElement] = onlyDomainElements { getCollectionFrom(targetNode, patchField) }
+    val patchElements: Seq[PatchDomainElement]   = onlyDomainElements { getCollectionFrom(patchValue) }
 
-    findPropertyMappingMergePolicy(propertyMapping) match {
+    val targetElementsIndex: Map[NeutralId, TargetDomainElement] = idIndex(targetElements, targetLocation)
+    val patchElementsIndex: Map[NeutralId, PatchDomainElement]   = idIndex(patchElements, patchLocation)
+
+    val mergePolicy = findPropertyMappingMergePolicy(propertyMapping)
+    mergePolicy match {
       case INSERT =>
-        val newDialectDomainElements = patchPropertyValueIds.collect {
-          case (id, elem) =>
-            targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
-              case Some(_) => None
-              case None    => Some(elem)
-            }
-        } collect { case Some(elem) => elem } toSeq
-        val unionElements
-          : Seq[DialectDomainElement] = targetPropertyValue.collect { case d: DialectDomainElement => d } union newDialectDomainElements
+        // Elements not defined in target
+        val toInsertElements = patchElementsIndex
+          .filter {
+            case (id, _) => !targetElementsIndex.contains(id)
+          }
+          .values
+          .toSeq
+
+        val unionElements = targetElements union toInsertElements
+
         targetNode.graph.patchSeqField(patchField, unionElements)
+
       case DELETE =>
-        val newDialectDomainElements = patchPropertyValueIds.collect {
-          case (id, _) =>
-            targetPropertyValueIds.get(neutralId(id, patchLocation))
-        } collect { case Some(elem) => elem } toSeq
-        val unionElements = targetPropertyValue.collect { case d: DialectDomainElement => d } diff newDialectDomainElements
+        // Elements defined by both patch and target
+        val toDeleteElements = patchElementsIndex.flatMap {
+          case (id, _) => targetElementsIndex.get(id)
+        }.toSeq
+
+        val unionElements = targetElements diff toDeleteElements
+
         targetNode.graph.patchSeqField(patchField, unionElements)
-      case UPDATE =>
-        val computedDomainElements: Seq[(DialectDomainElement, Option[DialectDomainElement])] =
-          patchPropertyValueIds.collect {
-            case (id, elem) =>
-              targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
-                case Some(targetElem) => Some((targetElem, elem))
-                case None             => None
+
+      case UPDATE | UPSERT =>
+        // Merge nodes defined for target and patch
+        val mergedElementsIndex: Map[NeutralId, MergedDomainElement] =
+          patchElementsIndex.flatMap {
+            case (id, patchElement) =>
+              for {
+                targetElement <- targetElementsIndex.get(id)
+                mergedElement <- patchNode(Some(targetElement), targetLocation, patchElement, patchLocation)
+              } yield {
+                (id, mergedElement)
               }
-          } collect { case Some(pair) => pair } map {
-            case (targetElem, patchElem) =>
-              (targetElem, patchNode(Some(targetElem), targetLocation, patchElem, patchLocation))
-          } toSeq
+          }
 
-        val newDomainElements = computedDomainElements.foldLeft(targetPropertyValueIds) {
-          case (acc, (targetElem, maybePatchedElem)) =>
-            maybePatchedElem match {
-              case Some(mergedElem) => acc.updated(neutralId(targetElem.id, targetLocation), mergedElem)
-              case None             => acc - neutralId(targetElem.id, targetLocation)
-            }
-        }
-        targetNode.graph.patchSeqField(patchField, newDomainElements.values.toSeq)
-      case UPSERT =>
-        val existingElems = patchPropertyValueIds.toSeq.map {
-          case (id, elem) =>
-            targetPropertyValueIds.get(neutralId(id, patchLocation)) match {
-              case Some(targetElem) => (Some(targetElem), elem)
-              case None             => (None, elem)
-            }
+        val unionElements = mergePolicy match {
+          case UPDATE => targetElementsIndex ++ mergedElementsIndex
+          case UPSERT => patchElementsIndex ++ targetElementsIndex ++ mergedElementsIndex
         }
 
-        val computedDomainElements = existingElems.map {
-          case (maybeTargetElem, patchElem) =>
-            maybeTargetElem match {
-              case Some(targetElem) =>
-                (Some(targetElem), patchNode(Some(targetElem), targetLocation, patchElem, patchLocation))
-              case None => (None, Some(patchElem))
-            }
+        targetNode.graph.patchSeqField(patchField, unionElements.values.toSeq)
 
-        }
-
-        val newDomainElements = computedDomainElements.foldLeft(targetPropertyValueIds) {
-          case (acc, (maybeTargetElem, maybeMergedElem)) =>
-            maybeTargetElem match {
-              // these elements were patch elements matching target elements
-              // they might have produced a merged or none element
-              case Some(targetElem) =>
-                maybeMergedElem match {
-                  case Some(mergedElement) =>
-                    acc.updated(neutralId(targetElem.id, targetLocation), mergedElement)
-                  case None =>
-                    acc - neutralId(targetElem.id, targetLocation)
-                }
-              // These are new elements introduced by the patch array not in the original target array, we always add them
-              case None =>
-                maybeMergedElem match {
-                  case Some(mergedElement) =>
-                    acc.updated(neutralId(mergedElement.id, patchLocation), mergedElement)
-                  case None =>
-                    acc // this should never happen
-                }
-            }
-        }
-        targetNode.graph.patchSeqField(patchField, newDomainElements.values.toSeq)
       case IGNORE =>
       // ignore
+
       case FAIL =>
         errorHandler.violation(
             InvalidDialectPatch,
