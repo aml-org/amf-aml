@@ -101,7 +101,7 @@
         "@id": "file://shared/src/test/resources/vocabularies2/dialects/example6.yaml/documents"
       },
       "http://a.ml/vocabularies/document#location": "file://shared/src/test/resources/vocabularies2/dialects/example6.yaml",
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.1.1",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -129,7 +129,7 @@
           "@id": "file://shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB"
         }
       ],
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.1.1",
       "http://a.ml/vocabularies/document#references": [],
       "http://a.ml/vocabularies/document#root": false,
       "http://a.ml/vocabularies/document-source-maps#sources": [
