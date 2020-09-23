@@ -240,7 +240,7 @@
         "@id": "file://shared/src/test/resources/vocabularies2/dialects/referencestyle/example19-referencestyle.yaml/documents"
       },
       "http://a.ml/vocabularies/document#location": "file://shared/src/test/resources/vocabularies2/dialects/referencestyle/example19-referencestyle.yaml",
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.1.1",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
