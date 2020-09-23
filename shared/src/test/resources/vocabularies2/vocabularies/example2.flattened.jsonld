@@ -18,7 +18,7 @@
       "http://a.ml/vocabularies/core#name": "test2",
       "http://a.ml/vocabularies/meta#base": "http://a.ml/vocabularies/test2#",
       "http://a.ml/vocabularies/document#location": "file://shared/src/test/resources/vocabularies2/vocabularies/example2.yaml",
-      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#version": "2.1.1",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
