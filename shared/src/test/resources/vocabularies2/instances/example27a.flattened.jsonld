@@ -105,7 +105,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://shared/src/test/resources/vocabularies2/instances/example27a.yaml#/encodes"
       },
-      "http://a.ml/vocabularies/document#version": "2.1.1",
+      "http://a.ml/vocabularies/document#version": "2.1.2",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
