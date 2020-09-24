@@ -38,8 +38,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     // closed node validation
     ctx.closedNode("dialect", dialect.id, map)
 
-    val references =
-      DialectsReferencesParser(dialect, map, root.references).parse(dialect.location().getOrElse(dialect.id))
+    val references = DialectsReferencesParser(dialect, map, root.references).parse()
 
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
@@ -677,8 +676,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     // closed node validation
     ctx.closedNode("library", dialect.id, map)
 
-    val references =
-      DialectsReferencesParser(dialect, map, root.references).parse(dialect.location().getOrElse(dialect.id))
+    val references = DialectsReferencesParser(dialect, map, root.references).parse()
 
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
@@ -735,8 +733,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     // closed node validation
     ctx.closedNode("fragment", dialect.id, map)
 
-    val references =
-      DialectsReferencesParser(dialect, map, root.references).parse(dialect.location().getOrElse(dialect.id))
+    val references = DialectsReferencesParser(dialect, map, root.references).parse()
 
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
