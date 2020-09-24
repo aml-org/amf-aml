@@ -5,31 +5,10 @@ import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
+import amf.plugins.document.vocabularies.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel._
-import amf.plugins.document.vocabularies.metamodel.document.{DialectFragmentModel, DialectLibraryModel, DialectModel}
-import amf.plugins.document.vocabularies.model.domain.{DocumentsModel, NodeMapping}
+import amf.plugins.document.vocabularies.model.domain.DocumentsModel
 import org.mulesoft.common.core._
-
-trait MappingDeclarer { this: BaseUnit with DeclaresModel =>
-
-  def findNodeMapping(mappingId: String): Option[NodeMapping] = {
-    declares.find(_.id == mappingId) match {
-      case Some(mapping: NodeMapping) => Some(mapping)
-      case _ =>
-        references
-          .collect {
-            case lib: MappingDeclarer =>
-              lib
-          }
-          .map { dec =>
-            dec.findNodeMapping(mappingId)
-          }
-          .filter(_.isDefined)
-          .map(_.get)
-          .headOption
-    }
-  }
-}
 
 case class Dialect(fields: Fields, annotations: Annotations)
     extends BaseUnit
@@ -82,45 +61,4 @@ object Dialect {
   def apply(): Dialect = apply(Annotations())
 
   def apply(annotations: Annotations): Dialect = Dialect(Fields(), annotations)
-}
-
-case class DialectLibrary(fields: Fields, annotations: Annotations)
-    extends BaseUnit
-    with ExternalContext[DialectLibrary]
-    with DeclaresModel
-    with MappingDeclarer {
-
-  def references: Seq[BaseUnit]    = fields.field(References)
-  def declares: Seq[DomainElement] = fields.field(Declares)
-
-  override def componentId: String = ""
-
-  def meta: Obj = DialectLibraryModel
-}
-
-object DialectLibrary {
-  def apply(): DialectLibrary = apply(Annotations())
-
-  def apply(annotations: Annotations): DialectLibrary = DialectLibrary(Fields(), annotations)
-}
-
-case class DialectFragment(fields: Fields, annotations: Annotations)
-    extends BaseUnit
-    with EncodesModel
-    with ExternalContext[DialectFragment] {
-
-  def references: Seq[BaseUnit]     = fields.field(References)
-  override def encodes: NodeMapping = fields.field(Encodes)
-
-  override def componentId: String = ""
-
-  def withEncodes(nodeMapping: NodeMapping): DialectFragment = set(Encodes, nodeMapping)
-
-  def meta: Obj = DialectFragmentModel
-}
-
-object DialectFragment {
-  def apply(): DialectFragment = apply(Annotations())
-
-  def apply(annotations: Annotations): DialectFragment = DialectFragment(Fields(), annotations)
 }
