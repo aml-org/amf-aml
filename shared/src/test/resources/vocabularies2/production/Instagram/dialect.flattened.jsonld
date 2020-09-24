@@ -140,7 +140,7 @@
         "@id": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml/documents"
       },
       "http://a.ml/vocabularies/document#location": "file://shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml",
-      "http://a.ml/vocabularies/document#version": "2.1.1",
+      "http://a.ml/vocabularies/document#version": "2.1.2",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -166,7 +166,7 @@
       ],
       "http://a.ml/vocabularies/meta#base": "http://mulesoft.com/vocabularies/amf-learning#",
       "http://a.ml/vocabularies/document#location": "file://shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.yaml",
-      "http://a.ml/vocabularies/document#version": "2.1.1",
+      "http://a.ml/vocabularies/document#version": "2.1.2",
       "http://a.ml/vocabularies/document#usage": "Learn AMF",
       "http://a.ml/vocabularies/document#root": false,
       "http://a.ml/vocabularies/document-source-maps#sources": [

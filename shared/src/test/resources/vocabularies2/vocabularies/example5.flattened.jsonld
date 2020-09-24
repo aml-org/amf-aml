@@ -36,7 +36,7 @@
       ],
       "http://a.ml/vocabularies/meta#base": "http://a.ml/vocabularies/test5#",
       "http://a.ml/vocabularies/document#location": "file://shared/src/test/resources/vocabularies2/vocabularies/example5.yaml",
-      "http://a.ml/vocabularies/document#version": "2.1.1",
+      "http://a.ml/vocabularies/document#version": "2.1.2",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
