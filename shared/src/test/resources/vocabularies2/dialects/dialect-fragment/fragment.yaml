@@ -1,0 +1,4 @@
+#%NodeMapping/Dialect1.0
+mapping:
+  anotherProperty:
+    range: string
