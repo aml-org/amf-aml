@@ -169,51 +169,46 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
   }
 
   /**
-   * Emits the triples
-   * @param base
-   * @param parsedPath
-   * @return
-   */
-  def emitPath(b: PartBuilder, base: String, parsedPath: PropertyPath): Unit = {
+    * Emits the triples
+    * @param parsedPath
+    * @return
+    */
+  def emitPath(b: PartBuilder, parsedPath: PropertyPath): Unit = {
     parsedPath match {
       case PredicatePath(p, true, false) =>
-        val uri = base + "_inv"
         b.obj { e =>
-          e.entry("@id", uri)
           e.entry((Namespace.Shacl + "inversePath").iri(), genValue(_, p))
         }
 
       case PredicatePath(p, false, true) =>
-        val uri = base + "_neg"
         b.obj { e =>
-          e.entry("@id", uri)
-          e.entry((Namespace.Shacl + "zerOrMorePath").iri(), genValue(_, p))
+          e.entry((Namespace.Shacl + "zeroOrMorePath").iri(), genValue(_, p))
         }
 
       case PredicatePath(p, false, false) =>
         link(b, p)
 
-      case SequencePath(elements)        =>
-        val uri = base + "_seq"
+      case SequencePath(elements) =>
         b.obj { e =>
           e.entry("@list", { l =>
-            l.list( p => {
-              elements.zipWithIndex.foreach { case (e, i) =>
-                emitPath(p, s"${uri}$i", e)
+            l.list(p => {
+              elements.zipWithIndex.foreach {
+                case (e, i) =>
+                  emitPath(p, e)
               }
             })
           })
         }
-      case AlternatePath(elements)        =>
-        val uri = base + "_alt"
+      case AlternatePath(elements) =>
         b.obj { e =>
           e.entry(
             (Namespace.Shacl + "alternativePath").iri(), { e =>
               e.obj { e =>
                 e.entry("@list", { l =>
-                  l.list( p => {
-                    elements.zipWithIndex.foreach { case (e, i) =>
-                      emitPath(p, s"${uri}$i", e)
+                  l.list(p => {
+                    elements.zipWithIndex.foreach {
+                      case (e, i) =>
+                        emitPath(p, e)
                     }
                   })
                 })
@@ -222,18 +217,18 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
           )
         }
 
-      case other =>  throw new Exception(s"""Cannot emit path, unsupported type of path token $other""")// ignore
+      case other => throw new Exception(s"""Cannot emit path, unsupported type of path token $other""") // ignore
     }
   }
 
   /**
-   * Builds a path property in a property constraint parsing a provided constraint path
-   * @param constraintId
-   * @param constraint
-   */
+    * Builds a path property in a property constraint parsing a provided constraint path
+    * @param constraintId
+    * @param constraint
+    */
   protected def assertPropertyPath(b: EntryBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
     val parsedPath = constraint.path.get
-    b.entry((Namespace.Shacl + "path").iri(), emitPath(_, constraintId + "_path", parsedPath))
+    b.entry((Namespace.Shacl + "path").iri(), emitPath(_, parsedPath))
   }
 
   private def emitConstraint(b: PartBuilder, constraintId: String, constraint: PropertyConstraint): Unit = {
@@ -256,11 +251,17 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
         constraint.maxInclusive.foreach(genNumericPropertyConstraintValue(b, "maxInclusive", _, Some(constraint)))
         constraint.minInclusive.foreach(genNumericPropertyConstraintValue(b, "minInclusive", _, Some(constraint)))
         if (constraint.atLeast.isDefined) {
-          genNumericPropertyConstraintValue(b, "qualifiedMinCount", constraint.atLeast.get._1.toString, Some(constraint))
+          genNumericPropertyConstraintValue(b,
+                                            "qualifiedMinCount",
+                                            constraint.atLeast.get._1.toString,
+                                            Some(constraint))
           b.entry((Namespace.Shacl + "qualifiedValueShape").iri(), link(_, constraint.atLeast.get._2))
         }
         if (constraint.atMost.isDefined) {
-          genNumericPropertyConstraintValue(b, "qualifiedMaxCount", constraint.atLeast.get._1.toString, Some(constraint))
+          genNumericPropertyConstraintValue(b,
+                                            "qualifiedMaxCount",
+                                            constraint.atLeast.get._1.toString,
+                                            Some(constraint))
           b.entry((Namespace.Shacl + "qualifiedValueShape").iri(), link(_, constraint.atLeast.get._2))
         }
         if (constraint.equalToProperty.isDefined) {
@@ -473,26 +474,26 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
     b.entry(constraintIri, value)
   }
 
-//  case class NumValueContainer(value:String, dataType:String)
-//
-//  private def genOrListConstraint(b:EntryBuilder, constraintName:String, values:Seq[NumValueContainer]): Unit = {
-//    b.entry(
-//      (Namespace.Shacl + "or").iri(),
-//      _.obj {
-//        _.entry(
-//          "@list",
-//          _.list { l =>
-//            values.foreach(numValue => {
-//              l.obj { o =>
-//                o.entry((Namespace.Shacl + constraintName).iri(),
-//                  genValue(_, numValue.value, Some((Namespace.Xsd + numValue.dataType).iri())))
-//              }
-//            })
-//          }
-//        )
-//      }
-//    )
-//  }
+  //  case class NumValueContainer(value:String, dataType:String)
+  //
+  //  private def genOrListConstraint(b:EntryBuilder, constraintName:String, values:Seq[NumValueContainer]): Unit = {
+  //    b.entry(
+  //      (Namespace.Shacl + "or").iri(),
+  //      _.obj {
+  //        _.entry(
+  //          "@list",
+  //          _.list { l =>
+  //            values.foreach(numValue => {
+  //              l.obj { o =>
+  //                o.entry((Namespace.Shacl + constraintName).iri(),
+  //                  genValue(_, numValue.value, Some((Namespace.Xsd + numValue.dataType).iri())))
+  //              }
+  //            })
+  //          }
+  //        )
+  //      }
+  //    )
+  //  }
 
   private def genNumericPropertyConstraintValue(b: EntryBuilder,
                                                 constraintName: String,
@@ -507,7 +508,7 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
         b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value.toDouble.toString, Some(DataType.Float)))
       case Some(scalarType) if scalarType == DataType.Integer =>
         b.entry((Namespace.Shacl + constraintName).iri(),
-          genValue(_, value.toDouble.floor.toInt.toString, Some(DataType.Integer)))
+                genValue(_, value.toDouble.floor.toInt.toString, Some(DataType.Integer)))
 
     }
   }
