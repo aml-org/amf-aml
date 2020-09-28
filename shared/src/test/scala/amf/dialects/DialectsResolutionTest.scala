@@ -27,11 +27,33 @@ class DialectsResolutionTest extends DialectInstanceResolutionCycleTests {
 
   multiGoldenTest("resolve 21 test JSON-LD", "example21.resolved.%s") { config =>
     init().flatMap(
+        _ =>
+          cycle("example21.raml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
+  }
+
+  multiGoldenTest("Resolve dialect with fragment", "dialect.resolved.%s") { config =>
+    init().flatMap(
+        _ =>
+          cycle("dialect.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions),
+                directory = s"$basePath/dialect-fragment"))
+  }
+
+  multiGoldenTest("Resolve dialect with library", "dialect.resolved.%s") { config =>
+    init().flatMap(
       _ =>
-        cycle("example21.raml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        cycle("dialect.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions),
+          directory = s"$basePath/dialect-library"))
   }
 }

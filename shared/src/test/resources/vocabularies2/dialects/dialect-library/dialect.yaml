@@ -1,0 +1,14 @@
+#%Dialect 1.0
+dialect: Test
+version: "1.0"
+uses:
+  lib: library.yaml
+nodeMappings:
+  AnotherNode: lib.AnotherNode
+  RootNode:
+    mapping:
+      myProperty:
+        range: AnotherNode
+documents:
+  root:
+    encodes: RootNode

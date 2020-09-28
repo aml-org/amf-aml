@@ -13,262 +13,262 @@ trait DialectsParsingTest extends DialectTests {
 
   multiGoldenTest("parse 1 test", "example1.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example1.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example1.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 1b test", "example1b.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example1b.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example1b.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 2 test", "example2.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example2.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example2.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 3 test", "example3.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example3.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example3.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 4 test", "example4.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example4.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example4.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 5 test", "example5.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example5.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example5.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 6 test", "example6.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example6.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example6.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 7 test", "example7.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example7.raml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example7.raml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 8 test", "example8.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example8.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example8.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 9 test", "example9.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example9.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example9.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 10 test", "example10.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example10.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example10.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 11 test", "example11.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example11.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example11.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 12 test", "example12.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example12.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example12.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 13 test", "example13.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example13.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example13.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 14 test", "example14.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example14.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example14.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 15 test", "example15.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example15.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example15.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 16 test", "example16.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example16.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example16.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 17 test", "example17.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example17.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example17.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 18 test", "example18.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example18.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example18.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 19 test", "example19.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example19.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example19.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 20 test", "example20.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example20.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example20.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 21 test", "example21.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example21.raml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example21.raml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 22 test", "example22.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example22.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example22.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 23a test", "example23a.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example23a.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example23a.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse 23b test", "example23b.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("example23b.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("example23b.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiGoldenTest("parse mappings_lib test", "mappings_lib.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("mappings_lib.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("mappings_lib.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiSourceTest("generate 1 test", "example1.%s") { config =>
@@ -369,12 +369,12 @@ trait DialectsParsingTest extends DialectTests {
 
   multiGoldenTest("no documents on dialect (raml -> json)", "no-documents.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("no-documents.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("no-documents.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiSourceTest("no documents on dialect (json -> raml)", "no-documents.%s") { config =>
@@ -388,12 +388,12 @@ trait DialectsParsingTest extends DialectTests {
   // Key Property tests
   multiGoldenTest("parse 19 test - with key property", "keyproperty/example19-keyproperty.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("keyproperty/example19-keyproperty.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("keyproperty/example19-keyproperty.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiSourceTest("generate 19 test - with key property", "keyproperty/example19-keyproperty.%s") { config =>
@@ -403,12 +403,12 @@ trait DialectsParsingTest extends DialectTests {
   // Reference Style tests
   multiGoldenTest("parse 19 test - with reference style", "referencestyle/example19-referencestyle.%s") { config =>
     init().flatMap(
-      _ =>
-        cycle("referencestyle/example19-referencestyle.yaml",
-              config.golden,
-              VocabularyYamlHint,
-              target = Amf,
-              renderOptions = Some(config.renderOptions)))
+        _ =>
+          cycle("referencestyle/example19-referencestyle.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions)))
   }
 
   multiSourceTest("generate 19 test - with reference style", "referencestyle/example19-referencestyle.%s") { config =>
@@ -434,5 +434,27 @@ trait DialectsParsingTest extends DialectTests {
       assert(AMLPlugin().registry.allDialects().size == preRegistry)
       assert(AMLPlugin().registry.dialectById(b.id).isEmpty)
     }
+  }
+
+  multiGoldenTest("Parse dialect with fragment", "dialect.%s") { config =>
+    init().flatMap(
+        _ =>
+          cycle("dialect.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions),
+                directory = s"$basePath/dialect-fragment"))
+  }
+
+  multiGoldenTest("Parse dialect with library", "dialect.%s") { config =>
+    init().flatMap(
+        _ =>
+          cycle("dialect.yaml",
+                config.golden,
+                VocabularyYamlHint,
+                target = Amf,
+                renderOptions = Some(config.renderOptions),
+                directory = s"$basePath/dialect-library"))
   }
 }
