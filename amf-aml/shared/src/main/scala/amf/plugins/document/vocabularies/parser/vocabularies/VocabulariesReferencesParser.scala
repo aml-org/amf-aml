@@ -1,7 +1,8 @@
 package amf.plugins.document.vocabularies.parser.vocabularies
 import amf.core.annotations.Aliases
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.parser.ParsedReference
+import amf.core.model.domain.AmfObject
+import amf.core.parser.{CallbackReferenceCollector, ParsedReference, ReferenceCollector}
 import amf.plugins.document.vocabularies.model.domain.External
 import amf.validation.DialectValidations.ExpectedVocabularyModule
 import org.yaml.model.{YMap, YScalar}
@@ -9,8 +10,8 @@ import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps.DialectYM
 
 case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReference])(implicit ctx: VocabularyContext) {
 
-  def parse(location: String): ReferenceDeclarations = {
-    val result = ReferenceDeclarations()
+  def parse(location: String): ReferenceCollector[AmfObject] = {
+    val result = CallbackReferenceCollector(VocabularyRegister())
     parseLibraries(result, location)
     parseExternals(result, location)
     result
@@ -19,7 +20,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
   private def target(url: String): Option[BaseUnit] =
     references.find(r => r.origin.url.equals(url)).map(_.unit)
 
-  private def parseLibraries(result: ReferenceDeclarations, id: String): Unit = {
+  private def parseLibraries(result: ReferenceCollector[AmfObject], id: String): Unit = {
     map.key(
       "uses",
       entry =>
@@ -39,7 +40,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
     )
   }
 
-  private def parseExternals(result: ReferenceDeclarations, id: String): Unit = {
+  private def parseExternals(result: ReferenceCollector[AmfObject], id: String): Unit = {
     map.key(
       "external",
       entry =>
@@ -50,7 +51,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
             val alias: String = e.key.as[YScalar].text
             val base: String  = e.value.as[YScalar].text
             val external      = External()
-            result += external.withAlias(alias).withBase(base)
+            result += (alias, external.withAlias(alias).withBase(base))
           })
     )
   }

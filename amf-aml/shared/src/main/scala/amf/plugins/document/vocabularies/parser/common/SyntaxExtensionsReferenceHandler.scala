@@ -8,9 +8,9 @@ import amf.validation.DialectValidations.InvalidModuleType
 import org.yaml.model._
 
 class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHandler) extends ReferenceHandler {
-  private val collector = ReferenceCollector()
+  private val collector = CompilerReferenceCollector()
 
-  override def collect(parsedDoc: ParsedDocument, ctx: ParserContext): ReferenceCollector = {
+  override def collect(parsedDoc: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     parsedDoc match {
       case parsed: SyamlParsedDocument =>
         for (comment <- parsed.comment)
