@@ -1,7 +1,0 @@
-#%Test 1.0
-a: Hello A
-b: Hello B
-c:
-  $dialect: file://shared/src/test/resources/vocabularies2/instances/$dialect/dialectB.yaml#/declarations/RootNode
-  x: Hello X
-  y: Hello Y
