@@ -1,8 +1,8 @@
 package amf.plugins.features
 
-import amf.plugins.features.validation.AMFValidatorPlugin
+import amf.plugins.features.validation.custom.AMFValidatorPlugin
 
-object AMFValidation {
+object AMFCustomValidation {
   def register(): Unit = {
     amf.Core.registerPlugin(AMFValidatorPlugin)
   }
