@@ -33,7 +33,7 @@ trait ReportComparison extends AsyncFunSuite with FileAssertionTest {
   }
 }
 
-trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
+trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with DefaultAmfInitialization {
 
   def basePath: String
 
@@ -42,11 +42,6 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
     val instanceContext = compilerContext(s"$path/$instance")
 
     for {
-      _ <- amf.core.AMF.init()
-      _ <- Future.successful {
-        amf.core.AMF.registerPlugin(plugin = AMLPlugin)
-        amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-      }
       dialect <- {
         new AMFCompiler(
           dialectContext,
@@ -78,7 +73,6 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
     val instanceContext = compilerContext(s"$directory/$instance")
 
     for {
-      _ <- amf.core.AMF.init()
       dialect <- {
         new AMFCompiler(
           dialectContext,

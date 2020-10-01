@@ -12,13 +12,11 @@ import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DialectSHACLTest extends FunSuiteRdfCycleTests with PlatformSecrets with DialectHelper {
+class DialectSHACLTest extends FunSuiteRdfCycleTests with PlatformSecrets with DialectHelper with DefaultAmfInitialization {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/dialects/"
-
-  init()
 
   test("shacl 1 test") {
     cycleRdf("example1.yaml", s"example1.shacl")

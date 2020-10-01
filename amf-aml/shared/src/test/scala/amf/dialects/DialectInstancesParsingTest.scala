@@ -786,7 +786,6 @@ trait DialectInstancesParsingTest extends DialectTests {
                                               platform,
                                               DefaultParserErrorHandler.withRun()).build()
     for {
-      _  <- init()
       _  <- new AMFCompiler(context1, None, Some(Aml.name)).build()
       bu <- new AMFCompiler(context2, None, Some(Aml.name)).build()
     } yield {
@@ -805,7 +804,6 @@ trait DialectInstancesParsingTest extends DialectTests {
                                   renderOptions: Option[RenderOptions] = None,
   ): Future[Assertion] = {
     for {
-      _   <- init()
       res <- cycle(source, golden, hint, target, renderOptions = renderOptions)
     } yield {
       res

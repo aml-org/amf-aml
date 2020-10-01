@@ -10,7 +10,7 @@ import amf.plugins.features.validation.AMFValidatorPlugin
 
 import scala.concurrent.Future
 
-class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets {
+class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets with DefaultAmfInitialization {
 
   val basePath       = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
   val productionPath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
@@ -95,9 +95,6 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
-      _ <- Future.successful {
-        init
-      }
       _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycleRdf(source, golden, hint, target)
     } yield {
@@ -114,19 +111,10 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
-      _ <- Future.successful {
-        init
-      }
       _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycleFullRdf(source, golden, hint, target, directory)
     } yield {
       res
     }
-  }
-
-  private def init = {
-    amf.core.AMF.registerPlugin(plugin = AMLPlugin)
-    amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-    AMFValidatorPlugin.init()
   }
 }
