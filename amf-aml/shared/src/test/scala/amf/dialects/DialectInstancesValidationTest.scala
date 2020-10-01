@@ -5,7 +5,7 @@ import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DialectInstancesValidationTest extends DialectInstanceValidation with ReportComparison {
+trait DialectInstancesValidationTest extends DialectInstanceValidation with ReportComparison with DefaultAmfInitialization {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -17,17 +17,6 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation with Repo
                golden: Option[String] = None,
                path: String = basePath): Future[Assertion] = {
     validation(dialect, instance, path) flatMap {
-      assertReport(_, golden.map(g => s"$path/$g"))
-    }
-  }
-
-  def validateWithCustomProfile(dialect: String,
-                                instance: String,
-                                profile: ProfileName,
-                                name: String,
-                                golden: Option[String] = None,
-                                path: String = basePath): Future[Assertion] = {
-    validationWithCustomProfile(dialect, instance, profile, name, path) flatMap {
       assertReport(_, golden.map(g => s"$path/$g"))
     }
   }
@@ -143,45 +132,6 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation with Repo
 
   test("validation eng_demos  example 1 correct") {
     validate("eng_demos_dialect1.yaml", "eng_demos_instance1.yaml")
-  }
-
-  test("custom validation profile for dialect") {
-    validateWithCustomProfile(
-      "eng_demos_dialect1.yaml",
-      "eng_demos_instance1.yaml",
-      ProfileName("eng_demos_profile.yaml"),
-      "Custom Eng-Demos Validation",
-      golden = Some("eng_demos_instance1.report.json")
-    )
-  }
-
-  test("custom validation profile for dialect default profile") {
-    validateWithCustomProfile("eng_demos_dialect1.yaml",
-                              "eng_demos_instance1.yaml",
-                              ProfileName("eng_demos_profile.yaml"),
-                              "Eng Demos 0.1")
-  }
-
-  test("custom validation profile for ABOUT dialect default profile") {
-    validateWithCustomProfile(
-      "ABOUT-dialect.yaml",
-      "ABOUT.yaml",
-      ProfileName("ABOUT-validation.yaml"),
-      "ABOUT-validation",
-      path = s"$productionPath/ABOUT",
-      golden = Some("ABOUT.report.json")
-    )
-  }
-
-  test("Custom validation profile for ABOUT dialect default profile negative case") {
-    validateWithCustomProfile(
-      "ABOUT-dialect.yaml",
-      "ABOUT.custom.errors.yaml",
-      ProfileName("ABOUT-validation.yaml"),
-      "ABOUT-validation",
-      path = s"$productionPath/ABOUT",
-      golden = Some("ABOUT.custom.errors.report.json")
-    )
   }
 
   test("Can validate asyncapi 0.1 error") {

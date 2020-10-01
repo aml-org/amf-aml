@@ -8,7 +8,7 @@
         "@id": "http://www.w3.org/ns/shacl#Violation"
       },
       "http://www.w3.org/ns/shacl#focusNode": {
-        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/encodes"
+        "@id": "file://amf-custom-validation/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/encodes"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
         "@id": "schema-org.codeRepository"
@@ -37,7 +37,7 @@
         "@id": "http://www.w3.org/ns/shacl#Violation"
       },
       "http://www.w3.org/ns/shacl#focusNode": {
-        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/encodes"
+        "@id": "file://amf-custom-validation/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/encodes"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
         "@id": "http://mulesoft.com/vocabularies/about#keyword"

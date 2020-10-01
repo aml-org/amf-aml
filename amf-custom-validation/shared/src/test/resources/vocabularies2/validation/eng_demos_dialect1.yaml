@@ -46,6 +46,7 @@ nodeMappings:
       speakers:
         propertyTerm: demos.speakers
         mandatory: true
+        allowMultiple: true
         mapKey: nick
         range: SpeakerNode
 
