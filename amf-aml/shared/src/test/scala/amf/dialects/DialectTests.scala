@@ -12,11 +12,11 @@ import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import org.scalatest.Assertion
+import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with DialectHelper {
+trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with DialectHelper with DefaultAmfInitialization {
   val basePath: String
 
   protected def withDialect(dialect: String,
@@ -30,7 +30,6 @@ trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with 
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
-      _       <- init()
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build()
       _       <- Future { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
       res <- cycle(source,
@@ -50,7 +49,6 @@ trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with 
                               hint: Hint,
                               directory: String = basePath): Future[BaseUnit] = {
     for {
-      _ <- init()
       dialect <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$dialect",
                                                             platform,
                                                             DefaultParserErrorHandler.withRun()).build(),
@@ -100,31 +98,6 @@ trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with 
 
   }
   def transform(unit: BaseUnit): BaseUnit = unit
-}
-
-trait DialectHelper {
-
-  def init()(implicit ec: ExecutionContext): Future[Unit] = {
-    amf.core.AMF.init().map { _ =>
-      amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-      amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
-      amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-      AMFValidatorPlugin.init()
-    }
-  }
-
-  final def parseAndRegisterDialect(uri: String, platform: Platform, hint: Hint)(
-      implicit ec: ExecutionContext): Future[BaseUnit] =
-    for {
-      _ <- init()
-      r <- new AMFCompiler(new CompilerContextBuilder(uri, platform, DefaultParserErrorHandler.withRun()).build(),
-                           None,
-                           Some(hint.vendor.name))
-        .build()
-    } yield {
-      r
-    }
 }
 
 abstract class DialectInstanceResolutionCycleTests extends DialectTests {

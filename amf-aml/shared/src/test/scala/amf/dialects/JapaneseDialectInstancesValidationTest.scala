@@ -7,11 +7,10 @@ import scala.concurrent.{ExecutionContext, Future}
 class JapaneseDialectInstancesValidationTest
     extends DialectInstanceValidation
     with ReportComparison
-    with DialectHelper {
+    with DialectHelper
+    with DefaultAmfInitialization {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-
-  init()
 
   val basePath = "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/instances/"
 

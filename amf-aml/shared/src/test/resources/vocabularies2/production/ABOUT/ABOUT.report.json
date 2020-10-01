@@ -11,7 +11,7 @@
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT.yaml#/encodes"
       },
       "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://schema.org/codeRepository"
+        "@id": "schema-org.codeRepository"
       },
       "http://www.w3.org/ns/shacl#resultMessage": "copyrightHolder was not defined",
       "http://www.w3.org/ns/shacl#sourceShape": {
@@ -21,13 +21,13 @@
         "@type": "http://a.ml/vocabularies/amf/parser#Position",
         "http://a.ml/vocabularies/amf/parser#start": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 11,
-          "http://a.ml/vocabularies/amf/parser#column": 12
+          "http://a.ml/vocabularies/amf/parser#line": 3,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         },
         "http://a.ml/vocabularies/amf/parser#end": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 11,
-          "http://a.ml/vocabularies/amf/parser#column": 54
+          "http://a.ml/vocabularies/amf/parser#line": 30,
+          "http://a.ml/vocabularies/amf/parser#column": 0
         }
       }
     },
@@ -51,7 +51,7 @@
         "http://a.ml/vocabularies/amf/parser#start": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
           "http://a.ml/vocabularies/amf/parser#line": 13,
-          "http://a.ml/vocabularies/amf/parser#column": 0
+          "http://a.ml/vocabularies/amf/parser#column": 9
         },
         "http://a.ml/vocabularies/amf/parser#end": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",

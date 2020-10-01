@@ -109,7 +109,7 @@ class DialectDomainElementRenderTest extends DialectElementTests {
   }
 }
 
-trait DialectElementTests extends AsyncFunSuite with FileAssertionTest with DialectHelper {
+trait DialectElementTests extends AsyncFunSuite with FileAssertionTest with DialectHelper with DefaultAmfInitialization {
 
   val basePath: String
   val baseHint: Hint
@@ -123,7 +123,6 @@ trait DialectElementTests extends AsyncFunSuite with FileAssertionTest with Dial
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
-      _       <- init()
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build().map(_.asInstanceOf[Dialect])
       _       <- Future { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
       res     <- cycleElement(dialect, source, extractor, golden, hint, directory = directory)

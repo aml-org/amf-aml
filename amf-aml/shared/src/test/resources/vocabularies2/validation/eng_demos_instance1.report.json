@@ -8,25 +8,22 @@
         "@id": "http://www.w3.org/ns/shacl#Violation"
       },
       "http://www.w3.org/ns/shacl#focusNode": {
-        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/validation/eng_demos_instance1.yaml#/encodes/speakers/Pedro"
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/validation/eng_demos_instance1.yaml"
       },
-      "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://mulesoft.com/vocabularies/eng-demos#nonExistent"
-      },
-      "http://www.w3.org/ns/shacl#resultMessage": "another error",
+      "http://www.w3.org/ns/shacl#resultMessage": "Expected vocabulary module but found: 'ExternalFragment(amf.core.parser.Fields@7f2a2b63,amf.core.parser.Annotations@76958ca8)'",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://a.ml/vocabularies/data#other-validation"
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
       },
       "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
         "@type": "http://a.ml/vocabularies/amf/parser#Position",
         "http://a.ml/vocabularies/amf/parser#start": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 19,
-          "http://a.ml/vocabularies/amf/parser#column": 0
+          "http://a.ml/vocabularies/amf/parser#line": 4,
+          "http://a.ml/vocabularies/amf/parser#column": 2
         },
         "http://a.ml/vocabularies/amf/parser#end": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 22,
+          "http://a.ml/vocabularies/amf/parser#line": 6,
           "http://a.ml/vocabularies/amf/parser#column": 0
         }
       }
@@ -37,26 +34,23 @@
         "@id": "http://www.w3.org/ns/shacl#Violation"
       },
       "http://www.w3.org/ns/shacl#focusNode": {
-        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/validation/eng_demos_instance1.yaml#/encodes/speakers/Pedro"
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/validation/eng_demos_instance_library.yaml"
       },
-      "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://schema.org/age"
-      },
-      "http://www.w3.org/ns/shacl#resultMessage": "one error",
+      "http://www.w3.org/ns/shacl#resultMessage": "Fragments must be imported by using '!include'",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://a.ml/vocabularies/data#test-custom-validation"
+        "@id": "http://a.ml/vocabularies/amf/core#invalid-include"
       },
       "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
         "@type": "http://a.ml/vocabularies/amf/parser#Position",
         "http://a.ml/vocabularies/amf/parser#start": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 19,
-          "http://a.ml/vocabularies/amf/parser#column": 9
+          "http://a.ml/vocabularies/amf/parser#line": 4,
+          "http://a.ml/vocabularies/amf/parser#column": 12
         },
         "http://a.ml/vocabularies/amf/parser#end": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 19,
-          "http://a.ml/vocabularies/amf/parser#column": 11
+          "http://a.ml/vocabularies/amf/parser#line": 4,
+          "http://a.ml/vocabularies/amf/parser#column": 45
         }
       }
     },
@@ -66,55 +60,23 @@
         "@id": "http://www.w3.org/ns/shacl#Violation"
       },
       "http://www.w3.org/ns/shacl#focusNode": {
-        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/validation/eng_demos_instance1.yaml#/encodes/speakers/Antonio"
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/validation/eng_demos_instance1.yaml#/encodes/product"
       },
-      "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://mulesoft.com/vocabularies/eng-demos#nonExistent"
-      },
-      "http://www.w3.org/ns/shacl#resultMessage": "another error",
+      "http://www.w3.org/ns/shacl#resultMessage": "Unresolved reference 'products.amf'",
       "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://a.ml/vocabularies/data#other-validation"
+        "@id": "http://a.ml/vocabularies/amf/core#unresolved-reference"
       },
       "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
         "@type": "http://a.ml/vocabularies/amf/parser#Position",
         "http://a.ml/vocabularies/amf/parser#start": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 23,
-          "http://a.ml/vocabularies/amf/parser#column": 0
+          "http://a.ml/vocabularies/amf/parser#line": 14,
+          "http://a.ml/vocabularies/amf/parser#column": 2
         },
         "http://a.ml/vocabularies/amf/parser#end": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 24,
-          "http://a.ml/vocabularies/amf/parser#column": 38
-        }
-      }
-    },
-    {
-      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
-      "http://www.w3.org/ns/shacl#resultSeverity": {
-        "@id": "http://www.w3.org/ns/shacl#Violation"
-      },
-      "http://www.w3.org/ns/shacl#focusNode": {
-        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/validation/eng_demos_instance1.yaml#/encodes/speakers/Antonio"
-      },
-      "http://www.w3.org/ns/shacl#resultPath": {
-        "@id": "http://schema.org/age"
-      },
-      "http://www.w3.org/ns/shacl#resultMessage": "one error",
-      "http://www.w3.org/ns/shacl#sourceShape": {
-        "@id": "http://a.ml/vocabularies/data#test-custom-validation"
-      },
-      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
-        "@type": "http://a.ml/vocabularies/amf/parser#Position",
-        "http://a.ml/vocabularies/amf/parser#start": {
-          "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 23,
-          "http://a.ml/vocabularies/amf/parser#column": 9
-        },
-        "http://a.ml/vocabularies/amf/parser#end": {
-          "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 23,
-          "http://a.ml/vocabularies/amf/parser#column": 11
+          "http://a.ml/vocabularies/amf/parser#line": 14,
+          "http://a.ml/vocabularies/amf/parser#column": 14
         }
       }
     }
