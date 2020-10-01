@@ -11,7 +11,7 @@ import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with ReportComparison with PlatformSecrets {
+class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with ReportComparison with PlatformSecrets with DefaultAmfInitialization {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
