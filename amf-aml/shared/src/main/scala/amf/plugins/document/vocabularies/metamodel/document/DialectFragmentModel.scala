@@ -17,7 +17,7 @@ object DialectFragmentModel extends FragmentModel with ExternalContextModel {
 
   override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Meta,
-      "Dialect Fragment",
+      "DialectFragment",
       "AML dialect mapping fragment that can be included in multiple AML dialects"
   )
 }

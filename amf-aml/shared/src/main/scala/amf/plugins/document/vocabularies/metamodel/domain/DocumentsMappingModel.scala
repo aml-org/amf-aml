@@ -14,7 +14,7 @@ object PublicNodeMappingModel extends DomainElementModel {
   val MappedNode = Field(
       Iri,
       Namespace.Meta + "mappedNode",
-      ModelDoc(ModelVocabularies.Meta, "mapped node", "Node in the dialect definition associated to this mapping"))
+      ModelDoc(ModelVocabularies.Meta, "mappedNode", "Node in the dialect definition associated to this mapping"))
 
   override def fields: List[Field] = Name :: MappedNode :: DomainElementModel.fields
 
@@ -24,7 +24,7 @@ object PublicNodeMappingModel extends DomainElementModel {
 
   override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Meta,
-      "Public Node Mapping",
+      "PublicNodeMapping",
       "Mapping for a graph node mapping to a particular function in a dialect"
   )
 }
@@ -37,11 +37,11 @@ object DocumentMappingModel extends DomainElementModel {
   val EncodedNode = Field(
       Iri,
       Namespace.Meta + "encodedNode",
-      ModelDoc(ModelVocabularies.Meta, "encoded node", "Node in the dialect encoded in the target mapped base unit"))
+      ModelDoc(ModelVocabularies.Meta, "encodedNode", "Node in the dialect encoded in the target mapped base unit"))
   val DeclaredNodes = Field(
       Array(PublicNodeMappingModel),
       Namespace.Meta + "declaredNode",
-      ModelDoc(ModelVocabularies.Meta, "declared node", "Node in the dialect declared in the target mappend base unit")
+      ModelDoc(ModelVocabularies.Meta, "declaredNode", "Node in the dialect declared in the target mappend base unit")
   )
 
   override def fields: List[Field] = DocumentName :: EncodedNode :: DeclaredNodes :: DomainElementModel.fields
@@ -52,7 +52,7 @@ object DocumentMappingModel extends DomainElementModel {
 
   override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Meta,
-      "Document Mapping",
+      "DocumentMapping",
       "Mapping for a particular dialect document into a graph base unit"
   )
 }
@@ -62,7 +62,7 @@ object DocumentsModelModel extends DomainElementModel {
   val Root = Field(
       DocumentMappingModel,
       Namespace.Meta + "rootDocument",
-      ModelDoc(ModelVocabularies.Meta, "root document", "Root node encoded in a mapped document base unit")
+      ModelDoc(ModelVocabularies.Meta, "rootDocument", "Root node encoded in a mapped document base unit")
   )
   val Fragments = Field(
       Array(DocumentMappingModel),
@@ -79,28 +79,28 @@ object DocumentsModelModel extends DomainElementModel {
       Namespace.Meta + "selfEncoded",
       ModelDoc(
           ModelVocabularies.Meta,
-          "self encoded",
+          "selfEncoded",
           "Information about if the base unit URL should be the same as the URI of the parsed root nodes in the unit")
   )
   val DeclarationsPath = Field(
       Str,
       Namespace.Meta + "declarationsPath",
       ModelDoc(ModelVocabularies.Meta,
-               "declarations path",
+               "declarationsPath",
                "Information about the AST location of the declarations to be parsed as declared domain elements")
   )
   val KeyProperty = Field(
       Bool,
       Namespace.Meta + "keyProperty",
       ModelDoc(ModelVocabularies.Meta,
-               "key property",
+               "keyProperty",
                "Information about whether the dialect is defined by the header or a key property")
   )
   val ReferenceStyle = Field(
       Str,
       Namespace.Meta + "referenceStyle",
       ModelDoc(ModelVocabularies.Meta,
-               "reference style",
+               "referenceStyle",
                "Determines the style for inclusions (RamlStyle or JsonSchemaStyle)")
   )
 
@@ -113,7 +113,7 @@ object DocumentsModelModel extends DomainElementModel {
 
   override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Meta,
-      "Documents Model",
+      "DocumentsModel",
       "Mapping from different type of dialect documents to base units in the parsed graph"
   )
 }

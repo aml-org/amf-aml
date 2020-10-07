@@ -11,7 +11,7 @@ abstract class PropertyTermModel extends DomainElementModel {
   val Name = Field(Str, Namespace.Core + "name", ModelDoc(ModelVocabularies.Core, "name", "Name of the property term"))
   val DisplayName = Field(Str,
                           Namespace.Core + "displayName",
-                          ModelDoc(ModelVocabularies.Core, "display name", "Human readable name for the property term"))
+                          ModelDoc(ModelVocabularies.Core, "displayName", "Human readable name for the property term"))
   val Description = Field(
       Str,
       Namespace.Core + "description",

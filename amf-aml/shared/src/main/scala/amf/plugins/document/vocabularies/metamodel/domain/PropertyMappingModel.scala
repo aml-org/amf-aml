@@ -29,25 +29,25 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
       Str,
       Namespace.Meta + "mapProperty",
       ModelDoc(ModelVocabularies.Meta,
-               "map label property",
+               "mapLabelProperty",
                "Marks the mapping as a 'map' mapping syntax. Directly related with mapTermKeyProperty")
   )
   val MapValueProperty = Field(
       Str,
       Namespace.Meta + "mapValueProperty",
       ModelDoc(ModelVocabularies.Meta,
-               "map label value property",
+               "mapLabelValueProperty",
                "Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty")
   )
 
   val MapTermKeyProperty = Field(
       Iri,
       Namespace.Meta + "mapTermProperty",
-      ModelDoc(ModelVocabularies.Meta, "map term property uri", "Marks the mapping as a 'map' mapping syntax. "))
+      ModelDoc(ModelVocabularies.Meta, "mapTermPropertyUri", "Marks the mapping as a 'map' mapping syntax. "))
   val MapTermValueProperty = Field(
       Iri,
       Namespace.Meta + "mapTermValueProperty",
-      ModelDoc(ModelVocabularies.Meta, "map term value property", "Marks the mapping as a 'map value' mapping syntax")
+      ModelDoc(ModelVocabularies.Meta, "mapTermValueProperty", "Marks the mapping as a 'map value' mapping syntax")
   )
 
   val Sorted = Field(Bool,
@@ -58,7 +58,7 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
   val MinCount = Field(
       Int,
       Namespace.Shacl + "minCount",
-      ModelDoc(ExternalModelVocabularies.Shacl, "min count", "Minimum count constraint over tha mapped property"))
+      ModelDoc(ExternalModelVocabularies.Shacl, "minCount", "Minimum count constraint over tha mapped property"))
   val Pattern = Field(
       Str,
       Namespace.Shacl + "pattern",
@@ -67,20 +67,20 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
       Double,
       Namespace.Shacl + "minInclusive",
       ModelDoc(ExternalModelVocabularies.Shacl,
-               "min inclusive",
+               "minInclusive",
                "Minimum inclusive constraint over the mapped property")
   )
   val Maximum = Field(
       Double,
       Namespace.Shacl + "maxInclusive",
       ModelDoc(ExternalModelVocabularies.Shacl,
-               "max inclusive",
+               "maxInclusive",
                "Maximum inclusive constraint over the mapped property")
   )
   val AllowMultiple = Field(
       Bool,
       Namespace.Meta + "allowMultiple",
-      ModelDoc(ModelVocabularies.Meta, "allow multiple", "Allows multiple mapped nodes for the property mapping"))
+      ModelDoc(ModelVocabularies.Meta, "allowMultiple", "Allows multiple mapped nodes for the property mapping"))
   val Enum = Field(
       SortedArray(Any),
       Namespace.Shacl + "in",
@@ -112,7 +112,7 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
 
   override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Meta,
-      "Node Property Mapping",
+      "NodePropertyMapping",
       "Semantic mapping from an input AST in a dialect document to the output graph of information for a class of output node"
   )
 }
