@@ -56,7 +56,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     if (imported.nonEmpty)
       vocabulary.withImports(imported.toSeq)
     if (declarables.nonEmpty) vocabulary.withDeclares(declarables)
-    if (references.references.nonEmpty) vocabulary.withReferences(references.baseUnitReferences())
+    if (references.nonEmpty) vocabulary.withReferences(references.baseUnitReferences())
     // we raise exceptions for missing terms
     ctx.pendingLocal.foreach {
       case (term, alias, location, isProperty) =>

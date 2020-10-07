@@ -2,8 +2,8 @@ package amf.plugins.document.vocabularies.parser.instances
 
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.Annotation
-import amf.core.parser._
+import amf.core.model.domain.{AmfObject, Annotation}
+import amf.core.parser.{Annotations, CallbackReferenceCollector, ParsedReference, Reference, ReferenceCollector, YMapOps}
 import amf.plugins.document.vocabularies.annotations.AliasesLocation
 import amf.plugins.document.vocabularies.model.document.{DialectInstance, DialectInstanceFragment, DialectInstanceLibrary}
 import amf.plugins.document.vocabularies.model.domain.External
@@ -15,8 +15,8 @@ import scala.collection.mutable
 case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap, references: Seq[ParsedReference])(
     implicit ctx: DialectInstanceContext) {
 
-  def parse(location: String): ReferenceDeclarations = {
-    val result = ReferenceDeclarations()
+  def parse(location: String): ReferenceCollector[AmfObject] = {
+    val result = CallbackReferenceCollector(DialectInstanceRegister())
     parseLibraries(dialectInstance, result, location)
     parseExternals(result, location)
     references.foreach {
@@ -36,7 +36,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
   private def target(url: String): Option[BaseUnit] =
     references.find(r => r.origin.url.equals(url)).map(_.unit)
 
-  private def parseLibraries(dialectInstance: BaseUnit, result: ReferenceDeclarations, id: String): Unit = {
+  private def parseLibraries(dialectInstance: BaseUnit, result: ReferenceCollector[AmfObject], id: String): Unit = {
     val parsedLibraries: mutable.Set[String] = mutable.Set()
     map.key(
       "uses",
@@ -77,7 +77,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
     case _ => e.value
   }
 
-  private def parseExternalEntry(result: ReferenceDeclarations, entry: YMapEntry): Unit = {
+  private def parseExternalEntry(result: ReferenceCollector[AmfObject], entry: YMapEntry): Unit = {
     entry.value
       .as[YMap]
       .entries
@@ -85,10 +85,10 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
         val alias: String = e.key.as[YScalar].text
         val base: String  = e.value
         val external      = External()
-        result += external.withAlias(alias).withBase(base)
+        result += (alias, external.withAlias(alias).withBase(base))
       })
   }
-  private def parseExternals(result: ReferenceDeclarations, id: String): Unit = {
+  private def parseExternals(result: ReferenceCollector[AmfObject], id: String): Unit = {
     map.key(
       "external",
       entry => parseExternalEntry(result, entry)
