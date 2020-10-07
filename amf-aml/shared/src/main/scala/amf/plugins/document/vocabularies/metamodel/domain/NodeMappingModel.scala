@@ -23,7 +23,7 @@ object NodeMappingModel
       Iri,
       Namespace.Shacl + "targetClass",
       ModelDoc(ExternalModelVocabularies.Shacl,
-               "target class",
+               "targetClass",
                "Target class whose instances will need to match the constraint described for the node")
   )
   val PropertiesMapping = Field(

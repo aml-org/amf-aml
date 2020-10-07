@@ -9,7 +9,7 @@ trait MergeableMappingModel {
       Str,
       Namespace.Meta + "mergePolicy",
       ModelDoc(ModelVocabularies.Meta,
-               "merge policy",
+               "mergePolicy",
                "Indication of how to merge this graph node when applying a patch document")
   )
 }
