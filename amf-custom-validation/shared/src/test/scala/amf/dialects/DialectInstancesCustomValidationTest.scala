@@ -32,8 +32,7 @@ class DialectInstancesCustomValidationTest extends DialectInstanceValidation wit
     }
   }
 
-  // Un-ignore after fixing APIMF-2509
-  ignore("custom validation profile for dialect") {
+  test("custom validation profile for dialect") {
     validateWithCustomProfile(
       "eng_demos_dialect1.yaml",
       "eng_demos_instance1.yaml",
@@ -43,14 +42,14 @@ class DialectInstancesCustomValidationTest extends DialectInstanceValidation wit
     )
   }
 
-  ignore("custom validation profile for dialect default profile") {
+  test("custom validation profile for dialect default profile") {
     validateWithCustomProfile("eng_demos_dialect1.yaml",
       "eng_demos_instance1.yaml",
       ProfileName("eng_demos_profile.yaml"),
       "Eng Demos 0.1")
   }
 
-  ignore("custom validation profile for ABOUT dialect default profile") {
+  test("custom validation profile for ABOUT dialect default profile") {
     validateWithCustomProfile(
       "ABOUT-dialect.yaml",
       "ABOUT.yaml",
@@ -61,7 +60,7 @@ class DialectInstancesCustomValidationTest extends DialectInstanceValidation wit
     )
   }
 
-  ignore("Custom validation profile for ABOUT dialect default profile negative case") {
+  test("Custom validation profile for ABOUT dialect default profile negative case") {
     validateWithCustomProfile(
       "ABOUT-dialect.yaml",
       "ABOUT.custom.errors.yaml",
