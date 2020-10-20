@@ -42,15 +42,15 @@ class DialectInstancesCustomValidationTest extends DialectInstanceValidation wit
       golden = Some("eng_demos_instance1.report.json")
     )
   }
-//  commented because the test is flaky
-//  test("custom validation profile for dialect default profile") {
-//    validateWithCustomProfile("eng_demos_dialect1.yaml",
-//      "eng_demos_instance1.yaml",
-//      ProfileName("eng_demos_profile.yaml"),
-//      "Eng Demos 0.1")
-//  }
 
-  test("custom validation profile for ABOUT dialect default profile") {
+  ignore("custom validation profile for dialect default profile") {
+    validateWithCustomProfile("eng_demos_dialect1.yaml",
+      "eng_demos_instance1.yaml",
+      ProfileName("eng_demos_profile.yaml"),
+      "Eng Demos 0.1")
+  }
+
+  ignore("custom validation profile for ABOUT dialect default profile") {
     validateWithCustomProfile(
       "ABOUT-dialect.yaml",
       "ABOUT.yaml",
@@ -61,7 +61,7 @@ class DialectInstancesCustomValidationTest extends DialectInstanceValidation wit
     )
   }
 
-  test("Custom validation profile for ABOUT dialect default profile negative case") {
+  ignore("Custom validation profile for ABOUT dialect default profile negative case") {
     validateWithCustomProfile(
       "ABOUT-dialect.yaml",
       "ABOUT.custom.errors.yaml",
