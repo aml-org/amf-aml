@@ -636,147 +636,159 @@ trait DialectInstancesParsingTest extends DialectTests {
 
   multiGoldenTest("Generate instance with invalid property terms", "/invalids/schema-uri/instance.%s") { config =>
     withDialect(
-      "/invalids/schema-uri/dialect.yaml",
-      "/invalids/schema-uri/instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions)
+        "/invalids/schema-uri/dialect.yaml",
+        "/invalids/schema-uri/instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions)
     )
   }
 
   multiGoldenTest("Instance with similar fragment names minor", "minor.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "minor.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments"
+        "dialect.yaml",
+        "minor.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments"
     )
   }
 
   multiGoldenTest("Instance with similar fragment names publicMinor", "publicMinor.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "publicMinor.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments"
+        "dialect.yaml",
+        "publicMinor.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments"
     )
   }
 
   multiGoldenTest("Parse mapKey and mapValue", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value"
     )
   }
 
   multiGoldenTest("Parse YAML instance with empty node", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/empty-node-yaml"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/empty-node-yaml"
     )
   }
 
   multiGoldenTest("Parse JSON instance with empty node", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.json",
-      config.golden,
-      VocabularyJsonHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/empty-node-json"
+        "dialect.yaml",
+        "instance.json",
+        config.golden,
+        VocabularyJsonHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/empty-node-json"
     )
   }
 
   multiGoldenTest("Parse instance with $dialect", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect"
     )
   }
 
   multiGoldenTest("Parse instance with includes", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/includes"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/includes"
     )
   }
 
   multiGoldenTest("Parse instance with $dialect and includes", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect-with-includes"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect-with-includes"
     )
   }
 
   multiGoldenTest("Parse instance with $id", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$id"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$id"
     )
   }
 
   multiGoldenTest("Parse instance with id template", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/id-template"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/id-template"
     )
   }
 
   multiGoldenTest("Parse instance with primary key", "instance.%s") { config =>
     withDialect(
-      "dialect.yaml",
-      "instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      renderOptions = Some(config.renderOptions),
-      directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key"
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key"
     )
   }
 
+  multiGoldenTest("Parse from instance from JSON-LD with extended term definitions in @context", "instance.golden.%s") {
+    config =>
+      withDialect(
+          "dialect.yaml",
+          "instance.source.flattened.jsonld",
+          config.golden,
+          hint = AmfJsonHint,
+          target = Amf,
+          directory = basePath + "jsonld-extended-term-definitions/",
+          renderOptions = Some(config.renderOptions)
+      )
+  }
 
   test("Clone instance from dialect") {
     val context1 = new CompilerContextBuilder(s"file://$basePath/dialect31.yaml",

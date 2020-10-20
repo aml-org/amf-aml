@@ -1,0 +1,18 @@
+#%Dialect 1.0
+
+dialect: Test
+version: 0.1
+
+documents:
+  root:
+    encodes: DataGraphEdge
+
+external:
+  af: http://a.ml/vocabularies/api-federation#
+
+nodeMappings:
+  DataGraphEdge:
+    classTerm: af.DataGraphEdge
+    mapping:
+      optional:
+        range: boolean
