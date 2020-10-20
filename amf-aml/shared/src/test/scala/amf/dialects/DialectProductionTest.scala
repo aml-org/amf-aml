@@ -49,7 +49,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
 
   test("Can parse and generated ABOUT dialect") {
-    cycle("ABOUT-dialect.yaml", "ABOUT-dialect.raml.yaml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
+    cycle("ABOUT-dialect.yaml", "ABOUT-dialect.yaml.yaml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
   }
 
   ignore("Can parse the canonical webapi dialect") {
@@ -83,7 +83,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   test("Can parse validation dialect instance") {
     withDialect("validation_dialect.yaml",
                 "validation_instance1.yaml",
-                "validation_instance1.raml.yaml",
+                "validation_instance1.yaml.yaml",
                 VocabularyYamlHint,
                 Aml)
   }
