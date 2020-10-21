@@ -15,11 +15,6 @@ import scala.concurrent.{ExecutionContext, Future}
 // TODO: this is only here for compatibility with the test suite
 class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax: Option[Syntax]) {
 
-  Core.init()
-  amf.core.registries.AMFPluginsRegistry.registerSyntaxPlugin(SYamlSyntaxPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMFGraphPlugin)
-  amf.core.registries.AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
-
   /** Print ast to string. */
   def renderToString(implicit executionContext: ExecutionContext): Future[String] = render()
 

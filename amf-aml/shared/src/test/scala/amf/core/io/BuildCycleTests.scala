@@ -112,8 +112,6 @@ trait BuildCycleTestCommon extends FileAssertionTest {
             eh: Option[ParserErrorHandler],
             useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
 
-    amf.core.AMF.registerPlugin(plugin = AMLPlugin)
-    amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     var options =
       if (!useAmfJsonldSerialisation) ParsingOptions().withoutAmfJsonLdSerialization
       else ParsingOptions().withAmfJsonLdSerialization

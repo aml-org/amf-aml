@@ -44,10 +44,6 @@ class VocabularyDefinitionValidationTest
 
     val vocabularyContext = compilerContext(s"file://$basePath/$path/$vocabulary")
     val report = for {
-      _ <- Future.successful {
-        amf.core.AMF.registerPlugin(plugin = AMLPlugin)
-        amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-      }
       vocabulary <- {
         new AMFCompiler(
           vocabularyContext,

@@ -13,7 +13,7 @@ import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DialectInstanceTester { this: FunSuiteCycleTests =>
+trait DialectInstanceTester extends DefaultAmfInitialization { this: FunSuiteCycleTests =>
 
   protected def withDialect(dialect: String,
                             source: String,
@@ -26,12 +26,7 @@ trait DialectInstanceTester { this: FunSuiteCycleTests =>
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
-      _ <- Future.successful {
-        amf.core.AMF.registerPlugin(plugin = AMLPlugin)
-        amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-      }
-      _ <- new AMFCompiler(context, None, Some(Aml.name))
-        .build()
+      _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycle(source, golden, hint, target, directory, renderOptions)
     } yield {
       res
@@ -90,37 +85,37 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   multiGoldenTest("Can parse validation dialect cfg1 instance", "example1_instance.%s") { config =>
     withDialect(
-      "example1.yaml",
-      "example1_instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      directory = s"${basePath}cfg/",
-      renderOptions = Some(config.renderOptions)
+        "example1.yaml",
+        "example1_instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        directory = s"${basePath}cfg/",
+        renderOptions = Some(config.renderOptions)
     )
   }
 
   multiGoldenTest("Can parse validation dialect cfg2 instance", "example2_instance.%s") { config =>
     withDialect(
-      "example2.yaml",
-      "example2_instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      directory = basePath + "cfg/",
-      renderOptions = Some(config.renderOptions)
+        "example2.yaml",
+        "example2_instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        directory = basePath + "cfg/",
+        renderOptions = Some(config.renderOptions)
     )
   }
 
   multiGoldenTest("Can parse validation dialect cfg3 instance", "example3_instance.%s") { config =>
     withDialect(
-      "example3.yaml",
-      "example3_instance.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      directory = basePath + "cfg/",
-      renderOptions = Some(config.renderOptions)
+        "example3.yaml",
+        "example3_instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        directory = basePath + "cfg/",
+        renderOptions = Some(config.renderOptions)
     )
   }
 
@@ -139,13 +134,13 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   multiGoldenTest("Can parse ABOUT-hosted dialectinstance", "ABOUT_hosted.%s") { config =>
     withDialect(
-      "ABOUT-hosted-vcs-dialect.yaml",
-      "ABOUT_hosted.yaml",
-      config.golden,
-      VocabularyYamlHint,
-      target = Amf,
-      directory = s"${basePath}ABOUT/",
-      renderOptions = Some(config.renderOptions)
+        "ABOUT-hosted-vcs-dialect.yaml",
+        "ABOUT_hosted.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        directory = s"${basePath}ABOUT/",
+        renderOptions = Some(config.renderOptions)
     )
   }
 

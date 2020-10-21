@@ -34,13 +34,7 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with R
   private val path: String = "amf-aml/shared/src/test/resources/vocabularies2/instances/invalids"
 
   protected def validate(dialect: String, goldenReport: Option[String]): Future[Assertion] = {
-    amf.core.AMF.registerPlugin(AMLPlugin)
-    amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     for {
-      _ <- Future.successful {
-        amf.core.AMF.registerPlugin(plugin = AMLPlugin)
-        amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-      }
       dialect <- {
         new AMFCompiler(
           new CompilerContextBuilder("file://" + path + dialect, platform, eh = DefaultParserErrorHandler.withRun())
