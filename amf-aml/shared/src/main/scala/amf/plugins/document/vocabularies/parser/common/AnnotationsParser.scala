@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.parser.common
 
+import amf.core.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.model.domain.DomainElement
 import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.parser.{Annotations, ParserContext}
@@ -50,7 +51,7 @@ trait AnnotationsParser {
             val property         = CustomDomainProperty(Annotations(v)).withId(propertyId).withName(k, Annotations())
             val extension = DomainExtension()
               .withId(id)
-              .withExtension(parsedAnnotation)
+              .set(DomainExtensionModel.Extension, parsedAnnotation, Annotations.inferred())
               .withDefinedBy(property)
               .withName(k)
               .add(Annotations(v))
@@ -65,7 +66,7 @@ trait AnnotationsParser {
                 val property         = CustomDomainProperty(Annotations(v)).withId(propertyId).withName(k)
                 val extension = DomainExtension()
                   .withId(id)
-                  .withExtension(parsedAnnotation)
+                  .set(DomainExtensionModel.Extension,parsedAnnotation, Annotations.inferred())
                   .withDefinedBy(property)
                   .withName(k)
                   .add(Annotations(v))
