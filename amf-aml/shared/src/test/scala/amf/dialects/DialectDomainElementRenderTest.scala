@@ -109,7 +109,11 @@ class DialectDomainElementRenderTest extends DialectElementTests {
   }
 }
 
-trait DialectElementTests extends AsyncFunSuite with FileAssertionTest with DialectHelper with DefaultAmfInitialization {
+trait DialectElementTests
+    extends AsyncFunSuite
+    with FileAssertionTest
+    with DialectHelper
+    with DefaultAmfInitialization {
 
   val basePath: String
   val baseHint: Hint
@@ -124,7 +128,7 @@ trait DialectElementTests extends AsyncFunSuite with FileAssertionTest with Dial
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build().map(_.asInstanceOf[Dialect])
-      _       <- Future { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
+      _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
       res     <- cycleElement(dialect, source, extractor, golden, hint, directory = directory)
     } yield {
       res
@@ -139,8 +143,8 @@ trait DialectElementTests extends AsyncFunSuite with FileAssertionTest with Dial
                          directory: String = basePath): Future[Assertion] = {
     for {
       b <- parseAndRegisterDialect(s"file://$directory/$source", platform, hint)
-      t <- Future { transform(b) }
-      s <- Future(renderDomainElement(extractor(t), t.asInstanceOf[DialectInstanceUnit], dialect)) // generated string
+      t <- Future.successful { transform(b) }
+      s <- Future.successful { renderDomainElement(extractor(t), t.asInstanceOf[DialectInstanceUnit], dialect) } // generated string
       d <- writeTemporaryFile(s"$directory/$golden")(s)
       r <- assertDifferences(d, s"$directory/$golden")
     } yield r
