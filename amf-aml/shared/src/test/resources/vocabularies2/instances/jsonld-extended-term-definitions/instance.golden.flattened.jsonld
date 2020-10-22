@@ -1,0 +1,34 @@
+{
+  "@graph": [
+    {
+      "@id": "some-id-24",
+      "@type": [
+        "http://a.ml/vocabularies/api-federation#DataGraphEdge",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/jsonld-extended-term-definitions/dialect.yaml#/declarations/DataGraphEdge",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#optional": false
+    },
+    {
+      "@id": "some-id-45",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/jsonld-extended-term-definitions/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "some-id-24"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#root": true
+    }
+  ]
+}

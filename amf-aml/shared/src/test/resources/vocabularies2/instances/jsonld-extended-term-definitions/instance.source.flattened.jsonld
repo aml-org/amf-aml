@@ -1,0 +1,49 @@
+{
+  "@context": {
+    "doc": "http://a.ml/vocabularies/document#",
+    "data": "http://a.ml/vocabularies/data#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "af-decl": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/jsonld-extended-term-definitions/dialect.yaml#/declarations/",
+    "af-voc": "http://ang.anypoint.com/vocabularies/api-federation#",
+    "name": "data:name",
+    "definedBy": "meta:definedBy",
+    "encodes": "doc:encodes",
+    "root": {
+      "@id": "doc:root",
+      "@type": "xsd:boolean"
+    },
+    "optional": {
+      "@id": "data:optional",
+      "@type": "xsd:boolean"
+    }
+  },
+  "@graph": [
+    {
+      "@id": "some-id-24",
+      "@type": [
+        "doc:DomainElement",
+        "meta:DialectDomainElement",
+        "af-decl:DataGraphEdge",
+        "af-voc:DataGraphEdge"
+      ],
+      "optional": "false"
+    },
+    {
+      "@id": "some-id-45",
+      "@type": [
+        "doc:Document",
+        "meta:DialectInstance",
+        "doc:Unit"
+      ],
+      "encodes": {
+        "@id": "some-id-24"
+      },
+      "root": "true",
+      "doc:version": "2.1.0",
+      "definedBy": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/jsonld-extended-term-definitions/dialect.yaml"
+      }
+    }
+  ]
+}
