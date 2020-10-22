@@ -16,7 +16,11 @@ import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with DialectHelper with DefaultAmfInitialization {
+trait DialectTests
+    extends MultiJsonldAsyncFunSuite
+    with FileAssertionTest
+    with DialectHelper
+    with DefaultAmfInitialization {
   val basePath: String
 
   protected def withDialect(dialect: String,
@@ -31,7 +35,7 @@ trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with 
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build()
-      _       <- Future { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
+      _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
       res <- cycle(source,
                    golden,
                    hint,
@@ -54,11 +58,12 @@ trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with 
                                                             DefaultParserErrorHandler.withRun()).build(),
                                  None,
                                  Some(Aml.name)).build()
-      _ <- Future { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
-      b <- new AMFCompiler(
-        new CompilerContextBuilder(s"file://$directory/$source", platform, DefaultParserErrorHandler.withRun()).build(),
-        None,
-        Some(hint.vendor.name)).build()
+      _ <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
+      b <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$source",
+                                                      platform,
+                                                      DefaultParserErrorHandler.withRun()).build(),
+                           None,
+                           Some(hint.vendor.name)).build()
     } yield {
       b
     }
@@ -89,7 +94,7 @@ trait DialectTests extends MultiJsonldAsyncFunSuite with FileAssertionTest with 
     if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
     for {
       b <- parseAndRegisterDialect(s"file://$directory/$source", platform, hint)
-      t <- Future { transform(b) }
+      t <- Future.successful { transform(b) }
       s <- new AMFSerializer(t, vendorToSyntax(target), target.name, options)
         .renderToString(scala.concurrent.ExecutionContext.Implicits.global)
       d <- writeTemporaryFile(s"$directory/$golden")(s)

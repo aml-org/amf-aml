@@ -7,7 +7,6 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationReport
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.io.FileAssertionTest
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
@@ -33,7 +32,7 @@ trait ReportComparison extends AsyncFunSuite with FileAssertionTest {
   }
 }
 
-trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with DefaultAmfInitializationWithCustomValidation {
+trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
 
   def basePath: String
 
@@ -67,8 +66,6 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with 
                                             profile: ProfileName,
                                             name: String,
                                             directory: String = basePath): Future[AMFValidationReport] = {
-    amf.core.AMF.registerPlugin(AMLPlugin)
-    amf.core.AMF.registerPlugin(AMFValidatorPlugin)
     val dialectContext  = compilerContext(s"$directory/$dialect")
     val instanceContext = compilerContext(s"$directory/$instance")
 
