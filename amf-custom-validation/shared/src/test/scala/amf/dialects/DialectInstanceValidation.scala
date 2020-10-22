@@ -32,7 +32,7 @@ trait ReportComparison extends AsyncFunSuite with FileAssertionTest {
   }
 }
 
-trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with DefaultAmfInitializationWithCustomValidation {
+trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
 
   def basePath: String
 
