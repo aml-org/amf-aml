@@ -17,7 +17,7 @@ import org.yaml.model.{YDocument, YNode}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DialectDomainElementRenderTest extends DialectElementTests {
+class DialectDomainElementRenderTest extends DomainElementCycleTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   override val basePath: String                            = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
@@ -109,7 +109,7 @@ class DialectDomainElementRenderTest extends DialectElementTests {
   }
 }
 
-trait DialectElementTests
+trait DomainElementCycleTests
     extends AsyncFunSuite
     with FileAssertionTest
     with DialectHelper
@@ -150,10 +150,10 @@ trait DialectElementTests
     } yield r
   }
 
-  private def renderDomainElement(shape: Option[DomainElement],
-                                  instance: DialectInstanceUnit,
-                                  dialect: Dialect): String = {
-    val node     = shape.map(AmlDomainElementEmitter.emit(_, dialect, UnhandledErrorHandler)).getOrElse(YNode.Empty)
+  def renderDomainElement(element: Option[DomainElement],
+                          instance: DialectInstanceUnit,
+                          dialect: Dialect): String = {
+    val node     = element.map(AmlDomainElementEmitter.emit(_, dialect, UnhandledErrorHandler)).getOrElse(YNode.Empty)
     val document = SyamlParsedDocument(document = YDocument(node))
     SYamlSyntaxPlugin.unparse("application/yaml", document).getOrElse("").toString
   }

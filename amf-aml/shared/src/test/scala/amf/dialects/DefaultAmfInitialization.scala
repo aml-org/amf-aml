@@ -1,6 +1,8 @@
 package amf.dialects
 
+import amf.plugins.document.Vocabularies
 import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.domain.VocabulariesRegister
 import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalactic.source.Position
 import org.scalatest.compatible.Assertion
@@ -25,7 +27,7 @@ object DefaultAmfInitialization {
   private def doInit(): Future[Unit] = {
     for {
       _ <- amf.core.AMF.init()
-      _ <- Future.successful { amf.core.AMF.registerPlugin(AMLPlugin) }
+      _ <- Future.successful { Vocabularies.register() }
       _ <- AMLPlugin.init()
       _ <- Future.successful { amf.core.AMF.registerPlugin(AMFValidatorPlugin) }
       _ <- AMFValidatorPlugin.init()
