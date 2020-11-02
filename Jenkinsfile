@@ -37,6 +37,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
+          branch 'sourcemaps/develop'
         }
       }
       steps {
