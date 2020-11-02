@@ -15,6 +15,8 @@ version in ThisBuild := {
   lazy val branch = sys.env.get("BRANCH_NAME")
 
   if (branch.contains("master")) s"$major.$minor.$build" else s"$major.${minor + 1}.0-SNAPSHOT"
+
+  "5.0.0-SNAPSHOT-INTERNAL"
 }
 
 publish := {}
@@ -44,7 +46,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "4.1.154"
+val amfCoreVersion = "4.1.0-SNAPSHOT-INTERNAL"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
