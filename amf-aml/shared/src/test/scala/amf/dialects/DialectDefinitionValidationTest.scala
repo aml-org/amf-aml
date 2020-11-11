@@ -31,6 +31,11 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with R
     validate("/missing-range-in-mapping/dialect.yaml", Some("/missing-range-in-mapping/report.json"))
   }
 
+  test("Test idTemplate variables overridable by $base directive") {
+    validate("/base-overridable-idTemplate-variable/dialect.yaml", Some("/base-overridable-idTemplate-variable/report.json"))
+  }
+
+
   private val path: String = "amf-aml/shared/src/test/resources/vocabularies2/instances/invalids"
 
   protected def validate(dialect: String, goldenReport: Option[String]): Future[Assertion] = {

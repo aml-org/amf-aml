@@ -29,8 +29,9 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragmen
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
+import amf.plugins.document.vocabularies.parser.instances.BaseDirective
 import amf.validation.DialectValidations
-import amf.validation.DialectValidations.DialectError
+import amf.validation.DialectValidations.{DialectError, VariablesDefinedInBase}
 import org.yaml.model._
 
 import scala.collection.immutable
@@ -394,6 +395,19 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     )
 
     map.parse("idTemplate", nodeMapping setParsing NodeMappingModel.IdTemplate)
+    map.key(
+        "idTemplate",
+        entry => {
+          val idTemplate = entry.value.as[String]
+          val base       = BaseDirective.baseFrom(idTemplate)
+          if (base.contains('{')) {
+            ctx.eh.warning(VariablesDefinedInBase,
+                           nodeMapping.id,
+                           s"Base $base contains idTemplate variables overridable by $$base directive",
+                           entry.value)
+          }
+        }
+    )
     nodeMapping.nodetypeMapping.option().foreach(validateTemplate(_, map, nodeMapping.propertiesMapping()))
 
     parseAnnotations(map, nodeMapping, ctx.declarations)

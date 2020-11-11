@@ -11,7 +11,7 @@ import scala.collection.mutable
 
 case class Ctx(map: YMap, nodeMapping: NodeMapping, id: String)
 
-trait InstanceNodeIdHandling extends BaseIdHanding { this: DialectInstanceParser =>
+trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstanceParser =>
 
   protected def scalarYType(entry: YMapEntry): Boolean = {
     entry.value.tagType match {
