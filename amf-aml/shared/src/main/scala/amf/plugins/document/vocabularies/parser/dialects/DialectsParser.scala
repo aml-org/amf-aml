@@ -7,11 +7,24 @@ import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
-import amf.core.parser.{Annotations, BaseSpecParser, ScalarNode, SearchScope, SyamlParsedDocument, ValueNode, YNodeLikeOps}
+import amf.core.parser.{
+  Annotations,
+  BaseSpecParser,
+  ScalarNode,
+  SearchScope,
+  SyamlParsedDocument,
+  ValueNode,
+  YNodeLikeOps
+}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.{MergePolicies, NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.{
+  MergePolicies,
+  NodeMappingModel,
+  PropertyMappingModel,
+  UnionNodeMappingModel
+}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
@@ -218,7 +231,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                   case nodeMapping: NodeMappable =>
                     val name = ScalarNode(entry.key).string()
                     nodeMapping.set(NodeMappingModel.Name, name, Annotations(entry.key)).adopted(parent)
-                    nodeMapping.annotations.reject(a => a.isInstanceOf[SourceAST] || a.isInstanceOf[LexicalInformation] || a.isInstanceOf[SourceLocation] || a.isInstanceOf[SourceNode])
+                    nodeMapping.annotations.reject(a =>
+                      a.isInstanceOf[SourceAST] || a.isInstanceOf[LexicalInformation] || a
+                        .isInstanceOf[SourceLocation] || a.isInstanceOf[SourceNode])
                     nodeMapping.annotations ++= Annotations(entry)
                   case _ =>
                     ctx.eh.violation(DialectError,
@@ -452,7 +467,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     val name = ScalarNode(entry.key).string()
     entry.value.tagType match {
       case YType.Map =>
-        val map  = entry.value.as[YMap]
+        val map             = entry.value.as[YMap]
         val propertyMapping = PropertyMapping(map).set(PropertyMappingModel.Name, name, Annotations(entry.key))
 
         adopt(propertyMapping)
@@ -467,41 +482,42 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                 propertyMapping.withNodePropertyMapping(propertyTerm.id)
               case _ =>
                 ctx.eh.violation(DialectError,
-                  propertyMapping.id,
-                  s"Cannot find property term with alias $propertyTermId",
-                  e.value)
+                                 propertyMapping.id,
+                                 s"Cannot find property term with alias $propertyTermId",
+                                 e.value)
             }
           case _ =>
-            propertyMapping.withNodePropertyMapping((Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri())
+            propertyMapping.withNodePropertyMapping(
+                (Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri())
         }
 
         map.key(
-          "range",
-          entry => {
-            entry.value.tagType match {
-              case YType.Seq =>
-                propertyMapping.withObjectRange(entry.value.as[Seq[String]])
-              case _ =>
-                val value = ValueNode(entry.value)
-                val range = value.string().toString
-                range match {
-                  case "guid" =>
-                    propertyMapping.withLiteralRange((Namespace.Shapes + "guid").iri())
-                  case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
-                       "time" | "date" | "anyType" =>
-                    propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
-                  case "anyUri"  => propertyMapping.withLiteralRange(DataType.AnyUri)
-                  case "link"    => propertyMapping.withLiteralRange((Namespace.Shapes + "link").iri())
-                  case "number"  => propertyMapping.withLiteralRange(DataType.Number)
-                  case "uri"     => propertyMapping.withLiteralRange(DataType.AnyUri)
-                  case "any"     => propertyMapping.withLiteralRange(DataType.Any)
-                  case "anyNode" => propertyMapping.withObjectRange(Seq((Namespace.Meta + "anyNode").iri()))
-                  case nodeMappingId =>
-                    propertyMapping
-                      .withObjectRange(Seq(nodeMappingId)) // temporary until we can resolve all nodeMappings after finishing parsing declarations
-                }
+            "range",
+            entry => {
+              entry.value.tagType match {
+                case YType.Seq =>
+                  propertyMapping.withObjectRange(entry.value.as[Seq[String]])
+                case _ =>
+                  val value = ValueNode(entry.value)
+                  val range = value.string().toString
+                  range match {
+                    case "guid" =>
+                      propertyMapping.withLiteralRange((Namespace.Shapes + "guid").iri())
+                    case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
+                        "time" | "date" | "anyType" =>
+                      propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
+                    case "anyUri"  => propertyMapping.withLiteralRange(DataType.AnyUri)
+                    case "link"    => propertyMapping.withLiteralRange((Namespace.Shapes + "link").iri())
+                    case "number"  => propertyMapping.withLiteralRange(DataType.Number)
+                    case "uri"     => propertyMapping.withLiteralRange(DataType.AnyUri)
+                    case "any"     => propertyMapping.withLiteralRange(DataType.Any)
+                    case "anyNode" => propertyMapping.withObjectRange(Seq((Namespace.Meta + "anyNode").iri()))
+                    case nodeMappingId =>
+                      propertyMapping
+                        .withObjectRange(Seq(nodeMappingId)) // temporary until we can resolve all nodeMappings after finishing parsing declarations
+                  }
+              }
             }
-          }
         )
 
         parseMapKey(map, propertyMapping)
@@ -509,29 +525,29 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         parseMapValue(map, propertyMapping)
 
         map.key(
-          "patch",
-          entry => {
-            val patchMethod = ScalarNode(entry.value).string()
-            propertyMapping.set(PropertyMappingModel.MergePolicy, patchMethod, Annotations(entry))
-            val patchMethodValue = patchMethod.toString
-            if (!MergePolicies.isAllowed(patchMethodValue)) {
-              ctx.eh.violation(DialectError,
-                propertyMapping.id,
-                s"Unsupported propertu mapping patch operation '$patchMethod'",
-                entry.value)
+            "patch",
+            entry => {
+              val patchMethod = ScalarNode(entry.value).string()
+              propertyMapping.set(PropertyMappingModel.MergePolicy, patchMethod, Annotations(entry))
+              val patchMethodValue = patchMethod.toString
+              if (!MergePolicies.isAllowed(patchMethodValue)) {
+                ctx.eh.violation(DialectError,
+                                 propertyMapping.id,
+                                 s"Unsupported propertu mapping patch operation '$patchMethod'",
+                                 entry.value)
+              }
             }
-          }
         )
 
         map.key(
-          "mandatory",
-          entry => {
-            val required = ScalarNode(entry.value).boolean().toBool
-            val value    = if (required) 1 else 0
-            propertyMapping.set(PropertyMappingModel.MinCount,
-              AmfScalar(value, Annotations(entry.value)),
-              Annotations(entry))
-          }
+            "mandatory",
+            entry => {
+              val required = ScalarNode(entry.value).boolean().toBool
+              val value    = if (required) 1 else 0
+              propertyMapping.set(PropertyMappingModel.MinCount,
+                                  AmfScalar(value, Annotations(entry.value)),
+                                  Annotations(entry))
+            }
         )
 
         map.parse("pattern", propertyMapping setParsing PropertyMappingModel.Pattern)
@@ -543,32 +559,32 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         map.parse("sorted", propertyMapping setParsing PropertyMappingModel.Sorted)
 
         map.key(
-          "enum",
-          entry => {
-            val seq = entry.value.as[YSequence]
-            val values = seq.nodes.flatMap { node =>
-              node.value match {
-                case scalar: YScalar => Some(ScalarNode(node).string())
-                case _ =>
-                  ctx.eh.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
-                  None
+            "enum",
+            entry => {
+              val seq = entry.value.as[YSequence]
+              val values = seq.nodes.flatMap { node =>
+                node.value match {
+                  case scalar: YScalar => Some(ScalarNode(node).string())
+                  case _ =>
+                    ctx.eh.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
+                    None
+                }
               }
+              propertyMapping.set(PropertyMappingModel.Enum, AmfArray(values, Annotations(seq)), Annotations(entry))
             }
-            propertyMapping.set(PropertyMappingModel.Enum, AmfArray(values, Annotations(seq)), Annotations(entry))
-          }
         )
 
         map.key(
-          "typeDiscriminator",
-          entry => {
-            val types = entry.value.as[YMap]
-            val typeMapping = types.entries.foldLeft(Map[String, String]()) {
-              case (acc, e) =>
-                val nodeMappingId = e.value.as[YScalar].text
-                acc + (e.key.as[YScalar].text -> nodeMappingId)
+            "typeDiscriminator",
+            entry => {
+              val types = entry.value.as[YMap]
+              val typeMapping = types.entries.foldLeft(Map[String, String]()) {
+                case (acc, e) =>
+                  val nodeMappingId = e.value.as[YScalar].text
+                  acc + (e.key.as[YScalar].text -> nodeMappingId)
+              }
+              propertyMapping.withTypeDiscriminator(typeMapping)
             }
-            propertyMapping.withTypeDiscriminator(typeMapping)
-          }
         )
 
         map.parse("typeDiscriminatorName", propertyMapping setParsing PropertyMappingModel.TypeDiscriminatorName)
@@ -663,9 +679,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   private def parseDocumentsMapping(map: YMap): Unit = {
     map.key("documents").foreach { e =>
-      val doc = DocumentsModelParser(e.value,
-                                     dialect.id,
-                                     s"${dialect.name().value()} ${dialect.version().value()}").parse()
+      val doc =
+        DocumentsModelParser(e.value, dialect.id, s"${dialect.name().value()} ${dialect.version().value()}").parse()
       dialect.set(DialectModel.Documents, doc, Annotations(e))
     }
   }
