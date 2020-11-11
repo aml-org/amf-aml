@@ -1,0 +1,8 @@
+#%Presidents 1.0
+presidentHashId:
+  id: DonaldTrump
+  $base: http://overriden.com/presidents# # base override id template with '#'
+presidentSlashId:
+  id: BarackObama
+  $base: http://overriden.com/ # base override id template with '/'
+

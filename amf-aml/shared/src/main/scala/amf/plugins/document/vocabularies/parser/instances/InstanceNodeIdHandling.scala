@@ -11,7 +11,7 @@ import scala.collection.mutable
 
 case class Ctx(map: YMap, nodeMapping: NodeMapping, id: String)
 
-trait InstanceNodeIdHandling { this: DialectInstanceParser =>
+trait InstanceNodeIdHandling extends BaseIdHanding { this: DialectInstanceParser =>
 
   protected def scalarYType(entry: YMapEntry): Boolean = {
     entry.value.tagType match {
@@ -31,7 +31,7 @@ trait InstanceNodeIdHandling { this: DialectInstanceParser =>
                                mapping: NodeMapping,
                                additionalProperties: Map[String, Any] = Map(),
                                rootNode: Boolean): String = {
-    if (rootNode && Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false))
+    val generatedId = if (rootNode && Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false))
       defaultId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
     else {
       if (nodeMap.key("$id").isDefined) {
@@ -47,6 +47,7 @@ trait InstanceNodeIdHandling { this: DialectInstanceParser =>
         defaultId
       }
     }
+    overrideBase(generatedId, nodeMap)
   }
 
   protected def explicitNodeId(node: DialectDomainElement,

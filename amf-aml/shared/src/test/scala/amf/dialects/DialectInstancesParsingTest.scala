@@ -790,6 +790,32 @@ trait DialectInstancesParsingTest extends DialectTests {
       )
   }
 
+  multiGoldenTest("Parse instance with $base facet", "instance.%s") {
+    config =>
+      withDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        hint = VocabularyYamlHint,
+        target = Amf,
+        directory = basePath + "$base/",
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
+  multiGoldenTest("Parse instance with $base facet and id template", "instance.%s") {
+    config =>
+      withDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        hint = VocabularyYamlHint,
+        target = Amf,
+        directory = basePath + "$base-with-id-template/",
+        renderOptions = Some(config.renderOptions)
+      )
+  }
+
   test("Clone instance from dialect") {
     val context1 = new CompilerContextBuilder(s"file://$basePath/dialect31.yaml",
                                               platform,
