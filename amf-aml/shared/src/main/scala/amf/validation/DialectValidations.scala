@@ -100,6 +100,8 @@ object DialectValidations extends Validations {
 
   val DuplicateTerm = validation("duplicate-term", "Vocabulary defines duplicate terms")
 
+  val VariablesDefinedInBase = validation("variables-defined-in-base", "idTemplate variables are overridable by $base directive")
+
   override val levels: Map[String, Map[ProfileName, String]] = Map(
     ClosedShapeSpecificationWarning.id  -> all(WARNING),
     MissingClassTermSpecification.id    -> all(WARNING),

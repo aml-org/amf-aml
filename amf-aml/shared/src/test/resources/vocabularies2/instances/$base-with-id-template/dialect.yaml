@@ -1,0 +1,28 @@
+#%Dialect 1.0
+dialect: Presidents
+version: 1.0
+
+nodeMappings:
+  presidentCollectionNode:
+    mapping:
+      presidentHashId:
+        range: presidentHashIdNode
+      presidentSlashId:
+        range: presidentSlashIdNode
+
+
+  presidentHashIdNode:
+    idTemplate: http://nonoverriden.com/presidents#{id}
+    mapping:
+      id:
+        range: string
+
+  presidentSlashIdNode:
+    idTemplate: http://nonoverriden.com/presidents/{id}
+    mapping:
+      id:
+        range: string
+
+documents:
+  root:
+    encodes: presidentCollectionNode

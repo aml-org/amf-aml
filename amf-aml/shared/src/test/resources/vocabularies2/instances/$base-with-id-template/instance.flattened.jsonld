@@ -1,0 +1,172 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/dialect.yaml#/declarations/presidentCollectionNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#presidentSlashId": {
+        "@id": "http://overriden.com/presidents/BarackObama"
+      },
+      "http://a.ml/vocabularies/data#presidentHashId": {
+        "@id": "http://overriden.com/presidents#DonaldTrump"
+      },
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "http://overriden.com/presidents/BarackObama",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/dialect.yaml#/declarations/presidentSlashIdNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#id": "BarackObama",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "http://overriden.com/presidents/BarackObama#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "http://overriden.com/presidents#DonaldTrump",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/dialect.yaml#/declarations/presidentHashIdNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#id": "DonaldTrump",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "http://overriden.com/presidents#DonaldTrump/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "http://overriden.com/presidents/BarackObama#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://overriden.com/presidents/BarackObama#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "http://overriden.com/presidents/BarackObama#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "http://overriden.com/presidents#DonaldTrump/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://overriden.com/presidents#DonaldTrump/source-map/lexical/element_1"
+        },
+        {
+          "@id": "http://overriden.com/presidents#DonaldTrump/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#presidentSlashId",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,17)-(9,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#presidentHashId",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,16)-(5,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(9,0)]"
+    },
+    {
+      "@id": "http://overriden.com/presidents/BarackObama#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://overriden.com/presidents/BarackObama",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(9,0)]"
+    },
+    {
+      "@id": "http://overriden.com/presidents/BarackObama#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#id",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(7,0)]"
+    },
+    {
+      "@id": "http://overriden.com/presidents#DonaldTrump/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://overriden.com/presidents#DonaldTrump",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(5,0)]"
+    },
+    {
+      "@id": "http://overriden.com/presidents#DonaldTrump/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#id",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.2",
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(9,0)]"
+    }
+  ]
+}

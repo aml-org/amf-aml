@@ -1,0 +1,19 @@
+#%Dialect 1.0
+dialect: Presidents
+version: 1.0
+
+nodeMappings:
+  presidentCollectionNode:
+    mapping:
+      presidents:
+        range: presidentNode
+        allowMultiple: true
+
+  presidentNode:
+    mapping:
+      name:
+        range: string
+
+documents:
+  root:
+    encodes: presidentCollectionNode

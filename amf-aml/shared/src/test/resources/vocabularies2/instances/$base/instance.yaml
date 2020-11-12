@@ -1,0 +1,12 @@
+#%Presidents 1.0
+presidents:
+  - name: Donald Trump
+    $base: http://overriden.com/presidents # base override default id
+
+  - name: Barack Obama
+    $id: http://nonoverriden.com/presidents/BarackObama
+    $base: http://overriden.com/ # base override $id with '/'
+
+  - name: Geroge W. Bush
+    $id: http://nonoverriden.com/presidents#GeorgeWBush
+    $base: http://overriden.com/presidents# # base override $id with '#'

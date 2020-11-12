@@ -1,0 +1,23 @@
+#%Dialect 1.0
+dialect: Presidents
+# removed version to make validation non-conformant and generate a report for DialectDefinitionValidationTest
+
+nodeMappings:
+  presidentCollectionNode:
+    mapping:
+      president:
+        range: predidentNode
+
+
+
+  predidentNode:
+    idTemplate: http://{top}.nonoverriden.com/presidents#{id}
+    mapping:
+      id:
+        range: string
+      top:
+        range: string
+
+documents:
+  root:
+    encodes: presidentCollectionNode
