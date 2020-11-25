@@ -125,7 +125,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.2.0"
+        "@value": "2.3.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
@@ -376,7 +376,7 @@
         ],
         "http://a.ml/vocabularies/document#version": [
           {
-            "@value": "2.2.0"
+            "@value": "2.3.0"
           }
         ],
         "http://a.ml/vocabularies/document#references": [],

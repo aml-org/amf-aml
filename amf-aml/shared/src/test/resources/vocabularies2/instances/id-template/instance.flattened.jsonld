@@ -82,7 +82,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "https://a.ml/domain/elements#DialectDomainElement"
       },
-      "http://a.ml/vocabularies/document#version": "2.2.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {

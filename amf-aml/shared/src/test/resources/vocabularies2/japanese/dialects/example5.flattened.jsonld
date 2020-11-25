@@ -187,7 +187,7 @@
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml/documents"
       },
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml",
-      "http://a.ml/vocabularies/document#version": "2.2.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -213,7 +213,7 @@
       ],
       "http://a.ml/vocabularies/meta#base": "http://a.ml/vocabularies/vocab2#",
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/vocab2.yaml",
-      "http://a.ml/vocabularies/document#version": "2.2.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#root": false,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
