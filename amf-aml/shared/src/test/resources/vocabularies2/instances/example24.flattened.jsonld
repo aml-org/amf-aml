@@ -61,7 +61,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24.yaml#/encodes/hey%20ho"
       },
-      "http://a.ml/vocabularies/document#version": "2.2.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -86,7 +86,7 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/library24.yaml#/declarations/path/declarations/myDeclarations"
         }
       ],
-      "http://a.ml/vocabularies/document#version": "2.2.0",
+      "http://a.ml/vocabularies/document#version": "2.3.0",
       "http://a.ml/vocabularies/document#root": false,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
