@@ -154,6 +154,7 @@ trait DialectSyntax { this: DialectContext =>
       "mapValue"              -> false,
       "mapTermKey"            -> false,
       "mapTermValue"          -> false,
+      "isLink"                -> false,
       "mandatory"             -> false,
       "pattern"               -> false,
       "sorted"                -> false,
@@ -915,6 +916,17 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
     map.parse("typeDiscriminatorName", propertyMapping setParsing PropertyMappingModel.TypeDiscriminatorName)
 
+    map.key(
+      "isLink",
+      entry => {
+        val isLink = entry.value.as[Boolean]
+        propertyMapping.withExternallyLinkable(isLink);
+        propertyMapping.literalRange().option() match {
+          case Some(v) => ctx.eh.violation(DialectError, s"External links support in property mappings only can be declared in object properties but scalar range detected: ${v}", entry.value)
+          case _       =>  // ignore
+        }
+      }
+    )
     // TODO: check dependencies among properties
 
     parseAnnotations(map, propertyMapping, ctx.declarations)

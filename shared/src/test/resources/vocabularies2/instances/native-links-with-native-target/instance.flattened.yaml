@@ -1,0 +1,16 @@
+#%Test 1.0
+bs:
+  B1:
+    a: 1
+    b: 2
+    $id: http://test.com/declarations/B1
+description: this is node A
+links:
+  -
+    a: 1
+    b: 2
+    $id: http://test.com/declarations/B1
+  -
+    a: 1
+    b: 2
+    $id: http://test.com/declarations/B1

@@ -7,9 +7,19 @@ import org.scalatest.{Assertion, AsyncFunSuite}
 import scala.concurrent.Future
 
 // Multi test configs
-case class MultiTestConfig(source: String, golden: String, renderOptions: RenderOptions)
-case class MultiSourceTestConfig(source: String)
-case class MultiGoldenTestConfig(golden: String, renderOptions: RenderOptions)
+class MultiJsonLdDocumentFormTest(jsonLdDocumentForm: JsonLdDocumentForm)
+
+case class MultiTestConfig(source: String,
+                           golden: String,
+                           renderOptions: RenderOptions,
+                           jsonLdDocumentForm: JsonLdDocumentForm)
+    extends MultiJsonLdDocumentFormTest(jsonLdDocumentForm)
+
+case class MultiSourceTestConfig(source: String, jsonLdDocumentForm: JsonLdDocumentForm)
+    extends MultiJsonLdDocumentFormTest(jsonLdDocumentForm)
+
+case class MultiGoldenTestConfig(golden: String, renderOptions: RenderOptions, jsonLdDocumentForm: JsonLdDocumentForm)
+    extends MultiJsonLdDocumentFormTest(jsonLdDocumentForm)
 
 // Multi JSON-LD abstract test suite
 abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite {
@@ -38,7 +48,7 @@ abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite {
     testedForms.foreach { form =>
       validatePattern(goldenNamePattern, "goldenNamePattern")
       val golden = goldenNamePattern.format(form.extension)
-      val config = MultiGoldenTestConfig(golden, renderOptionsFor(form))
+      val config = MultiGoldenTestConfig(golden, renderOptionsFor(form), form)
       test(s"$testText for ${form.name} JSON-LD golden")(testFn(config))
     }
   }
@@ -49,7 +59,7 @@ abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite {
     testedForms.foreach { form =>
       validatePattern(sourceNamePattern, "sourceNamePattern")
       val source = sourceNamePattern.format(form.extension)
-      val config = MultiSourceTestConfig(source)
+      val config = MultiSourceTestConfig(source, form)
       test(s"$testText for ${form.name} JSON-LD source")(testFn(config))
     }
   }
@@ -62,7 +72,7 @@ abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite {
       validatePattern(goldenNamePattern, "goldenNamePattern")
       val source = sourceNamePattern.format(form.extension)
       val golden = goldenNamePattern.format(form.extension)
-      val config = MultiTestConfig(source, golden, renderOptionsFor(form))
+      val config = MultiTestConfig(source, golden, renderOptionsFor(form), form)
       test(s"$testText for ${form.name} JSON-LD")(testFn(config))
     }
   }

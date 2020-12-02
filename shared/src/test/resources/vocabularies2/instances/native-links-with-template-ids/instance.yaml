@@ -1,0 +1,15 @@
+#%Test 1.34
+bs:
+  B1:
+    id: a
+    b: 3.4
+a: uno
+links:
+  - http://test/simple
+  -
+    $id: http://test/simpleAlt
+  -
+    id: embed
+  -
+    id: embedOverwritten
+    $id: http://defined.by.me

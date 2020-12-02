@@ -301,9 +301,9 @@ class AMFDialectValidations(val dialect: Dialect) extends AmlEmittersHelper {
       }
     }
 
-    if (prop
-          .objectRange()
-          .nonEmpty && !prop.objectRange().map(_.value()).contains((Namespace.Meta + "anyNode").iri())) {
+    if (prop.objectRange().nonEmpty &&
+        !prop.objectRange().map(_.value()).contains((Namespace.Meta + "anyNode").iri()) &&
+        !prop.externallyLinkable().option().getOrElse(false)) {
 
       val effectiveRange: Set[String] = prop
         .objectRange()

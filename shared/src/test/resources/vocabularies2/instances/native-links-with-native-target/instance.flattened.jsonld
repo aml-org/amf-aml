@@ -1,0 +1,170 @@
+{
+  "@graph": [
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes",
+      "@type": [
+        "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/dialect.yaml#/declarations/A",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#description": "this is node A",
+      "http://a.ml/vocabularies/data#links": [
+        {
+          "@id": "http://test.com/declarations/B1"
+        },
+        {
+          "@id": "http://test.com/declarations/B1"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#description",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(7,0)-(8,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#links",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,6)-(12,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(12,0)]"
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml",
+      "http://a.ml/vocabularies/document#declares": [
+        {
+          "@id": "http://test.com/declarations/B1"
+        }
+      ],
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/encodes"
+      },
+      "http://a.ml/vocabularies/document#version": "2.1.0",
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "http://test.com/declarations/B1",
+      "@type": [
+        "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/dialect.yaml#/declarations/B",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/meta#declarationName": "B1",
+      "http://a.ml/vocabularies/data#a": 1,
+      "http://a.ml/vocabularies/data#b": 2,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "http://test.com/declarations/B1#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "http://test.com/declarations/B1#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#custom-id": [
+        {
+          "@id": "http://test.com/declarations/B1#/source-map/custom-id/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://test.com/declarations/B1#/source-map/lexical/element_3"
+        },
+        {
+          "@id": "http://test.com/declarations/B1#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "http://test.com/declarations/B1#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://test.com/declarations/B1#/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(12,0)]"
+    },
+    {
+      "@id": "http://test.com/declarations/B1#/source-map/custom-id/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/declarations/B1",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "http://test.com/declarations/B1#/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#a",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(5,0)]"
+    },
+    {
+      "@id": "http://test.com/declarations/B1#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#declarationName",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,4)]"
+    },
+    {
+      "@id": "http://test.com/declarations/B1#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#b",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(6,0)]"
+    },
+    {
+      "@id": "http://test.com/declarations/B1#/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/declarations/B1",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(7,0)]"
+    }
+  ]
+}
