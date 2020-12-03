@@ -1,0 +1,25 @@
+#%Dialect 1.0
+dialect: Test
+version: "1.0"
+
+documents:
+  root:
+    encodes: A
+    declares:
+      bs: B
+
+nodeMappings:
+  A:
+    mapping:
+      description:
+        range: string
+      links:
+        range: B
+        isLink: true
+        allowMultiple: true
+  B:
+    mapping:
+      a:
+        range: integer
+      b:
+        range: integer

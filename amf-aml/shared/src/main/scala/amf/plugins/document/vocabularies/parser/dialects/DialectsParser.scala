@@ -605,6 +605,18 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
         // TODO: check dependencies among properties
 
+        map.key(
+          "isLink",
+          entry => {
+            val isLink = entry.value.as[Boolean]
+            propertyMapping.withExternallyLinkable(isLink);
+            propertyMapping.literalRange().option() match {
+              case Some(v) => ctx.eh.violation(DialectError, s"Aml links support in property mappings only can be declared in object properties but scalar range detected: ${v}", entry.value)
+              case _       =>  // ignore
+            }
+          }
+        )
+
         parseAnnotations(map, propertyMapping, ctx.declarations)
 
         // We check that if this is a GUID it also has the unique contraint

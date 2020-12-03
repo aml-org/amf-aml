@@ -1,0 +1,4 @@
+#%Test 1.0
+description: this is node A
+link:
+  $base: http://some.base/

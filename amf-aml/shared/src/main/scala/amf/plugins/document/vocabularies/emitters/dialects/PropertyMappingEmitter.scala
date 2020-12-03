@@ -176,6 +176,15 @@ case class PropertyMappingEmitter(dialect: Dialect,
             emitters ++= Seq(ArrayEmitter("enum", entry, ordering))
           }
 
+          propertyMapping.fields.entry(PropertyMappingModel.ExternallyLinkable) foreach { entry =>
+            val value = entry.value.value.asInstanceOf[AmfScalar].value
+            val pos   = fieldPos(propertyMapping, entry.field)
+            value match {
+              case true  => emitters ++= Seq(MapEntryEmitter("isLink", "true", YType.Bool, pos))
+              case false => emitters ++= Seq(MapEntryEmitter("isLink", "false", YType.Bool, pos))
+            }
+          }
+
           emitters ++= emitDiscriminator(propertyMapping)
 
           ordering.sorted(emitters).foreach(_.emit(b))

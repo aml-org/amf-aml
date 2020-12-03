@@ -43,6 +43,7 @@ trait DialectSyntax { this: DialectContext =>
       "mapValue"              -> false,
       "mapTermKey"            -> false,
       "mapTermValue"          -> false,
+      "isLink"                -> false,
       "mandatory"             -> false,
       "pattern"               -> false,
       "sorted"                -> false,
