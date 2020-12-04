@@ -11,9 +11,14 @@ import amf.core.model.domain.extensions.DomainExtension
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, ScalarNode}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
-import amf.plugins.document.vocabularies.annotations.{CustomId, JsonPointerRef, RefInclude}
+import amf.plugins.document.vocabularies.annotations.{CustomBase, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceFragment, DialectInstanceUnit}
+import amf.plugins.document.vocabularies.model.document.{
+  Dialect,
+  DialectInstance,
+  DialectInstanceFragment,
+  DialectInstanceUnit
+}
 import amf.plugins.document.vocabularies.model.domain._
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
@@ -21,16 +26,25 @@ import org.yaml.model.YNode.MutRef
 import org.yaml.model.{YNode, YTag, YType}
 
 class RootDialectNodeEmitter(node: DialectDomainElement,
-                              nodeMappable: NodeMappable,
-                              instance: DialectInstanceUnit,
-                              dialect: Dialect,
-                              ordering: SpecOrdering,
-                              keyPropertyId: Option[String] = None,
-                              discriminator: Option[(String, String)] = None,
-                              emitDialect: Boolean = false,
-                              topLevelEmitters: Seq[EntryEmitter] = Nil,
-                              renderOptions: RenderOptions)
-  extends DialectNodeEmitter(node, nodeMappable, instance.references, dialect, ordering, keyPropertyId, discriminator, emitDialect, topLevelEmitters, renderOptions) {
+                             nodeMappable: NodeMappable,
+                             instance: DialectInstanceUnit,
+                             dialect: Dialect,
+                             ordering: SpecOrdering,
+                             keyPropertyId: Option[String] = None,
+                             discriminator: Option[(String, String)] = None,
+                             emitDialect: Boolean = false,
+                             topLevelEmitters: Seq[EntryEmitter] = Nil,
+                             renderOptions: RenderOptions)
+    extends DialectNodeEmitter(node,
+                               nodeMappable,
+                               instance.references,
+                               dialect,
+                               ordering,
+                               keyPropertyId,
+                               discriminator,
+                               emitDialect,
+                               topLevelEmitters,
+                               renderOptions) {
 
   lazy val referencesAliasIndex: Map[RefId, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(instance)
 
@@ -69,21 +83,21 @@ class RootDialectNodeEmitter(node: DialectDomainElement,
               findNodeMappingById(publicNodeMapping.mappedNode().value()) match {
                 case (_, nodeMappable: NodeMappable) =>
                   acc ++ Seq(
-                    DeclarationsGroupEmitter(
-                      declared,
-                      publicNodeMapping,
-                      nodeMappable,
-                      instance,
-                      dialect,
-                      ordering,
-                      docs
-                        .declarationsPath()
-                        .option()
-                        .getOrElse("/")
-                        .split("/"),
-                      referencesAliasIndex,
-                      renderOptions = renderOptions
-                    ))
+                      DeclarationsGroupEmitter(
+                          declared,
+                          publicNodeMapping,
+                          nodeMappable,
+                          instance,
+                          dialect,
+                          ordering,
+                          docs
+                            .declarationsPath()
+                            .option()
+                            .getOrElse("/")
+                            .split("/"),
+                          referencesAliasIndex,
+                          renderOptions = renderOptions
+                      ))
               }
             }
             else acc
@@ -140,6 +154,13 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       emitters ++= Seq(MapEntryEmitter("$id", customId))
     }
 
+    if (node.annotations.find(classOf[CustomBase]).isDefined) {
+      node.annotations.find(classOf[CustomBase]) match {
+        case Some(customBase) if customBase.value != "true" => emitters ++= Seq(MapEntryEmitter("$base", customBase.value))
+        case _                                              => // Nothing
+      }
+    }
+
     emitters ++= fieldAndExtensionEmitters
     emitters
   }
@@ -179,10 +200,10 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       case field =>
         findPropertyMapping(node, field) foreach { propertyMapping =>
           if (keyPropertyId.isEmpty || propertyMapping
-            .nodePropertyMapping()
-            .value() != keyPropertyId.get) {
+                .nodePropertyMapping()
+                .value() != keyPropertyId.get) {
 
-            val key = propertyMapping.name().value()
+            val key                    = propertyMapping.name().value()
             val propertyClassification = propertyMapping.classification()
 
             val nextEmitter: Seq[EntryEmitter] =
@@ -192,63 +213,63 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                   emitScalar(key, field, scalar, Some(entry.annotations))
 
                 case Some(entry)
-                  if entry.value
-                    .isInstanceOf[AmfArray] && propertyClassification == LiteralPropertyCollection =>
+                    if entry.value
+                      .isInstanceOf[AmfArray] && propertyClassification == LiteralPropertyCollection =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitScalarArray(key, field, array, Some(entry.annotations))
 
                 case Some(entry)
-                  if entry.value
-                    .isInstanceOf[DialectDomainElement] && propertyClassification == ExtensionPointProperty =>
+                    if entry.value
+                      .isInstanceOf[DialectDomainElement] && propertyClassification == ExtensionPointProperty =>
                   val element = entry.value.asInstanceOf[DialectDomainElement]
                   emitExternalObject(key, element, propertyMapping)
 
                 case Some(entry)
-                  if entry.value
-                    .isInstanceOf[DialectDomainElement] && propertyClassification == ExternalLinkProperty =>
+                    if entry.value
+                      .isInstanceOf[DialectDomainElement] && propertyClassification == ExternalLinkProperty =>
                   val element = entry.value.asInstanceOf[DialectDomainElement]
                   emitExternalLink(key, element, propertyMapping)
 
                 case Some(entry)
-                  if entry.value
-                    .isInstanceOf[DialectDomainElement] && propertyClassification == ObjectProperty && !propertyMapping.isUnion =>
+                    if entry.value
+                      .isInstanceOf[DialectDomainElement] && propertyClassification == ObjectProperty && !propertyMapping.isUnion =>
                   val element = entry.value.asInstanceOf[DialectDomainElement]
-                  val result = emitObjectEntry(key, element, propertyMapping, Some(entry.annotations))
+                  val result  = emitObjectEntry(key, element, propertyMapping, Some(entry.annotations))
                   result
 
                 case Some(entry)
-                  if entry.value
-                    .isInstanceOf[AmfArray] && propertyClassification == ExternalLinkProperty =>
+                    if entry.value
+                      .isInstanceOf[AmfArray] && propertyClassification == ExternalLinkProperty =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitExternalLink(key, array, propertyMapping, Some(entry.annotations))
 
                 case Some(entry)
-                  if entry.value
-                    .isInstanceOf[AmfArray] && propertyClassification == ObjectPropertyCollection && !propertyMapping.isUnion =>
+                    if entry.value
+                      .isInstanceOf[AmfArray] && propertyClassification == ObjectPropertyCollection && !propertyMapping.isUnion =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
 
                 case Some(entry)
-                  if entry.value
-                    .isInstanceOf[AmfArray] && propertyClassification == ObjectMapProperty =>
+                    if entry.value
+                      .isInstanceOf[AmfArray] && propertyClassification == ObjectMapProperty =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
 
                 case Some(entry)
-                  if entry.value
-                    .isInstanceOf[DialectDomainElement] && propertyClassification == ObjectProperty && propertyMapping.isUnion =>
+                    if entry.value
+                      .isInstanceOf[DialectDomainElement] && propertyClassification == ObjectProperty && propertyMapping.isUnion =>
                   val element = entry.value.asInstanceOf[DialectDomainElement]
                   emitObjectEntry(key, element, propertyMapping)
 
                 case Some(entry)
-                  if entry.value
-                    .isInstanceOf[AmfArray] && propertyClassification == ObjectPropertyCollection && propertyMapping.isUnion =>
+                    if entry.value
+                      .isInstanceOf[AmfArray] && propertyClassification == ObjectPropertyCollection && propertyMapping.isUnion =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
 
                 case Some(entry)
-                  if entry.value
-                    .isInstanceOf[AmfArray] && propertyClassification == ObjectPairProperty =>
+                    if entry.value
+                      .isInstanceOf[AmfArray] && propertyClassification == ObjectPairProperty =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitObjectPairs(key, array, propertyMapping, Some(entry.annotations))
                 case None => Nil // ignore
@@ -266,35 +287,42 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                  annotations: Option[Annotations] = None): Seq[EntryEmitter] = {
     Seq(new EntryEmitter {
       override def emit(b: EntryBuilder): Unit = {
-        b.entry(key, (e) => {
-          target match {
-            case array: AmfArray =>
-              e.list(l => {
-                array.values.asInstanceOf[Seq[DialectDomainElement]].foreach { elem =>
-                  if (elem.fields.nonEmpty) { // map reference
-                    nodeMappingForObjectProperty(propertyMapping, elem) match {
-                      case Some(rangeMapping) =>
-                        DialectNodeEmitter(
-                          elem,
-                          rangeMapping,
-                          references,
-                          dialect,
-                          ordering,
-                          discriminator = None,
-                          keyPropertyId = keyPropertyId,
-                          renderOptions = renderOptions
-                        ).emit(l)
-                      case _ => // ignore, error
+        b.entry(
+            key,
+            (e) => {
+              target match {
+                case array: AmfArray =>
+                  e.list(l => {
+                    array.values.asInstanceOf[Seq[DialectDomainElement]].foreach {
+                      elem =>
+                        if (elem.fields.nonEmpty) { // map reference
+                          nodeMappingForObjectProperty(propertyMapping, elem) match {
+                            case Some(rangeMapping) =>
+                              DialectNodeEmitter(
+                                  elem,
+                                  rangeMapping,
+                                  references,
+                                  dialect,
+                                  ordering,
+                                  discriminator = None,
+                                  keyPropertyId = keyPropertyId,
+                                  renderOptions = renderOptions
+                              ).emit(l)
+                            case _ => // ignore, error
+                          }
+                        }
+                        else { // just link
+                          emitCustomId(elem, l)
+                          emitCustomBase(elem, l)
+                        }
                     }
-                  } else { // just link
-                    emitCustomId(elem, l)
-                  }
-                }
-              })
-            case element: DialectDomainElement =>
-              emitCustomId(element, e)
-          }
-        })
+                  })
+                case element: DialectDomainElement =>
+                  emitCustomId(element, e)
+                  emitCustomBase(element, e)
+              }
+            }
+        )
       }
 
       override def position(): Position = {
@@ -309,24 +337,40 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
   def emitCustomId(elem: DialectDomainElement, b: PartBuilder): Unit = {
     elem.annotations.find(classOf[CustomId]) match {
-      case Some(customId) if customId.value != "true" => b.obj { m => m.entry("$id", customId.value) }
-      case Some(_)                                    => b.obj { m => m.entry("$id", elem.id) }
-      case _                                          => b += elem.id
+      case Some(customId) if customId.value != "true" =>
+        b.obj { m =>
+          m.entry("$id", customId.value)
+        }
+      case Some(_) =>
+        b.obj { m =>
+          m.entry("$id", elem.id)
+        }
+      case _ => b += elem.id
     }
   }
 
+  def emitCustomBase(elem: DialectDomainElement, b: PartBuilder): Unit = {
+    elem.annotations.find(classOf[CustomBase]) match {
+      case Some(customBase) if customBase.value != "true" =>
+        b.obj { m =>
+          m.entry("$base", customBase.value)
+        }
+      case _ => // Nothing
+    }
+  }
 
-  protected def nodeMappingForObjectProperty(propertyMapping: PropertyMapping, dialectDomainElement: DialectDomainElement): Option[NodeMappable] = {
+  protected def nodeMappingForObjectProperty(propertyMapping: PropertyMapping,
+                                             dialectDomainElement: DialectDomainElement): Option[NodeMappable] = {
     // this can be multiple mappings if we have a union in the range or a range pointing to a union mapping
     val nodeMappings: Seq[NodeMapping] =
       propertyMapping.objectRange().flatMap { rangeNodeMapping =>
         findAllNodeMappings(rangeNodeMapping.value())
       }
     nodeMappings.find(
-      nodeMapping =>
-        dialectDomainElement.meta.`type`
-          .map(_.iri())
-          .exists(i => i == nodeMapping.nodetypeMapping.value() || i == nodeMapping.id))
+        nodeMapping =>
+          dialectDomainElement.meta.`type`
+            .map(_.iri())
+            .exists(i => i == nodeMapping.nodetypeMapping.value() || i == nodeMapping.id))
   }
 
   protected def uniqueFields(meta: DialectDomainElementModel): Iterable[Field] = {
@@ -370,7 +414,15 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                 propertyMapping: PropertyMapping,
                                 annotations: Option[Annotations] = None): Seq[EntryEmitter] = {
 
-    Seq(DialectObjectEntryEmitter(key, target, propertyMapping, references, dialect, ordering, renderOptions, annotations))
+    Seq(
+        DialectObjectEntryEmitter(key,
+                                  target,
+                                  propertyMapping,
+                                  references,
+                                  dialect,
+                                  ordering,
+                                  renderOptions,
+                                  annotations))
   }
 
   protected def emitExternalObject(key: String,
@@ -378,14 +430,14 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                    propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
     val (externalDialect, nextNodeMapping) = findNodeMappingById(element.definedBy.id)
     Seq(
-      EntryPartEmitter(key,
-                       DialectNodeEmitter(element,
-                                          nextNodeMapping,
-                                          references,
-                                          externalDialect,
-                                          ordering,
-                                          emitDialect = true,
-                                          renderOptions = renderOptions)))
+        EntryPartEmitter(key,
+                         DialectNodeEmitter(element,
+                                            nextNodeMapping,
+                                            references,
+                                            externalDialect,
+                                            ordering,
+                                            emitDialect = true,
+                                            renderOptions = renderOptions)))
   }
 
   protected def emitObjectPairs(key: String,
@@ -398,39 +450,40 @@ case class DialectNodeEmitter(node: DialectDomainElement,
     Seq(new EntryEmitter() {
       override def emit(b: EntryBuilder): Unit = {
         b.entry(
-          key,
-          _.obj {
-            b =>
-              val sortedElements = array.values.sortBy { elem =>
-                elem.annotations
-                  .find(classOf[LexicalInformation])
-                  .map(_.range.start)
-                  .getOrElse(ZERO)
-              }
-              sortedElements.foreach {
-                case element: DialectDomainElement =>
-                  val keyField =
-                    element.meta.fields.find(_.value.iri() == keyProperty)
-                  val valueField =
-                    element.meta.fields.find(_.value.iri() == valueProperty)
-                  if (keyField.isDefined && valueField.isDefined) {
-                    val keyLiteral =
-                      element.fields.getValueAsOption(keyField.get).map(_.value)
-                    val valueLiteral = element.fields
-                      .getValueAsOption(valueField.get)
-                      .map(_.value)
-                    (keyLiteral, valueLiteral) match {
-                      case (Some(keyScalar: AmfScalar), Some(valueScalar: AmfScalar)) =>
-                        MapEntryEmitter(keyScalar.value.toString, valueScalar.value.toString).emit(b)
-                      case _ =>
-                        throw new Exception("Cannot generate object pair without scalar values for key and value")
+            key,
+            _.obj {
+              b =>
+                val sortedElements = array.values.sortBy { elem =>
+                  elem.annotations
+                    .find(classOf[LexicalInformation])
+                    .map(_.range.start)
+                    .getOrElse(ZERO)
+                }
+                sortedElements.foreach {
+                  case element: DialectDomainElement =>
+                    val keyField =
+                      element.meta.fields.find(_.value.iri() == keyProperty)
+                    val valueField =
+                      element.meta.fields.find(_.value.iri() == valueProperty)
+                    if (keyField.isDefined && valueField.isDefined) {
+                      val keyLiteral =
+                        element.fields.getValueAsOption(keyField.get).map(_.value)
+                      val valueLiteral = element.fields
+                        .getValueAsOption(valueField.get)
+                        .map(_.value)
+                      (keyLiteral, valueLiteral) match {
+                        case (Some(keyScalar: AmfScalar), Some(valueScalar: AmfScalar)) =>
+                          MapEntryEmitter(keyScalar.value.toString, valueScalar.value.toString).emit(b)
+                        case _ =>
+                          throw new Exception("Cannot generate object pair without scalar values for key and value")
+                      }
                     }
-                  } else {
-                    throw new Exception("Cannot generate object pair with undefined key or value")
-                  }
-                case _ => // ignore
-              }
-          }
+                    else {
+                      throw new Exception("Cannot generate object pair with undefined key or value")
+                    }
+                  case _ => // ignore
+                }
+            }
         )
       }
 
@@ -575,10 +628,12 @@ private case class DialectObjectEntryEmitter(key: String,
     if (keyPropertyId.isDefined) {
       // emit map of nested objects by property
       emitMap(b, mappedElements)
-    } else if (isArray) {
+    }
+    else if (isArray) {
       // arrays of objects
       emitArray(b, mappedElements)
-    } else {
+    }
+    else {
       // single object
       emitSingleElement(b, mappedElements)
     }
@@ -586,20 +641,20 @@ private case class DialectObjectEntryEmitter(key: String,
 
   def emitMap(b: EntryBuilder, mapElements: Map[DialectNodeEmitter, DialectDomainElement]): Unit = {
     b.entry(
-      key,
-      _.obj { b =>
-        ordering.sorted(mapElements.keys.toSeq).foreach { emitter =>
-          val dialectDomainElement = mapElements(emitter)
-          val mapKeyField =
-            dialectDomainElement.meta.fields
-              .find(_.value
-                .iri() == propertyMapping.mapTermKeyProperty().value())
-              .get
-          val mapKeyValue =
-            dialectDomainElement.fields.getValue(mapKeyField).toString
-          EntryPartEmitter(mapKeyValue, emitter).emit(b)
+        key,
+        _.obj { b =>
+          ordering.sorted(mapElements.keys.toSeq).foreach { emitter =>
+            val dialectDomainElement = mapElements(emitter)
+            val mapKeyField =
+              dialectDomainElement.meta.fields
+                .find(_.value
+                  .iri() == propertyMapping.mapTermKeyProperty().value())
+                .get
+            val mapKeyValue =
+              dialectDomainElement.fields.getValue(mapKeyField).toString
+            EntryPartEmitter(mapKeyValue, emitter).emit(b)
+          }
         }
-      }
     )
   }
 

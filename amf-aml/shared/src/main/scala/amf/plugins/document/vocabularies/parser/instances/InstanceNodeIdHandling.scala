@@ -38,8 +38,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
         explicitNodeId(Some(node), nodeMap, path, defaultId, mapping)
       }
       else if (mapping.idTemplate.nonEmpty) {
-        val template = templateNodeId(node.id, nodeMap, mapping.idTemplate.value())
-        finalTemplateId(template, path)
+        idTemplate(node, nodeMap, path, mapping)
       }
       else if (mapping.primaryKey().nonEmpty) {
         primaryKeyNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties)
@@ -51,7 +50,13 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
     overrideBase(generatedId, nodeMap)
   }
 
-  protected def finalTemplateId(template: String, path: Seq[String]): String = {
+
+  protected def idTemplate(node: DialectDomainElement, nodeMap: YMap, path: Seq[String], mapping: NodeMapping): String = {
+    val template = replaceTemplateVariables(node.id, nodeMap, mapping.idTemplate.value())
+    prependRootIfIsRelative(template, path)
+  }
+
+  protected def prependRootIfIsRelative(template: String, path: Seq[String]): String = {
     val templateRoot = root.location
     if (template.contains("://"))
       template
@@ -88,7 +93,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
     externalId
   }
 
-  protected def templateNodeId(nodeId: String, nodeMap: YMap, originalTemplate: String): String = {
+  protected def replaceTemplateVariables(nodeId: String, nodeMap: YMap, originalTemplate: String): String = {
     var template = originalTemplate
     // template resolution
     val regex = "(\\{[^}]+\\})".r

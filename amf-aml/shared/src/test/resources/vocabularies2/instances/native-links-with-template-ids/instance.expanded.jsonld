@@ -133,9 +133,9 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#custom-id": [
+                "http://a.ml/vocabularies/document-source-maps#custom-base": [
                   {
-                    "@id": "http://defined.by.me/embedOverwritten#/source-map/custom-id/element_0",
+                    "@id": "http://defined.by.me/embedOverwritten#/source-map/custom-base/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://defined.by.me/embedOverwritten"
@@ -143,7 +143,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "http://defined.by.me"
+                        "@value": "http://defined.by.me/"
                       }
                     ]
                   }

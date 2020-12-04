@@ -12,4 +12,4 @@ links:
     id: embed
   -
     id: embedOverwritten
-    $id: http://defined.by.me
+    $base: http://defined.by.me/
