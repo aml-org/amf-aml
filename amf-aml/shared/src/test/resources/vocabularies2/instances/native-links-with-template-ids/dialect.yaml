@@ -1,0 +1,29 @@
+#%Dialect 1.0
+
+dialect: Test
+version: "1.34"
+
+documents:
+  root:
+    encodes: A
+    declares:
+      bs: B
+
+
+nodeMappings:
+  A:
+    mapping:
+      a:
+        range: string
+      links:
+        range: B
+        isLink: true
+        allowMultiple: true
+  B:
+    idTemplate: "http://test/{id}"
+    mapping:
+      id:
+        range: string
+        unique: true
+      b:
+        range: float
