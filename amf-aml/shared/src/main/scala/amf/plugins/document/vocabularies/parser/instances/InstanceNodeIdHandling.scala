@@ -35,10 +35,10 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
       defaultId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
     else {
       if (nodeMap.key("$id").isDefined) {
-        explicitNodeId(node, nodeMap, path, defaultId, mapping)
+        explicitNodeId(Some(node), nodeMap, path, defaultId, mapping)
       }
       else if (mapping.idTemplate.nonEmpty) {
-        templateNodeId(node, nodeMap, path, defaultId, mapping)
+        idTemplate(node, nodeMap, path, mapping)
       }
       else if (mapping.primaryKey().nonEmpty) {
         primaryKeyNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties)
@@ -50,7 +50,32 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
     overrideBase(generatedId, nodeMap)
   }
 
-  protected def explicitNodeId(node: DialectDomainElement,
+
+  protected def idTemplate(node: DialectDomainElement, nodeMap: YMap, path: Seq[String], mapping: NodeMapping): String = {
+    val template = replaceTemplateVariables(node.id, nodeMap, mapping.idTemplate.value())
+    prependRootIfIsRelative(template, path)
+  }
+
+  protected def prependRootIfIsRelative(template: String, path: Seq[String]): String = {
+    val templateRoot = root.location
+    if (template.contains("://"))
+      template
+    else if (template.startsWith("/"))
+      templateRoot + "#" + template
+    else if (template.startsWith("#"))
+      templateRoot + template
+    else {
+      val pathLocation = (path ++ template.split("/")).mkString("/")
+      if (pathLocation.startsWith(templateRoot) || pathLocation.contains("#")) {
+        pathLocation
+      }
+      else {
+        templateRoot + "#" + pathLocation
+      }
+    }
+  }
+
+  protected def explicitNodeId(node: Option[DialectDomainElement],
                                nodeMap: YMap,
                                path: Seq[String],
                                defaultId: String,
@@ -64,43 +89,28 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
     else {
       (ctx.dialect.location().getOrElse(ctx.dialect.id).split("#").head + s"#$rawId").replace("##", "#")
     }
-    node.annotations += CustomId()
+    node.foreach((n) => n.annotations += CustomId())
     externalId
   }
 
-  protected def templateNodeId(node: DialectDomainElement,
-                               nodeMap: YMap,
-                               path: Seq[String],
-                               defaultId: String,
-                               mapping: NodeMapping): String = {
+  protected def replaceTemplateVariables(nodeId: String, nodeMap: YMap, originalTemplate: String): String = {
+    var template = originalTemplate
     // template resolution
-    var template = mapping.idTemplate.value()
-    val regex    = "(\\{[^}]+\\})".r
+    val regex = "(\\{[^}]+\\})".r
     regex.findAllIn(template).foreach { varMatch =>
       val variable = varMatch.replace("{", "").replace("}", "")
       nodeMap.key(variable) match {
         case Some(entry) =>
-          val value = entry.value.value.toString
+          val value = entry.value.tagType match {
+            case YType.Str => entry.value.as[String]
+            case _         => entry.value.value.toString
+          }
           template = template.replace(varMatch, value)
         case None =>
-          ctx.eh.violation(DialectError, node.id, s"Missing ID template variable '$variable' in node", nodeMap)
+          ctx.eh.violation(DialectError, nodeId, s"Missing ID template variable '$variable' in node", nodeMap)
       }
     }
-    if (template.contains("://"))
-      template
-    else if (template.startsWith("/"))
-      root.location + "#" + template
-    else if (template.startsWith("#"))
-      root.location + template
-    else {
-      val pathLocation = (path ++ template.split("/")).mkString("/")
-      if (pathLocation.startsWith(root.location) || pathLocation.contains("#")) {
-        pathLocation
-      }
-      else {
-        root.location + "#" + pathLocation
-      }
-    }
+    template
   }
 
   protected def primaryKeyNodeId(node: DialectDomainElement,

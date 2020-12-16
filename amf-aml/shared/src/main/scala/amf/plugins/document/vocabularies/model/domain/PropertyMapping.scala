@@ -18,6 +18,7 @@ object ObjectMapProperty            extends PropertyClassification
 object ObjectMapInheritanceProperty extends PropertyClassification
 object ObjectPairProperty           extends PropertyClassification
 object LiteralPropertyCollection    extends PropertyClassification
+object ExternalLinkProperty         extends PropertyClassification
 
 case class PropertyMapping(fields: Fields, annotations: Annotations)
     extends DomainElement
@@ -34,14 +35,15 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
   def mapTermKeyProperty(): StrField   = fields.field(MapTermKeyProperty)
   def mapTermValueProperty(): StrField = fields.field(MapTermValueProperty)
 
-  def minCount(): IntField       = fields.field(MinCount)
-  def pattern(): StrField        = fields.field(Pattern)
-  def minimum(): DoubleField     = fields.field(Minimum)
-  def maximum(): DoubleField     = fields.field(Maximum)
-  def allowMultiple(): BoolField = fields.field(AllowMultiple)
-  def sorted(): BoolField        = fields.field(Sorted)
-  def enum(): Seq[AnyField]      = fields.field(PropertyMappingModel.Enum)
-  def unique(): BoolField        = fields.field(Unique)
+  def minCount(): IntField            = fields.field(MinCount)
+  def pattern(): StrField             = fields.field(Pattern)
+  def minimum(): DoubleField          = fields.field(Minimum)
+  def maximum(): DoubleField          = fields.field(Maximum)
+  def allowMultiple(): BoolField      = fields.field(AllowMultiple)
+  def sorted(): BoolField             = fields.field(Sorted)
+  def enum(): Seq[AnyField]           = fields.field(PropertyMappingModel.Enum)
+  def unique(): BoolField             = fields.field(Unique)
+  def externallyLinkable(): BoolField = fields.field(ExternallyLinkable)
 
   def withName(name: String): PropertyMapping = set(Name, name)
   def withNodePropertyMapping(propertyId: String): PropertyMapping =
@@ -66,6 +68,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     setArray(PropertyMappingModel.Enum, values.map(AmfScalar(_)))
   def withSorted(sorted: Boolean): PropertyMapping = set(Sorted, sorted)
   def withUnique(unique: Boolean): PropertyMapping = set(Unique, unique)
+  def withExternallyLinkable(linkable: Boolean): PropertyMapping = set(ExternallyLinkable, linkable)
 
   def classification(): PropertyClassification = {
     val isAnyNode = objectRange().exists { obj =>
@@ -76,8 +79,11 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     val multiple   = allowMultiple().option().getOrElse(false)
     val isMap      = mapTermKeyProperty().nonNull
     val isMapValue = mapTermValueProperty().nonNull
+    val isExternalLink = externallyLinkable().option().getOrElse(false)
 
-    if (isAnyNode)
+    if (isExternalLink)
+      ExternalLinkProperty
+    else if (isAnyNode)
       ExtensionPointProperty
     else if (isLiteral && !multiple)
       LiteralProperty

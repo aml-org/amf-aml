@@ -19,7 +19,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
 import amf.internal.environment.Environment
-import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomId, JsonPointerRef, RefInclude}
+import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomBase, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
@@ -85,6 +85,7 @@ trait AMLPlugin
     Map(
         "aliases-location" -> AliasesLocation,
         "custom-id"        -> CustomId,
+        "custom-base"      -> CustomBase,
         "ref-include"      -> RefInclude,
         "json-pointer-ref" -> JsonPointerRef
     )

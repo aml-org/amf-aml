@@ -5,6 +5,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.remote._
+import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm}
 import amf.plugins.document.vocabularies.AMLPlugin
 import org.scalatest.Assertion
 
@@ -832,6 +833,88 @@ trait DialectInstancesParsingTest extends DialectTests {
       bu.fields.foreach(f => assert(clone.fields.exists(f._1)))
       assert(bu != clone) // not the SAME object
     }
+  }
+
+  multiGoldenTest("Parse instance with simple native link", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/simple-native-links/"
+    )
+  }
+
+  multiGoldenTest("Parse instance with native links and template ids", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/native-links-with-template-ids/"
+    )
+  }
+
+  multiGoldenTest("Parse instance with native links and extra properties", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/native-link-with-extra-properties/"
+    )
+  }
+
+  multiGoldenTest("Parse instance with native links and native targets", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/native-links-with-native-target/"
+    )
+  }
+
+  multiSourceTest("Generate instance with simple native link", "instance.%s") { config =>
+    withDialect("dialect.yaml",
+      config.source,
+      "instance.yaml",
+      AmfJsonHint,
+      target = Aml,
+      directory = s"$basePath/simple-native-links/")
+  }
+
+  multiSourceTest("Generate instance with native links and template ids", "instance.%s") { config =>
+    withDialect("dialect.yaml",
+      config.source,
+      "instance.yaml",
+      AmfJsonHint,
+      target = Aml,
+      directory = s"$basePath/native-links-with-template-ids/")
+  }
+
+  multiSourceTest("Generate instance with native links and native targets", "instance.%s") { config =>
+    val golden = config.jsonLdDocumentForm match {
+      case FlattenedForm => "instance.flattened.yaml"
+      case ExpandedForm  => "instance.expanded.yaml"
+      case _             => "instance.flattened.yaml"
+    }
+    withDialect(
+      "dialect.yaml",
+      config.source,
+      golden,
+      AmfJsonHint,
+      target = Aml,
+      directory = s"$basePath/native-links-with-native-target/"
+    )
   }
 
   protected def withInlineDialect(source: String,

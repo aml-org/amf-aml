@@ -19,7 +19,10 @@ pipeline {
     }
     stage('Coverage') {
       when {
-        branch 'master'
+        anyOf {
+          branch 'master'
+          branch 'develop'
+        }
       }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
@@ -31,7 +34,10 @@ pipeline {
     }
     stage('Publish') {
       when {
-        branch 'master'
+        anyOf {
+          branch 'master'
+          branch 'develop'
+        }
       }
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {

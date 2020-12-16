@@ -1,0 +1,26 @@
+#%Dialect 1.0
+
+dialect: Test
+version: "1.33"
+
+documents:
+  root:
+    encodes: A
+
+
+nodeMappings:
+  A:
+    mapping:
+      a:
+        range: string
+      link:
+        range: B
+        isLink: true
+      links:
+        range: B
+        isLink: true
+        allowMultiple: true
+  B:
+    mapping:
+      b:
+        range: float

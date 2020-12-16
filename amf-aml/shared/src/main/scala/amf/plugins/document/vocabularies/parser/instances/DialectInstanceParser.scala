@@ -11,7 +11,7 @@ import amf.core.parser.{Annotations, SearchScope, _}
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.annotations.{CustomId, DiscriminatorField, JsonPointerRef, RefInclude}
+import amf.plugins.document.vocabularies.annotations.{CustomBase, CustomId, DiscriminatorField, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
@@ -266,13 +266,18 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
           case mapping: NodeMapping =>
             node
               .withDefinedBy(mapping)
-              .withInstanceTypes(Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).collect { case Some(t) => t })
+              .withInstanceTypes(typesFrom(mapping))
           case _ => // ignore
         }
       case other => other
     }
     result
   }
+
+  private def typesFrom(mapping: NodeMapping): Seq[String] = {
+    Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).flatten
+  }
+
 
   private def emptyElement(defaultId: String, ast: YNode, mappable: NodeMappable, givenAnnotations: Option[Annotations]) = {
     val mappings = mappable match {
@@ -301,10 +306,144 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
       case ObjectMapProperty         => parseObjectMapProperty(id, propertyEntry, property, node)
       case ObjectPairProperty        => parseObjectPairProperty(id, propertyEntry, property, node)
+      case ExternalLinkProperty      => parseExternalLinkProperty(id, propertyEntry, property, node)
       case _ =>
         ctx.eh.violation(DialectError, id, s"Unknown type of node property ${property.id}", propertyEntry)
     }
   }
+
+  private def generateExternalLink(id: String, node: YNode, mapping: NodeMapping): Option[DialectDomainElement] = {
+    lazy val instanceTypes = typesFrom(mapping)
+    node.tagType match {
+      case YType.Str => // plain link -> we generate an anonymous node and set the id to the ref and correct type information
+        val elem = DialectDomainElement()
+          .withDefinedBy(mapping)
+          .withId(node)
+          .withIsExternalLink(true)
+          .withInstanceTypes(instanceTypes)
+        Some(elem)
+
+      case YType.Map
+        if node.as[YMap]
+          .key("$id")
+          .isDefined => // simple link in a reference map
+        val refMap = node.as[YMap]
+
+
+        val id      = explicitNodeId(None, refMap, Nil, "", mapping)
+        val finalId = overrideBase(id, refMap)
+
+
+        val elem = DialectDomainElement().withDefinedBy(mapping).withId(finalId).withIsExternalLink(true)
+        elem.withInstanceTypes(instanceTypes)
+        elem.annotations += CustomId()
+        refMap.key("$base") match {
+          case Some(baseEntry) =>
+            elem.annotations += CustomBase(baseEntry.value.toString)
+          case _ => // Nothing
+        }
+        Some(elem)
+
+      case YType.Map if mapping.idTemplate.nonEmpty => // complex reference with mandatory idTemplate
+        val refMap = node.as[YMap]
+
+        val element = DialectDomainElement(Annotations(refMap))
+        val id      = idTemplate(element, refMap, Nil, mapping)
+        val finalId = overrideBase(id, refMap)
+
+
+        // Now we actually parse the provided properties for the node
+        val linkReference: DialectDomainElement =
+          element
+            .withDefinedBy(mapping)
+            .withId(finalId)
+            .withInstanceTypes(instanceTypes)
+            .withIsExternalLink(true) // this is a linkReference
+
+        refMap.key("$base") match {
+          case Some(baseEntry) =>
+            linkReference.annotations += CustomBase(baseEntry.value.toString)
+          case _ => // Nothing
+        }
+
+        // TODO why do we parse properties?
+        mapping.propertiesMapping().foreach { propertyMapping =>
+          val propertyName = propertyMapping.name().value()
+          refMap.key(propertyName) match {
+            case Some(entry) =>
+              parseProperty(finalId, entry, propertyMapping, linkReference)
+            case None => // ignore
+          }
+        }
+
+        // return the parsed reference
+        Some(linkReference)
+
+      case _ => // error
+        ctx.eh.violation(DialectError,
+          id,
+          "AML links must URI links (strings or maps with $id directive) or ID Template links (maps with idTemplate variables)")
+        None
+    }
+  }
+
+  private def parseExternalLinkProperty(id: String,
+                                        propertyEntry: YMapEntry,
+                                        property: PropertyMapping,
+                                        node: DialectDomainElement): Unit = {
+    // First extract the mapping information
+    // External links only work over single ranges, not unions or literal ranges
+    val maybeMapping: Option[NodeMapping] = property.objectRange() match {
+      case range if range.length == 1 =>
+        ctx.dialect.declares.find(_.id == range.head.value()) match {
+          case Some(nodeMapping: NodeMapping) =>
+            Some(nodeMapping)
+          case _ =>
+            ctx.eh.violation(DialectError, id, s"Cannot find object range ${range.head.value()}", propertyEntry)
+            None
+        }
+      case _ =>
+        ctx.eh
+          .violation(DialectError, id, s"Individual object range required for external link property", propertyEntry)
+        None
+    }
+
+    val allowMultiple = property.allowMultiple().option().getOrElse(false)
+
+    // now we parse the link
+    maybeMapping match {
+      case Some(mapping) =>
+        val rangeNode = propertyEntry.value
+        rangeNode.tagType match {
+          case YType.Str if !allowMultiple =>
+            // plain link -> we generate an anonymous node and set the id to the ref and correct type information
+            generateExternalLink(id, rangeNode, mapping).foreach { elem =>
+              node.setObjectField(property, elem, propertyEntry.value)
+            }
+          case YType.Map if !allowMultiple => // reference
+            val refMap = rangeNode.as[YMap]
+            generateExternalLink(id, refMap, mapping) foreach { elem =>
+              node.setObjectField(property, elem, propertyEntry.value)
+            }
+          case YType.Seq if allowMultiple => // sequence of links or references
+            val seq = rangeNode.as[YSequence]
+            val elems = seq.nodes.flatMap { node =>
+              generateExternalLink(id, node, mapping)
+            }
+            if (elems.nonEmpty)
+              node.setObjectField(property, elems, propertyEntry.value)
+          case YType.Seq if !allowMultiple => // error
+            ctx.eh.violation(DialectError,
+              id,
+              s"AllowMultiple not enable, sequence of external links not supported",
+              propertyEntry)
+          case _ =>
+            ctx.eh.violation(DialectError, id, s"Not supported external link range", propertyEntry)
+        }
+      case _ => // ignore
+    }
+  }
+
 
   protected def parseDialectExtension(id: String,
                                       propertyEntry: YMapEntry,
@@ -612,7 +751,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         case None                       => None
       }
     }
-    node.setObjectField(property, nested.collect { case Some(node: DialectDomainElement) => node }, propertyEntry.value)
+    node.setObjectField(property, nested.flatten, propertyEntry.value)
   }
 
   protected def parseObjectPairProperty(id: String,
@@ -624,15 +763,16 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     if (propertyKeyMapping.isDefined && propertyValueMapping.isDefined) {
       val nested = ctx.dialect.declares.find(_.id == property.objectRange().head.value()) match {
         case Some(nodeMapping: NodeMapping) =>
-          propertyEntry.value.as[YMap].entries map { pair: YMapEntry =>
-            val nestedId = id + "/" + propertyEntry.key.as[YScalar].text.urlComponentEncoded + "/" + pair.key
+          propertyEntry.value.as[YMap].entries flatMap { pair: YMapEntry =>
+          val nestedId = id + "/" + propertyEntry.key.as[YScalar].text.urlComponentEncoded + "/" + pair.key
               .as[YScalar]
               .text
               .urlComponentEncoded
+            val effectiveTypes = typesFrom(nodeMapping)
             val nestedNode = DialectDomainElement(Annotations(pair))
               .withId(nestedId)
               .withDefinedBy(nodeMapping)
-              .withInstanceTypes(Seq(nodeMapping.nodetypeMapping.value(), nodeMapping.id))
+              .withInstanceTypes(effectiveTypes)
             try {
               nestedNode.set(Field(Str, ValueType(propertyKeyMapping.get)),
                              AmfScalar(pair.key.as[YScalar].text),
@@ -645,7 +785,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                 ctx.eh.violation(DialectError, e.id, s"Cannot find mapping for key map property ${e.id}", pair)
             }
             Some(nestedNode)
-          } collect { case Some(elem: DialectDomainElement) => elem }
+          }
         case _ =>
           ctx.eh.violation(
               DialectError,
@@ -680,7 +820,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       case _         => Seq(propertyEntry.value)
     }
 
-    val res = entries.zipWithIndex.map {
+    val elems = entries.zipWithIndex.flatMap {
       case (elementNode, nextElem) =>
         val path           = List(propertyEntry.key.as[YScalar].text, nextElem.toString)
         val nestedObjectId = pathSegment(id, path)
@@ -704,7 +844,6 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
           case _ => None
         }
     }
-    val elems: Seq[DialectDomainElement] = res.collect { case Some(x: DialectDomainElement) => x }
     node.setObjectField(property, elems, propertyEntry.value)
   }
 
