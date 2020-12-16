@@ -35,6 +35,10 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with R
     validate("/base-overridable-idTemplate-variable/dialect.yaml", Some("/base-overridable-idTemplate-variable/report.json"))
   }
 
+  test("Test mandatory property mapping without value") {
+    validate("/mandatory-property-mapping-without-value/dialect.yaml", Some("mandatory-property-mapping-without-value/report.json"))
+  }
+
 
   private val path: String = "amf-aml/shared/src/test/resources/vocabularies2/instances/invalids"
 
