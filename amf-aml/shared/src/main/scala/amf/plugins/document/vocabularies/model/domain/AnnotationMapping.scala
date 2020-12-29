@@ -1,0 +1,40 @@
+package amf.plugins.document.vocabularies.model.domain
+
+import amf.core.metamodel.Obj
+import amf.core.model.StrField
+import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.parser.{Annotations, Fields}
+import amf.core.utils.AmfStrings
+import amf.plugins.document.vocabularies.metamodel.domain.AnnotationMappingModel
+import org.yaml.model.YMap
+
+class AnnotationMapping(override val fields: Fields, override val annotations: Annotations)
+  extends PropertyMapping(fields, annotations)
+  with NodeMappable {
+  def targets: Seq[StrField]                 = fields.field(AnnotationMappingModel.AnnotationTarget)
+  def withTargets(targets: Seq[String])      = set(AnnotationMappingModel.AnnotationTarget, targets)
+
+  override def name(): StrField              = fields.field(Name)
+  override def withName(name: String)        = set(Name, name)
+
+  override def meta: Obj = AnnotationMappingModel
+  override def componentId: String = {
+    "/" + name.value().urlComponentEncoded
+  }
+
+  override def linkCopy(): Linkable = AnnotationMapping().withId(id)
+
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = AnnotationMapping.apply
+}
+
+
+object AnnotationMapping {
+  def apply(): AnnotationMapping = apply(Annotations())
+
+  def apply(ast: YMap): AnnotationMapping = apply(Annotations(ast))
+
+  def apply(annotations: Annotations): AnnotationMapping = AnnotationMapping(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): AnnotationMapping = new AnnotationMapping(fields, annotations)
+
+}

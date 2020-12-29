@@ -4,12 +4,12 @@ import amf.core.annotations.LexicalInformation
 import amf.core.emitter.BaseEmitters.{ArrayEmitter, MapEntryEmitter, ScalarEmitter}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.AmfScalar
-import amf.core.parser.Position
+import amf.core.parser.{Fields, Position}
 import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
+import amf.plugins.document.vocabularies.metamodel.domain.{AnnotationMappingModel, PropertyMappingModel}
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.document.vocabularies.model.domain.PropertyMapping
+import amf.plugins.document.vocabularies.model.domain.{AnnotationMapping, PropertyMapping}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 
@@ -26,6 +26,27 @@ case class PropertyMappingEmitter(dialect: Dialect,
         propertyMapping.name().value(),
         _.obj { b =>
           var emitters: Seq[EntryEmitter] = Seq()
+
+          propertyMapping match {
+            case annotationMapping: AnnotationMapping =>
+              val aliasedTargets = annotationMapping.targets.map { targetId =>
+                aliasFor(targetId.value()) match {
+                  case Some(targetIdAlias) =>
+                    targetIdAlias
+                  case _                   =>
+                    targetId.value()
+                }
+              }
+              val entry = AnnotationMapping(Fields(), annotationMapping.annotations).withTargets(aliasedTargets).fields.entry(AnnotationMappingModel.AnnotationTarget).get
+              if (aliasedTargets.size > 1) {
+                emitters ++= Seq(ArrayEmitter("target", entry, ordering))
+              } else if (aliasedTargets.size == 1) {
+                val pos = fieldPos(annotationMapping, AnnotationMappingModel.AnnotationTarget)
+                emitters ++= Seq(MapEntryEmitter("target", aliasedTargets.head, YType.Str, pos))
+              }
+
+            case _ => // ignore
+          }
 
           aliasFor(propertyMapping.nodePropertyMapping().value()) match {
             case Some(propertyTermAlias) =>

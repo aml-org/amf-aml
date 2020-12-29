@@ -18,7 +18,7 @@ import amf.internal.environment.Environment
 import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
-import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
+import amf.plugins.document.vocabularies.model.domain.{AnnotationMapping, DialectDomainElement, NodeMapping, ObjectMapProperty}
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
 import org.mulesoft.common.core._
 import org.mulesoft.common.functional.MonadInstances._
@@ -29,8 +29,16 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   protected var map: Map[String, Dialect] = Map()
   protected var resolved: Set[String]     = Set()
+  protected var vendorExtensionMap: Map[String, (AnnotationMapping, Dialect)] = Map()
+  protected var vendorExtensionsForClassMap: Map[String, Seq[(String, AnnotationMapping, Dialect, Field)]] = Map()
+  protected var vendorExtensionForPropertyMap: Map[String, (String, AnnotationMapping, Dialect)] = Map()
 
   private[vocabularies] var validations: Map[String, ValidationProfile] = Map()
+
+  def vendorExtensionFor(name: String): Option[(AnnotationMapping, Dialect)] = vendorExtensionMap.get(name)
+  def extensionFieldsForClass(className: String): Seq[Field] =
+    vendorExtensionsForClassMap.getOrElse(className, Seq()).map(_._4)
+  def vendorExtensionForId(id: String): Option[(String, AnnotationMapping, Dialect)] = vendorExtensionForPropertyMap.get(id)
 
   def findNode(dialectNode: String): Option[(Dialect, NodeMapping)] = {
     map.values.find(dialect => dialectNode.contains(dialect.id)) map { dialect =>
@@ -53,6 +61,24 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   def register(dialect: Dialect): DialectsRegistry = {
     dialect.allHeaders foreach { header =>
       map += (header -> dialect)
+    }
+    if (dialect.documents() != null && dialect.documents().library() != null) {
+      dialect.documents().library().declaredNodes().foreach { nm =>
+        val alias = nm.name().value()
+        val id = nm.mappedNode().value()
+        dialect.declares.find(_.id == id) match {
+          case Some(declared: AnnotationMapping) =>
+            declared.targets.foreach { klass =>
+              var annotationsForClass: Seq[(String, AnnotationMapping, Dialect, Field)] = vendorExtensionsForClassMap.getOrElse(klass.value(), Seq())
+              val annotationAsField = declared.toField
+              annotationsForClass ++= Seq((alias, declared, dialect, annotationAsField))
+              vendorExtensionsForClassMap += (klass.value() -> annotationsForClass)
+              vendorExtensionForPropertyMap += (annotationAsField.value.iri() -> (alias, declared, dialect))
+            }
+            vendorExtensionMap += (alias -> (declared, dialect))
+          case _ => // ignore
+        }
+      }
     }
     resolved -= dialect.header
     validations -= dialect.header
@@ -202,6 +228,12 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     map.foreach {
       case (header, dialect) =>
         if (dialect.id == uri) {
+          dialect.declares.foreach {
+            case annotationMapping: AnnotationMapping =>
+              val key = annotationMapping.name().value()
+              vendorExtensionMap -= key
+            case _ => // ignore
+          }
           map -= header
           validations -= dialect.header
           resolved -= dialect.header

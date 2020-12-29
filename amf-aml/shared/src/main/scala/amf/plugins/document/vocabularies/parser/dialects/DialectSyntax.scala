@@ -57,6 +57,28 @@ trait DialectSyntax { this: DialectContext =>
       "patch"                 -> false
   )
 
+  val annotationMapping: Map[String, Boolean] = Map(
+    "target"                -> true,
+    "propertyTerm"          -> false,
+    "range"                 -> true,
+    "mapKey"                -> false,
+    "mapValue"              -> false,
+    "mapTermKey"            -> false,
+    "mapTermValue"          -> false,
+    "isLink"                -> false,
+    "mandatory"             -> false,
+    "pattern"               -> false,
+    "sorted"                -> false,
+    "minimum"               -> false,
+    "maximum"               -> false,
+    "allowMultiple"         -> false,
+    "enum"                  -> false,
+    "typeDiscriminatorName" -> false,
+    "typeDiscriminator"     -> false,
+    "unique"                -> false,
+    "patch"                 -> false
+  )
+
   val documentsMapping: Map[String, Boolean] = Map(
       "root"      -> false,
       "fragments" -> false,
@@ -78,6 +100,7 @@ trait DialectSyntax { this: DialectContext =>
       case "fragment"                => fragment
       case "nodeMapping"             => nodeMapping
       case "propertyMapping"         => propertyMapping
+      case "annotationMapping"       => annotationMapping
       case "documentsMapping"        => documentsMapping
       case "documentsMappingOptions" => documentsMappingOptions
     }

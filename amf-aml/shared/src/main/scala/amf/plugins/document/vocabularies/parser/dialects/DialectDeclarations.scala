@@ -10,6 +10,7 @@ import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarati
 import org.yaml.model.YPart
 
 class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
+                          var annotationMappings: Map[String, AnnotationMapping] = Map(),
                           errorHandler: ErrorHandler,
                           futureDeclarations: FutureDeclarations)
     extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
@@ -26,6 +27,11 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
     }
   }
 
+  def registerAnnotationMapping(annotationMapping: AnnotationMapping): DialectDeclarations = {
+    annotationMappings += (annotationMapping.name().value() -> annotationMapping)
+    this
+  }
+
   def +=(nodeMapping: NodeMappable): DialectDeclarations = {
     nodeMappings += (nodeMapping.name.value() -> nodeMapping)
     if (!nodeMapping.isUnresolved) {
@@ -40,7 +46,7 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
   }
 
   def findNodeMapping(key: String, scope: SearchScope.Scope): Option[NodeMappable] =
-    findForType(key, _.asInstanceOf[DialectDeclarations].nodeMappings, scope) collect {
+    findForType(key, { dec => dec.asInstanceOf[DialectDeclarations].nodeMappings ++ dec.asInstanceOf[DialectDeclarations].annotationMappings }, scope) collect {
       case nm: NodeMappable => nm
     }
 
@@ -63,7 +69,7 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
       case _                      => resolveExternal(key).map(DatatypePropertyTerm().withId(_))
     }
 
-  override def declarables(): Seq[DomainElement] = nodeMappings.values.toSeq
+  override def declarables(): Seq[DomainElement] = nodeMappings.values.toSeq ++ annotationMappings.values.toSeq
 
   case class ErrorNodeMappable(idPart: String, part: YPart)
       extends NodeMapping(Fields(), Annotations(part))

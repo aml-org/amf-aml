@@ -282,6 +282,12 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     element
   }
 
+  def parseVendorExtension(propertyEntry: YMapEntry, annotation: AnnotationMapping, parent: DomainElement): Unit = {
+    val dialectDomainElement = new DialectDomainElement(parent.extendedFields, parent.annotations)
+    dialectDomainElement.withId(parent.id)
+    val id = parent.id + "/" + propertyEntry.key.as[String].urlComponentEncoded
+    parseProperty(id, propertyEntry, annotation, dialectDomainElement)
+  }
   protected def parseProperty(id: String,
                               propertyEntry: YMapEntry,
                               property: PropertyMapping,
@@ -685,7 +691,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                                     property: PropertyMapping,
                                     node: DialectDomainElement,
                                     additionalProperties: Map[String, Any] = Map()): Unit = {
-    val path           = propertyEntry.key.as[YScalar].text
+    val path           = propertyEntry.key.as[YScalar].text.urlComponentEncoded
     val nestedObjectId = pathSegment(id, List(path))
     property.nodesInRange match {
       case range: Seq[String] if range.size > 1 =>
