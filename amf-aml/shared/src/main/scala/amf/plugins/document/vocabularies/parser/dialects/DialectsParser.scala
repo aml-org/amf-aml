@@ -7,25 +7,13 @@ import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
-import amf.core.parser.{
-  Annotations,
-  BaseSpecParser,
-  ScalarNode,
-  SearchScope,
-  SyamlParsedDocument,
-  ValueNode,
-  YNodeLikeOps
-}
+import amf.core.parser.{Annotations, BaseSpecParser, ScalarNode, SearchScope, SyamlParsedDocument, ValueNode, YNodeLikeOps}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
-import amf.plugins.document.vocabularies.metamodel.domain.{
-  MergePolicies,
-  NodeMappingModel,
-  PropertyMappingModel,
-  UnionNodeMappingModel
-}
+import amf.plugins.document.vocabularies.metamodel.domain.{MergePolicies, NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
+import amf.plugins.document.vocabularies.model.domain
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
@@ -68,6 +56,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         nodeMapping.propertiesMapping().foreach { propertyMapping =>
           checkNodeMappableReferences(propertyMapping)
         }
+
+      case annotationMapping: AnnotationMapping => checkNodeMappableReferences(annotationMapping)
     }
 
     if (declarables.nonEmpty) dialect.withDeclares(declarables)
@@ -91,6 +81,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   protected def parseDeclarations(root: Root, map: YMap): Unit = {
     val parent = root.location + "#/declarations"
     parseNodeMappingDeclarations(map, parent)
+    parseAnnotationsMappingDeclarations(map, parent)
   }
 
   /**
@@ -252,6 +243,32 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           }
         case YType.Null =>
         case t          => ctx.eh.violation(DialectError, parent, s"Invalid type $t for 'nodeMappings' node.", e.value)
+      }
+    }
+  }
+
+  private def parseAnnotationsMappingDeclarations(map: YMap, parent: String): Unit = {
+    map.key("annotationMappings").foreach { e =>
+      e.value.tagType match {
+        case YType.Map =>
+          e.value.as[YMap].entries.foreach { entry =>
+            parsePropertyMapping(entry, {
+              case annotationMapping: AnnotationMapping =>
+                val name = ScalarNode(entry.key).string()
+                annotationMapping.set(NodeMappingModel.Name, name, Annotations(entry.key)).adopted(parent)
+                annotationMapping.annotations.reject(a =>
+                  a.isInstanceOf[SourceAST] || a.isInstanceOf[LexicalInformation] || a
+                    .isInstanceOf[SourceLocation] || a.isInstanceOf[SourceNode])
+                annotationMapping.annotations ++= Annotations(entry)
+                ctx.declarations.registerAnnotationMapping(annotationMapping)
+              case _ =>
+                ctx.eh.violation(DialectError, parent, s"Error parsing 'annotationMappings' node.", e.value)
+            }, isAnnotation = true)
+          }
+        case YType.Null =>
+          ctx.eh.violation(DialectError, parent, s"Null declaration for 'annotationMappings' node.", e.value)
+        case t          =>
+          ctx.eh.violation(DialectError, parent, s"Invalid type $t for 'annotationMappings' node.", e.value)
       }
     }
   }
@@ -477,15 +494,51 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
-  def parsePropertyMapping(entry: YMapEntry, adopt: PropertyMapping => Any): PropertyMapping = {
+  def parsePropertyMapping(entry: YMapEntry, adopt: PropertyMapping => Any, isAnnotation: Boolean = false): PropertyMapping = {
     val name = ScalarNode(entry.key).string()
     entry.value.tagType match {
       case YType.Map =>
         val map             = entry.value.as[YMap]
-        val propertyMapping = PropertyMapping(map).set(PropertyMappingModel.Name, name, Annotations(entry.key))
+        val propertyMapping = if (isAnnotation) {
+          AnnotationMapping(map)
+        } else {
+          PropertyMapping(map)
+        }
+        propertyMapping.set(PropertyMappingModel.Name, name, Annotations(entry.key))
 
         adopt(propertyMapping)
-        ctx.closedNode("propertyMapping", propertyMapping.id, map)
+
+        if (isAnnotation) {
+          ctx.closedNode("annotationMapping", propertyMapping.id, map)
+        } else {
+          ctx.closedNode("propertyMapping", propertyMapping.id, map)
+        }
+
+        if (isAnnotation) {
+          map.key("target",
+            entry => {
+              val ids: Seq[String] = entry.value.tagType match {
+                case YType.Str =>
+                  val id = ValueNode(entry.value).string().toString
+                  Seq(id)
+                case YType.Seq =>
+                  entry.value.as[Seq[String]]
+              }
+              val expandedIds = ids.map { classTermId =>
+                ctx.declarations.findClassTerm(classTermId, SearchScope.All) match {
+                  case Some(classTerm) =>
+                    classTerm.id
+                  case _ =>
+                    ctx.eh.violation(DialectError,
+                      propertyMapping.id,
+                      s"Cannot find class term with alias $classTermId",
+                      entry.value)
+                    classTermId
+                }
+              }
+              propertyMapping.asInstanceOf[domain.AnnotationMapping].withTargets(expandedIds)
+            })
+        }
 
         map.key("propertyTerm") match {
           case Some(e) =>

@@ -4,11 +4,11 @@ import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.core.emitter.{EntryEmitter, RenderOptions, ShapeRenderOptions, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
-import amf.core.metamodel.Obj
+import amf.core.metamodel.{Field, Obj}
 import amf.core.model.document.BaseUnit
-import amf.core.model.domain.AnnotationGraphLoader
+import amf.core.model.domain.{AnnotationGraphLoader, DomainElement}
 import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument, _}
 import amf.core.rdf.RdfModel
 import amf.core.registries.{AMFDomainEntityResolver, AMFPluginsRegistry}
@@ -21,11 +21,12 @@ import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityL
 import amf.internal.environment.Environment
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomBase, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
-import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
+import amf.plugins.document.vocabularies.emitters.instances.{DialectInstancesEmitter, DialectNodeEmitter}
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.document._
+import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.instances._
@@ -69,6 +70,7 @@ trait AMLPlugin
       DialectModel,
       NodeMappingModel,
       UnionNodeMappingModel,
+      AnnotationMappingModel,
       PropertyMappingModel,
       DocumentsModelModel,
       PublicNodeMappingModel,
@@ -334,4 +336,51 @@ trait AMLPlugin
       ParserContext(root.location, root.references, EmptyFutureDeclarations(), eh = wrapped.eh)
     new DialectContext(cleanNested)
   }
+
+  override def canParseVendorExtension(name: String): Boolean = registry.vendorExtensionFor(name).isDefined
+
+  override def parserVendorExtension(extensionName: String, entry: YMapEntry, parent: DomainElement, context: ParserContext): Unit = {
+    registry.vendorExtensionFor(extensionName) match {
+      case Some((annotationMapping, dialect)) =>
+        val dialectInstanceContext = new DialectInstanceContext(dialect, context)
+        val fakeRoot = Root(
+          SyamlParsedDocument(YDocument(YNode("")), None),
+          "",
+          "",
+          Nil,
+          LinkReference,
+          "")
+        val parser = new DialectInstanceParser(fakeRoot)(dialectInstanceContext)
+        parser.parseVendorExtension(entry, annotationMapping, parent)
+      case _                       => None
+    }
+  }
+
+  override def vendorExtensionFieldsForClass(className: String): Seq[Field] =
+    registry.extensionFieldsForClass(className)
+
+  override def canEmitExtension(field: Field): Boolean = registry.vendorExtensionForId(field.value.iri()).nonEmpty
+
+  override def emitVendorExtensions(element: DomainElement, field: Field, keyDecorator: String => String): Seq[EntryEmitter] = {
+    registry.vendorExtensionForId(field.value.iri()) match {
+      case Some((alias, annotationMapping, dialect)) =>
+        val wrapper = new DialectDomainElement(element.extendedFields, element.annotations)
+        wrapper.withId(element.id)
+        val emitter = DialectNodeEmitter(
+          wrapper,
+          null,
+          Nil,
+          dialect,
+          SpecOrdering.Default,
+          None,
+          None,
+          false,
+          Nil,
+          RenderOptions()
+        )
+        emitter.emitVendorExtension(keyDecorator(alias), annotationMapping, field, element.extendedFields)
+      case None => Nil
+    }
+  }
+
 }
