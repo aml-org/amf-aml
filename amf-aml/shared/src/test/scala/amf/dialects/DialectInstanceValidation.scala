@@ -10,26 +10,39 @@ import amf.core.io.FileAssertionTest
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
-trait ReportComparison extends AsyncFunSuite with FileAssertionTest {
-  def assertReport(report: AMFValidationReport, goldenOption: Option[String] = None): Future[Assertion] = {
-    goldenOption match {
-      case Some(golden) =>
-        for {
-          actual    <- writeTemporaryFile(golden)(ValidationReportJSONLDEmitter.emitJSON(report))
-          assertion <- assertDifferences(actual, golden.stripPrefix("file://"))
-        } yield {
-          assertion
-        }
-      case None =>
-        Future.successful {
-          assert(report.conforms)
-        }
-    }
+trait ReportComparator extends FileAssertionTest with Matchers {
+
+  implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
+  def assertReport(report: AMFValidationReport, goldenOption: Option[String] = None, jsonldReport: Boolean = true): Future[Assertion] = {
+    goldenOption.map(processGoldenPath).map { golden =>
+      for {
+        actual    <- writeTemporaryFile(golden)(emitReport(report, jsonldReport))
+        assertion <- assertDifferences(actual, golden.stripPrefix("file://"))
+      } yield {
+        assertion
+      }
+    }.getOrElse { Future.successful { report.conforms shouldBe true } }
   }
+
+  protected def processGoldenPath(path: String): String
+
+  private def emitReport(report: AMFValidationReport, emitJsonLd: Boolean): String = {
+    if (emitJsonLd) ValidationReportJSONLDEmitter.emitJSON(report)
+    else report.toString()
+  }
+}
+
+object UniquePlatformReportComparator extends ReportComparator {
+  override protected def processGoldenPath(path: String): String = path
+}
+
+object MultiPlatformReportComparator extends ReportComparator with PlatformSecrets {
+  override protected def processGoldenPath(path: String): String = path + s".${platform.name}"
 }
 
 trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with DefaultAmfInitialization {

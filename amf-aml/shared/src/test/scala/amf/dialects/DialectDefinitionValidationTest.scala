@@ -1,17 +1,11 @@
 package amf.dialects
-import amf.ProfileName
-import amf.client.parse.DefaultParserErrorHandler
-import amf.core.services.RuntimeValidator
-import amf.core.unsafe.PlatformSecrets
-import amf.core.{AMFCompiler, CompilerContextBuilder}
-import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.features.validation.AMFValidatorPlugin
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.{AsyncFunSuite, Matchers}
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 
-class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with ReportComparison with PlatformSecrets with DefaultAmfInitialization {
+class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with DialectValidation {
+
+  protected val path: String = "amf-aml/shared/src/test/resources/vocabularies2/instances/invalids"
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -37,30 +31,5 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with R
 
   test("Test mandatory property mapping without value") {
     validate("/mandatory-property-mapping-without-value/dialect.yaml", Some("mandatory-property-mapping-without-value/report.json"))
-  }
-
-
-  private val path: String = "amf-aml/shared/src/test/resources/vocabularies2/instances/invalids"
-
-  protected def validate(dialect: String, goldenReport: Option[String]): Future[Assertion] = {
-    for {
-      dialect <- {
-        new AMFCompiler(
-          new CompilerContextBuilder("file://" + path + dialect, platform, eh = DefaultParserErrorHandler.withRun())
-            .build(),
-          Some("application/yaml"),
-          Some(AMLPlugin.ID)
-        ).build()
-      }
-      report <- {
-        RuntimeValidator(
-          dialect,
-          ProfileName(dialect.asInstanceOf[Dialect].nameAndVersion())
-        )
-      }
-      assertion <- assertReport(report, goldenReport.map(g => s"$path/$g"))
-    } yield {
-      assertion
-    }
   }
 }
