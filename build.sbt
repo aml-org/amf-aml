@@ -122,6 +122,9 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
   )
   .disablePlugins(SonarPlugin)
 
+lazy val amlJVM = aml.jvm.in(file("./amf-aml/jvm"))
+lazy val amlJS = aml.js.in(file("./amf-aml/js"))
+
 /** **********************************************
   * AMF-Validation
   * ********************************************* */

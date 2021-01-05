@@ -1,5 +1,5 @@
 package amf.plugins.document.vocabularies.parser.vocabularies
-import org.yaml.model.{YMap, YScalar}
+import org.yaml.model.{IllegalTypeHandler, YMap, YScalar}
 
 trait VocabularySyntax { this: VocabularyContext =>
 
@@ -28,7 +28,7 @@ trait VocabularySyntax { this: VocabularyContext =>
     "extends"     -> "string[]"
   )
 
-  def closedNode(nodeType: String, id: String, map: YMap): Unit = {
+  def closedNode(nodeType: String, id: String, map: YMap)(implicit errorHandler: IllegalTypeHandler): Unit = {
     val allowedProps = nodeType match {
       case "vocabulary"   => vocabulary
       case "classTerm"    => classTerm

@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import org.yaml.model.{YMap, YNode, YScalar, YType}
+import org.yaml.model.{IllegalTypeHandler, YMap, YNode, YScalar, YType}
 
 trait DialectSyntax { this: DialectContext =>
   val dialect: Map[String, Boolean] = Map(
@@ -71,7 +71,7 @@ trait DialectSyntax { this: DialectContext =>
       "referenceStyle"   -> false
   )
 
-  def closedNode(nodeType: String, id: String, map: YMap): Unit = {
+  def closedNode(nodeType: String, id: String, map: YMap)(implicit errorHandler: IllegalTypeHandler): Unit = {
     val allowedProps = nodeType match {
       case "dialect"                 => dialect
       case "library"                 => library
@@ -104,7 +104,7 @@ trait DialectSyntax { this: DialectContext =>
   private def isAnnotation(property: String): Boolean =
     (property.startsWith("(") && property.endsWith(")")) || property.startsWith("x-")
 
-  def link(node: YNode): Either[String, YNode] = {
+  def link(node: YNode)(implicit errorHandler: IllegalTypeHandler): Either[String, YNode] = {
     node match {
       case _ if isInclude(node) => Left(node.as[YScalar].text)
       case _                    => Right(node)
