@@ -10,7 +10,7 @@ class DialectContext(private val wrapped: ParserContext, private val ds: Option[
     with DialectSyntax
     with SyntaxErrorReporter {
 
-  def findInRecursiveShapes(key: String): Option[String] = {
+  def findInRecursiveUnits(key: String): Option[String] = {
     val qname = QName(key)
     if (qname.isQualified) {
       recursiveDeclarations.get(qname.qualification) match {
