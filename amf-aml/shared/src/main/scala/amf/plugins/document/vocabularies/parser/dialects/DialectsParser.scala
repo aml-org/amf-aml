@@ -94,66 +94,69 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   }
 
   /**
-    * Transforming URIs in references of node ranges and discrminators into actual
+    * Transforming URIs in references of node ranges and discriminators into actual
     * label with a reference
     */
-  protected def checkNodeMappableReferences[T <: DomainElement](mappable: NodeWithDiscriminator[T]): Unit = {
-    val mapped: Seq[Option[String]] = mappable.objectRange().map { nodeMappingRef =>
-      if (nodeMappingRef.value() == (Namespace.Meta + "anyNode").iri()) {
-        Some(nodeMappingRef.value())
-      }
-      else {
-        ctx.declarations.findNodeMapping(nodeMappingRef.value(), All) match {
-          case Some(mapping: NodeMapping) if mappable.isInstanceOf[PropertyMapping] =>
-            // I want to search or generate the uri (and check that the term is the same if is already set it) right know, so I can throw a violation if some is wrong before start parsing the instance.
-            // Also, If none instance will be parsed, but the dialect model is going to be serialized, I would be better has the terms already setting in the json ld. That way, the violation is collected now, and we don't need to do some particular, border case, logic in the json ld graph parser.
-
-            updateMapLabelReferences(mappable.asInstanceOf[PropertyMapping], mapping)
-            Some(mapping.id)
-          case Some(mapping) =>
-            Some(mapping.id)
-          case _ =>
-            ctx.findInRecursiveShapes(nodeMappingRef.value()) match {
-              case Some(recursiveId) =>
-                Some(recursiveId)
-              case _ =>
-                ctx.missingPropertyRangeViolation(
-                    nodeMappingRef.value(),
-                    mappable.id,
-                    mappable.fields
-                      .entry(PropertyMappingModel.ObjectRange)
-                      .map(_.value.annotations)
-                      .getOrElse(mappable.annotations)
-                )
-                None
-            }
-        }
-      }
-    }
-    val refs = mapped.collect { case Some(ref) => ref }
-    if (refs.nonEmpty) mappable.withObjectRange(refs)
+  protected def checkNodeMappableReferences[T <: DomainElement](union: NodeWithDiscriminator[T]): Unit = {
+    val memberStream      = union.objectRange().toStream
+    val memberNamesStream = memberStream.map(member => member.value())
+    val memberIdsStream   = memberNamesStream.flatMap(name => memberIdFromName(name, union))
+    if (memberIdsStream.nonEmpty) union.withObjectRange(memberIdsStream)
 
     // Setting ids we left unresolved in typeDiscriminators
-    Option(mappable.typeDiscriminator()) match {
+    Option(union.typeDiscriminator()) match {
       case Some(typeDiscriminators) =>
-        val mapped = typeDiscriminators.foldLeft(Map[String, String]()) {
-          case (acc, (nodeMappingRef, alias)) =>
-            ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
-              case Some(mapping) => acc.updated(mapping.id, alias)
-              case _ =>
+        val discriminatorValueMapping = typeDiscriminators.flatMap {
+          case (name, discriminatorValue) =>
+            ctx.declarations
+              .findNodeMapping(name, All)
+              .map(_.id -> discriminatorValue)
+              .orElse {
                 ctx.missingPropertyRangeViolation(
-                    nodeMappingRef,
-                    mappable.id,
-                    mappable.fields
+                    name,
+                    union.id,
+                    union.fields
                       .entry(PropertyMappingModel.TypeDiscriminator)
                       .map(_.value.annotations)
-                      .getOrElse(mappable.annotations)
+                      .getOrElse(union.annotations)
                 )
-                acc
-            }
+                None
+              }
         }
-        mappable.withTypeDiscriminator(mapped)
+        union.withTypeDiscriminator(discriminatorValueMapping)
       case _ => // ignore
+    }
+  }
+
+  private def memberIdFromName[T <: DomainElement](name: String, union: NodeWithDiscriminator[T]): Option[String] = {
+    if (name == (Namespace.Meta + "anyNode").iri()) {
+      Some(name)
+    }
+    else {
+      ctx.declarations.findNodeMapping(name, All) match {
+        case Some(mapping: NodeMapping) if union.isInstanceOf[PropertyMapping] =>
+          // I want to search or generate the uri (and check that the term is the same if is already set it) right know, so I can throw a violation if some is wrong before start parsing the instance.
+          // Also, If none instance will be parsed, but the dialect model is going to be serialized, I would be better has the terms already setting in the json ld. That way, the violation is collected now, and we don't need to do some particular, border case, logic in the json ld graph parser.
+          updateMapLabelReferences(union.asInstanceOf[PropertyMapping], mapping) // Should remove this side effect
+          Some(mapping.id)
+        case Some(mapping) =>
+          Some(mapping.id)
+        case _ =>
+          ctx.findInRecursiveUnits(name) match {
+            case Some(recursiveId) =>
+              Some(recursiveId)
+            case _ =>
+              ctx.missingPropertyRangeViolation(
+                  name,
+                  union.id,
+                  union.fields
+                    .entry(PropertyMappingModel.ObjectRange)
+                    .map(_.value.annotations)
+                    .getOrElse(union.annotations)
+              )
+              None
+          }
+      }
     }
   }
 
@@ -606,15 +609,19 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         // TODO: check dependencies among properties
 
         map.key(
-          "isLink",
-          entry => {
-            val isLink = entry.value.as[Boolean]
-            propertyMapping.withExternallyLinkable(isLink);
-            propertyMapping.literalRange().option() match {
-              case Some(v) => ctx.eh.violation(DialectError, s"Aml links support in property mappings only can be declared in object properties but scalar range detected: ${v}", entry.value)
-              case _       =>  // ignore
+            "isLink",
+            entry => {
+              val isLink = entry.value.as[Boolean]
+              propertyMapping.withExternallyLinkable(isLink);
+              propertyMapping.literalRange().option() match {
+                case Some(v) =>
+                  ctx.eh.violation(
+                      DialectError,
+                      s"Aml links support in property mappings only can be declared in object properties but scalar range detected: ${v}",
+                      entry.value)
+                case _ => // ignore
+              }
             }
-          }
         )
 
         parseAnnotations(map, propertyMapping, ctx.declarations)
