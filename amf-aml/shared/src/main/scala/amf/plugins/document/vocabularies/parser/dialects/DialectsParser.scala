@@ -16,6 +16,7 @@ import amf.core.parser.{
   ValueNode,
   YNodeLikeOps
 }
+import amf.core.remote.Cache
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
@@ -31,10 +32,10 @@ import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
 import amf.plugins.document.vocabularies.parser.instances.BaseDirective
 import amf.validation.DialectValidations
-import amf.validation.DialectValidations.{DialectError, VariablesDefinedInBase}
+import amf.validation.DialectValidations.{DialectError, EventualAmbiguity, UnavoidableAmbiguity, VariablesDefinedInBase}
 import org.yaml.model._
 
-import scala.collection.immutable
+import scala.collection.{immutable, mutable}
 
 class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     extends BaseSpecParser
@@ -94,17 +95,134 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   }
 
   /**
-    * Transforming URIs in references of node ranges and discriminators into actual
-    * label with a reference
+    * Recursively collects members from unions and nested unions
+    * @param union union to extract members from
+    * @param path path to show error on nested ambiguities
+    * @tparam T
+    * @return Map member -> path from root level union
     */
-  protected def checkNodeMappableReferences[T <: DomainElement](union: NodeWithDiscriminator[T]): Unit = {
-    val memberStream      = union.objectRange().toStream
+  private def flattenedMembersFrom[T <: DomainElement](
+      union: NodeWithDiscriminator[T],
+      path: Seq[UnionNodeMapping] = Nil): Map[NodeMapping, Seq[UnionNodeMapping]] = {
+    membersFrom(union).flatMap {
+      case anotherUnion: UnionNodeMapping if !path.contains(union) =>
+        flattenedMembersFrom(anotherUnion, path :+ anotherUnion) // if member is another union get its members recursively
+      case nodeMapping: NodeMapping => Some(nodeMapping -> path)
+      case _                        => None
+    }.toMap
+  }
+
+  protected def membersFrom[T <: DomainElement](union: NodeWithDiscriminator[T]): Seq[NodeMappable] = {
+    union
+      .objectRange()
+      .toStream
+      .flatMap { name =>
+        ctx.declarations.findNodeMapping(name.value(), All)
+      }
+  }
+
+  type Member            = NodeMapping
+  type ConcatenatedNames = String
+
+  /**
+    * Ambiguity kinds:
+    *   - Un-avoidable: cannot distinguish between two union members
+    *   - Eventual: some times cannot distinguish between two union members, depending on the value of the dialect instance
+    *
+    * Conditions for un-avoidable ambiguity:
+    *   - Set of property names is exactly the same between two union members
+    *
+    * Conditions for eventual ambiguity:
+    *   - Set of MANDATORY property names is exactly the same between two union members
+    *
+    * @param union Union to calculate ambiguity over its members
+    * @tparam T type of union: union node mapping or union property mapping
+    */
+  def checkAmbiguity[T <: DomainElement](union: NodeWithDiscriminator[T]): Unit = {
+    val membersPathIndex = flattenedMembersFrom(union)
+    val members          = membersPathIndex.keys.toSeq
+
+    // We use the hash of the concatenated names as an approximation of the set equality function for performance gain
+    val unavoidableCache: mutable.HashMap[ConcatenatedNames, Seq[Member]] = mutable.HashMap.empty
+    val eventualCache: mutable.HashMap[ConcatenatedNames, Seq[Member]]    = mutable.HashMap.empty
+
+    members.foreach { member =>
+      updateAmbiguityCaches(member, unavoidableCache, eventualCache)
+    }
+
+    val buildPath = (m: Member) => {
+      val path = membersPathIndex(m) :+ m
+      path.map(_.name.value()).mkString("/")
+    }
+
+    unavoidableCache.foreach {
+      case (_, members) if members.size > 1 =>
+        val names = members.map(buildPath).sorted.mkString(", ")
+        ctx.eh.violation(UnavoidableAmbiguity,
+                         union.id,
+                         s"Union is ambiguous. Members $names have the same set of property names",
+                         union.annotations)
+      case _ => // Ignore
+    }
+
+    eventualCache.foreach {
+      case (_, members) if members.size > 1 =>
+        val names = members.map(buildPath).sorted.mkString(", ")
+        ctx.eh.warning(EventualAmbiguity,
+                       union.id,
+                       s"Union might be ambiguous. Members $names have the same set of mandatory property names",
+                       union.annotations)
+      case _ => // Ignore
+    }
+  }
+
+  private def updateAmbiguityCaches[T <: DomainElement](
+      member: Member,
+      unavoidableCache: mutable.HashMap[ConcatenatedNames, Seq[Member]],
+      eventualCache: mutable.HashMap[ConcatenatedNames, Seq[Member]]) = {
+
+    val allProperties = member
+      .propertiesMapping()
+      .toStream
+      .sortBy(_.name().value()) // Sort properties by name
+
+    val mandatoryProperties = allProperties.filter(_.minCount().is(1))
+
+    val concatenateNames = (properties: Seq[PropertyMapping]) => properties.map(_.name().value()).mkString("")
+
+    val unavoidableCacheKey = concatenateNames(allProperties)
+    val eventualCacheKey    = concatenateNames(mandatoryProperties)
+
+    // Update caches
+    unavoidableCache.put(unavoidableCacheKey, member +: unavoidableCache.getOrElse(unavoidableCacheKey, Nil))
+    if (unavoidableCacheKey != eventualCacheKey) {
+      // Unavoidable ambiguity is a superset of eventual ambiguity. We want the eventual ambiguity cache to contain clashes which are eventual and NOT unavoidable
+      eventualCache.put(eventualCacheKey, member +: eventualCache.getOrElse(eventualCacheKey, Nil))
+    }
+  }
+
+  /**
+    * This method:
+    *  1. replaces union & discriminator members references to other node mappings from their name to their id
+    *  2. validates union & discriminator members exist
+    *  3. checks for ambiguity
+    */
+  protected def checkNodeMappableReferences[T <: DomainElement](mappable: NodeWithDiscriminator[T]): Unit = {
+    val memberStream      = mappable.objectRange().toStream
     val memberNamesStream = memberStream.map(member => member.value())
-    val memberIdsStream   = memberNamesStream.flatMap(name => memberIdFromName(name, union))
-    if (memberIdsStream.nonEmpty) union.withObjectRange(memberIdsStream)
+    val memberIdsStream   = memberNamesStream.flatMap(name => memberIdFromName(name, mappable))
+
+    mappable match {
+      case p: PropertyMapping if p.isUnion && p.typeDiscriminatorName().isNull =>
+        checkAmbiguity(p)
+      case u: UnionNodeMapping if u.typeDiscriminatorName().isNull =>
+        checkAmbiguity(u)
+      case _ => // Ignore
+    }
+    if (memberIdsStream.nonEmpty) mappable.withObjectRange(memberIdsStream)
 
     // Setting ids we left unresolved in typeDiscriminators
-    Option(union.typeDiscriminator()) match {
+    Option(mappable.typeDiscriminator()) match {
       case Some(typeDiscriminators) =>
         val discriminatorValueMapping = typeDiscriminators.flatMap {
           case (name, discriminatorValue) =>
@@ -114,16 +232,16 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               .orElse {
                 ctx.missingPropertyRangeViolation(
                     name,
-                    union.id,
-                    union.fields
+                    mappable.id,
+                    mappable.fields
                       .entry(PropertyMappingModel.TypeDiscriminator)
                       .map(_.value.annotations)
-                      .getOrElse(union.annotations)
+                      .getOrElse(mappable.annotations)
                 )
                 None
               }
         }
-        union.withTypeDiscriminator(discriminatorValueMapping)
+        mappable.withTypeDiscriminator(discriminatorValueMapping)
       case _ => // ignore
     }
   }

@@ -43,6 +43,16 @@ object DialectValidations extends Validations {
     "Missing property range term"
   )
 
+  val UnavoidableAmbiguity = validation(
+      "unavoidable-ambiguity",
+      "Unavoidable ambiguity"
+  )
+
+  val EventualAmbiguity = validation(
+      "eventual-ambiguity",
+      "Eventual ambiguity"
+  )
+
   val DifferentTermsInMapKey = validation(
     "different-terms-in-mapkey",
     "Different terms in map key"
