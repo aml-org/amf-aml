@@ -32,4 +32,38 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   test("Test mandatory property mapping without value") {
     validate("/mandatory-property-mapping-without-value/dialect.yaml", Some("mandatory-property-mapping-without-value/report.json"))
   }
+
+  test("Test un-avoidable ambiguity in node") {
+    validate("/unavoidable-ambiguity-node/dialect.yaml", Some("unavoidable-ambiguity-node/report.json"))
+  }
+
+  test("Test un-avoidable ambiguity in property") {
+    validate("/unavoidable-ambiguity-property/dialect.yaml", Some("unavoidable-ambiguity-property/report.json"))
+  }
+
+  test("Test eventual ambiguity in node") {
+    validate("/eventual-ambiguity-node/dialect.yaml", Some("eventual-ambiguity-node/report.json"))
+  }
+
+  test("Test eventual ambiguity in property") {
+    validate("/eventual-ambiguity-property/dialect.yaml", Some("eventual-ambiguity-property/report.json"))
+  }
+
+  test("Test nested un-avoidable ambiguity in node") {
+    validate("/nested-unavoidable-ambiguity-node/dialect.yaml", Some("nested-unavoidable-ambiguity-node/report.json"))
+  }
+
+  test("Test nested un-avoidable ambiguity in property") {
+    validate("/nested-unavoidable-ambiguity-property/dialect.yaml", Some("nested-unavoidable-ambiguity-property/report.json"))
+  }
+
+  test("Test nested eventual ambiguity in node") {
+    validate("/nested-eventual-ambiguity-node/dialect.yaml", Some("nested-eventual-ambiguity-node/report.json"))
+  }
+
+  test("Test nested eventual ambiguity in property") {
+    validate("/nested-eventual-ambiguity-property/dialect.yaml", Some("nested-eventual-ambiguity-property/report.json"))
+  }
+
+
 }
