@@ -1,0 +1,18 @@
+#%Dialect 1.0
+dialect: Person
+version: 1.0
+external:
+  schema: https://schema.org/
+documents:
+  root:
+    encodes: PersonNode
+nodeMappings:
+  PersonNode:
+    idTemplate: http://people.org/people/{firstName} - {lastName}
+    mapping:
+      firstName:
+        range: string
+        mandatory: false
+      lastName:
+        range: string
+        mandatory: true

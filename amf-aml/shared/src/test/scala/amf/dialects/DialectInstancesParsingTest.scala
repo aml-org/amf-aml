@@ -871,6 +871,54 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("id-template-non-scalar", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/id-template-non-scalar/"
+    )
+  }
+
+  multiGoldenTest("id-template-non-valid-uri", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/id-template-non-valid-uri/"
+    )
+  }
+
+  multiGoldenTest("id-template-on-union-valid", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/id-template-on-union-valid/"
+    )
+  }
+
+  multiGoldenTest("id-template-on-union-member-valid", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/id-template-on-union-member-valid/"
+    )
+  }
+
   multiGoldenTest("Parse instance with native links and native targets", "instance.%s") { config =>
     withDialect(
       "dialect.yaml",

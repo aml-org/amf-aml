@@ -1,0 +1,83 @@
+{
+  "@graph": [
+    {
+      "@id": "http://people.org/people/Dogge",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-on-union-member-valid/dialect.yaml#/declarations/PetNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#petName": "Dogge",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "http://people.org/people/Dogge#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "http://people.org/people/Dogge#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://people.org/people/Dogge#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "http://people.org/people/Dogge#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "http://people.org/people/Dogge#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://people.org/people/Dogge",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,14)]"
+    },
+    {
+      "@id": "http://people.org/people/Dogge#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#petName",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,14)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-on-union-member-valid/instance.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-on-union-member-valid/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "http://people.org/people/Dogge"
+      },
+      "http://a.ml/vocabularies/document#version": "2.3.0",
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-on-union-member-valid/instance.yaml#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-on-union-member-valid/instance.yaml#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-on-union-member-valid/instance.yaml#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-on-union-member-valid/instance.yaml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-on-union-member-valid/instance.yaml",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,14)]"
+    }
+  ]
+}

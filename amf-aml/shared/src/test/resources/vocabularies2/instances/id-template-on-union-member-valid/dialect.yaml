@@ -1,0 +1,25 @@
+#%Dialect 1.0
+dialect: PersonOrPet
+version: 1.0
+external:
+  schema: https://schema.org/
+documents:
+  root:
+    encodes: PersonOrPet
+nodeMappings:
+  PersonOrPet:
+    union:
+      - PetNode
+      - PersonNode
+  PetNode:
+    idTemplate: http://people.org/people/{petName}
+    mapping:
+      petName:
+        range: string
+        mandatory: true
+  PersonNode:
+    idTemplate: http://people.org/people/{personName}
+    mapping:
+      personName:
+        range: string
+        mandatory: true

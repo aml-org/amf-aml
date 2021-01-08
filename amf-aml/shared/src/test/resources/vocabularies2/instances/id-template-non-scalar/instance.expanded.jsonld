@@ -1,0 +1,165 @@
+[
+  {
+    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/instance.yaml",
+    "@type": [
+      "http://a.ml/vocabularies/meta#DialectInstance",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/dialect.yaml"
+      }
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "http://people.org/people/a-{nested: a}",
+        "@type": [
+          "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/dialect.yaml#/declarations/PersonNode",
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/data#lastName": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/instance.yaml#/encodes/lastName",
+            "@type": [
+              "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/dialect.yaml#/declarations/OtherNode",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/data#nested": [
+              {
+                "@value": "a"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/instance.yaml#/encodes/lastName/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/instance.yaml#/encodes/lastName/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/instance.yaml#/encodes/lastName"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(4,0)-(4,11)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/instance.yaml#/encodes/lastName/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/data#nested"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(4,2)-(4,11)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/data#firstName": [
+          {
+            "@value": "a"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "http://people.org/people/a-{nested: a}#/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "http://people.org/people/a-{nested: a}#/source-map/lexical/element_2",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/data#lastName"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(3,9)-(4,11)]"
+                  }
+                ]
+              },
+              {
+                "@id": "http://people.org/people/a-{nested: a}#/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/data#firstName"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(3,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "http://people.org/people/a-{nested: a}#/source-map/lexical/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://people.org/people/a-{nested: a}"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(4,11)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "2.3.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/instance.yaml#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/instance.yaml#/source-map/lexical/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/id-template-non-scalar/instance.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(4,11)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
