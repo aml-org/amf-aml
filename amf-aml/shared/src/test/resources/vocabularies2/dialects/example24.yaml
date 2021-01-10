@@ -1,0 +1,34 @@
+#%Dialect 1.0
+dialect: example
+version: "1.24"
+annotationMappings:
+  one:
+    target: v3.target
+    propertyTerm: v3.a
+    range: string
+  two:
+    target:
+      - v3.target1
+      - v3.target2
+    propertyTerm: v3.b
+    range: Other
+nodeMappings:
+  Other:
+    classTerm: v3.Simple
+    mapping:
+      a:
+        unique: true
+        propertyTerm: v3.a
+        range: string
+      ho:
+        propertyTerm: v3.ho
+        range: parent.Anchor
+documents:
+  library:
+    declares:
+      annotation-one: one
+      annotation-two: two
+uses:
+  parent: example23a.yaml
+external:
+  v3: http://test.com/v3#

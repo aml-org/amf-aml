@@ -10,7 +10,7 @@ import amf.core.parser.Position.ZERO
 import amf.plugins.document.vocabularies.emitters.common.ExternalEmitter
 import amf.plugins.document.vocabularies.emitters.instances.AmlEmittersHelper
 import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
-import amf.plugins.document.vocabularies.model.domain.NodeMappable
+import amf.plugins.document.vocabularies.model.domain.{AnnotationMapping, NodeMappable}
 import org.yaml.model.YDocument.EntryBuilder
 
 trait DialectDocumentsEmitters extends AmlEmittersHelper {
@@ -32,6 +32,7 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
   def rootLevelEmitters(ordering: SpecOrdering): Seq[EntryEmitter] =
     Seq(ReferencesEmitter(dialect, ordering, aliases)) ++
       nodeMappingDeclarationEmitters(dialect, ordering, aliases) ++
+      annotationMappingDeclarationEmitters(dialect, ordering, aliases) ++
       externalEmitters(ordering)
 
   def externalEmitters(ordering: SpecOrdering): Seq[EntryEmitter] = {
@@ -61,7 +62,7 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
                                      ordering: SpecOrdering,
                                      aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
     val nodeMappingDeclarations: Seq[NodeMappable] = dialect.declares.collect {
-      case nm: NodeMappable => nm
+      case nm: NodeMappable if !nm.isInstanceOf[AnnotationMapping] => nm
     }
     if (nodeMappingDeclarations.nonEmpty) {
       Seq(new EntryEmitter {
@@ -84,6 +85,45 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
                   .find(classOf[LexicalInformation])
                   .map(_.range.start)
                   .getOrElse(ZERO))
+            .filter(_ != ZERO)
+            .sorted
+            .headOption
+            .getOrElse(ZERO)
+        }
+      })
+    }
+    else {
+      Nil
+    }
+  }
+
+  def annotationMappingDeclarationEmitters(dialect: Dialect,
+                                     ordering: SpecOrdering,
+                                     aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
+    val annotationMappingDeclarations: Seq[AnnotationMapping] = dialect.declares.collect {
+      case nm: AnnotationMapping => nm
+    }
+    if (annotationMappingDeclarations.nonEmpty) {
+      Seq(new EntryEmitter {
+        override def emit(b: EntryBuilder): Unit = {
+          b.entry(
+            "annotationMappings",
+            _.obj { b =>
+              val nodeMappingEmitters: Seq[EntryEmitter] = annotationMappingDeclarations.map { am: AnnotationMapping =>
+                PropertyMappingEmitter(dialect, am, ordering, aliases)
+              }
+              traverse(ordering.sorted(nodeMappingEmitters), b)
+            }
+          )
+        }
+
+        override def position(): Position = {
+          annotationMappingDeclarations
+            .map(
+              _.annotations
+                .find(classOf[LexicalInformation])
+                .map(_.range.start)
+                .getOrElse(ZERO))
             .filter(_ != ZERO)
             .sorted
             .headOption
