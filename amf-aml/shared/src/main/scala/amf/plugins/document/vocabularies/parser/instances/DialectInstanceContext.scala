@@ -4,7 +4,7 @@ import amf.core.parser._
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, DocumentMapping, NodeMappable, PublicNodeMapping}
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter
-import org.yaml.model.{YMap, YNode, YScalar, YType}
+import org.yaml.model.{IllegalTypeHandler, YMap, YNode, YScalar, YType}
 
 class DialectInstanceContext(var dialect: Dialect,
                              private val wrapped: ParserContext,
@@ -92,10 +92,11 @@ class DialectInstanceContext(var dialect: Dialect,
 
   private def isInclude(node: YNode) = node.tagType == YType.Include
 
-  private def isIncludeMap(node: YNode): Boolean =
-    node.value.isInstanceOf[YMap] && node.as[YMap].key("$include").isDefined
+  private def isIncludeMap(node: YNode): Boolean = {
+    node.asOption[YMap].flatMap(_.key("$include")).isDefined
+  }
 
-  def link(node: YNode): Either[String, YNode] = {
+  def link(node: YNode)(implicit errorHandler: IllegalTypeHandler): Either[String, YNode] = {
     node match {
       case _ if isInclude(node)    => Left(node.as[YScalar].text)
       case _ if isIncludeMap(node) => Left(node.as[YMap].key("$include").get.value.as[String])

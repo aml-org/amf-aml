@@ -7,13 +7,11 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-version in ThisBuild := "5.1.0"
+version in ThisBuild := "5.1.1"
 
 publish := {}
 
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
-
-libraryDependencies += "org.codehaus.sonar.runner" % "sonar-runner-dist" % "2.4"
 
 lazy val sonarUrl   = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
 lazy val sonarToken = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")
@@ -36,21 +34,20 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "4.1.159"
+val amfCoreVersion = "4.1.164"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
 lazy val amfCoreLibJVM = "com.github.amlorg" %% "amf-core" % amfCoreVersion
 lazy val amfCoreLibJS  = "com.github.amlorg" %% "amf-core_sjs0.6" % amfCoreVersion
 
-val settings = Common.settings ++ Common.publish ++ Seq(
+val commonSettings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
   resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal),
 //  resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   libraryDependencies ++= Seq(
-    "org.scalatest"    %%% "scalatest" % "3.0.5" % Test,
-    "com.github.scopt" %%% "scopt"     % "3.7.0"
+    "org.scalatest"    %%% "scalatest" % "3.0.5" % Test
   )
 )
 
@@ -71,21 +68,13 @@ lazy val customValidation = crossProject(JSPlatform, JVMPlatform)
     ))
   .in(file("./amf-custom-validation"))
   .dependsOn(aml)
-  .settings(settings)
+  .settings(commonSettings)
   .jvmSettings(
-    libraryDependencies += "org.scala-js"               %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "org.scala-lang.modules"     % "scala-java8-compat_2.12" % "0.8.0",
-    libraryDependencies += "org.json4s"                 %% "json4s-native"          % "3.5.4",
-    libraryDependencies += "org.apache.jena"            % "apache-jena-libs"        % "3.14.0" pomOnly (),
-    libraryDependencies += "org.apache.jena"            % "jena-shacl"              % "3.14.0",
-    libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.19",
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.9.8",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-custom-validation-javadoc.jar"
   )
   .jsSettings(
     jsDependencies += ProvidedJS / "shacl.js",
     jsDependencies += ProvidedJS / "ajv.min.js",
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-custom-validation-module.js"
   )
@@ -107,20 +96,21 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
       name := "amf-aml"
     ))
   .in(file("./amf-aml"))
-  .settings(settings)
+  .settings(commonSettings)
   .dependsOn(validation)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "org.scala-lang.modules" % "scala-java8-compat_2.12" % "0.8.0",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-aml-javadoc.jar"
   )
   .jsSettings(
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations"
   )
   .disablePlugins(SonarPlugin)
+
+lazy val amlJVM = aml.jvm.in(file("./amf-aml/jvm"))
+lazy val amlJS = aml.js.in(file("./amf-aml/js"))
 
 /** **********************************************
   * AMF-Validation
@@ -131,21 +121,19 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
       name := "amf-validation"
     ))
   .in(file("./amf-validation"))
-  .settings(settings)
+  .settings(commonSettings)
   .jvmSettings(
-    libraryDependencies += "org.scala-js"               %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    libraryDependencies += "org.scala-lang.modules"     % "scala-java8-compat_2.12" % "0.8.0",
     libraryDependencies += "org.json4s"                 %% "json4s-native"          % "3.5.4",
-    libraryDependencies += "org.apache.jena"            % "apache-jena-libs"        % "3.14.0" pomOnly (),
     libraryDependencies += "org.apache.jena"            % "jena-shacl"              % "3.14.0",
+    libraryDependencies += "commons-io" % "commons-io" % "2.6",
+    libraryDependencies += "org.apache.commons" % "commons-lang3" % "3.9",
     libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.19",
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.9.8",
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.11.0",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
   .jsSettings(
     jsDependencies += ProvidedJS / "shacl.js",
     jsDependencies += ProvidedJS / "ajv.min.js",
-    libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "0.9.2",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
   )

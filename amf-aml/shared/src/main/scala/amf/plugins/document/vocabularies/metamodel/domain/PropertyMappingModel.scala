@@ -58,7 +58,7 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
   val MinCount = Field(
       Int,
       Namespace.Shacl + "minCount",
-      ModelDoc(ExternalModelVocabularies.Shacl, "minCount", "Minimum count constraint over tha mapped property"))
+      ModelDoc(ExternalModelVocabularies.Shacl, "minCount", "Minimum count constraint over the mapped property"))
   val Pattern = Field(
       Str,
       Namespace.Shacl + "pattern",

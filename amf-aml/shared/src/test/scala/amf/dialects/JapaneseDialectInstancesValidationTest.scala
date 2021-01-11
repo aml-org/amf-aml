@@ -6,11 +6,11 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class JapaneseDialectInstancesValidationTest
     extends DialectInstanceValidation
-    with ReportComparison
     with DialectHelper
     with DefaultAmfInitialization {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+  private val reportComparator: ReportComparator = UniquePlatformReportComparator
 
   val basePath = "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/instances/"
 
@@ -19,7 +19,7 @@ class JapaneseDialectInstancesValidationTest
                golden: Option[String] = None,
                path: String = basePath): Future[Assertion] = {
     validation(dialect, instance, path) flatMap {
-      assertReport(_, golden.map(g => s"$path/$g"))
+      reportComparator.assertReport(_, golden.map(g => s"$path/$g"))
     }
   }
 
