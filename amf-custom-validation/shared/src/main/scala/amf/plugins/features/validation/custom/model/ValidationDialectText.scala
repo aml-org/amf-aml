@@ -157,6 +157,7 @@ object ValidationDialectText {
       |        propertyTerm: shacl.and
       |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
       |        allowMultiple: true
+      |        mandatory: true
       |  notShapeValidationNode:
       |    classTerm: validation.NotShapeValidation
       |    mapping:
@@ -173,6 +174,7 @@ object ValidationDialectText {
       |      not:
       |        propertyTerm: shacl.not
       |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
+      |        mandatory: true
       |  orShapeValidationNode:
       |    classTerm: validation.OrShapeValidation
       |    mapping:
@@ -190,6 +192,7 @@ object ValidationDialectText {
       |        propertyTerm: shacl.or
       |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
       |        allowMultiple: true
+      |        mandatory: true
       |  xoneShapeValidationNode:
       |    classTerm: validation.XoneShapeValidation
       |    mapping:
@@ -207,6 +210,7 @@ object ValidationDialectText {
       |        propertyTerm: shacl.xone
       |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
       |        allowMultiple: true
+      |        mandatory: true
       |  queryValidationNode:
       |    classTerm: validation.QueryValidation
       |    mapping:

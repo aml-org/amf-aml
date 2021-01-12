@@ -1,0 +1,58 @@
+{
+  "@type": "http://www.w3.org/ns/shacl#ValidationReport",
+  "http://www.w3.org/ns/shacl#conforms": false,
+  "http://www.w3.org/ns/shacl#result": [
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/eventual-ambiguity-property/dialect.yaml"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Property: 'version' mandatory in a dialect node",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#mandatory-property-shape"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 2,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 26,
+          "http://a.ml/vocabularies/amf/parser#column": 23
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Warning"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/eventual-ambiguity-property/dialect.yaml#/declarations/RootNode/property/unionProp"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Union might be ambiguous. Members A, B have the same set of mandatory property names",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#eventual-ambiguity"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 25,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 26,
+          "http://a.ml/vocabularies/amf/parser#column": 23
+        }
+      }
+    }
+  ]
+}

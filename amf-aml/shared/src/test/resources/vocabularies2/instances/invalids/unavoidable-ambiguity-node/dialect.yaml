@@ -1,0 +1,19 @@
+#%Dialect 1.0
+dialect: Union Node
+version: 1.0
+nodeMappings:
+  A:
+    mapping:
+      propertyX:
+        range: integer
+        mandatory: true
+  B:
+    mapping:
+      propertyX:
+        range: string
+        mandatory: true
+
+  RootNode:
+    union:
+      - A
+      - B
