@@ -10,7 +10,7 @@ import amf.core.rdf.RdfModel
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor}
 import amf.emit.AMFRenderer
-import amf.plugins.document.graph.parser.{ExpandedForm, FlattenedForm, JsonLdDocumentForm, NoForm}
+import amf.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalactic.Fail
@@ -22,14 +22,14 @@ import scala.concurrent.{ExecutionContext, Future}
   * Cycle tests using temporary file and directory creator
   */
 abstract class MultiJsonldAsyncFunSuite extends AsyncFunSuite {
-  def testedForms: Seq[JsonLdDocumentForm] = Seq(FlattenedForm, ExpandedForm)
+  def testedForms: Seq[JsonLdDocumentForm] = Seq(FlattenedForm, EmbeddedForm)
 
   def defaultRenderOptions: RenderOptions = RenderOptions()
 
   def renderOptionsFor(documentForm: JsonLdDocumentForm): RenderOptions = {
     documentForm match {
       case FlattenedForm => defaultRenderOptions.withFlattenedJsonLd
-      case ExpandedForm  => defaultRenderOptions.withoutFlattenedJsonLd
+      case EmbeddedForm  => defaultRenderOptions.withoutFlattenedJsonLd
       case _             => defaultRenderOptions
 
     }
@@ -83,13 +83,13 @@ case class MultiTestConfig(source: String,
                            golden: String,
                            renderOptions: RenderOptions,
                            jsonLdDocumentForm: JsonLdDocumentForm)
-  extends MultiJsonLdDocumentFormTest(jsonLdDocumentForm)
+    extends MultiJsonLdDocumentFormTest(jsonLdDocumentForm)
 
 case class MultiSourceTestConfig(source: String, jsonLdDocumentForm: JsonLdDocumentForm)
-  extends MultiJsonLdDocumentFormTest(jsonLdDocumentForm)
+    extends MultiJsonLdDocumentFormTest(jsonLdDocumentForm)
 
 case class MultiGoldenTestConfig(golden: String, renderOptions: RenderOptions, jsonLdDocumentForm: JsonLdDocumentForm)
-  extends MultiJsonLdDocumentFormTest(jsonLdDocumentForm)
+    extends MultiJsonLdDocumentFormTest(jsonLdDocumentForm)
 
 abstract class FunSuiteCycleTests extends MultiJsonldAsyncFunSuite with BuildCycleTests {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global

@@ -1,6 +1,7 @@
 package amf.plugins.features.validation
 
 import amf.core.validation.core.{ValidationReport, ValidationResult}
+import amf.plugins.document.graph.JsonLdKeywords
 import org.json4s
 import org.json4s._
 import org.json4s.native.JsonMethods._
@@ -34,8 +35,8 @@ class JVMValidationReport(jsonld: String) extends ValidationReport with JSONLDPa
     val foundNode = parsed.arr.find {
       case JObject(properties) =>
         properties.exists {
-          case ("@id", JString(s)) => s == resultId
-          case _                   => false
+          case (JsonLdKeywords.Id, JString(s)) => s == resultId
+          case _                               => false
         }
       case _ => false
     }

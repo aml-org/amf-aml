@@ -4,6 +4,7 @@ import amf.core.annotations.LexicalInformation
 import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
 import amf.core.vocabulary.Namespace
 import amf.core.emitter.BaseEmitters._
+import amf.plugins.document.graph.JsonLdKeywords
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YType}
 import org.yaml.render.JsonRender
@@ -22,7 +23,7 @@ object ValidationReportJSONLDEmitter {
   def emitJSONLDAST(report: AMFValidationReport): YDocument = {
     YDocument {
       _.obj { b =>
-        b.entry("@type", shacl("ValidationReport"))
+        b.entry(JsonLdKeywords.Type, shacl("ValidationReport"))
         b.entry(shacl("conforms"), raw(_, report.conforms.toString, YType.Bool))
         if (report.results.nonEmpty) {
           val sorted = report.results.sorted
@@ -37,24 +38,24 @@ object ValidationReportJSONLDEmitter {
 
   private def emitResult(b: PartBuilder, result: AMFValidationResult): Unit = {
     b.obj { b =>
-      b.entry("@type", shacl("ValidationResult"))
+      b.entry(JsonLdKeywords.Type, shacl("ValidationResult"))
       b.entry(shacl("resultSeverity"), emitViolation(_, result.level))
       b.entry(
         shacl("focusNode"),
-        _.obj(_.entry("@id", result.targetNode))
+        _.obj(_.entry(JsonLdKeywords.Id, result.targetNode))
       )
       result.targetProperty foreach {
         case path if path != "" =>
           b.entry(
             shacl("resultPath"),
-            _.obj(_.entry("@id", path))
+            _.obj(_.entry(JsonLdKeywords.Id, path))
           )
         case _ => // ignore
       }
       b.entry(shacl("resultMessage"), result.message)
       b.entry(
         shacl("sourceShape"),
-        _.obj(_.entry("@id", result.validationId))
+        _.obj(_.entry(JsonLdKeywords.Id, result.validationId))
       )
       result.position.foreach(pos => b.entry(amfParser("lexicalPosition"), emitPosition(_, pos)))
     }
@@ -63,7 +64,7 @@ object ValidationReportJSONLDEmitter {
   private def emitViolation(b: PartBuilder, severity: String): Unit = {
     b.obj(
       _.entry(
-        "@id",
+        JsonLdKeywords.Id,
         severity match {
           case SeverityLevels.INFO      => shacl("Info")
           case SeverityLevels.WARNING   => shacl("Warning")
@@ -75,11 +76,11 @@ object ValidationReportJSONLDEmitter {
 
   def emitPosition(b: PartBuilder, pos: LexicalInformation): Unit = {
     b.obj { b =>
-      b.entry("@type", amfParser("Position"))
+      b.entry(JsonLdKeywords.Type, amfParser("Position"))
       b.entry(
         amfParser("start"),
         _.obj { b =>
-          b.entry("@type", amfParser("Location"))
+          b.entry(JsonLdKeywords.Type, amfParser("Location"))
           b.entry(amfParser("line"), raw(_, pos.range.start.line.toString, YType.Int))
           b.entry(amfParser("column"), raw(_, pos.range.start.column.toString, YType.Int))
         }
@@ -87,7 +88,7 @@ object ValidationReportJSONLDEmitter {
       b.entry(
         amfParser("end"),
         _.obj { b =>
-          b.entry("@type", amfParser("Location"))
+          b.entry(JsonLdKeywords.Type, amfParser("Location"))
           b.entry(amfParser("line"), raw(_, pos.range.end.line.toString, YType.Int))
           b.entry(amfParser("column"), raw(_, pos.range.end.column.toString, YType.Int))
         }
