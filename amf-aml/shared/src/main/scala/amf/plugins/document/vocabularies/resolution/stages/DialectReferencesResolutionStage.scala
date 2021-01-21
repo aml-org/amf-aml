@@ -3,57 +3,15 @@ package amf.plugins.document.vocabularies.resolution.stages
 import amf.core.annotations.Aliases
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.parser.{Annotations, Fields}
 import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary, Vocabulary}
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.plugins.document.vocabularies.model.domain.{External, NodeMappable, NodeMapping, UnionNodeMapping}
+import amf.utils.internal.AmlExtensionSyntax._
 
 import scala.collection.mutable
 
 class DialectReferencesResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
-
-  def findDeclarations(model: BaseUnit, acc: Map[String, NodeMappable] = Map()): Map[String, NodeMappable] = {
-    val updateDeclarations = model match {
-      case lib: DeclaresModel =>
-        lib.declares.collect { case nodeMapping: NodeMappable => nodeMapping }.foldLeft(acc) {
-          case (acc, mapping) =>
-            acc.updated(mapping.id, mapping)
-        }
-      case _ => acc
-    }
-
-    model.references.collect { case lib: DeclaresModel => lib }.foldLeft(updateDeclarations) {
-      case (acc, lib) =>
-        findDeclarations(lib, acc)
-    }
-  }
-
-  def findExternals(model: BaseUnit, acc: Set[String] = Set()): Set[String] = {
-    val updateDeclarations = model match {
-      case lib: DialectLibrary       => acc ++ lib.externals.map(_.base.value())
-      case dialect: Dialect          => acc ++ dialect.externals.map(_.base.value())
-      case fragment: DialectFragment => acc ++ fragment.externals.map(_.base.value())
-      case _                         => acc
-    }
-
-    model.references.foldLeft(updateDeclarations) {
-      case (acc, lib) =>
-        findExternals(lib, acc)
-    }
-  }
-
-  def findVocabularies(model: BaseUnit, acc: Set[Vocabulary] = Set()): Set[Vocabulary] = {
-    val updateDeclarations = model.references.foldLeft(acc) {
-      case (acc, ref) =>
-        acc ++ ref.references.collect { case vocab: Vocabulary => vocab }
-    }
-
-    model.references.collect { case lib: DialectLibrary => lib }.foldLeft(updateDeclarations) {
-      case (acc, lib) =>
-        findVocabularies(lib, acc)
-    }
-  }
 
   def dereference(nodeMappable: NodeMappable, finalDeclarations: mutable.Map[String, NodeMappable]): NodeMappable = {
     finalDeclarations.get(nodeMappable.id) match {
@@ -92,19 +50,6 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
     }
   }
 
-  def cloneNodeMapping(target: NodeMappable) = {
-    val fields = Fields()
-    target.fields.fields().foreach { entry =>
-      fields.setWithoutId(entry.field, entry.value.value, entry.value.annotations)
-    }
-    target match {
-      case _: NodeMapping =>
-        NodeMapping(fields, Annotations())
-      case _: UnionNodeMapping =>
-        new UnionNodeMapping(fields, Annotations())
-    }
-  }
-
   def genName(baseName: String, allDeclarations: Map[String, NodeMappable]): String = {
     var c   = 1
     var acc = baseName
@@ -127,7 +72,10 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
         case None =>
           val effectiveNextPending = if (nextPending.isLink) {
             // if this is a link, we clone
-            cloneNodeMapping(nextPending.effectiveLinkTarget().asInstanceOf[NodeMappable])
+            nextPending
+              .effectiveLinkTarget()
+              .asInstanceOf[NodeMappable]
+              .cloneMapping
               .withName(nextPending.name.value())
               .withId(nextPending.id)
           }
@@ -184,35 +132,21 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
   }
 
   override def resolve[T <: BaseUnit](model: T): T = {
-
-    var allDeclarations = findDeclarations(model)
-    var allExternals    = findExternals(model)
-    var allVocabularies = findVocabularies(model)
-
     val finalDeclarationsMap = mutable.Map[String, NodeMappable]()
     val unitDeclarations =
       model.asInstanceOf[DeclaresModel].declares.filter(_.isInstanceOf[NodeMappable]).asInstanceOf[Seq[NodeMappable]]
 
     dereferencePendingDeclarations(pending = unitDeclarations,
                                    acc = finalDeclarationsMap,
-                                   allDeclarations = allDeclarations)
+                                   allDeclarations = model.recursivelyFindDeclarations())
     linkExtendedNodes(finalDeclarationsMap)
 
     val finalDeclarations = finalDeclarationsMap.values.toSeq
 
-    val vocabulariesAliases =
-      allVocabularies.zipWithIndex.foldLeft(Map[Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl)]()) {
-        case (acc, (vocab, i)) =>
-          acc.updated(s"vocab$i", (vocab.id, vocab.id))
-      }
-
-    val finalExternals: Seq[External] = allExternals.toSeq.zipWithIndex.map {
-      case (external: String, i) =>
-        External()
-          .withBase(external)
-          .withAlias(s"external$i")
-          .withId(model.location().getOrElse(model.id) + s"#/external/external$i")
-    }
+    val finalExternals: Seq[External] = model
+      .recursivelyFindExternals()
+      .fixAliasCollisions
+      .map { external => external.withId(model.location().getOrElse(model.id) + s"#/external/${external.alias.value()}") }
 
     val resolved = model match {
       case dialect: Dialect =>
@@ -238,7 +172,9 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
           .withExternals(finalExternals)
     }
 
-    resolved.annotations += Aliases(vocabulariesAliases.toSet)
+    model.annotations.find(classOf[Aliases]).map { aliases =>
+      resolved.annotations += aliases
+    }
 
     resolved.asInstanceOf[T]
   }
