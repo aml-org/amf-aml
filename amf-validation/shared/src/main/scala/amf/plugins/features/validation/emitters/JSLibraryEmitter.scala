@@ -187,7 +187,7 @@ class JSLibraryEmitter(profile: Option[ValidationProfile] = None) {
     """.stripMargin
 
   def prefixes: String = {
-    val namespaces = Namespace.ns.filter {
+    val namespaces = Namespace.staticAliases.ns.filter {
       case (prefix, _) =>
         prefix != "schema-org" && prefix != "raml-http"
     }
