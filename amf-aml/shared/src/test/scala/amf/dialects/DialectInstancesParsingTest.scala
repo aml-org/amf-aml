@@ -913,6 +913,19 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("Parse instance with compact URIs", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions.withCompactUris),
+      directory = s"$basePath/compact-uris/"
+    )
+  }
+
+
   protected def withInlineDialect(source: String,
                                   golden: String,
                                   hint: Hint,

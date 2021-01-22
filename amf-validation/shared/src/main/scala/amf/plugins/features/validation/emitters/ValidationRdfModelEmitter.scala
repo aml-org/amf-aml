@@ -102,7 +102,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
       (constraint, values) <- validation.nodeConstraints.groupBy(_.constraint)
     } yield {
       values.foreach { v =>
-        link(validationId, Namespace.expand(constraint).iri(), Namespace.expand(v.value).iri())
+        link(validationId, Namespace.staticAliases.expand(constraint).iri(), Namespace.staticAliases.expand(v.value).iri())
       }
     }
 
@@ -422,7 +422,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
     if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
       s.trim
     } else {
-      Namespace.expand(s.replace(".", ":")).iri().trim
+      Namespace.staticAliases.expand(s.replace(".", ":")).iri().trim
     }
 
   private def genNonEmptyList(subject: String, property: String): Unit = {
@@ -448,7 +448,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
           rdfModel.addTriple(subject, property, s, Some(DataType.Long))
         } else if (s == "true" || s == "false") {
           rdfModel.addTriple(subject, property, s, Some(DataType.Boolean))
-        } else if (Namespace.expand(s).iri() == Namespace.expand("amf-parser:NonEmptyList").iri()) {
+        } else if (Namespace.staticAliases.expand(s).iri() == Namespace.staticAliases.expand("amf-parser:NonEmptyList").iri()) {
           genNonEmptyList(subject, property)
         } else if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
           link(subject, property, s)

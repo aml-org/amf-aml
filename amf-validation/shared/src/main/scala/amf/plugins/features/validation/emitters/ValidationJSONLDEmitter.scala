@@ -131,8 +131,8 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
       for {
         (constraint, values) <- validation.nodeConstraints.groupBy(_.constraint)
       } yield {
-        p.entry(Namespace.expand(constraint).iri(),
-                _.list(b => values.foreach(v => link(b, Namespace.expand(v.value).iri()))))
+        p.entry(Namespace.staticAliases.expand(constraint).iri(),
+                _.list(b => values.foreach(v => link(b, Namespace.staticAliases.expand(v.value).iri()))))
       }
 
       if (validation.propertyConstraints.nonEmpty) {
@@ -497,7 +497,7 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
     if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
       s.trim
     } else {
-      Namespace.expand(s.replace(".", ":")).iri().trim
+      Namespace.staticAliases.expand(s.replace(".", ":")).iri().trim
     }
 
   private def genNonEmptyList(b: PartBuilder): Unit = {
@@ -533,7 +533,7 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
           b.obj(_.entry(JsonLdKeywords.Value, raw(_, s, YType.Int)))
         } else if (s == "true" || s == "false") {
           b.obj(_.entry(JsonLdKeywords.Value, raw(_, s, YType.Bool)))
-        } else if (Namespace.expand(s).iri() == Namespace.expand("amf-parser:NonEmptyList").iri()) {
+        } else if (Namespace.staticAliases.expand(s).iri() == Namespace.staticAliases.expand("amf-parser:NonEmptyList").iri()) {
           genNonEmptyList(b)
         } else if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
           link(b, s)
