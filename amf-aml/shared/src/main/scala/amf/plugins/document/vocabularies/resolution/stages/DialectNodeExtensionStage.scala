@@ -12,7 +12,7 @@ class DialectNodeExtensionStage()(override implicit val errorHandler: ErrorHandl
     model match {
       case declarationModel: DeclaresModel =>
         declarationModel.declares.foreach {
-          case nodeMapping: NodeMapping => nodeMapping.resolveExtension
+          case nodeMapping: NodeMapping => nodeMapping.resolver.resolveExtension
           case _ => // ignore
         }
       case _ => // ignore
