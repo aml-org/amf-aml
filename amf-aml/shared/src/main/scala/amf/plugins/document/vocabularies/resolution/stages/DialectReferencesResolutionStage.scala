@@ -75,7 +75,7 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
             nextPending
               .effectiveLinkTarget()
               .asInstanceOf[NodeMappable]
-              .cloneMapping
+              .copyMapping
               .withName(nextPending.name.value())
               .withId(nextPending.id)
           }
