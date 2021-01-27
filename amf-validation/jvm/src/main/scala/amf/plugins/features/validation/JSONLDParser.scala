@@ -1,22 +1,22 @@
 package amf.plugins.features.validation
 
+import amf.plugins.document.graph.JsonLdKeywords
 import org.json4s.JsonAST.{JArray, JString}
 import org.json4s.{JObject, JValue}
 
 /**
   * Created by antoniogarrote on 18/07/2017.
   */
-
 trait JSONLDParser {
 
   def extractSubject(jsonld: JObject): Option[String] = {
     val JObject(properties) = jsonld
     properties.find {
-      case ("@id", _) => true
-      case _ => false
+      case (JsonLdKeywords.Id, _) => true
+      case _                      => false
     } match {
-      case Some(("@id", JString(id))) => Some(id)
-      case _ => None
+      case Some((JsonLdKeywords.Id, JString(id))) => Some(id)
+      case _                                      => None
     }
   }
 
@@ -27,16 +27,17 @@ trait JSONLDParser {
     * @return
     */
   def extractIds(json: JValue, toFind: String): List[String] =
-    extractObjects(json, toFind).map {
-      case node@JObject(_) =>
-        extractObject(node, "@id") match {
-          case Some(JString(id)) => Some(id)
-          case _ => None
-        }
-      case _ => None
-    }.filter(_.isDefined)
+    extractObjects(json, toFind)
+      .map {
+        case node @ JObject(_) =>
+          extractObject(node, JsonLdKeywords.Id) match {
+            case Some(JString(id)) => Some(id)
+            case _                 => None
+          }
+        case _ => None
+      }
+      .filter(_.isDefined)
       .map(_.get)
-
 
   /**
     * Extracts the first ID for a JSON-LD node property
@@ -54,15 +55,18 @@ trait JSONLDParser {
     */
   def extractValues(json: JValue, toFind: String): List[JValue] =
     extractObjects(json, toFind)
-    .map {
-      case JObject(values) =>
-        values.map {
-          case ("@value", jvalue) => Some(jvalue)
-          case _ => None
-        }.find(_.isDefined)
-      case _ => None
-    }.filter(_.isDefined)
-     .map(_.get.get)
+      .map {
+        case JObject(values) =>
+          values
+            .map {
+              case ("@value", jvalue) => Some(jvalue)
+              case _                  => None
+            }
+            .find(_.isDefined)
+        case _ => None
+      }
+      .filter(_.isDefined)
+      .map(_.get.get)
 
   /**
     * Extracts a single value by property from a JSON-LD resource node
@@ -80,9 +84,9 @@ trait JSONLDParser {
           List.empty
         } else {
           found.head match {
-            case (_,JArray(values)) => values
-            case (_,v) => List(v)
-            case _ => List.empty
+            case (_, JArray(values)) => values
+            case (_, v)              => List(v)
+            case _                   => List.empty
           }
         }
       case _ => List.empty

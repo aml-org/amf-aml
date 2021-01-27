@@ -7,6 +7,7 @@ import amf.core.utils.AmfStrings
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core.{PropertyConstraint, SeverityMapping, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.graph.JsonLdKeywords
 import amf.plugins.document.vocabularies.emitters.instances.AmlEmittersHelper
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
@@ -204,13 +205,15 @@ class AMFDialectValidations(val dialect: Dialect) extends AmlEmittersHelper {
                   b.entry(
                     (Namespace.Shacl + "or").iri(),
                     _.obj(_.entry(
-                      "@list",
+                      JsonLdKeywords.List,
                       _.list { l =>
                         l.obj { v =>
-                          v.entry((Namespace.Shacl + "datatype").iri(), _.obj(_.entry("@id", DataType.Integer.trim)))
+                          v.entry((Namespace.Shacl + "datatype").iri(),
+                                  _.obj(_.entry(JsonLdKeywords.Id, DataType.Integer.trim)))
                         }
                         l.obj { v =>
-                          v.entry((Namespace.Shacl + "datatype").iri(), _.obj(_.entry("@id", DataType.Double.trim)))
+                          v.entry((Namespace.Shacl + "datatype").iri(),
+                                  _.obj(_.entry(JsonLdKeywords.Id, DataType.Double.trim)))
                         }
                       }
                     ))
@@ -255,7 +258,7 @@ class AMFDialectValidations(val dialect: Dialect) extends AmlEmittersHelper {
                 custom = Some((b: EntryBuilder, _: String) => {
                   b.entry(
                     (Namespace.Shacl + "nodeKind").iri(),
-                    _.obj(_.entry("@id", (Namespace.Shacl + "IRI").iri()))
+                    _.obj(_.entry(JsonLdKeywords.Id, (Namespace.Shacl + "IRI").iri()))
                   )
                 }),
                 customRdf = Some((rdfModel: RdfModel, subject: String) => {
@@ -302,8 +305,8 @@ class AMFDialectValidations(val dialect: Dialect) extends AmlEmittersHelper {
     }
 
     if (prop.objectRange().nonEmpty &&
-      !prop.objectRange().map(_.value()).contains((Namespace.Meta + "anyNode").iri()) &&
-      !prop.externallyLinkable().option().getOrElse(false)) {
+        !prop.objectRange().map(_.value()).contains((Namespace.Meta + "anyNode").iri()) &&
+        !prop.externallyLinkable().option().getOrElse(false)) {
 
       val effectiveRange: Set[String] = prop
         .objectRange()

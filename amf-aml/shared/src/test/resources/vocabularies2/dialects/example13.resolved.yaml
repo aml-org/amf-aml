@@ -1,22 +1,22 @@
 #%Dialect 1.0
 nodeMappings:
   nodeB:
-    classTerm: external1.B
+    classTerm: v2.B
     mapping:
       za:
-        propertyTerm: external1.b
+        propertyTerm: v2.b
         range: string
   Local:
-    classTerm: external0.Local
+    classTerm: v3.Local
     mapping:
       za:
-        propertyTerm: external0.za
+        propertyTerm: v3.za
         range: nodeB
 documents:
   root:
     encodes: Local
 external:
-  external0: http://test.com/v3#
-  external1: http://test.com/v2#
+  v3: http://test.com/v3#
+  v2: http://test.com/v2#
 dialect: Test
 version: "1.0"
