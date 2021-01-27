@@ -1,0 +1,422 @@
+{
+  "@type": "http://www.w3.org/ns/shacl#ValidationReport",
+  "http://www.w3.org/ns/shacl#conforms": false,
+  "http://www.w3.org/ns/shacl#result": [
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'string' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 7,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 12,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'integer' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 12,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 17,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'boolean' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 17,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 22,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'float' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 22,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 27,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'decimal' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 27,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 32,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'double' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 32,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 37,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'duration' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 37,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 42,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'dateTime' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 42,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 47,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'time' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 47,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 52,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'date' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 52,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 57,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'anyUri' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 57,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 62,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'uri' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 62,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 67,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations/anyype"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Property: 'id' not supported in a nodeMapping node",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#closed-shape"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 68,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 72,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": ""
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "YAML map expected",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/core#syaml-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 68,
+          "http://a.ml/vocabularies/amf/parser#column": 12
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 68,
+          "http://a.ml/vocabularies/amf/parser#column": 12
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-with-reserved-names/dialect.yaml#/declarations"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Error parsing node mapping: 'any' is a reserved name",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#dialect-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 72,
+          "http://a.ml/vocabularies/amf/parser#column": 2
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 78,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": ""
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "NodeMappable string not found",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/core#declaration-not-found"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 80,
+          "http://a.ml/vocabularies/amf/parser#column": 13
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 80,
+          "http://a.ml/vocabularies/amf/parser#column": 19
+        }
+      }
+    }
+  ]
+}

@@ -348,27 +348,34 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
-            parseNodeMapping(
-                entry, {
-                  case nodeMapping: NodeMappable =>
-                    val name = ScalarNode(entry.key).string()
-                    nodeMapping.set(NodeMappingModel.Name, name, Annotations(entry.key)).adopted(parent)
-                    nodeMapping.annotations.reject(a =>
-                      a.isInstanceOf[SourceAST] || a.isInstanceOf[LexicalInformation] || a
-                        .isInstanceOf[SourceLocation] || a.isInstanceOf[SourceNode])
-                    nodeMapping.annotations ++= Annotations(entry)
-                  case _ =>
-                    ctx.eh.violation(DialectError,
-                                     parent,
-                                     s"Error only valid node mapping or union mapping can be declared",
-                                     entry)
-                    None
-                }
-            ) match {
-              case Some(nodeMapping: NodeMapping) =>
-                ctx.declarations += nodeMapping
-              case Some(nodeMapping: UnionNodeMapping) => ctx.declarations += nodeMapping
-              case _                                   => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry)
+            val nodeName = entry.key.toString
+            if (AmlScalars.all.contains(nodeName)) {
+              ctx.eh.violation(DialectError, parent, s"Error parsing node mapping: '$nodeName' is a reserved name", entry)
+            }
+            else {
+              parseNodeMapping(
+                  entry, {
+                    case nodeMapping: NodeMappable =>
+                      val name = ScalarNode(entry.key).string()
+                      nodeMapping.set(NodeMappingModel.Name, name, Annotations(entry.key)).adopted(parent)
+                      nodeMapping.annotations.reject(a =>
+                        a.isInstanceOf[SourceAST] || a.isInstanceOf[LexicalInformation] || a
+                          .isInstanceOf[SourceLocation] || a.isInstanceOf[SourceNode])
+                      nodeMapping.annotations ++= Annotations(entry)
+                    case _ =>
+                      ctx.eh.violation(DialectError,
+                                       parent,
+                                       s"Error only valid node mapping or union mapping can be declared",
+                                       entry)
+                      None
+                  }
+              ) match {
+                case Some(nodeMapping: NodeMapping) =>
+                  ctx.declarations += nodeMapping
+                case Some(nodeMapping: UnionNodeMapping) => ctx.declarations += nodeMapping
+                case _                                   => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry)
+              }
+
             }
           }
         case YType.Null =>
