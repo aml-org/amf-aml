@@ -70,4 +70,7 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
 
+  test("idTemplate uri template references property not present in mapping") {
+    validate("/id-template-missing-variable/dialect.yaml", Some("id-template-missing-variable/report.json"))
+  }
 }

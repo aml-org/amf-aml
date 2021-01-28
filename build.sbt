@@ -48,7 +48,8 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   credentials ++= Common.credentials(),
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest" % "3.0.5" % Test
-  )
+  ),
+  logBuffered in Test := false
 )
 
 /** **********************************************
