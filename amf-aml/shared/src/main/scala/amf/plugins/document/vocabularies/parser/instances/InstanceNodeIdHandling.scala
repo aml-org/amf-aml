@@ -47,7 +47,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
         defaultId
       }
     }
-    overrideBase(generatedId, nodeMap)
+    overrideBase(generatedId, nodeMap).urlEncoded
   }
 
 
@@ -117,7 +117,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
     template
   }
 
-  protected def primaryKeyNodeId(node: DialectDomainElement,
+  private def primaryKeyNodeId(node: DialectDomainElement,
                                  nodeMap: YMap,
                                  path: Seq[String],
                                  defaultId: String,
@@ -139,7 +139,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
           }
       }
     }
-    if (allFound) { path.map(_.urlEncoded).mkString("/") + "/" + keyId.mkString("_").urlEncoded }
+    if (allFound) { path.mkString("/") + "/" + keyId.mkString("_") }
     else { defaultId }
   }
 

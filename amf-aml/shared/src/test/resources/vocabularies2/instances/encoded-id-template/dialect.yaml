@@ -1,0 +1,16 @@
+#%Dialect 1.0
+dialect: Football_Players
+version: 1.0
+
+nodeMappings:
+  PlayerNode:
+    idTemplate: http://someUri/{playerName}
+    mapping:
+      playerName:
+        range: string
+        mandatory: true
+        unique: true
+
+documents:
+  root:
+    encodes: PlayerNode
