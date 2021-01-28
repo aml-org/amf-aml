@@ -1,0 +1,80 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+nodeMappings:
+
+  string:
+    mapping:
+    id:
+      range: string
+
+  integer:
+    mapping:
+    id:
+      range: string
+
+  boolean:
+    mapping:
+    id:
+      range: string
+
+  float:
+    mapping:
+    id:
+      range: string
+
+  decimal:
+    mapping:
+    id:
+      range: string
+
+  double:
+    mapping:
+    id:
+      range: string
+
+  duration:
+    mapping:
+    id:
+      range: string
+
+  dateTime:
+    mapping:
+    id:
+      range: string
+
+  time:
+    mapping:
+    id:
+      range: string
+
+  date:
+    mapping:
+    id:
+      range: string
+
+  anyUri:
+    mapping:
+    id:
+      range: string
+
+  uri:
+    mapping:
+    id:
+      range: string
+
+  anyype:
+    mapping:
+    id:
+      range: string
+
+  any:
+    mapping:
+    id:
+      range: string
+
+
+documents:
+  root:
+    encodes: string

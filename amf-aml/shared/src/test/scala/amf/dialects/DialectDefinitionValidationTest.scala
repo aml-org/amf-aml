@@ -65,5 +65,9 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
     validate("/nested-eventual-ambiguity-property/dialect.yaml", Some("nested-eventual-ambiguity-property/report.json"))
   }
 
+  test("Test node mapping with reserved names") {
+    validate("/dialect-with-reserved-names/dialect.yaml", Some("dialect-with-reserved-names/report.json"))
+  }
+
 
 }
