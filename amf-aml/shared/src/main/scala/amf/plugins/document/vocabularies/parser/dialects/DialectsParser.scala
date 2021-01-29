@@ -821,7 +821,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   def validateTemplate(template: String, map: YMap, propMappings: Seq[PropertyMapping]): Unit = {
     getVariablesFromTemplate(template).foreach { variable =>
       propMappings.find(_.name().value() == variable) match {
-        case Some(prop) if prop.isRequired =>
+        case Some(prop) if !prop.isMandatory =>
           ctx.eh.violation(DialectError,
             prop.id,
             s"PropertyMapping for idTemplate variable '$variable' must be mandatory",
