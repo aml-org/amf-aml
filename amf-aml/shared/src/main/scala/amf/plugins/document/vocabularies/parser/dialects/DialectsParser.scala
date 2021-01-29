@@ -536,7 +536,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           }
         }
     )
-    nodeMapping.nodetypeMapping.option().foreach(validateTemplate(_, map, nodeMapping.propertiesMapping()))
+    nodeMapping.idTemplate.option().foreach(validateTemplate(_, map, nodeMapping.propertiesMapping()))
 
     parseAnnotations(map, nodeMapping, ctx.declarations)
 
@@ -819,19 +819,22 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   }
 
   def validateTemplate(template: String, map: YMap, propMappings: Seq[PropertyMapping]): Unit = {
-    val regex = "(\\{[^}]+\\})".r
-    regex.findAllIn(template).foreach { varMatch =>
-      val variable = varMatch.replace("{", "").replace("}", "")
+    getVariablesFromTemplate(template).foreach { variable =>
       propMappings.find(_.name().value() == variable) match {
-        case Some(prop) =>
-          if (prop.minCount().option().getOrElse(0) != 1)
-            ctx.eh.violation(DialectError,
-                             prop.id,
-                             s"PropertyMapping for idTemplate variable '$variable' must be mandatory",
-                             map)
+        case Some(prop) if prop.isRequired =>
+          ctx.eh.violation(DialectError,
+            prop.id,
+            s"PropertyMapping for idTemplate variable '$variable' must be mandatory",
+            map)
         case None =>
           ctx.eh.violation(DialectError, "", s"Missing propertyMapping for idTemplate variable '$variable'", map)
+        case _ => // ignore
       }
+    }
+
+    def getVariablesFromTemplate(template: String): Iterator[String] = {
+      val regex = "(\\{[^}]+\\})".r
+      regex.findAllIn(template).map { varMatch => varMatch.replace("{", "").replace("}", "") }
     }
   }
 
