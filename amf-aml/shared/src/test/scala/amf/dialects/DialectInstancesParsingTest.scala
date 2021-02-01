@@ -925,6 +925,17 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("Id produced from idTemplate is encoded", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"$basePath/encoded-id-template/"
+    )
+  }
+
 
   protected def withInlineDialect(source: String,
                                   golden: String,
