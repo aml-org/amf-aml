@@ -2,11 +2,11 @@ package amf.core.io
 
 import amf.core.unsafe.PlatformSecrets
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
+import org.mulesoft.common.test.Tests.checkDiff
 import org.scalatest.Assertion
-import amf.core.common.Tests.checkDiff
+
 import scala.concurrent.{ExecutionContext, Future}
 
-// todo: temp fix , duplicated with core.
 trait FileAssertionTest extends PlatformSecrets {
 
   private implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global

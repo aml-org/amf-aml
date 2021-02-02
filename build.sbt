@@ -47,7 +47,8 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
 //  resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   libraryDependencies ++= Seq(
-    "org.scalatest"    %%% "scalatest" % "3.0.5" % Test
+    "org.scalatest"    %%% "scalatest"         % "3.0.5" % Test,
+    "org.mule.common"  %%% "scala-common-test" % "0.0.4" % Test,
   ),
   logBuffered in Test := false
 )
@@ -68,7 +69,7 @@ lazy val customValidation = crossProject(JSPlatform, JVMPlatform)
       name := "amf-custom-validation"
     ))
   .in(file("./amf-custom-validation"))
-  .dependsOn(aml)
+  .dependsOn(aml % "compile->compile;test->test")
   .settings(commonSettings)
   .jvmSettings(
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-custom-validation-javadoc.jar"
