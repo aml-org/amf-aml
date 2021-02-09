@@ -3,6 +3,7 @@ package amf.plugins.document.vocabularies
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.Root
+import amf.core.annotations.Aliases
 import amf.core.client.ParsingOptions
 import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
 import amf.core.errorhandling.ErrorHandler
@@ -18,8 +19,9 @@ import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
+import amf.core.vocabulary.NamespaceAliases
 import amf.internal.environment.Environment
-import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomBase, CustomId, JsonPointerRef, RefInclude}
+import amf.plugins.document.vocabularies.annotations._
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
@@ -38,8 +40,9 @@ import org.yaml.model._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object AMLPlugin extends AMLPlugin{
-  def apply():AMLPlugin = AMFPluginsRegistry.documentPluginForID(this.ID).collect({case a:AMLPlugin => a}).getOrElse(this)
+object AMLPlugin extends AMLPlugin {
+  def apply(): AMLPlugin =
+    AMFPluginsRegistry.documentPluginForID(this.ID).collect({ case a: AMLPlugin => a }).getOrElse(this)
 }
 
 trait AMLPlugin
@@ -225,7 +228,8 @@ trait AMLPlugin
         case Some(headerKey) if resolvedDialect.isLibraryHeader(headerKey) =>
           new DialectInstanceLibraryParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parse()
         case Some(headerKey) if resolvedDialect.isPatchHeader(headerKey) =>
-          new DialectInstancePatchParser(document)(new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
+          new DialectInstancePatchParser(document)(
+              new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
             .parse()
         case _ =>
           new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
@@ -333,5 +337,34 @@ trait AMLPlugin
     val cleanNested =
       ParserContext(root.location, root.references, EmptyFutureDeclarations(), eh = wrapped.eh)
     new DialectContext(cleanNested)
+  }
+  override def canGenerateNamespaceAliases(unit: BaseUnit): Boolean =
+    unit.isInstanceOf[DialectInstanceUnit] || unit.isInstanceOf[Dialect]
+
+  override def generateNamespaceAliases(unit: BaseUnit): NamespaceAliases = {
+    unit match {
+      case di: DialectInstanceUnit =>
+        registry.dialectFor(di) match {
+          case Some(dialect) => generateNamespaceAliasesFrom(dialect)
+          case None => throw new IllegalStateException(s"No dialect registered with ID ${di.definedBy().value()}")
+        }
+      case dialect: Dialect => generateNamespaceAliasesFrom(dialect)
+      case _          => throw new IllegalStateException("Unreachable")
+    }
+  }
+
+  private def generateNamespaceAliasesFrom(dialect: Dialect): NamespaceAliases = {
+    val aliases = NamespaceAliases()
+
+    dialect.externals.foreach { external =>
+      aliases.registerNamespace(external.alias.value(), external.base.value())
+    }
+
+    dialect.annotations.find(classOf[Aliases]).foreach { aliasesAnnotation =>
+      aliasesAnnotation.aliases.foreach {
+        case (alias, (url, _)) => aliases.registerNamespace(alias, url)
+      }
+    }
+    aliases
   }
 }

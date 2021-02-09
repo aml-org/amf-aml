@@ -16,6 +16,7 @@ import amf.core.parser.{
   ValueNode,
   YNodeLikeOps
 }
+import amf.core.remote.Cache
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
@@ -31,10 +32,10 @@ import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
 import amf.plugins.document.vocabularies.parser.instances.BaseDirective
 import amf.validation.DialectValidations
-import amf.validation.DialectValidations.{DialectError, VariablesDefinedInBase}
+import amf.validation.DialectValidations.{DialectError, EventualAmbiguity, UnavoidableAmbiguity, VariablesDefinedInBase}
 import org.yaml.model._
 
-import scala.collection.immutable
+import scala.collection.{immutable, mutable}
 
 class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     extends BaseSpecParser
@@ -94,66 +95,186 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   }
 
   /**
-    * Transforming URIs in references of node ranges and discrminators into actual
-    * label with a reference
+    * Recursively collects members from unions and nested unions
+    * @param union union to extract members from
+    * @param path path to show error on nested ambiguities
+    * @tparam T
+    * @return Map member -> path from root level union
+    */
+  private def flattenedMembersFrom[T <: DomainElement](
+      union: NodeWithDiscriminator[T],
+      path: Seq[UnionNodeMapping] = Nil): Map[NodeMapping, Seq[UnionNodeMapping]] = {
+    membersFrom(union).flatMap {
+      case anotherUnion: UnionNodeMapping if !path.contains(union) =>
+        flattenedMembersFrom(anotherUnion, path :+ anotherUnion) // if member is another union get its members recursively
+      case nodeMapping: NodeMapping => Some(nodeMapping -> path)
+      case _                        => None
+    }.toMap
+  }
+
+  protected def membersFrom[T <: DomainElement](union: NodeWithDiscriminator[T]): Seq[NodeMappable] = {
+    union
+      .objectRange()
+      .toStream
+      .flatMap { name =>
+        ctx.declarations.findNodeMapping(name.value(), All)
+      }
+  }
+
+  type Member            = NodeMapping
+  type ConcatenatedNames = String
+
+  /**
+    * Ambiguity kinds:
+    *   - Un-avoidable: cannot distinguish between two union members
+    *   - Eventual: some times cannot distinguish between two union members, depending on the value of the dialect instance
+    *
+    * Conditions for un-avoidable ambiguity:
+    *   - Set of property names is exactly the same between two union members
+    *
+    * Conditions for eventual ambiguity:
+    *   - Set of MANDATORY property names is exactly the same between two union members
+    *
+    * @param union Union to calculate ambiguity over its members
+    * @tparam T type of union: union node mapping or union property mapping
+    */
+  def checkAmbiguity[T <: DomainElement](union: NodeWithDiscriminator[T]): Unit = {
+    val membersPathIndex = flattenedMembersFrom(union)
+    val members          = membersPathIndex.keys.toSeq
+
+    // We use the hash of the concatenated names as an approximation of the set equality function for performance gain
+    val unavoidableCache: mutable.HashMap[ConcatenatedNames, Seq[Member]] = mutable.HashMap.empty
+    val eventualCache: mutable.HashMap[ConcatenatedNames, Seq[Member]]    = mutable.HashMap.empty
+
+    members.foreach { member =>
+      updateAmbiguityCaches(member, unavoidableCache, eventualCache)
+    }
+
+    val buildPath = (m: Member) => {
+      val path = membersPathIndex(m) :+ m
+      path.map(_.name.value()).mkString("/")
+    }
+
+    unavoidableCache.foreach {
+      case (_, members) if members.size > 1 =>
+        val names = members.map(buildPath).sorted.mkString(", ")
+        ctx.eh.violation(UnavoidableAmbiguity,
+                         union.id,
+                         s"Union is ambiguous. Members $names have the same set of property names",
+                         union.annotations)
+      case _ => // Ignore
+    }
+
+    eventualCache.foreach {
+      case (_, members) if members.size > 1 =>
+        val names = members.map(buildPath).sorted.mkString(", ")
+        ctx.eh.warning(EventualAmbiguity,
+                       union.id,
+                       s"Union might be ambiguous. Members $names have the same set of mandatory property names",
+                       union.annotations)
+      case _ => // Ignore
+    }
+  }
+
+  private def updateAmbiguityCaches[T <: DomainElement](
+      member: Member,
+      unavoidableCache: mutable.HashMap[ConcatenatedNames, Seq[Member]],
+      eventualCache: mutable.HashMap[ConcatenatedNames, Seq[Member]]) = {
+
+    val allProperties = member
+      .propertiesMapping()
+      .toStream
+      .sortBy(_.name().value()) // Sort properties by name
+
+    val mandatoryProperties = allProperties.filter(_.minCount().is(1))
+
+    val concatenateNames = (properties: Seq[PropertyMapping]) => properties.map(_.name().value()).mkString("")
+
+    val unavoidableCacheKey = concatenateNames(allProperties)
+    val eventualCacheKey    = concatenateNames(mandatoryProperties)
+
+    // Update caches
+    unavoidableCache.put(unavoidableCacheKey, member +: unavoidableCache.getOrElse(unavoidableCacheKey, Nil))
+    if (unavoidableCacheKey != eventualCacheKey) {
+      // Unavoidable ambiguity is a superset of eventual ambiguity. We want the eventual ambiguity cache to contain clashes which are eventual and NOT unavoidable
+      eventualCache.put(eventualCacheKey, member +: eventualCache.getOrElse(eventualCacheKey, Nil))
+    }
+  }
+
+  /**
+    * This method:
+    *  1. replaces union & discriminator members references to other node mappings from their name to their id
+    *  2. validates union & discriminator members exist
+    *  3. checks for ambiguity
     */
   protected def checkNodeMappableReferences[T <: DomainElement](mappable: NodeWithDiscriminator[T]): Unit = {
-    val mapped: Seq[Option[String]] = mappable.objectRange().map { nodeMappingRef =>
-      if (nodeMappingRef.value() == (Namespace.Meta + "anyNode").iri()) {
-        Some(nodeMappingRef.value())
-      }
-      else {
-        ctx.declarations.findNodeMapping(nodeMappingRef.value(), All) match {
-          case Some(mapping: NodeMapping) if mappable.isInstanceOf[PropertyMapping] =>
-            // I want to search or generate the uri (and check that the term is the same if is already set it) right know, so I can throw a violation if some is wrong before start parsing the instance.
-            // Also, If none instance will be parsed, but the dialect model is going to be serialized, I would be better has the terms already setting in the json ld. That way, the violation is collected now, and we don't need to do some particular, border case, logic in the json ld graph parser.
+    val memberStream      = mappable.objectRange().toStream
+    val memberNamesStream = memberStream.map(member => member.value())
+    val memberIdsStream   = memberNamesStream.flatMap(name => memberIdFromName(name, mappable))
 
-            updateMapLabelReferences(mappable.asInstanceOf[PropertyMapping], mapping)
-            Some(mapping.id)
-          case Some(mapping) =>
-            Some(mapping.id)
-          case _ =>
-            ctx.findInRecursiveShapes(nodeMappingRef.value()) match {
-              case Some(recursiveId) =>
-                Some(recursiveId)
-              case _ =>
-                ctx.missingPropertyRangeViolation(
-                    nodeMappingRef.value(),
-                    mappable.id,
-                    mappable.fields
-                      .entry(PropertyMappingModel.ObjectRange)
-                      .map(_.value.annotations)
-                      .getOrElse(mappable.annotations)
-                )
-                None
-            }
-        }
-      }
+    mappable match {
+      case p: PropertyMapping if p.isUnion && p.typeDiscriminatorName().isNull =>
+        checkAmbiguity(p)
+      case u: UnionNodeMapping if u.typeDiscriminatorName().isNull =>
+        checkAmbiguity(u)
+      case _ => // Ignore
     }
-    val refs = mapped.collect { case Some(ref) => ref }
-    if (refs.nonEmpty) mappable.withObjectRange(refs)
+    if (memberIdsStream.nonEmpty) mappable.withObjectRange(memberIdsStream)
 
     // Setting ids we left unresolved in typeDiscriminators
     Option(mappable.typeDiscriminator()) match {
       case Some(typeDiscriminators) =>
-        val mapped = typeDiscriminators.foldLeft(Map[String, String]()) {
-          case (acc, (nodeMappingRef, alias)) =>
-            ctx.declarations.findNodeMapping(nodeMappingRef, All) match {
-              case Some(mapping) => acc.updated(mapping.id, alias)
-              case _ =>
+        val discriminatorValueMapping = typeDiscriminators.flatMap {
+          case (name, discriminatorValue) =>
+            ctx.declarations
+              .findNodeMapping(name, All)
+              .map(_.id -> discriminatorValue)
+              .orElse {
                 ctx.missingPropertyRangeViolation(
-                    nodeMappingRef,
+                    name,
                     mappable.id,
                     mappable.fields
                       .entry(PropertyMappingModel.TypeDiscriminator)
                       .map(_.value.annotations)
                       .getOrElse(mappable.annotations)
                 )
-                acc
-            }
+                None
+              }
         }
-        mappable.withTypeDiscriminator(mapped)
+        mappable.withTypeDiscriminator(discriminatorValueMapping)
       case _ => // ignore
+    }
+  }
+
+  private def memberIdFromName[T <: DomainElement](name: String, union: NodeWithDiscriminator[T]): Option[String] = {
+    if (name == (Namespace.Meta + "anyNode").iri()) {
+      Some(name)
+    }
+    else {
+      ctx.declarations.findNodeMapping(name, All) match {
+        case Some(mapping: NodeMapping) if union.isInstanceOf[PropertyMapping] =>
+          // I want to search or generate the uri (and check that the term is the same if is already set it) right know, so I can throw a violation if some is wrong before start parsing the instance.
+          // Also, If none instance will be parsed, but the dialect model is going to be serialized, I would be better has the terms already setting in the json ld. That way, the violation is collected now, and we don't need to do some particular, border case, logic in the json ld graph parser.
+          updateMapLabelReferences(union.asInstanceOf[PropertyMapping], mapping) // Should remove this side effect
+          Some(mapping.id)
+        case Some(mapping) =>
+          Some(mapping.id)
+        case _ =>
+          ctx.findInRecursiveUnits(name) match {
+            case Some(recursiveId) =>
+              Some(recursiveId)
+            case _ =>
+              ctx.missingPropertyRangeViolation(
+                  name,
+                  union.id,
+                  union.fields
+                    .entry(PropertyMappingModel.ObjectRange)
+                    .map(_.value.annotations)
+                    .getOrElse(union.annotations)
+              )
+              None
+          }
+      }
     }
   }
 
@@ -227,27 +348,34 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
-            parseNodeMapping(
-                entry, {
-                  case nodeMapping: NodeMappable =>
-                    val name = ScalarNode(entry.key).string()
-                    nodeMapping.set(NodeMappingModel.Name, name, Annotations(entry.key)).adopted(parent)
-                    nodeMapping.annotations.reject(a =>
-                      a.isInstanceOf[SourceAST] || a.isInstanceOf[LexicalInformation] || a
-                        .isInstanceOf[SourceLocation] || a.isInstanceOf[SourceNode])
-                    nodeMapping.annotations ++= Annotations(entry)
-                  case _ =>
-                    ctx.eh.violation(DialectError,
-                                     parent,
-                                     s"Error only valid node mapping or union mapping can be declared",
-                                     entry)
-                    None
-                }
-            ) match {
-              case Some(nodeMapping: NodeMapping) =>
-                ctx.declarations += nodeMapping
-              case Some(nodeMapping: UnionNodeMapping) => ctx.declarations += nodeMapping
-              case _                                   => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry)
+            val nodeName = entry.key.toString
+            if (AmlScalars.all.contains(nodeName)) {
+              ctx.eh.violation(DialectError, parent, s"Error parsing node mapping: '$nodeName' is a reserved name", entry)
+            }
+            else {
+              parseNodeMapping(
+                  entry, {
+                    case nodeMapping: NodeMappable =>
+                      val name = ScalarNode(entry.key).string()
+                      nodeMapping.set(NodeMappingModel.Name, name, Annotations(entry.key)).adopted(parent)
+                      nodeMapping.annotations.reject(a =>
+                        a.isInstanceOf[SourceAST] || a.isInstanceOf[LexicalInformation] || a
+                          .isInstanceOf[SourceLocation] || a.isInstanceOf[SourceNode])
+                      nodeMapping.annotations ++= Annotations(entry)
+                    case _ =>
+                      ctx.eh.violation(DialectError,
+                                       parent,
+                                       s"Error only valid node mapping or union mapping can be declared",
+                                       entry)
+                      None
+                  }
+              ) match {
+                case Some(nodeMapping: NodeMapping) =>
+                  ctx.declarations += nodeMapping
+                case Some(nodeMapping: UnionNodeMapping) => ctx.declarations += nodeMapping
+                case _                                   => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry)
+              }
+
             }
           }
         case YType.Null =>
@@ -408,7 +536,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           }
         }
     )
-    nodeMapping.nodetypeMapping.option().foreach(validateTemplate(_, map, nodeMapping.propertiesMapping()))
+    nodeMapping.idTemplate.option().foreach(validateTemplate(_, map, nodeMapping.propertiesMapping()))
 
     parseAnnotations(map, nodeMapping, ctx.declarations)
 
@@ -606,15 +734,19 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         // TODO: check dependencies among properties
 
         map.key(
-          "isLink",
-          entry => {
-            val isLink = entry.value.as[Boolean]
-            propertyMapping.withExternallyLinkable(isLink);
-            propertyMapping.literalRange().option() match {
-              case Some(v) => ctx.eh.violation(DialectError, s"Aml links support in property mappings only can be declared in object properties but scalar range detected: ${v}", entry.value)
-              case _       =>  // ignore
+            "isLink",
+            entry => {
+              val isLink = entry.value.as[Boolean]
+              propertyMapping.withExternallyLinkable(isLink);
+              propertyMapping.literalRange().option() match {
+                case Some(v) =>
+                  ctx.eh.violation(
+                      DialectError,
+                      s"Aml links support in property mappings only can be declared in object properties but scalar range detected: ${v}",
+                      entry.value)
+                case _ => // ignore
+              }
             }
-          }
         )
 
         parseAnnotations(map, propertyMapping, ctx.declarations)
@@ -687,19 +819,22 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   }
 
   def validateTemplate(template: String, map: YMap, propMappings: Seq[PropertyMapping]): Unit = {
-    val regex = "(\\{[^}]+\\})".r
-    regex.findAllIn(template).foreach { varMatch =>
-      val variable = varMatch.replace("{", "").replace("}", "")
+    getVariablesFromTemplate(template).foreach { variable =>
       propMappings.find(_.name().value() == variable) match {
-        case Some(prop) =>
-          if (prop.minCount().option().getOrElse(0) != 1)
-            ctx.eh.violation(DialectError,
-                             prop.id,
-                             s"PropertyMapping for idTemplate variable '$variable' must be mandatory",
-                             map)
+        case Some(prop) if !prop.isMandatory =>
+          ctx.eh.violation(DialectError,
+            prop.id,
+            s"PropertyMapping for idTemplate variable '$variable' must be mandatory",
+            map)
         case None =>
           ctx.eh.violation(DialectError, "", s"Missing propertyMapping for idTemplate variable '$variable'", map)
+        case _ => // ignore
       }
+    }
+
+    def getVariablesFromTemplate(template: String): Iterator[String] = {
+      val regex = "(\\{[^}]+\\})".r
+      regex.findAllIn(template).map { varMatch => varMatch.replace("{", "").replace("}", "") }
     }
   }
 

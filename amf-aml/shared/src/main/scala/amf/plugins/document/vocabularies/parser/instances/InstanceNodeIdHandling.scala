@@ -31,7 +31,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
                                mapping: NodeMapping,
                                additionalProperties: Map[String, Any] = Map(),
                                rootNode: Boolean): String = {
-    val generatedId = if (rootNode && Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false))
+    val generatedId = if (rootNode && isSelfEncoded)
       defaultId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
     else {
       if (nodeMap.key("$id").isDefined) {
@@ -47,9 +47,13 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
         defaultId
       }
     }
-    overrideBase(generatedId, nodeMap)
+    overrideBase(generatedId, nodeMap).urlEncoded
   }
 
+
+  private def isSelfEncoded = {
+    Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false)
+  }
 
   protected def idTemplate(node: DialectDomainElement, nodeMap: YMap, path: Seq[String], mapping: NodeMapping): String = {
     val template = replaceTemplateVariables(node.id, nodeMap, mapping.idTemplate.value())
@@ -113,7 +117,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
     template
   }
 
-  protected def primaryKeyNodeId(node: DialectDomainElement,
+  private def primaryKeyNodeId(node: DialectDomainElement,
                                  nodeMap: YMap,
                                  path: Seq[String],
                                  defaultId: String,
@@ -135,7 +139,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
           }
       }
     }
-    if (allFound) { path.map(_.urlEncoded).mkString("/") + "/" + keyId.mkString("_").urlEncoded }
+    if (allFound) { path.mkString("/") + "/" + keyId.mkString("_") }
     else { defaultId }
   }
 

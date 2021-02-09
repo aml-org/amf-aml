@@ -15,8 +15,10 @@ nodeMappings:
     mapping:
       id:
         range: string
+        mandatory: true
       top:
         range: string
+        mandatory: true
 
 documents:
   root:

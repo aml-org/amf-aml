@@ -110,6 +110,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
   }
 
   def isUnion: Boolean = nodesInRange.size > 1
+  def isMandatory: Boolean = minCount().option().getOrElse(0) == 1
 
   def toField: Field = {
     val iri = nodePropertyMapping()

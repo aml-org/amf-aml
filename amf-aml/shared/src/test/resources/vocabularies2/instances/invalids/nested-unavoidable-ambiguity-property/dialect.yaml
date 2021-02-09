@@ -1,0 +1,40 @@
+#%Dialect 1.0
+dialect: Union Node
+version: 1.0
+nodeMappings:
+  A: # is ambiguous with C
+    mapping:
+      propertyX:
+        range: integer
+        mandatory: true
+  B:
+    mapping:
+      propertyY:
+        range: string
+        mandatory: true
+  C:
+    mapping:
+      propertyX:
+        range: integer
+        mandatory: true
+  D:
+    mapping:
+      propertyZ:
+        range: string
+        mandatory: true
+
+  Union0:
+    union:
+      - A
+      - B
+
+  Union1:
+    union:
+      - C
+      - D
+
+  RootUnion:
+    mapping:
+      unionProp:
+        range: [Union0, Union1]
+        mandatory: true

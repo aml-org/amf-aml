@@ -1,0 +1,26 @@
+#%Dialect 1.0
+dialect: Union Node
+#version: 1.0 comment version to force violation & non-conformity
+nodeMappings:
+  A:
+    mapping:
+      propertyX:
+        range: integer
+        mandatory: true
+      propertyA:
+        range: integer
+        mandatory: false
+  B:
+    mapping:
+      propertyX:
+        range: string
+        mandatory: true
+      propertyB:
+        range: integer
+        mandatory: false
+
+  RootNode:
+    mapping:
+      unionProp:
+        range: [A, B]
+        mandatory: true

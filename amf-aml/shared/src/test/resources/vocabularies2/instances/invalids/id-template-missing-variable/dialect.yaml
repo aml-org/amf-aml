@@ -1,0 +1,15 @@
+#%Dialect 1.0
+dialect: Resource
+version: 1.0
+
+documents:
+  root:
+    encodes: ResourceNode
+
+nodeMappings:
+  ResourceNode:
+    mapping:
+      somethingPresent:
+        mandatory: true
+        range: string
+    idTemplate: "http://aVeryCoolUri/{somethingPresent}#{somethingNotPresent}"

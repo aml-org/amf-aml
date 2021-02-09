@@ -23,7 +23,7 @@
         },
         "http://a.ml/vocabularies/amf/parser#end": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
-          "http://a.ml/vocabularies/amf/parser#line": 23,
+          "http://a.ml/vocabularies/amf/parser#line": 25,
           "http://a.ml/vocabularies/amf/parser#column": 36
         }
       }

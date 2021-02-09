@@ -1,0 +1,46 @@
+#%Dialect 1.0
+dialect: Union Node
+#version: 1.0 comment version to force violation & non-conformity
+nodeMappings:
+  A: # is eventually ambiguous with C
+    mapping:
+      propertyX:
+        range: integer
+        mandatory: true
+      propertyA:
+        range: integer
+        mandatory: false
+  B:
+    mapping:
+      propertyY:
+        range: string
+        mandatory: true
+  C:
+    mapping:
+      propertyX:
+        range: integer
+        mandatory: true
+      propertyC:
+        range: integer
+        mandatory: false
+
+  D:
+    mapping:
+      propertyZ:
+        range: string
+        mandatory: true
+
+  Union0:
+    union:
+      - A
+      - B
+
+  Union1:
+    union:
+      - C
+      - D
+
+  RootUnion:
+    union:
+      - Union0
+      - Union1
