@@ -932,7 +932,44 @@ trait DialectInstancesParsingTest extends DialectTests {
       config.golden,
       VocabularyYamlHint,
       target = Amf,
+      renderOptions = Some(config.renderOptions),
       directory = s"$basePath/encoded-id-template/"
+    )
+  }
+
+  multiGoldenTest("Simple node mapping extension", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/simple-node-mapping-extension/"
+    )
+  }
+
+  multiGoldenTest("Node mapping extension with overriden properties", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/node-mapping-extension-with-overriden-properties/"
+    )
+  }
+
+  multiGoldenTest("Node mapping extension with id templates", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/node-mapping-extension-with-id-templates/"
     )
   }
 
