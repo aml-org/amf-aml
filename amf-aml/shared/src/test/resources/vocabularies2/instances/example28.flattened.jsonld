@@ -28,8 +28,8 @@
         "http://a.ml/vocabularies/meta#DialectDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://test.com/v3#a": 1,
       "http://test.com/v3#c": "hey, ho",
+      "http://test.com/v3#a": 1,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/root/source-map"
@@ -44,8 +44,8 @@
         "http://a.ml/vocabularies/meta#DialectDomainElement",
         "http://a.ml/vocabularies/document#DomainElement"
       ],
-      "http://test.com/v3#e": "let's",
       "http://test.com/v3#d": "go",
+      "http://test.com/v3#e": "let's",
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/other/source-map"
@@ -120,13 +120,13 @@
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/root/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/v3#a",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/v3#c",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/root/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/v3#c",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(4,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/v3#a",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(5,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/root/source-map/lexical/element_1",
@@ -135,13 +135,13 @@
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/other/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/v3#e",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(7,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/v3#d",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(8,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/other/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/v3#d",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(8,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/v3#e",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(7,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/other/source-map/lexical/element_1",
