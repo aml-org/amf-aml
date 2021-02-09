@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
+import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalactic.source.Position
 import org.scalatest.{AsyncFunSuite, Tag}
 import org.scalatest.compatible.Assertion
@@ -8,8 +9,8 @@ import org.scalatest.compatible.Assertion
 import scala.concurrent.ExecutionContext.Implicits
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DefaultAmfInitializationWithCustomValidation extends AsyncBeforeAndAfterAll {
-  override protected def beforeAll(): Future[Unit] = DefaultAmfInitializationWithCustomValidation.init
+trait DefaultAmfInitializationWithCustomValidation extends AsyncBeforeAndAfterEach {
+  override protected def beforeEach(): Future[Unit] = DefaultAmfInitializationWithCustomValidation.init
 }
 
 object DefaultAmfInitializationWithCustomValidation {
@@ -30,21 +31,4 @@ object DefaultAmfInitializationWithCustomValidation {
       initialized = true
     }
   }
-}
-
-trait AsyncBeforeAndAfterAll extends AsyncFunSuite {
-  override protected def test(testName: String, testTags: Tag*)(testFun: => Future[Assertion])(
-      implicit pos: Position): Unit = {
-    lazy val composedFn = for {
-      _         <- beforeAll()
-      assertion <- testFun
-      _         <- afterAll()
-    } yield {
-      assertion
-    }
-    super.test(testName, testTags: _*)(composedFn)
-  }
-
-  protected def beforeAll(): Future[Unit] = Future.successful(Unit)
-  protected def afterAll(): Future[Unit]  = Future.successful(Unit)
 }
