@@ -47,7 +47,7 @@
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml/documents"
 },
 "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml",
-"http://a.ml/vocabularies/document#version": "2.4.0",
+"http://a.ml/vocabularies/document#version": "3.0.0",
 "http://a.ml/vocabularies/document#root": false
 },
 {
