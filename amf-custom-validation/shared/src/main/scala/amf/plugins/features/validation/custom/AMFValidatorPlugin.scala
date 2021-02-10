@@ -32,7 +32,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
 
   override val ID = "AMF Validation"
 
-  override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = {
+  override def init()(implicit executionContext: ExecutionContext): AMFPlugin = {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
     ExecutionLog.log("Register RDF framework")
