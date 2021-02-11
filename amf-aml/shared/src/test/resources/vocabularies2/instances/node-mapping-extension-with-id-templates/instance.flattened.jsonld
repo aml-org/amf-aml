@@ -56,7 +56,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "http://myNode.org#my-example-node"
       },
-      "http://a.ml/vocabularies/document#version": "2.4.0",
+      "http://a.ml/vocabularies/document#version": "3.0.0",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
