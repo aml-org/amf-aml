@@ -2,7 +2,7 @@ package amf.client.parse
 
 import amf.client.environment.Environment
 import amf.core.registries.AMFPluginsRegistry
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.{AMLParsePlugin, AMLPlugin}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -20,4 +20,6 @@ class Aml10Parser private (private val mediaType: String, private val env: Optio
   def this(mediaType: String, env: Environment) = this(mediaType, Some(env))
 
   AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
+  AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
+
 }
