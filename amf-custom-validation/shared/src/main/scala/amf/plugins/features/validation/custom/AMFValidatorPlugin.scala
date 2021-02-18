@@ -10,6 +10,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.remote._
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.validation.ValidationResultProcessor
 import amf.core.validation.core.ValidationProfile
@@ -56,12 +57,14 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
   }
 
   private def parseProfile(validationProfilePath: String, env: Environment, errorHandler: ErrorHandler)(implicit executionContext: ExecutionContext) = {
+    val newEnv = AMFPluginsRegistry.obtainStaticEnv()
     RuntimeCompiler(
       validationProfilePath,
       Some("application/yaml"),
       Some(AMLPlugin.ID),
       Context(platform),
       cache = Cache(),
+      newEnv = newEnv,
       env = env,
       errorHandler = errorHandlerToParser(errorHandler)
     )
