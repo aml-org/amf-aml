@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies
 
+import amf.client.`new`.BaseEnvironment
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.parse.DefaultErrorHandler
 import amf.core.CompilerContextBuilder
@@ -8,7 +9,7 @@ import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.Annotations
 import amf.core.parser.errorhandler.UnhandledParserErrorHandler
-import amf.core.registries.AMFDomainEntityResolver
+import amf.core.registries.{AMFDomainEntityResolver, AMFPluginsRegistry}
 import amf.core.remote.Aml
 import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
@@ -170,8 +171,10 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
           dialect
         }
       case _ =>
+        val newEnv = AMFPluginsRegistry.obtainStaticEnv()
+        val withLegacyEnvValues = BaseEnvironment.fromLegacy(newEnv, environment)
         val context =
-          new CompilerContextBuilder(uri, platform, UnhandledParserErrorHandler).withEnvironment(environment).build()
+          new CompilerContextBuilder(uri, platform, UnhandledParserErrorHandler).build(withLegacyEnvValues)
         RuntimeCompiler
           .forContext(context, Some("application/yaml"), Some(Aml.name))
           .map {

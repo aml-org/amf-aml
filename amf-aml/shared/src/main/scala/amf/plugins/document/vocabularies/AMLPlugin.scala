@@ -134,7 +134,6 @@ trait AMLPlugin
     */
   override def parse(document: Root,
                      parentContext: ParserContext,
-                     platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
 
     val header = DialectHeader.dialectHeaderDirective(document)
