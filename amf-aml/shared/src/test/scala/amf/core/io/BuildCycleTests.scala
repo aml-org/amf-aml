@@ -7,6 +7,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
 import amf.core.rdf.RdfModel
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor}
 import amf.emit.AMFRenderer
@@ -130,11 +131,11 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 
     val context =
       new CompilerContextBuilder(s"file://${config.sourcePath}", platform, eh.getOrElse(UnhandledParserErrorHandler))
-        .build()
+        .build(AMFPluginsRegistry.obtainStaticEnv().withParsingOptions(options))
 
     val maybeSyntax = config.syntax.map(_.toString)
     val maybeVendor = Some(config.hint.vendor.name)
-    new AMFCompiler(context, mediaType = maybeSyntax, vendor = maybeVendor, parsingOptions = options).build()
+    new AMFCompiler(context, mediaType = maybeSyntax, vendor = maybeVendor).build()
   }
 
   /** Method to render parsed unit. Override if necessary. */

@@ -5,6 +5,7 @@ import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.io.FileAssertionTest
+import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
@@ -36,7 +37,7 @@ class VocabularyDefinitionValidationTest
   }
 
   private def compilerContext(url: String) =
-    new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
+    new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build(AMFPluginsRegistry.obtainStaticEnv())
 
   protected def validate(vocabulary: String,
                          goldenReport: Option[String] = None,
