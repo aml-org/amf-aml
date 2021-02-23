@@ -7,6 +7,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationReport
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.io.FileAssertionTest
+import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
@@ -114,6 +115,7 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with 
   }
 
   private def compilerContext(url: String) =
-    new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
+    new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun())
+      .build(AMFPluginsRegistry.obtainStaticEnv())
 
 }

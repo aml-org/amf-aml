@@ -7,6 +7,7 @@ import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.io.FunSuiteCycleTests
+import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalatest.Assertion
@@ -24,7 +25,8 @@ trait DialectInstanceTester extends DefaultAmfInitialization { this: FunSuiteCyc
                             renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
 
     val context =
-      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
+      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
+        .build(AMFPluginsRegistry.obtainStaticEnv())
     for {
       _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycle(source, golden, hint, target, directory, renderOptions)

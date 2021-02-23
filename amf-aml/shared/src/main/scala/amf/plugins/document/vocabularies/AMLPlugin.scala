@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies
 
-import amf.client.`new`.amfcore.plugins.AmfParsePluginAdapter
+import amf.client.`new`.amfcore.plugins.AMFParsePluginAdapter
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.core.Root
@@ -46,7 +46,7 @@ object AMLPlugin extends AMLPlugin {
     AMFPluginsRegistry.documentPluginForID(this.ID).collect({ case a: AMLPlugin => a }).getOrElse(this)
 }
 
-object AMLParsePlugin extends AmfParsePluginAdapter(AMLPlugin)
+object AMLParsePlugin extends AMFParsePluginAdapter(AMLPlugin)
 
 trait AMLPlugin
     extends AMFDocumentPlugin
