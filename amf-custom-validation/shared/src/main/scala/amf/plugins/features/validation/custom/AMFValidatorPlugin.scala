@@ -15,11 +15,15 @@ import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.validation.ShaclReportAdaptation
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
+import amf.plugins.document.graph.{AMFGraphParsePlugin, AMFGraphPlugin}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
+import amf.plugins.document.vocabularies.{AMLParsePlugin, AMLPlugin}
+import amf.plugins.features.validation.PlatformValidator
+import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.custom.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.features.validation.{AMFValidator, PlatformValidator}
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -33,6 +37,8 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
+    AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
+    AMFPluginsRegistry.registerNewInterfacePlugin(AMFGraphParsePlugin)
     ExecutionLog.log("Register RDF framework")
     platform.rdfFramework = Some(PlatformValidator.instance)
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")

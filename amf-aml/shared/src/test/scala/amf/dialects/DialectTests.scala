@@ -5,6 +5,7 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.core.model.document.BaseUnit
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
 import amf.core.{AMFCompiler, AMFSerializer, CompilerContextBuilder}
@@ -32,7 +33,8 @@ trait DialectTests
                             renderOptions: Option[RenderOptions] = None,
                             useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
     val context =
-      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
+      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
+        .build(AMFPluginsRegistry.obtainStaticEnv())
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build()
       _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
@@ -52,16 +54,17 @@ trait DialectTests
                               source: String,
                               hint: Hint,
                               directory: String = basePath): Future[BaseUnit] = {
+    val env = AMFPluginsRegistry.obtainStaticEnv()
     for {
       dialect <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$dialect",
                                                             platform,
-                                                            DefaultParserErrorHandler.withRun()).build(),
+                                                            DefaultParserErrorHandler.withRun()).build(env),
                                  None,
                                  Some(Aml.name)).build()
       _ <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
       b <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$source",
                                                       platform,
-                                                      DefaultParserErrorHandler.withRun()).build(),
+                                                      DefaultParserErrorHandler.withRun()).build(env),
                            None,
                            Some(hint.vendor.name)).build()
     } yield {

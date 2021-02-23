@@ -11,5 +11,7 @@ import scala.scalajs.js.annotation.JSExportAll
 object AMFCustomValidation {
   def register(): Unit = {
     amf.Core.registerPlugin(AMFValidatorPlugin)
+    AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
+    AMFPluginsRegistry.registerNewInterfacePlugin(AMFGraphParsePlugin)
   }
 }

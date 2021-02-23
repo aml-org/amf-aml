@@ -1,5 +1,8 @@
 package amf.dialects
 
+import amf.core.registries.AMFPluginsRegistry
+import amf.plugins.document.graph.AMFGraphParsePlugin
+import amf.plugins.document.vocabularies.AMLParsePlugin
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 import org.scalactic.source.Position
@@ -25,7 +28,11 @@ object DefaultAmfInitializationWithCustomValidation {
   private def doInit(): Future[Unit] = {
     for {
       _ <- amf.core.AMF.init()
-      _ <- Future.successful { amf.core.AMF.registerPlugin(AMFValidatorPlugin) }
+      _ <- Future.successful {
+        amf.core.AMF.registerPlugin(AMFValidatorPlugin)
+        AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
+        AMFPluginsRegistry.registerNewInterfacePlugin(AMFGraphParsePlugin)
+      }
       _ <- AMFValidatorPlugin.init()
     } yield {
       initialized = true
