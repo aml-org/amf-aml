@@ -319,8 +319,9 @@ trait AMLPlugin
     registry.vendorExtensionFor(extensionName) match {
       case Some((annotationMapping, dialect)) =>
         val dialectInstanceContext = new DialectInstanceContext(dialect, context)
+
         val fakeRoot = Root(
-          SyamlParsedDocument(YDocument(YNode("")), None),
+          SyamlParsedDocument(YDocument.parseYaml("{}")),
           "",
           "",
           Nil,
@@ -357,6 +358,12 @@ trait AMLPlugin
         emitter.emitVendorExtension(keyDecorator(alias), annotationMapping, field, element.extendedFields)
       case None => Nil
     }
+  }
+
+  override def vendorExtensionsValidations(): Seq[ValidationSpecification] = {
+    this.registry.allDialects().flatMap((d) => {
+      new AMFDialectValidations(d).annotationValidations()
+    }).toSeq
   }
 
 }
