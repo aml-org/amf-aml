@@ -10,6 +10,7 @@ import amf.core.services.ValidationOptions
 import amf.core.validation.core._
 import amf.core.validation.{EffectiveValidations, SeverityLevels}
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.{OASStyle, RAMLStyle}
 import org.yaml.model.YScalar
 
@@ -115,11 +116,14 @@ class CustomShaclValidator(model: BaseUnit,
 
   def extractPredicateValue(predicate: String,
                             element: DomainElement): Option[(Annotations, AmfElement, Option[Any])] = {
-    element.meta.fields.find { f =>
+    val allFields = element.meta.fields ++ element.extendedFields.fieldsMeta()
+    allFields.find { f =>
       f.value.iri() == predicate
     } match {
       case Some(f) =>
-        Option(element.fields.getValue(f)) match {
+        val defaultFieldValue = Option(element.fields.getValue(f))
+        val extendedFieldValue = Option(element.extendedFields.getValue(f))
+        defaultFieldValue.orElse(extendedFieldValue) match {
           case Some(value) if value.value.isInstanceOf[AmfScalar] =>
             Some((value.annotations, value.value, Some(amfScalarToScala(value.value.asInstanceOf[AmfScalar]))))
           case Some(value) =>
@@ -287,14 +291,16 @@ class CustomShaclValidator(model: BaseUnit,
     //
     propertyConstraint.`class` match {
       case Nil => // ignore
-      case _   => throw new Exception(s"class property constraint not supported yet ${validationSpecification.id}")
+      case _   => validateClassConstraint(validationSpecification, propertyConstraint, element)
     }
+    /*
     if (propertyConstraint.custom.isDefined) {
       throw new Exception(s"custom property constraint not supported yet ${validationSpecification.id}")
     }
     if (propertyConstraint.customRdf.isDefined) {
       throw new Exception(s"customRdf property constraint not supported yet ${validationSpecification.id}")
     }
+     */
     if (propertyConstraint.multipleOf.isDefined) {
       throw new Exception(s"multipleOf property constraint not supported yet ${validationSpecification.id}")
     }
@@ -647,6 +653,21 @@ class CustomShaclValidator(model: BaseUnit,
     }
   }
 
+  def validateClassConstraint(validationSpecification: ValidationSpecification, propertyConstraint: PropertyConstraint, parentElement: DomainElement): Unit = {
+    val targetClass = propertyConstraint.`class`
+    extractPropertyValue(propertyConstraint, parentElement) match {
+      case Some((annotations, element: DialectDomainElement, optionalValue)) =>
+        val definedId = element.definedBy.id
+        if (!targetClass.contains(definedId)) {
+          if (!element.definedBy.nodetypeMapping.option().exists((k) => targetClass.contains(k))) {
+            reportFailure(validationSpecification, propertyConstraint, parentElement.id, annotations)
+          }
+        }
+      case _  =>
+        // ignore or fail?
+    }
+  }
+
   def validateDataType(validationSpecification: ValidationSpecification,
                        propertyConstraint: PropertyConstraint,
                        parentElement: DomainElement): Unit = {
@@ -654,6 +675,8 @@ class CustomShaclValidator(model: BaseUnit,
     val xsdBoolean = DataType.Boolean
     val xsdInteger = DataType.Integer
     val xsdDouble  = DataType.Double
+    val shapesNumber = DataType.Number
+    val shapesLink = DataType.Link
     extractPropertyValue(propertyConstraint, parentElement) match {
       case Some((_, element, _)) =>
         val elements = element match {
@@ -687,6 +710,27 @@ class CustomShaclValidator(model: BaseUnit,
                                 propertyConstraint,
                                 parentElement.id,
                                 element.asInstanceOf[AmfScalar].annotations)
+              }
+            case Some(s) if s == shapesLink =>
+              maybeScalarValue match {
+                case Some(_: String) => // ignore => link regular expresion?
+                case _               =>
+                  reportFailure(validationSpecification,
+                    propertyConstraint,
+                    parentElement.id,
+                    element.asInstanceOf[AmfScalar].annotations)
+              }
+            case Some(s) if s == shapesNumber =>
+              maybeScalarValue match {
+                case Some(_:Integer) =>  // ignore
+                case Some(_:Long)    =>  // ignore
+                case Some(_:Float)   =>  // ignore
+                case Some(_:Double)  =>  // ignore
+                case _               =>  // ignore
+                  reportFailure(validationSpecification,
+                    propertyConstraint,
+                    parentElement.id,
+                    element.asInstanceOf[AmfScalar].annotations)
               }
             case Some(s) if s == xsdInteger =>
               maybeScalarValue match {

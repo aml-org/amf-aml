@@ -237,7 +237,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
 
     profilesPlugins.get(profileName.profile) match {
       case Some(domainPlugin: AMFValidationPlugin) =>
-        val validations = computeValidations(profileName)
+        val validations = computeValidations(profileName).allEffective(extensionValidations())
         domainPlugin
           .validationRequest(model, profileName, validations, platform, env, resolved, exec)
       case _ =>
@@ -246,6 +246,10 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
         }
     }
   }
+
+  private def extensionValidations(): Seq[ValidationSpecification] =
+    AMFPluginsRegistry.documentPlugins.flatMap(p => p.vendorExtensionsValidations()).toSeq
+
 
   def profileNotFoundWarningReport(model: BaseUnit, profileName: ProfileName): AMFValidationReport = {
     AMFValidationReport(conforms = true, model.location().getOrElse(model.id), profileName, Seq())

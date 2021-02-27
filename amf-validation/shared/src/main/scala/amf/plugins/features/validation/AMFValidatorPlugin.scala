@@ -108,7 +108,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
       implicit executionContext: ExecutionContext): Future[ValidationReport] = {
     ExecutionLog.log(
       s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
-    // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
+    // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.valuetas.size} => $profileName")
     // validations.effective.keys.foreach(v => println(s" - $v"))
 
     if (PlatformValidator.instance.supportsJSFunctions) {

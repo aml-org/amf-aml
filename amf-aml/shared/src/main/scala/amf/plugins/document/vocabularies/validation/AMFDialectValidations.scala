@@ -9,7 +9,7 @@ import amf.core.validation.core.{PropertyConstraint, SeverityMapping, Validation
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.emitters.instances.AmlEmittersHelper
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
+import amf.plugins.document.vocabularies.model.domain.{AnnotationMapping, NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
 import amf.plugins.features.validation.Validations
 import org.yaml.model.YDocument.EntryBuilder
 
@@ -29,6 +29,24 @@ class AMFDialectValidations(val dialect: Dialect) extends AmlEmittersHelper {
       validations = parsedValidations ++ Validations.validations,
       severities = severityMapping
     )
+  }
+
+  def annotationValidations(): Seq[ValidationSpecification] = {
+    dialect.declares.flatMap {
+      case annotationMapping: AnnotationMapping =>
+        emitAnnotationMapping(annotationMapping)
+      case _ => Nil
+    }
+  }
+
+  protected def emitAnnotationMapping(annotationMapping: AnnotationMapping): Seq[ValidationSpecification] = {
+    val name = annotationMapping.name().value()
+    annotationMapping.targets.flatMap((target) => {
+      val id = target.value();
+      val node = NodeMapping().withId(id).withName(name)
+      node.withPropertiesMapping(Seq(annotationMapping))
+      emitEntityValidations(node, mutable.Set[String]())
+    })
   }
 
   protected def validations(): Seq[ValidationSpecification] = {
@@ -200,6 +218,7 @@ class AMFDialectValidations(val dialect: Dialect) extends AmlEmittersHelper {
                 ramlPropertyId = prop.nodePropertyMapping().value(),
                 name = validationId(node, prop.name().value(), "dialectRange") + "/prop",
                 message = Some(message),
+                datatype = Some(DataType.Number),
                 custom = Some((b: EntryBuilder, _: String) => {
                   b.entry(
                     (Namespace.Shacl + "or").iri(),
@@ -252,6 +271,7 @@ class AMFDialectValidations(val dialect: Dialect) extends AmlEmittersHelper {
                 ramlPropertyId = prop.nodePropertyMapping().value(),
                 name = validationId(node, prop.name().value(), "dialectRange") + "/prop",
                 message = Some(message),
+                datatype = Some(DataType.Link),
                 custom = Some((b: EntryBuilder, _: String) => {
                   b.entry(
                     (Namespace.Shacl + "nodeKind").iri(),

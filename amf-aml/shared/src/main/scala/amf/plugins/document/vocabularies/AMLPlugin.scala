@@ -16,7 +16,7 @@ import amf.core.remote.{Aml, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.core.ValidationProfile
+import amf.core.validation.core.{ValidationProfile, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
 import amf.internal.environment.Environment
 import amf.plugins.document.vocabularies.annotations.{AliasesLocation, CustomBase, CustomId, JsonPointerRef, RefInclude}
@@ -343,8 +343,9 @@ trait AMLPlugin
     registry.vendorExtensionFor(extensionName) match {
       case Some((annotationMapping, dialect)) =>
         val dialectInstanceContext = new DialectInstanceContext(dialect, context)
+
         val fakeRoot = Root(
-          SyamlParsedDocument(YDocument(YNode("")), None),
+          SyamlParsedDocument(YDocument.parseYaml("{}")),
           "",
           "",
           Nil,
@@ -381,6 +382,12 @@ trait AMLPlugin
         emitter.emitVendorExtension(keyDecorator(alias), annotationMapping, field, element.extendedFields)
       case None => Nil
     }
+  }
+
+  override def vendorExtensionsValidations(): Seq[ValidationSpecification] = {
+    this.registry.allDialects().flatMap((d) => {
+      new AMFDialectValidations(d).annotationValidations()
+    }).toSeq
   }
 
 }
