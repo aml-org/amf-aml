@@ -38,6 +38,9 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   def vendorExtensionFor(name: String): Option[(AnnotationMapping, Dialect)] = vendorExtensionMap.get(name)
   def extensionFieldsForClass(className: String): Seq[Field] =
     vendorExtensionsForClassMap.getOrElse(className, Seq()).map(_._4)
+
+  def extensionMappingForTerm(term:String): Seq[(String, AnnotationMapping)] = vendorExtensionsForClassMap.getOrElse(term, Seq()).map(t => (t._1 -> t._2))
+
   def vendorExtensionForId(id: String): Option[(String, AnnotationMapping, Dialect)] = vendorExtensionForPropertyMap.get(id)
 
   def findNode(dialectNode: String): Option[(Dialect, NodeMapping)] = {
