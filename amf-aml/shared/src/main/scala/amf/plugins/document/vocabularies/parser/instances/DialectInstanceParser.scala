@@ -9,6 +9,7 @@ import amf.core.model.document.EncodesModel
 import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DomainElement}
 import amf.core.parser.{Annotations, SearchScope, _}
 import amf.core.utils._
+import amf.core.validation.core.ValidationSpecification
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.annotations.{
@@ -282,10 +283,24 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     element
   }
 
+  def checkAnnotationDomain(annotation: AnnotationMapping, propertyEntry: YMapEntry, parent: DomainElement): Unit = {
+    val metaTypes = parent.meta.`type`.map((t) => t.iri())
+    val correctDomain = annotation.targets.map((f) => f.value()).exists((classId) => {
+      metaTypes.contains(classId)
+    })
+    if (!correctDomain) {
+      val spec: ValidationSpecification = DialectError
+      val node: String = parent.id
+      val message: String = s"Annotation ${annotation.name()} cannot be applied to Node of type ${parent.meta.`type`.head.iri()}"
+      ctx.eh.violation(spec, node, message, propertyEntry)
+    }
+  }
+
   def parseVendorExtension(propertyEntry: YMapEntry, annotation: AnnotationMapping, parent: DomainElement): Unit = {
     val dialectDomainElement = new DialectDomainElement(parent.extendedFields, parent.annotations)
     dialectDomainElement.withId(parent.id)
     val id = parent.id + "/" + propertyEntry.key.as[String].urlComponentEncoded
+    checkAnnotationDomain(annotation, propertyEntry, parent)
     parseProperty(id, propertyEntry, annotation, dialectDomainElement)
   }
   protected def parseProperty(id: String,
