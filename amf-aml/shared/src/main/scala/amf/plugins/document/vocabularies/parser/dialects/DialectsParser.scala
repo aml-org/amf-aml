@@ -496,17 +496,17 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   def parsePropertyMapping(entry: YMapEntry, adopt: PropertyMapping => Any, isAnnotation: Boolean = false): PropertyMapping = {
     val name = ScalarNode(entry.key).string()
+    val propertyMapping = if (isAnnotation) {
+      AnnotationMapping(Annotations(entry))
+    } else {
+      PropertyMapping(Annotations(entry))
+    }
+    propertyMapping.set(PropertyMappingModel.Name, name, Annotations(entry.key))
+    adopt(propertyMapping)
+
     entry.value.tagType match {
       case YType.Map =>
         val map             = entry.value.as[YMap]
-        val propertyMapping = if (isAnnotation) {
-          AnnotationMapping(map)
-        } else {
-          PropertyMapping(map)
-        }
-        propertyMapping.set(PropertyMappingModel.Name, name, Annotations(entry.key))
-
-        adopt(propertyMapping)
 
         if (isAnnotation) {
           ctx.closedNode("annotationMapping", propertyMapping.id, map)
@@ -677,7 +677,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
         propertyMapping
       case _ =>
-        PropertyMapping(Annotations(entry)).set(PropertyMappingModel.Name, name, Annotations(entry.key))
+        propertyMapping
     }
   }
 
