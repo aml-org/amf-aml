@@ -11,7 +11,8 @@ trait DialectSyntax { this: DialectContext =>
       "external"     -> false,
       "uses"         -> false,
       "nodeMappings" -> false,
-      "documents"    -> false
+      "documents"    -> false,
+      "annotationMappings" -> false
   )
 
   val library: Map[String, Boolean] = Map(
