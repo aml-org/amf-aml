@@ -1,5 +1,6 @@
 package amf.dialects
 
+import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.emitter.RenderOptions
 import amf.core.registries.AMFPluginsRegistry
@@ -815,7 +816,7 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
   test("Clone instance from dialect") {
-    val env = AMFPluginsRegistry.obtainStaticEnv()
+    val env = AmlEnvironment.aml()
     val context1 = new CompilerContextBuilder(s"file://$basePath/dialect31.yaml",
                                               platform,
                                               DefaultParserErrorHandler.withRun()).build(env)

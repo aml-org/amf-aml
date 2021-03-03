@@ -1,5 +1,6 @@
 package amf.dialects
 
+import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
@@ -34,7 +35,7 @@ trait DialectTests
                             useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AMFPluginsRegistry.obtainStaticEnv())
+        .build(AmlEnvironment.aml())
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build()
       _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
@@ -54,7 +55,7 @@ trait DialectTests
                               source: String,
                               hint: Hint,
                               directory: String = basePath): Future[BaseUnit] = {
-    val env = AMFPluginsRegistry.obtainStaticEnv()
+    val env = AmlEnvironment.aml()
     for {
       dialect <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$dialect",
                                                             platform,

@@ -1,5 +1,6 @@
 package amf.dialects
 
+import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.io.FileAssertionTest
@@ -127,7 +128,7 @@ trait DomainElementCycleTests
                               directory: String = basePath): Future[Assertion] = {
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AMFPluginsRegistry.obtainStaticEnv())
+        .build(AmlEnvironment.aml())
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build().map(_.asInstanceOf[Dialect])
       _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }

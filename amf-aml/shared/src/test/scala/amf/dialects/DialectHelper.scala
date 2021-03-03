@@ -1,5 +1,6 @@
 package amf.dialects
 
+import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
@@ -14,7 +15,7 @@ trait DialectHelper {
       implicit ec: ExecutionContext): Future[BaseUnit] =
     for {
       r <- new AMFCompiler(new CompilerContextBuilder(uri, platform, DefaultParserErrorHandler.withRun())
-        .build(AMFPluginsRegistry.obtainStaticEnv()),
+        .build(AmlEnvironment.aml()),
                            None,
                            Some(hint.vendor.name))
         .build()

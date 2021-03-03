@@ -1,5 +1,6 @@
 package amf.dialects
 
+import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.emitter.RenderOptions
@@ -26,7 +27,7 @@ trait DialectInstanceTester extends DefaultAmfInitialization { this: FunSuiteCyc
 
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AMFPluginsRegistry.obtainStaticEnv())
+        .build(AmlEnvironment.aml())
     for {
       _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycle(source, golden, hint, target, directory, renderOptions)
