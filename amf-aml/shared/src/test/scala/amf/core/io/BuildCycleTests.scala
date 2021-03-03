@@ -1,5 +1,6 @@
 package amf.core.io
 
+import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.client.ParsingOptions
@@ -131,7 +132,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 
     val context =
       new CompilerContextBuilder(s"file://${config.sourcePath}", platform, eh.getOrElse(UnhandledParserErrorHandler))
-        .build(AMFPluginsRegistry.obtainStaticEnv().withParsingOptions(options))
+        .build(AmlEnvironment.aml().withParsingOptions(options))
 
     val maybeSyntax = config.syntax.map(_.toString)
     val maybeVendor = Some(config.hint.vendor.name)
