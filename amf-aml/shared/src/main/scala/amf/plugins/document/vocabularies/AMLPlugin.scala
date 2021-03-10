@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies
 
-import amf.client.`new`.amfcore.plugins.AMFParsePluginAdapter
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.client.ParsingOptions
