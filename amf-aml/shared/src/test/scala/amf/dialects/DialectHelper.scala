@@ -15,7 +15,7 @@ trait DialectHelper {
       implicit ec: ExecutionContext): Future[BaseUnit] =
     for {
       r <- new AMFCompiler(new CompilerContextBuilder(uri, platform, DefaultParserErrorHandler.withRun())
-        .build(AmlEnvironment.aml()),
+        .withBaseEnvironment(AmlEnvironment.aml()).build(),
                            None,
                            Some(hint.vendor.name))
         .build()

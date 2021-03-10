@@ -27,7 +27,7 @@ trait DialectInstanceTester extends DefaultAmfInitialization { this: FunSuiteCyc
 
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AmlEnvironment.aml())
+        .withBaseEnvironment(AmlEnvironment.aml()).build()
     for {
       _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycle(source, golden, hint, target, directory, renderOptions)

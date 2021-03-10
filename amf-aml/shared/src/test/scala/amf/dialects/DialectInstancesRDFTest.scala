@@ -96,7 +96,7 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
 
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AmlEnvironment.aml())
+        .withBaseEnvironment(AmlEnvironment.aml()).build()
     for {
       _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycleRdf(source, golden, hint, target)
@@ -113,7 +113,7 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
                               directory: String = basePath) = {
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AmlEnvironment.aml())
+        .withBaseEnvironment(AmlEnvironment.aml()).build()
     for {
       _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycleFullRdf(source, golden, hint, target, directory)

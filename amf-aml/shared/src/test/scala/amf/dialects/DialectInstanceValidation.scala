@@ -117,6 +117,6 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with 
 
   private def compilerContext(url: String) =
     new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun())
-      .build(AmlEnvironment.aml())
+      .withBaseEnvironment(AmlEnvironment.aml()).build()
 
 }

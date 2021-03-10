@@ -82,14 +82,13 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[ProfileName] = {
 
     implicit val executionContext: ExecutionContext = exec.executionContext
-    val newEnv = AMFPluginsRegistry.obtainStaticEnv()
+
     RuntimeCompiler(
       validationProfilePath,
       Some("application/yaml"),
       Some(AMLPlugin.ID),
       Context(platform),
       cache = Cache(),
-      newEnv = newEnv,
       env = env,
       errorHandler = errorHandlerToParser(errorHandler)
     ).map {

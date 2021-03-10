@@ -171,10 +171,8 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
           dialect
         }
       case _ =>
-        val newEnv = AMFPluginsRegistry.obtainStaticEnv()
-        val withLegacyEnvValues = BaseEnvironment.fromLegacy(newEnv, environment)
         val context =
-          new CompilerContextBuilder(uri, platform, UnhandledParserErrorHandler).build(withLegacyEnvValues)
+          new CompilerContextBuilder(uri, platform, UnhandledParserErrorHandler).withEnvironment(environment).build()
         RuntimeCompiler
           .forContext(context, Some("application/yaml"), Some(Aml.name))
           .map {

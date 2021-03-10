@@ -819,10 +819,10 @@ trait DialectInstancesParsingTest extends DialectTests {
     val env = AmlEnvironment.aml()
     val context1 = new CompilerContextBuilder(s"file://$basePath/dialect31.yaml",
                                               platform,
-                                              DefaultParserErrorHandler.withRun()).build(env)
+                                              DefaultParserErrorHandler.withRun()).withBaseEnvironment(env).build()
     val context2 = new CompilerContextBuilder(s"file://$basePath/example31.yaml",
                                               platform,
-                                              DefaultParserErrorHandler.withRun()).build(env)
+                                              DefaultParserErrorHandler.withRun()).withBaseEnvironment(env).build()
     for {
       _  <- new AMFCompiler(context1, None, Some(Aml.name)).build()
       bu <- new AMFCompiler(context2, None, Some(Aml.name)).build()

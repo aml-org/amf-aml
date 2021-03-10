@@ -23,7 +23,7 @@ trait DialectValidation extends AsyncFunSuite with PlatformSecrets with DefaultA
       dialect <- {
         new AMFCompiler(
           new CompilerContextBuilder("file://" + path + dialectPath, platform, eh = DefaultParserErrorHandler.withRun())
-            .build(AmlEnvironment.aml()),
+            .withBaseEnvironment(AmlEnvironment.aml())build(),
           Some("application/yaml"),
           Some(AMLPlugin.ID)
         ).build()
