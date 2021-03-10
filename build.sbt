@@ -7,7 +7,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-version in ThisBuild := "5.1.2"
+version in ThisBuild := "5.1.3"
 
 publish := {}
 
@@ -34,7 +34,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "4.1.177"
+val amfCoreVersion = "4.1.185"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
@@ -47,7 +47,8 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
 //  resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   libraryDependencies ++= Seq(
-    "org.scalatest"    %%% "scalatest" % "3.0.5" % Test
+    "org.scalatest"    %%% "scalatest"         % "3.0.5" % Test,
+    "org.mule.common"  %%% "scala-common-test" % "0.0.4" % Test,
   ),
   logBuffered in Test := false
 )
@@ -68,7 +69,7 @@ lazy val customValidation = crossProject(JSPlatform, JVMPlatform)
       name := "amf-custom-validation"
     ))
   .in(file("./amf-custom-validation"))
-  .dependsOn(aml)
+  .dependsOn(aml % "compile->compile;test->test")
   .settings(commonSettings)
   .jvmSettings(
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-custom-validation-javadoc.jar"

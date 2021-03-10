@@ -165,7 +165,7 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example10a.yaml#/encodes"
       },
-      "http://a.ml/vocabularies/document#version": "2.4.0",
+      "http://a.ml/vocabularies/document#version": "3.0.0",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {

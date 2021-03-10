@@ -1,0 +1,25 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+external:
+  myExternal: http://myexternal.org#
+
+documents:
+  root:
+    encodes: ChildNodeMapping
+
+nodeMappings:
+  ParentNodeMapping:
+    classTerm: myExternal.ParentClass
+    mapping:
+      parentName:
+        propertyTerm: myExternal.parentProperty
+        range: string
+  ChildNodeMapping:
+    classTerm: myExternal.ChildClass
+    extends: ParentNodeMapping
+    mapping:
+      childName:
+        propertyTerm: myExternal.childProperty
+        range: string

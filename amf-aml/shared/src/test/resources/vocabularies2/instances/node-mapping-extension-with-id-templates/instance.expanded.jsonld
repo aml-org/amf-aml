@@ -1,0 +1,102 @@
+[
+  {
+    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-mapping-extension-with-id-templates/instance.yaml",
+    "@type": [
+      "http://a.ml/vocabularies/meta#DialectInstance",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-mapping-extension-with-id-templates/dialect.yaml"
+      }
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "http://myNode.org#my-example-node",
+        "@type": [
+          "http://myexternal.org#ChildClass",
+          "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-mapping-extension-with-id-templates/dialect.yaml#/declarations/ChildNodeMapping",
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://myexternal.org#childProperty": [
+          {
+            "@value": "my-example-node"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "http://myNode.org#my-example-node/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "http://myNode.org#my-example-node/source-map/lexical/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://myNode.org#my-example-node"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(2,23)]"
+                  }
+                ]
+              },
+              {
+                "@id": "http://myNode.org#my-example-node/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://myexternal.org#childProperty"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(2,23)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "3.0.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-mapping-extension-with-id-templates/instance.yaml#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-mapping-extension-with-id-templates/instance.yaml#/source-map/lexical/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-mapping-extension-with-id-templates/instance.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(2,23)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

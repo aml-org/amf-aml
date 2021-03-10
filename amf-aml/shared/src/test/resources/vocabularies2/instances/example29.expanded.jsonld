@@ -31,14 +31,14 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://test.com/v3#a": [
-              {
-                "@value": 1
-              }
-            ],
             "http://test.com/v3#c": [
               {
                 "@value": "hey, ho"
+              }
+            ],
+            "http://test.com/v3#a": [
+              {
+                "@value": 1
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -52,12 +52,12 @@
                     "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example29.yaml#/encodes/root/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/v3#a"
+                        "@value": "http://test.com/v3#c"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(4,2)-(5,0)]"
+                        "@value": "[(3,2)-(4,0)]"
                       }
                     ]
                   },
@@ -65,12 +65,12 @@
                     "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example29.yaml#/encodes/root/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/v3#c"
+                        "@value": "http://test.com/v3#a"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(3,2)-(4,0)]"
+                        "@value": "[(4,2)-(5,0)]"
                       }
                     ]
                   },
@@ -101,14 +101,14 @@
               "http://a.ml/vocabularies/meta#DialectDomainElement",
               "http://a.ml/vocabularies/document#DomainElement"
             ],
-            "http://test.com/v3#e": [
-              {
-                "@value": "let's"
-              }
-            ],
             "http://test.com/v3#d": [
               {
                 "@value": "go!"
+              }
+            ],
+            "http://test.com/v3#e": [
+              {
+                "@value": "let's"
               }
             ],
             "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -122,12 +122,12 @@
                     "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example29.yaml#/encodes/other/source-map/lexical/element_2",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/v3#e"
+                        "@value": "http://test.com/v3#d"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(6,2)-(7,0)]"
+                        "@value": "[(7,2)-(8,0)]"
                       }
                     ]
                   },
@@ -135,12 +135,12 @@
                     "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example29.yaml#/encodes/other/source-map/lexical/element_0",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
-                        "@value": "http://test.com/v3#d"
+                        "@value": "http://test.com/v3#e"
                       }
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(7,2)-(8,0)]"
+                        "@value": "[(6,2)-(7,0)]"
                       }
                     ]
                   },
@@ -215,7 +215,7 @@
     ],
     "http://a.ml/vocabularies/document#version": [
       {
-        "@value": "2.4.0"
+        "@value": "3.0.0"
       }
     ],
     "http://a.ml/vocabularies/document#root": [
