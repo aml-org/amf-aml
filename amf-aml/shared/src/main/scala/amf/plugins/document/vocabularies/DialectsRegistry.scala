@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies
 
-import amf.client.`new`.BaseEnvironment
+import amf.client.remod.BaseEnvironment
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.parse.DefaultErrorHandler
 import amf.core.CompilerContextBuilder
