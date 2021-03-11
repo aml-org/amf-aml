@@ -1,12 +1,10 @@
 package amf.dialects
 
-import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
 import amf.core.io.FunSuiteRdfCycleTests
-import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
 
@@ -95,8 +93,7 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
                           directory: String = basePath) = {
 
     val context =
-      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AmlEnvironment.aml())
+      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
       _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycleRdf(source, golden, hint, target)
@@ -112,8 +109,7 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
                               target: Vendor,
                               directory: String = basePath) = {
     val context =
-      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AmlEnvironment.aml())
+      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
       _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycleFullRdf(source, golden, hint, target, directory)

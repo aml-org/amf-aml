@@ -1,13 +1,11 @@
 package amf.dialects
 
-import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.io.FileAssertionTest
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.SyamlParsedDocument
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.{Aml, Hint, VocabularyYamlHint}
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -127,8 +125,7 @@ trait DomainElementCycleTests
                               hint: Hint = baseHint,
                               directory: String = basePath): Future[Assertion] = {
     val context =
-      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AmlEnvironment.aml())
+      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build().map(_.asInstanceOf[Dialect])
       _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }

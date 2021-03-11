@@ -3,9 +3,8 @@ package amf.plugins.domain
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.core.metamodel.Obj
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
-import amf.plugins.document.vocabularies.{AMLParsePlugin, AMLPlugin}
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.{document, domain}
@@ -75,6 +74,5 @@ object VocabulariesRegister {
     }
 
     amf.Core.registerPlugin(AMLPlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
   }
 }

@@ -15,10 +15,10 @@ import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.validation.ValidationResultProcessor
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
-import amf.plugins.document.graph.{AMFGraphParsePlugin, AMFGraphPlugin}
+import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
-import amf.plugins.document.vocabularies.{AMLParsePlugin, AMLPlugin}
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.features.validation.PlatformValidator
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.custom.model.{ParsedValidationProfile, ValidationDialectText}
@@ -34,8 +34,6 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(AMFGraphParsePlugin)
     ExecutionLog.log("Register RDF framework")
     platform.rdfFramework = Some(PlatformValidator.instance)
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
@@ -55,20 +53,19 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
 
     implicit val executionContext: ExecutionContext = exec.executionContext
 
+
     parseProfile(validationProfilePath, env, errorHandler)
       .map { getEncodesOrExit }
       .map { loadProfilesFromDialectOrExit }
   }
 
   private def parseProfile(validationProfilePath: String, env: Environment, errorHandler: ErrorHandler)(implicit executionContext: ExecutionContext) = {
-    val newEnv = AMFPluginsRegistry.obtainStaticEnv()
     RuntimeCompiler(
       validationProfilePath,
       Some("application/yaml"),
       Some(AMLPlugin.ID),
       Context(platform),
       cache = Cache(),
-      newEnv = newEnv,
       env = env,
       errorHandler = errorHandlerToParser(errorHandler)
     )
