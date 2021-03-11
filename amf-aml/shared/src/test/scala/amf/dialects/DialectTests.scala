@@ -34,8 +34,7 @@ trait DialectTests
                             renderOptions: Option[RenderOptions] = None,
                             useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
     val context =
-      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .withBaseEnvironment(AmlEnvironment.aml()).build()
+      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build()
       _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
@@ -55,17 +54,16 @@ trait DialectTests
                               source: String,
                               hint: Hint,
                               directory: String = basePath): Future[BaseUnit] = {
-    val env = AmlEnvironment.aml()
     for {
       dialect <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$dialect",
                                                             platform,
-                                                            DefaultParserErrorHandler.withRun()).withBaseEnvironment(env).build(),
+                                                            DefaultParserErrorHandler.withRun()).build(),
                                  None,
                                  Some(Aml.name)).build()
       _ <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
       b <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$source",
                                                       platform,
-                                                      DefaultParserErrorHandler.withRun()).withBaseEnvironment(env).build(),
+                                                      DefaultParserErrorHandler.withRun()).build(),
                            None,
                            Some(hint.vendor.name)).build()
     } yield {

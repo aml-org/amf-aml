@@ -14,8 +14,7 @@ trait DialectHelper {
   final def parseAndRegisterDialect(uri: String, platform: Platform, hint: Hint)(
       implicit ec: ExecutionContext): Future[BaseUnit] =
     for {
-      r <- new AMFCompiler(new CompilerContextBuilder(uri, platform, DefaultParserErrorHandler.withRun())
-        .withBaseEnvironment(AmlEnvironment.aml()).build(),
+      r <- new AMFCompiler(new CompilerContextBuilder(uri, platform, DefaultParserErrorHandler.withRun()).build(),
                            None,
                            Some(hint.vendor.name))
         .build()

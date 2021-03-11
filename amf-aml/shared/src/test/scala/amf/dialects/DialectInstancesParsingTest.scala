@@ -816,13 +816,12 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
   test("Clone instance from dialect") {
-    val env = AmlEnvironment.aml()
     val context1 = new CompilerContextBuilder(s"file://$basePath/dialect31.yaml",
                                               platform,
-                                              DefaultParserErrorHandler.withRun()).withBaseEnvironment(env).build()
+                                              DefaultParserErrorHandler.withRun()).build()
     val context2 = new CompilerContextBuilder(s"file://$basePath/example31.yaml",
                                               platform,
-                                              DefaultParserErrorHandler.withRun()).withBaseEnvironment(env).build()
+                                              DefaultParserErrorHandler.withRun()).build()
     for {
       _  <- new AMFCompiler(context1, None, Some(Aml.name)).build()
       bu <- new AMFCompiler(context2, None, Some(Aml.name)).build()

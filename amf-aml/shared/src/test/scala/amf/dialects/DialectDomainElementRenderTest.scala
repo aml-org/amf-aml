@@ -128,7 +128,6 @@ trait DomainElementCycleTests
                               directory: String = basePath): Future[Assertion] = {
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .withBaseEnvironment(AmlEnvironment.aml())
         .build()
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build().map(_.asInstanceOf[Dialect])
