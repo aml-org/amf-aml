@@ -2,6 +2,7 @@ package amf.core.io
 
 import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
+import amf.client.remod.amfcore.config.ParsingOptionsConverter
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
@@ -130,7 +131,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 
     options = options.withBaseUnitUrl("file://" + config.goldenPath)
 
-    val environment = AMFPluginsRegistry.obtainStaticEnv().withParsingOptions(options)
+    val environment = AMFPluginsRegistry.obtainStaticEnv().withParsingOptions(ParsingOptionsConverter.fromLegacy(options))
     val context =
       new CompilerContextBuilder(s"file://${config.sourcePath}", platform, eh.getOrElse(UnhandledParserErrorHandler))
         .withBaseEnvironment(environment)
