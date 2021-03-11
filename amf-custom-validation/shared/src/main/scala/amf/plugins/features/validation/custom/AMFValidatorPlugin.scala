@@ -35,8 +35,6 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(AMFGraphParsePlugin)
     ExecutionLog.log("Register RDF framework")
     platform.rdfFramework = Some(PlatformValidator.instance)
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")

@@ -30,8 +30,6 @@ object DefaultAmfInitializationWithCustomValidation {
       _ <- amf.core.AMF.init()
       _ <- Future.successful {
         amf.core.AMF.registerPlugin(AMFValidatorPlugin)
-        AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
-        AMFPluginsRegistry.registerNewInterfacePlugin(AMFGraphParsePlugin)
       }
       _ <- AMFValidatorPlugin.init()
     } yield {

@@ -20,6 +20,4 @@ class Aml10Parser private (private val mediaType: String, private val env: Optio
   def this(mediaType: String, env: Environment) = this(mediaType, Some(env))
 
   AMFPluginsRegistry.registerDocumentPlugin(AMLPlugin)
-  AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
-
 }

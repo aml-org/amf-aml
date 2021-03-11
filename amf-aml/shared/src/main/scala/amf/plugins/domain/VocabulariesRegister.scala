@@ -75,6 +75,5 @@ object VocabulariesRegister {
     }
 
     amf.Core.registerPlugin(AMLPlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
   }
 }
