@@ -3,6 +3,7 @@ package amf.plugins.document.vocabularies
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
+import amf.client.remod.amfcore.plugins.render.AMFRenderPluginAdapter
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.client.ParsingOptions
@@ -47,6 +48,7 @@ object AMLPlugin extends AMLPlugin {
 }
 
 object AMLParsePlugin extends AMFParsePluginAdapter(AMLPlugin)
+object AMLRenderPlugin extends AMFRenderPluginAdapter(AMLPlugin)
 
 trait AMLPlugin
     extends AMFDocumentPlugin
