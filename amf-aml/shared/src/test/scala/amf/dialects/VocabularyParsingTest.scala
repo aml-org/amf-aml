@@ -65,4 +65,8 @@ class VocabularyParsingTest extends DialectTests {
   multiSourceTest("generate 7 test", "example7.%s") { config =>
     cycle(config.source, "example7.yaml", AmfJsonHint, target = Aml)
   }
+
+  multiGoldenTest("Multiple extends test", "vocabulary.%s") { config =>
+    cycle("vocabulary.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions), directory = s"${basePath}multiple-extends/")
+  }
 }

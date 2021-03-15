@@ -1,0 +1,38 @@
+#%Vocabulary 1.0
+vocabulary: Test
+base: http://a.ml/vocabularies/test#
+
+classTerms:
+  ParentClassA:
+    displayName: Parent class term A
+    description: Test class term
+
+  ParentClassB:
+    displayName: Parent class term B
+    description: Test class term
+
+  ChildClass:
+    displayName: Child class term
+    description: Test class term
+    extends:
+      - ParentClassA
+      - ParentClassB
+
+propertyTerms:
+  ParentPropA:
+    displayName: Parent property term A
+    description: Test property term
+    range: string
+
+  ParentPropB:
+    displayName: Parent property term B
+    description: Test property term
+    range: string
+
+  ChildProp:
+    displayName: Child property term
+    description: Test property term
+    range: string
+    extends:
+      - ParentPropA
+      - ParentPropB

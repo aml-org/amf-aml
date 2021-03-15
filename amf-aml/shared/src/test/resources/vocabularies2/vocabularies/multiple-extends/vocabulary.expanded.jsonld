@@ -1,0 +1,375 @@
+[
+  {
+    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/multiple-extends/vocabulary.yaml",
+    "@type": [
+      "http://a.ml/vocabularies/meta#Vocabulary",
+      "http://www.w3.org/2002/07/owl#Ontology",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/core#name": [
+      {
+        "@value": "Test"
+      }
+    ],
+    "http://a.ml/vocabularies/meta#base": [
+      {
+        "@value": "http://a.ml/vocabularies/test#"
+      }
+    ],
+    "http://a.ml/vocabularies/document#location": [
+      {
+        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/multiple-extends/vocabulary.yaml"
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "3.0.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/multiple-extends/vocabulary.yaml#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/multiple-extends/vocabulary.yaml#/source-map/lexical/element_2",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://a.ml/vocabularies/core#name"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(3,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/multiple-extends/vocabulary.yaml#/source-map/lexical/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "http://a.ml/vocabularies/meta#base"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(3,0)-(5,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/multiple-extends/vocabulary.yaml#/source-map/lexical/element_1",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/multiple-extends/vocabulary.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(39,0)]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#declares": [
+      {
+        "@id": "http://a.ml/vocabularies/test#ParentClassA",
+        "@type": [
+          "http://www.w3.org/2002/07/owl#Class",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "ParentClassA"
+          }
+        ],
+        "http://a.ml/vocabularies/core#displayName": [
+          {
+            "@value": "Parent class term A"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "Test class term"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "http://a.ml/vocabularies/test#ParentClassA/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "http://a.ml/vocabularies/test#ParentClassA/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/test#ParentClassA"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(6,2)-(10,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "http://a.ml/vocabularies/test#ParentClassB",
+        "@type": [
+          "http://www.w3.org/2002/07/owl#Class",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "ParentClassB"
+          }
+        ],
+        "http://a.ml/vocabularies/core#displayName": [
+          {
+            "@value": "Parent class term B"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "Test class term"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "http://a.ml/vocabularies/test#ParentClassB/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "http://a.ml/vocabularies/test#ParentClassB/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/test#ParentClassB"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(10,2)-(14,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "http://a.ml/vocabularies/test#ChildClass",
+        "@type": [
+          "http://www.w3.org/2002/07/owl#Class",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#name": [
+          {
+            "@value": "ChildClass"
+          }
+        ],
+        "http://a.ml/vocabularies/core#displayName": [
+          {
+            "@value": "Child class term"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "Test class term"
+          }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#subClassOf": [
+          {
+            "@id": "http://a.ml/vocabularies/test#ParentClassA"
+          },
+          {
+            "@id": "http://a.ml/vocabularies/test#ParentClassB"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "http://a.ml/vocabularies/test#ChildClass/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "http://a.ml/vocabularies/test#ChildClass/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/test#ChildClass"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(14,2)-(21,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "http://a.ml/vocabularies/test#ParentPropA",
+        "@type": [
+          "http://www.w3.org/2002/07/owl#DatatypeProperty",
+          "http://a.ml/vocabularies/meta#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#displayName": [
+          {
+            "@value": "Parent property term A"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "Test property term"
+          }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "http://a.ml/vocabularies/test#ParentPropA/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "http://a.ml/vocabularies/test#ParentPropA/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/test#ParentPropA"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(22,2)-(27,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "http://a.ml/vocabularies/test#ParentPropB",
+        "@type": [
+          "http://www.w3.org/2002/07/owl#DatatypeProperty",
+          "http://a.ml/vocabularies/meta#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#displayName": [
+          {
+            "@value": "Parent property term B"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "Test property term"
+          }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "http://a.ml/vocabularies/test#ParentPropB/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "http://a.ml/vocabularies/test#ParentPropB/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/test#ParentPropB"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(27,2)-(32,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "http://a.ml/vocabularies/test#ChildProp",
+        "@type": [
+          "http://www.w3.org/2002/07/owl#DatatypeProperty",
+          "http://a.ml/vocabularies/meta#Property",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/core#displayName": [
+          {
+            "@value": "Child property term"
+          }
+        ],
+        "http://a.ml/vocabularies/core#description": [
+          {
+            "@value": "Test property term"
+          }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#range": [
+          {
+            "@id": "http://www.w3.org/2001/XMLSchema#string"
+          }
+        ],
+        "http://www.w3.org/2000/01/rdf-schema#subPropertyOf": [
+          {
+            "@id": "http://a.ml/vocabularies/test#ParentPropA"
+          },
+          {
+            "@id": "http://a.ml/vocabularies/test#ParentPropB"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "http://a.ml/vocabularies/test#ChildProp/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "http://a.ml/vocabularies/test#ChildProp/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/test#ChildProp"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(32,2)-(39,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
