@@ -38,5 +38,3 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
     throw new Exception("Cannot load a custom validation profile for this")
   }
 }
-
-object ValidationMutex {}
