@@ -130,7 +130,8 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 
     options = options.withBaseUnitUrl("file://" + config.goldenPath)
 
-    val environment = AMFPluginsRegistry.obtainStaticEnv().withParsingOptions(ParsingOptionsConverter.fromLegacy(options))
+    val environment =
+      AMFPluginsRegistry.obtainStaticConfig().withParsingOptions(ParsingOptionsConverter.fromLegacy(options))
     val context =
       new CompilerContextBuilder(s"file://${config.sourcePath}", platform, eh.getOrElse(UnhandledParserErrorHandler))
         .withBaseEnvironment(environment)
