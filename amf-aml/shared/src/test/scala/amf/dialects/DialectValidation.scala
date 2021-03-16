@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.ProfileName
-import amf.client.environment.AmlEnvironment
+import amf.client.environment.AMLEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.{AMFCompiler, CompilerContextBuilder}
@@ -23,7 +23,7 @@ trait DialectValidation extends AsyncFunSuite with PlatformSecrets with DefaultA
       dialect <- {
         new AMFCompiler(
           new CompilerContextBuilder("file://" + path + dialectPath, platform, eh = DefaultParserErrorHandler.withRun())
-            .build(AmlEnvironment.aml()),
+            .build(AMLEnvironment.aml()),
           Some("application/yaml"),
           Some(AMLPlugin.ID)
         ).build()

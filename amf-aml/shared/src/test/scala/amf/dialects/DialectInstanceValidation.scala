@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.ProfileName
-import amf.client.environment.AmlEnvironment
+import amf.client.environment.AMLEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
@@ -117,6 +117,6 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with 
 
   private def compilerContext(url: String) =
     new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun())
-      .build(AmlEnvironment.aml())
+      .build(AMLEnvironment.aml())
 
 }
