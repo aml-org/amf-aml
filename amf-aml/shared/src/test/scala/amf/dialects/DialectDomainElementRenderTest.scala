@@ -127,7 +127,8 @@ trait DomainElementCycleTests
                               directory: String = basePath): Future[Assertion] = {
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AMFPluginsRegistry.obtainStaticEnv())
+        .withBaseEnvironment(AMFPluginsRegistry.obtainStaticConfig())
+        .build()
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build().map(_.asInstanceOf[Dialect])
       _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
@@ -152,9 +153,7 @@ trait DomainElementCycleTests
     } yield r
   }
 
-  def renderDomainElement(element: Option[DomainElement],
-                          instance: DialectInstanceUnit,
-                          dialect: Dialect): String = {
+  def renderDomainElement(element: Option[DomainElement], instance: DialectInstanceUnit, dialect: Dialect): String = {
     val node     = element.map(AmlDomainElementEmitter.emit(_, dialect, UnhandledErrorHandler)).getOrElse(YNode.Empty)
     val document = SyamlParsedDocument(document = YDocument(node))
     SYamlSyntaxPlugin.unparse("application/yaml", document).getOrElse("").toString

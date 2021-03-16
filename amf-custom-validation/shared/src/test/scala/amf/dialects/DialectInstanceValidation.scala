@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.ProfileName
-import amf.client.environment.AmlEnvironment
+import amf.client.environment.AMLConfiguration
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets

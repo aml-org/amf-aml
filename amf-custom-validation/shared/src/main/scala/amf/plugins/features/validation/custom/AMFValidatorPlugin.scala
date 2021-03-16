@@ -10,6 +10,7 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.parser.errorhandler.AmfParserErrorHandler
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.validation.ShaclReportAdaptation
@@ -30,15 +31,14 @@ import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with ShaclReportAdaptation with AMFValidator{
+object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with ShaclReportAdaptation with AMFValidator {
 
   override val ID = "AMF Validation"
 
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(AMLParsePlugin)
-    AMFPluginsRegistry.registerNewInterfacePlugin(AMFGraphParsePlugin)
+
     ExecutionLog.log("Register RDF framework")
     platform.rdfFramework = Some(PlatformValidator.instance)
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
@@ -58,21 +58,21 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
 
     implicit val executionContext: ExecutionContext = exec.executionContext
 
-
     parseProfile(validationProfilePath, env, errorHandler)
       .map { getEncodesOrExit }
       .map { loadProfilesFromDialectOrExit }
   }
 
-  private def parseProfile(validationProfilePath: String, env: Environment, errorHandler: ErrorHandler)(implicit executionContext: ExecutionContext) = {
+  private def parseProfile(validationProfilePath: String, env: Environment, errorHandler: ErrorHandler)(
+      implicit executionContext: ExecutionContext) = {
     RuntimeCompiler(
-      validationProfilePath,
-      Some("application/yaml"),
-      Some(AMLPlugin.ID),
-      Context(platform),
-      cache = Cache(),
-      env = env,
-      errorHandler = errorHandlerToParser(errorHandler)
+        validationProfilePath,
+        Some("application/yaml"),
+        Some(AMLPlugin.ID),
+        Context(platform),
+        cache = Cache(),
+        env = env,
+        errorHandler = errorHandlerToParser(errorHandler)
     )
   }
 
@@ -93,15 +93,18 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
       val domainPlugin: Seq[AMFValidatePlugin] = getProfilePluginFor(validationProfile)
         .orElse(getProfilePluginFor(validationProfile.baseProfile.getOrElse(AmfProfile)))
         .getOrElse(Seq(amlPlugin()))
-      customValidationProfiles += (validationProfile.name.profile -> { () => validationProfile })
+      customValidationProfiles += (validationProfile.name.profile -> { () =>
+        validationProfile
+      })
       customValidationProfilesPlugins += (validationProfile.name.profile -> domainPlugin)
       validationProfile.name
 
     case _ =>
-      throw new Exception(
-        "Trying to load as a validation profile that does not match the Validation Profile dialect")
+      throw new Exception("Trying to load as a validation profile that does not match the Validation Profile dialect")
   }
 
-  private def getProfilePluginFor(profileName: ProfileName): Option[Seq[AMFValidatePlugin]] = profilesPlugins.get(profileName.profile)
-  private def getProfilePluginFor(validationProfile: ValidationProfile): Option[Seq[AMFValidatePlugin]] = getProfilePluginFor(validationProfile.name)
+  private def getProfilePluginFor(profileName: ProfileName): Option[Seq[AMFValidatePlugin]] =
+    profilesPlugins.get(profileName.profile)
+  private def getProfilePluginFor(validationProfile: ValidationProfile): Option[Seq[AMFValidatePlugin]] =
+    getProfilePluginFor(validationProfile.name)
 }

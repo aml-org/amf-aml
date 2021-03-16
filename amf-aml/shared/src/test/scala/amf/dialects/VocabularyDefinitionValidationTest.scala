@@ -1,5 +1,6 @@
 package amf.dialects
 import amf.AmlProfile
+import amf.client.environment.AMLConfiguration
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
@@ -37,7 +38,9 @@ class VocabularyDefinitionValidationTest
   }
 
   private def compilerContext(url: String) =
-    new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build(AMFPluginsRegistry.obtainStaticEnv())
+    new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun())
+      .withBaseEnvironment(AMFPluginsRegistry.obtainStaticConfig())
+      .build()
 
   protected def validate(vocabulary: String,
                          goldenReport: Option[String] = None,
@@ -47,9 +50,9 @@ class VocabularyDefinitionValidationTest
     val report = for {
       vocabulary <- {
         new AMFCompiler(
-          vocabularyContext,
-          Some("application/yaml"),
-          None
+            vocabularyContext,
+            Some("application/yaml"),
+            None
         ).build()
       }
       report <- RuntimeValidator(vocabulary, AmlProfile)

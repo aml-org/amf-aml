@@ -34,7 +34,8 @@ trait DialectTests
                             useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AMFPluginsRegistry.obtainStaticEnv())
+        .withBaseEnvironment(AMFPluginsRegistry.obtainStaticConfig())
+        .build()
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build()
       _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
@@ -54,19 +55,23 @@ trait DialectTests
                               source: String,
                               hint: Hint,
                               directory: String = basePath): Future[BaseUnit] = {
-    val env = AMFPluginsRegistry.obtainStaticEnv()
+    val env = AMFPluginsRegistry.obtainStaticConfig()
     for {
-      dialect <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$dialect",
-                                                            platform,
-                                                            DefaultParserErrorHandler.withRun()).build(env),
-                                 None,
-                                 Some(Aml.name)).build()
+      dialect <- new AMFCompiler(
+          new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
+            .withBaseEnvironment(env)
+            .build(),
+          None,
+          Some(Aml.name)
+      ).build()
       _ <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
-      b <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$source",
-                                                      platform,
-                                                      DefaultParserErrorHandler.withRun()).build(env),
-                           None,
-                           Some(hint.vendor.name)).build()
+      b <- new AMFCompiler(
+          new CompilerContextBuilder(s"file://$directory/$source", platform, DefaultParserErrorHandler.withRun())
+            .withBaseEnvironment(env)
+            .build(),
+          None,
+          Some(hint.vendor.name)
+      ).build()
     } yield {
       b
     }

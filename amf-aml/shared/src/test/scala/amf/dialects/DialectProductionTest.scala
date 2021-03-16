@@ -1,16 +1,14 @@
 package amf.dialects
 
-import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
-import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
 import amf.core.io.FunSuiteCycleTests
+import amf.core.model.document.BaseUnit
 import amf.core.registries.AMFPluginsRegistry
+import amf.core.remote._
+import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -27,7 +25,8 @@ trait DialectInstanceTester extends DefaultAmfInitialization { this: FunSuiteCyc
 
     val context =
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun())
-        .build(AMFPluginsRegistry.obtainStaticEnv())
+        .withBaseEnvironment(AMFPluginsRegistry.obtainStaticConfig())
+        .build()
     for {
       _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
       res <- cycle(source, golden, hint, target, directory, renderOptions)
@@ -196,7 +195,12 @@ class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectIns
 
   // Order is not predictable
   ignore("Can parse asyncapi overlay instances") {
-    withDialect("dialect6.yaml", "patch6.yaml", "patch6.resolved.yaml", VocabularyYamlHint, Aml, basePath + "asyncapi/")
+    withDialect("dialect6.yaml",
+                "patch6.yaml",
+                "patch6.resolved.yaml",
+                VocabularyYamlHint,
+                Aml,
+                basePath + "asyncapi/")
   }
 
 }
