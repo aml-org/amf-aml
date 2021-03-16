@@ -15,7 +15,6 @@ object Vocabularies extends PlatformSecrets {
 
   def register(): Unit = {
     VocabulariesRegister.register(platform)
-    amf.Core.registerPlugin(AMLPlugin)
   }
 
   def registerDialect(url: String): ClientFuture[Dialect] = {

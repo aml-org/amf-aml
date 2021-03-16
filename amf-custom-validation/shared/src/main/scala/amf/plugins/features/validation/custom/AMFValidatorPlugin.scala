@@ -10,14 +10,17 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.remote._
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
 import amf.core.validation.ValidationResultProcessor
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
+import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.features.validation.PlatformValidator
+import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.custom.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.features.validation.{AMFValidator, PlatformValidator}
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -49,6 +52,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[ProfileName] = {
 
     implicit val executionContext: ExecutionContext = exec.executionContext
+
 
     parseProfile(validationProfilePath, env, errorHandler)
       .map { getEncodesOrExit }

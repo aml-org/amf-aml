@@ -2,6 +2,7 @@ package amf.plugins.document.vocabularies
 
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.client.ParsingOptions
@@ -44,6 +45,8 @@ object AMLPlugin extends AMLPlugin {
   def apply(): AMLPlugin =
     AMFPluginsRegistry.documentPluginForID(this.ID).collect({ case a: AMLPlugin => a }).getOrElse(this)
 }
+
+object AMLParsePlugin extends AMFParsePluginAdapter(AMLPlugin)
 
 trait AMLPlugin
     extends AMFDocumentPlugin
@@ -131,7 +134,6 @@ trait AMLPlugin
     */
   override def parse(document: Root,
                      parentContext: ParserContext,
-                     platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
 
     val header = DialectHeader.dialectHeaderDirective(document)

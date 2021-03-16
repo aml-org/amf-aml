@@ -1,5 +1,6 @@
 package amf.dialects
 
+import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.emitter.RenderOptions
@@ -7,6 +8,7 @@ import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.io.FunSuiteCycleTests
+import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalatest.Assertion
