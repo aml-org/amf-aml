@@ -20,7 +20,7 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
-import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ValidationResultProcessor}
+import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ShaclReportAdaptation}
 import amf.core.vocabulary.NamespaceAliases
 import amf.internal.environment.Environment
 import amf.plugins.document.vocabularies.annotations._
@@ -55,7 +55,7 @@ trait AMLPlugin
     with RamlHeaderExtractor
     with JsonHeaderExtractor
     with AMFValidationPlugin
-    with ValidationResultProcessor
+    with ShaclReportAdaptation
     with PlatformSecrets
     with KeyPropertyHeaderExtractor {
 
@@ -309,7 +309,7 @@ trait AMLPlugin
 
           // adding model-side validations
           val results = shaclReport.results.flatMap { r =>
-            buildValidationResult(baseUnit, r, RamlProfile.messageStyle, validations)
+            adaptToAmfResult(baseUnit, r, RamlProfile.messageStyle, validations)
           }
 
           AMFValidationReport(

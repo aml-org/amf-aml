@@ -12,7 +12,7 @@ import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.remote._
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
-import amf.core.validation.ValidationResultProcessor
+import amf.core.validation.ShaclReportAdaptation
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
@@ -27,7 +27,7 @@ import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with ValidationResultProcessor with AMFValidator{
+object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with ShaclReportAdaptation with AMFValidator{
 
   override val ID = "AMF Validation"
 
