@@ -116,6 +116,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
               case YType.Seq =>
                 DefaultArrayNode(entry.value).nodes._1
                   .map(_.value.toString) // ArrayNode(entry.value).strings().scalars.map(_.toString)
+              case YType.Null => Seq.empty
             }
 
             val properties: Seq[String] = refs
@@ -143,6 +144,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
               case YType.Seq =>
                 // ArrayNode(entry.value).strings().scalars.map(_.toString)
                 DefaultArrayNode(node = entry.value).nodes._1.map(_.value.toString)
+              case YType.Null => Seq.empty
             }
 
             val superClasses: Seq[String] = refs
@@ -254,6 +256,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
               case YType.Seq =>
                 DefaultArrayNode(entry.value).nodes._1.map(_.as[YScalar].text)
               // ArrayNode(entry.value).strings().scalars.map(_.toString)
+              case YType.Null => Seq.empty
             }
 
             val superClasses: Seq[String] = refs

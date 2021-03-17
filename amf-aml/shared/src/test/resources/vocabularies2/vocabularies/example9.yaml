@@ -1,0 +1,6 @@
+#%Vocabulary 1.0
+base: http://a.ml/vocabularies/test9#
+vocabulary: test9
+classTerms:
+  t:
+    properties: *
