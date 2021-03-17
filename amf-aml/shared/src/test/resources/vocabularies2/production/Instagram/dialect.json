@@ -296,7 +296,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://mulesoft.com/vocabularies/amf-learning#Person/source-map/lexical/element_0",
+                    "@id": "http://mulesoft.com/vocabularies/amf-learning#Person/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://mulesoft.com/vocabularies/amf-learning#Person"
@@ -305,6 +305,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(15,2)-(21,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://mulesoft.com/vocabularies/amf-learning#Person/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/meta#properties"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(18,4)-(21,0)]"
                       }
                     ]
                   }
