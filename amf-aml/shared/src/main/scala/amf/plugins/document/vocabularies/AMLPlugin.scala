@@ -35,7 +35,11 @@ import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, Dialec
 import amf.plugins.document.vocabularies.parser.instances._
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.plugin.headers._
-import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DialectInstancePatchResolutionPipeline,
+  DialectInstanceResolutionPipeline,
+  DialectResolutionPipeline
+}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.{ProfileName, RamlProfile}
 import org.yaml.model._
@@ -68,34 +72,34 @@ trait AMLPlugin
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future { this }
 
   override def modelEntities: Seq[Obj] = Seq(
-      VocabularyModel,
-      ExternalModel,
-      VocabularyReferenceModel,
-      ClassTermModel,
-      ObjectPropertyTermModel,
-      DatatypePropertyTermModel,
-      DialectModel,
-      NodeMappingModel,
-      UnionNodeMappingModel,
-      PropertyMappingModel,
-      DocumentsModelModel,
-      PublicNodeMappingModel,
-      DocumentMappingModel,
-      DialectLibraryModel,
-      DialectFragmentModel,
-      DialectInstanceModel,
-      DialectInstanceLibraryModel,
-      DialectInstanceFragmentModel,
-      DialectInstancePatchModel
+    VocabularyModel,
+    ExternalModel,
+    VocabularyReferenceModel,
+    ClassTermModel,
+    ObjectPropertyTermModel,
+    DatatypePropertyTermModel,
+    DialectModel,
+    NodeMappingModel,
+    UnionNodeMappingModel,
+    PropertyMappingModel,
+    DocumentsModelModel,
+    PublicNodeMappingModel,
+    DocumentMappingModel,
+    DialectLibraryModel,
+    DialectFragmentModel,
+    DialectInstanceModel,
+    DialectInstanceLibraryModel,
+    DialectInstanceFragmentModel,
+    DialectInstancePatchModel
   )
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] =
     Map(
-        "aliases-location" -> AliasesLocation,
-        "custom-id"        -> CustomId,
-        "custom-base"      -> CustomBase,
-        "ref-include"      -> RefInclude,
-        "json-pointer-ref" -> JsonPointerRef
+      "aliases-location" -> AliasesLocation,
+      "custom-id"        -> CustomId,
+      "custom-base"      -> CustomBase,
+      "ref-include"      -> RefInclude,
+      "json-pointer-ref" -> JsonPointerRef
     )
 
   /**
@@ -119,24 +123,22 @@ trait AMLPlugin
     * this domain
     */
   override def documentSyntaxes: Seq[String] = Seq(
-      "application/aml+json",
-      "application/aml+yaml",
-      "application/raml",
-      "application/raml+json",
-      "application/raml+yaml",
-      "text/yaml",
-      "text/x-yaml",
-      "application/yaml",
-      "application/x-yaml",
-      "application/json"
+    "application/aml+json",
+    "application/aml+yaml",
+    "application/raml",
+    "application/raml+json",
+    "application/raml+yaml",
+    "text/yaml",
+    "text/x-yaml",
+    "application/yaml",
+    "application/x-yaml",
+    "application/json"
   )
 
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root,
-                     parentContext: ParserContext,
-                     options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
 
     val header = DialectHeader.dialectHeaderDirective(document)
 
@@ -233,7 +235,7 @@ trait AMLPlugin
           new DialectInstanceLibraryParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parse()
         case Some(headerKey) if resolvedDialect.isPatchHeader(headerKey) =>
           new DialectInstancePatchParser(document)(
-              new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
+            new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
             .parse()
         case _ =>
           new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
@@ -256,22 +258,7 @@ trait AMLPlugin
   }
 
   protected def computeValidationProfile(dialect: Dialect): ValidationProfile = {
-    val header = dialect.header
-    registry.validations.get(header) match {
-      case Some(profile) => profile
-      case _ =>
-        val resolvedDialect = new DialectResolutionPipeline(dialect.errorHandler()).resolve(dialect)
-        val profile         = new AMFDialectValidations(resolvedDialect).profile()
-        registry.validations += (header -> profile)
-        profile
-    }
-  }
-
-  def aggregateValidations(validations: EffectiveValidations,
-                           dependenciesValidations: Seq[ValidationProfile]): EffectiveValidations = {
-    dependenciesValidations.foldLeft(validations) {
-      case (effective, profile) => effective.someEffective(profile)
-    }
+    ValidationProfileComputation.computeProfileFor(dialect, registry)
   }
 
   /**
@@ -286,43 +273,7 @@ trait AMLPlugin
       resolved: Boolean,
       executionEnv: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
 
-    implicit val executionContext: ExecutionContext = executionEnv.executionContext
-
-    baseUnit match {
-      case dialectInstance: DialectInstanceUnit =>
-        val resolvedModel =
-          new DialectInstanceResolutionPipeline(baseUnit.errorHandler()).resolve(dialectInstance)
-
-        val dependenciesValidations: Future[Seq[ValidationProfile]] = Future
-          .sequence(dialectInstance.graphDependencies.map { instance =>
-            registry.registerDialect(instance.value())
-          }) map { dialects =>
-          dialects.map(computeValidationProfile)
-        }
-
-        for {
-          validationsFromDeps <- dependenciesValidations
-          shaclReport <- RuntimeValidator.shaclValidation(resolvedModel,
-                                                          aggregateValidations(validations, validationsFromDeps),
-                                                          options = new ValidationOptions().withFullValidation())
-        } yield {
-
-          // adding model-side validations
-          val results = shaclReport.results.flatMap { r =>
-            adaptToAmfResult(baseUnit, r, RamlProfile.messageStyle, validations)
-          }
-
-          AMFValidationReport(
-              conforms = !results.exists(_.level == SeverityLevels.VIOLATION),
-              model = baseUnit.id,
-              profile = profile,
-              results = results
-          )
-        }
-
-      case _ =>
-        throw new Exception(s"Cannot resolve base unit of type ${baseUnit.getClass}")
-    }
+    new AMLValidator(registry).validate(baseUnit, profile, validations)(executionEnv.executionContext)
   }
 
   /**
@@ -350,10 +301,10 @@ trait AMLPlugin
       case di: DialectInstanceUnit =>
         registry.dialectFor(di) match {
           case Some(dialect) => generateNamespaceAliasesFrom(dialect)
-          case None => throw new IllegalStateException(s"No dialect registered with ID ${di.definedBy().value()}")
+          case None          => throw new IllegalStateException(s"No dialect registered with ID ${di.definedBy().value()}")
         }
       case dialect: Dialect => generateNamespaceAliasesFrom(dialect)
-      case _          => throw new IllegalStateException("Unreachable")
+      case _                => throw new IllegalStateException("Unreachable")
     }
   }
 

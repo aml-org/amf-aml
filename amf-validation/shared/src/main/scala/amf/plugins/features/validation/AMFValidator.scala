@@ -10,7 +10,7 @@ import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.{Oas30, Raml08, Vendor}
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
-import amf.core.services.ValidationOptions
+import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
@@ -20,7 +20,7 @@ import amf._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-protected[amf] trait AMFValidator extends PlatformSecrets {
+protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets {
   protected var customValidationProfiles: Map[String, () => ValidationProfile]  = Map.empty
   protected var customValidationProfilesPlugins: Map[String, AMFDocumentPlugin] = Map.empty
 

@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 
 
-object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with AMFValidator {
+object AMFValidatorPlugin extends AMFFeaturePlugin with AMFValidator {
 
   override val ID = "AMF Validation"
 
