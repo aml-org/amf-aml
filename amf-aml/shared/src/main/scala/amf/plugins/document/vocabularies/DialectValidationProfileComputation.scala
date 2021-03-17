@@ -5,7 +5,7 @@ import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 
-object ValidationProfileComputation {
+object DialectValidationProfileComputation {
 
   def computeProfileFor(dialect: Dialect, registry: DialectsRegistry): ValidationProfile = {
     val header = dialect.header

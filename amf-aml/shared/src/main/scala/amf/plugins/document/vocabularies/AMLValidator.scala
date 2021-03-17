@@ -39,7 +39,7 @@ class AMLValidator(registry: DialectsRegistry) extends ShaclReportAdaptation {
       implicit executionContext: ExecutionContext) = {
     Future
       .sequence(registerGraphDependencies(dialectInstance)) map { dialects =>
-      dialects.map(ValidationProfileComputation.computeProfileFor(_, registry))
+      dialects.map(DialectValidationProfileComputation.computeProfileFor(_, registry))
     }
   }
 

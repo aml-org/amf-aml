@@ -258,7 +258,7 @@ trait AMLPlugin
   }
 
   protected def computeValidationProfile(dialect: Dialect): ValidationProfile = {
-    ValidationProfileComputation.computeProfileFor(dialect, registry)
+    DialectValidationProfileComputation.computeProfileFor(dialect, registry)
   }
 
   /**

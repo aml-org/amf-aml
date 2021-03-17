@@ -9,7 +9,7 @@ import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.{Oas30, Raml08, Vendor}
-import amf.core.services.RuntimeValidator.CustomShaclFunctions
+import amf.core.services.RuntimeValidator.{CustomShaclFunctions, validatorOption}
 import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
@@ -66,48 +66,8 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
       validations: EffectiveValidations,
       customFunctions: CustomShaclFunctions,
       options: ValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] =
-    if (options.isPartialValidation) partialShaclValidation(model, validations, customFunctions, options)
-    else fullShaclValidation(model, validations, options)
-
-  private def partialShaclValidation(
-      model: BaseUnit,
-      validations: EffectiveValidations,
-      customFunctions: CustomShaclFunctions,
-      options: ValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] =
-    new CustomShaclValidator(model, validations, customFunctions, options).run
-
-  private def fullShaclValidation(model: BaseUnit, validations: EffectiveValidations, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[ValidationReport] = {
-    ExecutionLog.log(
-      s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
-    // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
-    // validations.effective.keys.foreach(v => println(s" - $v"))
-
-    if (PlatformValidator.instance.supportsJSFunctions) {
-      // TODO: Check the validation profile passed to JSLibraryEmitter, it contains the prefixes
-      // for the functions
-      val jsLibrary = new JSLibraryEmitter(None).emitJS(validations.effective.values.toSeq)
-
-      jsLibrary match {
-        case Some(code) =>
-          PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
-        case _ => // ignore
-      }
-    }
-
-    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: jsLibrary generated")
-
-    val data   = model
-    val shapes = customValidations(validations)
-
-    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: Invoking platform validation")
-
-    PlatformValidator.instance.report(data, shapes, options).map {
-      case report =>
-        ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: validation finished")
-        report
-    }
-  }
+    if (options.isPartialValidation) new CustomShaclValidator(model, validations, customFunctions, options).run
+    else new FullShaclValidator().validate(model, validations, options)
 
   private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {
     given match {
@@ -150,7 +110,6 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
 
   private def modelValidation(model: BaseUnit,
                               profileName: ProfileName,
-                              messageStyle: MessageStyle,
                               env: Environment,
                               resolved: Boolean,
                               exec: BaseExecutionEnvironment): Future[AMFValidationReport] = {
