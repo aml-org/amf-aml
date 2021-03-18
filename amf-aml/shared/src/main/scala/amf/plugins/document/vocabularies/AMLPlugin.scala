@@ -1,13 +1,13 @@
 package amf.plugins.document.vocabularies
 
-import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
 import amf.client.remod.amfcore.plugins.render.AMFRenderPluginAdapter
+import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.client.ParsingOptions
-import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
@@ -17,12 +17,12 @@ import amf.core.rdf.RdfModel
 import amf.core.registries.{AMFDomainEntityResolver, AMFPluginsRegistry}
 import amf.core.remote.{Aml, Platform}
 import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.services.{RuntimeValidator, ValidationOptions}
+import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
+import amf.core.validation.ShaclReportAdaptation
 import amf.core.validation.core.ValidationProfile
-import amf.core.validation.{AMFValidationReport, EffectiveValidations, SeverityLevels, ShaclReportAdaptation}
 import amf.core.vocabulary.NamespaceAliases
-import amf.internal.environment.Environment
+import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
 import amf.plugins.document.vocabularies.annotations._
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
@@ -35,13 +35,7 @@ import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, Dialec
 import amf.plugins.document.vocabularies.parser.instances._
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.plugin.headers._
-import amf.plugins.document.vocabularies.resolution.pipelines.{
-  DialectInstancePatchResolutionPipeline,
-  DialectInstanceResolutionPipeline,
-  DialectResolutionPipeline
-}
-import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.{ProfileName, RamlProfile}
+import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
 import org.yaml.model._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -221,6 +215,9 @@ trait AMLPlugin
     }
   }
 
+
+  override protected[amf] def getRemodValidatePlugins(): Seq[AMFValidatePlugin] = Seq(amlPlugin())
+
   protected def parseDocumentWithDialect(document: Root,
                                          parentContext: ParserContext,
                                          dialect: Dialect,
@@ -259,21 +256,6 @@ trait AMLPlugin
 
   protected def computeValidationProfile(dialect: Dialect): ValidationProfile = {
     DialectValidationProfileComputation.computeProfileFor(dialect, registry)
-  }
-
-  /**
-    * Request for validation of a particular model, profile and list of effective validations for that profile
-    */
-  override def validationRequest(
-      baseUnit: BaseUnit,
-      profile: ProfileName,
-      validations: EffectiveValidations,
-      platform: Platform,
-      env: Environment,
-      resolved: Boolean,
-      executionEnv: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
-
-    new AMLValidator(registry).validate(baseUnit, profile, validations)(executionEnv.executionContext)
   }
 
   /**

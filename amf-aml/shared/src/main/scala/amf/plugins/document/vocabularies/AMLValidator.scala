@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies
 
+import amf.client.remod.amfcore.plugins.validate.ValidationResult
 import amf.{ProfileName, RamlProfile}
 import amf.core.model.document.BaseUnit
 import amf.core.services.{RuntimeValidator, ValidationOptions}
@@ -13,7 +14,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class AMLValidator(registry: DialectsRegistry) extends ShaclReportAdaptation {
 
   def validate(baseUnit: BaseUnit, profile: ProfileName, validations: EffectiveValidations)(
-      implicit executionContext: ExecutionContext): Future[AMFValidationReport] = {
+      implicit executionContext: ExecutionContext): Future[ValidationResult] = {
 
     baseUnit match {
       case dialectInstance: DialectInstanceUnit =>
@@ -27,7 +28,8 @@ class AMLValidator(registry: DialectsRegistry) extends ShaclReportAdaptation {
                                                           addValidations(validations, validationsFromDeps),
                                                           options = new ValidationOptions().withFullValidation())
         } yield {
-          adaptToAmfReport(baseUnit, profile, shaclReport, RamlProfile.messageStyle, validations)
+          val report = adaptToAmfReport(baseUnit, profile, shaclReport, RamlProfile.messageStyle, validations)
+          ValidationResult(resolvedModel, report)
         }
 
       case _ =>
