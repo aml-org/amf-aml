@@ -3,6 +3,7 @@ package amf.plugins.document.vocabularies.parser.vocabularies
 import amf.core.Root
 import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
+import amf.core.model.domain.{AmfArray, AmfScalar}
 import amf.core.parser.{BaseSpecParser, _}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel
@@ -116,12 +117,13 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
               case YType.Seq =>
                 DefaultArrayNode(entry.value).nodes._1
                   .map(_.value.toString) // ArrayNode(entry.value).strings().scalars.map(_.toString)
+              case YType.Null => Seq.empty
             }
 
-            val properties: Seq[String] = refs
+            val properties: Seq[AmfScalar] = refs
               .map { term: String =>
                 ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
-                  case Some(v) => Some(v)
+                  case Some(v) => Some(AmfScalar(v))
                   case None =>
                     ctx.missingPropertyTermWarning(term, classTerm.id, entry.value)
                     None
@@ -131,7 +133,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
               .map(_.get)
 
             if (properties.nonEmpty)
-              classTerm.set(ClassTermModel.Properties, properties)
+              classTerm.set(ClassTermModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
           }
         )
 
@@ -143,6 +145,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
               case YType.Seq =>
                 // ArrayNode(entry.value).strings().scalars.map(_.toString)
                 DefaultArrayNode(node = entry.value).nodes._1.map(_.value.toString)
+              case YType.Null => Seq.empty
             }
 
             val superClasses: Seq[String] = refs
@@ -254,6 +257,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
               case YType.Seq =>
                 DefaultArrayNode(entry.value).nodes._1.map(_.as[YScalar].text)
               // ArrayNode(entry.value).strings().scalars.map(_.toString)
+              case YType.Null => Seq.empty
             }
 
             val superClasses: Seq[String] = refs

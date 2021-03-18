@@ -38,6 +38,14 @@ class VocabularyParsingTest extends DialectTests {
     cycle("example7.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
   }
 
+  multiGoldenTest("parse 8 test", "example8.%s") { config =>
+    cycle("example8.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("parse 9 test", "example9.%s") { config =>
+    cycle("example9.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+  }
+
   multiSourceTest("generate 1 test", "example1.%s") { config =>
     cycle(config.source, "example1.yaml", AmfJsonHint, target = Aml)
   }
