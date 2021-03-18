@@ -1,8 +1,10 @@
 package amf.plugins.document.vocabularies
 
-import amf.client.remod.BaseEnvironment
+import amf.client.environment.AMLEnvironment
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.BaseEnvironment
+import amf.client.remod.internal.FilterType
 import amf.core.CompilerContextBuilder
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.metamodel.{Field, Obj, Type}
@@ -25,47 +27,49 @@ import org.mulesoft.common.core._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
+class DialectsRegistry(var e: AMLEnvironment) extends AMFDomainEntityResolver with PlatformSecrets {
 
-  protected var map: Map[String, Dialect] = Map()
-  protected var resolved: Set[String]     = Set()
+  protected var resolved: Set[String] = Set()
 
   private[vocabularies] var validations: Map[String, ValidationProfile] = Map()
 
+
   def findNode(dialectNode: String): Option[(Dialect, NodeMapping)] = {
-    map.values.find(dialect => dialectNode.contains(dialect.id)) map { dialect =>
+    allDialects().find(dialect => dialectNode.contains(dialect.id)) map { dialect =>
       (dialect, dialect.declares.find(_.id == dialectNode))
     } collectFirst { case (dialect, Some(nodeMapping: NodeMapping)) => (dialect, nodeMapping) }
   }
 
-  def knowsHeader(header: String): Boolean = {
-    header == "%Vocabulary 1.0" || header == "%Dialect 1.0" || header == "%Library / Dialect 1.0" || map
-      .contains(headerKey(header))
-  }
+  def knowsHeader(header: String): Boolean = findDialectForHeader(header).isDefined
 
   def knowsDialectInstance(instance: DialectInstanceUnit): Boolean = dialectFor(instance).isDefined
 
-  def dialectFor(instance: DialectInstanceUnit): Option[Dialect] =
-    instance.definedBy().option().flatMap(id => map.values.find(_.id == id))
+  def dialectFor(instance: DialectInstanceUnit): Option[Dialect] = {
+    for {
+      dialectId <- instance.definedBy().option()
+      dialect   <- dialectById(dialectId)
+    } yield {
+      dialect
+    }
+  }
 
-  def allDialects(): Iterable[Dialect] = map.values
+  def allDialects(): Iterable[Dialect] = e.registry.plugins.allPlugins.filterByType[AMLInstancePlugin].map(_.dialect)
 
   def register(dialect: Dialect): DialectsRegistry = {
-    dialect.allHeaders foreach { header =>
-      map += (header -> dialect)
-    }
+    e = e.withDialect(dialect)
     resolved -= dialect.header
     validations -= dialect.header
     this
   }
 
-  def findDialectForHeader(header: String): Option[Dialect] = map.get(header)
+  def findDialectForHeader(rawHeader: String): Option[Dialect] = {
+    allDialects().find(_.header == headerKey(rawHeader))
+  }
 
-  def dialectById(id: String): Option[Dialect] = map.values.find(_.id == id)
+  def dialectById(id: String): Option[Dialect] = allDialects().find(_.id == id)
 
   def withRegisteredDialect(header: String)(k: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
-    val dialectId = headerKey(header.split("\\|").head)
-    map.get(dialectId) match {
+    findDialectForHeader(header) match {
       case Some(dialect) => withRegisteredDialect(dialect)(k)
       case _             => None
     }
@@ -80,18 +84,18 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   }
 
   private def resolveDialect(dialect: Dialect) = {
+    e = e.withoutDialect(dialect)
     val solved = new DialectResolutionPipeline(DefaultErrorHandler()).resolve(dialect)
-    dialect.allHeaders foreach { header =>
-      map += (header -> solved)
-    }
+    e = e.withDialect(solved)
     resolved += dialect.header
     solved
   }
 
-  protected def headerKey(header: String): String = header.stripSpaces
+  protected def headerKey(header: String): String = header.split("\\|").head.stripSpaces
 
+  // Should not be here
   override def findType(typeString: String): Option[Obj] = {
-    val foundMapping: Option[(Dialect, DomainElement)] = map.values.toSeq.distinct
+    val foundMapping: Option[(Dialect, DomainElement)] = allDialects()
       .collect {
         case dialect: Dialect =>
           dialect.declares.find {
@@ -110,6 +114,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     }
   }
 
+  // Shouldn't be here
   override def buildType(modelType: Obj): Option[Annotations => AmfObject] = modelType match {
     case dialectModel: DialectDomainElementModel =>
       val reviver = (annotations: Annotations) =>
@@ -126,6 +131,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     case _ => None
   }
 
+  // Shouldn't be here
   def buildMetaModel(nodeMapping: NodeMapping, dialect: Dialect): DialectDomainElementModel = {
     val nodeType = nodeMapping.nodetypeMapping
     val fields   = nodeMapping.propertiesMapping().map(_.toField)
@@ -148,8 +154,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   }
 
   def resolveRegisteredDialect(header: String): Unit = {
-    val h = headerKey(header.split("\\|").head)
-    map.get(h) match {
+    findDialectForHeader(header) match {
       case Some(dialect) => resolveDialect(dialect)
       case _             => throw new Exception(s"Cannot find Dialect with header '$header'")
     }
@@ -165,16 +170,12 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   def registerDialect(uri: String, environment: Environment, exec: ExecutionContext): Future[Dialect] = {
     implicit val executionContext: ExecutionContext = exec
-    map.get(uri) match {
-      case Some(dialect) =>
-        Future {
-          dialect
-        }
+    dialectById(uri) match {
+      case Some(dialect) => Future.successful(dialect)
       case _ =>
-        val newEnv = AMFPluginsRegistry.obtainStaticEnv()
+        val newEnv              = AMFPluginsRegistry.obtainStaticEnv()
         val withLegacyEnvValues = BaseEnvironment.fromLegacy(newEnv, environment)
-        val context =
-          new CompilerContextBuilder(uri, platform, UnhandledParserErrorHandler).build(withLegacyEnvValues)
+        val context = new CompilerContextBuilder(uri, platform, UnhandledParserErrorHandler).build(withLegacyEnvValues)
         RuntimeCompiler
           .forContext(context, Some("application/yaml"), Some(Aml.name))
           .map {
@@ -186,16 +187,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   }
 
-  def unregisterDialect(uri: String): Unit = {
-    map.foreach {
-      case (header, dialect) =>
-        if (dialect.id == uri) {
-          map -= header
-          validations -= dialect.header
-          resolved -= dialect.header
-        }
-    }
-  }
+  def unregisterDialect(uri: String): Unit = remove(uri)
 
   def registerDialect(url: String, code: String): Future[Dialect] = registerDialect(url, code, Environment())
 
@@ -214,9 +206,5 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   def registerDialect(url: String, code: String, env: Environment, exec: ExecutionContext): Future[Dialect] =
     registerDialect(url, env.add(StringResourceLoader(url, code)), exec)
 
-  def remove(uri: String): Unit = {
-    val headers = map.filter(_._2.id == uri).keys.toList
-    resolved = resolved.filter(l => !headers.contains(l))
-    map = map.filter(_._2.id != uri)
-  }
+  def remove(uri: String): Unit = dialectById(uri).foreach(d => e = e.withoutDialect(d))
 }

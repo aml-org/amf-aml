@@ -9,7 +9,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, ReferenceHandler}
 import amf.plugins.document.vocabularies.model.document.Dialect
 
-class AMLInstancePlugin(dialect:Dialect) extends AMFParsePlugin{
+class AMLInstancePlugin(val dialect:Dialect) extends AMFParsePlugin{
 
   override def parse(document: Root, ctx: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
 

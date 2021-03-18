@@ -14,30 +14,46 @@ case class AMLEnvironment(override val resolvers: AMFResolvers,
                           override val errorHandlerProvider: ErrorHandlerProvider,
                           override val registry: AMFRegistry,
                           override val amfConfig: AMFConfig,
-                          override val options: AMFOptions) extends AMFEnvironment(resolvers, errorHandlerProvider, registry, amfConfig, options){
-
+                          override val options: AMFOptions)
+    extends AMFEnvironment(resolvers, errorHandlerProvider, registry, amfConfig, options) {
 
   /**
     *
     * @param path
     * @return
     */
-
-  def withDialect(path: String): Future[AMLEnvironment] ={
+  def withDialect(path: String): Future[AMLEnvironment] = {
     getInstance().parse(path).map {
-      case AmfResult(d:Dialect, _) => withDialect(d)
-      case _ => this
+      // TODO We should also resolve the dialect
+      case AmfResult(d: Dialect, _) => withDialect(d)
+      case _                        => this
     }
   }
 
-  def withDialect(dialect:Dialect) :AMLEnvironment= {
+  def withDialect(dialect: Dialect): AMLEnvironment = {
+    // TODO check if this dialect is resolved
     withPlugin(new AMLInstancePlugin(dialect)).withConstraints() //build contraints
   }
 
-  def withCustomProfile(instancePath:String) : Future[AMLEnvironment] = {
-    getInstance().parse(instancePath:String).map {
-      case AmfResult(i:DialectInstance,_) =>// SET REGISTRY PROFILE
-      case _ => this
+  def withoutDialect(dialect: Dialect): AMLEnvironment =
+    pluginFor(dialect)
+      .map(withoutPlugin)
+      .getOrElse(this)
+      .asInstanceOf[AMLEnvironment]
+
+  private[amf] def pluginFor(dialect: Dialect): Option[AMLInstancePlugin] = {
+    registry.plugins.allPlugins
+      .find {
+        case e: AMLInstancePlugin => e.dialect == dialect
+        case _                    => false
+      }
+      .asInstanceOf[Option[AMLInstancePlugin]]
+  }
+
+  def withCustomProfile(instancePath: String): Future[AMLEnvironment] = {
+    getInstance().parse(instancePath: String).map {
+      case AmfResult(i: DialectInstance, _) => // SET REGISTRY PROFILE
+      case _                                => this
     }
   }
 }
@@ -47,7 +63,11 @@ private[amf] object AMLEnvironment {
 
   def aml(): AMLEnvironment = {
 
-    new AMLEnvironment(environment.resolvers, environment.errorHandlerProvider, environment.registry, environment.amfConfig, environment.options).withPlugins(List(AMLParsePlugin, AMFGraphParsePlugin))
+    new AMLEnvironment(environment.resolvers,
+                       environment.errorHandlerProvider,
+                       environment.registry,
+                       environment.amfConfig,
+                       environment.options).withPlugins(List(AMLParsePlugin, AMFGraphParsePlugin))
   }
 
 }
