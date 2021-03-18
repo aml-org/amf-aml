@@ -3,13 +3,15 @@ package amf.plugins.document.vocabularies.emitters.instances
 import amf.core.annotations.Aliases.{Alias, ImportLocation, RefId}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.SpecOrdering.Lexical
-import amf.core.emitter.{RenderOptions, SpecOrdering}
+import amf.core.emitter.SpecOrdering
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.model.document.{DeclaresModel, EncodesModel}
 import amf.core.parser.Position
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.PartBuilder
+import amf.client.remod.amfcore.config.RenderOptions
 
 case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Dialect, renderOptions: RenderOptions)
     extends AmlEmittersHelper {

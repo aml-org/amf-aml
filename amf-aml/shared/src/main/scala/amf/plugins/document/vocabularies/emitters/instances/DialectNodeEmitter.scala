@@ -2,7 +2,8 @@ package amf.plugins.document.vocabularies.emitters.instances
 import amf.core.annotations.Aliases.{Alias, ImportLocation, RefId}
 import amf.core.annotations.{LexicalInformation, SourceNode}
 import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, RenderOptions, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.DataType

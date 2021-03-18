@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies.emitters.instances
 import amf.core.annotations.LexicalInformation
-import amf.core.emitter.{EntryEmitter, RenderOptions, SpecOrdering}
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
