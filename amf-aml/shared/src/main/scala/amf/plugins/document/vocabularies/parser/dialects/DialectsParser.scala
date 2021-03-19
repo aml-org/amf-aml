@@ -480,7 +480,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                 entry,
                 propertyMapping =>
                   propertyMapping
-                    .adopted(nodeMapping.id + "/property/" + entry.key.as[YScalar].text.urlComponentEncoded))
+                    .adopted(nodeMapping.id + "/property/" + entry.key.as[YScalar].text.urlComponentEncoded), nodeMapping.id)
           }
           val (withTerm, withourTerm) = properties.partition(_.nodePropertyMapping().option().nonEmpty)
           val filterProperties: immutable.Iterable[PropertyMapping] = withTerm
@@ -605,7 +605,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
-  def parsePropertyMapping(entry: YMapEntry, adopt: PropertyMapping => Any): PropertyMapping = {
+  def parsePropertyMapping(entry: YMapEntry, adopt: PropertyMapping => Any, nodeId: String): PropertyMapping = {
     val name = ScalarNode(entry.key).string()
     entry.value.tagType match {
       case YType.Map =>
@@ -756,7 +756,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
         propertyMapping
       case _ =>
-        PropertyMapping(Annotations(entry)).set(PropertyMappingModel.Name, name, Annotations(entry.key))
+        val p = PropertyMapping(Annotations(entry)).set(PropertyMappingModel.Name, name, Annotations(entry.key))
+        ctx.eh.violation(DialectValidations.PropertyMappingMustBeAMap, nodeId, s"Property mapping $name must be a map", entry)
+        p
     }
   }
 
