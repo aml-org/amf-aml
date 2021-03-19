@@ -95,7 +95,7 @@ trait DialectTests
     for {
       b <- parseAndRegisterDialect(s"file://$directory/$source", platform, hint)
       t <- Future.successful { transform(b) }
-      s <- AMFSerializer(t, vendorToSyntax(target), target.name, options)
+      s <- new AMFSerializer(t, vendorToSyntax(target), target.name, options)
         .renderToString(scala.concurrent.ExecutionContext.Implicits.global)
       d <- writeTemporaryFile(s"$directory/$golden")(s)
       r <- assertDifferences(d, s"$directory/$golden")
