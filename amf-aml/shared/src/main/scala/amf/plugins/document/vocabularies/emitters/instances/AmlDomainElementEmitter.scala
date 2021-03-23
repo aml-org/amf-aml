@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies.emitters.instances
 
-import amf.core.emitter.{DomainElementEmitter, RenderOptions, SpecOrdering}
+import amf.core.emitter.{DomainElementEmitter, SpecOrdering}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement

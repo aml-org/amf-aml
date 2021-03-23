@@ -3,10 +3,11 @@ package amf.plugins.document.vocabularies
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
+import amf.client.remod.amfcore.plugins.render.AMFRenderPluginAdapter
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.client.ParsingOptions
-import amf.core.emitter.{RenderOptions, ShapeRenderOptions}
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
@@ -47,6 +48,7 @@ object AMLPlugin extends AMLPlugin {
 }
 
 object AMLParsePlugin extends AMFParsePluginAdapter(AMLPlugin)
+object AMLRenderPlugin extends AMFRenderPluginAdapter(AMLPlugin)
 
 trait AMLPlugin
     extends AMFDocumentPlugin
@@ -164,7 +166,7 @@ trait AMLPlugin
 
   protected def unparseAsYDocument(unit: BaseUnit,
                                    renderOptions: RenderOptions,
-                                   shapeRenderOptions: ShapeRenderOptions = ShapeRenderOptions()): Option[YDocument] = {
+                                   errorHandler: ErrorHandler): Option[YDocument] = {
     unit match {
       case vocabulary: Vocabulary  => Some(VocabularyEmitter(vocabulary).emitVocabulary())
       case dialect: Dialect        => Some(DialectEmitter(dialect).emitDialect())
