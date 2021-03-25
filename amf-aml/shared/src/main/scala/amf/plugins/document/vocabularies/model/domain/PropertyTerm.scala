@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -33,7 +32,7 @@ abstract class PropertyTerm extends DomainElement {
 }
 
 case class ObjectPropertyTerm(fields: Fields, annotations: Annotations) extends PropertyTerm {
-  override def meta: Obj = ObjectPropertyTermModel
+  override def meta: ObjectPropertyTermModel.type = ObjectPropertyTermModel
 }
 
 object ObjectPropertyTerm {
@@ -46,7 +45,7 @@ object ObjectPropertyTerm {
 }
 
 case class DatatypePropertyTerm(fields: Fields, annotations: Annotations) extends PropertyTerm {
-  override def meta: Obj = DatatypePropertyTermModel
+  override def meta: DatatypePropertyTermModel.type = DatatypePropertyTermModel
 }
 
 object DatatypePropertyTerm {

@@ -1,12 +1,16 @@
 package amf.plugins.document.vocabularies.model.document
 
 import amf.core.errorhandling.ErrorHandler
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
-import amf.core.traversal.{DomainElementSelectorAdapter, DomainElementTransformationAdapter, TransformationData, TransformationTraversal}
+import amf.core.traversal.{
+  DomainElementSelectorAdapter,
+  DomainElementTransformationAdapter,
+  TransformationData,
+  TransformationTraversal
+}
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
@@ -18,7 +22,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
     with ComposedInstancesSupport
     with PlatformSecrets {
 
-  override def meta: Obj = DialectInstanceModel
+  override def meta: DialectInstanceModel.type = DialectInstanceModel
 
   def encodes: DomainElement           = fields.field(Encodes)
   def references: Seq[BaseUnit]        = fields.field(References)
@@ -51,4 +55,3 @@ object DialectInstance {
   def apply(annotations: Annotations): DialectInstance =
     DialectInstance(Fields(), annotations)
 }
-

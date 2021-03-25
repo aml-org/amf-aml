@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.{Field, Obj, Type}
+import amf.core.metamodel.{Field, Type}
 import amf.core.model._
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -66,19 +66,19 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     set(AllowMultiple, allow)
   def withEnum(values: Seq[Any]): PropertyMapping =
     setArray(PropertyMappingModel.Enum, values.map(AmfScalar(_)))
-  def withSorted(sorted: Boolean): PropertyMapping = set(Sorted, sorted)
-  def withUnique(unique: Boolean): PropertyMapping = set(Unique, unique)
+  def withSorted(sorted: Boolean): PropertyMapping               = set(Sorted, sorted)
+  def withUnique(unique: Boolean): PropertyMapping               = set(Unique, unique)
   def withExternallyLinkable(linkable: Boolean): PropertyMapping = set(ExternallyLinkable, linkable)
 
   def classification(): PropertyClassification = {
     val isAnyNode = objectRange().exists { obj =>
       obj.value() == (Namespace.Meta + "anyNode").iri()
     }
-    val isLiteral  = literalRange().nonNull
-    val isObject   = objectRange().nonEmpty
-    val multiple   = allowMultiple().option().getOrElse(false)
-    val isMap      = mapTermKeyProperty().nonNull
-    val isMapValue = mapTermValueProperty().nonNull
+    val isLiteral      = literalRange().nonNull
+    val isObject       = objectRange().nonEmpty
+    val multiple       = allowMultiple().option().getOrElse(false)
+    val isMap          = mapTermKeyProperty().nonNull
+    val isMapValue     = mapTermValueProperty().nonNull
     val isExternalLink = externallyLinkable().option().getOrElse(false)
 
     if (isExternalLink)
@@ -103,13 +103,12 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     val range = objectRange()
     if (range.isEmpty) {
       Option(typeDiscriminator()).getOrElse(Map()).values.toSeq
-    }
-    else {
+    } else {
       range.map(_.value())
     }
   }
 
-  def isUnion: Boolean = nodesInRange.size > 1
+  def isUnion: Boolean     = nodesInRange.size > 1
   def isMandatory: Boolean = minCount().option().getOrElse(0) == 1
 
   def toField: Field = {
@@ -123,15 +122,12 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     if (isObjectRange) {
       if (allowMultiple().value() && sorted().value()) {
         Field(Type.SortedArray(DialectDomainElementModel()), propertyIdValue)
-      }
-      else if (allowMultiple().value() || mapTermKeyProperty().nonNull) {
+      } else if (allowMultiple().value() || mapTermKeyProperty().nonNull) {
         Field(Type.Array(DialectDomainElementModel()), propertyIdValue)
-      }
-      else {
+      } else {
         Field(DialectDomainElementModel(), propertyIdValue)
       }
-    }
-    else {
+    } else {
       val fieldType = literalRange().option() match {
         case Some(literal) if literal == (Namespace.Shapes + "link").iri() => Type.Iri
         case Some(literal) if literal == DataType.AnyUri =>
@@ -154,14 +150,13 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
 
       if (allowMultiple().value()) {
         Field(Type.Array(fieldType), propertyIdValue)
-      }
-      else {
+      } else {
         Field(fieldType, propertyIdValue)
       }
     }
   }
 
-  override def meta: Obj = PropertyMappingModel
+  override def meta: PropertyMappingModel.type = PropertyMappingModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = ""
