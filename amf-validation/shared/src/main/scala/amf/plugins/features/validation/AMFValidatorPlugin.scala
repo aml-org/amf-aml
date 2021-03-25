@@ -6,7 +6,7 @@ import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.benchmark.ExecutionLog
 import amf.core.errorhandling.ErrorHandler
 import amf.core.services.RuntimeValidator
-import amf.core.validation.ValidationResultProcessor
+import amf.core.validation.ShaclReportAdaptation
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 
 
-object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with ValidationResultProcessor with AMFValidator {
+object AMFValidatorPlugin extends AMFFeaturePlugin with AMFValidator {
 
   override val ID = "AMF Validation"
 

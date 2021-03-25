@@ -3,31 +3,30 @@ package amf.plugins.features.validation.custom
 import amf._
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.parse.DefaultParserErrorHandler
-import amf.client.plugins.{AMFDocumentPlugin, AMFFeaturePlugin, AMFPlugin}
+import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
+import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
 import amf.core.benchmark.ExecutionLog
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.remote._
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
-import amf.core.validation.ValidationResultProcessor
+import amf.core.validation.ShaclReportAdaptation
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
+import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
-import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.features.validation.PlatformValidator
-import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf.plugins.features.validation.custom.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.features.validation.{AMFValidator, PlatformValidator}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with ValidationResultProcessor with AMFValidator{
+object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with ShaclReportAdaptation with AMFValidator{
 
   override val ID = "AMF Validation"
 
@@ -85,9 +84,9 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
   private def loadProfilesFromDialectOrExit(domainElement: DomainElement) = domainElement match {
     case encoded: DialectDomainElement if encoded.definedBy.name.is("profileNode") =>
       val validationProfile = ParsedValidationProfile(encoded)
-      val domainPlugin = getProfilePluginFor(validationProfile)
+      val domainPlugin: Seq[AMFValidatePlugin] = getProfilePluginFor(validationProfile)
         .orElse(getProfilePluginFor(validationProfile.baseProfile.getOrElse(AmfProfile)))
-        .getOrElse(AMLPlugin())
+        .getOrElse(Seq(amlPlugin()))
       customValidationProfiles += (validationProfile.name.profile -> { () => validationProfile })
       customValidationProfilesPlugins += (validationProfile.name.profile -> domainPlugin)
       validationProfile.name
@@ -97,6 +96,6 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Va
         "Trying to load as a validation profile that does not match the Validation Profile dialect")
   }
 
-  private def getProfilePluginFor(profileName: ProfileName): Option[AMFDocumentPlugin] = profilesPlugins.get(profileName.profile)
-  private def getProfilePluginFor(validationProfile: ValidationProfile): Option[AMFDocumentPlugin] = getProfilePluginFor(validationProfile.name)
+  private def getProfilePluginFor(profileName: ProfileName): Option[Seq[AMFValidatePlugin]] = profilesPlugins.get(profileName.profile)
+  private def getProfilePluginFor(validationProfile: ValidationProfile): Option[Seq[AMFValidatePlugin]] = getProfilePluginFor(validationProfile.name)
 }

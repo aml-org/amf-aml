@@ -9,20 +9,22 @@ import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.{Oas30, Raml08, Vendor}
-import amf.core.services.RuntimeValidator.CustomShaclFunctions
-import amf.core.services.ValidationOptions
+import amf.core.services.RuntimeValidator.{CustomShaclFunctions, validatorOption}
+import amf.core.services.{RuntimeValidator, ValidationOptions => LegacyValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.internal.environment.Environment
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
 import amf._
+import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions}
 
+import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
-protected[amf] trait AMFValidator extends PlatformSecrets {
-  protected var customValidationProfiles: Map[String, () => ValidationProfile]  = Map.empty
-  protected var customValidationProfilesPlugins: Map[String, AMFDocumentPlugin] = Map.empty
+protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets {
+  protected var customValidationProfiles: Map[String, () => ValidationProfile]       = Map.empty
+  protected var customValidationProfilesPlugins: Map[String, Seq[AMFValidatePlugin]] = Map.empty
 
   // All the profiles are collected here, plugins can generate their own profiles
   protected def profiles: Map[String, () => ValidationProfile] =
@@ -32,19 +34,21 @@ protected[amf] trait AMFValidator extends PlatformSecrets {
     } ++ customValidationProfiles
 
   // Mapping from profile to domain plugin
-  protected def profilesPlugins: Map[String, AMFDocumentPlugin] =
-    AMFPluginsRegistry.documentPlugins.foldLeft(Map[String, AMFDocumentPlugin]()) {
+  protected def profilesPlugins: Map[String, Seq[AMFValidatePlugin]] =
+    AMFPluginsRegistry.documentPlugins.foldLeft(Map[String, Seq[AMFValidatePlugin]]()) {
       case (acc, domainPlugin: AMFValidationPlugin) =>
-        val toPut = domainPlugin.domainValidationProfiles(platform).keys.foldLeft(Map[String, AMFDocumentPlugin]()) {
-          case (accProfiles, profileName) =>
-            accProfiles.updated(profileName, domainPlugin)
-        }
+        val toPut =
+          domainPlugin.domainValidationProfiles(platform).keys.foldLeft(Map[String, Seq[AMFValidatePlugin]]()) {
+            case (accProfiles, profileName) =>
+              accProfiles.updated(profileName, domainPlugin.getRemodValidatePlugins())
+          }
         acc ++ toPut
       case (acc, _) => acc
     } ++ customValidationProfilesPlugins
 
-  protected[amf] def computeValidations(profileName: ProfileName,
-                         computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
+  protected[amf] def computeValidations(
+      profileName: ProfileName,
+      computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
     val maybeProfile = profiles.get(profileName.profile) match {
       case Some(profileGenerator) => Some(profileGenerator())
       case _                      => None
@@ -65,49 +69,9 @@ protected[amf] trait AMFValidator extends PlatformSecrets {
       model: BaseUnit,
       validations: EffectiveValidations,
       customFunctions: CustomShaclFunctions,
-      options: ValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] =
-    if (options.isPartialValidation) partialShaclValidation(model, validations, customFunctions, options)
-    else fullShaclValidation(model, validations, options)
-
-  private def partialShaclValidation(
-      model: BaseUnit,
-      validations: EffectiveValidations,
-      customFunctions: CustomShaclFunctions,
-      options: ValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] =
-    new CustomShaclValidator(model, validations, customFunctions, options).run
-
-  private def fullShaclValidation(model: BaseUnit, validations: EffectiveValidations, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[ValidationReport] = {
-    ExecutionLog.log(
-      s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
-    // println(s"VALIDATIONS: ${validations.effective.values.size} / ${validations.all.values.size} => $profileName")
-    // validations.effective.keys.foreach(v => println(s" - $v"))
-
-    if (PlatformValidator.instance.supportsJSFunctions) {
-      // TODO: Check the validation profile passed to JSLibraryEmitter, it contains the prefixes
-      // for the functions
-      val jsLibrary = new JSLibraryEmitter(None).emitJS(validations.effective.values.toSeq)
-
-      jsLibrary match {
-        case Some(code) =>
-          PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
-        case _ => // ignore
-      }
-    }
-
-    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: jsLibrary generated")
-
-    val data   = model
-    val shapes = customValidations(validations)
-
-    ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: Invoking platform validation")
-
-    PlatformValidator.instance.report(data, shapes, options).map {
-      case report =>
-        ExecutionLog.log(s"AMFValidatorPlugin#shaclValidation: validation finished")
-        report
-    }
-  }
+      options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] =
+    if (options.isPartialValidation) new CustomShaclValidator(model, validations, customFunctions, options).run
+    else new FullShaclValidator().validate(model, validations, options)
 
   private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {
     given match {
@@ -133,40 +97,39 @@ protected[amf] trait AMFValidator extends PlatformSecrets {
     case _           => None
   }
 
-  def validate(
-      model: BaseUnit,
-      given: ProfileName,
-      messageStyle: MessageStyle,
-      env: Environment,
-      resolved: Boolean = false,
-      exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
+  def validate(model: BaseUnit,
+               given: ProfileName,
+               messageStyle: MessageStyle,
+               env: Environment,
+               resolved: Boolean = false,
+               exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
 
     val profileName = profileForUnit(model, given)
-    val report      = new AmfStaticReportBuilder(model, profileName).buildFromStatic()
+    // TODO: we shouldn't compute validations if there are parser errors. This will be removed after ErrorHandler is returned in parsing.
+    val report = new AmfStaticReportBuilder(model, profileName).buildFromStatic()
 
     if (!report.conforms) Future.successful(report)
-    else modelValidation(model, profileName, messageStyle, env, resolved, exec)
+    else validate(model, profileName, env, resolved, exec)
   }
 
-  private def modelValidation(model: BaseUnit,
-                              profileName: ProfileName,
-                              messageStyle: MessageStyle,
-                              env: Environment,
-                              resolved: Boolean,
-                              exec: BaseExecutionEnvironment): Future[AMFValidationReport] = {
+  private def validate(model: BaseUnit,
+                       profileName: ProfileName,
+                       env: Environment,
+                       resolved: Boolean,
+                       exec: BaseExecutionEnvironment): Future[AMFValidationReport] = {
 
     implicit val executionContext: ExecutionContext = exec.executionContext
 
-    profilesPlugins.get(profileName.profile) match {
-      case Some(domainPlugin: AMFValidationPlugin) =>
+    profilesPlugins
+      .get(profileName.profile)
+      .map { plugins =>
         val validations = computeValidations(profileName)
-        domainPlugin
-          .validationRequest(model, profileName, validations, platform, env, resolved, exec)
-      case _ =>
-        Future {
-          profileNotFoundWarningReport(model, profileName)
-        }
-    }
+        val options     = new ValidationOptions(profileName, env, validations)
+        if (resolved) model.resolved = true
+        FailFastValidationRunner(plugins, options).run(model)
+
+      }
+      .getOrElse(successful(profileNotFoundWarningReport(model, profileName)))
   }
 
   protected def profileNotFoundWarningReport(model: BaseUnit, profileName: ProfileName): AMFValidationReport = {
