@@ -9,7 +9,7 @@ nodeMappings:
     patch: upsert
     mapping:
       a:
-        patch: ignore
+        patch: update
         propertyTerm: v.a
         range: string
 documents:

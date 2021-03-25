@@ -1,0 +1,15 @@
+#%Dialect 1.0
+dialect: App
+version: 1.0
+nodeMappings:
+  AppConfiguration:
+    patch: update
+    mapping:
+      monitoring:
+        range: anyNode
+        patch: insert
+        mandatory: true
+
+documents:
+  root:
+    encodes: AppConfiguration

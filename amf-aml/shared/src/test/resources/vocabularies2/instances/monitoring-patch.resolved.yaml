@@ -1,0 +1,6 @@
+#%Patch / App 1.0
+$target: app-config-instance.yaml
+monitoring:
+  $dialect: file://amf-aml/shared/src/test/resources/vocabularies2/instances/monitoring-dialect.yaml#/declarations/Monitoring
+  a: world
+  membership: silver

@@ -1,0 +1,22 @@
+#%Dialect 1.0
+dialect: TestInstance
+version: 1.0
+external:
+  v: http://monitoring.com#
+nodeMappings:
+  Monitoring:
+    classTerm: v.monitoring
+    mapping:
+      a:
+        propertyTerm: v.a
+        range: string
+      membership:
+        range: string
+  RootNode:
+    classTerm: v.root
+    mapping:
+      monitoring:
+        range: Monitoring
+documents:
+  root:
+    encodes: RootNode

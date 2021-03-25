@@ -43,6 +43,18 @@ class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests 
                 directory = s"$basePath/patch-properties/")
   }
 
+  test("test app configuration") {
+    withDialect("app-config-dialect.yaml",
+                "monitoring-patch.yaml",
+                "monitoring-patch.resolved.yaml",
+                VocabularyYamlHint,
+                Aml)
+  }
+
+  test("test dialecv21 configuration") {
+    withDialect("dialect21.yaml", "patch21b.yaml", "patch21b.json", VocabularyYamlHint, Aml)
+  }
+
   multiGoldenTest("Resolve patch properties to AMF Graph", "patch.resolved.%s") { config =>
     withDialect(
         "dialect.yaml",
