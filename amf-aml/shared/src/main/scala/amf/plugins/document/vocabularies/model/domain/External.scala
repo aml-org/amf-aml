@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
@@ -17,7 +16,7 @@ case class External(fields: Fields, annotations: Annotations) extends DomainElem
   def withAlias(alias: String): External = set(DisplayName, alias)
   def withBase(base: String): External   = set(Base, base)
 
-  override def meta: Obj = ExternalModel
+  override def meta: ExternalModel.type = ExternalModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = alias.option() match {

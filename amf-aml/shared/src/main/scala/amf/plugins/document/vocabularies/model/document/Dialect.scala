@@ -54,7 +54,7 @@ case class Dialect(fields: Fields, annotations: Annotations)
 
   def allHeaders: Seq[String] = Seq(header) ++ libraryHeader ++ fragmentHeaders ++ Seq(patchHeader)
 
-  def meta: Obj = DialectModel
+  def meta: DialectModel.type = DialectModel
 }
 
 object Dialect {

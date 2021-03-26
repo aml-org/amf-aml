@@ -1,8 +1,7 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.Obj
-import amf.core.model.{BoolField, StrField}
 import amf.core.model.domain.DomainElement
+import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentMappingModel._
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentsModelModel._
@@ -22,7 +21,7 @@ case class PublicNodeMapping(fields: Fields, annotations: Annotations) extends D
   def withName(name: String): PublicNodeMapping             = set(Name, name)
   def withMappedNode(mappedNode: String): PublicNodeMapping = set(MappedNode, mappedNode)
 
-  override def meta: Obj = PublicNodeMappingModel
+  override def meta: PublicNodeMappingModel.type = PublicNodeMappingModel
 
   override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
     if (Option(id).isEmpty) {
@@ -52,7 +51,7 @@ case class DocumentMapping(fields: Fields, annotations: Annotations) extends Dom
   def withDeclaredNodes(fragments: Seq[PublicNodeMapping]): DocumentMapping =
     setArrayWithoutId(DeclaredNodes, fragments)
 
-  override def meta: Obj = DocumentMappingModel
+  override def meta: DocumentMappingModel.type = DocumentMappingModel
 
   override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
     if (Option(id).isEmpty) {
@@ -88,7 +87,7 @@ case class DocumentsModel(fields: Fields, annotations: Annotations) extends Doma
   def withKeyProperty(keyProperty: Boolean): DocumentsModel          = set(KeyProperty, keyProperty)
   def withReferenceStyle(referenceStyle: String): DocumentsModel     = set(ReferenceStyle, referenceStyle)
 
-  override def meta: Obj = DocumentsModelModel
+  override def meta: DocumentsModelModel.type = DocumentsModelModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = "/documents"

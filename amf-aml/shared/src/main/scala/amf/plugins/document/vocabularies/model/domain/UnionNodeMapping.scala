@@ -1,5 +1,4 @@
 package amf.plugins.document.vocabularies.model.domain
-import amf.core.metamodel.Obj
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
 import amf.core.utils._
@@ -15,11 +14,12 @@ case class UnionNodeMapping(fields: Fields, annotations: Annotations)
 
   override def withName(name: String): UnionNodeMapping = super.withName(name).asInstanceOf[UnionNodeMapping]
 
-  override def meta: Obj = UnionNodeMappingModel
+  override def meta: UnionNodeMappingModel.type = UnionNodeMappingModel
 
-  override def linkCopy(): UnionNodeMapping                                                             = UnionNodeMapping().withId(id)
-  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = UnionNodeMapping.apply
-  override def componentId: String                                                              = "/" + name.value().urlComponentEncoded
+  override def linkCopy(): UnionNodeMapping = UnionNodeMapping().withId(id)
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    UnionNodeMapping.apply
+  override def componentId: String = "/" + name.value().urlComponentEncoded
 }
 
 object UnionNodeMapping {

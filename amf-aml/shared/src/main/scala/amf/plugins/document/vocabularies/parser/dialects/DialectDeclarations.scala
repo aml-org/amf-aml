@@ -2,7 +2,6 @@ package amf.plugins.document.vocabularies.parser.dialects
 
 import amf.core.annotations.{ErrorDeclaration => DeclaredErrorDeclaration}
 import amf.core.errorhandling.ErrorHandler
-import amf.core.metamodel.Obj
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, Fields, FutureDeclarations, SearchScope}
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
@@ -50,7 +49,7 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
       case Some(result) => result
       case _ =>
         error(s"NodeMappable $key not found", ast)
-        ErrorNodeMapabble(key, ast)
+        ErrorNodeMappable(key, ast)
     }
   def findClassTerm(key: String, scope: SearchScope.Scope): Option[ClassTerm] =
     findForType(key, _.asInstanceOf[DialectDeclarations].classTerms, scope) match {
@@ -66,15 +65,14 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
 
   override def declarables(): Seq[DomainElement] = nodeMappings.values.toSeq
 
-  case class ErrorNodeMapabble(idPart: String, part: YPart)
+  case class ErrorNodeMappable(idPart: String, part: YPart)
       extends NodeMapping(Fields(), Annotations(part))
-      with DeclaredErrorDeclaration {
-    override val namespace: String = "http://amferror.com/#errorNodeMappable/"
+      with DeclaredErrorDeclaration[NodeMappingModel.type] {
+    override val namespace: String            = "http://amferror.com/#errorNodeMappable/"
+    override val model: NodeMappingModel.type = NodeMappingModel
 
     withId(idPart)
 
-    override def newErrorInstance: DeclaredErrorDeclaration = ErrorNodeMapabble(idPart, part)
-
-    override protected def originalMeta: Obj = NodeMappingModel
+    override def newErrorInstance: DeclaredErrorDeclaration[NodeMappingModel.type] = ErrorNodeMappable(idPart, part)
   }
 }

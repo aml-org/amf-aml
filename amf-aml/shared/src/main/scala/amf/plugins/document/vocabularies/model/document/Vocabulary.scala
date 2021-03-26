@@ -1,13 +1,12 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel
 import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel._
-import amf.plugins.document.vocabularies.model.domain.{External, VocabularyReference}
+import amf.plugins.document.vocabularies.model.domain.VocabularyReference
 
 case class Vocabulary(fields: Fields, annotations: Annotations)
     extends BaseUnit
@@ -30,7 +29,7 @@ case class Vocabulary(fields: Fields, annotations: Annotations)
   def withImports(vocabularies: Seq[VocabularyReference]): Vocabulary = setArray(Imports, vocabularies)
 
   /** Meta data for the document */
-  override def meta: Obj = VocabularyModel
+  override def meta: VocabularyModel.type = VocabularyModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = ""
