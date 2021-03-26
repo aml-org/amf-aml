@@ -11,7 +11,13 @@ import amf.core.parser.{Annotations, SearchScope, _}
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.annotations.{CustomBase, CustomId, DiscriminatorField, JsonPointerRef, RefInclude}
+import amf.plugins.document.vocabularies.annotations.{
+  CustomBase,
+  CustomId,
+  DiscriminatorField,
+  JsonPointerRef,
+  RefInclude
+}
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
@@ -27,11 +33,12 @@ import scala.collection.mutable
 // TODO:
 class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectInstanceContext)
     extends AnnotationsParser
-    with JsonPointerResolver with InstanceNodeIdHandling {
+    with JsonPointerResolver
+    with InstanceNodeIdHandling {
 
   val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
-  def parseDocument(): Option[DialectInstance] = {
+  def parseDocument(): DialectInstance = {
     val dialectInstance: DialectInstance = DialectInstance(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
@@ -45,29 +52,22 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     if (ctx.declarations.externals.nonEmpty)
       dialectInstance.withExternals(ctx.declarations.externals.values.toSeq)
 
-    val document = parseEncoded(dialectInstance) match {
+    val dialectDomainElement = parseEncoded(dialectInstance)
+    // registering JSON pointer
+    ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
 
-      case Some(dialectDomainElement) =>
-        // registering JSON pointer
-        ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
-
-        dialectInstance.withEncodes(dialectDomainElement)
-        if (ctx.declarations.declarables().nonEmpty)
-          dialectInstance.withDeclares(ctx.declarations.declarables())
-        if (references.baseUnitReferences().nonEmpty)
-          dialectInstance.withReferences(references.baseUnitReferences())
-        if (ctx.nestedDialects.nonEmpty)
-          dialectInstance.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
-        Some(dialectInstance)
-
-      case _ => None
-
-    }
+    dialectInstance.withEncodes(dialectDomainElement)
+    if (ctx.declarations.declarables().nonEmpty)
+      dialectInstance.withDeclares(ctx.declarations.declarables())
+    if (references.baseUnitReferences().nonEmpty)
+      dialectInstance.withReferences(references.baseUnitReferences())
+    if (ctx.nestedDialects.nonEmpty)
+      dialectInstance.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
 
     // resolve unresolved references
     ctx.futureDeclarations.resolve()
 
-    document
+    dialectInstance
   }
 
   @scala.annotation.tailrec
@@ -91,8 +91,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
   protected def parseDeclarations(documentType: String): Unit = {
     val declarationsNodeMappings = if (documentType == "root") {
       ctx.rootDeclarationsNodeMappings
-    }
-    else {
+    } else {
       ctx.libraryDeclarationsNodeMappings
     }
 
@@ -108,26 +107,19 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
             entry.value.as[YMap].entries.foreach { declarationEntry =>
               val declarationName = declarationEntry.key.as[YScalar].text
               val id              = pathSegment(declarationsId, List(declarationName))
-              parseNode(declarationsId,
-                        id,
-                        declarationEntry.value,
-                        nodeMapping,
-                        givenAnnotations = Some(Annotations(declarationEntry))) match {
-                case Some(node) =>
-                  // lookup by ref name
-
-                  node.set(DialectDomainElementModel.DeclarationName,
-                           AmfScalar(declarationName, Annotations(declarationEntry.key)),
-                           Annotations(declarationEntry.key))
-                  ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
-                  // lookup by JSON pointer, absolute URI
-                  ctx.registerJsonPointerDeclaration(id, node)
-                case _ =>
-                  ctx.eh.violation(DialectError,
+              val node = parseNode(declarationsId,
                                    id,
-                                   s"Cannot parse declaration for node with key '$declarationName'",
-                                   entry.value)
-              }
+                                   declarationEntry.value,
+                                   nodeMapping,
+                                   givenAnnotations = Some(Annotations(declarationEntry)))
+
+              // lookup by ref name
+              node.set(DialectDomainElementModel.DeclarationName,
+                       AmfScalar(declarationName, Annotations(declarationEntry.key)),
+                       Annotations(declarationEntry.key))
+              ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
+              // lookup by JSON pointer, absolute URI
+              ctx.registerJsonPointerDeclaration(id, node)
             }
           }
       }
@@ -140,28 +132,38 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     else
       dialectInstance.id + "#/encodes"
 
-  protected def parseEncoded(dialectInstance: EncodesModel): Option[DialectDomainElement] = {
-    Option(ctx.dialect.documents()) flatMap { documents: DocumentsModel =>
-      Option(documents.root()) flatMap { mapping =>
-        ctx.findNodeMapping(mapping.encoded().value()) match {
-          case Some(nodeMapping) =>
-            val path = dialectInstance.id + "#"
-            val additionalKey =
-              if (documents.keyProperty().value()) {
-                Some(ctx.dialect.name().value())
-              }
-              else None
-            parseNode(path,
-                      encodedElementDefaultId(dialectInstance),
-                      map,
-                      nodeMapping,
-                      rootNode = true,
-                      givenAnnotations = None,
-                      additionalKey = additionalKey)
-          case _ => None
-        }
+  protected def parseEncoded(dialectInstance: EncodesModel): DialectDomainElement = {
+    val result = for {
+      documents <- Option(ctx.dialect.documents())
+      mapping   <- Option(documents.root())
+    } yield {
+      ctx.findNodeMapping(mapping.encoded().value()) match {
+        case Some(nodeMapping) =>
+          val path = dialectInstance.id + "#"
+          val additionalKey =
+            if (documents.keyProperty().value()) {
+              Some(ctx.dialect.name().value())
+            } else None
+          parseNode(path,
+                    encodedElementDefaultId(dialectInstance),
+                    map,
+                    nodeMapping,
+                    rootNode = true,
+                    givenAnnotations = None,
+                    additionalKey = additionalKey)
+        case _ =>
+          emptyElementWithViolation(s"Could not find node mapping for: ${mapping.encoded().value()}")
       }
     }
+    result.getOrElse {
+      emptyElementWithViolation("Could not find root document mapping from dialect")
+    }
+  }
+
+  protected def emptyElementWithViolation(msg: String)(implicit ctx: DialectInstanceContext): DialectDomainElement = {
+    val empty = DialectDomainElement(map).withId(root.location)
+    ctx.eh.violation(DialectError, empty.id, msg, map)
+    empty
   }
 
   def checkClosedNode(id: String,
@@ -173,8 +175,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                       additionalKey: Option[String]): Unit = {
     val rootProps: Set[String] = if (rootNode) {
       ctx.rootProps
-    }
-    else {
+    } else {
       Set[String]()
     }
     val props = mapping.propertiesMapping().map(_.name().value()).toSet.union(rootProps)
@@ -199,25 +200,23 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                           additionalProperties: Map[String, Any] = Map(),
                           rootNode: Boolean = false,
                           givenAnnotations: Option[Annotations],
-                          additionalKey: Option[String] = None): Option[DialectDomainElement] = {
-    val result = ast.tagType match {
+                          additionalKey: Option[String] = None): DialectDomainElement = {
+    val result: DialectDomainElement = ast.tagType match {
       case YType.Map =>
         val nodeMap = ast.as[YMap]
         dispatchNodeMap(nodeMap) match {
           case "$ref" =>
-            resolveJSONPointer(nodeMap, mappable, defaultId).map { ref =>
-              ref.annotations += JsonPointerRef()
-              mappable match {
-                case m: NodeMapping => ref.withDefinedBy(m)
-                case _              => // ignore
-              }
-              ref
+            val ref = resolveJSONPointer(nodeMap, mappable, defaultId)
+            ref.annotations += JsonPointerRef()
+            mappable match {
+              case m: NodeMapping => ref.withDefinedBy(m)
+              case _              => // ignore
             }
+            ref
           case "$include" =>
-            resolveLink(ast, mappable, defaultId, givenAnnotations).map { link =>
-              link.annotations += RefInclude()
-              link
-            }
+            val link = resolveLink(ast, mappable, defaultId, givenAnnotations)
+            link.annotations += RefInclude()
+            link
           case _ =>
             mappable match {
               case mapping: NodeMapping =>
@@ -242,7 +241,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                   }
                 }
                 checkClosedNode(finalId, mapping.id, nodeMap.map, mapping, nodeMap, rootNode, additionalKey)
-                Some(node)
+                node
 
               case unionMapping: UnionNodeMapping =>
                 parseObjectUnion(defaultId, Seq(path), ast, unionMapping, additionalProperties)
@@ -250,26 +249,23 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
         }
 
-      case YType.Str => resolveLink(ast, mappable, defaultId, givenAnnotations)
-      case YType.Include          => resolveLink(ast, mappable, defaultId, givenAnnotations)
+      case YType.Str     => resolveLink(ast, mappable, defaultId, givenAnnotations)
+      case YType.Include => resolveLink(ast, mappable, defaultId, givenAnnotations)
       case YType.Null =>
         emptyElement(defaultId, ast, mappable, givenAnnotations)
       case _ =>
         ctx.eh.violation(DialectError, defaultId, "Cannot parse AST node for node in dialect instance", ast)
-        None
+        DialectDomainElement().withId(defaultId)
     }
     // if we are parsing a patch document we mark the node as abstract
-    result match {
-      case Some(node) =>
-        if (ctx.isPatch) node.withAbstract(true)
-        mappable match {
-          case mapping: NodeMapping =>
-            node
-              .withDefinedBy(mapping)
-              .withInstanceTypes(typesFrom(mapping))
-          case _ => // ignore
-        }
-      case other => other
+
+    if (ctx.isPatch) result.withAbstract(true)
+    mappable match {
+      case mapping: NodeMapping =>
+        result
+          .withDefinedBy(mapping)
+          .withInstanceTypes(typesFrom(mapping))
+      case _ => // ignore
     }
     result
   }
@@ -278,20 +274,19 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).flatten
   }
 
-
-  private def emptyElement(defaultId: String, ast: YNode, mappable: NodeMappable, givenAnnotations: Option[Annotations]) = {
+  private def emptyElement(defaultId: String,
+                           ast: YNode,
+                           mappable: NodeMappable,
+                           givenAnnotations: Option[Annotations]): DialectDomainElement = {
     val mappings = mappable match {
       case m: NodeMapping => Seq(m.nodetypeMapping.value(), mappable.id)
-      case _ => Seq(mappable.id)
+      case _              => Seq(mappable.id)
     }
     val element = DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast)))
       .withId(defaultId)
       .withInstanceTypes(mappings)
-    ctx.eh.warning(DialectError,
-      defaultId,
-      s"Empty map: ${mappings.head}",
-      ast)
-    Some(element)
+    ctx.eh.warning(DialectError, defaultId, s"Empty map: ${mappings.head}", ast)
+    element
   }
 
   protected def parseProperty(id: String,
@@ -324,15 +319,14 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         Some(elem)
 
       case YType.Map
-        if node.as[YMap]
-          .key("$id")
-          .isDefined => // simple link in a reference map
+          if node
+            .as[YMap]
+            .key("$id")
+            .isDefined => // simple link in a reference map
         val refMap = node.as[YMap]
-
 
         val id      = explicitNodeId(None, refMap, Nil, "", mapping)
         val finalId = overrideBase(id, refMap)
-
 
         val elem = DialectDomainElement().withDefinedBy(mapping).withId(finalId).withIsExternalLink(true)
         elem.withInstanceTypes(instanceTypes)
@@ -350,7 +344,6 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         val element = DialectDomainElement(Annotations(refMap))
         val id      = idTemplate(element, refMap, Nil, mapping)
         val finalId = overrideBase(id, refMap)
-
 
         // Now we actually parse the provided properties for the node
         val linkReference: DialectDomainElement =
@@ -380,9 +373,10 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         Some(linkReference)
 
       case _ => // error
-        ctx.eh.violation(DialectError,
-          id,
-          "AML links must URI links (strings or maps with $id directive) or ID Template links (maps with idTemplate variables)")
+        ctx.eh.violation(
+            DialectError,
+            id,
+            "AML links must URI links (strings or maps with $id directive) or ID Template links (maps with idTemplate variables)")
         None
     }
   }
@@ -434,16 +428,15 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               node.setObjectField(property, elems, propertyEntry.value)
           case YType.Seq if !allowMultiple => // error
             ctx.eh.violation(DialectError,
-              id,
-              s"AllowMultiple not enable, sequence of external links not supported",
-              propertyEntry)
+                             id,
+                             s"AllowMultiple not enable, sequence of external links not supported",
+                             propertyEntry)
           case _ =>
             ctx.eh.violation(DialectError, id, s"Not supported external link range", propertyEntry)
         }
       case _ => // ignore
     }
   }
-
 
   protected def parseDialectExtension(id: String,
                                       propertyEntry: YMapEntry,
@@ -463,11 +456,8 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               case Some((dialect, nodeMapping)) =>
                 ctx.nestedDialects ++= Seq(dialect)
                 ctx.withCurrentDialect(dialect) {
-                  parseNestedNode(id, nestedObjectId, propertyEntry.value, nodeMapping) match {
-                    case Some(dialectDomainElement) =>
-                      node.setObjectField(property, dialectDomainElement, propertyEntry.value)
-                    case None => // ignore
-                  }
+                  val dialectDomainElement = parseNestedNode(id, nestedObjectId, propertyEntry.value, nodeMapping)
+                  node.setObjectField(property, dialectDomainElement, propertyEntry.value)
                 }
               case None =>
                 ctx.eh.violation(DialectError,
@@ -489,8 +479,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     }
   }
 
-  protected def findHashProperties(propertyMapping: PropertyMapping,
-                                   propertyEntry: YMapEntry): Option[(String, Any)] = {
+  protected def findHashProperties(propertyMapping: PropertyMapping, propertyEntry: YMapEntry): Option[(String, Any)] = {
     propertyMapping.mapTermKeyProperty().option() match {
       case Some(propId) => Some((propId, propertyEntry.key.as[YScalar].text))
       case None         => None
@@ -560,7 +549,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
   private def discriminatorAnnotation(discriminatorName: Option[String], nodeMap: YMap): Option[Annotation] = {
     discriminatorName.flatMap { propertyName =>
       nodeMap.entries.find(_.key.as[YScalar].text == propertyName).map { entry =>
-        DiscriminatorField(propertyName,entry.value.as[YScalar].text)
+        DiscriminatorField(propertyName, entry.value.as[YScalar].text)
       }
     }
   }
@@ -570,7 +559,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       path: Seq[String],
       ast: YNode,
       unionMapping: NodeWithDiscriminator[T],
-      additionalProperties: Map[String, Any] = Map()): Option[DialectDomainElement] = {
+      additionalProperties: Map[String, Any] = Map()): DialectDomainElement = {
 
     // potential node range based in the objectRange
     val unionMembers: Seq[NodeMapping] = unionMapping.objectRange().flatMap { memberId =>
@@ -615,15 +604,13 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         val nodeMap = ast.as[YMap]
         dispatchNodeMap(nodeMap) match {
           case "$include" =>
-            resolveLinkUnion(ast, allPossibleMappings, defaultId).map { link =>
-              link.annotations += RefInclude()
-              link
-            }
+            val link = resolveLinkUnion(ast, allPossibleMappings, defaultId)
+            link.annotations += RefInclude()
+            link
           case "$ref" =>
-            resolveJSONPointerUnion(nodeMap, allPossibleMappings, defaultId).map { ref =>
-              ref.annotations += JsonPointerRef()
-              ref
-            }
+            val ref = resolveJSONPointerUnion(nodeMap, allPossibleMappings, defaultId)
+            ref.annotations += JsonPointerRef()
+            ref
           case _ =>
             val discriminatorName = unionMapping.typeDiscriminatorName().option()
             val mappings = findCompatibleMapping(defaultId,
@@ -639,9 +626,8 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                   s"Ambiguous node in union range, found 0 compatible mappings from ${allPossibleMappings.size} mappings: [${allPossibleMappings.map(_.id).mkString(",")}]",
                   ast
               )
-              None
-            }
-            else if (mappings.size == 1) {
+              DialectDomainElement(nodeMap).withId(defaultId)
+            } else if (mappings.size == 1) {
               val node: DialectDomainElement = DialectDomainElement(nodeMap).withDefinedBy(mappings.head)
               val finalId =
                 generateNodeId(node, nodeMap, path, defaultId, mappings.head, additionalProperties, rootNode = false)
@@ -666,9 +652,8 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               }
               node.withInstanceTypes(instanceTypes ++ Seq(mappings.head.id))
               discriminatorAnnotation(discriminatorName, nodeMap).foreach(node.add)
-              Some(node)
-            }
-            else {
+              node
+            } else {
               ctx.eh.violation(
                   DialectAmbiguousRangeSpecification,
                   defaultId,
@@ -676,7 +661,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                   s"Ambiguous node, please provide a type disambiguator. Nodes ${mappings.map(_.id).mkString(",")} have been found compatible, only one is allowed",
                   map
               )
-              None
+              DialectDomainElement(nodeMap).withId(defaultId)
             }
         }
 
@@ -685,7 +670,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
       case _ =>
         ctx.eh.violation(InvalidUnionType, defaultId, "Cannot parse AST for union node mapping", ast)
-        None
+        DialectDomainElement().withId(defaultId)
     }
   }
 
@@ -698,18 +683,15 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     val nestedObjectId = pathSegment(id, List(path))
     property.nodesInRange match {
       case range: Seq[String] if range.size > 1 =>
-        parseObjectUnion(nestedObjectId, Seq(path), propertyEntry.value, property, additionalProperties) match {
-          case Some(parsedRange) => node.setObjectField(property, parsedRange, propertyEntry.value)
-          case None              => // ignore
-        }
+        val parsedRange =
+          parseObjectUnion(nestedObjectId, Seq(path), propertyEntry.value, property, additionalProperties)
+        node.setObjectField(property, parsedRange, propertyEntry.value)
       case range: Seq[String] if range.size == 1 =>
         ctx.dialect.declares.find(_.id == range.head) match {
           case Some(nodeMapping: NodeMappable) =>
-            parseNestedNode(id, nestedObjectId, propertyEntry.value, nodeMapping, additionalProperties) match {
-              case Some(dialectDomainElement) =>
-                node.setObjectField(property, dialectDomainElement, propertyEntry.value)
-              case _ => // ignore
-            }
+            val dialectDomainElement =
+              parseNestedNode(id, nestedObjectId, propertyEntry.value, nodeMapping, additionalProperties)
+            node.setObjectField(property, dialectDomainElement, propertyEntry.value)
           case _ => // ignore
         }
       case _ => // TODO: throw exception, illegal range
@@ -737,11 +719,11 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
             case _                      => keyAdditionalProperties
           }
           // now we can parse the union with all the required properties to find the right node in the union
-          parseObjectUnion(nestedObjectId, path, keyEntry.value, property, keyValueAdditionalProperties)
+          Some(parseObjectUnion(nestedObjectId, path, keyEntry.value, property, keyValueAdditionalProperties))
         case range: Seq[String] if range.size == 1 =>
           ctx.dialect.declares.find(_.id == range.head) match {
             case Some(nodeMapping: NodeMappable) if keyEntry.value.tagType != YType.Null =>
-              parseNestedNode(id, nestedObjectId, keyEntry.value, nodeMapping, keyAdditionalProperties)
+              Some(parseNestedNode(id, nestedObjectId, keyEntry.value, nodeMapping, keyAdditionalProperties))
             case _ => None
           }
         case _ => None
@@ -764,7 +746,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       val nested = ctx.dialect.declares.find(_.id == property.objectRange().head.value()) match {
         case Some(nodeMapping: NodeMapping) =>
           propertyEntry.value.as[YMap].entries flatMap { pair: YMapEntry =>
-          val nestedId = id + "/" + propertyEntry.key.as[YScalar].text.urlComponentEncoded + "/" + pair.key
+            val nestedId = id + "/" + propertyEntry.key.as[YScalar].text.urlComponentEncoded + "/" + pair.key
               .as[YScalar]
               .text
               .urlComponentEncoded
@@ -798,8 +780,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
       node.setObjectField(property, nested, propertyEntry.key)
 
-    }
-    else {
+    } else {
       ctx.eh.violation(DialectError,
                        id,
                        s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
@@ -826,19 +807,16 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         val nestedObjectId = pathSegment(id, path)
         property.nodesInRange match {
           case range: Seq[String] if range.size > 1 =>
-            parseObjectUnion(nestedObjectId, path, elementNode, property, additionalProperties) map { parsed =>
-              checkDuplicated(parsed, elementNode, idsMap)
-              parsed
-            }
+            val parsed = parseObjectUnion(nestedObjectId, path, elementNode, property, additionalProperties)
+            checkDuplicated(parsed, elementNode, idsMap)
+            Some(parsed)
           case range: Seq[String] if range.size == 1 =>
             ctx.dialect.declares.find(_.id == range.head) match {
               case Some(nodeMapping: NodeMappable) =>
-                parseNestedNode(id, nestedObjectId, elementNode, nodeMapping, additionalProperties) match {
-                  case Some(dialectDomainElement) =>
-                    checkDuplicated(dialectDomainElement, elementNode, idsMap)
-                    Some(dialectDomainElement)
-                  case None => None
-                }
+                val dialectDomainElement =
+                  parseNestedNode(id, nestedObjectId, elementNode, nodeMapping, additionalProperties)
+                checkDuplicated(dialectDomainElement, elementNode, idsMap)
+                Some(dialectDomainElement)
               case _ => None
             }
           case _ => None
@@ -865,8 +843,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     nexts.foreach { n =>
       path = if (path.endsWith("/")) {
         path + n.urlComponentEncoded
-      }
-      else {
+      } else {
         path + "/" + n.urlComponentEncoded
       }
     }
@@ -1019,7 +996,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                                 id: String,
                                 entry: YNode,
                                 mapping: NodeMappable,
-                                additionalProperties: Map[String, Any] = Map()): Option[DialectDomainElement] =
+                                additionalProperties: Map[String, Any] = Map()): DialectDomainElement =
     parseNode(path, id, entry, mapping, additionalProperties, givenAnnotations = None)
 
   protected def dispatchNodeMap(nodeMap: YMap): String =
@@ -1033,7 +1010,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
   protected def resolveLink(ast: YNode,
                             mapping: NodeMappable,
                             id: String,
-                            givenAnnotations: Option[Annotations]): Option[DialectDomainElement] = {
+                            givenAnnotations: Option[Annotations]): DialectDomainElement = {
     val refTuple = ctx.link(ast) match {
       case Left(key) =>
         (key, ctx.declarations.findDialectDomainElement(key, mapping, SearchScope.Fragments))
@@ -1048,19 +1025,17 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
           .asInstanceOf[DialectDomainElement]
           .withInstanceTypes(Seq(mapping.id))
           .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
-        Some(linkedNode)
+        linkedNode
       case (text: String, _) =>
         val linkedNode = DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast)))
           .withId(id)
           .withInstanceTypes(Seq(mapping.id))
         linkedNode.unresolved(text, givenAnnotations.flatMap(_.find(classOf[SourceAST])).map(_.ast).getOrElse(ast))
-        Some(linkedNode)
+        linkedNode
     }
   }
 
-  protected def resolveLinkUnion(ast: YNode,
-                                 allPossibleMappings: Seq[NodeMapping],
-                                 id: String): Some[DialectDomainElement] = {
+  protected def resolveLinkUnion(ast: YNode, allPossibleMappings: Seq[NodeMapping], id: String): DialectDomainElement = {
     val refTuple = ctx.link(ast) match {
       case Left(key) =>
         (key,
@@ -1080,23 +1055,22 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
           .link(text, Annotations(ast.value))
           .asInstanceOf[DialectDomainElement]
           .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
-        Some(linkedNode)
+        linkedNode
       case (text: String, _) =>
         val linkedNode = DialectDomainElement(map).withId(id)
         linkedNode.unresolved(text, map)
-        Some(linkedNode)
+        linkedNode
     }
   }
 
   protected def resolveJSONPointerUnion(map: YMap,
                                         allPossibleMappings: Seq[NodeMapping],
-                                        id: String): Option[DialectDomainElement] = {
+                                        id: String): DialectDomainElement = {
     val entry   = map.key("$ref").get
     val pointer = entry.value.as[String]
     val fullPointer = if (pointer.startsWith("#")) {
       root.location + pointer
-    }
-    else {
+    } else {
       pointer
     }
     ctx.findJsonPointer(fullPointer) map { node =>
@@ -1105,16 +1079,15 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
           .link(pointer, Annotations(map))
           .asInstanceOf[DialectDomainElement]
           .withId(id)
-      }
-      else {
+      } else {
         val linkedNode = DialectDomainElement(map).withId(id)
         linkedNode.unresolved(fullPointer, map)
         linkedNode
       }
-    } orElse {
+    } getOrElse {
       val linkedNode = DialectDomainElement(map).withId(id)
       linkedNode.unresolved(fullPointer, map)
-      Some(linkedNode)
+      linkedNode
     }
   }
 
@@ -1165,8 +1138,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     val pointer = entry.value.as[String]
     val fullPointer = if (pointer.startsWith("#")) {
       root.location + pointer
-    }
-    else {
+    } else {
       pointer
     }
 

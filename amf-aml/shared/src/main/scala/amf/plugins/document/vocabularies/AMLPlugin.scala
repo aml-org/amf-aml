@@ -35,7 +35,11 @@ import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, Dialec
 import amf.plugins.document.vocabularies.parser.instances._
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.plugin.headers._
-import amf.plugins.document.vocabularies.resolution.pipelines.{DialectInstancePatchResolutionPipeline, DialectInstanceResolutionPipeline, DialectResolutionPipeline}
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DialectInstancePatchResolutionPipeline,
+  DialectInstanceResolutionPipeline,
+  DialectResolutionPipeline
+}
 import org.yaml.model._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -45,7 +49,7 @@ object AMLPlugin extends AMLPlugin {
     AMFPluginsRegistry.documentPluginForID(this.ID).collect({ case a: AMLPlugin => a }).getOrElse(this)
 }
 
-object AMLParsePlugin extends AMFParsePluginAdapter(AMLPlugin)
+object AMLParsePlugin  extends AMFParsePluginAdapter(AMLPlugin)
 object AMLRenderPlugin extends AMFRenderPluginAdapter(AMLPlugin)
 
 trait AMLPlugin
@@ -66,34 +70,34 @@ trait AMLPlugin
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future { this }
 
   override def modelEntities: Seq[Obj] = Seq(
-    VocabularyModel,
-    ExternalModel,
-    VocabularyReferenceModel,
-    ClassTermModel,
-    ObjectPropertyTermModel,
-    DatatypePropertyTermModel,
-    DialectModel,
-    NodeMappingModel,
-    UnionNodeMappingModel,
-    PropertyMappingModel,
-    DocumentsModelModel,
-    PublicNodeMappingModel,
-    DocumentMappingModel,
-    DialectLibraryModel,
-    DialectFragmentModel,
-    DialectInstanceModel,
-    DialectInstanceLibraryModel,
-    DialectInstanceFragmentModel,
-    DialectInstancePatchModel
+      VocabularyModel,
+      ExternalModel,
+      VocabularyReferenceModel,
+      ClassTermModel,
+      ObjectPropertyTermModel,
+      DatatypePropertyTermModel,
+      DialectModel,
+      NodeMappingModel,
+      UnionNodeMappingModel,
+      PropertyMappingModel,
+      DocumentsModelModel,
+      PublicNodeMappingModel,
+      DocumentMappingModel,
+      DialectLibraryModel,
+      DialectFragmentModel,
+      DialectInstanceModel,
+      DialectInstanceLibraryModel,
+      DialectInstanceFragmentModel,
+      DialectInstancePatchModel
   )
 
   override def serializableAnnotations(): Map[String, AnnotationGraphLoader] =
     Map(
-      "aliases-location" -> AliasesLocation,
-      "custom-id"        -> CustomId,
-      "custom-base"      -> CustomBase,
-      "ref-include"      -> RefInclude,
-      "json-pointer-ref" -> JsonPointerRef
+        "aliases-location" -> AliasesLocation,
+        "custom-id"        -> CustomId,
+        "custom-base"      -> CustomBase,
+        "ref-include"      -> RefInclude,
+        "json-pointer-ref" -> JsonPointerRef
     )
 
   /**
@@ -117,32 +121,32 @@ trait AMLPlugin
     * this domain
     */
   override def documentSyntaxes: Seq[String] = Seq(
-    "application/aml+json",
-    "application/aml+yaml",
-    "application/raml",
-    "application/raml+json",
-    "application/raml+yaml",
-    "text/yaml",
-    "text/x-yaml",
-    "application/yaml",
-    "application/x-yaml",
-    "application/json"
+      "application/aml+json",
+      "application/aml+yaml",
+      "application/raml",
+      "application/raml+json",
+      "application/raml+yaml",
+      "text/yaml",
+      "text/x-yaml",
+      "application/yaml",
+      "application/x-yaml",
+      "application/json"
   )
 
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): Option[BaseUnit] = {
+  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
 
     val header = DialectHeader.dialectHeaderDirective(document)
 
     header match {
       case Some(ExtensionHeader.VocabularyHeader) =>
-        Some(new VocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument())
+        new VocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument()
       case Some(ExtensionHeader.DialectLibraryHeader) =>
-        Some(new DialectsParser(document)(cleanDialectContext(parentContext, document)).parseLibrary())
+        new DialectsParser(document)(cleanDialectContext(parentContext, document)).parseLibrary()
       case Some(ExtensionHeader.DialectFragmentHeader) =>
-        Some(new DialectsParser(document)(new DialectContext(parentContext)).parseFragment())
+        new DialectsParser(document)(new DialectContext(parentContext)).parseFragment()
       case Some(ExtensionHeader.DialectHeader) =>
         parseAndRegisterDialect(document, cleanDialectContext(parentContext, document))
       case _ => parseDialectInstance(document, header, parentContext)
@@ -210,18 +214,17 @@ trait AMLPlugin
       .parseDocument() match {
       case dialect: Dialect if dialect.hasValidHeader =>
         registry.register(dialect)
-        Some(dialect)
-      case unit => Some(unit)
+        dialect
+      case unit => unit
     }
   }
-
 
   override protected[amf] def getRemodValidatePlugins(): Seq[AMFValidatePlugin] = Seq(amlPlugin())
 
   protected def parseDocumentWithDialect(document: Root,
                                          parentContext: ParserContext,
                                          dialect: Dialect,
-                                         header: Option[String]): Option[DialectInstanceUnit] = {
+                                         header: Option[String]): DialectInstanceUnit = {
     registry.withRegisteredDialect(dialect) { resolvedDialect =>
       header match {
         case Some(headerKey) if resolvedDialect.isFragmentHeader(headerKey) =>
@@ -229,10 +232,11 @@ trait AMLPlugin
           new DialectInstanceFragmentParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
             .parse(name)
         case Some(headerKey) if resolvedDialect.isLibraryHeader(headerKey) =>
-          new DialectInstanceLibraryParser(document)(new DialectInstanceContext(resolvedDialect, parentContext)).parse()
+          new DialectInstanceLibraryParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
+            .parse()
         case Some(headerKey) if resolvedDialect.isPatchHeader(headerKey) =>
           new DialectInstancePatchParser(document)(
-            new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
+              new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
             .parse()
         case _ =>
           new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
