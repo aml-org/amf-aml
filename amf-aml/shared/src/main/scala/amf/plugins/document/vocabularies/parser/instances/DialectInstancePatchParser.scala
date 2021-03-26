@@ -6,17 +6,14 @@ import amf.validation.DialectValidations.DialectError
 import org.yaml.model.YType
 import amf.core.parser._
 
-class DialectInstancePatchParser(root: Root)(implicit override val ctx: DialectInstanceContext) extends DialectInstanceParser(root) {
+class DialectInstancePatchParser(root: Root)(implicit override val ctx: DialectInstanceContext)
+    extends DialectInstanceParser(root) {
 
-  def parse(): Option[DialectInstancePatch] = {
-    parseDocument() match {
-      case Some(dialectInstance) =>
-        val patch = DialectInstancePatch(dialectInstance.fields, dialectInstance.annotations)
-        patch.withId(dialectInstance.id)
-        Some(checkTarget(patch))
-      case _ =>
-        None
-    }
+  def parse(): DialectInstancePatch = {
+    val dialectInstance = parseDocument()
+    val patch           = DialectInstancePatch(dialectInstance.fields, dialectInstance.annotations)
+    patch.withId(dialectInstance.id)
+    checkTarget(patch)
   }
 
   private def checkTarget(patch: DialectInstancePatch): DialectInstancePatch = {

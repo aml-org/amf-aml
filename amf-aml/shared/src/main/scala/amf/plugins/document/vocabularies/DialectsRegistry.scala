@@ -62,16 +62,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   def dialectById(id: String): Option[Dialect] = map.values.find(_.id == id)
 
-  def withRegisteredDialect(header: String)(k: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
-    val dialectId = headerKey(header.split("\\|").head)
-    map.get(dialectId) match {
-      case Some(dialect) => withRegisteredDialect(dialect)(k)
-      case _             => None
-    }
-  }
-
-  def withRegisteredDialect(dialect: Dialect)(
-      fn: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
+  def withRegisteredDialect(dialect: Dialect)(fn: Dialect => DialectInstanceUnit): DialectInstanceUnit = {
     if (!resolved.contains(dialect.header))
       fn(resolveDialect(dialect))
     else
