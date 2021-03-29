@@ -34,7 +34,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "4.1.195"
+val amfCoreVersion = "4.1.196"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
@@ -48,7 +48,7 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   credentials ++= Common.credentials(),
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest"         % "3.0.5" % Test,
-    "org.mule.common"  %%% "scala-common-test" % "0.0.4" % Test,
+    "org.mule.common"  %%% "scala-common-test" % "0.0.6" % Test,
   ),
   logBuffered in Test := false
 )
