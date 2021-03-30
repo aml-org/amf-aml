@@ -15,7 +15,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.internal.environment.Environment
-import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
+import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ShaclJsonLdShapeGraphEmitter}
 import amf._
 import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions}
 
@@ -141,7 +141,7 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
     * @return JSON-LD graph
     */
   def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = RamlProfile): String = {
-    new ValidationJSONLDEmitter(profileName).emitJSON(customValidations(validations))
+    new ShaclJsonLdShapeGraphEmitter(profileName).emit(customValidations(validations))
   }
 
   def customValidations(validations: EffectiveValidations): Seq[ValidationSpecification] =

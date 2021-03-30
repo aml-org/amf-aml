@@ -19,7 +19,7 @@ import scala.collection.mutable.ListBuffer
   * Generates a JSON-LD graph with the shapes for a set of validations
   * @param targetProfile which kind of messages should be generated
   */
-class ValidationJSONLDEmitter(targetProfile: ProfileName) {
+class ShaclJsonLdShapeGraphEmitter(targetProfile: ProfileName) {
 
   private val jsValidatorEmitters: ListBuffer[PartEmitter]  = ListBuffer()
   private val jsConstraintEmitters: ListBuffer[PartEmitter] = ListBuffer()
@@ -29,10 +29,9 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
     * @param validations validations
     * @return JSON-LD graph with the validations
     */
-  def emitJSON(validations: Seq[ValidationSpecification]): String =
-    JsonRender.render(emitJSONLDAST(validations))
+  def emit(validations: Seq[ValidationSpecification]): String = JsonRender.render(buildDocument(validations))
 
-  private def emitJSONLDAST(validations: Seq[ValidationSpecification]): YDocument = {
+  private def buildDocument(validations: Seq[ValidationSpecification]): YDocument = {
     YDocument {
       _.list { b =>
         validations.foreach(emitValidation(b, _))
@@ -49,94 +48,26 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
       p.entry(JsonLdKeywords.Id, validationId)
       p.entry(JsonLdKeywords.Type, (Namespace.Shacl + "NodeShape").iri())
 
-      val message = targetProfile match {
-        case RamlProfile | Raml08Profile => validation.ramlMessage.getOrElse(validation.message)
-        case OasProfile                  => validation.oasMessage.getOrElse(validation.message)
-        case _                           => validation.message
-      }
-      if (message != "") {
-        p.entry((Namespace.Shacl + "message").iri(), genValue(_, message))
-      }
+      emitMessage(validation, p)
+      emitTargetInstance(validation, p)
+      emitTargetClass(validation, p)
+      emitClosedShape(validation, p)
+      emitTargetObject(validation, p)
+      emitUnionConstraints(validation, p)
+      emitAndConstraints(validation, p)
+      emitXoneConstraints(validation, p)
+      emitNotConstraint(validation, p)
 
-      if (validation.targetInstance.nonEmpty)
-        p.entry((Namespace.Shacl + "targetNode").iri(), _.list(p => {
-          validation.targetInstance.distinct.foreach { ti =>
-            link(p, expandRamlId(ti))
-          }
-        }))
+      validation.functionConstraint.foreach { emitFunctionConstraint(p, validationId, _) }
 
-      if (validation.targetClass.nonEmpty)
-        p.entry((Namespace.Shacl + "targetClass").iri(), _.list(p => {
-          validation.targetClass.foreach { tc =>
-            link(p, expandRamlId(tc))
-          }
-        }))
+      emitNodeConstraints(validation, p)
+      emitPropertyConstraints(validation, validationId, p)
+    }
+  }
 
-      for {
-        closedShape <- validation.closed
-      } yield {
-        if (closedShape) {
-          p.entry((Namespace.Shacl + "closed").iri(), genValue(_, closedShape.toString))
-        }
-      }
-
-      if (validation.targetObject.nonEmpty)
-        p.entry((Namespace.Shacl + "targetObjectsOf").iri(), _.list(p => {
-          validation.targetObject.foreach { to =>
-            link(p, expandRamlId(to))
-          }
-        }))
-
-      if (validation.unionConstraints.nonEmpty) {
-        p.entry((Namespace.Shacl + "or").iri(), _.obj {
-          _.entry(JsonLdKeywords.List,
-                  _.list(l =>
-                    validation.unionConstraints.foreach { v =>
-                      link(l, v)
-                  }))
-        })
-      }
-
-      if (validation.andConstraints.nonEmpty) {
-        p.entry((Namespace.Shacl + "and").iri(), _.obj {
-          _.entry(JsonLdKeywords.List,
-                  _.list(l =>
-                    validation.andConstraints.foreach { v =>
-                      link(l, v)
-                  }))
-        })
-      }
-
-      if (validation.xoneConstraints.nonEmpty) {
-        p.entry((Namespace.Shacl + "xone").iri(), _.obj {
-          _.entry(JsonLdKeywords.List,
-                  _.list(l =>
-                    validation.xoneConstraints.foreach { v =>
-                      link(l, v)
-                  }))
-        })
-      }
-
-      if (validation.notConstraint.isDefined) {
-        p.entry((Namespace.Shacl + "not").iri(), _.list { l =>
-          link(l, validation.notConstraint.get)
-        })
-      }
-
-      validation.functionConstraint match {
-        case Some(f) => emitFunctionConstraint(p, validationId, f)
-        case _       => // ignore
-      }
-
-      for {
-        (constraint, values) <- validation.nodeConstraints.groupBy(_.constraint)
-      } yield {
-        p.entry(Namespace.staticAliases.expand(constraint).iri(),
-                _.list(b => values.foreach(v => link(b, Namespace.staticAliases.expand(v.value).iri()))))
-      }
-
-      if (validation.propertyConstraints.nonEmpty) {
-        p.entry(
+  private def emitPropertyConstraints(validation: ValidationSpecification, validationId: String, p: EntryBuilder) = {
+    if (validation.propertyConstraints.nonEmpty) {
+      p.entry(
           (Namespace.Shacl + "property").iri(),
           _.list { b =>
             for {
@@ -159,8 +90,112 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
               }
             }
           }
-        )
+      )
+    }
+  }
+
+  private def emitNodeConstraints(validation: ValidationSpecification, p: EntryBuilder) = {
+    for {
+      (constraint, values) <- validation.nodeConstraints.groupBy(_.constraint)
+    } yield {
+      p.entry(Namespace.staticAliases.expand(constraint).iri(),
+              _.list(b => values.foreach(v => link(b, Namespace.staticAliases.expand(v.value).iri()))))
+    }
+  }
+
+  private def emitNotConstraint(validation: ValidationSpecification, p: EntryBuilder) = {
+    if (validation.notConstraint.isDefined) {
+      p.entry((Namespace.Shacl + "not").iri(), _.list { l =>
+        link(l, validation.notConstraint.get)
+      })
+    }
+  }
+
+  private def emitXoneConstraints(validation: ValidationSpecification, p: EntryBuilder) = {
+    if (validation.xoneConstraints.nonEmpty) {
+      p.entry((Namespace.Shacl + "xone").iri(), _.obj {
+        _.entry(JsonLdKeywords.List,
+                _.list(l =>
+                  validation.xoneConstraints.foreach { v =>
+                    link(l, v)
+                }))
+      })
+    }
+  }
+
+  private def emitAndConstraints(validation: ValidationSpecification, p: EntryBuilder) = {
+    if (validation.andConstraints.nonEmpty) {
+      p.entry((Namespace.Shacl + "and").iri(), _.obj {
+        _.entry(JsonLdKeywords.List,
+                _.list(l =>
+                  validation.andConstraints.foreach { v =>
+                    link(l, v)
+                }))
+      })
+    }
+  }
+
+  private def emitUnionConstraints(validation: ValidationSpecification, p: EntryBuilder) = {
+    if (validation.unionConstraints.nonEmpty) {
+      p.entry((Namespace.Shacl + "or").iri(), _.obj {
+        _.entry(JsonLdKeywords.List,
+                _.list(l =>
+                  validation.unionConstraints.foreach { v =>
+                    link(l, v)
+                }))
+      })
+    }
+  }
+
+  private def emitTargetObject(validation: ValidationSpecification, p: EntryBuilder) = {
+    if (validation.targetObject.nonEmpty)
+      p.entry((Namespace.Shacl + "targetObjectsOf").iri(), _.list(p => {
+        validation.targetObject.foreach { to =>
+          link(p, expandRamlId(to))
+        }
+      }))
+  }
+
+  private def emitClosedShape(validation: ValidationSpecification, p: EntryBuilder) = {
+    for {
+      closedShape <- validation.closed
+    } yield {
+      if (closedShape) {
+        p.entry((Namespace.Shacl + "closed").iri(), genValue(_, closedShape.toString))
       }
+    }
+  }
+
+  private def emitTargetClass(validation: ValidationSpecification, p: EntryBuilder) = {
+    if (validation.targetClass.nonEmpty)
+      p.entry((Namespace.Shacl + "targetClass").iri(), _.list(p => {
+        validation.targetClass.foreach { tc =>
+          link(p, expandRamlId(tc))
+        }
+      }))
+  }
+
+  private def emitTargetInstance(validation: ValidationSpecification, p: EntryBuilder) = {
+    if (validation.targetInstance.nonEmpty)
+      p.entry((Namespace.Shacl + "targetNode").iri(), _.list(p => {
+        validation.targetInstance.distinct.foreach { ti =>
+          link(p, expandRamlId(ti))
+        }
+      }))
+  }
+
+  private def emitMessage(validation: ValidationSpecification, p: EntryBuilder) = {
+    val message = getMessageOf(validation)
+    if (message != "") {
+      p.entry((Namespace.Shacl + "message").iri(), genValue(_, message))
+    }
+  }
+
+  private def getMessageOf(validation: ValidationSpecification) = {
+    targetProfile match {
+      case RamlProfile | Raml08Profile => validation.ramlMessage.getOrElse(validation.message)
+      case OasProfile                  => validation.oasMessage.getOrElse(validation.message)
+      case _                           => validation.message
     }
   }
 
@@ -203,18 +238,18 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
       case AlternatePath(elements) =>
         b.obj { e =>
           e.entry(
-            (Namespace.Shacl + "alternativePath").iri(), { e =>
-              e.obj { e =>
-                e.entry(JsonLdKeywords.List, { l =>
-                  l.list(p => {
-                    elements.zipWithIndex.foreach {
-                      case (e, i) =>
-                        emitPath(p, e)
-                    }
+              (Namespace.Shacl + "alternativePath").iri(), { e =>
+                e.obj { e =>
+                  e.entry(JsonLdKeywords.List, { l =>
+                    l.list(p => {
+                      elements.zipWithIndex.foreach {
+                        case (e, i) =>
+                          emitPath(p, e)
+                      }
+                    })
                   })
-                })
+                }
               }
-            }
           )
         }
 
@@ -278,7 +313,7 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
           b.entry((Namespace.Shacl + "lessThanOrEquals").iri(), link(_, constraint.lessThanOrEqualsToProperty.get))
         }
         constraint.multipleOf.foreach(
-          genCustomPropertyConstraintValue(b, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
+            genCustomPropertyConstraintValue(b, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
         constraint.pattern.foreach(v => genPropertyConstraintValue(b, "pattern", v))
         constraint.node.foreach(genPropertyConstraintValue(b, "node", _))
         constraint.value.foreach(genPropertyConstraintValue(b, "hasValue", _, Some(constraint)))
@@ -294,16 +329,16 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
             b.entry((Namespace.Shacl + "class").iri(), link(_, constraint.`class`.head))
           } else {
             b.entry(
-              (Namespace.Shacl + "or").iri(),
-              _.obj {
-                _.entry(JsonLdKeywords.List,
-                        _.list(l =>
-                          constraint.`class`.foreach { v =>
-                            l.obj {
-                              _.entry((Namespace.Shacl + "class").iri(), link(_, v))
-                            }
-                        }))
-              }
+                (Namespace.Shacl + "or").iri(),
+                _.obj {
+                  _.entry(JsonLdKeywords.List,
+                          _.list(l =>
+                            constraint.`class`.foreach { v =>
+                              l.obj {
+                                _.entry((Namespace.Shacl + "class").iri(), link(_, v))
+                              }
+                          }))
+                }
             )
           }
         }
@@ -315,10 +350,10 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
 
         if (constraint.in.nonEmpty) {
           b.entry(
-            (Namespace.Shacl + "in").iri(),
-            _.obj {
-              _.entry(JsonLdKeywords.List, _.list(b => constraint.in.foreach(genValue(b, _))))
-            }
+              (Namespace.Shacl + "in").iri(),
+              _.obj {
+                _.entry(JsonLdKeywords.List, _.list(b => constraint.in.foreach(genValue(b, _))))
+              }
           )
         }
       }
@@ -343,31 +378,31 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
           b.entry(JsonLdKeywords.Type, (Namespace.Shacl + "ConstraintComponent").iri())
           if (f.parameters.nonEmpty) {
             b.entry(
-              (Namespace.Shacl + "parameter").iri(),
-              _.obj { b =>
-                b.entry(
-                  (Namespace.Shacl + "path").iri(),
-                  _.obj(_.entry(JsonLdKeywords.Id, f.parameters.head.path))
-                )
-                b.entry(
-                  (Namespace.Shacl + "datatype").iri(),
-                  _.obj(_.entry(JsonLdKeywords.Id, f.parameters.head.datatype))
-                )
-              }
+                (Namespace.Shacl + "parameter").iri(),
+                _.obj { b =>
+                  b.entry(
+                      (Namespace.Shacl + "path").iri(),
+                      _.obj(_.entry(JsonLdKeywords.Id, f.parameters.head.path))
+                  )
+                  b.entry(
+                      (Namespace.Shacl + "datatype").iri(),
+                      _.obj(_.entry(JsonLdKeywords.Id, f.parameters.head.datatype))
+                  )
+                }
             )
           } else {
             b.entry(
-              (Namespace.Shacl + "parameter").iri(),
-              _.obj { b =>
-                b.entry(
-                  (Namespace.Shacl + "path").iri(),
-                  _.obj(_.entry(JsonLdKeywords.Id, validatorPath))
-                )
-                b.entry(
-                  (Namespace.Shacl + "datatype").iri(),
-                  _.obj(_.entry(JsonLdKeywords.Id, DataType.Boolean))
-                )
-              }
+                (Namespace.Shacl + "parameter").iri(),
+                _.obj { b =>
+                  b.entry(
+                      (Namespace.Shacl + "path").iri(),
+                      _.obj(_.entry(JsonLdKeywords.Id, validatorPath))
+                  )
+                  b.entry(
+                      (Namespace.Shacl + "datatype").iri(),
+                      _.obj(_.entry(JsonLdKeywords.Id, DataType.Boolean))
+                  )
+                }
             )
           }
           b.entry((Namespace.Shacl + "validator").iri(), _.obj(_.entry(JsonLdKeywords.Id, validatorId)))
@@ -388,20 +423,20 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
               b.entry(JsonLdKeywords.Type, (Namespace.Shacl + "JSValidator").iri())
               f.message.foreach(msg => b.entry((Namespace.Shacl + "message").iri(), genValue(_, msg)))
               b.entry(
-                (Namespace.Shacl + "jsLibrary").iri(),
-                _.list { b =>
-                  for { library <- f.libraries } {
-                    b.obj {
-                      _.entry(
-                        (Namespace.Shacl + "jsLibraryURL").iri(),
-                        _.obj { o =>
-                          o.entry(JsonLdKeywords.Value, library)
-                          o.entry(JsonLdKeywords.Type, "http://www.w3.org/2001/XMLSchema#anyUri")
-                        }
-                      )
+                  (Namespace.Shacl + "jsLibrary").iri(),
+                  _.list { b =>
+                    for { library <- f.libraries } {
+                      b.obj {
+                        _.entry(
+                            (Namespace.Shacl + "jsLibraryURL").iri(),
+                            _.obj { o =>
+                              o.entry(JsonLdKeywords.Value, library)
+                              o.entry(JsonLdKeywords.Type, "http://www.w3.org/2001/XMLSchema#anyUri")
+                            }
+                        )
+                      }
                     }
                   }
-                }
               )
               b.entry((Namespace.Shacl + "jsFunctionName").iri(), genValue(_, fnName))
             }
@@ -414,20 +449,20 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
                   b.entry(JsonLdKeywords.Type, (Namespace.Shacl + "JSValidator").iri())
                   f.message.foreach(msg => b.entry((Namespace.Shacl + "message").iri(), genValue(_, msg)))
                   b.entry(
-                    (Namespace.Shacl + "jsLibrary").iri(),
-                    _.list { b =>
-                      for { library <- Seq(ValidationJSONLDEmitter.validationLibraryUrl) ++ f.libraries } {
-                        b.obj {
-                          _.entry(
-                            (Namespace.Shacl + "jsLibraryURL").iri(),
-                            _.obj { o =>
-                              o.entry(JsonLdKeywords.Value, library)
-                              o.entry(JsonLdKeywords.Type, "http://www.w3.org/2001/XMLSchema#anyUri")
-                            }
-                          )
+                      (Namespace.Shacl + "jsLibrary").iri(),
+                      _.list { b =>
+                        for { library <- Seq(ShaclJsonLdShapeGraphEmitter.validationLibraryUrl) ++ f.libraries } {
+                          b.obj {
+                            _.entry(
+                                (Namespace.Shacl + "jsLibraryURL").iri(),
+                                _.obj { o =>
+                                  o.entry(JsonLdKeywords.Value, library)
+                                  o.entry(JsonLdKeywords.Type, "http://www.w3.org/2001/XMLSchema#anyUri")
+                                }
+                            )
+                          }
                         }
                       }
-                    }
                   )
                   b.entry((Namespace.Shacl + "jsFunctionName").iri(), genValue(_, f.computeFunctionName(validationId)))
                 }
@@ -446,22 +481,22 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
     constraint.flatMap(_.datatype) match {
       case Some(scalarType) if scalarType == (Namespace.Shapes + "number").iri() =>
         b.entry(
-          (Namespace.Shacl + "or").iri(),
-          _.obj {
-            _.entry(
-              JsonLdKeywords.List,
-              _.list { l =>
-                l.obj { o =>
-                  o.entry((Namespace.Shacl + constraintName).iri(),
-                          genValue(_, value.toDouble.floor.toInt.toString, Some(DataType.Integer)))
-                }
-                l.obj { o =>
-                  o.entry((Namespace.Shacl + constraintName).iri(),
-                          genValue(_, value.toDouble.toString, Some(DataType.Double)))
-                }
-              }
-            )
-          }
+            (Namespace.Shacl + "or").iri(),
+            _.obj {
+              _.entry(
+                  JsonLdKeywords.List,
+                  _.list { l =>
+                    l.obj { o =>
+                      o.entry((Namespace.Shacl + constraintName).iri(),
+                              genValue(_, value.toDouble.floor.toInt.toString, Some(DataType.Integer)))
+                    }
+                    l.obj { o =>
+                      o.entry((Namespace.Shacl + constraintName).iri(),
+                              genValue(_, value.toDouble.toString, Some(DataType.Double)))
+                    }
+                  }
+              )
+            }
         )
       case Some(_) =>
         b.entry((Namespace.Shacl + constraintName).iri(), genValue(_, value, constraint.flatMap(_.datatype)))
@@ -505,18 +540,18 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
       b.entry(JsonLdKeywords.Type, raw(_, (Namespace.Shacl + "NodeShape").iri()))
       b.entry((Namespace.Shacl + "message").iri(), raw(_, "List cannot be empty"))
       b.entry(
-        (Namespace.Shacl + "property").iri(),
-        _.list {
-          _.obj { b =>
-            b.entry((Namespace.Shacl + "path").iri(), link(_, (Namespace.Rdfs + "_1").iri()))
-            b.entry(
-              (Namespace.Shacl + "minCount").iri(),
-              _.obj {
-                _.entry(JsonLdKeywords.Value, raw(_, "1", YType.Int))
-              }
-            )
+          (Namespace.Shacl + "property").iri(),
+          _.list {
+            _.obj { b =>
+              b.entry((Namespace.Shacl + "path").iri(), link(_, (Namespace.Rdfs + "_1").iri()))
+              b.entry(
+                  (Namespace.Shacl + "minCount").iri(),
+                  _.obj {
+                    _.entry(JsonLdKeywords.Value, raw(_, "1", YType.Int))
+                  }
+              )
+            }
           }
-        }
       )
     }
   }
@@ -533,7 +568,9 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
           b.obj(_.entry(JsonLdKeywords.Value, raw(_, s, YType.Int)))
         } else if (s == "true" || s == "false") {
           b.obj(_.entry(JsonLdKeywords.Value, raw(_, s, YType.Bool)))
-        } else if (Namespace.staticAliases.expand(s).iri() == Namespace.staticAliases.expand("amf-parser:NonEmptyList").iri()) {
+        } else if (Namespace.staticAliases
+                     .expand(s)
+                     .iri() == Namespace.staticAliases.expand("amf-parser:NonEmptyList").iri()) {
           genNonEmptyList(b)
         } else if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
           link(b, s)
@@ -544,6 +581,6 @@ class ValidationJSONLDEmitter(targetProfile: ProfileName) {
   }
 }
 
-object ValidationJSONLDEmitter {
+object ShaclJsonLdShapeGraphEmitter {
   def validationLibraryUrl: String = (Namespace.AmfParser + "validationLibrary.js").iri()
 }
