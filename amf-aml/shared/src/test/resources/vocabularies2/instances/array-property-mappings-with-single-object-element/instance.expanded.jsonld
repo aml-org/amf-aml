@@ -1,0 +1,149 @@
+[
+  {
+    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml",
+    "@type": [
+      "http://a.ml/vocabularies/meta#DialectInstance",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/dialect.yaml"
+      }
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes",
+        "@type": [
+          "http://test.com/tmp#RootNode",
+          "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/dialect.yaml#/declarations/RootNode",
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://test.com/tmp#rootProp": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/rootProp/0",
+            "@type": [
+              "http://test.com/tmp#NestedNode",
+              "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/dialect.yaml#/declarations/NestedNode",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://test.com/tmp#nestedProp": [
+              {
+                "@value": "Hello"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#sources": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/rootProp/0/source-map",
+                "@type": [
+                  "http://a.ml/vocabularies/document-source-maps#SourceMap"
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/rootProp/0/source-map/lexical/element_1",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/rootProp/0"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,4)-(3,21)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/rootProp/0/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://test.com/tmp#nestedProp"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(3,4)-(3,21)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/source-map/lexical/element_1",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(3,21)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#rootProp"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,9)-(3,21)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "3.0.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document-source-maps#sources": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/source-map",
+        "@type": [
+          "http://a.ml/vocabularies/document-source-maps#SourceMap"
+        ],
+        "http://a.ml/vocabularies/document-source-maps#lexical": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/source-map/lexical/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "[(2,0)-(3,21)]"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

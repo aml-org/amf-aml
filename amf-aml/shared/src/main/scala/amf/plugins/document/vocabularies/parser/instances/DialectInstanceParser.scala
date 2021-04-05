@@ -22,6 +22,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementMo
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
+import amf.plugins.document.vocabularies.parser.instances.ClosedInstanceNode.{checkClosedNode, checkRootNode}
 import amf.validation.DialectValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
@@ -166,31 +167,15 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     empty
   }
 
-  def checkClosedNode(id: String,
-                      nodetype: String,
-                      entries: Map[YNode, YNode],
-                      mapping: NodeMapping,
-                      ast: YPart,
-                      rootNode: Boolean,
-                      additionalKey: Option[String]): Unit = {
-    val rootProps: Set[String] = if (rootNode) {
-      ctx.rootProps
-    } else {
-      Set[String]()
-    }
-    val props = mapping.propertiesMapping().map(_.name().value()).toSet.union(rootProps)
-    val inNode = entries.keys
-      .map(_.value.asInstanceOf[YScalar].text)
-      .filter(p => !p.startsWith("$") && !p.startsWith("(") && !p.startsWith("x-"))
-      .filterNot(additionalKey.contains)
-      .toSet
-    val outside = inNode.diff(props)
-    if (outside.nonEmpty) {
-      outside.foreach { prop =>
-        val posAst = entries.find(_._1.toString == prop).map(_._2).getOrElse(ast)
-        ctx.closedNodeViolation(id, prop, nodetype, posAst)
-      }
-    }
+  private def checkNodeForAdditionalKeys(id: String,
+                                         nodetype: String,
+                                         entries: Map[YNode, YNode],
+                                         mapping: NodeMapping,
+                                         ast: YPart,
+                                         rootNode: Boolean,
+                                         additionalKey: Option[String]): Unit = {
+    if (rootNode) checkRootNode(id, nodetype, entries, mapping, ast, additionalKey)
+    else checkClosedNode(id, nodetype, entries, mapping, ast, additionalKey)
   }
 
   protected def parseNode(path: String,
@@ -240,7 +225,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                     case None => // ignore
                   }
                 }
-                checkClosedNode(finalId, mapping.id, nodeMap.map, mapping, nodeMap, rootNode, additionalKey)
+                checkNodeForAdditionalKeys(finalId, mapping.id, nodeMap.map, mapping, nodeMap, rootNode, additionalKey)
                 node
 
               case unionMapping: UnionNodeMapping =>
@@ -652,6 +637,13 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               }
               node.withInstanceTypes(instanceTypes ++ Seq(mappings.head.id))
               discriminatorAnnotation(discriminatorName, nodeMap).foreach(node.add)
+              checkNodeForAdditionalKeys(finalId,
+                                         mappings.head.id,
+                                         nodeMap.map,
+                                         mappings.head,
+                                         nodeMap,
+                                         rootNode = false,
+                                         discriminatorName)
               node
             } else {
               ctx.eh.violation(
