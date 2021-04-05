@@ -49,6 +49,7 @@ class ShaclJsonLdShapeGraphEmitter(targetProfile: ProfileName) {
       p.entry(JsonLdKeywords.Type, (Namespace.Shacl + "NodeShape").iri())
 
       emitMessage(validation, p)
+      emitSeverity(validation, p)
       emitTargetInstance(validation, p)
       emitTargetClass(validation, p)
       emitClosedShape(validation, p)
@@ -189,6 +190,10 @@ class ShaclJsonLdShapeGraphEmitter(targetProfile: ProfileName) {
     if (message != "") {
       p.entry((Namespace.Shacl + "message").iri(), genValue(_, message))
     }
+  }
+
+  private def emitSeverity(validation: ValidationSpecification, p: EntryBuilder) = {
+    p.entry((Namespace.Shacl + "severity").iri(), genValue(_, validation.severity))
   }
 
   private def getMessageOf(validation: ValidationSpecification) = {

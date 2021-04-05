@@ -33,6 +33,8 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
       genValue(validationId, (Namespace.Shacl + "message").iri(), message)
     }
 
+    genValue(validationId, (Namespace.Shacl + "severity").iri(), validation.severity)
+
     if (validation.targetInstance.nonEmpty) {
       validation.targetInstance.distinct.foreach { ti =>
         link(validationId, (Namespace.Shacl + "targetNode").iri(), expandRamlId(ti))
@@ -195,6 +197,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         link(constraintId, (Namespace.Shacl + "path").iri(), expandRamlId(constraint.ramlPropertyId))
       }
 
+      genPropertyConstraintValue(constraintId, "severity", constraint.severity, None)
       constraint.maxCount.foreach(genPropertyConstraintValue(constraintId, "maxCount", _, Some(constraint)))
       constraint.minCount.foreach(genPropertyConstraintValue(constraintId, "minCount", _, Some(constraint)))
       constraint.maxLength.foreach(genPropertyConstraintValue(constraintId, "maxLength", _, Some(constraint)))
