@@ -1,0 +1,16 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+external:
+  tmp: http://test.com/tmp#
+nodeMappings:
+  RootNode:
+    classTerm: tmp.RootNode
+    mapping:
+      rootProp:
+        propertyTerm: tmp.rootProp
+        allowMultiple: true
+        range: string
+documents:
+  root:
+    encodes: RootNode

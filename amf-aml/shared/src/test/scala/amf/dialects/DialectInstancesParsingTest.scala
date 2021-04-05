@@ -973,6 +973,30 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("Array property mapping with single string element", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.jsonld",
+      config.golden,
+      AmfJsonHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/array-property-mappings-with-single-string-element/"
+    )
+  }
+
+  multiGoldenTest("Array property mapping with single object element", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.jsonld",
+      config.golden,
+      AmfJsonHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/array-property-mappings-with-single-object-element/"
+    )
+  }
+
 
   protected def withInlineDialect(source: String,
                                   golden: String,
