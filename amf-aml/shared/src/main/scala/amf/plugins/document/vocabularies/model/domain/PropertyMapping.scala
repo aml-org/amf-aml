@@ -50,14 +50,14 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     set(NodePropertyMapping, propertyId)
   def withLiteralRange(range: String): PropertyMapping =
     set(LiteralRange, range)
-  def withMapKeyProperty(key: String): PropertyMapping =
-    set(MapKeyProperty, key)
-  def withMapValueProperty(value: String): PropertyMapping =
-    set(MapValueProperty, value)
-  def withMapTermKeyProperty(key: String): PropertyMapping =
-    set(MapTermKeyProperty, key)
-  def withMapTermValueProperty(value: String): PropertyMapping =
-    set(MapTermValueProperty, value)
+  def withMapKeyProperty(key: String, annotations: Annotations = Annotations()): PropertyMapping =
+    set(MapKeyProperty, AmfScalar(key, annotations))
+  def withMapValueProperty(value: String, annotations: Annotations = Annotations()): PropertyMapping =
+    set(MapValueProperty, AmfScalar(value, annotations))
+  def withMapTermKeyProperty(key: String, annotations: Annotations = Annotations()): PropertyMapping =
+    set(MapTermKeyProperty, AmfScalar(key, annotations))
+  def withMapTermValueProperty(value: String, annotations: Annotations = Annotations()): PropertyMapping =
+    set(MapTermValueProperty, AmfScalar(value, annotations))
   def withMinCount(minCount: Int): PropertyMapping  = set(MinCount, minCount)
   def withPattern(pattern: String): PropertyMapping = set(Pattern, pattern)
   def withMinimum(min: Double): PropertyMapping     = set(Minimum, min)

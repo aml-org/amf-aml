@@ -81,9 +81,15 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
     validate("/scalar-property-mapping/dialect.yaml", Some("scalar-property-mapping/report.json"))
   }
 
-  test("Correct lexical range in unknown object range terms") {
+  test("Lexical range in unknown object range terms") {
     validate("/invalid-union-objectRange/dialect.yaml",
              Some("/invalid-union-objectRange/dialect.report"),
+             jsonldReport = false)
+  }
+
+  test("Lexical range of unknown property used as map key") {
+    validate("/unknown-map-key-property/dialect.yaml",
+             Some("/unknown-map-key-property/dialect.report"),
              jsonldReport = false)
   }
 }

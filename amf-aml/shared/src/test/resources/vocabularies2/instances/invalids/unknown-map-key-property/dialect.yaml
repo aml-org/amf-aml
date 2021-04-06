@@ -1,0 +1,21 @@
+#%Dialect 1.0
+dialect: Cloudformation
+version: 1.0
+external:
+  schema-org: http://schema.org/
+documents:
+  root:
+    encodes: CloudformationRoot
+nodeMappings:
+  CloudformationRoot:
+    classTerm: schema-org.root
+    mapping:
+      Resources:
+        mandatory: true
+        range: ResourceNode
+        mapKey: name
+  ResourceNode:
+    mapping:
+      logicalId:
+        mandatory: true
+        range: string

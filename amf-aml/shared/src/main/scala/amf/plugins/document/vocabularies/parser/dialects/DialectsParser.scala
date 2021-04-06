@@ -328,24 +328,24 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           val term = property.nodePropertyMapping().option().getOrElse((Namespace.Data + label).iri())
           property.mapTermKeyProperty().option() match {
             case Some(actualTerm) if term != actualTerm =>
-              propertyMapping.fields.removeField(PropertyMappingModel.MapTermKeyProperty)
-              propertyMapping.fields.removeField(PropertyMappingModel.MapKeyProperty)
               ctx.differentTermsInMapKey(
                   propertyMapping.id,
                   PropertyMappingModel.MapKeyProperty.value.iri(),
                   label,
                   propertyMapping.mapKeyProperty().annotations()
               )
+              propertyMapping.fields.removeField(PropertyMappingModel.MapTermKeyProperty)
+              propertyMapping.fields.removeField(PropertyMappingModel.MapKeyProperty)
             case _ => propertyMapping.withMapTermKeyProperty(term)
           }
         case _ =>
-          propertyMapping.fields.removeField(PropertyMappingModel.MapKeyProperty)
           ctx.missingPropertyKeyViolation(
               propertyMapping.id,
               PropertyMappingModel.MapKeyProperty.value.iri(),
               label,
               propertyMapping.mapKeyProperty().annotations()
           )
+          propertyMapping.fields.removeField(PropertyMappingModel.MapKeyProperty)
       }
     }
   }
@@ -787,11 +787,13 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     mapTermKey.fold({
       mapKey.foreach(entry => {
         val propertyLabel = ValueNode(entry.value).string().toString
-        propertyMapping.withMapKeyProperty(propertyLabel)
+        propertyMapping.withMapKeyProperty(propertyLabel, Annotations(entry.value))
       })
     })(entry => {
       val propertyTermId = ValueNode(entry.value).string().toString
-      getTermIfValid(propertyTermId, propertyMapping.id, entry.value).foreach(propertyMapping.withMapTermKeyProperty)
+      getTermIfValid(propertyTermId, propertyMapping.id, entry.value).foreach { p =>
+        propertyMapping.withMapTermKeyProperty(p, Annotations(entry.value))
+      }
     })
   }
 
@@ -809,11 +811,13 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     mapTermValue.fold({
       mapValu.foreach(entry => {
         val propertyLabel = ValueNode(entry.value).string().toString
-        propertyMapping.withMapValueProperty(propertyLabel)
+        propertyMapping.withMapValueProperty(propertyLabel, Annotations(entry.value))
       })
     })(entry => {
       val propertyTermId = ValueNode(entry.value).string().toString
-      getTermIfValid(propertyTermId, propertyMapping.id, entry.value).foreach(propertyMapping.withMapTermValueProperty)
+      getTermIfValid(propertyTermId, propertyMapping.id, entry.value).foreach { p =>
+        propertyMapping.withMapTermValueProperty(p, Annotations(entry.value))
+      }
     })
 
   }
