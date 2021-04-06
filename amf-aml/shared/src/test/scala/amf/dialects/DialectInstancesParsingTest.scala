@@ -997,6 +997,18 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("mapKey and mapValue without classterm", "instance.%s") { config =>
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/map-key-value-without-classterm/"
+    )
+  }
+
 
   protected def withInlineDialect(source: String,
                                   golden: String,
