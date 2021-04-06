@@ -26,11 +26,13 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Test idTemplate variables overridable by $base directive") {
-    validate("/base-overridable-idTemplate-variable/dialect.yaml", Some("/base-overridable-idTemplate-variable/report.json"))
+    validate("/base-overridable-idTemplate-variable/dialect.yaml",
+             Some("/base-overridable-idTemplate-variable/report.json"))
   }
 
   test("Test mandatory property mapping without value") {
-    validate("/mandatory-property-mapping-without-value/dialect.yaml", Some("mandatory-property-mapping-without-value/report.json"))
+    validate("/mandatory-property-mapping-without-value/dialect.yaml",
+             Some("mandatory-property-mapping-without-value/report.json"))
   }
 
   test("Test un-avoidable ambiguity in node") {
@@ -54,7 +56,8 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Test nested un-avoidable ambiguity in property") {
-    validate("/nested-unavoidable-ambiguity-property/dialect.yaml", Some("nested-unavoidable-ambiguity-property/report.json"))
+    validate("/nested-unavoidable-ambiguity-property/dialect.yaml",
+             Some("nested-unavoidable-ambiguity-property/report.json"))
   }
 
   test("Test nested eventual ambiguity in node") {
@@ -62,13 +65,13 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Test nested eventual ambiguity in property") {
-    validate("/nested-eventual-ambiguity-property/dialect.yaml", Some("nested-eventual-ambiguity-property/report.json"))
+    validate("/nested-eventual-ambiguity-property/dialect.yaml",
+             Some("nested-eventual-ambiguity-property/report.json"))
   }
 
   test("Test node mapping with reserved names") {
     validate("/dialect-with-reserved-names/dialect.yaml", Some("dialect-with-reserved-names/report.json"))
   }
-
 
   test("idTemplate uri template references property not present in mapping") {
     validate("/id-template-missing-variable/dialect.yaml", Some("id-template-missing-variable/report.json"))
@@ -76,5 +79,11 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
 
   test("Scalar property mapping") {
     validate("/scalar-property-mapping/dialect.yaml", Some("scalar-property-mapping/report.json"))
+  }
+
+  test("Correct lexical range in unknown object range terms") {
+    validate("/invalid-union-objectRange/dialect.yaml",
+             Some("/invalid-union-objectRange/dialect.report"),
+             jsonldReport = false)
   }
 }
