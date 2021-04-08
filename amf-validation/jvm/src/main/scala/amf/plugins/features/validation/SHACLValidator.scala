@@ -25,11 +25,11 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
   var functionCode: Option[String] = None
 
   val formats = Map(
-    "application/ld+json" -> "JSON-LD",
-    "application/json"    -> "JSON-LD",
-    "JSON-LD"             -> "JSON-LD",
-    "text/n3"             -> FileUtils.langN3,
-    "test/turtle"         -> FileUtils.langTurtle
+      "application/ld+json" -> "JSON-LD",
+      "application/json"    -> "JSON-LD",
+      "JSON-LD"             -> "JSON-LD",
+      "text/n3"             -> FileUtils.langN3,
+      "test/turtle"         -> FileUtils.langTurtle
   )
 
   override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
@@ -37,8 +37,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
     Future {
       val dataModel: Model   = loadModel(StringUtils.chomp(data), dataMediaType)
       val shapesModel: Model = loadModel(StringUtils.chomp(shapes), shapesMediaType)
-      val shaclShapes = Shapes.parse(shapesModel)
-      val report = ShaclValidator.get.validate(shaclShapes, dataModel.getGraph)
+      val shaclShapes        = Shapes.parse(shapesModel)
+      val report             = ShaclValidator.get.validate(shaclShapes, dataModel.getGraph)
       RDFPrinter(report.getModel, "JSON-LD")
     }
 
@@ -64,7 +64,6 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
     functionCode = Some(code)
   }
 
-
   override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[String] =
     Future {
@@ -75,42 +74,13 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
       val shapesModel = new JenaRdfModel()
       new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
       ExecutionLog.log(
-        s"SHACLValidator#validate: Number of data triples -> ${dataModel.model.listStatements().toList.size()}")
+          s"SHACLValidator#validate: Number of data triples -> ${dataModel.model.listStatements().toList.size()}")
       ExecutionLog.log(
-        s"SHACLValidator#validate: Number of shapes triples -> ${shapesModel.model.listStatements().toList.size()}")
-
-/*
-    dataModel.dump()
-    println("\n\n=======> SHAPES")
-    println(shapesModel.toN3())
-    println("\n\n=======> DATA")
-    println(dataModel.toN3())
-    val queryText =
-      """
-        |select (count(*) as ?total) ?name {
-        | ?s a <http://www.w3.org/ns/shacl#NodeShape> .
-        | ?s <http://www.w3.org/ns/shacl#name> ?name
-        |}
-        |group by ?name
-        |order by desc(?total)
-      """.stripMargin
-
-    val query = QueryFactory.create(queryText)
-    val queryExec = QueryExecutionFactory.create(query, dataModel.model)
-    val results = queryExec.execSelect()
-    while (results.hasNext) {
-      val solution = results.next()
-      val varNames = solution.varNames()
-      while (varNames.hasNext) {
-        val varName = varNames.next()
-        println(s"$varName -> ${solution.get(varName)}")
-      }
-    }
-*/
+          s"SHACLValidator#validate: Number of shapes triples -> ${shapesModel.model.listStatements().toList.size()}")
       ExecutionLog.log(s"SHACLValidator#validate: validating...")
       ExecutionLog.log("SHACLValidator#validate: starting script engine")
       val shaclShapes = Shapes.parse(shapesModel.native().asInstanceOf[Model])
-      val report = ShaclValidator.get.validate(shaclShapes, dataModel.native().asInstanceOf[Model].getGraph)
+      val report      = ShaclValidator.get.validate(shaclShapes, dataModel.native().asInstanceOf[Model].getGraph)
 
       ExecutionLog.log(s"SHACLValidator#validate: Generating JSON-LD report")
       val output = RDFPrinter(report.getModel, "JSON-LD")

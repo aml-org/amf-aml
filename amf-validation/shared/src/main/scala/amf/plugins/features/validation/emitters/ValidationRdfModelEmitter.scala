@@ -9,7 +9,7 @@ import amf.core.vocabulary.Namespace
 
 class ValidationRdfModelEmitter(targetProfile: ProfileName,
                                 rdfModel: RdfModel,
-                                defaultJSLibraryUrl: String = ValidationJSONLDEmitter.validationLibraryUrl) {
+                                defaultJSLibraryUrl: String = ShaclJsonLdShapeGraphEmitter.validationLibraryUrl) {
 
   /**
     * Emit the triples for the validations
@@ -32,6 +32,8 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
     if (message != "") {
       genValue(validationId, (Namespace.Shacl + "message").iri(), message)
     }
+
+    genValue(validationId, (Namespace.Shacl + "severity").iri(), validation.severity)
 
     if (validation.targetInstance.nonEmpty) {
       validation.targetInstance.distinct.foreach { ti =>
@@ -81,15 +83,22 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
     if (validation.query.isDefined) {
       val queryValidationId = validationId + "/query"
       link(validationId, (Namespace.Shacl + "sparql").iri(), queryValidationId)
-      rdfModel.addTriple(queryValidationId, (Namespace.Shacl + "message").iri(), validation.message, Some(DataType.String))
-      rdfModel.addTriple(queryValidationId, (Namespace.Shacl + "select").iri(), validation.query.get.query, Some(DataType.String))
+      rdfModel.addTriple(queryValidationId,
+                         (Namespace.Shacl + "message").iri(),
+                         validation.message,
+                         Some(DataType.String))
+      rdfModel.addTriple(queryValidationId,
+                         (Namespace.Shacl + "select").iri(),
+                         validation.query.get.query,
+                         Some(DataType.String))
       val ontologyId = validationId + "/query/ontology"
       rdfModel.addTriple(queryValidationId, (Namespace.Shacl + "prefixes").iri(), ontologyId)
-      validation.query.get.prefixes.foreach { case (alias, ns) =>
-        val declarationId = rdfModel.nextAnonId()
-        rdfModel.addTriple(ontologyId, (Namespace.Shacl + "declare").iri(), declarationId)
-        rdfModel.addTriple(declarationId, (Namespace.Shacl + "prefix").iri(), alias, Some(DataType.AnyUri))
-        rdfModel.addTriple(declarationId, (Namespace.Shacl + "namespace").iri(), ns, Some(DataType.String))
+      validation.query.get.prefixes.foreach {
+        case (alias, ns) =>
+          val declarationId = rdfModel.nextAnonId()
+          rdfModel.addTriple(ontologyId, (Namespace.Shacl + "declare").iri(), declarationId)
+          rdfModel.addTriple(declarationId, (Namespace.Shacl + "prefix").iri(), alias, Some(DataType.AnyUri))
+          rdfModel.addTriple(declarationId, (Namespace.Shacl + "namespace").iri(), ns, Some(DataType.String))
       }
     }
 
@@ -102,13 +111,15 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
       (constraint, values) <- validation.nodeConstraints.groupBy(_.constraint)
     } yield {
       values.foreach { v =>
-        link(validationId, Namespace.staticAliases.expand(constraint).iri(), Namespace.staticAliases.expand(v.value).iri())
+        link(validationId,
+             Namespace.staticAliases.expand(constraint).iri(),
+             Namespace.staticAliases.expand(v.value).iri())
       }
     }
 
     if (validation.propertyConstraints.nonEmpty) {
       for {
-        (constraint,i) <- validation.propertyConstraints.zipWithIndex
+        (constraint, i) <- validation.propertyConstraints.zipWithIndex
       } yield {
         // processed properties will always include with /prop, this is a CONVENTION
         // can be tricking to follow when debugging
@@ -128,27 +139,27 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
     }
   }
   private def isPropertyConstraintUri(name: String): Boolean = {
-    (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) && name.indexOf("/prop") > -1
+    (name.startsWith("http://") || name.startsWith("https://") || name.startsWith("file:")) && name
+      .indexOf("/prop") > -1
   }
 
-
   /**
-   * Builds a path property in a property constraint parsing a provided constraint path
-   * @param constraintId
-   * @param constraint
-   */
+    * Builds a path property in a property constraint parsing a provided constraint path
+    * @param constraintId
+    * @param constraint
+    */
   protected def assertPropertyPath(constraintId: String, constraint: PropertyConstraint): Unit = {
     val parsedPath = constraint.path.get
-    val pathId = buildPath(constraintId + "_path", parsedPath)
+    val pathId     = buildPath(constraintId + "_path", parsedPath)
     link(constraintId, (Namespace.Shacl + "path").iri(), pathId)
   }
 
   /**
-   * Emits the triples
-   * @param base
-   * @param parsedPath
-   * @return
-   */
+    * Emits the triples
+    * @param base
+    * @param parsedPath
+    * @return
+    */
   def buildPath(base: String, parsedPath: PropertyPath): String = {
     parsedPath match {
       case PredicatePath(p, false, false) =>
@@ -161,19 +172,19 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         val uri = base + "_neg"
         link(uri, (Namespace.Shacl + "zeroOrMorePath").iri(), p)
         uri
-      case SequencePath(elements)        =>
-        val uri = base + "_seq"
-        val nestedIds = elements.zipWithIndex.map { case (path, i) =>  buildPath(s"${uri}$i", path) }
+      case SequencePath(elements) =>
+        val uri       = base + "_seq"
+        val nestedIds = elements.zipWithIndex.map { case (path, i) => buildPath(s"${uri}$i", path) }
         emitAnonList(nestedIds, link)
-        // emitList(nestedIds, link)
-      case AlternatePath(elements)       =>
-        val uri = base + "_alt"
-        val nestedIds = elements.zipWithIndex.map { case (path, i) =>  buildPath(s"${uri}$i", path) }
-        val listId = emitAnonList(nestedIds, link)
-        val altId = rdfModel.nextAnonId()
+      // emitList(nestedIds, link)
+      case AlternatePath(elements) =>
+        val uri       = base + "_alt"
+        val nestedIds = elements.zipWithIndex.map { case (path, i) => buildPath(s"${uri}$i", path) }
+        val listId    = emitAnonList(nestedIds, link)
+        val altId     = rdfModel.nextAnonId()
         link(altId, (Namespace.Shacl + "alternativePath").iri(), listId)
         altId
-      case other                         => throw new Exception(s"""Cannote emit path, unsupported type of path token $other""")// ignore
+      case other => throw new Exception(s"""Cannote emit path, unsupported type of path token $other""") // ignore
     }
   }
 
@@ -186,29 +197,36 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         link(constraintId, (Namespace.Shacl + "path").iri(), expandRamlId(constraint.ramlPropertyId))
       }
 
+      genPropertyConstraintValue(constraintId, "severity", constraint.severity, None)
       constraint.maxCount.foreach(genPropertyConstraintValue(constraintId, "maxCount", _, Some(constraint)))
       constraint.minCount.foreach(genPropertyConstraintValue(constraintId, "minCount", _, Some(constraint)))
       constraint.maxLength.foreach(genPropertyConstraintValue(constraintId, "maxLength", _, Some(constraint)))
       constraint.minLength.foreach(genPropertyConstraintValue(constraintId, "minLength", _, Some(constraint)))
       constraint.maxExclusive.foreach(
-        genNumericPropertyConstraintValue(constraintId, "maxExclusive", _, Some(constraint)))
+          genNumericPropertyConstraintValue(constraintId, "maxExclusive", _, Some(constraint)))
       constraint.minExclusive.foreach(
-        genNumericPropertyConstraintValue(constraintId, "minExclusive", _, Some(constraint)))
+          genNumericPropertyConstraintValue(constraintId, "minExclusive", _, Some(constraint)))
       constraint.maxInclusive.foreach(
-        genNumericPropertyConstraintValue(constraintId, "maxInclusive", _, Some(constraint)))
+          genNumericPropertyConstraintValue(constraintId, "maxInclusive", _, Some(constraint)))
       constraint.minInclusive.foreach(
-        genNumericPropertyConstraintValue(constraintId, "minInclusive", _, Some(constraint)))
+          genNumericPropertyConstraintValue(constraintId, "minInclusive", _, Some(constraint)))
       constraint.multipleOf.foreach(
-        genCustomPropertyConstraintValue(constraintId, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
+          genCustomPropertyConstraintValue(constraintId, (Namespace.Shapes + "multipleOfValidationParam").iri(), _))
       constraint.pattern.foreach(v => genPropertyConstraintValue(constraintId, "pattern", v))
       constraint.node.foreach(genPropertyConstraintValue(constraintId, "node", _))
       constraint.value.foreach(genPropertyConstraintValue(constraintId, "hasValue", _, Some(constraint)))
       if (constraint.atLeast.isDefined) {
-        rdfModel.addTriple(constraintId, (Namespace.Shacl + "qualifiedMinCount").iri(), constraint.atLeast.get._1.toString, Some((Namespace.Xsd + "integer").iri()))
+        rdfModel.addTriple(constraintId,
+                           (Namespace.Shacl + "qualifiedMinCount").iri(),
+                           constraint.atLeast.get._1.toString,
+                           Some((Namespace.Xsd + "integer").iri()))
         link(constraintId, (Namespace.Shacl + "qualifiedValueShape").iri(), constraint.atLeast.get._2)
       }
       if (constraint.atMost.isDefined) {
-        rdfModel.addTriple(constraintId, (Namespace.Shacl + "qualifiedMaxCount").iri(), constraint.atMost.get._1.toString, Some((Namespace.Xsd + "integer").iri()))
+        rdfModel.addTriple(constraintId,
+                           (Namespace.Shacl + "qualifiedMaxCount").iri(),
+                           constraint.atMost.get._1.toString,
+                           Some((Namespace.Xsd + "integer").iri()))
         link(constraintId, (Namespace.Shacl + "qualifiedValueShape").iri(), constraint.atMost.get._2)
       }
       if (constraint.equalToProperty.isDefined) {
@@ -371,7 +389,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
   }
 
   def emitAnonList(listValues: Seq[String], generator: (String, String, String) => Unit): String = {
-    var listId = rdfModel.nextAnonId()
+    var listId     = rdfModel.nextAnonId()
     val origListId = listId
 
     val totalElements = listValues.length
@@ -448,7 +466,9 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
           rdfModel.addTriple(subject, property, s, Some(DataType.Long))
         } else if (s == "true" || s == "false") {
           rdfModel.addTriple(subject, property, s, Some(DataType.Boolean))
-        } else if (Namespace.staticAliases.expand(s).iri() == Namespace.staticAliases.expand("amf-parser:NonEmptyList").iri()) {
+        } else if (Namespace.staticAliases
+                     .expand(s)
+                     .iri() == Namespace.staticAliases.expand("amf-parser:NonEmptyList").iri()) {
           genNonEmptyList(subject, property)
         } else if (s.startsWith("http://") || s.startsWith("https://") || s.startsWith("file:")) {
           link(subject, property, s)

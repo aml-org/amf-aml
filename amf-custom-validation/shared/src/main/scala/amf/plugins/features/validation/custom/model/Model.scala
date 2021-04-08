@@ -330,12 +330,26 @@ object ParsedValidationProfile extends DialectWrapper {
       .set(extractStrings(node, "info"), SeverityLevels.INFO)
       .set(extractStrings(node, "warning"), SeverityLevels.WARNING)
       .disable(extractStrings(node, "disabled"))
+    val validations = collectValidations(mapEntities(node, "validations", (v) => ParsedValidationSpecification(deref(v), prfx))).collect {
+      case v: ValidationSpecification =>
+        severityMapping.getSeverityOf(v.name)
+          .map(s =>
+            v.copy(
+              severity = ShaclSeverityUris.amfToShaclSeverity(s),
+              propertyConstraints = v.propertyConstraints.map {
+                _.copy(severity = ShaclSeverityUris.amfToShaclSeverity(s))
+              }
+            )
+
+          )
+          .getOrElse(v)
+    }
     ValidationProfile(
       name = ProfileName(mandatory("profile in validation profile", extractString(node, "profile"))),
       baseProfile = extractString(node, "extends").map(ProfileName.apply),
       severities = severityMapping,
-      validations =
-        collectValidations(mapEntities(node, "validations", (v) => ParsedValidationSpecification(deref(v), prfx))),
+      validations = validations,
+
       prefixes = prfx
     )
   }
