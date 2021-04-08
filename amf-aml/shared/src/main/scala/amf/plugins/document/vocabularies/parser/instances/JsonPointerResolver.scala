@@ -15,7 +15,7 @@ trait JsonPointerResolver extends NodeMappableHelper with PlatformSecrets with B
   val root: Root
   implicit val ctx: DialectInstanceContext
 
-  protected def resolveJSONPointer(map: YMap, mapping: NodeMappable, id: String): Option[DialectDomainElement] = {
+  protected def resolveJSONPointer(map: YMap, mapping: NodeMappable, id: String): DialectDomainElement = {
     val mappingIds = allNodeMappingIds(mapping)
     val entry      = map.key("$ref").get
     val pointer    = entry.value.as[String]
@@ -37,10 +37,10 @@ trait JsonPointerResolver extends NodeMappableHelper with PlatformSecrets with B
         linkedNode.unresolved(fullPointer, map)
         linkedNode
       }
-    } orElse {
+    } getOrElse {
       val linkedNode = DialectDomainElement(map).withId(id).withInstanceTypes(Seq(mapping.id))
       linkedNode.unresolved(fullPointer, map)
-      Some(linkedNode)
+      linkedNode
     }
   }
 

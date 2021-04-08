@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -9,7 +8,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.ClassTermModel._
 import org.yaml.model.YMap
 
 case class ClassTerm(fields: Fields, annotations: Annotations) extends DomainElement {
-  override def meta: Obj = ClassTermModel
+  override def meta: ClassTermModel.type = ClassTermModel
 
   override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
     if (Option(id).isEmpty) {

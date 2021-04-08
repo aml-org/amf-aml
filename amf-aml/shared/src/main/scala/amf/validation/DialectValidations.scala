@@ -108,6 +108,8 @@ object DialectValidations extends Validations {
     "GUID scalar type declared without unique constraint"
   )
 
+  val PropertyMappingMustBeAMap = validation("property-mapping-must-be-a-map", "Property mapping must be a map")
+
   val DuplicateTerm = validation("duplicate-term", "Vocabulary defines duplicate terms")
 
   val VariablesDefinedInBase = validation("variables-defined-in-base", "idTemplate variables are overridable by $base directive")

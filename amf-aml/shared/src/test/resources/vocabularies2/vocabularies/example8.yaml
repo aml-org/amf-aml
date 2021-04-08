@@ -1,0 +1,10 @@
+#%Vocabulary 1.0
+base: http://a.ml/vocabularies/test8#
+vocabulary: test8
+propertyTerms:
+  emptyExtends:
+    extends:
+
+classTerms:
+  emptyExtend:
+    extends:

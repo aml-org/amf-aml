@@ -674,7 +674,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_0",
+                    "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://mulesoft.com/vocabularies/about#License"
@@ -683,6 +683,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(60,2)-(68,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/meta#properties"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(64,4)-(68,0)]"
                       }
                     ]
                   }
@@ -730,7 +743,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://mulesoft.com/vocabularies/about#DiscussionChannel/source-map/lexical/element_0",
+                    "@id": "http://mulesoft.com/vocabularies/about#DiscussionChannel/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://mulesoft.com/vocabularies/about#DiscussionChannel"
@@ -739,6 +752,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(34,2)-(42,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://mulesoft.com/vocabularies/about#DiscussionChannel/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/meta#properties"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(37,4)-(42,0)]"
                       }
                     ]
                   }
@@ -785,7 +811,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_0",
+                    "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://mulesoft.com/vocabularies/about#Contributor"
@@ -794,6 +820,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(68,2)-(75,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/meta#properties"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(72,4)-(75,0)]"
                       }
                     ]
                   }
@@ -930,7 +969,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://mulesoft.com/vocabularies/about#SoftwareProject/source-map/lexical/element_0",
+                    "@id": "http://mulesoft.com/vocabularies/about#SoftwareProject/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://mulesoft.com/vocabularies/about#SoftwareProject"
@@ -939,6 +978,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(18,2)-(34,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://mulesoft.com/vocabularies/about#SoftwareProject/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/meta#properties"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(21,4)-(34,0)]"
                       }
                     ]
                   }

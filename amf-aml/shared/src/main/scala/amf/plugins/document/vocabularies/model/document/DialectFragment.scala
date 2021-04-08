@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, EncodesModel}
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.document.DialectFragmentModel
@@ -19,7 +18,7 @@ case class DialectFragment(fields: Fields, annotations: Annotations)
 
   def withEncodes(nodeMapping: NodeMapping): DialectFragment = set(Encodes, nodeMapping)
 
-  def meta: Obj = DialectFragmentModel
+  def meta: DialectFragmentModel.type = DialectFragmentModel
 }
 
 object DialectFragment {

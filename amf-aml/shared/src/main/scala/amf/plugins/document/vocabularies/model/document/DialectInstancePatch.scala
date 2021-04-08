@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
@@ -13,7 +12,7 @@ case class DialectInstancePatch(fields: Fields, annotations: Annotations)
     with DeclaresModel
     with EncodesModel {
 
-  override def meta: Obj = DialectInstancePatchModel
+  override def meta: DialectInstancePatchModel.type = DialectInstancePatchModel
 
   def references: Seq[BaseUnit]        = fields.field(References)
   def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)

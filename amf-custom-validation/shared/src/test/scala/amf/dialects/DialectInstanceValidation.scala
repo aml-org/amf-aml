@@ -1,12 +1,14 @@
 package amf.dialects
 
 import amf.ProfileName
+import amf.client.environment.AmlEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationReport
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.core.io.FileAssertionTest
+import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter

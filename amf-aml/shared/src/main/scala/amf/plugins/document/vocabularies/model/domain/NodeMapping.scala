@@ -15,7 +15,7 @@ class NodeMapping(override val fields: Fields, override val annotations: Annotat
     with MergeableMapping
     with NodeMappable {
 
-  override def meta: Obj = NodeMappingModel
+  override def meta: NodeMappingModel.type = NodeMappingModel
 
   def nodetypeMapping: StrField                 = fields.field(NodeTypeMapping)
   def propertiesMapping(): Seq[PropertyMapping] = fields.field(PropertiesMapping)

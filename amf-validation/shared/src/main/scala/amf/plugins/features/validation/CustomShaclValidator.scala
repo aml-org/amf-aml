@@ -19,7 +19,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class CustomShaclValidator(model: BaseUnit,
                            validations: EffectiveValidations,
                            customFunctions: CustomShaclFunctions,
-                           options: ValidationOptions)(implicit executionContext: ExecutionContext) {
+                           options: ValidationOptions)(implicit executionContext: ExecutionContext){
 
   var validationReport: CustomValidationReport = new CustomValidationReport(Nil)
 

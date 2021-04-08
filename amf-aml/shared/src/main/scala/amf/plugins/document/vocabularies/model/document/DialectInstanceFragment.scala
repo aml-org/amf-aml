@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, EncodesModel}
 import amf.core.model.domain.DomainElement
@@ -18,7 +17,7 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
     extends DialectInstanceUnit
     with EncodesModel
     with ComposedInstancesSupport {
-  override def meta: Obj = DialectInstanceFragmentModel
+  override def meta: DialectInstanceFragmentModel.type = DialectInstanceFragmentModel
 
   def references: Seq[BaseUnit]        = fields.field(References)
   def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)

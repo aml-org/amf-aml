@@ -4,9 +4,10 @@ import amf.core.Root
 import amf.core.parser.Annotations
 import amf.plugins.document.vocabularies.model.document.DialectInstanceLibrary
 
-class DialectInstanceLibraryParser(root: Root)(implicit override val ctx: DialectInstanceContext) extends DialectInstanceParser(root) {
+class DialectInstanceLibraryParser(root: Root)(implicit override val ctx: DialectInstanceContext)
+    extends DialectInstanceParser(root) {
 
-  def parse(): Option[DialectInstanceLibrary] = {
+  def parse(): DialectInstanceLibrary = {
     val dialectInstance: DialectInstanceLibrary = DialectInstanceLibrary(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
@@ -30,6 +31,6 @@ class DialectInstanceLibraryParser(root: Root)(implicit override val ctx: Dialec
     // resolve unresolved references
     ctx.futureDeclarations.resolve()
 
-    Some(dialectInstance)
+    dialectInstance
   }
 }

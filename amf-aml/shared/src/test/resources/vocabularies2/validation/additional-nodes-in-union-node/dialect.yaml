@@ -1,0 +1,35 @@
+#%Dialect 1.0
+
+dialect: Something
+version: 1.0
+
+nodeMappings:
+  SampleDataDeclaration:
+    mapping:
+      definition:
+        range:
+        - SampleDataSimpleDefinition
+        - SampleDataCustomDefinition
+        typeDiscriminatorName: typeDisc
+        typeDiscriminator:
+          simple: SampleDataSimpleDefinition
+          custom: SampleDataCustomDefinition
+  
+  SampleDataSimpleDefinition:
+    mapping:
+      request:
+        range: string
+        mandatory: true
+      transform:
+        range: string
+  
+  SampleDataCustomDefinition:
+    mapping:
+      result:
+        range: string
+        mandatory: true
+
+documents:
+  root:
+    encodes:
+      SampleDataDeclaration

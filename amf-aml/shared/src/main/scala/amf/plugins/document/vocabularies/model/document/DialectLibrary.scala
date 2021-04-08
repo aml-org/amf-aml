@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.metamodel.Obj
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
@@ -18,7 +17,7 @@ case class DialectLibrary(fields: Fields, annotations: Annotations)
 
   override def componentId: String = ""
 
-  def meta: Obj = DialectLibraryModel
+  def meta: DialectLibraryModel.type = DialectLibraryModel
 }
 
 object DialectLibrary {

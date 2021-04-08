@@ -9,8 +9,8 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation with Defa
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath       = "file://amf-aml/shared/src/test/resources/vocabularies2/validation"
-  val productionPath = "file://amf-aml/shared/src/test/resources/vocabularies2/production"
+  val basePath                                   = "file://amf-aml/shared/src/test/resources/vocabularies2/validation"
+  val productionPath                             = "file://amf-aml/shared/src/test/resources/vocabularies2/production"
   private val reportComparator: ReportComparator = UniquePlatformReportComparator
 
   def validate(dialect: String,
@@ -172,25 +172,29 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation with Defa
 
   test("Validate native link with colliding properties") {
     validate("dialect.yaml",
-      "instance.yaml",
-      Some("report.json"),
-      path = s"$basePath/native-link-with-colliding-properties")
+             "instance.yaml",
+             Some("report.json"),
+             path = s"$basePath/native-link-with-colliding-properties")
   }
 
   // This should be invalid!
   test("Validate native link with extra properties") {
     validate("dialect.yaml",
-      "instance.yaml",
-      Some("report.json"),
-      path = s"$basePath/native-link-with-extra-properties")
+             "instance.yaml",
+             Some("report.json"),
+             path = s"$basePath/native-link-with-extra-properties")
   }
 
   // This should be invalid!
   test("Validate native link with $base without $id") {
     validate("dialect.yaml",
-      "instance.yaml",
-      Some("report.json"),
-      path = s"$basePath/native-link-with-$$base-without-$$id")
+             "instance.yaml",
+             Some("report.json"),
+             path = s"$basePath/native-link-with-$$base-without-$$id")
+  }
+
+  test("Validate additional nodes in union node") {
+    validate("dialect.yaml", "instance.yaml", Some("report.json"), path = s"$basePath/additional-nodes-in-union-node")
   }
 
 }

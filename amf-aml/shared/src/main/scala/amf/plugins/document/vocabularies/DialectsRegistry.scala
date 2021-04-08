@@ -21,6 +21,7 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanc
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping, ObjectMapProperty}
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
 import org.mulesoft.common.core._
+import org.mulesoft.common.functional.MonadInstances._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -62,16 +63,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   def dialectById(id: String): Option[Dialect] = map.values.find(_.id == id)
 
-  def withRegisteredDialect(header: String)(k: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
-    val dialectId = headerKey(header.split("\\|").head)
-    map.get(dialectId) match {
-      case Some(dialect) => withRegisteredDialect(dialect)(k)
-      case _             => None
-    }
-  }
-
-  def withRegisteredDialect(dialect: Dialect)(
-      fn: Dialect => Option[DialectInstanceUnit]): Option[DialectInstanceUnit] = {
+  def withRegisteredDialect(dialect: Dialect)(fn: Dialect => DialectInstanceUnit): DialectInstanceUnit = {
     if (!resolved.contains(dialect.header))
       fn(resolveDialect(dialect))
     else
@@ -89,7 +81,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   protected def headerKey(header: String): String = header.stripSpaces
 
-  override def findType(typeString: String): Option[Obj] = {
+  private val findType = CachedFunction.fromMonadic { typeString: String =>
     val foundMapping: Option[(Dialect, DomainElement)] = map.values.toSeq.distinct
       .collect {
         case dialect: Dialect =>
@@ -109,41 +101,57 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     }
   }
 
-  override def buildType(modelType: Obj): Option[Annotations => AmfObject] = modelType match {
-    case dialectModel: DialectDomainElementModel =>
-      val reviver = (annotations: Annotations) =>
-        dialectModel.nodeMapping match {
-          case Some(nodeMapping) =>
-            DialectDomainElement(annotations)
-              .withInstanceTypes(dialectModel.typeIri :+ nodeMapping.id)
-              .withDefinedBy(nodeMapping)
-          case _ =>
-            throw new Exception(s"Cannot find node mapping for dialectModel $dialectModel")
-      }
+  override def findType(typeString: String): Option[Obj] = findType.runCached(typeString)
 
-      Some(reviver)
-    case _ => None
+  private val buildType = CachedFunction.fromMonadic { modelType: Obj =>
+    modelType match {
+      case dialectModel: DialectDomainElementModel =>
+        val reviver = (annotations: Annotations) =>
+          dialectModel.nodeMapping match {
+            case Some(nodeMapping) =>
+              DialectDomainElement(annotations)
+                .withInstanceTypes(dialectModel.typeIri :+ nodeMapping.id)
+                .withDefinedBy(nodeMapping)
+            case _ =>
+              throw new Exception(s"Cannot find node mapping for dialectModel $dialectModel")
+        }
+
+        Some(reviver)
+      case _ => None
+    }
   }
 
+  override def buildType(modelType: Obj): Option[Annotations => AmfObject] = buildType.runCached(modelType)
+
+  type NodeMappingId = String
+  private val metamodelCache = new Cache[NodeMappingId, DialectDomainElementModel]
+
   def buildMetaModel(nodeMapping: NodeMapping, dialect: Dialect): DialectDomainElementModel = {
-    val nodeType = nodeMapping.nodetypeMapping
-    val fields   = nodeMapping.propertiesMapping().map(_.toField)
-    val mapPropertiesInDomain = dialect.declares
-      .collect {
-        case nodeMapping: NodeMapping =>
-          nodeMapping.propertiesMapping().filter(_.classification() == ObjectMapProperty)
+    metamodelCache
+      .get(nodeMapping.id)
+      .getOrElse {
+        val nodeType = nodeMapping.nodetypeMapping
+        val fields   = nodeMapping.propertiesMapping().map(_.toField)
+        val mapPropertiesInDomain = dialect.declares
+          .collect {
+            case nodeMapping: NodeMapping =>
+              nodeMapping.propertiesMapping().filter(_.classification() == ObjectMapProperty)
+          }
+          .flatten
+          .filter(prop => prop.objectRange().exists(_.value() == nodeMapping.id))
+
+        val mapPropertiesFields =
+          mapPropertiesInDomain
+            .map(_.mapTermKeyProperty())
+            .distinct
+            .map(iri =>
+              Field(Type.Str, ValueType(iri.value()), ModelDoc(ModelVocabularies.Parser, "custom", iri.value())))
+
+        val nodeTypes = nodeType.option().map(Seq(_)).getOrElse(Nil)
+        val result    = new DialectDomainElementModel(nodeTypes, fields ++ mapPropertiesFields, Some(nodeMapping))
+        metamodelCache.put(nodeMapping.id, result)
+        result
       }
-      .flatten
-      .filter(prop => prop.objectRange().exists(_.value() == nodeMapping.id))
-
-    val mapPropertiesFields =
-      mapPropertiesInDomain
-        .map(_.mapTermKeyProperty())
-        .distinct
-        .map(iri => Field(Type.Str, ValueType(iri.value()), ModelDoc(ModelVocabularies.Parser, "custom", iri.value())))
-
-    val nodeTypes = nodeType.option().map(Seq(_)).getOrElse(Nil)
-    new DialectDomainElementModel(nodeTypes, fields ++ mapPropertiesFields, Some(nodeMapping))
   }
 
   def resolveRegisteredDialect(header: String): Unit = {
@@ -183,7 +191,14 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   }
 
+  private def invalidateCaches() = {
+    findType.invalidateCache()
+    buildType.invalidateCache()
+    metamodelCache.invalidate()
+  }
+
   def unregisterDialect(uri: String): Unit = {
+    invalidateCaches()
     map.foreach {
       case (header, dialect) =>
         if (dialect.id == uri) {
@@ -214,6 +229,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   def remove(uri: String): Unit = {
     val headers = map.filter(_._2.id == uri).keys.toList
     resolved = resolved.filter(l => !headers.contains(l))
+    invalidateCaches()
     map = map.filter(_._2.id != uri)
   }
 }

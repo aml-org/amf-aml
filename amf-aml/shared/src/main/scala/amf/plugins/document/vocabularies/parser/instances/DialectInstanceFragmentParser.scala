@@ -5,10 +5,12 @@ import org.mulesoft.common.core._
 import amf.core.parser.Annotations
 import amf.plugins.document.vocabularies.model.document.DialectInstanceFragment
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, DocumentsModel}
+import amf.validation.DialectValidations.DialectError
 
-class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: DialectInstanceContext) extends DialectInstanceParser(root) {
+class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: DialectInstanceContext)
+    extends DialectInstanceParser(root) {
 
-  def parse(name: String): Option[DialectInstanceFragment] = {
+  def parse(name: String): DialectInstanceFragment = {
     val dialectInstanceFragment: DialectInstanceFragment = DialectInstanceFragment(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
@@ -20,34 +22,31 @@ class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: Diale
     if (ctx.declarations.externals.nonEmpty)
       dialectInstanceFragment.withExternals(ctx.declarations.externals.values.toSeq)
 
-    parseEncodedFragment(dialectInstanceFragment, name) match {
-      case Some(dialectDomainElement) =>
-        val defaultId = encodedElementDefaultId(dialectInstanceFragment)
-        dialectDomainElement.withId(defaultId)
-        // registering JSON pointer
-        ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
+    val dialectDomainElement = parseEncodedFragment(dialectInstanceFragment, name)
+    val defaultId            = encodedElementDefaultId(dialectInstanceFragment)
+    dialectDomainElement.withId(defaultId)
+    // registering JSON pointer
+    ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
 
-        Some(dialectInstanceFragment.withEncodes(dialectDomainElement))
-      case _ => None
-    }
+    dialectInstanceFragment.withEncodes(dialectDomainElement)
   }
 
-  private def parseEncodedFragment(dialectInstanceFragment: DialectInstanceFragment, fragmentName: String): Option[DialectDomainElement] = {
-    Option(ctx.dialect.documents()) flatMap { documents: DocumentsModel =>
-      documents
-        .fragments()
-        .find(dm => {
-          fragmentName == dm.documentName().value()
-        }) match {
-        case Some(documentMapping) =>
-          ctx.findNodeMapping(documentMapping.encoded().value()) match {
-            case Some(nodeMapping) =>
-              val path = dialectInstanceFragment.id + "#"
-              parseNode(path, path + "/", map, nodeMapping, Map(), givenAnnotations = None)
-            case _ => None
-          }
-        case None => None
-      }
+  private def parseEncodedFragment(dialectInstanceFragment: DialectInstanceFragment,
+                                   fragmentName: String): DialectDomainElement = {
+    val documentMapping = Option(ctx.dialect.documents()).flatMap { documents =>
+      documents.fragments().find(fragmentName == _.documentName().value())
+    }
+    documentMapping match {
+      case Some(documentMapping) =>
+        ctx.findNodeMapping(documentMapping.encoded().value()) match {
+          case Some(nodeMapping) =>
+            val path = dialectInstanceFragment.id + "#"
+            parseNode(path, path + "/", map, nodeMapping, Map(), givenAnnotations = None)
+          case _ =>
+            emptyElementWithViolation(s"Could not find node mapping for: ${documentMapping.encoded().value()}")
+        }
+      case None =>
+        emptyElementWithViolation("Could not obtain fragment document mapping from dialect")
     }
   }
 }

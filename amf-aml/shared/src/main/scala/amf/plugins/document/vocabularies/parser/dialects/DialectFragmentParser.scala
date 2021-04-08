@@ -1,13 +1,13 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
 import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, ScalarNode, SearchScope}
+import amf.core.parser.{Annotations, SearchScope}
+import amf.core.utils._
 import amf.plugins.document.vocabularies.metamodel.domain.{DocumentMappingModel, DocumentsModelModel}
 import amf.plugins.document.vocabularies.model.domain.{DocumentMapping, DocumentsModel}
-import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
-import amf.core.utils._
-import DialectAstOps._
+import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
 import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
+import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 case class DialectFragmentParser(into: DocumentsModel)(override implicit val ctx: DialectContext)
     extends DialectEntryParser {
 
@@ -27,16 +27,16 @@ case class DialectFragmentParser(into: DocumentsModel)(override implicit val ctx
               .withId(into.id + s"/fragments/${fragmentName.urlComponentEncoded}")
             val nodeMapping = ctx.declarations.findNodeMappingOrError(entry.value)(nodeId, SearchScope.All)
             documentsMapping.set(DocumentMappingModel.EncodedNode,
-              AmfScalar(nodeMapping.id, Annotations(entry.value)),
-              Annotations(entry))
+                                 AmfScalar(nodeMapping.id, Annotations(entry.value)),
+                                 Annotations(entry))
           }
         case _ =>
           ctx.eh.violation(DeclarationNotFound, "", s"NodeMappable ${entry.value} not found", entry)
           val documentMapping = DocumentMapping(entry.value)
-          val nodeMapping = ctx.declarations.ErrorNodeMapabble(entry.key, entry.value)
+          val nodeMapping     = ctx.declarations.ErrorNodeMappable(entry.key, entry.value)
           documentMapping.set(DocumentMappingModel.EncodedNode,
-            AmfScalar(nodeMapping, Annotations(entry.value)),
-            Annotations(entry))
+                              AmfScalar(nodeMapping, Annotations(entry.value)),
+                              Annotations(entry))
           Seq(documentMapping)
       }
       into.set(DocumentsModelModel.Fragments, AmfArray(docs, Annotations(entry.value)), Annotations(entry))

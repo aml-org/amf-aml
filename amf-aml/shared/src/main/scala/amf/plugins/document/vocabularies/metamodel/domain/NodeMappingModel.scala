@@ -19,26 +19,26 @@ object NodeMappingModel
     with MergeableMappingModel
     with NodeMappableModel {
 
-  val NodeTypeMapping = Field(
+  val NodeTypeMapping: Field = Field(
       Iri,
       Namespace.Shacl + "targetClass",
       ModelDoc(ExternalModelVocabularies.Shacl,
                "targetClass",
                "Target class whose instances will need to match the constraint described for the node")
   )
-  val PropertiesMapping = Field(
+  val PropertiesMapping: Field = Field(
       Array(PropertyMappingModel),
       Namespace.Shacl + "property",
       ModelDoc(ExternalModelVocabularies.Shacl, "property", "Data shape constraint for a property of the target node")
   )
-  val IdTemplate = Field(
+  val IdTemplate: Field = Field(
       Str,
       Namespace.ApiContract + "uriTemplate",
       ModelDoc(ModelVocabularies.ApiContract,
                "uriTemplate",
                "URI template that will be used to generate the URI of the parsed nodeds in the graph")
   )
-  val ResolvedExtends = Field(Array(Iri), Namespace.Meta + "resolvedExtends")
+  val ResolvedExtends: Field = Field(Array(Iri), Namespace.Meta + "resolvedExtends")
 
   override def fields: List[Field] =
     NodeTypeMapping :: Name :: PropertiesMapping :: IdTemplate :: MergePolicy :: ResolvedExtends :: LinkableElementModel.fields ++ DomainElementModel.fields

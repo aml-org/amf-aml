@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
@@ -19,7 +18,7 @@ case class VocabularyReference(fields: Fields, annotations: Annotations) extends
   def withReference(reference: String): VocabularyReference = set(Reference, reference)
   def withBase(base: String): VocabularyReference           = set(Base, base)
 
-  override def meta: Obj = VocabularyReferenceModel
+  override def meta: VocabularyReferenceModel.type = VocabularyReferenceModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = alias.option() match {
