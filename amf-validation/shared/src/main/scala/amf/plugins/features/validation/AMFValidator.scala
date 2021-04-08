@@ -18,6 +18,8 @@ import amf.internal.environment.Environment
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ShaclJsonLdShapeGraphEmitter}
 import amf._
 import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions}
+import amf.plugins.features.validation.shacl.FullShaclValidator
+import amf.plugins.features.validation.shacl.custom.CustomShaclValidator
 
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
@@ -69,9 +71,11 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
       model: BaseUnit,
       validations: EffectiveValidations,
       customFunctions: CustomShaclFunctions,
-      options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] =
-    if (options.isPartialValidation) new CustomShaclValidator(model, validations, customFunctions, options).run
+      options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] = {
+    val validationSeq = validations.effective.values.toSeq
+    if (options.isPartialValidation) new CustomShaclValidator(model, validationSeq, customFunctions, options).run
     else new FullShaclValidator().validate(model, validations, options)
+  }
 
   private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {
     given match {

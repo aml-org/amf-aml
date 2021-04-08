@@ -1,6 +1,5 @@
-package amf.plugins.features.validation
+package amf.plugins.features.validation.shacl
 
-import amf.core.benchmark.ExecutionLog
 import amf.core.benchmark.ExecutionLog.log
 import amf.core.model.document.BaseUnit
 import amf.core.services.ValidationOptions
@@ -8,6 +7,7 @@ import amf.core.validation.EffectiveValidations
 import amf.core.validation.core.ValidationReport
 import amf.plugins.features.validation.AMFValidatorPlugin.customValidations
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ShaclJsonLdShapeGraphEmitter}
+import amf.plugins.features.validation.PlatformValidator
 
 import scala.concurrent.{ExecutionContext, Future}
 
