@@ -18,8 +18,7 @@ class AMLValidator(registry: DialectsRegistry) extends ShaclReportAdaptation {
 
     baseUnit match {
       case dialectInstance: DialectInstanceUnit =>
-
-        val resolvedModel = new DialectInstanceResolutionPipeline(baseUnit.errorHandler()).resolve(dialectInstance)
+        val resolvedModel           = new DialectInstanceResolutionPipeline().transform(dialectInstance, baseUnit.errorHandler())
         val dependenciesValidations = computeValidationProfilesOfDependencies(dialectInstance)
 
         for {
