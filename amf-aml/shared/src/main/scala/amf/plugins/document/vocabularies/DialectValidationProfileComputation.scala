@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies
 
+import amf.core.remote.Aml
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
@@ -12,7 +13,7 @@ object DialectValidationProfileComputation {
     registry.validations.get(header) match {
       case Some(profile) => profile
       case _ =>
-        val resolvedDialect = new DialectResolutionPipeline(dialect.errorHandler()).resolve(dialect)
+        val resolvedDialect = new DialectResolutionPipeline().transform(dialect, Aml.name, dialect.errorHandler())
         val profile         = new AMFDialectValidations(resolvedDialect).profile()
         registry.validations += (header -> profile)
         profile

@@ -5,10 +5,10 @@ import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.io.FunSuiteCycleTests
 import amf.core.model.document.BaseUnit
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.{AMFCompiler, CompilerContextBuilder}
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.services.RuntimeResolver
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -187,7 +187,7 @@ class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectIns
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    AMLPlugin().resolve(unit, UnhandledErrorHandler)
+    RuntimeResolver.resolve(Vendor.AML.name, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
 

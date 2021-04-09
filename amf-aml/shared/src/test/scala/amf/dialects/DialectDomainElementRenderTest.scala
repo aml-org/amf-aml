@@ -6,7 +6,9 @@ import amf.core.io.FileAssertionTest
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.SyamlParsedDocument
-import amf.core.remote.{Aml, Hint, VocabularyYamlHint}
+import amf.core.remote.{Aml, Hint, Vendor, VocabularyYamlHint}
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.services.RuntimeResolver
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.emitters.instances.AmlDomainElementEmitter
@@ -128,8 +130,10 @@ trait DomainElementCycleTests
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build().map(_.asInstanceOf[Dialect])
-      _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
-      res     <- cycleElement(dialect, source, extractor, golden, hint, directory = directory)
+      _ <- Future.successful {
+        RuntimeResolver.resolve(Vendor.AML.name, dialect, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
+      }
+      res <- cycleElement(dialect, source, extractor, golden, hint, directory = directory)
     } yield {
       res
     }

@@ -71,7 +71,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
   }
 
   private def resolveDialect(dialect: Dialect) = {
-    val solved = new DialectResolutionPipeline(DefaultErrorHandler()).resolve(dialect)
+    val solved = new DialectResolutionPipeline().transform(dialect, Aml.name, DefaultErrorHandler())
     dialect.allHeaders foreach { header =>
       map += (header -> solved)
     }

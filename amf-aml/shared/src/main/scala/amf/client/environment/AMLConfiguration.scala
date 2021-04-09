@@ -4,13 +4,16 @@ import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
+import amf.client.remod.amfcore.resolution.TransformationPipeline
 import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
-import amf.plugins.document.graph.AMFGraphParsePlugin
+import amf.plugins.document.graph.{AMFGraphParsePlugin, AMFGraphRenderPlugin}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceUnit}
-import amf.plugins.document.vocabularies.{AMLInstancePlugin, AMLParsePlugin}
+import amf.plugins.document.vocabularies.resolution.pipelines.DefaultAMLTransformationPipeline
+import amf.plugins.document.vocabularies.{AMLInstancePlugin, AMLParsePlugin, AMLRenderPlugin}
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -48,6 +51,12 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
 
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMLConfiguration =
     super.withPlugins(plugins).asInstanceOf[AMLConfiguration]
+  
+  override def withTransformationPipeline(name: String, pipeline: ResolutionPipeline): AMLConfiguration = 
+    super.withTransformationPipeline(name, pipeline).asInstanceOf[AMLConfiguration]
+
+  override def withTransformationPipelines(pipelines: Map[String, ResolutionPipeline]): AMLConfiguration = 
+    super.withTransformationPipelines(pipelines).asInstanceOf[AMLConfiguration]
 
   override def withValidationProfile(profile: ValidationProfile): AMLConfiguration =
     super.withValidationProfile(profile).asInstanceOf[AMLConfiguration]
@@ -97,6 +106,8 @@ private[amf] object AMLConfiguration {
         environment.registry,
         environment.logger,
         environment.listeners,
-        environment.options).withPlugins(List(AMLParsePlugin, AMFGraphParsePlugin)).asInstanceOf[AMLConfiguration]
+        environment.options)
+      .withPlugins(List(AMLParsePlugin, AMLRenderPlugin))
+      .withTransformationPipeline(TransformationPipeline.DEFAULT, new DefaultAMLTransformationPipeline())
   }
 }

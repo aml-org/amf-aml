@@ -7,6 +7,8 @@ import amf.core.io.{FileAssertionTest, MultiJsonldAsyncFunSuite}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.services.RuntimeResolver
 import amf.core.{AMFCompiler, AMFSerializer, CompilerContextBuilder}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -35,7 +37,9 @@ trait DialectTests
       new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build()
-      _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
+      _ <- Future.successful {
+        RuntimeResolver.resolve(Vendor.AML.name, dialect, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
+      }
       res <- cycle(source,
                    golden,
                    hint,
@@ -58,7 +62,9 @@ trait DialectTests
                                                             DefaultParserErrorHandler.withRun()).build(),
                                  None,
                                  Some(Aml.name)).build()
-      _ <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
+      _ <- Future.successful {
+        RuntimeResolver.resolve(Vendor.AML.name, dialect, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
+      }
       b <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$source",
                                                       platform,
                                                       DefaultParserErrorHandler.withRun()).build(),
@@ -107,5 +113,5 @@ trait DialectTests
 
 abstract class DialectInstanceResolutionCycleTests extends DialectTests {
   override def transform(unit: BaseUnit): BaseUnit =
-    AMLPlugin().resolve(unit, UnhandledErrorHandler)
+    RuntimeResolver.resolve(Vendor.AML.name, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
 }

@@ -36,6 +36,7 @@ import amf.plugins.document.vocabularies.parser.instances._
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.plugin.headers._
 import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DefaultAMLTransformationPipeline,
   DialectInstancePatchResolutionPipeline,
   DialectInstanceResolutionPipeline,
   DialectResolutionPipeline
@@ -100,21 +101,10 @@ trait AMLPlugin
         "json-pointer-ref" -> JsonPointerRef
     )
 
-  /**
-    * Resolves the provided base unit model, according to the semantics of the domain of the document
-    */
-  override def resolve(unit: BaseUnit,
-                       errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
-    unit match {
-      case patch: DialectInstancePatch =>
-        new DialectInstancePatchResolutionPipeline(errorHandler).resolve(patch)
-      case dialect: Dialect =>
-        new DialectResolutionPipeline(errorHandler).resolve(dialect)
-      case dialect: DialectInstance =>
-        new DialectInstanceResolutionPipeline(errorHandler).resolve(dialect)
-      case _ => unit
-    }
+  override val pipelines: Map[String, ResolutionPipeline] = Map(
+      ResolutionPipeline.DEFAULT_PIPELINE -> new DefaultAMLTransformationPipeline(),
+      ResolutionPipeline.EDITING_PIPELINE -> new DefaultAMLTransformationPipeline() // hack to maintain compatibility with legacy behaviour
+  )
 
   /**
     * List of media types used to encode serialisations of

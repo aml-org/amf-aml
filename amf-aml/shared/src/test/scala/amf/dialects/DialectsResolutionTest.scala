@@ -2,15 +2,17 @@ package amf.dialects
 
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.remote.{Amf, Aml, VocabularyYamlHint}
+import amf.core.remote.{Amf, Aml, Vendor, VocabularyYamlHint}
 import amf.core.io.FunSuiteCycleTests
+import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.services.RuntimeResolver
 import amf.plugins.document.vocabularies.AMLPlugin
 
 import scala.concurrent.ExecutionContext
 
 abstract class DialectResolutionCycleTests extends FunSuiteCycleTests {
   override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
-    AMLPlugin().resolve(unit, UnhandledErrorHandler)
+    RuntimeResolver.resolve(Vendor.AML.name, unit, ResolutionPipeline.DEFAULT_PIPELINE, UnhandledErrorHandler)
 }
 
 class DialectsResolutionTest extends DialectResolutionCycleTests {
