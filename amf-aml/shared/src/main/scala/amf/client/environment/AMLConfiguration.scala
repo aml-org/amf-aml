@@ -11,8 +11,11 @@ import amf.client.remod.rendering.{
   AMLDialectRenderingPlugin,
   AMLVocabularyRenderingPlugin
 }
+import amf.client.remod.amfcore.resolution.PipelineName
 import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
 import amf.core.unsafe.PlatformSecrets
+import amf.core.remote.Aml
+import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.validation.core.ValidationProfile
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
@@ -21,7 +24,7 @@ import amf.plugins.document.graph.{AMFGraphParsePlugin, AMFGraphRenderPlugin}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceUnit}
 import org.mulesoft.common.collections.FilterType
-
+import amf.plugins.document.vocabularies.resolution.pipelines.DefaultAMLTransformationPipeline
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -61,6 +64,12 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
 
   override def withValidationProfile(profile: ValidationProfile): AMLConfiguration =
     super.withValidationProfile(profile).asInstanceOf[AMLConfiguration]
+
+  override def withTransformationPipeline(name: String, pipeline: ResolutionPipeline): AMLConfiguration =
+    super.withTransformationPipeline(name, pipeline).asInstanceOf[AMLConfiguration]
+
+  override def withTransformationPipelines(pipelines: Map[String, ResolutionPipeline]): AMLConfiguration =
+    super.withTransformationPipelines(pipelines).asInstanceOf[AMLConfiguration]
 
   override def createClient(): AMLClient = new AMLClient(this)
   // forInstnace ==  colecta dialects dinamicos
@@ -106,9 +115,12 @@ private[amf] object AMLConfiguration extends PlatformSecrets {
       new AMLVocabularyParsingPlugin() ::
       new AMLDialectRenderingPlugin() ::
       new AMLVocabularyRenderingPlugin() ::
-      AMFGraphParsePlugin ::
-      AMFGraphRenderPlugin ::
       Nil
+
+    // we might need to register editing pipeline as well because of legacy behaviour.
+    val pipelines = Map(
+      PipelineName.from(Aml.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new DefaultAMLTransformationPipeline()
+    )
 
     new AMLConfiguration(
         predefinedGraphConfiguration.resolvers,
@@ -118,6 +130,7 @@ private[amf] object AMLConfiguration extends PlatformSecrets {
         predefinedGraphConfiguration.listeners,
         predefinedGraphConfiguration.options
     ).withPlugins(predefinedPlugins)
+      .withTransformationPipelines(pipelines)
   }
 
   // TODO: what about nested $dialect references?

@@ -8,15 +8,14 @@ import amf.plugins.document.vocabularies.resolution.stages.{
 }
 import amf.{AmfProfile, ProfileName}
 
-class DialectInstancePatchResolutionPipeline(override val eh: ErrorHandler) extends ResolutionPipeline(eh) {
+class DialectInstancePatchResolutionPipeline() extends ResolutionPipeline() {
 
-  override val steps: Seq[ResolutionStage] = Seq(
-      new DialectInstanceReferencesResolutionStage(),
-      new DialectPatchApplicationStage(),
-      new CleanReferencesStage(),
-      new DeclarationsRemovalStage()
-  )
-
-  override def profileName: ProfileName = AmfProfile
+  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+    Seq(
+        new DialectInstanceReferencesResolutionStage(),
+        new DialectPatchApplicationStage(),
+        new CleanReferencesStage(),
+        new DeclarationsRemovalStage()
+    )
 
 }
