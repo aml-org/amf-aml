@@ -79,25 +79,18 @@ class CustomShaclValidator(model: BaseUnit,
       case _       => // ignore
     }
 
-    validationSpecification.replacesFunctionConstraint match {
-      // some JS functions have been replaced by custom validations.
-      // The custom SHACL validator cannot execute them, it still relies on the custom Scala function
-      case Some(functionConstraintName) =>
-        validateFunctionConstraint(
-            validationSpecification.copy(
-                functionConstraint = Some(
-                    FunctionConstraint(
-                        message = Some(validationSpecification.message),
-                        internalFunction = Some(functionConstraintName)
-                    ))),
-            element
-        )
-      // Normal constraints here
-      case _ =>
-        validationSpecification.propertyConstraints.foreach { propertyConstraint =>
-          PROPERTY_CONSTRAINT_VALIDATORS.foreach(
-              _.validate(validationSpecification, propertyConstraint, element, reportBuilder))
-        }
+    validationSpecification.replacesFunctionConstraint.foreach { functionName =>
+      val nextSpecification = validationSpecification.copy(
+          functionConstraint = Some(
+              FunctionConstraint(message = Some(validationSpecification.message),
+                                 internalFunction = Some(functionName)))
+      )
+      validateFunctionConstraint(nextSpecification, element)
+    }
+
+    validationSpecification.propertyConstraints.foreach { propertyConstraint =>
+      PROPERTY_CONSTRAINT_VALIDATORS.foreach(
+          _.validate(validationSpecification, propertyConstraint, element, reportBuilder))
     }
 
   }
