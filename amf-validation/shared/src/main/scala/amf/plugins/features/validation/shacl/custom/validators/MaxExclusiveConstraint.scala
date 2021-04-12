@@ -1,6 +1,6 @@
 package amf.plugins.features.validation.shacl.custom.validators
 
-import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfObject, AmfScalar, DomainElement}
 import amf.core.validation.core.{PropertyConstraint, ValidationSpecification}
 import amf.plugins.features.validation.shacl.custom.PropertyConstraintValidator.extractPropertyValue
 import amf.plugins.features.validation.shacl.custom.{PropertyConstraintValidator, ReportBuilder}
@@ -11,12 +11,12 @@ case object MaxExclusiveConstraint extends PropertyConstraintValidator {
 
   override def validate(spec: ValidationSpecification,
                         propertyConstraint: PropertyConstraint,
-                        parent: DomainElement,
+                        parent: AmfObject,
                         reportBuilder: ReportBuilder): Unit = {
     propertyConstraint.maxExclusive.foreach { maxExclusive =>
       extractPropertyValue(propertyConstraint, parent) match {
         case Some((_, _: AmfScalar, Some(value: Long))) =>
-          if (maxExclusive == ".") {
+          if (maxExclusive.contains(".")) {
             if (!(maxExclusive.toDouble > value.toDouble)) {
               reportBuilder.reportFailure(spec, propertyConstraint, parent.id)
             }
@@ -27,7 +27,7 @@ case object MaxExclusiveConstraint extends PropertyConstraintValidator {
           }
 
         case Some((_, _: AmfScalar, Some(value: Integer))) =>
-          if (propertyConstraint.maxExclusive.get.contains(".")) {
+          if (maxExclusive.contains(".")) {
             if (!(maxExclusive.toDouble > value.toDouble)) {
               reportBuilder.reportFailure(spec, propertyConstraint, parent.id)
             }
@@ -38,7 +38,7 @@ case object MaxExclusiveConstraint extends PropertyConstraintValidator {
           }
 
         case Some((_, _: AmfScalar, Some(value: Float))) =>
-          if (maxExclusive == ".") {
+          if (maxExclusive.contains(".")) {
             if (!(maxExclusive.toDouble > value.toDouble)) {
               reportBuilder.reportFailure(spec, propertyConstraint, parent.id)
             }
@@ -49,7 +49,7 @@ case object MaxExclusiveConstraint extends PropertyConstraintValidator {
           }
 
         case Some((_, _: AmfScalar, Some(value: Double))) =>
-          if (maxExclusive == ".") {
+          if (maxExclusive.contains(".")) {
             if (!(maxExclusive.toDouble > value)) {
               reportBuilder.reportFailure(spec, propertyConstraint, parent.id)
             }

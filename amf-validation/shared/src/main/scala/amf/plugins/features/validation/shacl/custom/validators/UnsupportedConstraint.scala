@@ -1,6 +1,6 @@
 package amf.plugins.features.validation.shacl.custom.validators
 
-import amf.core.model.domain.DomainElement
+import amf.core.model.domain.{AmfElement, AmfObject, DomainElement}
 import amf.core.validation.core.{PropertyConstraint, ValidationSpecification}
 import amf.plugins.features.validation.shacl.custom.{ConstraintValidator, PropertyConstraintValidator, ReportBuilder}
 
@@ -14,7 +14,7 @@ case class UnsupportedConstraint(private val applies: ValidationSpecification =>
     extends ConstraintValidator {
   override def canValidate(spec: ValidationSpecification): Boolean = false
 
-  override def validate(spec: ValidationSpecification, parent: DomainElement, reportBuilder: ReportBuilder): Unit = {
+  override def validate(spec: ValidationSpecification, element: AmfObject, reportBuilder: ReportBuilder): Unit = {
     if (applies(spec)) throw new Exception(s"$message ${spec.id}")
   }
 }

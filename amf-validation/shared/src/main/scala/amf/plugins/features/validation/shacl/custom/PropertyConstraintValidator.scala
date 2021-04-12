@@ -1,19 +1,18 @@
 package amf.plugins.features.validation.shacl.custom
 
 import amf.core.annotations.SourceAST
-import amf.core.model.domain.{AmfElement, AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfElement, AmfObject, AmfScalar, DomainElement}
 import amf.core.parser.Annotations
 import amf.core.validation.core.{NodeConstraint, PropertyConstraint, ValidationSpecification}
 import org.yaml.model.YScalar
 
 object PropertyConstraintValidator {
   def extractPropertyValue(propertyConstraint: PropertyConstraint,
-                           element: DomainElement): Option[(Annotations, AmfElement, Option[Any])] = {
+                           element: AmfObject): Option[(Annotations, AmfElement, Option[Any])] = {
     extractPredicateValue(propertyConstraint.ramlPropertyId, element)
   }
 
-  def extractPredicateValue(predicate: String,
-                            element: DomainElement): Option[(Annotations, AmfElement, Option[Any])] = {
+  def extractPredicateValue(predicate: String, element: AmfObject): Option[(Annotations, AmfElement, Option[Any])] = {
     element.meta.fields.find { f =>
       f.value.iri() == predicate
     } match {
@@ -46,7 +45,7 @@ object PropertyConstraintValidator {
 
 trait ConstraintValidator {
   def canValidate(spec: ValidationSpecification): Boolean
-  def validate(spec: ValidationSpecification, parent: DomainElement, reportBuilder: ReportBuilder)
+  def validate(spec: ValidationSpecification, element: AmfObject, reportBuilder: ReportBuilder): Unit
 }
 
 trait PropertyConstraintValidator {
@@ -54,6 +53,6 @@ trait PropertyConstraintValidator {
   def canValidate(spec: PropertyConstraint): Boolean
   def validate(spec: ValidationSpecification,
                propertyConstraint: PropertyConstraint,
-               parent: DomainElement,
+               parent: AmfObject,
                reportBuilder: ReportBuilder)
 }

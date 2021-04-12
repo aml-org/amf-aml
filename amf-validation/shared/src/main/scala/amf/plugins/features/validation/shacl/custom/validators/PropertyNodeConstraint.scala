@@ -1,6 +1,6 @@
 package amf.plugins.features.validation.shacl.custom.validators
 
-import amf.core.model.domain.{AmfArray, AmfElement, DomainElement}
+import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, DomainElement}
 import amf.core.validation.core.{PropertyConstraint, ValidationSpecification}
 import amf.plugins.features.validation.shacl.custom.PropertyConstraintValidator.extractPropertyValue
 import amf.plugins.features.validation.shacl.custom.{PropertyConstraintValidator, ReportBuilder}
@@ -11,7 +11,7 @@ case object PropertyNodeConstraint extends PropertyConstraintValidator {
 
   override def validate(spec: ValidationSpecification,
                         propertyConstraint: PropertyConstraint,
-                        parent: DomainElement,
+                        parent: AmfObject,
                         reportBuilder: ReportBuilder): Unit = {
     propertyConstraint.node.foreach { node =>
       if (node.endsWith("NonEmptyList")) {

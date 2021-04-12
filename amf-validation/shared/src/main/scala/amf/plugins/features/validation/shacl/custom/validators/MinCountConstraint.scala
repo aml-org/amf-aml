@@ -11,7 +11,7 @@ case object MinCountConstraint extends PropertyConstraintValidator {
 
   override def validate(spec: ValidationSpecification,
                         propertyConstraint: PropertyConstraint,
-                        parent: DomainElement,
+                        parent: AmfObject,
                         reportBuilder: ReportBuilder): Unit = {
     propertyConstraint.minCount.foreach { minCount =>
       extractPropertyValue(propertyConstraint, parent) match {

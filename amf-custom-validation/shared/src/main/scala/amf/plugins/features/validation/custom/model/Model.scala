@@ -345,7 +345,6 @@ object ParsedValidationProfile extends DialectWrapper {
       baseProfile = extractString(node, "extends").map(ProfileName.apply),
       severities = severityMapping,
       validations = validations,
-
       prefixes = prfx
     )
   }

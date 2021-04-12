@@ -5,26 +5,20 @@ import amf.core.validation.core.{PropertyConstraint, ValidationSpecification}
 import amf.plugins.features.validation.shacl.custom.PropertyConstraintValidator.extractPropertyValue
 import amf.plugins.features.validation.shacl.custom.{PropertyConstraintValidator, ReportBuilder}
 
-import scala.collection.mutable
-
 case object InConstraint extends PropertyConstraintValidator {
 
   override def canValidate(spec: PropertyConstraint): Boolean = spec.in.nonEmpty
 
   override def validate(spec: ValidationSpecification,
                         propertyConstraint: PropertyConstraint,
-                        parent: DomainElement,
+                        parent: AmfObject,
                         reportBuilder: ReportBuilder): Unit = {
-    propertyConstraint.in match {
-      case Nil                        => // ignore
-      case Seq(_)                     => validateIn(spec, propertyConstraint, parent, reportBuilder)
-      case _: mutable.WrappedArray[_] => validateIn(spec, propertyConstraint, parent, reportBuilder)
-    }
+    if (propertyConstraint.in.nonEmpty) validateIn(spec, propertyConstraint, parent, reportBuilder)
   }
 
   private def validateIn(validationSpecification: ValidationSpecification,
                          propertyConstraint: PropertyConstraint,
-                         parentElement: DomainElement,
+                         parentElement: AmfObject,
                          reportBuilder: ReportBuilder): Unit = {
     extractPropertyValue(propertyConstraint, parentElement) match {
       case Some((_, _: AmfScalar, Some(value: String))) =>

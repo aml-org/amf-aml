@@ -8,10 +8,10 @@ import amf.plugins.features.validation.shacl.custom.PropertyConstraintValidator.
 import amf.plugins.features.validation.shacl.custom.{ConstraintValidator, ReportBuilder}
 
 case object TargetObjectsOfConstraint extends ConstraintValidator {
-  override def canValidate(spec: ValidationSpecification): Boolean = true
+  override def canValidate(spec: ValidationSpecification): Boolean = spec.targetObject.nonEmpty
 
   // this is always (?s sh:nodeKind sh:IRI), we still put the checking logic in place
-  override def validate(spec: ValidationSpecification, element: DomainElement, reportBuilder: ReportBuilder): Unit = {
+  override def validate(spec: ValidationSpecification, element: AmfObject, reportBuilder: ReportBuilder): Unit = {
     spec.targetObject.foreach { property =>
       findFieldTarget(element, property) match {
         case Some((_: Annotations, objectsOf: AmfArray)) =>
@@ -29,7 +29,7 @@ case object TargetObjectsOfConstraint extends ConstraintValidator {
 
   private def validateNodeConstraint(validationSpecification: ValidationSpecification,
                                      nodeConstraint: NodeConstraint,
-                                     element: DomainElement,
+                                     element: AmfObject,
                                      reportBuilder: ReportBuilder): Unit = {
     val nodeKindIri = (Namespace.Shacl + "nodeKind").iri()
     val shaclIri    = (Namespace.Shacl + "IRI").iri()
@@ -55,7 +55,7 @@ case object TargetObjectsOfConstraint extends ConstraintValidator {
     }
   }
 
-  private def findFieldTarget(element: DomainElement, property: String): Option[(Annotations, Seq[AmfElement])] = {
+  private def findFieldTarget(element: AmfObject, property: String): Option[(Annotations, Seq[AmfElement])] = {
     findFieldWithIri(element, property).flatMap(f => element.fields.getValueAsOption(f)).map { value =>
       value.value match {
         case elems: AmfArray   => (value.annotations, elems.values)
@@ -66,7 +66,7 @@ case object TargetObjectsOfConstraint extends ConstraintValidator {
     }
   }
 
-  private def findFieldWithIri(element: DomainElement, iri: String) = {
+  private def findFieldWithIri(element: AmfObject, iri: String) = {
     element.meta.fields.find(_.value.iri() == iri)
   }
 }

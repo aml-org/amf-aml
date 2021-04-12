@@ -1,18 +1,22 @@
 package amf.plugins.features.validation.shacl.custom.validators
 
 import amf.core.model.DataType
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.model.domain.{AmfArray, AmfObject, AmfScalar, DomainElement}
 import amf.core.validation.core.{PropertyConstraint, ValidationSpecification}
 import amf.plugins.features.validation.shacl.custom.PropertyConstraintValidator.extractPropertyValue
 import amf.plugins.features.validation.shacl.custom.{PropertyConstraintValidator, ReportBuilder}
 
 case object DataTypeConstraint extends PropertyConstraintValidator {
 
-  override def canValidate(spec: PropertyConstraint): Boolean = spec.datatype.isDefined
+  private val supportedTypes = Set(DataType.String, DataType.Boolean, DataType.Integer, DataType.Double)
+
+  override def canValidate(spec: PropertyConstraint): Boolean = spec.datatype.exists { datatype =>
+    supportedTypes.contains(datatype)
+  }
 
   override def validate(spec: ValidationSpecification,
                         propertyConstraint: PropertyConstraint,
-                        parent: DomainElement,
+                        parent: AmfObject,
                         reportBuilder: ReportBuilder): Unit = {
     propertyConstraint.datatype.foreach { datatype =>
       validateDataType(spec, propertyConstraint, parent, reportBuilder)
@@ -21,7 +25,7 @@ case object DataTypeConstraint extends PropertyConstraintValidator {
 
   private def validateDataType(validationSpecification: ValidationSpecification,
                                propertyConstraint: PropertyConstraint,
-                               parentElement: DomainElement,
+                               parentElement: AmfObject,
                                reportBuilder: ReportBuilder): Unit = {
     val xsdString  = DataType.String
     val xsdBoolean = DataType.Boolean

@@ -4,7 +4,7 @@ import amf.core.benchmark.ExecutionLog.log
 import amf.core.model.document.BaseUnit
 import amf.core.services.ValidationOptions
 import amf.core.validation.EffectiveValidations
-import amf.core.validation.core.ValidationReport
+import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.AMFValidatorPlugin.customValidations
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ShaclJsonLdShapeGraphEmitter}
 import amf.plugins.features.validation.PlatformValidator
@@ -13,10 +13,10 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class FullShaclValidator {
 
-  def validate(model: BaseUnit, validations: EffectiveValidations, options: ValidationOptions)(
+  def validate(model: BaseUnit, validations: Seq[ValidationSpecification], options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationReport] = {
 
-    log(s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.effective.values.size} validations")
+    log(s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.size} validations")
 
     if (PlatformValidator.instance.supportsJSFunctions) loadJSFunctions(validations)
 
@@ -31,10 +31,10 @@ class FullShaclValidator {
     report
   }
 
-  private def loadJSFunctions(validations: EffectiveValidations) = {
+  private def loadJSFunctions(validations: Seq[ValidationSpecification]) = {
     // TODO: Check the validation profile passed to JSLibraryEmitter, it contains the prefixes
     // for the functions
-    val jsLibrary = new JSLibraryEmitter(None).emitJS(validations.effective.values.toSeq)
+    val jsLibrary = new JSLibraryEmitter(None).emitJS(validations)
 
     jsLibrary match {
       case Some(code) =>
