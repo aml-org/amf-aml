@@ -6,7 +6,11 @@ import amf.core.io.FunSuiteRdfCycleTests
 
 import scala.concurrent.ExecutionContext
 
-class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets with DialectHelper with DefaultAmfInitialization {
+class DialectRDFTest
+    extends FunSuiteRdfCycleTests
+    with PlatformSecrets
+    with AMLParsingHelper
+    with DefaultAmfInitialization {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val productionPath                                       = "amf-aml/shared/src/test/resources/vocabularies2/production/"

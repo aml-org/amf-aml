@@ -112,7 +112,7 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
 trait DomainElementCycleTests
     extends AsyncFunSuite
     with FileAssertionTest
-    with DialectHelper
+    with AMLParsingHelper
     with DefaultAmfInitialization {
 
   val basePath: String
@@ -142,7 +142,7 @@ trait DomainElementCycleTests
                          hint: Hint,
                          directory: String = basePath): Future[Assertion] = {
     for {
-      b <- parseAndRegisterDialect(s"file://$directory/$source", platform, hint)
+      b <- parse(s"file://$directory/$source", platform, hint)
       t <- Future.successful { transform(b) }
       s <- Future.successful { renderDomainElement(extractor(t), t.asInstanceOf[DialectInstanceUnit], dialect) } // generated string
       d <- writeTemporaryFile(s"$directory/$golden")(s)

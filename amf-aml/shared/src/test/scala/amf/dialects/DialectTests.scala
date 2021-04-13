@@ -10,6 +10,7 @@ import amf.core.remote._
 import amf.core.{AMFCompiler, AMFSerializer, CompilerContextBuilder}
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.AMFValidatorPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.{Assertion, AsyncFunSuite, BeforeAndAfterAll}
@@ -19,7 +20,7 @@ import scala.concurrent.{ExecutionContext, Future}
 trait DialectTests
     extends MultiJsonldAsyncFunSuite
     with FileAssertionTest
-    with DialectHelper
+    with AMLParsingHelper
     with DefaultAmfInitialization {
   val basePath: String
 
@@ -36,6 +37,7 @@ trait DialectTests
     for {
       dialect <- new AMFCompiler(context, None, Some(Aml.name)).build()
       _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
+      _       <- Future.successful { AMLPlugin.registry.register(dialect.asInstanceOf[Dialect]) }
       res <- cycle(source,
                    golden,
                    hint,
@@ -93,7 +95,7 @@ trait DialectTests
     val options = renderOptions.getOrElse(defaultRenderOptions)
     if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
     for {
-      b <- parseAndRegisterDialect(s"file://$directory/$source", platform, hint)
+      b <- parse(s"file://$directory/$source", platform, hint)
       t <- Future.successful { transform(b) }
       s <- new AMFSerializer(t, vendorToSyntax(target), target.name, options)
         .renderToString(scala.concurrent.ExecutionContext.Implicits.global)

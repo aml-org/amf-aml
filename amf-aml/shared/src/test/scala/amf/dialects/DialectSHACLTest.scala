@@ -12,7 +12,11 @@ import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DialectSHACLTest extends FunSuiteRdfCycleTests with PlatformSecrets with DialectHelper with DefaultAmfInitialization {
+class DialectSHACLTest
+    extends FunSuiteRdfCycleTests
+    with PlatformSecrets
+    with AMLParsingHelper
+    with DefaultAmfInitialization {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
