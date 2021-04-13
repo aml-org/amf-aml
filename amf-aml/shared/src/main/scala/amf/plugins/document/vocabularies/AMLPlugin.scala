@@ -215,15 +215,7 @@ trait AMLPlugin
   /**
     * Validation profiles supported by this plugin. Notice this will be called multiple times.
     */
-  override def domainValidationProfiles(platform: Platform): Map[String, () => ValidationProfile] = {
-    registry.allDialects().foldLeft(Map[String, () => ValidationProfile]()) {
-      case (acc, dialect) if !dialect.nameAndVersion().contains("Validation Profile") =>
-        acc.updated(dialect.nameAndVersion(), () => {
-          computeValidationProfile(dialect)
-        })
-      case (acc, _) => acc
-    }
-  }
+  override def domainValidationProfiles: Seq[ValidationProfile] = registry.env().registry.constraintsRules.values.toSeq
 
   protected def computeValidationProfile(dialect: Dialect): ValidationProfile = {
     DialectValidationProfileComputation.computeProfileFor(dialect, registry)
