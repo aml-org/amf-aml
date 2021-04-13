@@ -9,7 +9,7 @@ import amf.core.errorhandling.AmfStaticReportBuilder
 import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote.{Oas20, Oas30, Raml08, Raml10, Vendor}
+import amf.core.remote._
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.services.{RuntimeValidator, ValidationOptions => LegacyValidationOptions}
 import amf.core.unsafe.PlatformSecrets
@@ -18,30 +18,29 @@ import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.internal.environment.Environment
 import amf.plugins.features.validation.emitters.ShaclJsonLdShapeGraphEmitter
 import amf.plugins.features.validation.shacl.FullShaclValidator
-import amf.plugins.features.validation.shacl.custom.{CustomShaclValidator, CustomValidationReport}
+import amf.plugins.features.validation.shacl.custom.CustomShaclValidator
 
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
 
 protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets {
-  protected var customValidationProfiles: Map[String, () => ValidationProfile]       = Map.empty
+
   protected var customValidationProfilesPlugins: Map[String, Seq[AMFValidatePlugin]] = Map.empty
 
   // All the profiles are collected here, plugins can generate their own profiles
-  protected def profiles: Map[String, () => ValidationProfile] =
-    AMFPluginsRegistry.documentPlugins.foldLeft(Map[String, () => ValidationProfile]()) {
-      case (acc, domainPlugin: AMFValidationPlugin) => acc ++ domainPlugin.domainValidationProfiles(platform)
-      case (acc, _)                                 => acc
-    } ++ customValidationProfiles
+  protected def profiles: Map[String, ValidationProfile] =
+    AMFPluginsRegistry.staticCofiguration.registry.constraintsRules.map {
+      case (profileName, profile) => (profileName.p, profile)
+    }
 
   // Mapping from profile to domain plugin
   protected def profilesPlugins: Map[String, Seq[AMFValidatePlugin]] =
     AMFPluginsRegistry.documentPlugins.foldLeft(Map[String, Seq[AMFValidatePlugin]]()) {
       case (acc, domainPlugin: AMFValidationPlugin) =>
         val toPut =
-          domainPlugin.domainValidationProfiles(platform).keys.foldLeft(Map[String, Seq[AMFValidatePlugin]]()) {
+          domainPlugin.domainValidationProfiles.foldLeft(Map[String, Seq[AMFValidatePlugin]]()) {
             case (accProfiles, profileName) =>
-              accProfiles.updated(profileName, domainPlugin.getRemodValidatePlugins())
+              accProfiles.updated(profileName.name.p, domainPlugin.getRemodValidatePlugins())
           }
         acc ++ toPut
       case (acc, _) => acc
@@ -53,9 +52,6 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
 
     profiles
       .get(profileName.profile)
-      .map { generator =>
-        generator()
-      }
       .map { foundProfile =>
         addBaseProfileValidations(computed, foundProfile)
       }

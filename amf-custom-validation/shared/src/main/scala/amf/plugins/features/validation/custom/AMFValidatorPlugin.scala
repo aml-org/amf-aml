@@ -17,8 +17,8 @@ import amf.core.validation.ShaclReportAdaptation
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.features.validation.custom.model.{ParsedValidationProfile, ValidationDialectText}
@@ -88,9 +88,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
       val domainPlugin: Seq[AMFValidatePlugin] = getProfilePluginFor(validationProfile)
         .orElse(getProfilePluginFor(validationProfile.baseProfile.getOrElse(AmfProfile)))
         .getOrElse(Seq(amlPlugin()))
-      customValidationProfiles += (validationProfile.name.profile -> { () =>
-        validationProfile
-      })
+      AMFPluginsRegistry.registerValidationProfile(validationProfile)
       customValidationProfilesPlugins += (validationProfile.name.profile -> domainPlugin)
       validationProfile.name
 
