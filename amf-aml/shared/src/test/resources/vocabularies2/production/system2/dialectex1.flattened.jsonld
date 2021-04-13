@@ -291,13 +291,10 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_2"
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_0"
-        },
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_1"
         }
       ]
     },
@@ -384,19 +381,14 @@
       ]
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_2",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(12,13)]"
-    },
-    {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,4)-(30,0)]"
-    },
-    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(30,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(12,13)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/declarations/AssetObject/property/typeOfAsset/source-map/lexical/element_1",

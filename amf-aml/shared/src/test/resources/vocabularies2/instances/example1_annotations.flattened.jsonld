@@ -248,11 +248,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon1/scalar_1/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon1/scalar_1/source-map/lexical/element_0"
@@ -263,11 +258,6 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon2/scalar_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon2/scalar_1/source-map/synthesized-field/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -280,11 +270,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey/scalar_1/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey/scalar_1/source-map/lexical/element_0"
@@ -295,11 +280,6 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey2/scalar_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey2/scalar_1/source-map/synthesized-field/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -312,11 +292,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho/scalar_1/source-map/synthesized-field/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho/scalar_1/source-map/lexical/element_0"
@@ -327,11 +302,6 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho2/scalar_1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
-      ],
-      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho2/scalar_1/source-map/synthesized-field/element_0"
-        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -375,19 +345,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,0)-(13,0)]"
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon1/scalar_1/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon1/scalar_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon1/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,9)-(11,13)]"
-    },
-    {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon2/scalar_1/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon2/scalar_1/source-map/lexical/element_0",
@@ -395,19 +355,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,9)-(13,13)]"
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey/scalar_1/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey/scalar_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,9)-(3,12)]"
-    },
-    {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey2/scalar_1/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey2/scalar_1/source-map/lexical/element_0",
@@ -415,19 +365,9 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(7,10)-(7,11)]"
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho/scalar_1/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
-    },
-    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho/scalar_1/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho/scalar_1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,8)-(5,10)]"
-    },
-    {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho2/scalar_1/source-map/synthesized-field/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho2/scalar_1/source-map/lexical/element_0",
