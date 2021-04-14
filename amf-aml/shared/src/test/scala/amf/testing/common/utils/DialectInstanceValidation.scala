@@ -1,4 +1,4 @@
-package amf.dialects
+package amf.testing.common.utils
 
 import amf.ProfileName
 import amf.client.parse.DefaultParserErrorHandler
@@ -7,12 +7,12 @@ import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationReport
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.features.validation.custom.AMFValidatorPlugin
+import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.Future
 
-trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
+trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with DefaultAMLInitialization {
 
   def basePath: String
 
