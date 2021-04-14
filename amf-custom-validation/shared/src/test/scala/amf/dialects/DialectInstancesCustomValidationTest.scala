@@ -5,7 +5,10 @@ import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DialectInstancesCustomValidationTest extends DialectInstanceValidation with ReportComparison with DefaultAmfInitializationWithCustomValidation {
+class DialectInstancesCustomValidationTest
+    extends DialectInstanceValidation
+    with ReportComparison
+    with DefaultAMLInitializationWithCustomValidation {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
@@ -34,42 +37,41 @@ class DialectInstancesCustomValidationTest extends DialectInstanceValidation wit
 
   test("custom validation profile for dialect") {
     validateWithCustomProfile(
-      "eng_demos_dialect1.yaml",
-      "eng_demos_instance1.yaml",
-      ProfileName("eng_demos_profile.yaml"),
-      "Custom Eng-Demos Validation",
-      golden = Some("eng_demos_instance1.report.json")
+        "eng_demos_dialect1.yaml",
+        "eng_demos_instance1.yaml",
+        ProfileName("eng_demos_profile.yaml"),
+        "Custom Eng-Demos Validation",
+        golden = Some("eng_demos_instance1.report.json")
     )
   }
 
   test("custom validation profile for dialect default profile") {
     validateWithCustomProfile("eng_demos_dialect1.yaml",
-      "eng_demos_instance1.yaml",
-      ProfileName("eng_demos_profile.yaml"),
-      "Eng Demos 0.1")
+                              "eng_demos_instance1.yaml",
+                              ProfileName("eng_demos_profile.yaml"),
+                              "Eng Demos 0.1")
   }
 
   test("custom validation profile for ABOUT dialect default profile") {
     validateWithCustomProfile(
-      "ABOUT-dialect.yaml",
-      "ABOUT.yaml",
-      ProfileName("ABOUT-validation.yaml"),
-      "ABOUT-validation",
-      path = s"$productionPath/ABOUT",
-      golden = Some("ABOUT.report.json")
+        "ABOUT-dialect.yaml",
+        "ABOUT.yaml",
+        ProfileName("ABOUT-validation.yaml"),
+        "ABOUT-validation",
+        path = s"$productionPath/ABOUT",
+        golden = Some("ABOUT.report.json")
     )
   }
 
   test("Custom validation profile for ABOUT dialect default profile negative case") {
     validateWithCustomProfile(
-      "ABOUT-dialect.yaml",
-      "ABOUT.custom.errors.yaml",
-      ProfileName("ABOUT-validation.yaml"),
-      "ABOUT-validation",
-      path = s"$productionPath/ABOUT",
-      golden = Some("ABOUT.custom.errors.report.json")
+        "ABOUT-dialect.yaml",
+        "ABOUT.custom.errors.yaml",
+        ProfileName("ABOUT-validation.yaml"),
+        "ABOUT-validation",
+        path = s"$productionPath/ABOUT",
+        golden = Some("ABOUT.custom.errors.report.json")
     )
   }
-
 
 }
