@@ -43,6 +43,18 @@ class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests 
                 directory = s"$basePath/patch-properties/")
   }
 
+  multiGoldenTest("Resolve declares on self-encoded dialect instance", "instance.%s") { config =>
+    withDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        renderOptions = Some(config.renderOptions),
+        target = Amf,
+        directory = s"$basePath/declares-in-self-encoded/"
+    )
+  }
+
   multiGoldenTest("Resolve patch properties to AMF Graph", "patch.resolved.%s") { config =>
     withDialect(
         "dialect.yaml",

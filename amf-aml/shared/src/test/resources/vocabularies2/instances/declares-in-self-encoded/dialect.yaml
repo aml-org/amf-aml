@@ -1,0 +1,24 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+documents:
+  root:
+    encodes: PersonMapping
+    declares:
+      declaredOrg: OrganizationMapping
+  options:
+    selfEncoded: true
+nodeMappings:
+  PersonMapping:
+    mapping:
+      name:
+        range: string
+      surname:
+        range: string
+      organization:
+        range: OrganizationMapping
+  OrganizationMapping:
+    mapping:
+      name:
+        range: string
+
