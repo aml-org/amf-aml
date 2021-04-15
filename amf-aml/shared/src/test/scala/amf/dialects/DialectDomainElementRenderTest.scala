@@ -150,9 +150,7 @@ trait DomainElementCycleTests
     } yield r
   }
 
-  def renderDomainElement(element: Option[DomainElement],
-                          instance: DialectInstanceUnit,
-                          dialect: Dialect): String = {
+  def renderDomainElement(element: Option[DomainElement], instance: DialectInstanceUnit, dialect: Dialect): String = {
     val node     = element.map(AmlDomainElementEmitter.emit(_, dialect, UnhandledErrorHandler)).getOrElse(YNode.Empty)
     val document = SyamlParsedDocument(document = YDocument(node))
     SYamlSyntaxPlugin.unparse("application/yaml", document).getOrElse("").toString
