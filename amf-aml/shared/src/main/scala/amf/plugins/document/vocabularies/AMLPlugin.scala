@@ -98,7 +98,7 @@ trait AMLPlugin
     */
   override def resolve(unit: BaseUnit,
                        errorHandler: ErrorHandler,
-                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit =
+                       pipelineId: String = ResolutionPipeline.DEFAULT_PIPELINE): BaseUnit = {
     unit match {
       case patch: DialectInstancePatch =>
         new DialectInstancePatchResolutionPipeline(errorHandler).resolve(patch)
@@ -108,6 +108,7 @@ trait AMLPlugin
         new DialectInstanceResolutionPipeline(errorHandler).resolve(dialect)
       case _ => unit
     }
+  }
 
   /**
     * List of media types used to encode serialisations of
@@ -131,7 +132,6 @@ trait AMLPlugin
     */
   override def parse(document: Root,
                      parentContext: ParserContext,
-                     platform: Platform,
                      options: ParsingOptions): Option[BaseUnit] = {
 
     val header = DialectHeader.dialectHeaderDirective(document)

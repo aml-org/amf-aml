@@ -1,0 +1,91 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance2.yaml#/encodes",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg2.yaml#/declarations/Source",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "wadus-source",
+      "http://a.ml/vocabularies/data#sourceId": "s1",
+      "http://a.ml/vocabularies/data#dataGraph": {
+        "@id": "http://test.com/this/is/a/datagraph"
+      }
+    },
+    {
+      "@id": "http://test.com/this/is/a/datagraph",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg2.yaml#/declarations/DataGraph",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#query": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance2.yaml#/encodes/dataGraph/query"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance2.yaml#/encodes/dataGraph/query",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg2.yaml#/declarations/EntryPoint",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#queryMethods": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance2.yaml#/encodes/dataGraph/query/queryMethods/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance2.yaml#/encodes/dataGraph/query/queryMethods/0",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg2.yaml#/declarations/QueryMethod",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/document#link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance2.yaml#/queryMethods/qm1"
+        }
+      ],
+      "http://a.ml/vocabularies/document#link-label": "qm1"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance2.yaml",
+      "http://a.ml/vocabularies/document#declares": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance2.yaml#/queryMethods/qm1"
+        }
+      ],
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg2.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance2.yaml#/encodes"
+      },
+      "http://a.ml/vocabularies/document#version": "3.0.0",
+      "http://a.ml/vocabularies/document#root": true
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance2.yaml#/queryMethods/qm1",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg2.yaml#/declarations/QueryMethod",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/meta#declarationName": "qm1",
+      "http://a.ml/vocabularies/data#name": "qm",
+      "http://a.ml/vocabularies/data#id": "qmuuid"
+    }
+  ]
+}

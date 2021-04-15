@@ -1,0 +1,43 @@
+#%Dialect 1.0
+
+dialect: Source
+version: 1.0
+
+documents:
+  root:
+    encodes: Source
+    declares:
+      Datagraph: DataGraph
+
+nodeMappings:
+  Source:
+    mapping:
+      sourceId:
+        range: string
+        mandatory: true
+      name:
+        range: string
+        mandatory: true
+      # DataGraph
+      dataGraph:
+        range: link
+        mandatory: true
+
+  DataGraph:
+    mapping:
+      query:
+        range: EntryPoint
+        mandatory: true
+
+  EntryPoint:
+    mapping:
+      queryMethods:
+        range: QueryMethod
+        allowMultiple: true
+
+  QueryMethod:
+    mapping:
+      id:
+        range: string
+      name:
+        range: string

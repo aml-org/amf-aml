@@ -134,7 +134,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 
     val maybeSyntax = config.syntax.map(_.toString)
     val maybeVendor = Some(config.hint.vendor.name)
-    new AMFCompiler(context, mediaType = maybeSyntax, vendor = maybeVendor, parsingOptions = options).build()
+    new AMFCompiler(context, mediaType = maybeSyntax, vendor = maybeVendor).build()
   }
 
   /** Method to render parsed unit. Override if necessary. */

@@ -1,0 +1,37 @@
+#%Dialect 1.0
+
+dialect: Source
+version: 3.0
+
+external:
+  federation: http://mulesoft.com/vocabs/federation#
+
+documents:
+  root:
+    encodes: Source
+
+nodeMappings:
+  Source:
+    mapping:
+      sourceId:
+        range: string
+        mandatory: true
+      name:
+        range: string
+        mandatory: true
+      # DataGraph
+      dataGraph:
+        isLink: true
+        range: CustomizedDataGraph
+        mandatory: true
+
+  CustomizedDataGraph:
+    classTerm: federation.DataGraph
+    idTemplate: "https://federation.graph.anypoint.mulesoft.com/datagraphs/{uuid}"
+    mapping:
+      uuid:
+        range: string
+        unique: true
+        mandatory: true
+      customized:
+        range: boolean

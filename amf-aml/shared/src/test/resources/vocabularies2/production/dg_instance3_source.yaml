@@ -1,0 +1,7 @@
+#%Source 3.0
+
+sourceId: s1
+name: wadus-source
+dataGraph:
+  uuid: wadus-dg
+  customzied: true

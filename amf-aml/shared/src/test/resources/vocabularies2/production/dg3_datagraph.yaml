@@ -1,0 +1,41 @@
+#%Dialect 1.0
+
+dialect: DataGraph
+version: 3.0
+
+external:
+  federation: http://mulesoft.com/vocabs/federation#
+
+documents:
+  root:
+    encodes: DataGraph
+    declares:
+      queryMethods: QueryMethod
+
+
+nodeMappings:
+
+  DataGraph:
+    classTerm: federation.DataGraph
+    idTemplate: "https://federation.graph.anypoint.mulesoft.com/datagraphs/{uuid}"
+    mapping:
+      uuid:
+        mandatory: true
+        range: string
+        unique: true
+      query:
+        range: EntryPoint
+        mandatory: true
+
+  EntryPoint:
+    mapping:
+      queryMethods:
+        range: QueryMethod
+        allowMultiple: true
+
+  QueryMethod:
+    mapping:
+      id:
+        range: string
+      name:
+        range: string

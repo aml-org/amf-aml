@@ -1,0 +1,63 @@
+[
+  {
+    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance3_source.yaml",
+    "@type": [
+      "http://a.ml/vocabularies/meta#DialectInstance",
+      "http://a.ml/vocabularies/document#Document",
+      "http://a.ml/vocabularies/document#Fragment",
+      "http://a.ml/vocabularies/document#Module",
+      "http://a.ml/vocabularies/document#Unit"
+    ],
+    "http://a.ml/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg3_source.yaml"
+      }
+    ],
+    "http://a.ml/vocabularies/document#encodes": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance3_source.yaml#/encodes",
+        "@type": [
+          "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg3_source.yaml#/declarations/Source",
+          "http://a.ml/vocabularies/meta#DialectDomainElement",
+          "http://a.ml/vocabularies/document#DomainElement"
+        ],
+        "http://a.ml/vocabularies/data#name": [
+          {
+            "@value": "wadus-source"
+          }
+        ],
+        "http://a.ml/vocabularies/data#sourceId": [
+          {
+            "@value": "s1"
+          }
+        ],
+        "http://a.ml/vocabularies/data#dataGraph": [
+          {
+            "@id": "https://federation.graph.anypoint.mulesoft.com/datagraphs/wadus-dg",
+            "@type": [
+              "http://mulesoft.com/vocabs/federation#DataGraph",
+              "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg3_source.yaml#/declarations/CustomizedDataGraph",
+              "http://a.ml/vocabularies/meta#DialectDomainElement",
+              "http://a.ml/vocabularies/document#DomainElement"
+            ],
+            "http://a.ml/vocabularies/data#uuid": [
+              {
+                "@value": "wadus-dg"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "http://a.ml/vocabularies/document#version": [
+      {
+        "@value": "3.0.0"
+      }
+    ],
+    "http://a.ml/vocabularies/document#root": [
+      {
+        "@value": true
+      }
+    ]
+  }
+]

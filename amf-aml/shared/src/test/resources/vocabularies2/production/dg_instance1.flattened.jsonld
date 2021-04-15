@@ -1,0 +1,79 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance1.yaml#/encodes",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg1.yaml#/declarations/Source",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "wadus-source",
+      "http://a.ml/vocabularies/data#sourceId": "s1",
+      "http://a.ml/vocabularies/data#dataGraph": [
+        {
+          "@id": "http://test.com/this/is/a/datagraph"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance1.yaml",
+      "http://a.ml/vocabularies/document#declares": [
+        {
+          "@id": "http://test.com/this/is/a/datagraph"
+        }
+      ],
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg1.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance1.yaml#/encodes"
+      },
+      "http://a.ml/vocabularies/document#version": "3.0.0",
+      "http://a.ml/vocabularies/document#root": true
+    },
+    {
+      "@id": "http://test.com/this/is/a/datagraph",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg1.yaml#/declarations/DataGraph",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/meta#declarationName": "aDataGraph",
+      "http://a.ml/vocabularies/data#query": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance1.yaml#/Datagraph/aDataGraph/query"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance1.yaml#/Datagraph/aDataGraph/query",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg1.yaml#/declarations/EntryPoint",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#queryMethods": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance1.yaml#/Datagraph/aDataGraph/query/queryMethods/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance1.yaml#/Datagraph/aDataGraph/query/queryMethods/0",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg1.yaml#/declarations/QueryMethod",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "qm",
+      "http://a.ml/vocabularies/data#id": "qmuuid"
+    }
+  ]
+}

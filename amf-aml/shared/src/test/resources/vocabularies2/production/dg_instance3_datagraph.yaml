@@ -1,0 +1,7 @@
+#%DataGraph 3.0
+
+uuid: wadus-dg
+query:
+  queryMethods:
+    - id: qmuuid
+      name: qm

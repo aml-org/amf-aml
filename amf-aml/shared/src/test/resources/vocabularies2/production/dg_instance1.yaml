@@ -1,0 +1,13 @@
+#%Source 1.0
+
+Datagraph:
+  aDataGraph:
+    $id: "http://test.com/this/is/a/datagraph"
+    query:
+      queryMethods:
+        - id: qmuuid
+          name: qm
+
+sourceId: s1
+name: wadus-source
+dataGraph: "http://test.com/this/is/a/datagraph"

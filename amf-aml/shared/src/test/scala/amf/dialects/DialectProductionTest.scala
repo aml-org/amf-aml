@@ -7,6 +7,9 @@ import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
 import amf.core.io.FunSuiteCycleTests
+import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.remote.Syntax.{Json, Yaml}
+import amf.emit.AMFRenderer
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalatest.Assertion
@@ -40,7 +43,10 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
-
+/*
+  override def transform(unit: BaseUnit, config: CycleConfig): BaseUnit =
+    AMLPlugin().resolve(unit, UnhandledErrorHandler)
+*/
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
 
   test("Can parse and generated ABOUT dialect") {
@@ -144,6 +150,109 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
     )
   }
 
+  multiGoldenTest("dg1 test", "dg_instance1.%s") { config =>
+    withDialect(
+      "dg1.yaml",
+      "dg_instance1.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"${basePath}/",
+      renderOptions = Some(config.renderOptions.withoutSourceMaps)
+    )
+  }
+
+  multiGoldenTest("dg2 test", "dg_instance2.%s") { config =>
+    withDialect(
+      "dg2.yaml",
+      "dg_instance2.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"${basePath}/",
+      renderOptions = Some(config.renderOptions.withoutSourceMaps)
+    )
+  }
+
+  multiGoldenTest("HERE_HERE dg3-source test", "dg_instance3_source.%s") { config =>
+    withDialect(
+      "dg3_source.yaml",
+      "dg_instance3_source.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"${basePath}/",
+      renderOptions = Some(config.renderOptions.withoutSourceMaps)
+    )
+  }
+
+  multiGoldenTest("HERE_HERE dg3-datagraph test", "dg_instance3_datagraph.%s") { config =>
+    withDialect(
+      "dg3_datagraph.yaml",
+      "dg_instance3_datagraph.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      directory = s"${basePath}/",
+      renderOptions = Some(config.renderOptions.withoutSourceMaps)
+    )
+  }
+
+  def genYaml(source: String): Future[Boolean] = {
+    val context =
+      new CompilerContextBuilder(source, platform, UnhandledParserErrorHandler).build()
+
+    for {
+      baseUnit <- new AMFCompiler(context, None, Some("AMF Graph")).build()
+      rendered <- new AMFRenderer(baseUnit, amf.core.remote.Vendor.AML, RenderOptions(), Some(amf.core.remote.Syntax.Yaml)).renderToString
+    } yield {
+      println("RENDERED")
+      println(rendered)
+      true
+    }
+  }
+
+  def genResolvedJsonLD(source: String): Future[Boolean] = {
+    val context =
+      new CompilerContextBuilder(source, platform, UnhandledParserErrorHandler).build()
+
+    for {
+      baseUnit <- new AMFCompiler(context, None, Some("AMF Graph")).build()
+      resolved <- Future(AMLPlugin().resolve(baseUnit, UnhandledErrorHandler))
+      rendered <- new AMFRenderer(resolved, amf.core.remote.Vendor.AMF, RenderOptions(), Some(amf.core.remote.Syntax.Json)).renderToString
+    } yield {
+      println("RENDERED")
+      println(rendered)
+      true
+    }
+  }
+
+  def genResolvedYaml(source: String): Future[Boolean] = {
+    val context =
+      new CompilerContextBuilder(source, platform, UnhandledParserErrorHandler).build()
+
+    for {
+      baseUnit <- new AMFCompiler(context, None, Some("AMF Graph")).build()
+      //resolved <- Future(AMLPlugin().resolve(baseUnit, UnhandledErrorHandler))
+      rendered <- new AMFRenderer(baseUnit, amf.core.remote.Vendor.AML, RenderOptions(), Some(amf.core.remote.Syntax.Yaml)).renderToString
+    } yield {
+      println("RENDERED")
+      println(rendered)
+      true
+    }
+  }
+
+  test("LALA generate yaml from JSON-LD") {
+    val context =
+      new CompilerContextBuilder(s"file://$basePath/dg_production_dialect.yaml", platform, DefaultParserErrorHandler.withRun()).build()
+    for {
+      _   <- new AMFCompiler(context, None, Some(Aml.name)).build()
+      res <- genResolvedYaml(s"file://${basePath}/dg_production.jsonld")
+    } yield {
+      assert(res)
+    }
+  }
+
   // TODO migrate to multiGoldenTest
   test("Can parse and generate Instance dialect instance 1") {
     withDialect("dialect.yaml",
@@ -195,5 +304,4 @@ class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectIns
   ignore("Can parse asyncapi overlay instances") {
     withDialect("dialect6.yaml", "patch6.yaml", "patch6.resolved.yaml", VocabularyYamlHint, Aml, basePath + "asyncapi/")
   }
-
 }

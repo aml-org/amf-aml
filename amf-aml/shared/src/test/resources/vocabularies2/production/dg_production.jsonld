@@ -1,0 +1,976 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#entry-points/query",
+      "@type": [
+        "dg:EntryPoint",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/EntryPoint",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:queryMethods": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18/link-1931430400"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19/link-1931430401"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20/link-1931430423"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18/link-1931430400",
+      "@type": [
+        "dg:QueryMethod",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/QueryMethod",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18"
+        }
+      ],
+      "doc:link-label": "some-id-18"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19/link-1931430401",
+      "@type": [
+        "dg:QueryMethod",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/QueryMethod",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19"
+        }
+      ],
+      "doc:link-label": "some-id-19"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20/link-1931430423",
+      "@type": [
+        "dg:QueryMethod",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/QueryMethod",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20"
+        }
+      ],
+      "doc:link-label": "some-id-20"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#/",
+      "@type": [
+        "meta:DialectInstance",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit",
+        "dg:DataGraph",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/DataGraph",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:declares": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-11"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-4"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-10"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#global/types/String"
+        }
+      ],
+      "data:id": "242ac12-ff3b-11ea-adc1-8769b2d20002",
+      "data:query": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#entry-points/query"
+      },
+      "data:translation": "",
+      "core:version": "1.0",
+      "catalog:assetId": "assetId",
+      "anypoint:organizationId": "organizationId",
+      "catalog:groupId": "groupId",
+      "meta:definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml"
+        }
+      ],
+      "doc:encodes": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#/"
+      },
+      "doc:version": "3.0.0",
+      "doc:root": true
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20",
+      "@type": [
+        "dg:QueryMethod",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/QueryMethod",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "customersById",
+      "data:optional": false,
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-10/link-1931430392"
+      },
+      "core:description": "description",
+      "data:resolvers": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20/resolvers/NKia1jSBcJqgefJSVQBTNg=="
+        }
+      ],
+      "data:id": "some-id-20",
+      "data:elementProperties": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20/properties/member/+7LtzpX+f6Z5T7ts2jTPQA=="
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-11",
+      "@type": [
+        "dg:ListType",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ListType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:isMemberTypeNullable": true,
+      "data:memberType": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-10/link-1931430392"
+      },
+      "data:id": "some-id-11"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-4",
+      "@type": [
+        "dg:ObjectType",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ObjectType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:closed": true,
+      "data:edges": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-1"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-2"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-3"
+        }
+      ],
+      "core:description": "description",
+      "core:name": "Address",
+      "data:id": "some-id-4",
+      "data:elementProperties": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-4/properties/member/MfOB2FWt0wyOYm4J10sb3w=="
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18",
+      "@type": [
+        "dg:QueryMethod",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/QueryMethod",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "accountsByAccountId",
+      "data:optional": false,
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-4/link--630432453"
+      },
+      "core:description": "description",
+      "data:resolvers": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18/resolvers/NKia1jSBcJqgefJSVQBTNg=="
+        }
+      ],
+      "data:id": "some-id-18",
+      "data:elementProperties": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18/properties/member/9sNe4iwdhKyL5ewrmMq5VQ=="
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type",
+      "@type": [
+        "dg:ObjectType",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ObjectType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:closed": true,
+      "data:edges": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type-field"
+        }
+      ],
+      "core:description": "",
+      "core:name": "Email",
+      "data:id": "some-id-7/reference-type",
+      "data:elementProperties": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type/properties/reference/some-id-7"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type/properties/member/N3B4UDHNv64ct9+d3qWNVw=="
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19",
+      "@type": [
+        "dg:QueryMethod",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/QueryMethod",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "customers",
+      "data:optional": false,
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-11/link-1931430393"
+      },
+      "core:description": "description",
+      "data:resolvers": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19/resolvers/NKia1jSBcJqgefJSVQBTNg=="
+        }
+      ],
+      "data:id": "some-id-19",
+      "data:elementProperties": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19/properties/member/mZ10EtOWMhN6UGMjPicDYg=="
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-10",
+      "@type": [
+        "dg:ObjectType",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ObjectType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:closed": true,
+      "data:edges": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-8"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-9"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-field"
+        }
+      ],
+      "core:description": "description",
+      "core:name": "Customer",
+      "data:id": "some-id-10",
+      "data:elementProperties": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-10/properties/member/KllS10Aim0CSMXYBli44pA=="
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#global/types/String",
+      "@type": [
+        "dg:ScalarType",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ScalarType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:range": "http://www.w3.org/2001/XMLSchema#string",
+      "core:name": "String",
+      "data:id": "global/types/String"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-10/link-1931430392",
+      "@type": [
+        "dg:ObjectType",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ObjectType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-10"
+        }
+      ],
+      "doc:link-label": "some-id-10"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20/resolvers/NKia1jSBcJqgefJSVQBTNg==",
+      "@type": [
+        "dg:QueryMethodResolver",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/QueryMethodResolver",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:binding": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20/resolvers/NKia1jSBcJqgefJSVQBTNg==/bindings/PCNHWq/3avurnK1BCX0gGA=="
+      },
+      "data:parametersRef": [
+        "parameter"
+      ],
+      "data:fieldsRef": [
+        "field"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20/properties/member/+7LtzpX+f6Z5T7ts2jTPQA==",
+      "@type": [
+        "dg:Member",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Member",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:id": "some-id-20",
+      "data:kind": "concrete"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-1",
+      "@type": [
+        "dg:PropertyEdge",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PropertyEdge",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:bindings": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-1/bindings/iVGOms3OheDVw7ZlS9xt7g=="
+        }
+      ],
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#global/types/String/link--1808118735"
+      },
+      "core:name": "countryRenamed",
+      "data:optional": false,
+      "core:description": "description",
+      "data:id": "some-id-1",
+      "data:elementProperties": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-1/properties/primary-key"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-2",
+      "@type": [
+        "dg:PropertyEdge",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PropertyEdge",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:bindings": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-2/bindings/iVGOms3OheDVw7ZlS9xt7g=="
+        }
+      ],
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#global/types/String/link--1808118735"
+      },
+      "core:name": "hidden",
+      "data:optional": false,
+      "core:description": "description",
+      "data:id": "some-id-2",
+      "data:elementProperties": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-2/properties/hidden"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-3",
+      "@type": [
+        "dg:PropertyEdge",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PropertyEdge",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:bindings": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-3/bindings/iVGOms3OheDVw7ZlS9xt7g=="
+        }
+      ],
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#global/types/String/link--1808118735"
+      },
+      "core:name": "locality",
+      "data:optional": false,
+      "core:description": "description",
+      "data:id": "some-id-3"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-4/properties/member/MfOB2FWt0wyOYm4J10sb3w==",
+      "@type": [
+        "dg:Member",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Member",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:id": "some-id-4",
+      "data:kind": "concrete"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-4/link--630432453",
+      "@type": [
+        "dg:ObjectType",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ObjectType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-4"
+        }
+      ],
+      "doc:link-label": "some-id-4"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18/resolvers/NKia1jSBcJqgefJSVQBTNg==",
+      "@type": [
+        "dg:QueryMethodResolver",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/QueryMethodResolver",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:binding": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18/resolvers/NKia1jSBcJqgefJSVQBTNg==/bindings/PCNHWq/3avurnK1BCX0gGA=="
+      },
+      "data:parametersRef": [
+        "parameter"
+      ],
+      "data:fieldsRef": [
+        "field"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18/properties/member/9sNe4iwdhKyL5ewrmMq5VQ==",
+      "@type": [
+        "dg:Member",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Member",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:id": "some-id-18",
+      "data:kind": "concrete"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type-field",
+      "@type": [
+        "dg:PropertyEdge",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PropertyEdge",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:bindings": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type-field/bindings/6pfI/GJ05kPGXb21qYWaRg=="
+        }
+      ],
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#global/types/String/link--1808118735"
+      },
+      "core:name": "email",
+      "data:optional": false,
+      "core:description": "",
+      "data:id": "some-id-7/reference-type-field",
+      "data:elementProperties": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type-field/properties/reference/some-id-7"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type-field/properties/primary-key"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type/properties/reference/some-id-7",
+      "@type": [
+        "dg:Reference",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Reference",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:edgeId": "some-id-7"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type/properties/member/N3B4UDHNv64ct9+d3qWNVw==",
+      "@type": [
+        "dg:Member",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Member",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:id": "some-id-7/reference-type",
+      "data:kind": "synthetic"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-11/link-1931430393",
+      "@type": [
+        "dg:ListType",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ListType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-11"
+        }
+      ],
+      "doc:link-label": "some-id-11"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19/resolvers/NKia1jSBcJqgefJSVQBTNg==",
+      "@type": [
+        "dg:QueryMethodResolver",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/QueryMethodResolver",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:binding": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19/resolvers/NKia1jSBcJqgefJSVQBTNg==/bindings/PCNHWq/3avurnK1BCX0gGA=="
+      },
+      "data:parametersRef": [
+        "parameter"
+      ],
+      "data:fieldsRef": [
+        "field"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19/properties/member/mZ10EtOWMhN6UGMjPicDYg==",
+      "@type": [
+        "dg:Member",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Member",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:id": "some-id-19",
+      "data:kind": "concrete"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-8",
+      "@type": [
+        "dg:PropertyEdge",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PropertyEdge",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:bindings": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-8/bindings/iVGOms3OheDVw7ZlS9xt7g=="
+        }
+      ],
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#global/types/String/link--1808118735"
+      },
+      "core:name": "customerId",
+      "data:optional": false,
+      "core:description": "description",
+      "data:id": "some-id-8"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7",
+      "@type": [
+        "dg:PropertyEdge",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PropertyEdge",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:bindings": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/bindings/iVGOms3OheDVw7ZlS9xt7g=="
+        }
+      ],
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#global/types/String/link--1808118735"
+      },
+      "core:name": "email",
+      "data:optional": false,
+      "core:description": "description",
+      "data:id": "some-id-7"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-9",
+      "@type": [
+        "dg:PropertyEdge",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PropertyEdge",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:bindings": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-9/bindings/roW936g1t1gZRpRt6aY/vA=="
+        }
+      ],
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-4/link--630432453"
+      },
+      "core:name": "addressById",
+      "data:optional": false,
+      "core:description": "description",
+      "data:id": "some-id-9"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-field",
+      "@type": [
+        "dg:PropertyEdge",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PropertyEdge",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:bindings": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-field/bindings/Dfxzo/RNhdTII/BkTKk/vQ=="
+        }
+      ],
+      "data:target": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type/link--1946138500"
+      },
+      "core:name": "emailRef",
+      "data:optional": false,
+      "core:description": "",
+      "data:id": "some-id-7/reference-field",
+      "data:elementProperties": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-field/properties/reference/some-id-7"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-10/properties/member/KllS10Aim0CSMXYBli44pA==",
+      "@type": [
+        "dg:Member",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Member",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:id": "some-id-10",
+      "data:kind": "concrete"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-20/resolvers/NKia1jSBcJqgefJSVQBTNg==/bindings/PCNHWq/3avurnK1BCX0gGA==",
+      "@type": [
+        "dg:HttpEndpointBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/HttpEndpointBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:securityScheme": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#security-schemas/no-auth"
+      },
+      "data:endpoint": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#endpoint/web-api-id/link--911227321"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-1/bindings/iVGOms3OheDVw7ZlS9xt7g==",
+      "@type": [
+        "dg:HttpScalarPayloadBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/HttpScalarPayloadBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:property": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id/link--2029704044"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#global/types/String/link--1808118735",
+      "@type": [
+        "dg:ScalarType",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ScalarType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#global/types/String"
+        }
+      ],
+      "doc:link-label": "String"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-1/properties/primary-key",
+      "@type": [
+        "dg:PrimaryKey",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PrimaryKey",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-2/bindings/iVGOms3OheDVw7ZlS9xt7g==",
+      "@type": [
+        "dg:HttpScalarPayloadBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/HttpScalarPayloadBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:property": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id/link--2029704044"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-2/properties/hidden",
+      "@type": [
+        "dg:Hidden",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Hidden",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:implicitly": false
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-3/bindings/iVGOms3OheDVw7ZlS9xt7g==",
+      "@type": [
+        "dg:HttpScalarPayloadBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/HttpScalarPayloadBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:property": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id/link--2029704044"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-18/resolvers/NKia1jSBcJqgefJSVQBTNg==/bindings/PCNHWq/3avurnK1BCX0gGA==",
+      "@type": [
+        "dg:HttpEndpointBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/HttpEndpointBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:securityScheme": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#security-schemas/no-auth"
+      },
+      "data:endpoint": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#endpoint/web-api-id"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type-field/bindings/6pfI/GJ05kPGXb21qYWaRg==",
+      "@type": [
+        "dg:NilBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/NilBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type-field/properties/reference/some-id-7",
+      "@type": [
+        "dg:Reference",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Reference",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:edgeId": "some-id-7"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type-field/properties/primary-key",
+      "@type": [
+        "dg:PrimaryKey",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PrimaryKey",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-19/resolvers/NKia1jSBcJqgefJSVQBTNg==/bindings/PCNHWq/3avurnK1BCX0gGA==",
+      "@type": [
+        "dg:HttpEndpointBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/HttpEndpointBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:securityScheme": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#security-schemas/no-auth"
+      },
+      "data:endpoint": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#endpoint/web-api-id/link--911227321"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-8/bindings/iVGOms3OheDVw7ZlS9xt7g==",
+      "@type": [
+        "dg:HttpScalarPayloadBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/HttpScalarPayloadBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:property": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/bindings/iVGOms3OheDVw7ZlS9xt7g==",
+      "@type": [
+        "dg:HttpScalarPayloadBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/HttpScalarPayloadBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:property": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id/link--2029704044"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-9/bindings/roW936g1t1gZRpRt6aY/vA==",
+      "@type": [
+        "dg:HttpNestedPayloadBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/HttpNestedPayloadBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:mediaTypes": [
+        "application/json"
+      ],
+      "data:property": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id/link--2029704044"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-field/bindings/Dfxzo/RNhdTII/BkTKk/vQ==",
+      "@type": [
+        "dg:ReferenceBinding",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ReferenceBinding",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:property": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id/link--2029704044"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type/link--1946138500",
+      "@type": [
+        "dg:ObjectType",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/ObjectType",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-type"
+        }
+      ],
+      "doc:link-label": "reference-type"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id-7/reference-field/properties/reference/some-id-7",
+      "@type": [
+        "dg:Reference",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Reference",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:edgeId": "some-id-7"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#security-schemas/no-auth",
+      "@type": [
+        "dg:NoAuthSecurityScheme",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/NoAuthSecurityScheme",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#endpoint/web-api-id/link--911227321",
+      "@type": [
+        "dg:Endpoint",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Endpoint",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#endpoint/web-api-id"
+        }
+      ],
+      "doc:link-label": "web-api-id"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id/link--2029704044",
+      "@type": [
+        "dg:PropertyShape",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PropertyShape",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "doc:link-target": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id"
+        }
+      ],
+      "doc:link-label": "some-id"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#endpoint/web-api-id",
+      "@type": [
+        "dg:Endpoint",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/Endpoint",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:path": "http://localhost:8080/some-endpoint",
+      "data:method": "get",
+      "data:webApiId": "endpoint/web-api-id"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production.yaml#some-id",
+      "@type": [
+        "dg:PropertyShape",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_production_dialect.yaml#/declarations/PropertyShape",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "core:name": "name",
+      "data:webApiId": "some-id"
+    }
+  ],
+  "@context": {
+    "@base": "https://federation.graph.local.anypoint.mulesoft.com/v1/datagraph/242ac12-ff3b-11ea-adc1-8769b2d20002/",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "dg": "http://anypoint.com/vocabs/datagraph#",
+    "anypoint": "http://anypoint.com/vocabs/anypoint#",
+    "catalog": "http://anypoint.com/vocabs/digital-repository#"
+  }
+}

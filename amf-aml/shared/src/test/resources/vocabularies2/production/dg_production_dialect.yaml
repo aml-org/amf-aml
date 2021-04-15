@@ -1,0 +1,626 @@
+#%Dialect 1.0
+
+dialect: Source
+version: 0.4
+
+documents:
+#  options:
+#    selfEncoded: true
+  root:
+    encodes: Source
+    declares:
+      Datagraph: DataGraph
+      sources: Source
+      types: DataGraphTypeUnion
+      #queryMethods: QueryMethod
+
+external:
+  dg: http://anypoint.com/vocabs/datagraph#
+  anypoint: http://anypoint.com/vocabs/anypoint#
+  catalog: http://anypoint.com/vocabs/digital-repository#
+  core: http://a.ml/vocabularies/core#
+  doc: http://a.ml/vocabularies/document#
+
+nodeMappings:
+  DataGraphElement:
+    classTerm: dg.DataGraphElement
+    mapping:
+      elementProperties:
+        range: PropertyUnion
+        allowMultiple: true
+
+  AssetIdentifier:
+    classTerm: dg.AssetIdentifier
+    extends: DataGraphElement
+    mapping:
+      organizationId:
+        propertyTerm: anypoint.organizationId
+        range: string
+        mandatory: true
+      groupId:
+        propertyTerm: catalog.groupId
+        range: string
+        mandatory: true
+      assetId:
+        propertyTerm: catalog.assetId
+        range: string
+        mandatory: true
+      version:
+        propertyTerm: core.version
+        range: string
+        mandatory: true
+
+  Source:
+    classTerm: dg.Source
+    extends: AssetIdentifier
+    mapping:
+      sourceId:
+        range: string
+        mandatory: true
+      environmentId:
+        range: string
+        mandatory: true
+      sourceType:
+        range: string
+      # AssetInfo
+      name:
+        propertyTerm: core.name
+        range: string
+        mandatory: true
+      apiVersion:
+        propertyTerm: catalog.apiVersion
+        range: string
+        mandatory: true
+      # DataGraph
+      dataGraph:
+        range: link
+        mandatory: true
+      # Config
+      endpoint:
+        range: string
+      ## Security
+      securitySchemeType:
+        range: string
+      securityScheme:
+        range: SecuritySchemeUnion
+      customizations:
+        range: CustomizationUnion
+        allowMultiple: true
+      # Audit
+      createDate:
+        range: dateTime
+        mandatory: true
+      updateDate:
+        range: dateTime
+        mandatory: true
+
+  DataGraph:
+    classTerm: dg.DataGraph
+    extends: AssetIdentifier
+    mapping:
+      id:
+        range: string
+        mandatory: true
+      query:
+        range: EntryPoint
+        mandatory: true
+      translation:
+        range: string
+        mandatory: true
+
+  SourceRef:
+    classTerm: dg.SourceRef
+    extends: DataGraphElement
+    mapping:
+      sourceId:
+        range: string
+      sourceName:
+        range: string
+
+  DataGraphTypeUnion:
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      EntryPoint: EntryPoint
+      Scalar: ScalarType
+      Enum: EnumType
+      List: ListType
+      Union: UnionType
+      Any: AnyType
+      Object: ObjectType
+    union:
+      - EntryPoint
+      - ScalarType
+      - EnumType
+      - ListType
+      - UnionType
+      - AnyType
+      - ObjectType
+
+  ElementWithId:
+    classTerm: dg.ElementWithId
+    extends: DataGraphElement
+    mapping:
+      id:
+        range: string
+        mandatory: true
+
+  ApiBindingUnion:
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      HttpEndpoint: HttpEndpointBinding
+      HttpPayload: HttpPayloadBinding
+      HttpParameter: HttpParameterBinding
+      HttpNestedPayload: HttpNestedPayloadBinding
+      ScalarProperty: HttpScalarPayloadBinding
+    union:
+      - HttpEndpointBinding
+      - HttpPayloadBinding
+      - HttpParameterBinding
+      - HttpNestedPayloadBinding
+      - HttpScalarPayloadBinding
+
+  DataGraphEdgeUnion:
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      Property: PropertyEdge
+    union:
+      - PropertyEdge
+
+  SecuritySchemeUnion:
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      NoAuth: NoAuthSecurityScheme
+      HttpAuth: HttpAuthSecurityScheme
+      HttpBasicAuth: HttpBasicAuthSecurityScheme
+    union:
+      - NoAuthSecurityScheme
+      - HttpAuthSecurityScheme
+      - HttpBasicAuthSecurityScheme
+
+  NoAuthSecurityScheme:
+    classTerm: dg.NoAuthSecurityScheme
+    extends: DataGraphElement
+
+  HttpAuthSecurityScheme:
+    classTerm: dg.HttpAuthSecurityScheme
+    extends: DataGraphElement
+    mapping:
+      queryParameters:
+        range: string
+        allowMultiple: true
+      headers:
+        range: string
+        allowMultiple: true
+      cookies:
+        range: string
+        allowMultiple: true
+
+  HttpBasicAuthSecurityScheme:
+    classTerm: dg.HttpBasicAuthSecurityScheme
+    extends: DataGraphElement
+
+  HttpEndpointBinding:
+    classTerm: dg.HttpEndpointBinding
+    extends: DataGraphElement
+    mapping:
+      endpoint:
+        range: Endpoint
+      securityScheme:
+        range: SecuritySchemeUnion
+      sourceRef:
+        range: SourceRef
+
+  HttpPayloadBinding:
+    classTerm: dg.HttpPayloadBinding
+    extends: DataGraphElement
+    mapping:
+      mediaTypes:
+        range: string
+        allowMultiple: true
+      sourceRef:
+        range: SourceRef
+
+  HttpParameterBinding:
+    classTerm: dg.HttpParameterBinding
+    extends: DataGraphElement
+    mapping:
+      parameter:
+        range: Parameter
+      sourceRef:
+        range: SourceRef
+
+  HttpNestedPayloadBinding:
+    classTerm: dg.HttpNestedPayloadBinding
+    extends: DataGraphElement
+    mapping:
+      property:
+        range: PropertyShape
+      mediaTypes:
+        range: string
+        allowMultiple: true
+      sourceRef:
+        range: SourceRef
+
+  HttpScalarPayloadBinding:
+    classTerm: dg.HttpScalarPayloadBinding
+    extends: DataGraphElement
+    mapping:
+      property:
+        range: PropertyShape
+      sourceRef:
+        range: SourceRef
+
+  ReferenceBinding:
+    classTerm: dg.ReferenceBinding
+    extends: DataGraphElement
+    mapping:
+      property:
+        range: PropertyShape
+      sourceRef:
+        range: SourceRef
+
+  NilBinding:
+    classTerm: dg.NilBinding
+    extends: DataGraphElement
+    mapping:
+      sourceRef:
+        range: SourceRef
+
+  DataGraphNode:
+    classTerm: dg.DataGraphNode
+    extends: DataGraphElement
+
+  EntryPoint:
+    classTerm: dg.EntryPoint
+    extends: DataGraphNode
+    mapping:
+      edges:
+        range: DataGraphEdgeUnion
+        allowMultiple: true
+      queryMethods:
+        range: QueryMethod
+        allowMultiple: true
+
+  # Edges
+
+  DataGraphEdge:
+    classTerm: dg.DataGraphEdge
+    extends: ElementWithId
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      optional:
+        range: boolean
+      target:
+        range: DataGraphTypeUnion
+      parameters:
+        range: PropertyEdge
+        allowMultiple: true
+      bindings:
+        range: ApiBindingUnion
+        allowMultiple: true
+      regex:
+        range: string
+      defaultValue:
+        range: string
+
+  PropertyEdge:
+    classTerm: dg.PropertyEdge
+    extends: DataGraphEdge
+    mapping:
+      target:
+        range: DataGraphTypeUnion
+      bindings:
+        range: ApiBindingUnion
+        allowMultiple: true
+
+  # Types
+
+  DataGraphType:
+    classTerm: dg.DataGraphType
+    extends: DataGraphNode
+    mapping:
+      id:
+        range: string
+        mandatory: true
+
+  NamedType:
+    classTerm: dg.NamedType
+    extends: DataGraphType
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+
+  ScalarType:
+    classTerm: dg.ScalarType
+    extends: NamedType
+    mapping:
+      range:
+        range: string
+      format:
+        range: string
+
+  EnumValue:
+    classTerm: dg.EnumValue
+    extends: DataGraphElement
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+        mandatory: true
+      description:
+        propertyTerm: core.description
+        range: string
+      value:
+        range: string
+        mandatory: true
+
+  EnumType:
+    classTerm: dg.EnumType
+    extends: NamedType
+    mapping:
+      scalarType:
+        range: ScalarType
+      values:
+        range: EnumValue
+        allowMultiple: true
+        mapKey: name
+
+  ListType:
+    classTerm: dg.ListType
+    extends: DataGraphType
+    mapping:
+      memberType:
+        range: DataGraphTypeUnion
+      isMemberTypeNullable:
+        range: boolean
+        mandatory: false
+
+  DiscriminatorMapping:
+    classTerm: dg.DiscriminatorMapping
+    extends: DataGraphElement
+    mapping:
+      key:
+        range: string
+        mandatory: true
+      value:
+        range: DataGraphTypeUnion
+        mandatory: true
+
+  UnionType:
+    classTerm: dg.UnionType
+    extends: NamedType
+    mapping:
+      unionTypes:
+        range: DataGraphTypeUnion
+        allowMultiple: true
+      disjointProperties:
+        range: string
+        allowMultiple: true
+      discriminator:
+        range: string
+        mandatory: false
+      discriminatorMapping:
+        range: DiscriminatorMapping
+        mandatory: false
+        allowMultiple: true
+
+  AnyType:
+    classTerm: dg.AnyType
+    extends: DataGraphType
+
+  ObjectType:
+    classTerm: dg.ObjectType
+    extends: NamedType
+    mapping:
+      edges:
+        range: DataGraphEdgeUnion
+        allowMultiple: true
+      closed:
+        range: boolean
+
+  # WebApi references
+
+  WebApiElement:
+    classTerm: dg.WebApiElement
+    extends: DataGraphElement
+    mapping:
+      webApiId:
+        range: string
+        mandatory: true
+
+  Endpoint:
+    classTerm: dg.Endpoint
+    extends: WebApiElement
+    mapping:
+      method:
+        range: string
+        mandatory: true
+      path:
+        range: string
+        mandatory: true
+
+  Parameter:
+    classTerm: dg.Parameter
+    extends: WebApiElement
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+        mandatory: true
+      binding:
+        range: string
+        mandatory: true
+
+  PropertyShape:
+    classTerm: dg.PropertyShape
+    extends: WebApiElement
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+        mandatory: true
+
+
+  # Properties
+
+  PropertyUnion:
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      PrimaryKey: PrimaryKey
+      Reference: Reference
+      Hidden: Hidden
+      Member: Member
+      DefaultQueryMethod: DefaultQueryMethod
+    union:
+      - PrimaryKey
+      - Reference
+      - Hidden
+      - Member
+      - DefaultQueryMethod
+
+  PrimaryKey:
+    classTerm: dg.PrimaryKey
+    extends: DataGraphElement
+
+  Reference:
+    classTerm: dg.Reference
+    extends: DataGraphElement
+    mapping:
+      edgeId:
+        range: string
+        mandatory: true
+
+  Hidden:
+    classTerm: dg.Hidden
+    extends: DataGraphElement
+    mapping:
+      implicitly:
+        range: boolean
+        mandatory: true
+
+  Member:
+    classTerm: dg.Member
+    extends: DataGraphElement
+    mapping:
+      id:
+        range: string
+        mandatory: true
+      sourceRef:
+        range: SourceRef
+      kind:
+        range: string
+
+  DefaultQueryMethod:
+    classTerm: dg.DefaultQueryMethod
+    extends: DataGraphElement
+    mapping:
+      queryMethodId:
+        range: string
+        mandatory: true
+
+  # Customizations
+
+  CustomizationUnion:
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      PrimaryKey: PrimaryKeyCustomization
+      Rename: RenameCustomization
+      Reference: ReferenceCustomization
+      Hide: HideCustomization
+      DefaultQueryMethod: DefaultQueryMethodCustomization
+    union:
+      - PrimaryKeyCustomization
+      - RenameCustomization
+      - ReferenceCustomization
+      - HideCustomization
+      - DefaultQueryMethodCustomization
+
+  Customization:
+    classTerm: dg.Customization
+    extends: DataGraphElement
+    mapping:
+      elementId:
+        range: string
+        mandatory: true
+
+  PrimaryKeyCustomization:
+    classTerm: dg.PrimaryKeyCustomization
+    extends: Customization
+
+  RenameCustomization:
+    classTerm: dg.RenameCustomization
+    extends: Customization
+    mapping:
+      renameTo:
+        range: string
+        mandatory: true
+
+  ReferenceCustomization:
+    classTerm: dg.ReferenceCustomization
+    extends: Customization
+    mapping:
+      edgeId:
+        range: string
+        mandatory: true
+      fieldName:
+        range: string
+        mandatory: true
+      typeName:
+        range: string
+        mandatory: true
+      typeFieldName:
+        range: string
+        mandatory: true
+
+  HideCustomization:
+    classTerm: dg.HideCustomization
+    extends: Customization
+
+  DefaultQueryMethodCustomization:
+    classTerm: dg.DefaultQueryMethodCustomization
+    extends: Customization
+
+  # Query Method
+
+  QueryMethod:
+    classTerm: dg.QueryMethod
+    extends: ElementWithId
+    mapping:
+      name:
+        propertyTerm: core.name
+        range: string
+      description:
+        propertyTerm: core.description
+        range: string
+      parameters:
+        range: PropertyEdge
+        allowMultiple: true
+      resolvers:
+        range: QueryMethodResolver
+        allowMultiple: true
+      optional:
+        range: boolean
+      target:
+        range: DataGraphTypeUnion
+
+  QueryMethodResolver:
+    classTerm: dg.QueryMethodResolver
+    extends: DataGraphElement
+    mapping:
+      binding:
+        range: HttpEndpointBinding
+      fieldsRef:
+        range: string
+        allowMultiple: true
+      parametersRef:
+        range: string
+        allowMultiple: true

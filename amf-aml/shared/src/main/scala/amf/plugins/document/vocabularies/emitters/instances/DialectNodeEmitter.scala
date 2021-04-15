@@ -197,7 +197,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
           case _ => // Ignore
         }
 
-      case field =>
+      case field =>  {
         findPropertyMapping(node, field) foreach { propertyMapping =>
           if (keyPropertyId.isEmpty || propertyMapping
                 .nodePropertyMapping()
@@ -277,6 +277,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
             emitters ++= nextEmitter
           }
         }
+      }
     }
     emitters
   }

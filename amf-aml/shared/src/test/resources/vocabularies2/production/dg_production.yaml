@@ -1,0 +1,74 @@
+#%Source 0.4
+types:
+  some-id-11:
+    type: List
+    memberType: some-id-10
+    isMemberTypeNullable: true
+  some-id-4:
+    type: Object
+    edges:
+      -
+        type: Property
+        target: String
+        bindings:
+          -
+            type: ScalarProperty
+            property: some-id
+      -
+        type: Property
+        target: String
+        bindings:
+          -
+            type: ScalarProperty
+            property: some-id
+      -
+        type: Property
+        target: String
+        bindings:
+          -
+            type: ScalarPropertya
+            property: some-id
+    closed: true
+  reference-type:
+    type: Object
+    edges:
+      -
+        type: Property
+        target: String
+        bindings: []
+    closed: true
+  some-id-10:
+    type: Object
+    edges:
+      -
+        type: Property
+        target: String
+        bindings:
+          -
+            type: ScalarProperty
+            property:
+              name: name
+      -
+        type: Property
+        target: String
+        bindings:
+          -
+            type: ScalarProperty
+            property: some-id
+      -
+        type: Property
+        target: some-id-4
+        bindings:
+          -
+            type: HttpNestedPayload
+            property: some-id
+            mediaTypes:
+              - application/json
+      -
+        type: Property
+        target: reference-type
+        bindings: []
+    closed: true
+  String:
+    type: Scalar
+    range: http://www.w3.org/2001/XMLSchema#string

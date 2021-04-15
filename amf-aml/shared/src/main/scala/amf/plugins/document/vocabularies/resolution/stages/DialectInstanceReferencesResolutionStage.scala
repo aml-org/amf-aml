@@ -35,13 +35,16 @@ class DialectInstanceReferencesResolutionStage()(override implicit val errorHand
     element match {
 
       // link not traversed, cache it and traverse it
-      case l: Linkable if l.linkTarget.isDefined && !isCycle => Some(resolveLinked(l.linkTarget.get))
+      case l: Linkable if l.linkTarget.isDefined && !isCycle =>
+        Some(resolveLinked(l.linkTarget.get))
 
       // link traversed, return the link
-      case l: Linkable if l.linkTarget.isDefined => Some(l)
+      case l: Linkable if l.linkTarget.isDefined =>
+        Some(l)
 
       // no link
-      case other => Some(other)
+      case other =>
+        Some(other)
 
     }
   }

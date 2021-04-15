@@ -1,0 +1,60 @@
+{
+  "@graph": [
+    {
+      "@id": "https://federation.graph.anypoint.mulesoft.com/datagraphs/wadus-dg",
+      "@type": [
+        "http://mulesoft.com/vocabs/federation#DataGraph",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg3_datagraph.yaml#/declarations/DataGraph",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#uuid": "wadus-dg",
+      "http://a.ml/vocabularies/data#query": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance3_datagraph.yaml#/encodes/query"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance3_datagraph.yaml#/encodes/query",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg3_datagraph.yaml#/declarations/EntryPoint",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#queryMethods": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance3_datagraph.yaml#/encodes/query/queryMethods/0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance3_datagraph.yaml#/encodes/query/queryMethods/0",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg3_datagraph.yaml#/declarations/QueryMethod",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "qm",
+      "http://a.ml/vocabularies/data#id": "qmuuid"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg_instance3_datagraph.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/dg3_datagraph.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "https://federation.graph.anypoint.mulesoft.com/datagraphs/wadus-dg"
+      },
+      "http://a.ml/vocabularies/document#version": "3.0.0",
+      "http://a.ml/vocabularies/document#root": true
+    }
+  ]
+}
