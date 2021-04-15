@@ -1,0 +1,23 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+documents:
+  root:
+    encodes: NodeA
+
+nodeMappings:
+  NodeA:
+    idTemplate: http://a.ml/nodes/NodeA
+    mapping:
+      name:
+        range: string
+      b:
+        range: NodeB
+  NodeB:
+    idTemplate: http://a.ml/nodes/NodeB
+    mapping:
+      name:
+        range: string
+      a:
+        range: NodeA
