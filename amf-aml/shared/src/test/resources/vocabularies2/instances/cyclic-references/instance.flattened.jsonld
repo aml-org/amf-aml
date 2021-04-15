@@ -1,0 +1,48 @@
+{
+  "@graph": [
+    {
+      "@id": "http://a.ml/nodes/NodeA",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/cyclic-references/dialect.yaml#/declarations/NodeA",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "NodeA",
+      "http://a.ml/vocabularies/data#b": {
+        "@id": "http://a.ml/nodes/NodeB"
+      }
+    },
+    {
+      "@id": "http://a.ml/nodes/NodeB",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/cyclic-references/dialect.yaml#/declarations/NodeB",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "NodeB",
+      "http://a.ml/vocabularies/data#a": {
+        "@id": "http://a.ml/nodes/NodeA"
+      }
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/cyclic-references/instance.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/cyclic-references/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "http://a.ml/nodes/NodeA"
+      },
+      "http://a.ml/vocabularies/document#version": "3.0.0",
+      "http://a.ml/vocabularies/document#root": true
+    }
+  ]
+}

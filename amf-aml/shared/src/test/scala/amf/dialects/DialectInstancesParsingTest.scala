@@ -998,6 +998,18 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
 
+  test("Cyclic references") {
+    withDialect(
+      "dialect.yaml",
+      "instance.flattened.jsonld",
+      "instance.golden.flattened.jsonld",
+      AmfJsonHint,
+      target = Amf,
+      renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint),
+      directory = s"$basePath/cyclic-references/"
+    )
+  }
+
   protected def withInlineDialect(source: String,
                                   golden: String,
                                   hint: Hint,
