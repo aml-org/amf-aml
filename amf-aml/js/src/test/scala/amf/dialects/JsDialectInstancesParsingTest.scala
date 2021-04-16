@@ -5,6 +5,6 @@ import amf.testing.parsing.DialectInstancesParsingTest
 
 class JsDialectInstancesParsingTest extends DialectInstancesParsingTest {
   multiSourceTest("generate 32 test", "example32.%s") { config =>
-    withDialect("dialect32.yaml", config.source, "example32.js.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect32.yaml", config.source, "example32.js.yaml", AmfJsonHint, target = Aml)
   }
 }

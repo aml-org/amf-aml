@@ -6,6 +6,7 @@ import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationReport
 import amf.core.{AMFCompiler, CompilerContextBuilder}
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import org.scalatest.AsyncFunSuite
@@ -46,9 +47,7 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
                                             profile: ProfileName,
                                             name: String,
                                             directory: String = basePath): Future[AMFValidationReport] = {
-    val dialectContext  = compilerContext(s"$directory/$dialect")
-    val instanceContext = compilerContext(s"$directory/$instance")
-
+    val dialectContext = compilerContext(s"$directory/$dialect")
     for {
       dialect <- {
         new AMFCompiler(
@@ -57,12 +56,13 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
             None
         ).build()
       }
+      _ <- Future.successful(AMLPlugin.registry.register(dialect.asInstanceOf[Dialect]))
       profile <- {
         AMFValidatorPlugin.loadValidationProfile(s"$directory/${profile.profile}",
                                                  errorHandler = dialectContext.parserContext.eh)
       }
       instance <- {
-
+        val instanceContext = compilerContext(s"$directory/$instance")
         new AMFCompiler(
             instanceContext,
             Some("application/yaml"),
@@ -75,6 +75,7 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
             ProfileName(name)
         )
       }
+      _ <- Future.successful(AMLPlugin.registry.unregisterDialect(dialect.id))
     } yield {
       report
     }

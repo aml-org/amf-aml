@@ -48,15 +48,15 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   test("Can parse validation dialect instance") {
-    withDialect("validation_dialect.yaml",
-                "validation_instance1.yaml",
-                "validation_instance1.yaml.yaml",
-                VocabularyYamlHint,
-                Aml)
+    cycleWithDialect("validation_dialect.yaml",
+                     "validation_instance1.yaml",
+                     "validation_instance1.yaml.yaml",
+                     VocabularyYamlHint,
+                     Aml)
   }
 
   multiGoldenTest("Can parse validation dialect cfg1 instance", "example1_instance.%s") { config =>
-    withDialect(
+    cycleWithDialect(
         "example1.yaml",
         "example1_instance.yaml",
         config.golden,
@@ -68,7 +68,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   multiGoldenTest("Can parse validation dialect cfg2 instance", "example2_instance.%s") { config =>
-    withDialect(
+    cycleWithDialect(
         "example2.yaml",
         "example2_instance.yaml",
         config.golden,
@@ -80,7 +80,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   multiGoldenTest("Can parse validation dialect cfg3 instance", "example3_instance.%s") { config =>
-    withDialect(
+    cycleWithDialect(
         "example3.yaml",
         "example3_instance.yaml",
         config.golden,
@@ -92,20 +92,25 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   test("Can parse and generate ABOUT dialect instance") {
-    withDialect("ABOUT-dialect.yaml", "ABOUT.yaml", "ABOUT.yaml.yaml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
+    cycleWithDialect("ABOUT-dialect.yaml",
+                     "ABOUT.yaml",
+                     "ABOUT.yaml.yaml",
+                     VocabularyYamlHint,
+                     Aml,
+                     basePath + "ABOUT/")
   }
 
   test("Can parse and generate ABOUT-github dialect instance") {
-    withDialect("ABOUT-GitHub-dialect.yaml",
-                "example.yaml",
-                "example.yaml.yaml",
-                VocabularyYamlHint,
-                Aml,
-                basePath + "ABOUT/github/")
+    cycleWithDialect("ABOUT-GitHub-dialect.yaml",
+                     "example.yaml",
+                     "example.yaml.yaml",
+                     VocabularyYamlHint,
+                     Aml,
+                     basePath + "ABOUT/github/")
   }
 
   multiGoldenTest("Can parse ABOUT-hosted dialectinstance", "ABOUT_hosted.%s") { config =>
-    withDialect(
+    cycleWithDialect(
         "ABOUT-hosted-vcs-dialect.yaml",
         "ABOUT_hosted.yaml",
         config.golden,
@@ -118,38 +123,38 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   // TODO migrate to multiGoldenTest
   test("Can parse and generate Instance dialect instance 1") {
-    withDialect("dialect.yaml",
-                "instance1.yaml",
-                "instance1.json",
-                VocabularyYamlHint,
-                target = Amf,
-                basePath + "Instagram/")
+    cycleWithDialect("dialect.yaml",
+                     "instance1.yaml",
+                     "instance1.json",
+                     VocabularyYamlHint,
+                     target = Amf,
+                     basePath + "Instagram/")
   }
 
   test("Can parse and generate Instance dialect instance 2") {
-    withDialect("dialect.yaml",
-                "instance2.yaml",
-                "instance2.json",
-                VocabularyYamlHint,
-                target = Amf,
-                basePath + "Instagram/")
+    cycleWithDialect("dialect.yaml",
+                     "instance2.yaml",
+                     "instance2.json",
+                     VocabularyYamlHint,
+                     target = Amf,
+                     basePath + "Instagram/")
   }
 
   test("Can parse activity instances") {
-    withDialect("activity.yaml",
-                "stream1.yaml",
-                "stream1.json",
-                VocabularyYamlHint,
-                target = Amf,
-                basePath + "streams/")
+    cycleWithDialect("activity.yaml",
+                     "stream1.yaml",
+                     "stream1.json",
+                     VocabularyYamlHint,
+                     target = Amf,
+                     basePath + "streams/")
   }
 
   test("Can parse activity deployments demo") {
-    withDialect("dialect.yaml",
-                "deployment.yaml",
-                "deployment.json",
-                VocabularyYamlHint,
-                target = Amf,
-                basePath + "deployments_demo/")
+    cycleWithDialect("dialect.yaml",
+                     "deployment.yaml",
+                     "deployment.json",
+                     VocabularyYamlHint,
+                     target = Amf,
+                     basePath + "deployments_demo/")
   }
 }

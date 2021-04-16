@@ -19,32 +19,27 @@ trait DialectTests
     extends MultiJsonLDAsyncFunSuite
     with FileAssertionTest
     with AMLParsingHelper
-    with DefaultAMLInitialization {
+    with DefaultAMLInitialization
+    with DialectRegistrationHelper {
   val basePath: String
 
-  protected def withDialect(dialect: String,
-                            source: String,
-                            golden: String,
-                            hint: Hint,
-                            target: Vendor,
-                            directory: String = basePath,
-                            renderOptions: Option[RenderOptions] = None,
-                            useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
-    val context =
-      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
-    for {
-      dialect <- new AMFCompiler(context, None, Some(Aml.name)).build()
-      _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
-      _       <- Future.successful { AMLPlugin.registry.register(dialect.asInstanceOf[Dialect]) }
-      res <- cycle(source,
-                   golden,
-                   hint,
-                   target,
-                   useAmfJsonldSerialization = useAmfJsonldSerialization,
-                   renderOptions = renderOptions,
-                   directory = directory)
-    } yield {
-      res
+  protected def cycleWithDialect(dialect: String,
+                                 source: String,
+                                 golden: String,
+                                 hint: Hint,
+                                 target: Vendor,
+                                 directory: String = basePath,
+                                 renderOptions: Option[RenderOptions] = None,
+                                 useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
+
+    withDialect(s"file://$directory/$dialect") { _ =>
+      cycle(source,
+            golden,
+            hint,
+            target,
+            useAmfJsonldSerialization = useAmfJsonldSerialization,
+            renderOptions = renderOptions,
+            directory = directory)
     }
   }
 
@@ -52,20 +47,11 @@ trait DialectTests
                               source: String,
                               hint: Hint,
                               directory: String = basePath): Future[BaseUnit] = {
-    for {
-      dialect <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$dialect",
-                                                            platform,
-                                                            DefaultParserErrorHandler.withRun()).build(),
-                                 None,
-                                 Some(Aml.name)).build()
-      _ <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
-      b <- new AMFCompiler(new CompilerContextBuilder(s"file://$directory/$source",
-                                                      platform,
-                                                      DefaultParserErrorHandler.withRun()).build(),
-                           None,
-                           Some(hint.vendor.name)).build()
-    } yield {
-      b
+
+    withDialect(s"file://$directory/$dialect") { _ =>
+      val context =
+        new CompilerContextBuilder(s"file://$directory/$source", platform, DefaultParserErrorHandler.withRun()).build()
+      new AMFCompiler(context, None, Some(hint.vendor.name)).build()
     }
   }
 
@@ -88,8 +74,7 @@ trait DialectTests
                   target: Vendor,
                   directory: String = basePath,
                   renderOptions: Option[RenderOptions] = None,
-                  useAmfJsonldSerialization: Boolean = true,
-                  syntax: Option[Syntax] = None): Future[Assertion] = {
+                  useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
     val options = renderOptions.getOrElse(defaultRenderOptions)
     if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
     for {
