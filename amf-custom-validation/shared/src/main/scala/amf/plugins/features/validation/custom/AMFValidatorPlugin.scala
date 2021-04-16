@@ -37,7 +37,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
     ExecutionLog.log("Register RDF framework")
     platform.rdfFramework = Some(PlatformValidator.instance)
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
-    AMLPlugin().registry.registerDialect(PROFILE_DIALECT_URL, ValidationDialectText.text, executionContext) map { _ =>
+    AMLPlugin.registry.registerDialect(PROFILE_DIALECT_URL, ValidationDialectText.text, executionContext) map { _ =>
       ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
       this
     }

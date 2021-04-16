@@ -12,32 +12,23 @@ import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.Future
 
-trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with DefaultAMLInitialization {
+trait DialectInstanceValidation
+    extends AsyncFunSuite
+    with PlatformSecrets
+    with DefaultAMLInitialization
+    with DialectRegistrationHelper
+    with AMLParsingHelper {
 
   def basePath: String
 
   protected def validation(dialect: String, instance: String, path: String = basePath): Future[AMFValidationReport] = {
-    val dialectContext  = compilerContext(s"$path/$dialect")
-    val instanceContext = compilerContext(s"$path/$instance")
-
-    for {
-      dialect <- {
-        new AMFCompiler(
-            dialectContext,
-            Some("application/yaml"),
-            None
-        ).build()
+    withDialect(s"$path/$dialect") { dialect =>
+      for {
+        instance <- parse(s"$path/$instance", platform, None)
+        report   <- RuntimeValidator(instance, ProfileName(dialect.nameAndVersion()))
+      } yield {
+        report
       }
-      instance <- {
-        new AMFCompiler(
-            instanceContext,
-            Some("application/yaml"),
-            None
-        ).build()
-      }
-      report <- RuntimeValidator(instance, ProfileName(dialect.asInstanceOf[Dialect].nameAndVersion()))
-    } yield {
-      report
     }
   }
 
@@ -46,41 +37,19 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with 
                                             profile: ProfileName,
                                             name: String,
                                             directory: String = basePath): Future[AMFValidationReport] = {
-    val dialectContext  = compilerContext(s"$directory/$dialect")
-    val instanceContext = compilerContext(s"$directory/$instance")
-
-    for {
-      dialect <- {
-        new AMFCompiler(
-            dialectContext,
-            Some("application/yaml"),
-            None
-        ).build()
+    val ctx =
+      new CompilerContextBuilder(s"$directory/$dialect", platform, eh = DefaultParserErrorHandler.withRun()).build()
+    withDialect(s"$directory/$dialect") { _ =>
+      for {
+        _ <- {
+          AMFValidatorPlugin.loadValidationProfile(s"$directory/${profile.profile}",
+                                                   errorHandler = ctx.parserContext.eh)
+        }
+        instance <- parse(s"$directory/$instance", platform, None)
+        report   <- RuntimeValidator(instance, ProfileName(name))
+      } yield {
+        report
       }
-      profile <- {
-        AMFValidatorPlugin.loadValidationProfile(s"$directory/${profile.profile}",
-                                                 errorHandler = dialectContext.parserContext.eh)
-      }
-      instance <- {
-
-        new AMFCompiler(
-            instanceContext,
-            Some("application/yaml"),
-            None
-        ).build()
-      }
-      report <- {
-        RuntimeValidator(
-            instance,
-            ProfileName(name)
-        )
-      }
-    } yield {
-      report
     }
   }
-
-  private def compilerContext(url: String) =
-    new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
-
 }

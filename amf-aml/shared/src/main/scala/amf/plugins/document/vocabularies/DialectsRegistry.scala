@@ -191,7 +191,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   }
 
-  private def invalidateCaches() = {
+  private def invalidateCaches(): Unit = {
     findType.invalidateCache()
     buildType.invalidateCache()
     metamodelCache.invalidate()
@@ -231,5 +231,12 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
     resolved = resolved.filter(l => !headers.contains(l))
     invalidateCaches()
     map = map.filter(_._2.id != uri)
+  }
+
+  def reset(): Unit = {
+    map = Map()
+    resolved = Set()
+    validations = Map()
+    invalidateCaches()
   }
 }

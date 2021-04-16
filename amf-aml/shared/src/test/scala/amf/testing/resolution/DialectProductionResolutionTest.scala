@@ -20,12 +20,12 @@ class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectIns
 
   // Order is not predictable
   ignore("Can parse asyncapi overlay instances") {
-    withDialect("dialect6.yaml",
-                "patch6.yaml",
-                "patch6.resolved.yaml",
-                VocabularyYamlHint,
-                Aml,
-                basePath + "asyncapi/")
+    cycleWithDialect("dialect6.yaml",
+                     "patch6.yaml",
+                     "patch6.resolved.yaml",
+                     VocabularyYamlHint,
+                     Aml,
+                     basePath + "asyncapi/")
   }
 
 }

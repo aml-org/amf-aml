@@ -21,7 +21,8 @@ trait DomainElementCycleTests
     extends AsyncFunSuite
     with FileAssertionTest
     with AMLParsingHelper
-    with DefaultAMLInitialization {
+    with DefaultAMLInitialization
+    with DialectRegistrationHelper {
 
   val basePath: String
   val baseHint: Hint
@@ -32,14 +33,9 @@ trait DomainElementCycleTests
                               golden: String,
                               hint: Hint = baseHint,
                               directory: String = basePath): Future[Assertion] = {
-    val context =
-      new CompilerContextBuilder(s"file://$directory/$dialect", platform, DefaultParserErrorHandler.withRun()).build()
-    for {
-      dialect <- new AMFCompiler(context, None, Some(Aml.name)).build().map(_.asInstanceOf[Dialect])
-      _       <- Future.successful { AMLPlugin().resolve(dialect, UnhandledErrorHandler) }
-      res     <- cycleElement(dialect, source, extractor, golden, hint, directory = directory)
-    } yield {
-      res
+
+    withDialect(s"file://$directory/$dialect") { d =>
+      cycleElement(d, source, extractor, golden, hint, directory = directory)
     }
   }
 
