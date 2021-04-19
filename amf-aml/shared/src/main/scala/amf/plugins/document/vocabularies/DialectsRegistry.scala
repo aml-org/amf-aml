@@ -2,7 +2,6 @@ package amf.plugins.document.vocabularies
 
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.parse.DefaultErrorHandler
-import amf.client.remod.AMFConfiguration
 import amf.core.CompilerContextBuilder
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.metamodel.{Field, Obj, Type}
