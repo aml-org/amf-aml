@@ -4,7 +4,7 @@ import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
-import amf.client.remod.{AMFConfiguration, AMFResult, ErrorHandlerProvider}
+import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
 import amf.core.validation.core.ValidationProfile
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
@@ -21,7 +21,7 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
                                     override private[amf] val logger: AMFLogger,
                                     override private[amf] val listeners: Set[AMFEventListener],
                                     override private[amf] val options: AMFOptions)
-    extends AMFConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
+    extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
 
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,
@@ -40,7 +40,7 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
   override def withResourceLoaders(rl: List[ResourceLoader]): AMLConfiguration =
     super.withResourceLoaders(rl).asInstanceOf[AMLConfiguration]
 
-  override def withUnitCache(cache: UnitCache): AMFConfiguration =
+  override def withUnitCache(cache: UnitCache): AMFGraphConfiguration =
     super.withUnitCache(cache).asInstanceOf[AMLConfiguration]
 
   override def withPlugin(amfPlugin: AMFParsePlugin): AMLConfiguration =
@@ -81,11 +81,11 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
 }
 
 private[amf] object AMLConfiguration {
-  private val environment: AMFConfiguration = AMFConfiguration.predefined()
+  private val environment: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
 
   /**
     * Predefined env to deal with AML documents based on
-    * Predefined AMF Environment {@link amf.client.remod.AMFConfiguration.predefined()}
+    * Predefined AMF Environment {@link amf.client.remod.AMFGraphConfiguration.predefined()}
     *
     * @return
     */

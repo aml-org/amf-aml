@@ -7,7 +7,8 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanc
 import scala.concurrent.{ExecutionContext, Future}
 
 // TODO: ARM remove private[amf]
-private[amf] class AMLClient(protected override val configuration: AMLConfiguration) extends AMFClient(configuration) {
+private[amf] class AMLClient(protected override val configuration: AMLConfiguration)
+    extends AMFGraphClient(configuration) {
 
   override implicit val exec: ExecutionContext = configuration.resolvers.executionContext.executionContext
 
