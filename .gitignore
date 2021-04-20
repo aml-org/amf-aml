@@ -12,3 +12,5 @@ output/
 classes
 .gradle
 build/
+.metals/
+.vscode/
