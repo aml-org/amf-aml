@@ -37,7 +37,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'hackathon-fixes-0'
+          branch 'hackathon-fixes'
         }
       }
       steps {
