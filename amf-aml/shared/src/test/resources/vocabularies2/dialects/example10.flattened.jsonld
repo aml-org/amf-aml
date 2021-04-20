@@ -630,7 +630,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example10.yaml#/declarations/nodeA/property/a/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#in",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(27,8)-(30,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(29,8)-(32,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example10.yaml#/declarations/nodeA/property/a/source-map/lexical/element_1",
