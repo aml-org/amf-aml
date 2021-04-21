@@ -2,7 +2,8 @@ package amf.testing.render
 
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
-import amf.core.remote.{Hint, VocabularyYamlHint}
+import amf.core.remote.{Amf, Hint, VocabularyYamlHint}
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.testing.common.utils.DomainElementCycleTests
 
 import scala.concurrent.ExecutionContext
@@ -79,7 +80,12 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
   }
 
   test("render 16 test") {
-    renderElement("dialect16a.yaml", "example16a.yaml", encodes, "example16a-encodes.yaml")
+    for {
+      _         <- AMLPlugin.registry.registerDialect(s"file://$basePath/dialect16b.yaml")
+      assertion <- renderElement("dialect16a.yaml", "example16a.yaml", encodes, "example16a-encodes.yaml")
+    } yield {
+      assertion
+    }
   }
 
   test("render 24b test") {
@@ -87,7 +93,12 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
   }
 
   test("render 16 $include test") {
-    renderElement("dialect16a.yaml", "example16c.yaml", encodes, "example16c-encodes.yaml")
+    for {
+      _         <- AMLPlugin.registry.registerDialect(s"file://$basePath/dialect16b.yaml")
+      assertion <- renderElement("dialect16a.yaml", "example16c.yaml", encodes, "example16c-encodes.yaml")
+    } yield {
+      assertion
+    }
   }
 
   test("render 27a test") {
