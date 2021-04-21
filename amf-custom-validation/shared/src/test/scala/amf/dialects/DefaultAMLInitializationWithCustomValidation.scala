@@ -1,5 +1,7 @@
 package amf.dialects
 
+import amf.client.environment.AMLConfiguration
+import amf.core.registries.AMFPluginsRegistry
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 
@@ -22,6 +24,7 @@ object DefaultAMLInitializationWithCustomValidation {
   private def doInit(): Future[Unit] = {
     for {
       _ <- amf.core.AMF.init()
+      _ <- Future.successful { AMFPluginsRegistry.staticCofiguration = AMLConfiguration.predefined() }
       _ <- Future.successful { amf.core.AMF.registerPlugin(AMFValidatorPlugin) }
       _ <- AMFValidatorPlugin.init()
     } yield {

@@ -1,5 +1,6 @@
 package amf.plugins.domain
 
+import amf.client.environment.AMLConfiguration
 import amf.client.model.document._
 import amf.client.model.domain._
 import amf.client.remod.parsing.{AMLDialectParsingPlugin, AMLVocabularyParsingPlugin}
@@ -77,14 +78,7 @@ object VocabulariesRegister {
     }
 
     // Remod registering
-    AMFPluginsRegistry.staticEnvironment = AMFPluginsRegistry.staticEnvironment.withPlugins(
-        List(
-            new AMLDialectParsingPlugin,
-            new AMLDialectRenderingPlugin,
-            new AMLVocabularyParsingPlugin,
-            new AMLVocabularyRenderingPlugin
-        ))
-
+    AMFPluginsRegistry.staticCofiguration = AMLConfiguration.predefined()
     amf.Core.registerPlugin(AMLPlugin)
   }
 }
