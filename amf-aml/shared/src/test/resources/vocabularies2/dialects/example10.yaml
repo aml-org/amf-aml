@@ -24,11 +24,11 @@ nodeMappings:
         maximum: 10.5
         allowMultiple: true
         sorted: true
-        propertyTerm: v2.a
-        range: string
         enum:
           - hey
           - ho
+        propertyTerm: v2.a
+        range: string
       b:
         propertyTerm: v2.t
         range: string

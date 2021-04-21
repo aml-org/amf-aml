@@ -41,6 +41,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/source-map/lexical/element_1"
+        },
+        {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/source-map/lexical/element_0"
         }
       ]
@@ -60,9 +63,14 @@
       ]
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/source-map/lexical/element_0",
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(3,21)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#rootProp",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,9)-(3,21)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-object-element/instance.yaml#/encodes/rootProp/0/source-map/lexical/element_1",

@@ -35,10 +35,23 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
-                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-string-element/instance.yaml#/encodes/source-map/lexical/element_0",
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-string-element/instance.yaml#/encodes/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-string-element/instance.yaml#/encodes"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(2,0)-(3,15)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-property-mappings-with-single-string-element/instance.yaml#/encodes/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://test.com/tmp#rootProp"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [

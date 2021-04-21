@@ -340,10 +340,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/source-map/lexical/element_1"
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/source-map/lexical/element_2"
         },
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/source-map/lexical/element_1"
         }
       ]
     },
@@ -378,10 +381,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/source-map/lexical/element_1"
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/source-map/lexical/element_2"
         },
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/source-map/lexical/element_1"
         }
       ]
     },
@@ -440,10 +446,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root/source-map/lexical/element_1"
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root/source-map/lexical/element_2"
         },
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root/source-map/lexical/element_1"
         }
       ]
     },
@@ -491,14 +500,19 @@
       ]
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(14,0)]"
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,7)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(5,7)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(7,4)-(14,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(14,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/property/b/source-map",
@@ -518,14 +532,19 @@
       ]
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(21,0)]"
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(14,14)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(14,14)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(16,4)-(21,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Declarations",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(21,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/UnionNode/source-map/lexical/element_2",
@@ -564,14 +583,19 @@
       ]
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(29,2)-(35,0)]"
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(29,2)-(29,6)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(29,2)-(29,6)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#property",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(31,4)-(35,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Root",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(29,2)-(35,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example20.yaml#/declarations/Local/property/a/source-map/lexical/element_4",
