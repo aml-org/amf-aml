@@ -2,6 +2,7 @@ package amf.testing.render
 
 import amf.core.emitter.RenderOptions
 import amf.core.remote.{Aml, Vendor, VocabularyYamlHint}
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.testing.common.utils.DialectTests
 
 import scala.concurrent.ExecutionContext
@@ -258,30 +259,46 @@ class DialectInstanceRenderTest extends DialectTests {
   }
 
   test("render 15 test") {
-    cycleWithDialect("dialect15a.yaml",
-                     "example15.yaml",
-                     "example15.yaml",
-                     VocabularyYamlHint,
-                     target = Aml,
-                     directory = instances)
+    for {
+      _ <- AMLPlugin.registry.registerDialect(s"file://$instances/dialect15b.yaml")
+      assertion <- cycleWithDialect("dialect15a.yaml",
+                                    "example15.yaml",
+                                    "example15.yaml",
+                                    VocabularyYamlHint,
+                                    target = Aml,
+                                    directory = instances)
+    } yield {
+      assertion
+    }
+
   }
 
   test("render 16 test") {
-    cycleWithDialect("dialect16a.yaml",
-                     "example16a.yaml",
-                     "example16a.yaml",
-                     VocabularyYamlHint,
-                     target = Aml,
-                     directory = instances)
+    for {
+      _ <- AMLPlugin.registry.registerDialect(s"file://$instances/dialect16b.yaml")
+      assertion <- cycleWithDialect("dialect16a.yaml",
+                                    "example16a.yaml",
+                                    "example16a.yaml",
+                                    VocabularyYamlHint,
+                                    target = Aml,
+                                    directory = instances)
+    } yield {
+      assertion
+    }
   }
 
   test("render 16 $include test") {
-    cycleWithDialect("dialect16a.yaml",
-                     "example16c.yaml",
-                     "example16c.yaml",
-                     VocabularyYamlHint,
-                     target = Aml,
-                     directory = instances)
+    for {
+      _ <- AMLPlugin.registry.registerDialect(s"file://$instances/dialect16b.yaml")
+      assertion <- cycleWithDialect("dialect16a.yaml",
+                                    "example16c.yaml",
+                                    "example16c.yaml",
+                                    VocabularyYamlHint,
+                                    target = Aml,
+                                    directory = instances)
+    } yield {
+      assertion
+    }
   }
 
   test("render 18 test") {

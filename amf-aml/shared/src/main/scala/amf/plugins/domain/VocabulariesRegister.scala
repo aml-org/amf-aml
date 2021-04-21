@@ -2,7 +2,10 @@ package amf.plugins.domain
 
 import amf.client.model.document._
 import amf.client.model.domain._
+import amf.client.remod.parsing.{AMLDialectParsingPlugin, AMLVocabularyParsingPlugin}
+import amf.client.remod.rendering.{AMLDialectRenderingPlugin, AMLVocabularyRenderingPlugin}
 import amf.core.metamodel.Obj
+import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.document._
@@ -72,6 +75,15 @@ object VocabulariesRegister {
     platform.registerWrapper(DialectInstanceLibraryModel) {
       case s: document.DialectInstanceLibrary => new DialectInstanceLibrary(s)
     }
+
+    // Remod registering
+    AMFPluginsRegistry.staticEnvironment = AMFPluginsRegistry.staticEnvironment.withPlugins(
+        List(
+            new AMLDialectParsingPlugin,
+            new AMLDialectRenderingPlugin,
+            new AMLVocabularyParsingPlugin,
+            new AMLVocabularyRenderingPlugin
+        ))
 
     amf.Core.registerPlugin(AMLPlugin)
   }

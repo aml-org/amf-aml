@@ -1,6 +1,12 @@
 package amf.testing.validation
 
-import amf.testing.common.utils.{DefaultAMLInitialization, DialectInstanceValidation, ReportComparator, UniquePlatformReportComparator}
+import amf.plugins.document.vocabularies.AMLPlugin
+import amf.testing.common.utils.{
+  DefaultAMLInitialization,
+  DialectInstanceValidation,
+  ReportComparator,
+  UniquePlatformReportComparator
+}
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -87,11 +93,22 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation with Defa
   }
 
   test("validation dialect 8 example 1 correct") {
-    validate("dialect8a.yaml", "instance8_correct1.yaml")
+    for {
+      _         <- AMLPlugin.registry.registerDialect(s"$basePath/dialect8b.yaml")
+      assertion <- validate("dialect8a.yaml", "instance8_correct1.yaml")
+    } yield {
+      assertion
+    }
+
   }
 
   test("validation dialect 8 example 1 incorrect") {
-    validate("dialect8a.yaml", "instance8_incorrect1.yaml", Some("instance8_incorrect1.report.json"))
+    for {
+      _         <- AMLPlugin.registry.registerDialect(s"$basePath/dialect8b.yaml")
+      assertion <- validate("dialect8a.yaml", "instance8_incorrect1.yaml", Some("instance8_incorrect1.report.json"))
+    } yield {
+      assertion
+    }
   }
 
   test("validation dialect 9 example 1 correct") {
