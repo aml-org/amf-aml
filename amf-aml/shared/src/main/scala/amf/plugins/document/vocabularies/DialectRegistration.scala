@@ -17,8 +17,8 @@ trait DialectRegistration { this: DialectsRegistry =>
     }
     setEnv {
       env()
-        .withPlugin(new AMLDialectInstanceParsingPlugin(cloned))
-        .withPlugin(new AMLDialectInstanceRenderingPlugin(cloned))
+        .withPlugins(
+            new AMLDialectInstanceParsingPlugin(cloned) :: new AMLDialectInstanceRenderingPlugin(cloned) :: Nil)
     }
     invalidateCaches()
     validations -= dialect.header

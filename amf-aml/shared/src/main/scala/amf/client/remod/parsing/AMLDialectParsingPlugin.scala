@@ -36,4 +36,12 @@ class AMLDialectParsingPlugin extends AMFParsePlugin {
   }
 
   override def priority: PluginPriority = NormalPriority
+/**
+    * media types which specifies vendors that are parsed by this plugin.
+    */
+override def mediaTypes: Seq[String] = Seq("application/aml")
+/**
+    * media types which specifies vendors that may be referenced.
+    */
+override def validMediaTypesToReference: scala.Seq[String] = Seq("application/aml")
 }
