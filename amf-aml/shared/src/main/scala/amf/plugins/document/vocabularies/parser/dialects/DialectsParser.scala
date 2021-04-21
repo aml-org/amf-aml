@@ -227,7 +227,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
     // Setting ids we left unresolved in typeDiscriminators
     Option(mappable.typeDiscriminator()) match {
-      case Some(typeDiscriminators) =>
+      case Some(typeDiscriminators) => {
+        val fieldValue = mappable.fields.entry(PropertyMappingModel.TypeDiscriminator).map(_.value)
         val discriminatorValueMapping = typeDiscriminators.flatMap {
           case (name, discriminatorValue) =>
             ctx.declarations
@@ -237,15 +238,21 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                 ctx.missingPropertyRangeViolation(
                     name,
                     mappable.id,
-                    mappable.fields
-                      .entry(PropertyMappingModel.TypeDiscriminator)
-                      .map(_.value.annotations)
+                    fieldValue
+                      .map(_.annotations)
                       .getOrElse(mappable.annotations)
                 )
                 None
               }
         }
-        mappable.withTypeDiscriminator(discriminatorValueMapping)
+        mappable.withTypeDiscriminator(discriminatorValueMapping,
+                                       fieldValue
+                                         .map(_.annotations)
+                                         .getOrElse(Annotations()),
+                                       fieldValue
+                                         .map(_.value.annotations)
+                                         .getOrElse(Annotations()))
+      }
       case _ => // ignore
     }
   }
@@ -431,7 +438,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               val nodeMappingId = e.value.as[YScalar].text
               acc + (e.key.as[YScalar].text -> nodeMappingId)
           }
-          unionNodeMapping.withTypeDiscriminator(typeMapping)
+          unionNodeMapping.withTypeDiscriminator(typeMapping, Annotations(entry), Annotations(types))
         }
     )
 
@@ -733,7 +740,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                   val nodeMappingId = e.value.as[YScalar].text
                   acc + (e.key.as[YScalar].text -> nodeMappingId)
               }
-              propertyMapping.withTypeDiscriminator(typeMapping)
+              propertyMapping.withTypeDiscriminator(typeMapping, Annotations(entry), Annotations(types))
             }
         )
 
