@@ -1,5 +1,6 @@
 package amf.client.environment
 
+import amf.client.environment.AMLConfiguration.{platform, predefined}
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
@@ -19,7 +20,9 @@ import amf.internal.resource.ResourceLoader
 import amf.plugins.document.graph.{AMFGraphParsePlugin, AMFGraphRenderPlugin}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceUnit}
-import scala.concurrent.ExecutionContext.Implicits.global // TODO should this be here?
+import org.mulesoft.common.collections.FilterType
+
+import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
 private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFResolvers,
@@ -119,7 +122,21 @@ private[amf] object AMLConfiguration extends PlatformSecrets {
 
   // TODO: what about nested $dialect references?
   def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
-    var env      = predefined()
+    var env       = predefined()
+    val collector = new DialectReferencesCollector
+    collector.collectFrom(url, mediaType).map { dialects =>
+      dialects.foreach { dialect =>
+        val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
+        val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
+        env = env.withPlugins(List(parsing, rendering))
+      }
+      env
+    }
+  }
+}
+
+class DialectReferencesCollector {
+  def collectFrom(url: String, mediaType: Option[String] = None): Future[Seq[Dialect]] = {
     val ctx      = new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
     val compiler = new AMFCompiler(ctx, mediaType, None)
     for {
@@ -129,16 +146,9 @@ private[amf] object AMLConfiguration extends PlatformSecrets {
       plugin                 <- Future.successful(compiler.getDomainPluginFor(root))
       documentWithReferences <- compiler.parseReferences(root, plugin.get) if plugin.isDefined
     } yield {
-      documentWithReferences.references.foreach { r =>
-        r.unit match {
-          case d: Dialect =>
-            val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(d)
-            val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(d)
-            env = env.withPlugins(List(parsing, rendering))
-          case _ => // Ignore
-        }
-      }
-      env
+      documentWithReferences.references.toStream
+        .map(_.unit)
+        .filterType[Dialect]
     }
   }
 }
