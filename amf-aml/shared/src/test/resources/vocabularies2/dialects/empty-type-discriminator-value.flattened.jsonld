@@ -281,7 +281,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-type-discriminator-value.yaml#/declarations/RootNode/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#typeDiscriminatorMap",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(23,0)-(23,12)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(22,4)-(23,12)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-type-discriminator-value.yaml#/declarations/RootNode/source-map/lexical/element_1",

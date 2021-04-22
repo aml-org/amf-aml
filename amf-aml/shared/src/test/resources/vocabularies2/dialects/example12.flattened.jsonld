@@ -531,7 +531,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example12.yaml#/declarations/nodeB/property/za/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#typeDiscriminatorMap",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(11,0)-(13,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(10,8)-(13,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example12.yaml#/declarations/nodeB/property/za/source-map/lexical/element_1",

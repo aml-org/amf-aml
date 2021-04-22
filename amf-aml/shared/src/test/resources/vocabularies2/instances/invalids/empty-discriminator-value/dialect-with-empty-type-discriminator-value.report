@@ -26,5 +26,5 @@ Level: Violation
   Level: Violation
   Target: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml#/declarations/RootNode
   Property: http://www.w3.org/ns/shacl#node
-  Position: Some(LexicalInformation([(23,0)-(23,12)]))
+  Position: Some(LexicalInformation([(22,4)-(23,12)]))
   Location: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml
