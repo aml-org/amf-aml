@@ -1,0 +1,30 @@
+Model: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml
+Profile: Test Unions 1.0
+Conforms? false
+Number of results: 3
+
+Level: Violation
+
+- Source: http://a.ml/vocabularies/amf/aml#dialect-error
+  Message: Cannot find property term with alias vocab.text
+  Level: Violation
+  Target: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml#/declarations/A/property/text
+  Property: 
+  Position: Some(LexicalInformation([(9,22)-(9,32)]))
+  Location: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml
+
+- Source: http://a.ml/vocabularies/amf/aml#dialect-error
+  Message: Cannot find property term with alias vocab.text
+  Level: Violation
+  Target: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml#/declarations/B/property/text
+  Property: 
+  Position: Some(LexicalInformation([(14,22)-(14,32)]))
+  Location: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml
+
+- Source: http://a.ml/vocabularies/amf/aml#missing-node-mapping-range-term
+  Message: Cannot find property range term 
+  Level: Violation
+  Target: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml#/declarations/RootNode
+  Property: http://www.w3.org/ns/shacl#node
+  Position: Some(LexicalInformation([(22,4)-(23,12)]))
+  Location: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml

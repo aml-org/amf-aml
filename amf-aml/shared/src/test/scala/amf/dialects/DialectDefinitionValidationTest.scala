@@ -92,4 +92,12 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
              Some("/unknown-map-key-property/dialect.report"),
              jsonldReport = false)
   }
+
+  test("Empty type discriminator value") {
+    validate(
+        "/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml",
+        Some("/empty-discriminator-value/dialect-with-empty-type-discriminator-value.report"),
+        jsonldReport = false
+    )
+  }
 }
