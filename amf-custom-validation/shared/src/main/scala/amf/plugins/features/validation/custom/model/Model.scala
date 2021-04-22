@@ -335,12 +335,8 @@ object ParsedValidationProfile extends DialectWrapper {
         severityMapping.getSeverityOf(v.name)
           .map(s =>
             v.copy(
-              severity = ShaclSeverityUris.amfToShaclSeverity(s),
-              propertyConstraints = v.propertyConstraints.map {
-                _.copy(severity = ShaclSeverityUris.amfToShaclSeverity(s))
-              }
+              severity = ShaclSeverityUris.amfToShaclSeverity(s)
             )
-
           )
           .getOrElse(v)
     }

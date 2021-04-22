@@ -126,14 +126,14 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         if (constraint.path.isEmpty && isPropertyConstraintUri(constraint.name)) {
           rdfModel.addTriple(validationId, (Namespace.Shacl + "property").iri(), constraint.name)
           // These are the standard constraints for AMF/RAML/OAS they have already being sanitised
-          emitConstraint(constraint.name, constraint)
+          emitConstraint(constraint.name, constraint, validation.severity)
 
         } else {
           // this happens when the constraint comes from a profile document
           // an alias for a model element is all the name we provide
           val constraintId = s"$validationId/prop/$i"
           rdfModel.addTriple(validationId, (Namespace.Shacl + "property").iri(), constraintId)
-          emitConstraint(constraintId, constraint)
+          emitConstraint(constraintId, constraint, validation.severity)
         }
       }
     }
@@ -188,7 +188,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
     }
   }
 
-  private def emitConstraint(constraintId: String, constraint: PropertyConstraint): Unit = {
+  private def emitConstraint(constraintId: String, constraint: PropertyConstraint, severity: String): Unit = {
     if (Option(constraint.ramlPropertyId).isDefined) {
 
       if (constraint.path.isDefined) {
@@ -197,7 +197,7 @@ class ValidationRdfModelEmitter(targetProfile: ProfileName,
         link(constraintId, (Namespace.Shacl + "path").iri(), expandRamlId(constraint.ramlPropertyId))
       }
 
-      genPropertyConstraintValue(constraintId, "severity", constraint.severity, None)
+      genPropertyConstraintValue(constraintId, "severity", severity, None)
       constraint.maxCount.foreach(genPropertyConstraintValue(constraintId, "maxCount", _, Some(constraint)))
       constraint.minCount.foreach(genPropertyConstraintValue(constraintId, "minCount", _, Some(constraint)))
       constraint.maxLength.foreach(genPropertyConstraintValue(constraintId, "maxLength", _, Some(constraint)))
