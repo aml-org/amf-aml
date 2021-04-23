@@ -16,6 +16,16 @@ class AMLInstancePlugin(dialect: Dialect) extends AMFParsePlugin {
 
   override def referenceHandler(eh: ErrorHandler): ReferenceHandler = ???
 
+  /**
+    * media types which specifies vendors that are parsed by this plugin.
+    */
+  override def mediaTypes: Seq[String] = ???
+
+  /**
+    * media types which specifies vendors that may be referenced.
+    */
+  override def validMediaTypesToReference: Seq[String] = Nil
+
   override def allowRecursiveReferences: Boolean = true
 
   override def applies(element: ParsingInfo): Boolean = false
