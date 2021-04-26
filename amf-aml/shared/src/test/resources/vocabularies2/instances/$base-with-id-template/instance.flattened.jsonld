@@ -110,7 +110,7 @@
     {
       "@id": "http://overriden.com/presidents/BarackObama#/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://overriden.com/presidents/BarackObama",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(9,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,17)-(9,0)]"
     },
     {
       "@id": "http://overriden.com/presidents/BarackObama#/source-map/lexical/element_0",
@@ -120,7 +120,7 @@
     {
       "@id": "http://overriden.com/presidents#DonaldTrump/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://overriden.com/presidents#DonaldTrump",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(5,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,16)-(5,0)]"
     },
     {
       "@id": "http://overriden.com/presidents#DonaldTrump/source-map/lexical/element_0",

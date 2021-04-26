@@ -88,8 +88,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     if (isLink)
       linkTarget.map(_.id.split("#").last.split("/").last).getOrElse {
         throw new Exception(s"Cannot produce local reference without linked element at elem $id")
-      }
-    else id.split("#").last.split("/").last
+      } else id.split("#").last.split("/").last
   }
 
   def includeName: String = {
@@ -145,8 +144,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         case resolved =>
           throw new Exception(s"Cannot resolve reference with not dialect domain element value ${resolved.id}")
       }
-    }
-    else {
+    } else {
       val f = property.toField
       set(f, value, Annotations(node))
     }
@@ -157,7 +155,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   def setObjectField(property: PropertyMapping, value: Seq[DialectDomainElement], node: YNode): DialectDomainElement = {
     val f = property.toField
     value match {
-      case Nil if !fields.exists(f) => set(f, AmfArray(Nil), Annotations(node))
+      case Nil if !fields.exists(f) => set(f, AmfArray(Nil, Annotations(node.value)), Annotations(node))
       case _ =>
         val (unresolved, normal) = value.partition({
           case l: Linkable if l.isUnresolved => true
@@ -224,8 +222,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   override def meta: DialectDomainElementModel =
     if (instanceTypes.isEmpty) {
       DialectDomainElementModel()
-    }
-    else {
+    } else {
       new DialectDomainElementModel(instanceTypes.distinct,
                                     definedBy.propertiesMapping().map(_.toField),
                                     Some(definedBy))

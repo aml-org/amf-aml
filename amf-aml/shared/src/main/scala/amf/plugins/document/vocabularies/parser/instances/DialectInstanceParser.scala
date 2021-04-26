@@ -6,7 +6,7 @@ import amf.core.metamodel.Field
 import amf.core.metamodel.Type.Str
 import amf.core.model.DataType
 import amf.core.model.document.EncodesModel
-import amf.core.model.domain.{AmfScalar, Annotation, DomainElement}
+import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DomainElement}
 import amf.core.parser.{Annotations, SearchScope, _}
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -18,6 +18,7 @@ import amf.plugins.document.vocabularies.annotations.{
   JsonPointerRef,
   RefInclude
 }
+import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
@@ -57,9 +58,11 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     // registering JSON pointer
     ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
 
-    dialectInstance.withEncodes(dialectDomainElement)
+    dialectInstance.set(DialectInstanceModel.Encodes, dialectDomainElement, Annotations.inferred())
     if (ctx.declarations.declarables().nonEmpty)
-      dialectInstance.withDeclares(ctx.declarations.declarables())
+      dialectInstance.set(DialectInstanceModel.Declares,
+                          AmfArray(ctx.declarations.declarables(), Annotations.virtual()),
+                          Annotations.inferred())
     if (references.baseUnitReferences().nonEmpty)
       dialectInstance.withReferences(references.baseUnitReferences())
     if (ctx.nestedDialects.nonEmpty)
@@ -206,7 +209,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
             mappable match {
               case mapping: NodeMapping =>
                 val node: DialectDomainElement =
-                  DialectDomainElement(givenAnnotations.getOrElse(Annotations(nodeMap))).withDefinedBy(mapping)
+                  DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast))).withDefinedBy(mapping)
                 val finalId =
                   generateNodeId(node, nodeMap, Seq(defaultId), defaultId, mapping, additionalProperties, rootNode)
                 node.withId(finalId)
