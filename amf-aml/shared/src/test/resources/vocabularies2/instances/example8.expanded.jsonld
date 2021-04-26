@@ -106,7 +106,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(3,0)-(4,0)]"
+                        "@value": "[(2,2)-(4,0)]"
                       }
                     ]
                   },

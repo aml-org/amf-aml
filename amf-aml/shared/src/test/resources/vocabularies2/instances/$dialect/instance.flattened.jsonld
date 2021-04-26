@@ -103,7 +103,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect/instance.yaml#/encodes/c/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect/instance.yaml#/encodes/c",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(8,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(8,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect/instance.yaml",

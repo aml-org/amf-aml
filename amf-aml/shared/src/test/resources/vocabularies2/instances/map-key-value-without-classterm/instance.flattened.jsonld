@@ -121,7 +121,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value-without-classterm/instance.yaml#/encodes/mule.agent.application.properties.service/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value-without-classterm/instance.yaml#/encodes/mule.agent.application.properties.service",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(5,32)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,42)-(5,32)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value-without-classterm/instance.yaml#/encodes/mule.agent.application.properties.service/properties/something/source-map/lexical/element_2",

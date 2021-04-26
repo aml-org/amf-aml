@@ -3,6 +3,7 @@ package amf.plugins.document.vocabularies.parser.instances
 import amf.core.Root
 import org.mulesoft.common.core._
 import amf.core.parser.Annotations
+import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.model.document.DialectInstanceFragment
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, DocumentsModel}
 import amf.validation.DialectValidations.DialectError
@@ -28,7 +29,7 @@ class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: Diale
     // registering JSON pointer
     ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
 
-    dialectInstanceFragment.withEncodes(dialectDomainElement)
+    dialectInstanceFragment.set(DialectInstanceModel.Encodes, dialectDomainElement, Annotations.inferred())
   }
 
   private def parseEncodedFragment(dialectInstanceFragment: DialectInstanceFragment,

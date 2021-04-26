@@ -111,7 +111,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8.yaml#/encodes/b/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8.yaml#/encodes/b",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(4,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,2)-(4,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8.yaml#/encodes/b/source-map/lexical/element_0",
