@@ -51,7 +51,9 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
       errorHandler: ErrorHandler,
       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[ProfileName] = {
 
-    implicit val executionContext: ExecutionContext = exec.executionContext
+  def isValProfile(d:DialectInstance): Boolean = {
+    d.definedBy().is(url) && d.encodes !=null && d.encodes.isInstanceOf[domain.DialectDomainElement] && d.encodes.asInstanceOf[domain.DialectDomainElement].definedBy.name.is("profileNode")
+  }
 
     parseProfile(validationProfilePath, env, errorHandler)
       .map { getEncodesOrExit }
