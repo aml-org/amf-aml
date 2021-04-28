@@ -10,9 +10,12 @@ import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel
 import amf.plugins.document.vocabularies.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.model.domain._
+import amf.plugins.document.vocabularies.parser.common.{DeclarationKey, DeclarationKeyCollector}
 import org.yaml.model._
 
-class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContext) extends BaseSpecParser {
+class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContext)
+    extends BaseSpecParser
+    with DeclarationKeyCollector {
 
   val map: YMap              = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
   val vocabulary: Vocabulary = Vocabulary(Annotations(map)).withLocation(root.location).withId(root.location)
@@ -56,7 +59,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     }
     if (imported.nonEmpty)
       vocabulary.withImports(imported.toSeq)
-    if (declarables.nonEmpty) vocabulary.withDeclares(declarables)
+    addDeclarationsToModel(vocabulary, declarables)
     if (references.nonEmpty) vocabulary.withReferences(references.baseUnitReferences())
     // we raise exceptions for missing terms
     ctx.pendingLocal.foreach {
@@ -73,13 +76,14 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
 
   def parseClassTerms(map: YMap): Unit = {
     map.key(
-      "classTerms",
-      entry => {
-        val classDeclarations = entry.value.as[YMap]
-        classDeclarations.entries.foreach { classTermDeclaration =>
-          parseClassTerm(classTermDeclaration)
+        "classTerms",
+        entry => {
+          addDeclarationKey(DeclarationKey(entry))
+          val classDeclarations = entry.value.as[YMap]
+          classDeclarations.entries.foreach { classTermDeclaration =>
+            parseClassTerm(classTermDeclaration)
+          }
         }
-      }
     )
   }
 
@@ -110,58 +114,60 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
         })
 
         classTermMap.key(
-          "properties",
-          entry => {
-            val refs: Seq[String] = entry.value.tagType match {
-              case YType.Str => Seq(ValueNode(entry.value).string().toString)
-              case YType.Seq =>
-                DefaultArrayNode(entry.value).nodes._1
-                  .map(_.value.toString) // ArrayNode(entry.value).strings().scalars.map(_.toString)
-              case YType.Null => Seq.empty
-            }
-
-            val properties: Seq[AmfScalar] = refs
-              .map { term: String =>
-                ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
-                  case Some(v) => Some(AmfScalar(v))
-                  case None =>
-                    ctx.missingPropertyTermWarning(term, classTerm.id, entry.value)
-                    None
-                }
+            "properties",
+            entry => {
+              val refs: Seq[String] = entry.value.tagType match {
+                case YType.Str => Seq(ValueNode(entry.value).string().toString)
+                case YType.Seq =>
+                  DefaultArrayNode(entry.value).nodes._1
+                    .map(_.value.toString) // ArrayNode(entry.value).strings().scalars.map(_.toString)
+                case YType.Null => Seq.empty
               }
-              .filter(_.nonEmpty)
-              .map(_.get)
 
-            if (properties.nonEmpty)
-              classTerm.set(ClassTermModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
-          }
+              val properties: Seq[AmfScalar] = refs
+                .map { term: String =>
+                  ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
+                    case Some(v) => Some(AmfScalar(v))
+                    case None =>
+                      ctx.missingPropertyTermWarning(term, classTerm.id, entry.value)
+                      None
+                  }
+                }
+                .filter(_.nonEmpty)
+                .map(_.get)
+
+              if (properties.nonEmpty)
+                classTerm.set(ClassTermModel.Properties,
+                              AmfArray(properties, Annotations(entry.value)),
+                              Annotations(entry))
+            }
         )
 
         classTermMap.key(
-          "extends",
-          entry => {
-            val refs: Seq[String] = entry.value.tagType match {
-              case YType.Str => Seq(ValueNode(entry.value).string().toString)
-              case YType.Seq =>
-                // ArrayNode(entry.value).strings().scalars.map(_.toString)
-                DefaultArrayNode(node = entry.value).nodes._1.map(_.value.toString)
-              case YType.Null => Seq.empty
-            }
-
-            val superClasses: Seq[String] = refs
-              .map { term: String =>
-                ctx.resolveClassTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
-                  case Some(v) => Some(v)
-                  case None =>
-                    ctx.missingClassTermWarning(term, classTerm.id, entry.value)
-                    None
-                }
+            "extends",
+            entry => {
+              val refs: Seq[String] = entry.value.tagType match {
+                case YType.Str => Seq(ValueNode(entry.value).string().toString)
+                case YType.Seq =>
+                  // ArrayNode(entry.value).strings().scalars.map(_.toString)
+                  DefaultArrayNode(node = entry.value).nodes._1.map(_.value.toString)
+                case YType.Null => Seq.empty
               }
-              .filter(_.nonEmpty)
-              .map(_.get)
 
-            classTerm.set(ClassTermModel.SubClassOf, superClasses)
-          }
+              val superClasses: Seq[String] = refs
+                .map { term: String =>
+                  ctx.resolveClassTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
+                    case Some(v) => Some(v)
+                    case None =>
+                      ctx.missingClassTermWarning(term, classTerm.id, entry.value)
+                      None
+                  }
+                }
+                .filter(_.nonEmpty)
+                .map(_.get)
+
+              classTerm.set(ClassTermModel.SubClassOf, superClasses)
+            }
         )
     }
 
@@ -170,13 +176,14 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
 
   def parsePropertyTerms(map: YMap): Unit = {
     map.key(
-      "propertyTerms",
-      entry => {
-        val classDeclarations = entry.value.as[YMap]
-        classDeclarations.entries.foreach { propertyTermDeclaration =>
-          parsePropertyTerm(propertyTermDeclaration)
+        "propertyTerms",
+        entry => {
+          addDeclarationKey(DeclarationKey(entry))
+          val classDeclarations = entry.value.as[YMap]
+          classDeclarations.entries.foreach { propertyTermDeclaration =>
+            parsePropertyTerm(propertyTermDeclaration)
+          }
         }
-      }
     )
   }
 
@@ -224,56 +231,56 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
         })
 
         propertyTermMap.key(
-          "range",
-          entry => {
-            val text = entry.value.as[YScalar].text
-            val rangeId = text match {
-              case "guid" =>
-                Some((Namespace.Shapes + "guid").iri())
-              case "any" | "uri" | "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" |
-                  "dateTime" =>
-                Some(DataType(text))
-              case classAlias =>
-                ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
-                  case Some(classTermId) => Some(classTermId)
-                  case None =>
-                    ctx.missingClassTermWarning(classAlias, propertyTerm.id, entry.value)
-                    None
-                }
-            }
+            "range",
+            entry => {
+              val text = entry.value.as[YScalar].text
+              val rangeId = text match {
+                case "guid" =>
+                  Some((Namespace.Shapes + "guid").iri())
+                case "any" | "uri" | "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" |
+                    "dateTime" =>
+                  Some(DataType(text))
+                case classAlias =>
+                  ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
+                    case Some(classTermId) => Some(classTermId)
+                    case None =>
+                      ctx.missingClassTermWarning(classAlias, propertyTerm.id, entry.value)
+                      None
+                  }
+              }
 
-            rangeId match {
-              case Some(id: String) => propertyTerm.withRange(id)
-              case None             => // ignore
+              rangeId match {
+                case Some(id: String) => propertyTerm.withRange(id)
+                case None             => // ignore
+              }
             }
-          }
         )
 
         propertyTermMap.key(
-          "extends",
-          entry => {
-            val refs: Seq[String] = entry.value.tagType match {
-              case YType.Str => Seq(ValueNode(entry.value).string().toString)
-              case YType.Seq =>
-                DefaultArrayNode(entry.value).nodes._1.map(_.as[YScalar].text)
-              // ArrayNode(entry.value).strings().scalars.map(_.toString)
-              case YType.Null => Seq.empty
-            }
-
-            val superClasses: Seq[String] = refs
-              .map { term: String =>
-                ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
-                  case Some(v) => Some(v)
-                  case None =>
-                    ctx.missingPropertyTermWarning(term, propertyTerm.id, entry.value)
-                    None
-                }
+            "extends",
+            entry => {
+              val refs: Seq[String] = entry.value.tagType match {
+                case YType.Str => Seq(ValueNode(entry.value).string().toString)
+                case YType.Seq =>
+                  DefaultArrayNode(entry.value).nodes._1.map(_.as[YScalar].text)
+                // ArrayNode(entry.value).strings().scalars.map(_.toString)
+                case YType.Null => Seq.empty
               }
-              .filter(_.nonEmpty)
-              .map(_.get)
 
-            propertyTerm.set(ObjectPropertyTermModel.SubPropertyOf, superClasses)
-          }
+              val superClasses: Seq[String] = refs
+                .map { term: String =>
+                  ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
+                    case Some(v) => Some(v)
+                    case None =>
+                      ctx.missingPropertyTermWarning(term, propertyTerm.id, entry.value)
+                      None
+                  }
+                }
+                .filter(_.nonEmpty)
+                .map(_.get)
+
+              propertyTerm.set(ObjectPropertyTermModel.SubPropertyOf, superClasses)
+            }
         )
     }
 

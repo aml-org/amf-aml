@@ -22,7 +22,7 @@ import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
-import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
+import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.plugins.document.vocabularies.parser.instances.ClosedInstanceNode.{checkClosedNode, checkRootNode}
 import amf.validation.DialectValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
 import org.mulesoft.common.time.SimpleDateTime
@@ -35,6 +35,7 @@ import scala.collection.mutable
 // TODO:
 class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectInstanceContext)
     extends AnnotationsParser
+    with DeclarationKeyCollector
     with JsonPointerResolver
     with InstanceNodeIdHandling {
 
@@ -59,10 +60,8 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
 
     dialectInstance.set(DialectInstanceModel.Encodes, dialectDomainElement, Annotations.inferred())
-    if (ctx.declarations.declarables().nonEmpty)
-      dialectInstance.set(DialectInstanceModel.Declares,
-                          AmfArray(ctx.declarations.declarables(), Annotations.virtual()),
-                          Annotations.inferred())
+    addDeclarationsToModel(dialectInstance)
+
     if (references.baseUnitReferences().nonEmpty)
       dialectInstance.withReferences(references.baseUnitReferences())
     if (ctx.nestedDialects.nonEmpty)
@@ -107,6 +106,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       declarationsNodeMappings.foreach {
         case (name, nodeMapping) =>
           declarationsMap.entries.find(_.key.as[YScalar].text == name).foreach { entry =>
+            addDeclarationKey(DeclarationKey(entry))
             val declarationsId = root.location + "#" + normalizedPath.getOrElse("/") + name.urlComponentEncoded
             entry.value.as[YMap].entries.foreach { declarationEntry =>
               val declarationName = declarationEntry.key.as[YScalar].text

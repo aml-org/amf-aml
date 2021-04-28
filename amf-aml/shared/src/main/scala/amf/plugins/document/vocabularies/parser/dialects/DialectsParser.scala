@@ -29,7 +29,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.{
 }
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.plugins.document.vocabularies.model.domain._
-import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
+import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
 import amf.plugins.document.vocabularies.parser.instances.BaseDirective
 import amf.validation.DialectValidations
@@ -45,6 +45,7 @@ import scala.collection.{immutable, mutable}
 
 class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     extends BaseSpecParser
+    with DeclarationKeyCollector
     with AnnotationsParser {
 
   val map: YMap        = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
@@ -76,8 +77,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           checkNodeMappableReferences(propertyMapping)
         }
     }
-
-    if (declarables.nonEmpty) dialect.withDeclares(declarables)
+    addDeclarationsToModel(dialect)
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
 
     parseDocumentsMapping(map)
@@ -359,6 +359,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   private def parseNodeMappingDeclarations(map: YMap, parent: String): Unit = {
     map.key("nodeMappings").foreach { e =>
+      addDeclarationKey(DeclarationKey(e, isAbstract = true))
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
@@ -895,7 +896,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           checkNodeMappableReferences(propertyMapping)
         }
     }
-    if (declarables.nonEmpty) dialect.withDeclares(declarables)
+    addDeclarationsToModel(dialect)
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
 
     // resolve unresolved references
@@ -920,7 +921,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     dialect.usage.option().foreach(usage => library.withUsage(usage))
 
     val declares = dialect.declares
-    if (declares.nonEmpty) library.withDeclares(declares)
+    addDeclarationsToModel(library, declares)
 
     val externals = dialect.externals
     if (externals.nonEmpty) library.withExternals(externals)
