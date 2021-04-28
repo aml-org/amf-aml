@@ -1,10 +1,12 @@
 package amf.dialects
 
+import amf.testing.validation.DialectInstancesValidationTest
+
 class JvmDialectInstancesValidationTest extends DialectInstancesValidationTest {
   test("validation mule_config  example 1 incorrect") {
     validate("mule_config_dialect1.yaml",
-      "mule_config_instance_incorrect1.yaml",
-      Some("mule_config_instance_incorrect1.report.jvm.json"))
+             "mule_config_instance_incorrect1.yaml",
+             Some("mule_config_instance_incorrect1.report.jvm.json"))
   }
 
   test("validation dialect 4 example 1 incorrect") {

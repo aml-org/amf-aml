@@ -1,16 +1,26 @@
 package amf.client.environment
 
+import amf.client.environment.AMLConfiguration.{platform, predefined}
+import amf.client.parse.DefaultParserErrorHandler
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
-import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
+import amf.client.remod.parsing.{AMLDialectInstanceParsingPlugin, AMLDialectParsingPlugin, AMLVocabularyParsingPlugin}
+import amf.client.remod.rendering.{
+  AMLDialectInstanceRenderingPlugin,
+  AMLDialectRenderingPlugin,
+  AMLVocabularyRenderingPlugin
+}
 import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
+import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
+import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
-import amf.plugins.document.graph.AMFGraphParsePlugin
+import amf.plugins.document.graph.{AMFGraphParsePlugin, AMFGraphRenderPlugin}
+import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceUnit}
-import amf.plugins.document.vocabularies.{AMLInstancePlugin, AMLParsePlugin}
+import org.mulesoft.common.collections.FilterType
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
@@ -43,7 +53,7 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
   override def withUnitCache(cache: UnitCache): AMFGraphConfiguration =
     super.withUnitCache(cache).asInstanceOf[AMLConfiguration]
 
-  override def withPlugin(amfPlugin: AMFParsePlugin): AMLConfiguration =
+  override def withPlugin(amfPlugin: AMFPlugin[_]): AMLConfiguration =
     super.withPlugin(amfPlugin).asInstanceOf[AMLConfiguration]
 
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMLConfiguration =
@@ -67,7 +77,8 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
   }
 
   def withDialect(dialect: Dialect): AMLConfiguration = {
-    withPlugin(new AMLInstancePlugin(dialect)).asInstanceOf[AMLConfiguration] //.withConstraints() //build contraints
+    AMLPlugin.registry.register(dialect)
+    this
   }
 
   def withCustomProfile(instancePath: String): Future[AMLConfiguration] = {
@@ -80,8 +91,7 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
   def forInstance(d: DialectInstanceUnit) = throw new UnsupportedOperationException()
 }
 
-private[amf] object AMLConfiguration {
-  private val environment: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
+private[amf] object AMLConfiguration extends PlatformSecrets {
 
   /**
     * Predefined env to deal with AML documents based on
@@ -89,14 +99,56 @@ private[amf] object AMLConfiguration {
     *
     * @return
     */
-  def AML(): AMLConfiguration = {
+  def predefined(): AMLConfiguration = {
+    val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
+
+    val predefinedPlugins = new AMLDialectParsingPlugin() ::
+      new AMLVocabularyParsingPlugin() ::
+      new AMLDialectRenderingPlugin() ::
+      new AMLVocabularyRenderingPlugin() ::
+      AMFGraphParsePlugin ::
+      AMFGraphRenderPlugin ::
+      Nil
 
     new AMLConfiguration(
-        environment.resolvers,
-        environment.errorHandlerProvider,
-        environment.registry,
-        environment.logger,
-        environment.listeners,
-        environment.options).withPlugins(List(AMLParsePlugin, AMFGraphParsePlugin)).asInstanceOf[AMLConfiguration]
+        predefinedGraphConfiguration.resolvers,
+        predefinedGraphConfiguration.errorHandlerProvider,
+        predefinedGraphConfiguration.registry,
+        predefinedGraphConfiguration.logger,
+        predefinedGraphConfiguration.listeners,
+        predefinedGraphConfiguration.options
+    ).withPlugins(predefinedPlugins)
+  }
+
+  // TODO: what about nested $dialect references?
+  def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
+    var env       = predefined()
+    val collector = new DialectReferencesCollector
+    collector.collectFrom(url, mediaType).map { dialects =>
+      dialects.foreach { dialect =>
+        val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
+        val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
+        env = env.withPlugins(List(parsing, rendering))
+      }
+      env
+    }
+  }
+}
+
+class DialectReferencesCollector {
+  def collectFrom(url: String, mediaType: Option[String] = None): Future[Seq[Dialect]] = {
+    val ctx      = new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
+    val compiler = new AMFCompiler(ctx, mediaType, None)
+    for {
+      content                <- compiler.fetchContent()
+      eitherContentOrAst     <- Future.successful(compiler.parseSyntax(content))
+      root                   <- Future.successful(eitherContentOrAst.right.get) if eitherContentOrAst.isRight
+      plugin                 <- Future.successful(compiler.getDomainPluginFor(root))
+      documentWithReferences <- compiler.parseReferences(root, plugin.get) if plugin.isDefined
+    } yield {
+      documentWithReferences.references.toStream
+        .map(_.unit)
+        .filterType[Dialect]
+    }
   }
 }

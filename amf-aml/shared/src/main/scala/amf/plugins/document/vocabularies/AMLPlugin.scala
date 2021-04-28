@@ -2,8 +2,6 @@ package amf.plugins.document.vocabularies
 
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.parse.AMFParsePluginAdapter
-import amf.client.remod.amfcore.plugins.render.AMFRenderPluginAdapter
 import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
 import amf.core.Root
 import amf.core.annotations.Aliases
@@ -12,7 +10,7 @@ import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument, _}
+import amf.core.parser.{ParserContext, ReferenceHandler, _}
 import amf.core.rdf.RdfModel
 import amf.core.registries.{AMFDomainEntityResolver, AMFPluginsRegistry}
 import amf.core.remote.{Aml, Platform}
@@ -48,9 +46,6 @@ object AMLPlugin extends AMLPlugin {
   def apply(): AMLPlugin =
     AMFPluginsRegistry.documentPluginForID(this.ID).collect({ case a: AMLPlugin => a }).getOrElse(this)
 }
-
-object AMLParsePlugin  extends AMFParsePluginAdapter(AMLPlugin)
-object AMLRenderPlugin extends AMFRenderPluginAdapter(AMLPlugin)
 
 trait AMLPlugin
     extends AMFDocumentPlugin
@@ -148,7 +143,7 @@ trait AMLPlugin
       case Some(ExtensionHeader.DialectFragmentHeader) =>
         new DialectsParser(document)(new DialectContext(parentContext)).parseFragment()
       case Some(ExtensionHeader.DialectHeader) =>
-        parseAndRegisterDialect(document, cleanDialectContext(parentContext, document))
+        parseDialect(document, cleanDialectContext(parentContext, document))
       case _ => parseDialectInstance(document, header, parentContext)
     }
   }
@@ -183,8 +178,7 @@ trait AMLPlugin
     * to decide which one will parse the document base on information from
     * the document structure
     */
-  override def canParse(document: Root): Boolean =
-    document.parsed.isInstanceOf[SyamlParsedDocument] && DialectHeader(document, registry)
+  override def canParse(document: Root): Boolean = false
 
   /**
     * Decides if this plugin can unparse the provided model document instance.
@@ -192,14 +186,7 @@ trait AMLPlugin
     * to decide which one will unparse the document base on information from
     * the instance type and properties
     */
-  override def canUnparse(unit: BaseUnit): Boolean = unit match {
-    case _: Vocabulary     => true
-    case _: Dialect        => true
-    case _: DialectLibrary => true
-    case instance: DialectInstanceUnit =>
-      registry.knowsDialectInstance(instance)
-    case _ => false
-  }
+  override def canUnparse(unit: BaseUnit): Boolean = false
 
   override def referenceHandler(eh: ErrorHandler): ReferenceHandler =
     new SyntaxExtensionsReferenceHandler(registry, eh)
@@ -211,15 +198,8 @@ trait AMLPlugin
   override def modelEntitiesResolver: Option[AMFDomainEntityResolver] =
     Some(registry)
 
-  private def parseAndRegisterDialect(document: Root, parentContext: ParserContext) = {
-    new DialectsParser(document)(new DialectContext(parentContext))
-      .parseDocument() match {
-      case dialect: Dialect if dialect.hasValidHeader =>
-        registry.register(dialect)
-        dialect
-      case unit => unit
-    }
-  }
+  private def parseDialect(document: Root, parentContext: ParserContext) =
+    new DialectsParser(document)(new DialectContext(parentContext)).parseDocument()
 
   override protected[amf] def getRemodValidatePlugins(): Seq[AMFValidatePlugin] = Seq(amlPlugin())
 
