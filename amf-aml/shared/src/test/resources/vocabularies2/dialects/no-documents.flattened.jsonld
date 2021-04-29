@@ -12,7 +12,7 @@
       "http://a.ml/vocabularies/core#name": "no-document",
       "http://a.ml/vocabularies/core#version": "1",
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/no-documents.yaml",
-      "http://a.ml/vocabularies/document#version": "3.0.0",
+      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {

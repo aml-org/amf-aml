@@ -127,7 +127,7 @@
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23a.yaml/documents"
       },
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23a.yaml",
-      "http://a.ml/vocabularies/document#version": "3.0.0",
+      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -160,7 +160,7 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23b.yaml#/declarations/Other"
         }
       ],
-      "http://a.ml/vocabularies/document#version": "3.0.0",
+      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#references": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23a.yaml/recursive"
@@ -333,7 +333,7 @@
         "http://a.ml/vocabularies/document#Fragment",
         "http://a.ml/vocabularies/document#Unit"
       ],
-      "http://a.ml/vocabularies/document#version": "3.0.0",
+      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false
     },
     {
