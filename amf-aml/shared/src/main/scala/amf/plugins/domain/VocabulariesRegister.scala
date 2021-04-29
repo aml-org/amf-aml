@@ -78,7 +78,7 @@ object VocabulariesRegister {
     }
 
     // Remod registering
-    AMFPluginsRegistry.staticCofiguration = AMLConfiguration.predefined()
+    AMFPluginsRegistry.staticCofiguration = AMFPluginsRegistry.staticCofiguration.merge(AMLConfiguration.predefined())
     amf.Core.registerPlugin(AMLPlugin)
   }
 }
