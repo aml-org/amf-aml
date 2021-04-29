@@ -2,7 +2,7 @@ package amf.plugins.document.vocabularies
 
 import amf.client.environment.AMLConfiguration
 import amf.client.parse.DefaultErrorHandler
-import amf.client.remod.AMLDialectInstancePlugin
+import amf.client.remod.{AMFGraphConfiguration, AMLDialectInstancePlugin}
 import amf.core.CompilerContextBuilder
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.metamodel.{Field, Obj, Type}
@@ -38,9 +38,9 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
   private[vocabularies] var validations: Map[String, ValidationProfile] = Map()
 
   // Private methods
-  private[amf] def env(): AMLConfiguration = AMFPluginsRegistry.staticCofiguration.asInstanceOf[AMLConfiguration]
+  private[amf] def env(): AMFGraphConfiguration = AMFPluginsRegistry.staticCofiguration
 
-  private[amf] def setEnv(env: AMLConfiguration): Unit = AMFPluginsRegistry.staticCofiguration = env
+  private[amf] def setEnv(env: AMFGraphConfiguration): Unit = AMFPluginsRegistry.staticCofiguration = env
 
   private[amf] def resolveDialect(dialect: Dialect) =
     new DialectResolutionPipeline().transform(dialect, DefaultErrorHandler())
@@ -176,7 +176,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
     } yield {
       validations -= plugin.dialect.header
       setEnv {
-        env().removePlugin(plugin.id).asInstanceOf[AMLConfiguration]
+        env().removePlugin(plugin.id)
       }
       invalidateCaches()
     }
@@ -187,7 +187,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
   def reset(): Unit = {
     setEnv {
       instancePlugins.foldLeft(env()) { (env, p) =>
-        env.removePlugin(p.id).asInstanceOf[AMLConfiguration]
+        env.removePlugin(p.id)
       }
     }
     validations = Map()
