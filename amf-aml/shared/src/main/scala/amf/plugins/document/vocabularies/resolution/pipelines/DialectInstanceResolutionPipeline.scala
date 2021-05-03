@@ -6,7 +6,7 @@ import amf.core.resolution.stages.{CleanReferencesStage, DeclarationsRemovalStag
 import amf.plugins.document.vocabularies.resolution.stages.DialectInstanceReferencesResolutionStage
 import amf.{AmfProfile, ProfileName}
 
-class DialectInstanceResolutionPipeline() extends ResolutionPipeline() {
+class DialectInstanceResolutionPipeline private (override val name: String) extends ResolutionPipeline() {
 
   override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
     Seq(
@@ -15,4 +15,9 @@ class DialectInstanceResolutionPipeline() extends ResolutionPipeline() {
         new DeclarationsRemovalStage()
     )
 
+}
+
+object DialectInstanceResolutionPipeline {
+  val name: String = "DialectInstanceResolutionPipeline"
+  def apply()      = new DialectInstanceResolutionPipeline(name)
 }

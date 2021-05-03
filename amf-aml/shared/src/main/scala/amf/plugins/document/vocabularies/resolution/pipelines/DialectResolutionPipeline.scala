@@ -9,9 +9,14 @@ import amf.plugins.document.vocabularies.resolution.stages.{
 }
 import amf.{AmfProfile, ProfileName}
 
-class DialectResolutionPipeline() extends ResolutionPipeline() {
+class DialectResolutionPipeline private (override val name: String) extends ResolutionPipeline() {
 
   override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
     Seq(new DialectReferencesResolutionStage(), new DialectNodeExtensionStage())
 
+}
+
+object DialectResolutionPipeline {
+  val name: String = "DialectResolutionPipeline"
+  def apply()      = new DialectResolutionPipeline(name)
 }
