@@ -1,6 +1,6 @@
 package amf.client.environment
 
-import amf.client.environment.AMLConfiguration.{platform, predefined}
+import amf.client.environment.AMLConfiguration.platform
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
@@ -11,20 +11,18 @@ import amf.client.remod.rendering.{
   AMLDialectRenderingPlugin,
   AMLVocabularyRenderingPlugin
 }
-import amf.client.remod.amfcore.resolution.PipelineName
 import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
-import amf.core.unsafe.PlatformSecrets
-import amf.core.remote.Aml
 import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
-import amf.plugins.document.graph.{AMFGraphParsePlugin, AMFGraphRenderPlugin}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceUnit}
-import org.mulesoft.common.collections.FilterType
 import amf.plugins.document.vocabularies.resolution.pipelines.DefaultAMLTransformationPipeline
+import org.mulesoft.common.collections.FilterType
+
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
@@ -45,31 +43,44 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
     new AMLConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =
-    super.withParsingOptions(parsingOptions).asInstanceOf[AMLConfiguration]
+    super._withParsingOptions(parsingOptions)
 
   override def withResourceLoader(rl: ResourceLoader): AMLConfiguration =
-    super.withResourceLoader(rl).asInstanceOf[AMLConfiguration]
+    super._withResourceLoader(rl)
 
   override def withResourceLoaders(rl: List[ResourceLoader]): AMLConfiguration =
-    super.withResourceLoaders(rl).asInstanceOf[AMLConfiguration]
+    super._withResourceLoaders(rl)
 
-  override def withUnitCache(cache: UnitCache): AMFGraphConfiguration =
-    super.withUnitCache(cache).asInstanceOf[AMLConfiguration]
+  override def withUnitCache(cache: UnitCache): AMLConfiguration =
+    super._withUnitCache(cache)
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMLConfiguration =
-    super.withPlugin(amfPlugin).asInstanceOf[AMLConfiguration]
+    super._withPlugin(amfPlugin)
 
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMLConfiguration =
-    super.withPlugins(plugins).asInstanceOf[AMLConfiguration]
+    super._withPlugins(plugins)
 
   override def withValidationProfile(profile: ValidationProfile): AMLConfiguration =
-    super.withValidationProfile(profile).asInstanceOf[AMLConfiguration]
+    super._withValidationProfile(profile)
 
-  override def withTransformationPipeline(name: String, pipeline: ResolutionPipeline): AMLConfiguration =
-    super.withTransformationPipeline(name, pipeline).asInstanceOf[AMLConfiguration]
+  override def withTransformationPipeline(pipeline: ResolutionPipeline): AMLConfiguration =
+    super._withTransformationPipeline(pipeline)
 
-  override def withTransformationPipelines(pipelines: Map[String, ResolutionPipeline]): AMLConfiguration =
-    super.withTransformationPipelines(pipelines).asInstanceOf[AMLConfiguration]
+  /**
+    * AMF internal method just to facilitate the construction
+    * @param pipelines
+    * @return
+    */
+  override private[amf] def withTransformationPipelines(pipelines: List[ResolutionPipeline]): AMLConfiguration =
+    super._withTransformationPipelines(pipelines)
+
+  override def withRenderOptions(renderOptions: RenderOptions): AMLConfiguration =
+    super._withRenderOptions(renderOptions)
+
+  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMLConfiguration =
+    super._withErrorHandlerProvider(provider)
+
+  def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
   override def createClient(): AMLClient = new AMLClient(this)
   // forInstnace ==  colecta dialects dinamicos
@@ -118,10 +129,6 @@ private[amf] object AMLConfiguration extends PlatformSecrets {
       Nil
 
     // we might need to register editing pipeline as well because of legacy behaviour.
-    val pipelines = Map(
-      PipelineName.from(Aml.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new DefaultAMLTransformationPipeline()
-    )
-
     new AMLConfiguration(
         predefinedGraphConfiguration.resolvers,
         predefinedGraphConfiguration.errorHandlerProvider,
@@ -130,7 +137,7 @@ private[amf] object AMLConfiguration extends PlatformSecrets {
         predefinedGraphConfiguration.listeners,
         predefinedGraphConfiguration.options
     ).withPlugins(predefinedPlugins)
-      .withTransformationPipelines(pipelines)
+      .withTransformationPipeline(DefaultAMLTransformationPipeline())
   }
 
   // TODO: what about nested $dialect references?

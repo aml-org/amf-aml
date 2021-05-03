@@ -43,7 +43,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
   private[amf] def setEnv(env: AMFGraphConfiguration): Unit = AMFPluginsRegistry.staticCofiguration = env
 
   private[amf] def resolveDialect(dialect: Dialect) =
-    new DialectResolutionPipeline().transform(dialect, DefaultErrorHandler())
+    DialectResolutionPipeline().transform(dialect, DefaultErrorHandler())
 
   private[amf] def invalidateCaches(): Unit = {
     findType.invalidateCache()

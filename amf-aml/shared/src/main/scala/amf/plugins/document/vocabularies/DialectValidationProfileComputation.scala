@@ -12,7 +12,7 @@ object DialectValidationProfileComputation {
     registry.validations.get(header) match {
       case Some(profile) => profile
       case _ =>
-        val resolvedDialect = new DialectResolutionPipeline().transform(dialect, dialect.errorHandler())
+        val resolvedDialect = DialectResolutionPipeline().transform(dialect, dialect.errorHandler())
         val profile         = new AMFDialectValidations(resolvedDialect).profile()
         registry.validations += (header -> profile)
         profile

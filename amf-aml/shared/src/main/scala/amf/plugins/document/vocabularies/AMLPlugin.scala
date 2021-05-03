@@ -3,7 +3,6 @@ package amf.plugins.document.vocabularies
 import amf.client.plugins.{AMFDocumentPlugin, AMFPlugin, AMFValidationPlugin}
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
-import amf.client.remod.amfcore.resolution.{PipelineInfo, PipelineName}
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.client.ParsingOptions
@@ -34,12 +33,7 @@ import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, Dialec
 import amf.plugins.document.vocabularies.parser.instances._
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.plugin.headers._
-import amf.plugins.document.vocabularies.resolution.pipelines.{
-  DefaultAMLTransformationPipeline,
-  DialectInstancePatchResolutionPipeline,
-  DialectInstanceResolutionPipeline,
-  DialectResolutionPipeline
-}
+import amf.plugins.document.vocabularies.resolution.pipelines.{AMLEditingPipeline, DefaultAMLTransformationPipeline}
 import org.yaml.model._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -98,9 +92,8 @@ trait AMLPlugin
     )
 
   override val pipelines: Map[String, ResolutionPipeline] = Map(
-      PipelineName.from(Aml.name, ResolutionPipeline.DEFAULT_PIPELINE) -> new DefaultAMLTransformationPipeline(),
-      PipelineName
-        .from(Aml.name, ResolutionPipeline.EDITING_PIPELINE) -> new DefaultAMLTransformationPipeline() // hack to maintain compatibility with legacy behaviour
+      DefaultAMLTransformationPipeline.name -> DefaultAMLTransformationPipeline(),
+      AMLEditingPipeline.name               -> AMLEditingPipeline() // hack to maintain compatibility with legacy behaviour
   )
 
   /**
