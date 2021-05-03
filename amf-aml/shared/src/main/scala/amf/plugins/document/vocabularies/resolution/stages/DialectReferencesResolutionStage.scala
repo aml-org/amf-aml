@@ -11,7 +11,7 @@ import amf.utils.internal.AmlExtensionSyntax._
 
 import scala.collection.mutable
 
-class DialectReferencesResolutionStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
+class DialectReferencesResolutionStage() extends ResolutionStage() {
 
   def dereference(nodeMappable: NodeMappable, finalDeclarations: mutable.Map[String, NodeMappable]): NodeMappable = {
     finalDeclarations.get(nodeMappable.id) match {
@@ -24,8 +24,7 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
               val target = dereference(mapping.linkTarget.get.asInstanceOf[NodeMapping], finalDeclarations)
                 .asInstanceOf[NodeMapping]
               target.withName(mapping.name.value()).withId(target.id)
-            }
-            else {
+            } else {
               mapping
             }
 
@@ -78,8 +77,7 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
               .copyMapping
               .withName(nextPending.name.value())
               .withId(nextPending.id)
-          }
-          else {
+          } else {
             // otherwise we just introduce the node mapping
             nextPending
           }
@@ -93,7 +91,9 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
                 .collect { case Some(x) => x }
             case union: UnionNodeMapping =>
               // we add all union ranges to the list of pendings
-              pending.tail ++ union.objectRange().map(r => allDeclarations.get(r.value())).collect { case Some(x) => x }
+              pending.tail ++ union.objectRange().map(r => allDeclarations.get(r.value())).collect {
+                case Some(x) => x
+              }
           }
 
           val newPending = effectiveNextPending.extend.headOption match {
@@ -131,7 +131,7 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
     }
   }
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     val finalDeclarationsMap = mutable.Map[String, NodeMappable]()
     val unitDeclarations =
       model.asInstanceOf[DeclaresModel].declares.filter(_.isInstanceOf[NodeMappable]).asInstanceOf[Seq[NodeMappable]]
@@ -146,7 +146,9 @@ class DialectReferencesResolutionStage()(override implicit val errorHandler: Err
     val finalExternals: Seq[External] = model
       .recursivelyFindExternals()
       .fixAliasCollisions
-      .map { external => external.withId(model.location().getOrElse(model.id) + s"#/external/${external.alias.value()}") }
+      .map { external =>
+        external.withId(model.location().getOrElse(model.id) + s"#/external/${external.alias.value()}")
+      }
 
     val resolved = model match {
       case dialect: Dialect =>

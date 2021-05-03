@@ -8,7 +8,7 @@ import amf.{AmfProfile, ProfileName}
 
 class DialectInstanceResolutionPipeline private (override val name: String) extends ResolutionPipeline() {
 
-  override def steps(implicit eh: ErrorHandler): Seq[ResolutionStage] =
+  override def steps: Seq[ResolutionStage] =
     Seq(
         new DialectInstanceReferencesResolutionStage(),
         new CleanReferencesStage(),

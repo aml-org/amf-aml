@@ -9,11 +9,11 @@ import amf.core.resolution.stages.ResolutionStage
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstancePatch}
 
 class DefaultAMLTransformationPipeline(override val name: String) extends ResolutionPipeline {
-  override def steps(implicit errorHandler: ErrorHandler): Seq[ResolutionStage] = Seq(new RedirectResolutionByModel())
+  override def steps: Seq[ResolutionStage] = Seq(RedirectResolutionByModel)
 }
 
-private class RedirectResolutionByModel(override implicit val errorHandler: ErrorHandler) extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T): T =
+private object RedirectResolutionByModel extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
     model match {
       case _: DialectInstancePatch => DialectInstancePatchResolutionPipeline().transform(model, errorHandler)
       case _: Dialect              => DialectResolutionPipeline().transform(model, errorHandler)

@@ -15,14 +15,20 @@ import amf.validation.DialectValidations.InvalidDialectPatch
 
 import scala.language.postfixOps
 
-class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHandler) extends ResolutionStage() {
+class DialectPatchApplicationStage() extends ResolutionStage {
+  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+    new DialectPatchApplication()(errorHandler).resolve(model)
+  }
+}
+
+private class DialectPatchApplication()(implicit val errorHandler: ErrorHandler) {
   // Define types for better readability
   type TargetDomainElement = DialectDomainElement // Domain element from target
   type PatchDomainElement  = DialectDomainElement // Domain element from patch
   type MergedDomainElement = DialectDomainElement // Domain element resulting from target-patch merge
   type NeutralId           = String               // ID relative to a location
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  def resolve[T <: BaseUnit](model: T): T = {
     model match {
       case patch: DialectInstancePatch => resolvePatch(patch).asInstanceOf[T]
       case _                           => model
@@ -109,8 +115,7 @@ class DialectPatchApplicationStage()(override implicit val errorHandler: ErrorHa
                               patchLocation: String): Option[DialectDomainElement] = {
     if (targetNode.nonEmpty && sameNodeIdentity(targetNode.get, targetLocation, patchNode, patchLocation)) {
       None
-    }
-    else {
+    } else {
       targetNode
     }
   }
