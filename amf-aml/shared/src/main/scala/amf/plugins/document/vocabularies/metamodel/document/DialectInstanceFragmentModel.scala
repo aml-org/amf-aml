@@ -9,9 +9,11 @@ import amf.plugins.document.vocabularies.model.document.DialectInstanceFragment
 
 object DialectInstanceFragmentModel extends DocumentModel with ExternalContextModel {
 
-  val DefinedBy         = Field(Iri, Namespace.Meta + "definedBy")
-  val Fragment          = Field(Str, Namespace.Meta + "fragment")
-  val GraphDependencies = Field(Array(Iri), Namespace.Document + "graphDependencies")
+  val DefinedBy: Field = Field(Iri, Namespace.Meta + "definedBy")
+
+  val Fragment: Field = Field(Str, Namespace.Meta + "fragment")
+
+  val GraphDependencies: Field = Field(Array(Iri), Namespace.Document + "graphDependencies")
 
   override def modelInstance: AmfObject = DialectInstanceFragment()
 

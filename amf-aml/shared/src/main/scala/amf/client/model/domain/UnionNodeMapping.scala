@@ -32,7 +32,7 @@ case class UnionNodeMapping(override private[amf] val _internal: InternalUnionNo
     _internal.withTypeDiscriminatorName(name)
     this
   }
-  def withTypeDiscriminator(typesMapping: ClientMap[String]) = {
+  def withTypeDiscriminator(typesMapping: ClientMap[String]): UnionNodeMapping = {
     _internal.withTypeDiscriminator(typesMapping.asInternal)
     this
   }

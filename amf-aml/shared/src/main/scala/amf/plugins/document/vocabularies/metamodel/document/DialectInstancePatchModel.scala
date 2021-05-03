@@ -8,8 +8,9 @@ import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.document.DialectInstancePatch
 
 object DialectInstancePatchModel extends DocumentModel with ExternalContextModel with ExtensionLikeModel {
-  val DefinedBy         = Field(Iri, Namespace.Meta + "definedBy")
-  val GraphDependencies = Field(Array(Iri), Namespace.Document + "graphDependencies")
+  val DefinedBy: Field = Field(Iri, Namespace.Meta + "definedBy")
+
+  val GraphDependencies: Field = Field(Array(Iri), Namespace.Document + "graphDependencies")
 
   override def modelInstance: AmfObject = DialectInstancePatch()
 

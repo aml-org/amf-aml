@@ -6,7 +6,7 @@ import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.metamodel.domain.ExternalModel
 
 trait ExternalContextModel extends Obj {
-  val Externals = Field(Array(ExternalModel), Namespace.Meta + "externals")
+  val Externals: Field = Field(Array(ExternalModel), Namespace.Meta + "externals")
 }
 
 object ExternalContextModelFields extends ExternalContextModel {

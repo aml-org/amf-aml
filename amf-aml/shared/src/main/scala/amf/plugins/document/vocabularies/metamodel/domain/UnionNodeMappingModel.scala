@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.metamodel.domain
 import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Iri, SortedArray, Str}
+import amf.core.metamodel.Type.{Iri, SortedArray}
 import amf.core.metamodel.domain._
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -13,7 +13,7 @@ object UnionNodeMappingModel
     with NodeWithDiscriminatorModel
     with NodeMappableModel {
 
-  val ObjectRange = Field(
+  val ObjectRange: Field = Field(
       SortedArray(Iri),
       Namespace.Shacl + "node",
       ModelDoc(ExternalModelVocabularies.Shacl, "range", "Object constraint over the type of the mapped property"))

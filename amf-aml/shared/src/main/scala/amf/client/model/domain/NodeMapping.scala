@@ -33,7 +33,7 @@ case class NodeMapping(override private[amf] val _internal: InternalNodeMapping)
     this
   }
 
-  def withIdTemplate(idTemplate: String) = {
+  def withIdTemplate(idTemplate: String): NodeMapping = {
     _internal.withIdTemplate(idTemplate)
     this
   }

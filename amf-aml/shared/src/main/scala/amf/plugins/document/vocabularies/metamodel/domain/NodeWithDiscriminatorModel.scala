@@ -5,14 +5,14 @@ import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.vocabulary.Namespace
 
 trait NodeWithDiscriminatorModel {
-  val TypeDiscriminator = Field(
+  val TypeDiscriminator: Field = Field(
       Str,
       Namespace.Meta + "typeDiscriminatorMap",
       ModelDoc(ModelVocabularies.Meta,
                "typeDiscriminatorMap",
                "Information about the discriminator values in the source AST for the property mapping")
   )
-  val TypeDiscriminatorName = Field(
+  val TypeDiscriminatorName: Field = Field(
       Str,
       Namespace.Meta + "typeDiscriminatorName",
       ModelDoc(ModelVocabularies.Meta,
