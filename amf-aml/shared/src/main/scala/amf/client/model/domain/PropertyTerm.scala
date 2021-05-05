@@ -36,8 +36,8 @@ abstract class PropertyTerm(override private[amf] val _internal: InternalPropert
     this
   }
 
-  def withSubClasOf(superProperties: Seq[String]) = {
-    _internal.withSubClassOf(superProperties)
+  def withSubClasOf(superProperties: ClientList[String]) = {
+    _internal.withSubClassOf(superProperties.asInternal)
     this
   }
 }

@@ -1,0 +1,5 @@
+#% MyDialect 0.1
+mule.agent.application.properties.service:
+  properties:
+    something: anotherThing
+  applicationName: SomethingElse

@@ -7,13 +7,13 @@ nodeMappings:
     mapping:
       za:
         typeDiscriminatorName: type
+        typeDiscriminator:
+          TypeA: nodeA
+          TypeB: nodeC
         propertyTerm: v2.a
         range:
           - nodeA
           - nodeC
-        typeDiscriminator:
-          TypeA: nodeA
-          TypeB: nodeC
   nodeA:
     classTerm: v2.A
     mapping:

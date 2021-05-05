@@ -1,0 +1,32 @@
+#%Dialect 1.0
+### This is created by AMC Atlas
+dialect: MyDialect
+version: 0.1
+uses:
+  amc: ../amc.yaml
+  mule_application: mule_application_vocabulary.yaml
+documents:
+  root:
+    encodes: ConfigurationNode
+
+nodeMappings:
+
+  ConfigurationNode:
+    mapping:
+      mule.agent.application.properties.service:
+        range: ApplicationPropertiesNode
+  ApplicationPropertiesNode:
+    mapping:
+      properties:
+        range: PropertyNode
+        mapKey: name
+        mapValue: value
+      applicationName:
+        range: string
+
+  PropertyNode:
+    mapping:
+      name:
+        range: string
+      value:
+        range: string

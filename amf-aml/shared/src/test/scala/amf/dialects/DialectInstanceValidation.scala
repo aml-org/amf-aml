@@ -18,15 +18,20 @@ trait ReportComparator extends FileAssertionTest with Matchers {
 
   implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  def assertReport(report: AMFValidationReport, goldenOption: Option[String] = None, jsonldReport: Boolean = true): Future[Assertion] = {
-    goldenOption.map(processGoldenPath).map { golden =>
-      for {
-        actual    <- writeTemporaryFile(golden)(emitReport(report, jsonldReport))
-        assertion <- assertDifferences(actual, golden.stripPrefix("file://"))
-      } yield {
-        assertion
+  def assertReport(report: AMFValidationReport,
+                   goldenOption: Option[String] = None,
+                   jsonldReport: Boolean = true): Future[Assertion] = {
+    goldenOption
+      .map(processGoldenPath)
+      .map { golden =>
+        for {
+          actual    <- writeTemporaryFile(golden)(emitReport(report, jsonldReport))
+          assertion <- assertDifferences(actual, golden.stripPrefix("file://"))
+        } yield {
+          assertion
+        }
       }
-    }.getOrElse { Future.successful { report.conforms shouldBe true } }
+      .getOrElse { Future.successful { report.conforms shouldBe true } }
   }
 
   protected def processGoldenPath(path: String): String
@@ -56,16 +61,16 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with 
     for {
       dialect <- {
         new AMFCompiler(
-          dialectContext,
-          Some("application/yaml"),
-          None
+            dialectContext,
+            Some("application/yaml"),
+            None
         ).build()
       }
       instance <- {
         new AMFCompiler(
-          instanceContext,
-          Some("application/yaml"),
-          None
+            instanceContext,
+            Some("application/yaml"),
+            None
         ).build()
       }
       report <- RuntimeValidator(instance, ProfileName(dialect.asInstanceOf[Dialect].nameAndVersion()))
@@ -85,9 +90,9 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with 
     for {
       dialect <- {
         new AMFCompiler(
-          dialectContext,
-          Some("application/yaml"),
-          None
+            dialectContext,
+            Some("application/yaml"),
+            None
         ).build()
       }
       profile <- {
@@ -97,15 +102,15 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets with 
       instance <- {
 
         new AMFCompiler(
-          instanceContext,
-          Some("application/yaml"),
-          None
+            instanceContext,
+            Some("application/yaml"),
+            None
         ).build()
       }
       report <- {
         RuntimeValidator(
-          instance,
-          ProfileName(name)
+            instance,
+            ProfileName(name)
         )
       }
     } yield {

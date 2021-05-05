@@ -206,6 +206,8 @@ trait AMLPlugin
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 
+  override val validVendorsToReference: Seq[String] = Nil
+
   override def modelEntitiesResolver: Option[AMFDomainEntityResolver] =
     Some(registry)
 

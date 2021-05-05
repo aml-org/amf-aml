@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.ProfileName
-import amf.client.environment.AmlEnvironment
+import amf.client.environment.AMLConfiguration
 import amf.client.parse.DefaultParserErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
@@ -45,16 +45,16 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
     for {
       dialect <- {
         new AMFCompiler(
-          dialectContext,
-          Some("application/yaml"),
-          None
+            dialectContext,
+            Some("application/yaml"),
+            None
         ).build()
       }
       instance <- {
         new AMFCompiler(
-          instanceContext,
-          Some("application/yaml"),
-          None
+            instanceContext,
+            Some("application/yaml"),
+            None
         ).build()
       }
       report <- RuntimeValidator(instance, ProfileName(dialect.asInstanceOf[Dialect].nameAndVersion()))
@@ -74,9 +74,9 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
     for {
       dialect <- {
         new AMFCompiler(
-          dialectContext,
-          Some("application/yaml"),
-          None
+            dialectContext,
+            Some("application/yaml"),
+            None
         ).build()
       }
       profile <- {
@@ -86,15 +86,15 @@ trait DialectInstanceValidation extends AsyncFunSuite with PlatformSecrets {
       instance <- {
 
         new AMFCompiler(
-          instanceContext,
-          Some("application/yaml"),
-          None
+            instanceContext,
+            Some("application/yaml"),
+            None
         ).build()
       }
       report <- {
         RuntimeValidator(
-          instance,
-          ProfileName(name)
+            instance,
+            ProfileName(name)
         )
       }
     } yield {

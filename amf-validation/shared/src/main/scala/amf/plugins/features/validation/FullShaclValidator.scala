@@ -7,7 +7,7 @@ import amf.core.services.ValidationOptions
 import amf.core.validation.EffectiveValidations
 import amf.core.validation.core.ValidationReport
 import amf.plugins.features.validation.AMFValidatorPlugin.customValidations
-import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ValidationJSONLDEmitter}
+import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ShaclJsonLdShapeGraphEmitter}
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -38,7 +38,7 @@ class FullShaclValidator {
 
     jsLibrary match {
       case Some(code) =>
-        PlatformValidator.instance.registerLibrary(ValidationJSONLDEmitter.validationLibraryUrl, code)
+        PlatformValidator.instance.registerLibrary(ShaclJsonLdShapeGraphEmitter.validationLibraryUrl, code)
       case _ => // ignore
     }
 

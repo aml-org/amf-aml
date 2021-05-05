@@ -5,6 +5,10 @@ import amf.core.validation.core.{ValidationReport, ValidationResult}
 
 import scala.collection.mutable
 
+object CustomValidationReport {
+  def empty = new CustomValidationReport(Nil)
+}
+
 class CustomValidationReport(var rs: List[ValidationResult] = Nil) extends ValidationReport {
 
   val duplicates: mutable.Set[String] = mutable.Set()

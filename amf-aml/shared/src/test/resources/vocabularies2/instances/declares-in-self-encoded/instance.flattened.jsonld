@@ -1,0 +1,124 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/dialect.yaml#/declarations/OrganizationMapping",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/meta#declarationName": "Boca",
+      "http://a.ml/vocabularies/data#name": "Boca Juniors",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#declarationName",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,6)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,4)-(5,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(5,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/dialect.yaml#/declarations/PersonMapping",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#surname": "Riquelme",
+      "http://a.ml/vocabularies/data#name": "Juan Roman",
+      "http://a.ml/vocabularies/data#organization": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca"
+      },
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml"
+      },
+      "http://a.ml/vocabularies/document#version": "3.1.0",
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map/lexical/element_3"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map/lexical/element_3",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(6,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#surname",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(7,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#organization",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(7,14)-(7,18)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(7,18)]"
+    }
+  ]
+}

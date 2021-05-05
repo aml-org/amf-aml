@@ -20,12 +20,12 @@ nodeMappings:
         range: string
   UnionNode:
     typeDiscriminatorName: lala
-    union:
-      - Local
-      - Declarations
     typeDiscriminator:
       local: Local
       decls: Declarations
+    union:
+      - Local
+      - Declarations
   Root:
     classTerm: v3.Root
     mapping:

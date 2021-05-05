@@ -43,10 +43,13 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
       implicit errorHandler: ErrorHandler): BaseUnit = {
     val domainElementAdapter  = new DomainElementSelectorAdapter(selector)
     val transformationAdapter = new DomainElementTransformationAdapter(transformation)
-    new TransformationTraversal(TransformationData(domainElementAdapter, transformationAdapter)).traverse(this)
+    val transformationData    = TransformationData(domainElementAdapter, transformationAdapter)
+    val multiVisitAllowed     = if (isSelfEncoded) Set(id) else Set.empty[String]
+    new TransformationTraversal(transformationData, multiVisitAllowed).traverse(this)
     this
   }
 
+  private def isSelfEncoded: Boolean = encodes.id == id
 }
 
 object DialectInstance {

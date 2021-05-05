@@ -38,12 +38,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
     * @return
     */
   @JSExport("validate")
-  def validateJS(data: String,
-                 dataMediaType: String,
-                 shapes: String,
-                 shapesMediaType: String,
-                 exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): js.Promise[String] = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
+  def validateJS(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): js.Promise[String] = {
+    implicit val executionContext: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
     validate(data, dataMediaType, shapes, shapesMediaType).toJSPromise
   }
 
@@ -58,16 +54,16 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
       val shapesModel = platform.rdfFramework.get.syntaxToRdfModel(shapesMediaType, shapes).get
 
       validator.validateFromModels(
-        dataModel.model.native().asInstanceOf[js.Dynamic],
-        shapesModel.model.native().asInstanceOf[js.Dynamic], { (e: js.Dynamic, report: js.Dynamic) =>
-          if (js.isUndefined(e) || e == null) {
-            val repeater: js.Array[js.Any] = js.Array()
-            val result                     = new JSValidationReport(report)
-            promise.success(result)
-          } else {
-            promise.failure(js.JavaScriptException(e))
+          dataModel.model.native().asInstanceOf[js.Dynamic],
+          shapesModel.model.native().asInstanceOf[js.Dynamic], { (e: js.Dynamic, report: js.Dynamic) =>
+            if (js.isUndefined(e) || e == null) {
+              val repeater: js.Array[js.Any] = js.Array()
+              val result                     = new JSValidationReport(report)
+              promise.success(result)
+            } else {
+              promise.failure(js.JavaScriptException(e))
+            }
           }
-        }
       )
 
       promise.future
@@ -89,9 +85,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
   def reportJS(data: String,
                dataMediaType: String,
                shapes: String,
-               shapesMediaType: String,
-               exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): js.Promise[ValidationReport] = {
-    implicit val executionContext: ExecutionContext = exec.executionContext
+               shapesMediaType: String): js.Promise[ValidationReport] = {
+    implicit val executionContext: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
     report(data, dataMediaType, shapes, shapesMediaType).toJSPromise
   }
 
@@ -113,16 +108,16 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
     val validator = js.Dynamic.newInstance(nativeShacl)()
     loadLibrary(validator)
     validator.validate(
-      data,
-      dataMediaType,
-      shapes,
-      shapesMediaType, { (e: js.Dynamic, r: js.Dynamic) =>
-        if (js.isUndefined(e) || e == null) {
-          promise.success(js.Dynamic.global.JSON.stringify(r).toString)
-        } else {
-          promise.failure(js.JavaScriptException(e))
+        data,
+        dataMediaType,
+        shapes,
+        shapesMediaType, { (e: js.Dynamic, r: js.Dynamic) =>
+          if (js.isUndefined(e) || e == null) {
+            promise.success(js.Dynamic.global.JSON.stringify(r).toString)
+          } else {
+            promise.failure(js.JavaScriptException(e))
+          }
         }
-      }
     )
     promise.future
   }
@@ -148,14 +143,14 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
       val shapesModel = new RdflibRdfModel()
       new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
       validator.validateFroModels(
-        dataModel.model,
-        shapesModel.model, { (e: js.Dynamic, r: js.Dynamic) =>
-          if (js.isUndefined(e) || e == null) {
-            promise.success(js.Dynamic.global.JSON.stringify(r).toString)
-          } else {
-            promise.failure(js.JavaScriptException(e))
+          dataModel.model,
+          shapesModel.model, { (e: js.Dynamic, r: js.Dynamic) =>
+            if (js.isUndefined(e) || e == null) {
+              promise.success(js.Dynamic.global.JSON.stringify(r).toString)
+            } else {
+              promise.failure(js.JavaScriptException(e))
+            }
           }
-        }
       )
 
       promise.future
@@ -181,15 +176,15 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
       new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
 
       validator.validateFromModels(
-        dataModel.model,
-        shapesModel.model, { (e: js.Dynamic, report: js.Dynamic) =>
-          if (js.isUndefined(e) || e == null) {
-            val result = new JSValidationReport(report)
-            promise.success(result)
-          } else {
-            promise.failure(js.JavaScriptException(e))
+          dataModel.model,
+          shapesModel.model, { (e: js.Dynamic, report: js.Dynamic) =>
+            if (js.isUndefined(e) || e == null) {
+              val result = new JSValidationReport(report)
+              promise.success(result)
+            } else {
+              promise.failure(js.JavaScriptException(e))
+            }
           }
-        }
       )
 
       promise.future
