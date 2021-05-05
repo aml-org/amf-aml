@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies
 
-import amf.client.environment.AMLConfiguration
+import amf.ProfileName
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.{AMFGraphConfiguration, AMLDialectInstancePlugin}
 import amf.core.CompilerContextBuilder
@@ -14,7 +14,6 @@ import amf.core.remote.Aml
 import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.core.ValidationProfile
 import amf.core.vocabulary.ValueType
 import amf.internal.environment.Environment
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
@@ -34,9 +33,8 @@ import org.mulesoft.common.functional.MonadInstances._
 import scala.concurrent.ExecutionContext
 
 class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with DialectRegistration {
-  type NodeMappingId = String
 
-  private[vocabularies] var validations: Map[String, ValidationProfile] = Map()
+  type NodeMappingId = String
 
   // Private methods
   private[amf] def env(): AMFGraphConfiguration = AMFPluginsRegistry.staticConfiguration
@@ -53,6 +51,9 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
   }
   private[amf] def instancePlugins =
     env().registry.plugins.allPlugins.toStream.filterType[AMLDialectInstancePlugin[_]]
+
+  private[amf] def registeredValidationProfileOf(dialect: Dialect) =
+    env().registry.constraintsRules.get(ProfileName(dialect.header))
 
   private[amf] def parseDialect(uri: String, environment: Environment)(implicit e: ExecutionContext) = {
     val context =
@@ -175,9 +176,10 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
     for {
       plugin <- instancePlugins.find(_.dialect.location().contains(uri))
     } yield {
-      validations -= plugin.dialect.header
       setEnv {
-        env().removePlugin(plugin.id)
+        env()
+          .removePlugin(plugin.id)
+          .removeValidationProfile[AMFGraphConfiguration](ProfileName(plugin.dialect.header))
       }
       invalidateCaches()
     }
@@ -188,10 +190,11 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
   def reset(): Unit = {
     setEnv {
       instancePlugins.foldLeft(env()) { (env, p) =>
-        env.removePlugin(p.id)
+        env
+          .removePlugin(p.id)
+          .removeValidationProfile[AMFGraphConfiguration](ProfileName(p.dialect.header))
       }
     }
-    validations = Map()
     invalidateCaches()
   }
 }

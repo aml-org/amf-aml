@@ -6,22 +6,22 @@ import amf.client.remod.rendering.AMLDialectInstanceRenderingPlugin
 import amf.internal.environment.Environment
 import amf.internal.resource.StringResourceLoader
 import amf.plugins.document.vocabularies.model.document.Dialect
+import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 
 import scala.concurrent.{ExecutionContext, Future}
 
 trait DialectRegistration { this: DialectsRegistry =>
   def register(dialect: Dialect): DialectsRegistry = {
     val cloned = dialect.cloneUnit().asInstanceOf[Dialect]
-    if (!cloned.resolved) {
-      resolveDialect(cloned)
-    }
+    if (!cloned.resolved) resolveDialect(cloned)
+    val profile = new AMFDialectValidations(cloned).profile()
     setEnv {
       env()
         .withPlugins(
             new AMLDialectInstanceParsingPlugin(cloned) :: new AMLDialectInstanceRenderingPlugin(cloned) :: Nil)
+        .withValidationProfile(profile)
     }
     invalidateCaches()
-    validations -= dialect.header
     this
   }
 
