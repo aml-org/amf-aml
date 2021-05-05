@@ -7,23 +7,11 @@ import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
 
-object PropertyMappingModel extends DomainElementModel with MergeableMappingModel with NodeWithDiscriminatorModel {
-
-  val Name: Field = Field(Str,
-                          Namespace.Core + "name",
-                          ModelDoc(ModelVocabularies.Core, "name", "Name in the source AST for the mapped property"))
-  val NodePropertyMapping: Field = Field(
-      Iri,
-      Namespace.Shacl + "path",
-      ModelDoc(ExternalModelVocabularies.Shacl, "path", "URI in the mapped graph for this mapped property"))
-  val LiteralRange: Field = Field(
-      Iri,
-      Namespace.Shacl + "datatype",
-      ModelDoc(ExternalModelVocabularies.Shacl, "datatype", "Scalar constraint over the type of the mapped property"))
-  val ObjectRange: Field = Field(
-      SortedArray(Iri),
-      Namespace.Shacl + "node",
-      ModelDoc(ExternalModelVocabularies.Shacl, "range", "Object constraint over the type of the mapped property"))
+object PropertyMappingModel
+    extends DomainElementModel
+    with PropertyLikeMappingModel
+    with MergeableMappingModel
+    with NodeWithDiscriminatorModel {
 
   val MapKeyProperty: Field = Field(
       Str,
@@ -32,6 +20,7 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
                "mapLabelProperty",
                "Marks the mapping as a 'map' mapping syntax. Directly related with mapTermKeyProperty")
   )
+
   val MapValueProperty: Field = Field(
       Str,
       Namespace.Meta + "mapValueProperty",

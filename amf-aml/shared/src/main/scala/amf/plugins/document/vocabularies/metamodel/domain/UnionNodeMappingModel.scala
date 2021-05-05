@@ -13,11 +13,6 @@ object UnionNodeMappingModel
     with NodeWithDiscriminatorModel
     with NodeMappableModel {
 
-  val ObjectRange: Field = Field(
-      SortedArray(Iri),
-      Namespace.Shacl + "node",
-      ModelDoc(ExternalModelVocabularies.Shacl, "range", "Object constraint over the type of the mapped property"))
-
   override val fields
     : List[Field] = Name :: TypeDiscriminator :: TypeDiscriminatorName :: ObjectRange :: LinkableElementModel.fields ++ DomainElementModel.fields
 
