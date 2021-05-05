@@ -38,9 +38,9 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
   private[vocabularies] var validations: Map[String, ValidationProfile] = Map()
 
   // Private methods
-  private[amf] def env(): AMFGraphConfiguration = AMFPluginsRegistry.staticCofiguration
+  private[amf] def env(): AMFGraphConfiguration = AMFPluginsRegistry.staticConfiguration
 
-  private[amf] def setEnv(env: AMFGraphConfiguration): Unit = AMFPluginsRegistry.staticCofiguration = env
+  private[amf] def setEnv(env: AMFGraphConfiguration): Unit = AMFPluginsRegistry.staticConfiguration = env
 
   private[amf] def resolveDialect(dialect: Dialect) =
     DialectResolutionPipeline().transform(dialect, DefaultErrorHandler())
