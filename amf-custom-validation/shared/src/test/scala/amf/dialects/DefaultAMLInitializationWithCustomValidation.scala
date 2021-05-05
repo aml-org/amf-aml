@@ -24,7 +24,7 @@ object DefaultAMLInitializationWithCustomValidation {
   private def doInit(): Future[Unit] = {
     for {
       _ <- amf.core.AMF.init()
-      _ <- Future.successful { AMFPluginsRegistry.staticCofiguration = AMLConfiguration.predefined() }
+      _ <- Future.successful { AMFPluginsRegistry.staticConfiguration = AMLConfiguration.predefined() }
       _ <- Future.successful { amf.core.AMF.registerPlugin(AMFValidatorPlugin) }
       _ <- AMFValidatorPlugin.init()
     } yield {
