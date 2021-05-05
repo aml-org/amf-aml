@@ -12,7 +12,9 @@ import amf.client.model.domain.{
   ObjectPropertyTerm => ClientObjectPropertyTerm,
   PropertyMapping => ClientPropertyMapping,
   PublicNodeMapping => ClientPublicNodeMapping,
-  VocabularyReference => ClientVocabularyReference
+  VocabularyReference => ClientVocabularyReference,
+  AnnotationMapping => ClientAnnotationMapping,
+  ExtensionMapping => ClientExtensionMapping
 }
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.model.document.Dialect
@@ -21,6 +23,8 @@ import amf.plugins.document.vocabularies.model.domain._
 trait VocabulariesBaseConverter
     extends CoreBaseConverter
     with PropertyMappingConverter
+    with AnnotationMappingConverter
+    with ExtensionMappingConverter
     with PublicNodeMappingConverter
     with DialectConverter
     with DocumentsModelConverter
@@ -74,6 +78,24 @@ trait PropertyMappingConverter extends PlatformSecrets {
   implicit object PropertyMappingConverter extends BidirectionalMatcher[PropertyMapping, ClientPropertyMapping] {
     override def asClient(from: PropertyMapping): ClientPropertyMapping   = platform.wrap[ClientPropertyMapping](from)
     override def asInternal(from: ClientPropertyMapping): PropertyMapping = from._internal
+  }
+}
+
+trait AnnotationMappingConverter extends PlatformSecrets {
+
+  implicit object AnnotationMappingConverter extends BidirectionalMatcher[AnnotationMapping, ClientAnnotationMapping] {
+    override def asClient(from: AnnotationMapping): ClientAnnotationMapping =
+      platform.wrap[ClientAnnotationMapping](from)
+    override def asInternal(from: ClientAnnotationMapping): AnnotationMapping = from._internal
+  }
+}
+
+trait ExtensionMappingConverter extends PlatformSecrets {
+
+  implicit object ExtensionMappingConverter extends BidirectionalMatcher[ExtensionMapping, ClientExtensionMapping] {
+    override def asClient(from: ExtensionMapping): ClientExtensionMapping =
+      platform.wrap[ClientExtensionMapping](from)
+    override def asInternal(from: ClientExtensionMapping): ExtensionMapping = from._internal
   }
 }
 
