@@ -198,9 +198,9 @@ class ShaclJsonLdShapeGraphEmitter(targetProfile: ProfileName) {
 
   private def getMessageOf(validation: ValidationSpecification) = {
     targetProfile match {
-      case RamlProfile | Raml08Profile => validation.ramlMessage.getOrElse(validation.message)
-      case OasProfile                  => validation.oasMessage.getOrElse(validation.message)
-      case _                           => validation.message
+      case Raml10Profile | Raml08Profile => validation.ramlMessage.getOrElse(validation.message)
+      case Oas20Profile                  => validation.oasMessage.getOrElse(validation.message)
+      case _                             => validation.message
     }
   }
 

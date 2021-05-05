@@ -6,7 +6,7 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.BaseUnit
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
-import amf.core.remote.Raml
+import amf.core.remote.{Raml, Raml10}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.emitters.common.ExternalEmitter
 import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel
@@ -20,15 +20,13 @@ trait AliasMapper {
   def aliasFor(id: String, aliasMapping: Map[String, String]): String = {
     if (id == (Namespace.Shapes + "guid").iri()) {
       "guid"
-    }
-    else if (id.contains(Namespace.Xsd.base)) {
+    } else if (id.contains(Namespace.Xsd.base)) {
       id.split(Namespace.Xsd.base).last match {
         case "anyURI"  => "uri"
         case "anyType" => "any"
         case v         => v
       }
-    }
-    else {
+    } else {
       aliasMapping.keys.find(k => id.contains(k)) match {
         case Some(k) =>
           val alias = aliasMapping(k)
@@ -71,8 +69,7 @@ private case class ClassTermEmitter(classTerm: ClassTerm, ordering: SpecOrdering
         override def emit(b: EntryBuilder): Unit = {
           if (classTerm.subClassOf.length == 1) {
             b.entry("extends", aliasFor(classTerm.subClassOf.head.value(), aliasMapping))
-          }
-          else {
+          } else {
             b.entry("extends", _.list({ l =>
               classTerm.subClassOf.foreach { extended =>
                 l += aliasFor(extended.value(), aliasMapping)
@@ -110,8 +107,7 @@ private case class ClassTermEmitter(classTerm: ClassTerm, ordering: SpecOrdering
     }
     if (ctEmitters.isEmpty) {
       MapEntryEmitter(classAlias, "", YType.Null).emit(b)
-    }
-    else {
+    } else {
       b.entry(classAlias, _.obj({ ct =>
         traverse(ordering.sorted(ctEmitters), ct)
       }))
@@ -144,8 +140,7 @@ private case class PropertyTermEmitter(propertyTerm: PropertyTerm,
         override def emit(b: EntryBuilder): Unit = {
           if (propertyTerm.subPropertyOf.size == 1) {
             b.entry("extends", aliasFor(propertyTerm.subPropertyOf.head.value(), aliasMapping))
-          }
-          else {
+          } else {
             b.entry("extends", _.list({ l =>
               propertyTerm.subPropertyOf.foreach { extended =>
                 l += aliasFor(extended.value(), aliasMapping)
@@ -179,8 +174,7 @@ private case class PropertyTermEmitter(propertyTerm: PropertyTerm,
     }
     if (ptEmitters.isEmpty) {
       MapEntryEmitter(propertyAlias, "", YType.Null).emit(b)
-    }
-    else {
+    } else {
       b.entry(propertyAlias, _.obj({ ct =>
         traverse(ordering.sorted(ptEmitters), ct)
       }))
@@ -206,8 +200,7 @@ private case class ImportEmitter(vocabularyReference: VocabularyReference,
 
     val importLocation = if (vocabularyReferenceFile.contains(vocabFilePrefix)) {
       vocabularyReferenceFile.replace(vocabFilePrefix, "")
-    }
-    else {
+    } else {
       vocabularyReferenceFile.replace("file://", "")
     }
 
@@ -223,7 +216,7 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
   val aliasMapping: Map[String, String] = buildAliasMapping(vocabulary)
 
   def emitVocabulary(): YDocument = {
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml, vocabulary.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, vocabulary.annotations)
 
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ vocabularyEmitters(ordering)
 
@@ -257,8 +250,7 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
             .getOrElse(ZERO)
         }
       })
-    }
-    else {
+    } else {
       Nil
     }
   }
@@ -284,8 +276,7 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
             .getOrElse(ZERO)
         }
       })
-    }
-    else {
+    } else {
       Nil
     }
   }
@@ -349,8 +340,7 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
                 .getOrElse(ZERO)
           }
       )
-    }
-    else {
+    } else {
       Nil
     }
   }
@@ -373,8 +363,7 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
                 .getOrElse(ZERO)
           }
       )
-    }
-    else {
+    } else {
       Nil
     }
   }

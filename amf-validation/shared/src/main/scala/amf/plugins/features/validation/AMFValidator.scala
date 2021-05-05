@@ -9,7 +9,7 @@ import amf.core.errorhandling.AmfStaticReportBuilder
 import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote.{Oas30, Raml08, Vendor}
+import amf.core.remote.{Oas20, Oas30, Raml08, Raml10, Vendor}
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.services.{RuntimeValidator, ValidationOptions => LegacyValidationOptions}
 import amf.core.unsafe.PlatformSecrets
@@ -80,17 +80,11 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
 
   private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {
     given match {
-      case OasProfile =>
-        getSource(unit) match {
-          case Some(Oas30) => Oas30Profile
-          case _           => Oas20Profile
-        }
-      case RamlProfile =>
-        getSource(unit) match {
-          case Some(Raml08) => Raml08Profile
-          case _            => Raml10Profile
-        }
-      case _ => given
+      case Oas20Profile if getSource(unit).forall(_ == Oas20)   => Oas20Profile
+      case Oas30Profile if getSource(unit).forall(_ == Oas30)   => Oas30Profile
+      case Raml10Profile if getSource(unit).forall(_ == Raml10) => Raml10Profile
+      case Raml08Profile if getSource(unit).forall(_ == Raml08) => Raml08Profile
+      case _                                                    => given
     }
 
   }
@@ -145,7 +139,7 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
     * Generates a JSON-LD graph with the SHACL shapes for the requested profile validations
     * @return JSON-LD graph
     */
-  def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = RamlProfile): String = {
+  def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = Raml10Profile): String = {
     new ShaclJsonLdShapeGraphEmitter(profileName).emit(customValidations(validations.effective.values.toSeq))
   }
 
