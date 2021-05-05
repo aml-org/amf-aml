@@ -19,7 +19,7 @@ import amf.plugins.document.vocabularies.annotations.{
   RefInclude
 }
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
-import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
+import amf.plugins.document.vocabularies.metamodel.domain.{DialectDomainElementModel, NodeWithDiscriminatorModel}
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
@@ -546,7 +546,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       defaultId: String,
       path: Seq[String],
       ast: YNode,
-      unionMapping: NodeWithDiscriminator[T],
+      unionMapping: NodeWithDiscriminator[_ <: NodeWithDiscriminatorModel],
       additionalProperties: Map[String, Any] = Map()): DialectDomainElement = {
 
     // potential node range based in the objectRange

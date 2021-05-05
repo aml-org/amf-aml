@@ -9,7 +9,7 @@ case class UnionNodeMapping(fields: Fields, annotations: Annotations)
     extends DomainElement
     with Linkable
     with MergeableMapping
-    with NodeWithDiscriminator[UnionNodeMapping]
+    with NodeWithDiscriminator[UnionNodeMappingModel.type]
     with NodeMappable {
 
   override def withName(name: String): UnionNodeMapping = super.withName(name).asInstanceOf[UnionNodeMapping]

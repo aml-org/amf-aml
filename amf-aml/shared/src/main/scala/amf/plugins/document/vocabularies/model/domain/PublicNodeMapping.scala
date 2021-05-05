@@ -1,17 +1,11 @@
 package amf.plugins.document.vocabularies.model.domain
 
+import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
-import amf.core.model.{BoolField, StrField}
 import amf.core.parser.{Annotations, Fields}
-import amf.plugins.document.vocabularies.metamodel.domain.DocumentMappingModel._
-import amf.plugins.document.vocabularies.metamodel.domain.DocumentsModelModel._
+import amf.plugins.document.vocabularies.metamodel.domain.PublicNodeMappingModel
 import amf.plugins.document.vocabularies.metamodel.domain.PublicNodeMappingModel._
-import amf.plugins.document.vocabularies.metamodel.domain.{
-  DocumentMappingModel,
-  DocumentsModelModel,
-  PublicNodeMappingModel
-}
-import org.yaml.model.{YMap, YMapEntry, YNode}
+import org.yaml.model.YMapEntry
 
 case class PublicNodeMapping(fields: Fields, annotations: Annotations) extends DomainElement {
 
@@ -38,63 +32,4 @@ object PublicNodeMapping {
   def apply(): PublicNodeMapping                         = apply(Annotations())
   def apply(ast: YMapEntry): PublicNodeMapping           = apply(Annotations(ast))
   def apply(annotations: Annotations): PublicNodeMapping = PublicNodeMapping(Fields(), annotations)
-}
-
-case class DocumentMapping(fields: Fields, annotations: Annotations) extends DomainElement {
-
-  def documentName(): StrField                = fields.field(DocumentName)
-  def encoded(): StrField                     = fields.field(EncodedNode)
-  def declaredNodes(): Seq[PublicNodeMapping] = fields.field(DeclaredNodes)
-
-  def withDocumentName(name: String): DocumentMapping   = set(DocumentName, name)
-  def withEncoded(encodedNode: String): DocumentMapping = set(EncodedNode, encodedNode)
-  def withDeclaredNodes(fragments: Seq[PublicNodeMapping]): DocumentMapping =
-    setArrayWithoutId(DeclaredNodes, fragments)
-
-  override def meta: DocumentMappingModel.type = DocumentMappingModel
-
-  override def adopted(parent: String, cycle: Seq[String] = Seq()): this.type = {
-    if (Option(id).isEmpty) {
-      simpleAdoption(parent)
-    }
-    this
-  }
-
-  /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = ""
-}
-
-object DocumentMapping {
-  def apply(): DocumentMapping                         = apply(Annotations())
-  def apply(ast: YNode): DocumentMapping               = apply(Annotations(ast))
-  def apply(annotations: Annotations): DocumentMapping = DocumentMapping(Fields(), annotations)
-}
-
-case class DocumentsModel(fields: Fields, annotations: Annotations) extends DomainElement {
-  def root(): DocumentMapping           = fields.field(Root)
-  def library(): DocumentMapping        = fields.field(Library)
-  def fragments(): Seq[DocumentMapping] = fields.field(Fragments)
-  def selfEncoded(): BoolField          = fields.field(SelfEncoded)
-  def declarationsPath(): StrField      = fields.field(DeclarationsPath)
-  def keyProperty(): BoolField          = fields.field(KeyProperty)
-  def referenceStyle(): StrField        = fields.field(ReferenceStyle)
-
-  def withRoot(documentMapping: DocumentMapping): DocumentsModel     = set(Root, documentMapping)
-  def withLibrary(library: DocumentMapping): DocumentsModel          = set(Library, library)
-  def withFragments(fragments: Seq[DocumentMapping]): DocumentsModel = setArrayWithoutId(Fragments, fragments)
-  def withSelfEncoded(selfEncoded: Boolean): DocumentsModel          = set(SelfEncoded, selfEncoded)
-  def withDeclarationsPath(declarationsPath: String): DocumentsModel = set(DeclarationsPath, declarationsPath)
-  def withKeyProperty(keyProperty: Boolean): DocumentsModel          = set(KeyProperty, keyProperty)
-  def withReferenceStyle(referenceStyle: String): DocumentsModel     = set(ReferenceStyle, referenceStyle)
-
-  override def meta: DocumentsModelModel.type = DocumentsModelModel
-
-  /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = "/documents"
-}
-
-object DocumentsModel {
-  def apply(): DocumentsModel                         = apply(Annotations())
-  def apply(ast: YMap): DocumentsModel                = apply(Annotations(ast))
-  def apply(annotations: Annotations): DocumentsModel = DocumentsModel(Fields(), annotations)
 }

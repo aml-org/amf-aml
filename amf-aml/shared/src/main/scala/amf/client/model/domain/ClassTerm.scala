@@ -50,7 +50,7 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     * @param name
     * @return
     */
-  def withName(name: String) = {
+  def withName(name: String): ClassTerm = {
     _internal.withName(name)
     this
   }
@@ -60,7 +60,7 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     * @param displayName
     * @return
     */
-  def withDisplayName(displayName: String) = {
+  def withDisplayName(displayName: String): ClassTerm = {
     _internal.withDisplayName(displayName)
     this
   }
@@ -70,7 +70,7 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     * @param description
     * @return
     */
-  def withDescription(description: String) = {
+  def withDescription(description: String): ClassTerm = {
     _internal.withDescription(description)
     this
   }
@@ -80,7 +80,7 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     * @param properties
     * @return
     */
-  def withProperties(properties: ClientList[String]) = {
+  def withProperties(properties: ClientList[String]): ClassTerm = {
     _internal.withProperties(properties.asInternal)
     this
   }
@@ -90,7 +90,7 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     * @param superClasses
     * @return
     */
-  def withSubClassOf(superClasses: ClientList[String]) = {
+  def withSubClassOf(superClasses: ClientList[String]): ClassTerm = {
     _internal.withSubClassOf(superClasses.asInternal)
     this
   }

@@ -108,7 +108,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     * @return Map member -> path from root level union
     */
   private def flattenedMembersFrom[T <: DomainElement](
-      union: NodeWithDiscriminator[T],
+      union: NodeWithDiscriminator[_],
       path: Seq[UnionNodeMapping] = Nil): Map[NodeMapping, Seq[UnionNodeMapping]] = {
     membersFrom(union).flatMap {
       case anotherUnion: UnionNodeMapping if !path.contains(union) =>
@@ -118,7 +118,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }.toMap
   }
 
-  protected def membersFrom[T <: DomainElement](union: NodeWithDiscriminator[T]): Seq[NodeMappable] = {
+  protected def membersFrom[T <: DomainElement](union: NodeWithDiscriminator[_]): Seq[NodeMappable] = {
     union
       .objectRange()
       .toStream
@@ -144,7 +144,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     * @param union Union to calculate ambiguity over its members
     * @tparam T type of union: union node mapping or union property mapping
     */
-  def checkAmbiguity[T <: DomainElement](union: NodeWithDiscriminator[T]): Unit = {
+  def checkAmbiguity[T <: DomainElement](union: NodeWithDiscriminator[_]): Unit = {
     val membersPathIndex = flattenedMembersFrom(union)
     val members          = membersPathIndex.keys.toSeq
 
@@ -213,7 +213,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     *  2. validates union & discriminator members exist
     *  3. checks for ambiguity
     */
-  protected def checkNodeMappableReferences[T <: DomainElement](mappable: NodeWithDiscriminator[T]): Unit = {
+  protected def checkNodeMappableReferences[T <: DomainElement](mappable: NodeWithDiscriminator[_]): Unit = {
     val memberStream      = mappable.objectRange().toStream
     val memberNamesStream = memberStream.map(member => member.value())
     val memberIdsStream   = memberNamesStream.flatMap(name => memberIdFromName(name, mappable))
@@ -257,7 +257,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
-  private def memberIdFromName[T <: DomainElement](name: String, union: NodeWithDiscriminator[T]): Option[String] = {
+  private def memberIdFromName[T <: DomainElement](name: String, union: NodeWithDiscriminator[_]): Option[String] = {
     if (name == (Namespace.Meta + "anyNode").iri()) Some(name)
     else {
       ctx.declarations.findNodeMapping(name, All) match {

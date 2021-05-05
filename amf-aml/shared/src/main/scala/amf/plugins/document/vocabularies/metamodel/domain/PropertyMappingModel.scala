@@ -7,32 +7,21 @@ import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
 
-object PropertyMappingModel extends DomainElementModel with MergeableMappingModel with NodeWithDiscriminatorModel {
+object PropertyMappingModel
+    extends DomainElementModel
+    with PropertyLikeMappingModel
+    with MergeableMappingModel
+    with NodeWithDiscriminatorModel {
 
-  val Name = Field(Str,
-                   Namespace.Core + "name",
-                   ModelDoc(ModelVocabularies.Core, "name", "Name in the source AST for the mapped property"))
-  val NodePropertyMapping = Field(
-      Iri,
-      Namespace.Shacl + "path",
-      ModelDoc(ExternalModelVocabularies.Shacl, "path", "URI in the mapped graph for this mapped property"))
-  val LiteralRange = Field(
-      Iri,
-      Namespace.Shacl + "datatype",
-      ModelDoc(ExternalModelVocabularies.Shacl, "datatype", "Scalar constraint over the type of the mapped property"))
-  val ObjectRange = Field(
-      SortedArray(Iri),
-      Namespace.Shacl + "node",
-      ModelDoc(ExternalModelVocabularies.Shacl, "range", "Object constraint over the type of the mapped property"))
-
-  val MapKeyProperty = Field(
+  val MapKeyProperty: Field = Field(
       Str,
       Namespace.Meta + "mapProperty",
       ModelDoc(ModelVocabularies.Meta,
                "mapLabelProperty",
                "Marks the mapping as a 'map' mapping syntax. Directly related with mapTermKeyProperty")
   )
-  val MapValueProperty = Field(
+
+  val MapValueProperty: Field = Field(
       Str,
       Namespace.Meta + "mapValueProperty",
       ModelDoc(ModelVocabularies.Meta,
@@ -40,52 +29,59 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
                "Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty")
   )
 
-  val MapTermKeyProperty = Field(
+  val MapTermKeyProperty: Field = Field(
       Iri,
       Namespace.Meta + "mapTermProperty",
       ModelDoc(ModelVocabularies.Meta, "mapTermPropertyUri", "Marks the mapping as a 'map' mapping syntax. "))
-  val MapTermValueProperty = Field(
+
+  val MapTermValueProperty: Field = Field(
       Iri,
       Namespace.Meta + "mapTermValueProperty",
       ModelDoc(ModelVocabularies.Meta, "mapTermValueProperty", "Marks the mapping as a 'map value' mapping syntax")
   )
 
-  val Sorted = Field(Bool,
-                     Namespace.Meta + "sorted",
-                     ModelDoc(ModelVocabularies.Meta,
-                              "sorted",
-                              "Marks the mapping as requiring order in the mapped collection of nodes"))
-  val MinCount = Field(
+  val Sorted: Field = Field(Bool,
+                            Namespace.Meta + "sorted",
+                            ModelDoc(ModelVocabularies.Meta,
+                                     "sorted",
+                                     "Marks the mapping as requiring order in the mapped collection of nodes"))
+  val MinCount: Field = Field(
       Int,
       Namespace.Shacl + "minCount",
       ModelDoc(ExternalModelVocabularies.Shacl, "minCount", "Minimum count constraint over the mapped property"))
-  val Pattern = Field(
+
+  val Pattern: Field = Field(
       Str,
       Namespace.Shacl + "pattern",
       ModelDoc(ExternalModelVocabularies.Shacl, "pattern", "Pattern constraint over the mapped property"))
-  val Minimum = Field(
+
+  val Minimum: Field = Field(
       Double,
       Namespace.Shacl + "minInclusive",
       ModelDoc(ExternalModelVocabularies.Shacl,
                "minInclusive",
                "Minimum inclusive constraint over the mapped property")
   )
-  val Maximum = Field(
+
+  val Maximum: Field = Field(
       Double,
       Namespace.Shacl + "maxInclusive",
       ModelDoc(ExternalModelVocabularies.Shacl,
                "maxInclusive",
                "Maximum inclusive constraint over the mapped property")
   )
-  val AllowMultiple = Field(
+
+  val AllowMultiple: Field = Field(
       Bool,
       Namespace.Meta + "allowMultiple",
       ModelDoc(ModelVocabularies.Meta, "allowMultiple", "Allows multiple mapped nodes for the property mapping"))
-  val Enum = Field(
+
+  val Enum: Field = Field(
       SortedArray(Any),
       Namespace.Shacl + "in",
       ModelDoc(ExternalModelVocabularies.Shacl, "in", "Enum constraint for the values of the property mapping"))
-  val Unique = Field(
+
+  val Unique: Field = Field(
       Bool,
       Namespace.Meta + "unique",
       ModelDoc(ModelVocabularies.Meta,
@@ -93,7 +89,7 @@ object PropertyMappingModel extends DomainElementModel with MergeableMappingMode
                "Marks the values for the property mapping as a primary key for this type of node")
   )
 
-  val ExternallyLinkable = Field(
+  val ExternallyLinkable: Field = Field(
       Bool,
       Namespace.Meta + "externallyLinkable",
       ModelDoc(ModelVocabularies.Meta, "linkable", "Marks this object property as supporting external links")

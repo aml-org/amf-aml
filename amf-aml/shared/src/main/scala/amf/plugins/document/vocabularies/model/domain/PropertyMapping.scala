@@ -21,14 +21,10 @@ object LiteralPropertyCollection    extends PropertyClassification
 object ExternalLinkProperty         extends PropertyClassification
 
 case class PropertyMapping(fields: Fields, annotations: Annotations)
-    extends DomainElement
+    extends PropertyLikeMapping[PropertyMappingModel.type]
     with MergeableMapping
-    with NodeWithDiscriminator[PropertyMapping] {
+    with NodeWithDiscriminator[PropertyMappingModel.type] {
 
-  def name(): StrField                = fields.field(Name)
-  def nodePropertyMapping(): StrField = fields.field(NodePropertyMapping)
-
-  def literalRange(): StrField     = fields.field(LiteralRange)
   def mapKeyProperty(): StrField   = fields.field(MapKeyProperty)
   def mapValueProperty(): StrField = fields.field(MapValueProperty)
 
@@ -45,11 +41,6 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
   def unique(): BoolField             = fields.field(Unique)
   def externallyLinkable(): BoolField = fields.field(ExternallyLinkable)
 
-  def withName(name: String): PropertyMapping = set(Name, name)
-  def withNodePropertyMapping(propertyId: String): PropertyMapping =
-    set(NodePropertyMapping, propertyId)
-  def withLiteralRange(range: String): PropertyMapping =
-    set(LiteralRange, range)
   def withMapKeyProperty(key: String, annotations: Annotations = Annotations()): PropertyMapping =
     set(MapKeyProperty, AmfScalar(key, annotations))
   def withMapValueProperty(value: String, annotations: Annotations = Annotations()): PropertyMapping =

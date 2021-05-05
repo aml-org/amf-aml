@@ -5,6 +5,6 @@ import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.vocabulary.Namespace
 
 trait NodeMappableModel {
-  val Name =
+  val Name: Field =
     Field(Str, Namespace.Core + "name", ModelDoc(ModelVocabularies.Core, "name", "Name of the node mappable element"))
 }

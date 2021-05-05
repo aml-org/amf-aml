@@ -2,13 +2,13 @@ package amf.plugins.document.vocabularies.model.domain
 import amf.core.model.StrField
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.Annotations
-import amf.plugins.document.vocabularies.metamodel.domain.UnionNodeMappingModel._
+import amf.plugins.document.vocabularies.metamodel.domain.NodeWithDiscriminatorModel
 
-trait NodeWithDiscriminator[T] extends DomainElement {
-  def objectRange(): Seq[StrField]      = fields.field(ObjectRange)
-  def typeDiscriminatorName(): StrField = fields.field(TypeDiscriminatorName)
+trait NodeWithDiscriminator[M <: NodeWithDiscriminatorModel] extends DomainElement with HasObjectRange[M] {
+
+  def typeDiscriminatorName(): StrField = fields.field(meta.TypeDiscriminatorName)
   def typeDiscriminator(): Map[String, String] =
-    Option(fields(TypeDiscriminator)).map { disambiguator: String =>
+    Option(fields(meta.TypeDiscriminator)).map { disambiguator: String =>
       disambiguator.split(",").foldLeft(Map[String, String]()) {
         case (acc, typeMapping) =>
           val pair = typeMapping.split("->")
@@ -16,13 +16,14 @@ trait NodeWithDiscriminator[T] extends DomainElement {
       }
     }.orNull
 
-  def withObjectRange(range: Seq[String]): T     = set(ObjectRange, range).asInstanceOf[T]
-  def withTypeDiscriminatorName(name: String): T = set(TypeDiscriminatorName, name).asInstanceOf[T]
+  def withTypeDiscriminatorName(name: String): this.type = set(meta.TypeDiscriminatorName, name)
   def withTypeDiscriminator(typesMapping: Map[String, String],
                             entryAnnotations: Annotations = Annotations(),
-                            valueAnnotations: Annotations = Annotations()): T =
-    set(TypeDiscriminator,
+                            valueAnnotations: Annotations = Annotations()): this.type =
+    set(meta.TypeDiscriminator,
         AmfScalar(typesMapping.map { case (a, b) => s"$a->$b" }.mkString(","), valueAnnotations),
         entryAnnotations)
-      .asInstanceOf[T]
+
+  override def meta: M
+
 }

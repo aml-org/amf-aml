@@ -1,4 +1,5 @@
 package amf.plugins.document.vocabularies.emitters.instances
+import amf.plugins.document.vocabularies.metamodel.domain.NodeWithDiscriminatorModel
 import amf.plugins.document.vocabularies.model.domain.{
   DialectDomainElement,
   NodeMapping,
@@ -6,7 +7,8 @@ import amf.plugins.document.vocabularies.model.domain.{
   UnionNodeMapping
 }
 
-case class DiscriminatorHelper(mapping: NodeWithDiscriminator[_], dialectEmitter: AmlEmittersHelper) {
+case class DiscriminatorHelper(mapping: NodeWithDiscriminator[_ <: NodeWithDiscriminatorModel],
+                               dialectEmitter: AmlEmittersHelper) {
   // maybe we have a discriminator
   val discriminator: Option[Map[String, String]] =
     Option(mapping.typeDiscriminator()).orElse {

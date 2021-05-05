@@ -19,24 +19,24 @@ abstract class PropertyTerm(override private[amf] val _internal: InternalPropert
   def range: StrField                     = _internal.range
   def subPropertyOf: ClientList[StrField] = _internal.subPropertyOf.asClient
 
-  def withName(name: String) = {
+  def withName(name: String): PropertyTerm = {
     _internal.withName(name)
     this
   }
-  def withDisplayName(displayName: String) = {
+  def withDisplayName(displayName: String): PropertyTerm = {
     _internal.withDisplayName(displayName)
     this
   }
-  def withDescription(description: String) = {
+  def withDescription(description: String): PropertyTerm = {
     _internal.withDescription(description)
     this
   }
-  def withRange(range: String) = {
+  def withRange(range: String): PropertyTerm = {
     _internal.withRange(range)
     this
   }
 
-  def withSubClasOf(superProperties: ClientList[String]) = {
+  def withSubClasOf(superProperties: ClientList[String]): PropertyTerm = {
     _internal.withSubClassOf(superProperties.asInternal)
     this
   }
