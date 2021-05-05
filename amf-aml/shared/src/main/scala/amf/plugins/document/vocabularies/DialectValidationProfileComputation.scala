@@ -9,13 +9,17 @@ object DialectValidationProfileComputation {
 
   def computeProfileFor(dialect: Dialect, registry: DialectsRegistry): ValidationProfile = {
     val header = dialect.header
-    registry.validations.get(header) match {
+    registry.registeredValidationProfileOf(dialect) match {
       case Some(profile) => profile
       case _ =>
         val resolvedDialect = DialectResolutionPipeline().transform(dialect, dialect.errorHandler())
         val profile         = new AMFDialectValidations(resolvedDialect).profile()
-        registry.validations += (header -> profile)
         profile
     }
+  }
+
+  def computeProfileOf(dialect: Dialect): ValidationProfile = {
+    val resolvedDialect = DialectResolutionPipeline().transform(dialect, dialect.errorHandler())
+    new AMFDialectValidations(resolvedDialect).profile()
   }
 }

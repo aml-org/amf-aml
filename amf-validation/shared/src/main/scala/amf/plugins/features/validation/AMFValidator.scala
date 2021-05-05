@@ -29,7 +29,7 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
 
   // All the profiles are collected here, plugins can generate their own profiles
   protected def profiles: Map[String, ValidationProfile] =
-    AMFPluginsRegistry.staticCofiguration.registry.constraintsRules.map {
+    AMFPluginsRegistry.staticConfiguration.registry.constraintsRules.map {
       case (profileName, profile) => (profileName.p, profile)
     }
 
@@ -39,8 +39,8 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
       case (acc, domainPlugin: AMFValidationPlugin) =>
         val toPut =
           domainPlugin.domainValidationProfiles.foldLeft(Map[String, Seq[AMFValidatePlugin]]()) {
-            case (accProfiles, profileName) =>
-              accProfiles.updated(profileName.name.p, domainPlugin.getRemodValidatePlugins())
+            case (accProfiles, profile) =>
+              accProfiles.updated(profile.name.p, domainPlugin.getRemodValidatePlugins())
           }
         acc ++ toPut
       case (acc, _) => acc

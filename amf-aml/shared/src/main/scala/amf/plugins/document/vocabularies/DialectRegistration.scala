@@ -12,16 +12,15 @@ import scala.concurrent.{ExecutionContext, Future}
 trait DialectRegistration { this: DialectsRegistry =>
   def register(dialect: Dialect): DialectsRegistry = {
     val cloned = dialect.cloneUnit().asInstanceOf[Dialect]
-    if (!cloned.resolved) {
-      resolveDialect(cloned)
-    }
+    if (!cloned.resolved) resolveDialect(cloned)
+    val profile = DialectValidationProfileComputation.computeProfileOf(cloned)
     setEnv {
       env()
         .withPlugins(
             new AMLDialectInstanceParsingPlugin(cloned) :: new AMLDialectInstanceRenderingPlugin(cloned) :: Nil)
+        .withValidationProfile(profile)
     }
     invalidateCaches()
-    validations -= dialect.header
     this
   }
 
