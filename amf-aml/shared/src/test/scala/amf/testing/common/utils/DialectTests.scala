@@ -58,11 +58,11 @@ trait DialectTests
   def vendorToSyntax(vendor: Vendor): String = {
 
     vendor match {
-      case Amf                          => "application/ld+json"
-      case Payload                      => "application/amf+json"
-      case Raml10 | Raml08 | Raml | Aml => "application/yaml"
-      case Oas | Oas20 | Oas30          => "application/json"
-      case _                            => "text/plain"
+      case Amf                   => "application/ld+json"
+      case Payload               => "application/amf+json"
+      case Raml10 | Raml08 | Aml => "application/yaml"
+      case Oas20 | Oas30         => "application/json"
+      case _                     => "text/plain"
     }
   }
 
