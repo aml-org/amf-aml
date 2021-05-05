@@ -6,11 +6,11 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.resolution.stages.helpers.ModelReferenceResolver
 import amf.core.resolution.stages.selectors.LinkSelector
-import amf.core.resolution.stages.{ResolutionStage}
+import amf.core.resolution.stages.{TransformationStep}
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
-class DialectInstanceReferencesResolutionStage() extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+class DialectInstanceReferencesResolutionStage() extends TransformationStep {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     new DialectInstanceReferencesResolution()(errorHandler).resolve(model)
   }
 }

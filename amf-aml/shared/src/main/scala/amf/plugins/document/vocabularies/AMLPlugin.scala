@@ -14,7 +14,7 @@ import amf.core.parser.{ParserContext, ReferenceHandler, _}
 import amf.core.rdf.RdfModel
 import amf.core.registries.{AMFDomainEntityResolver, AMFPluginsRegistry}
 import amf.core.remote.{Aml, Platform}
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.ShaclReportAdaptation
@@ -91,7 +91,7 @@ trait AMLPlugin
         "json-pointer-ref" -> JsonPointerRef
     )
 
-  override val pipelines: Map[String, ResolutionPipeline] = Map(
+  override val pipelines: Map[String, TransformationPipeline] = Map(
       DefaultAMLTransformationPipeline.name -> DefaultAMLTransformationPipeline(),
       AMLEditingPipeline.name               -> AMLEditingPipeline() // hack to maintain compatibility with legacy behaviour
   )

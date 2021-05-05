@@ -2,13 +2,13 @@ package amf.plugins.document.vocabularies.resolution.stages
 
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
 import amf.utils.internal.AmlExtensionSyntax._
 
-class DialectNodeExtensionStage() extends ResolutionStage() {
+class DialectNodeExtensionStage() extends TransformationStep() {
 
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     model match {
       case declarationModel: DeclaresModel =>
         declarationModel.declares.foreach {

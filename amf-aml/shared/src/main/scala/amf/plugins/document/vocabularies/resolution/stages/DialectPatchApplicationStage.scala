@@ -6,7 +6,7 @@ import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.core.parser.Value
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.metamodel.domain.MergePolicies._
 import amf.plugins.document.vocabularies.model.document.{DialectInstance, DialectInstancePatch}
@@ -15,8 +15,8 @@ import amf.validation.DialectValidations.InvalidDialectPatch
 
 import scala.language.postfixOps
 
-class DialectPatchApplicationStage() extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+class DialectPatchApplicationStage() extends TransformationStep {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     new DialectPatchApplication()(errorHandler).resolve(model)
   }
 }

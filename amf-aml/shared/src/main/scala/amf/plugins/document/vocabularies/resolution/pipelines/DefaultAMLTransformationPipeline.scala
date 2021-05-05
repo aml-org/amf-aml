@@ -4,16 +4,16 @@ import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Aml
-import amf.core.resolution.pipelines.ResolutionPipeline
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstancePatch}
 
-class DefaultAMLTransformationPipeline(override val name: String) extends ResolutionPipeline {
-  override def steps: Seq[ResolutionStage] = Seq(RedirectResolutionByModel)
+class DefaultAMLTransformationPipeline(override val name: String) extends TransformationPipeline {
+  override def steps: Seq[TransformationStep] = Seq(RedirectResolutionByModel)
 }
 
-private object RedirectResolutionByModel extends ResolutionStage {
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+private object RedirectResolutionByModel extends TransformationStep {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
     model match {
       case _: DialectInstancePatch => DialectInstancePatchResolutionPipeline().transform(model, errorHandler)
       case _: Dialect              => DialectResolutionPipeline().transform(model, errorHandler)
@@ -23,12 +23,12 @@ private object RedirectResolutionByModel extends ResolutionStage {
 }
 
 object DefaultAMLTransformationPipeline {
-  val name: String                              = PipelineName.from(Aml.name, ResolutionPipeline.DEFAULT_PIPELINE)
+  val name: String                              = PipelineName.from(Aml.name, TransformationPipeline.DEFAULT_PIPELINE)
   def apply(): DefaultAMLTransformationPipeline = new DefaultAMLTransformationPipeline(name)
   private[amf] def editing()                    = new DefaultAMLTransformationPipeline(name)
 }
 
 object AMLEditingPipeline {
-  val name: String                              = PipelineName.from(Aml.name, ResolutionPipeline.EDITING_PIPELINE)
+  val name: String                              = PipelineName.from(Aml.name, TransformationPipeline.EDITING_PIPELINE)
   def apply(): DefaultAMLTransformationPipeline = DefaultAMLTransformationPipeline.editing()
 }

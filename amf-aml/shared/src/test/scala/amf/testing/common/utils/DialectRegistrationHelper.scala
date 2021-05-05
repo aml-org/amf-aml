@@ -4,7 +4,7 @@ import amf.client.parse.DefaultParserErrorHandler
 import amf.core.errorhandling.{ErrorHandler, UnhandledErrorHandler}
 import amf.core.remote.Aml
 import amf.core.remote.Vendor.AML
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeResolver
 import amf.core.unsafe.PlatformBuilder.platform
 import amf.core.{AMFCompiler, CompilerContextBuilder}
@@ -20,7 +20,7 @@ trait DialectRegistrationHelper {
     for {
       baseUnit <- new AMFCompiler(context, None, Some(Aml.name)).build()
       dialect  <- Future.successful(baseUnit.asInstanceOf[Dialect])
-      _        <- Future.successful(RuntimeResolver.resolve(AML.name, dialect, ResolutionPipeline.DEFAULT_PIPELINE, eh))
+      _        <- Future.successful(RuntimeResolver.resolve(AML.name, dialect, TransformationPipeline.DEFAULT_PIPELINE, eh))
       _        <- Future.successful(AMLPlugin.registry.register(dialect))
       result   <- fn(dialect)
       _        <- Future.successful(AMLPlugin.registry.reset())

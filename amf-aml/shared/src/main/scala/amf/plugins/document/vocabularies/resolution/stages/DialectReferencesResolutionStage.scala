@@ -3,7 +3,7 @@ package amf.plugins.document.vocabularies.resolution.stages
 import amf.core.annotations.Aliases
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.resolution.stages.ResolutionStage
+import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.plugins.document.vocabularies.model.domain.{External, NodeMappable, NodeMapping, UnionNodeMapping}
@@ -11,7 +11,7 @@ import amf.utils.internal.AmlExtensionSyntax._
 
 import scala.collection.mutable
 
-class DialectReferencesResolutionStage() extends ResolutionStage() {
+class DialectReferencesResolutionStage() extends TransformationStep() {
 
   def dereference(nodeMappable: NodeMappable, finalDeclarations: mutable.Map[String, NodeMappable]): NodeMappable = {
     finalDeclarations.get(nodeMappable.id) match {
@@ -131,7 +131,7 @@ class DialectReferencesResolutionStage() extends ResolutionStage() {
     }
   }
 
-  override def resolve[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     val finalDeclarationsMap = mutable.Map[String, NodeMappable]()
     val unitDeclarations =
       model.asInstanceOf[DeclaresModel].declares.filter(_.isInstanceOf[NodeMappable]).asInstanceOf[Seq[NodeMappable]]
