@@ -2,6 +2,7 @@ package amf.plugins.document.vocabularies
 
 import amf.client.remod.amfcore.plugins.validate.ValidationResult
 import amf.core.model.document.BaseUnit
+import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{EffectiveValidations, ShaclReportAdaptation}
@@ -18,7 +19,8 @@ class AMLValidator(registry: DialectsRegistry) extends ShaclReportAdaptation {
 
     baseUnit match {
       case dialectInstance: DialectInstanceUnit =>
-        val resolvedModel           = DialectInstanceTransformationPipeline().transform(dialectInstance, baseUnit.errorHandler())
+        val pipelineRunner          = TransformationPipelineRunner(baseUnit.errorHandler())
+        val resolvedModel           = pipelineRunner.run(dialectInstance, DialectInstanceTransformationPipeline())
         val dependenciesValidations = computeValidationProfilesOfDependencies(dialectInstance)
 
         for {

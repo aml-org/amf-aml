@@ -4,7 +4,7 @@ import amf.client.remod.amfcore.resolution.PipelineName
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Aml
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstancePatch}
 
@@ -13,13 +13,15 @@ class DefaultAMLTransformationPipeline(override val name: String) extends Transf
 }
 
 private object RedirectResolutionByModel extends TransformationStep {
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+    val runner = TransformationPipelineRunner(errorHandler)
     model match {
-      case _: DialectInstancePatch => DialectInstancePatchTransformationPipeline().transform(model, errorHandler)
-      case _: Dialect              => DialectTransformationPipeline().transform(model, errorHandler)
-      case _: DialectInstance      => DialectInstanceTransformationPipeline().transform(model, errorHandler)
+      case _: DialectInstancePatch => runner.run(model, DialectInstancePatchTransformationPipeline())
+      case _: Dialect              => runner.run(model, DialectTransformationPipeline())
+      case _: DialectInstance      => runner.run(model, DialectInstanceTransformationPipeline())
       case _                       => model
     }
+  }
 }
 
 object DefaultAMLTransformationPipeline {
