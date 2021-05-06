@@ -10,6 +10,8 @@ import scala.concurrent.{ExecutionContext, Future}
 
 trait DefaultAMLInitialization extends AsyncBeforeAndAfterEach {
   override protected def beforeEach(): Future[Unit] = DefaultAMLInitialization.init
+
+  override protected def afterEach(): Future[Unit] = Future.successful(AMLPlugin.registry.reset())
 }
 
 object DefaultAMLInitialization {
