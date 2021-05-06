@@ -6,13 +6,10 @@ import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
 import amf.client.remod.parsing.{AMLDialectInstanceParsingPlugin, AMLDialectParsingPlugin, AMLVocabularyParsingPlugin}
-import amf.client.remod.rendering.{
-  AMLDialectInstanceRenderingPlugin,
-  AMLDialectRenderingPlugin,
-  AMLVocabularyRenderingPlugin
-}
+import amf.client.remod.rendering.{AMLDialectInstanceRenderingPlugin, AMLDialectRenderingPlugin, AMLVocabularyRenderingPlugin}
 import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
-import amf.core.resolution.pipelines.TransformationPipeline
+import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.{AMFCompiler, CompilerContextBuilder}
@@ -20,7 +17,8 @@ import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceUnit}
-import amf.plugins.document.vocabularies.resolution.pipelines.DefaultAMLTransformationPipeline
+import amf.plugins.document.vocabularies.resolution.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
+import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.mulesoft.common.collections.FilterType
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -142,15 +140,20 @@ private[amf] object AMLConfiguration extends PlatformSecrets {
 
   // TODO: what about nested $dialect references?
   def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
-    var env       = predefined()
+    val env       = predefined()
     val collector = new DialectReferencesCollector
+    val runner = TransformationPipelineRunner(UnhandledErrorHandler)
     collector.collectFrom(url, mediaType).map { dialects =>
-      dialects.foreach { dialect =>
-        val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
-        val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
-        env = env.withPlugins(List(parsing, rendering))
-      }
-      env
+      dialects
+        .map(d => runner.run(d, DialectTransformationPipeline()))
+        .foldLeft(env) { (env, dialect) =>
+          val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
+          val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
+          val profile                                      = new AMFDialectValidations(dialect).profile()
+          env
+            .withPlugins(List(parsing, rendering))
+            .withValidationProfile(profile)
+        }
     }
   }
 }

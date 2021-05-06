@@ -9,14 +9,17 @@ import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 object DialectValidationProfileComputation {
 
   def computeProfileFor(dialect: Dialect, registry: DialectsRegistry): ValidationProfile = {
-    val header = dialect.header
-    registry.validations.get(header) match {
+    registry.registeredValidationProfileOf(dialect) match {
       case Some(profile) => profile
       case _ =>
-        val runner          = TransformationPipelineRunner(dialect.errorHandler())
-        val resolvedDialect = runner.run(dialect, DialectTransformationPipeline())
-        val profile         = new AMFDialectValidations(resolvedDialect).profile()
-        registry.validations += (header -> profile)
+        val copied = dialect.cloneUnit().asInstanceOf[Dialect]
+        val nextDialect =
+          if (!copied.resolved) {
+            val runner          = TransformationPipelineRunner(copied.errorHandler())
+            runner.run(copied, DialectTransformationPipeline())
+          }
+          else copied
+        val profile = new AMFDialectValidations(nextDialect).profile()
         profile
     }
   }
