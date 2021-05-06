@@ -12,7 +12,7 @@ import amf.client.remod.rendering.{
   AMLVocabularyRenderingPlugin
 }
 import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
-import amf.core.resolution.pipelines.ResolutionPipeline
+import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.{AMFCompiler, CompilerContextBuilder}
@@ -63,7 +63,7 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
   override def withValidationProfile(profile: ValidationProfile): AMLConfiguration =
     super._withValidationProfile(profile)
 
-  override def withTransformationPipeline(pipeline: ResolutionPipeline): AMLConfiguration =
+  override def withTransformationPipeline(pipeline: TransformationPipeline): AMLConfiguration =
     super._withTransformationPipeline(pipeline)
 
   /**
@@ -71,7 +71,7 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
     * @param pipelines
     * @return
     */
-  override private[amf] def withTransformationPipelines(pipelines: List[ResolutionPipeline]): AMLConfiguration =
+  override private[amf] def withTransformationPipelines(pipelines: List[TransformationPipeline]): AMLConfiguration =
     super._withTransformationPipelines(pipelines)
 
   override def withRenderOptions(renderOptions: RenderOptions): AMLConfiguration =

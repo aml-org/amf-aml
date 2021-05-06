@@ -6,16 +6,21 @@ import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.resolution.stages.helpers.ModelReferenceResolver
 import amf.core.resolution.stages.selectors.LinkSelector
-import amf.core.resolution.stages.{ResolutionStage}
+import amf.core.resolution.stages.{TransformationStep}
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
-class DialectInstanceReferencesResolutionStage()(override implicit val errorHandler: ErrorHandler)
-    extends ResolutionStage() {
+class DialectInstanceReferencesResolutionStage() extends TransformationStep {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+    new DialectInstanceReferencesResolution()(errorHandler).resolve(model)
+  }
+}
+
+private class DialectInstanceReferencesResolution(implicit errorHandler: ErrorHandler) {
   var model: Option[BaseUnit]                       = None
   var modelResolver: Option[ModelReferenceResolver] = None
   var mutuallyRecursive: Seq[String]                = Nil
 
-  override def resolve[T <: BaseUnit](model: T): T = {
+  def resolve[T <: BaseUnit](model: T): T = {
     this.model = Some(model)
     this.modelResolver = Some(new ModelReferenceResolver(model))
     model.transform(LinkSelector, transform).asInstanceOf[T]
@@ -49,11 +54,10 @@ class DialectInstanceReferencesResolutionStage()(override implicit val errorHand
   def resolveLinked(element: DomainElement): DomainElement = {
     if (mutuallyRecursive.contains(element.id)) {
       element
-    }
-    else {
+    } else {
       val nested = DialectInstance()
       nested.fields.setWithoutId(DocumentModel.Encodes, element)
-      val result = new DialectInstanceReferencesResolutionStage()
+      val result = new DialectInstanceReferencesResolution()
         .recursiveResolveInvocation(nested, modelResolver, mutuallyRecursive ++ Seq(element.id))
       result.asInstanceOf[DialectInstance].encodes
     }
