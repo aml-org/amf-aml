@@ -148,6 +148,7 @@ private[amf] object AMLConfiguration extends PlatformSecrets {
       dialects.foreach { dialect =>
         val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
         val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
+        env = env.withPlugins(List(parsing, rendering))
       }
       env
     }

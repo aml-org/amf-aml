@@ -8,7 +8,6 @@ import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 object DialectValidationProfileComputation {
 
   def computeProfileFor(dialect: Dialect, registry: DialectsRegistry): ValidationProfile = {
-    val header = dialect.header
     registry.registeredValidationProfileOf(dialect) match {
       case Some(profile) => profile
       case _ =>
