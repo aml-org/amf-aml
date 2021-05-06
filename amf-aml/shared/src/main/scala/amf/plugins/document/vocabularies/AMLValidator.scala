@@ -6,7 +6,7 @@ import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{EffectiveValidations, ShaclReportAdaptation}
 import amf.plugins.document.vocabularies.model.document.DialectInstanceUnit
-import amf.plugins.document.vocabularies.resolution.pipelines.DialectInstanceResolutionPipeline
+import amf.plugins.document.vocabularies.resolution.pipelines.DialectInstanceTransformationPipeline
 import amf.{ProfileName, Raml10Profile}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -18,7 +18,7 @@ class AMLValidator(registry: DialectsRegistry) extends ShaclReportAdaptation {
 
     baseUnit match {
       case dialectInstance: DialectInstanceUnit =>
-        val resolvedModel           = DialectInstanceResolutionPipeline().transform(dialectInstance, baseUnit.errorHandler())
+        val resolvedModel           = DialectInstanceTransformationPipeline().transform(dialectInstance, baseUnit.errorHandler())
         val dependenciesValidations = computeValidationProfilesOfDependencies(dialectInstance)
 
         for {

@@ -13,11 +13,11 @@ class DefaultAMLTransformationPipeline(override val name: String) extends Transf
 }
 
 private object RedirectResolutionByModel extends TransformationStep {
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T =
     model match {
-      case _: DialectInstancePatch => DialectInstancePatchResolutionPipeline().transform(model, errorHandler)
-      case _: Dialect              => DialectResolutionPipeline().transform(model, errorHandler)
-      case _: DialectInstance      => DialectInstanceResolutionPipeline().transform(model, errorHandler)
+      case _: DialectInstancePatch => DialectInstancePatchTransformationPipeline().transform(model, errorHandler)
+      case _: Dialect              => DialectTransformationPipeline().transform(model, errorHandler)
+      case _: DialectInstance      => DialectInstanceTransformationPipeline().transform(model, errorHandler)
       case _                       => model
     }
 }

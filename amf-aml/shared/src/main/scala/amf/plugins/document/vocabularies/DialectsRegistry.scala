@@ -25,7 +25,7 @@ import amf.plugins.document.vocabularies.plugin.headers.ExtensionHeader.{
   DialectLibraryHeader,
   VocabularyHeader
 }
-import amf.plugins.document.vocabularies.resolution.pipelines.DialectResolutionPipeline
+import amf.plugins.document.vocabularies.resolution.pipelines.DialectTransformationPipeline
 import org.mulesoft.common.collections.FilterType
 import org.mulesoft.common.core._
 import org.mulesoft.common.functional.MonadInstances._
@@ -43,7 +43,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
   private[amf] def setEnv(env: AMFGraphConfiguration): Unit = AMFPluginsRegistry.staticCofiguration = env
 
   private[amf] def resolveDialect(dialect: Dialect) =
-    DialectResolutionPipeline().transform(dialect, DefaultErrorHandler())
+    DialectTransformationPipeline().transform(dialect, DefaultErrorHandler())
 
   private[amf] def invalidateCaches(): Unit = {
     findType.invalidateCache()

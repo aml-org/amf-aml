@@ -131,7 +131,7 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
     }
   }
 
-  override def apply[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     val finalDeclarationsMap = mutable.Map[String, NodeMappable]()
     val unitDeclarations =
       model.asInstanceOf[DeclaresModel].declares.filter(_.isInstanceOf[NodeMappable]).asInstanceOf[Seq[NodeMappable]]
