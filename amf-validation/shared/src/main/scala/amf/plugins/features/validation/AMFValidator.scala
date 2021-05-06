@@ -119,7 +119,10 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
       .get(profileName.profile)
       .map { plugins =>
         val validations = computeValidations(profileName)
-        val options     = new ValidationOptions(profileName, env, validations)
+        if (validations.effective.isEmpty) {
+          throw new Exception("EMPTY VALIDATION PROFILE")
+        }
+        val options = new ValidationOptions(profileName, env, validations)
         if (resolved) model.resolved = true
         FailFastValidationRunner(plugins, options).run(model)
 
