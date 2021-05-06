@@ -34,12 +34,12 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "5.0.0-SUPER-SECRET-SNAPSHOT"
+val amfCoreVersion = "5.0.0-SUPER-SECRET-SNAPSHOT-APIMF-2979-0"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
-lazy val amfCoreLibJVM = "com.github.amlorg" %% "amf-core" % amfCoreVersion
-lazy val amfCoreLibJS  = "com.github.amlorg" %% "amf-core_sjs0.6" % amfCoreVersion
+lazy val amfCoreLibJVM = "com.github.amlorg" %% "amf-core" % amfCoreVersion changing()
+lazy val amfCoreLibJS  = "com.github.amlorg" %% "amf-core_sjs0.6" % amfCoreVersion changing()
 
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
