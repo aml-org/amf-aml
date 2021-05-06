@@ -171,6 +171,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
       }
   }
 
+  // TODO - ARM: Should be erased as configuration should be incremental, not decremental
   def unregisterDialect(uri: String): Unit = {
     for {
       plugin <- instancePlugins.find(_.dialect.location().contains(uri))
@@ -184,8 +185,10 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
     }
   }
 
+  // TODO - ARM: Should be erased as configuration should be incremental, not decremental
   def remove(uri: String): Unit = unregisterDialect(uri)
 
+  // TODO - ARM: Should be erased as configuration should be incremental, not decremental
   def reset(): Unit = {
     setEnv {
       instancePlugins.foldLeft(env()) { (env, p) =>
