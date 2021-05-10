@@ -24,12 +24,21 @@ import org.mulesoft.common.collections.FilterType
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 
-private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFResolvers,
-                                    override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
-                                    override private[amf] val registry: AMFRegistry,
-                                    override private[amf] val logger: AMFLogger,
-                                    override private[amf] val listeners: Set[AMFEventListener],
-                                    override private[amf] val options: AMFOptions)
+/**
+  * The configuration object required for using AML
+  * @param resolvers {@link amf.client.remod.amfcore.config.AMFResolvers}
+  * @param errorHandlerProvider {@link amf.client.remod.ErrorHandlerProvider}
+  * @param registry {@link amf.client.remod.amfcore.registry.AMFRegistry}
+  * @param logger {@link amf.client.remod.amfcore.config.AMFLogger}
+  * @param listeners a Set of {@link amf.client.remod.amfcore.config.AMFEventListener}
+  * @param options {@link amf.client.remod.amfcore.config.AMFOptions}
+  */
+class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
+                                     override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
+                                     override private[amf] val registry: AMFRegistry,
+                                     override private[amf] val logger: AMFLogger,
+                                     override private[amf] val listeners: Set[AMFEventListener],
+                                     override private[amf] val options: AMFOptions)
     extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
 
   override protected def copy(resolvers: AMFResolvers,
@@ -109,7 +118,7 @@ private[amf] class AMLConfiguration(override private[amf] val resolvers: AMFReso
   def forInstance(d: DialectInstanceUnit) = throw new UnsupportedOperationException()
 }
 
-private[amf] object AMLConfiguration extends PlatformSecrets {
+object AMLConfiguration extends PlatformSecrets {
 
   /**
     * Predefined env to deal with AML documents based on
