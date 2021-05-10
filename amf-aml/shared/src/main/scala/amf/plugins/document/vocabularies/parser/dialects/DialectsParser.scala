@@ -3,7 +3,6 @@ package amf.plugins.document.vocabularies.parser.dialects
 import amf.core.Root
 import amf.core.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
 import amf.core.metamodel.document.FragmentModel
-import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
@@ -16,7 +15,6 @@ import amf.core.parser.{
   ValueNode,
   YNodeLikeOps
 }
-import amf.core.remote.Cache
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
@@ -631,52 +629,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         adopt(propertyMapping)
         ctx.closedNode("propertyMapping", propertyMapping.id, map)
 
-        map.key("propertyTerm") match {
-          case Some(e) =>
-            val value          = ValueNode(e.value)
-            val propertyTermId = value.string().toString
-            ctx.declarations.findPropertyTerm(propertyTermId, SearchScope.All) match {
-              case Some(propertyTerm) =>
-                propertyMapping.withNodePropertyMapping(propertyTerm.id)
-              case _ =>
-                ctx.eh.violation(DialectError,
-                                 propertyMapping.id,
-                                 s"Cannot find property term with alias $propertyTermId",
-                                 e.value)
-            }
-          case _ =>
-            propertyMapping.withNodePropertyMapping(
-                (Namespace.Data + entry.key.as[YScalar].text.urlComponentEncoded).iri())
-        }
-
-        map.key(
-            "range",
-            entry => {
-              entry.value.tagType match {
-                case YType.Seq =>
-                  propertyMapping.withObjectRange(entry.value.as[Seq[String]])
-                case _ =>
-                  val value = ValueNode(entry.value)
-                  val range = value.string().toString
-                  range match {
-                    case "guid" =>
-                      propertyMapping.withLiteralRange((Namespace.Shapes + "guid").iri())
-                    case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
-                        "time" | "date" | "anyType" =>
-                      propertyMapping.withLiteralRange((Namespace.Xsd + range).iri())
-                    case "anyUri"  => propertyMapping.withLiteralRange(DataType.AnyUri)
-                    case "link"    => propertyMapping.withLiteralRange((Namespace.Shapes + "link").iri())
-                    case "number"  => propertyMapping.withLiteralRange(DataType.Number)
-                    case "uri"     => propertyMapping.withLiteralRange(DataType.AnyUri)
-                    case "any"     => propertyMapping.withLiteralRange(DataType.Any)
-                    case "anyNode" => propertyMapping.withObjectRange(Seq((Namespace.Meta + "anyNode").iri()))
-                    case nodeMappingId =>
-                      propertyMapping
-                        .withObjectRange(Seq(nodeMappingId)) // temporary until we can resolve all nodeMappings after finishing parsing declarations
-                  }
-              }
-            }
-        )
+        PropertyTermParser(map, propertyMapping).parse()
+        RangeParser(map, propertyMapping).parse()
 
         parseMapKey(map, propertyMapping)
 
