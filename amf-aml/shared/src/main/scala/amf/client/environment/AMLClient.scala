@@ -7,8 +7,7 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanc
 import scala.concurrent.{ExecutionContext, Future}
 
 /**
-  * AML Client object
-  * @param configuration {@link amf.client.environment.AMLConfiguration}
+  * The AML Client provides common AML use cases and handles typed results
   */
 class AMLClient private[amf] (protected override val configuration: AMLConfiguration)
     extends AMFGraphClient(configuration) {
