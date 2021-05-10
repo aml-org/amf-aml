@@ -2,6 +2,7 @@ package amf.plugins.document.vocabularies.parser.instances
 
 import amf.core.parser._
 import amf.plugins.document.vocabularies.model.document.Dialect
+import amf.plugins.document.vocabularies.model.domain.NodeMappable.AnyNodeMappable
 import amf.plugins.document.vocabularies.model.domain.{
   DialectDomainElement,
   DocumentMapping,
@@ -9,7 +10,9 @@ import amf.plugins.document.vocabularies.model.domain.{
   PublicNodeMapping
 }
 import amf.plugins.document.vocabularies.parser.common.{DeclarationContext, SyntaxErrorReporter}
-import org.yaml.model.{IllegalTypeHandler, YMap, YNode, YScalar, YType}
+import org.yaml.model._
+
+import scala.language.existentials
 
 class DialectInstanceContext(var dialect: Dialect,
                              private val wrapped: ParserContext,
@@ -18,6 +21,7 @@ class DialectInstanceContext(var dialect: Dialect,
     with DeclarationContext
     with SyntaxErrorReporter {
 
+  type NodeMappable = NodeMappable.AnyNodeMappable
   var isPatch: Boolean                                           = false
   var nestedDialects: Seq[Dialect]                               = Nil
   val libraryDeclarationsNodeMappings: Map[String, NodeMappable] = parseDeclaredNodeMappings("library")
@@ -85,7 +89,7 @@ class DialectInstanceContext(var dialect: Dialect,
             findNodeMapping(declaration.mappedNode().value()) map { nodeMapping =>
               (declaration.name().value(), nodeMapping)
             }
-          } collect { case Some(res: (String, NodeMappable)) => res }
+          } collect { case Some(res: (String, AnyNodeMappable)) => res }
         }
       }
       .getOrElse(Nil)

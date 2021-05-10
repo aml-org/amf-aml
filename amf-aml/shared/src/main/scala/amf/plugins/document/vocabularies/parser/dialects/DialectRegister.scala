@@ -7,10 +7,12 @@ import amf.plugins.document.vocabularies.model.document.{DialectFragment, Vocabu
 import amf.plugins.document.vocabularies.model.domain.{ClassTerm, External, NodeMappable, PropertyTerm}
 
 case class DialectRegister()(implicit ctx: DialectContext) extends CollectionSideEffect[AmfObject] {
+  type NodeMappable = NodeMappable.AnyNodeMappable
   override def onCollect(alias: String, unit: AmfObject): Unit = {
     unit match {
       case d: Vocabulary =>
-        ctx.declarations.registerUsedVocabulary(alias, d) // to keep track of the uses: alias -> vocab, useful for annotations
+        ctx.declarations
+          .registerUsedVocabulary(alias, d) // to keep track of the uses: alias -> vocab, useful for annotations
         val library = ctx.declarations.getOrCreateLibrary(alias)
         d.declares.foreach {
           case prop: PropertyTerm => library.registerTerm(prop)

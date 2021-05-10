@@ -6,14 +6,14 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.{AmfScalar, DomainElement, Linkable}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
-import amf.plugins.document.vocabularies.metamodel.domain.UnionNodeMappingModel
+import amf.plugins.document.vocabularies.metamodel.domain.{NodeMappableModel, UnionNodeMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment}
 import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 
 case class NodeMappingEmitter(dialect: Dialect,
-                              nodeMappable: NodeMappable,
+                              nodeMappable: NodeMappable[_ <: NodeMappableModel],
                               ordering: SpecOrdering,
                               aliases: Map[String, (String, String)])
     extends EntryEmitter
@@ -26,12 +26,10 @@ case class NodeMappingEmitter(dialect: Dialect,
     if (nodeMappable.isLink) {
       if (isFragment(nodeMappable.linkTarget.get, dialect)) {
         b.entry(nodeMappable.name.value(), YNode.include(nodeMappable.linkLabel.value()))
-      }
-      else {
+      } else {
         b.entry(nodeMappable.name.value(), nodeMappable.linkLabel.value())
       }
-    }
-    else {
+    } else {
       nodeMappable match {
         case nodeMapping: NodeMapping           => emitSingleNode(b, nodeMapping)
         case unionNodeMapping: UnionNodeMapping => emitUnioNode(b, unionNodeMapping)

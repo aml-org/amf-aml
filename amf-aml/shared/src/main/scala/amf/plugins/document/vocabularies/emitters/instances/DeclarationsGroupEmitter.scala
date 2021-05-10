@@ -5,14 +5,20 @@ import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
-import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMappable, PublicNodeMapping, UnionNodeMapping}
+import amf.plugins.document.vocabularies.model.domain.{
+  DialectDomainElement,
+  NodeMappable,
+  PublicNodeMapping,
+  UnionNodeMapping
+}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 import amf.core.utils.AmfStrings
+import amf.plugins.document.vocabularies.metamodel.domain.NodeMappableModel
 
 case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                     publicNodeMapping: PublicNodeMapping,
-                                    nodeMappable: NodeMappable,
+                                    nodeMappable: NodeMappable[_ <: NodeMappableModel],
                                     instance: DialectInstanceUnit,
                                     dialect: Dialect,
                                     ordering: SpecOrdering,
@@ -67,8 +73,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
             }
           }
       )
-    }
-    else {
+    } else {
       b.entry(
           declarationsPath.head,
           _.obj { b =>

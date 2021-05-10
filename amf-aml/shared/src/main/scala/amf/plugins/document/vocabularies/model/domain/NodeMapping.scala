@@ -1,6 +1,5 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.Obj
 import amf.core.model.StrField
 import amf.core.model.domain.{DomainElement, Linkable}
 import amf.core.parser.{Annotations, Fields}
@@ -13,7 +12,7 @@ class NodeMapping(override val fields: Fields, override val annotations: Annotat
     extends DomainElement
     with Linkable
     with MergeableMapping
-    with NodeMappable {
+    with NodeMappable[NodeMappingModel.type] {
 
   override def meta: NodeMappingModel.type = NodeMappingModel
 
@@ -26,7 +25,6 @@ class NodeMapping(override val fields: Fields, override val annotations: Annotat
   def withPropertiesMapping(props: Seq[PropertyMapping]): NodeMapping = setArrayWithoutId(PropertiesMapping, props)
   def withIdTemplate(idTemplate: String): NodeMapping                 = set(IdTemplate, idTemplate)
   def withResolvedExtends(ids: Seq[String]): NodeMapping              = set(ResolvedExtends, ids)
-  override def withName(name: String): NodeMapping                    = super.withName(name).asInstanceOf[NodeMapping]
 
   /**
     * Returns the properties forming the primary key for this node.

@@ -51,8 +51,7 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
             .getOrElse(ZERO)
         }
       })
-    }
-    else {
+    } else {
       Nil
     }
   }
@@ -60,6 +59,7 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
   def nodeMappingDeclarationEmitters(dialect: Dialect,
                                      ordering: SpecOrdering,
                                      aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
+    type NodeMappable = NodeMappable.AnyNodeMappable
     val nodeMappingDeclarations: Seq[NodeMappable] = dialect.declares.collect {
       case nm: NodeMappable => nm
     }
@@ -90,8 +90,7 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
             .getOrElse(ZERO)
         }
       })
-    }
-    else {
+    } else {
       Nil
     }
   }

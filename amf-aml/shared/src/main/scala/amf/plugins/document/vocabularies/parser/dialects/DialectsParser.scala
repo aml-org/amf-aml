@@ -46,6 +46,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     with DeclarationKeyCollector
     with AnnotationsParser {
 
+  type NodeMappable = NodeMappable.AnyNodeMappable
   val map: YMap        = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
   val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(root.location)
 

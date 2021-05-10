@@ -9,10 +9,12 @@ import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
 import org.yaml.model.YPart
 
-class DialectDeclarations(var nodeMappings: Map[String, NodeMappable] = Map(),
+class DialectDeclarations(var nodeMappings: Map[String, NodeMappable[_]] = Map(),
                           errorHandler: ErrorHandler,
                           futureDeclarations: FutureDeclarations)
     extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
+
+  type NodeMappable = NodeMappable.AnyNodeMappable
 
   /** Get or create specified library. */
   override def getOrCreateLibrary(alias: String): DialectDeclarations = {

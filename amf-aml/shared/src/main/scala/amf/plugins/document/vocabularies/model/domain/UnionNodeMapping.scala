@@ -10,9 +10,7 @@ case class UnionNodeMapping(fields: Fields, annotations: Annotations)
     with Linkable
     with MergeableMapping
     with NodeWithDiscriminator[UnionNodeMappingModel.type]
-    with NodeMappable {
-
-  override def withName(name: String): UnionNodeMapping = super.withName(name).asInstanceOf[UnionNodeMapping]
+    with NodeMappable[UnionNodeMappingModel.type] {
 
   override def meta: UnionNodeMappingModel.type = UnionNodeMappingModel
 
