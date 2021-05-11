@@ -6,7 +6,11 @@ import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
 import amf.client.remod.parsing.{AMLDialectInstanceParsingPlugin, AMLDialectParsingPlugin, AMLVocabularyParsingPlugin}
-import amf.client.remod.rendering.{AMLDialectInstanceRenderingPlugin, AMLDialectRenderingPlugin, AMLVocabularyRenderingPlugin}
+import amf.client.remod.rendering.{
+  AMLDialectInstanceRenderingPlugin,
+  AMLDialectRenderingPlugin,
+  AMLVocabularyRenderingPlugin
+}
 import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
@@ -17,7 +21,10 @@ import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceUnit}
-import amf.plugins.document.vocabularies.resolution.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
+import amf.plugins.document.vocabularies.resolution.pipelines.{
+  DefaultAMLTransformationPipeline,
+  DialectTransformationPipeline
+}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.mulesoft.common.collections.FilterType
 
@@ -120,12 +127,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
 object AMLConfiguration extends PlatformSecrets {
 
-  /**
-    * Predefined env to deal with AML documents based on
-    * Predefined AMF Environment {@link amf.client.remod.AMFGraphConfiguration.predefined()}
-    *
-    * @return
-    */
+  /** Predefined environment to deal with AML documents based on AMFGraphConfiguration predefined() method */
   def predefined(): AMLConfiguration = {
     val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
 
@@ -151,7 +153,7 @@ object AMLConfiguration extends PlatformSecrets {
   def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
     val env       = predefined()
     val collector = new DialectReferencesCollector
-    val runner = TransformationPipelineRunner(UnhandledErrorHandler)
+    val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
     collector.collectFrom(url, mediaType).map { dialects =>
       dialects
         .map(d => runner.run(d, DialectTransformationPipeline()))
