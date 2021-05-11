@@ -34,7 +34,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "5.0.0-SUPER-SECRET-SNAPSHOT"
+val amfCoreVersion = "internal-flaky-fix"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
