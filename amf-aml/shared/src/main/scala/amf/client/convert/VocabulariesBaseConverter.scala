@@ -14,7 +14,7 @@ import amf.client.model.domain.{
   PublicNodeMapping => ClientPublicNodeMapping,
   VocabularyReference => ClientVocabularyReference,
   AnnotationMapping => ClientAnnotationMapping,
-  ExtensionMapping => ClientExtensionMapping
+  SemanticExtension => ClientSemanticExtension
 }
 import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.model.document.Dialect
@@ -24,7 +24,7 @@ trait VocabulariesBaseConverter
     extends CoreBaseConverter
     with PropertyMappingConverter
     with AnnotationMappingConverter
-    with ExtensionMappingConverter
+    with SemanticExtensionConverter
     with PublicNodeMappingConverter
     with DialectConverter
     with DocumentsModelConverter
@@ -90,12 +90,12 @@ trait AnnotationMappingConverter extends PlatformSecrets {
   }
 }
 
-trait ExtensionMappingConverter extends PlatformSecrets {
+trait SemanticExtensionConverter extends PlatformSecrets {
 
-  implicit object ExtensionMappingConverter extends BidirectionalMatcher[ExtensionMapping, ClientExtensionMapping] {
-    override def asClient(from: ExtensionMapping): ClientExtensionMapping =
-      platform.wrap[ClientExtensionMapping](from)
-    override def asInternal(from: ClientExtensionMapping): ExtensionMapping = from._internal
+  implicit object SemanticExtensionConverter extends BidirectionalMatcher[SemanticExtension, ClientSemanticExtension] {
+    override def asClient(from: SemanticExtension): ClientSemanticExtension =
+      platform.wrap[ClientSemanticExtension](from)
+    override def asInternal(from: ClientSemanticExtension): SemanticExtension = from._internal
   }
 }
 
