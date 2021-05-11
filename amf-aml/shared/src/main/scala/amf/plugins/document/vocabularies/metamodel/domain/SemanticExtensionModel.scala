@@ -3,7 +3,6 @@ package amf.plugins.document.vocabularies.metamodel.domain
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Iri, Str}
 import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.SemanticExtension
 

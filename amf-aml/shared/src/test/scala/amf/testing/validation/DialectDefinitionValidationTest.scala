@@ -102,4 +102,12 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
         jsonldReport = false
     )
   }
+
+  test("Validate annotation mappings & semantic extensions") {
+    validate(
+        "/annotation-mappings-invalid/dialect.yaml",
+        Some("/annotation-mappings-invalid/report.report"),
+        jsonldReport = false
+    )
+  }
 }

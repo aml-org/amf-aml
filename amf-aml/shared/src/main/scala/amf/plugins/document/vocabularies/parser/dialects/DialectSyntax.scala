@@ -4,14 +4,16 @@ import org.yaml.model.{IllegalTypeHandler, YMap, YNode, YScalar, YType}
 
 trait DialectSyntax { this: DialectContext =>
   val dialect: Map[String, Boolean] = Map(
-      "$dialect"     -> false,
-      "dialect"      -> true,
-      "version"      -> true,
-      "usage"        -> false,
-      "external"     -> false,
-      "uses"         -> false,
-      "nodeMappings" -> false,
-      "documents"    -> false
+      "$dialect"           -> false,
+      "dialect"            -> true,
+      "version"            -> true,
+      "usage"              -> false,
+      "external"           -> false,
+      "uses"               -> false,
+      "nodeMappings"       -> false,
+      "documents"          -> false,
+      "annotationMappings" -> false,
+      "extensions"         -> false
   )
 
   val library: Map[String, Boolean] = Map(
@@ -28,6 +30,12 @@ trait DialectSyntax { this: DialectContext =>
       "idTemplate" -> false,
       "patch"      -> false,
       "extends"    -> false
+  )
+
+  val annotationMapping = Map(
+      "targetNode"   -> true, // Might change to false
+      "range"        -> true,
+      "propertyTerm" -> false
   )
 
   val fragment: Map[String, Boolean] = Map(
@@ -77,6 +85,7 @@ trait DialectSyntax { this: DialectContext =>
       case "library"                 => library
       case "fragment"                => fragment
       case "nodeMapping"             => nodeMapping
+      case "annotationMapping"       => annotationMapping
       case "propertyMapping"         => propertyMapping
       case "documentsMapping"        => documentsMapping
       case "documentsMappingOptions" => documentsMappingOptions

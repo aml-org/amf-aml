@@ -6,7 +6,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.AnnotationMappingModel
 import amf.plugins.document.vocabularies.metamodel.domain.AnnotationMappingModel._
 import org.yaml.model.YMap
 
-case class AnnotationMapping(fields: Fields, annotations: Annotations)
+class AnnotationMapping(override val fields: Fields, override val annotations: Annotations)
     extends PropertyLikeMapping[AnnotationMappingModel.type] {
   def target(): StrField                               = fields.field(Target)
   def withTarget(targetIri: String): AnnotationMapping = set(Target, targetIri)
@@ -22,6 +22,5 @@ object AnnotationMapping {
 
   def apply(ast: YMap): AnnotationMapping = apply(Annotations(ast))
 
-  def apply(annotations: Annotations): AnnotationMapping =
-    AnnotationMapping(Fields(), annotations)
+  def apply(annotations: Annotations): AnnotationMapping = new AnnotationMapping(Fields(), annotations)
 }
