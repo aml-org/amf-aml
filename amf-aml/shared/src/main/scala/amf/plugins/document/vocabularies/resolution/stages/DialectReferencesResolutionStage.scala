@@ -12,6 +12,7 @@ import amf.utils.internal.AmlExtensionSyntax._
 import scala.collection.mutable
 
 class DialectReferencesResolutionStage() extends TransformationStep() {
+  type NodeMappable = NodeMappable.AnyNodeMappable
 
   def dereference(nodeMappable: NodeMappable, finalDeclarations: mutable.Map[String, NodeMappable]): NodeMappable = {
     finalDeclarations.get(nodeMappable.id) match {

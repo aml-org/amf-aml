@@ -3,8 +3,8 @@ package amf.plugins.document.vocabularies.metamodel.domain
 import amf.core.metamodel.Field
 import amf.core.metamodel.Type.{Iri, Str}
 import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
+import amf.plugins.document.vocabularies.model.domain.SemanticExtension
 
 /**
   * Defines a the relation extension name -> extension mapping to be applied to target documents. An extension is defined
@@ -15,7 +15,7 @@ import amf.core.vocabulary.{Namespace, ValueType}
   *   /myEndpoint:
   *     (extension-name): extension-range (derived from extension mapping definition)
   */
-object ExtensionMappingModel extends DomainElementModel {
+object SemanticExtensionModel extends DomainElementModel {
   val ExtensionName: Field = Field(
       Str,
       Namespace.Core + "name",
@@ -33,13 +33,13 @@ object ExtensionMappingModel extends DomainElementModel {
 
   override def fields: List[Field] = ExtensionName :: ExtensionMappingDefinition :: DomainElementModel.fields
 
-  override def modelInstance: AmfObject = ???
+  override def modelInstance: SemanticExtension = SemanticExtension()
 
   override val `type`: List[ValueType] = Namespace.Meta + "ExtensionMapping" :: DomainElementModel.`type`
 
   override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Meta,
-      "ExtensionMapping",
+      "SemanticExtension",
       "Mapping a particular extension name to an extension definition"
   )
 }

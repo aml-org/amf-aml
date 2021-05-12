@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.emitters.instances
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.annotations.Aliases.{Alias, ImportLocation, RefId}
 import amf.core.annotations.{LexicalInformation, SourceNode}
 import amf.core.emitter.BaseEmitters._
 import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.metamodel.Field
 import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.DataType
@@ -13,21 +13,17 @@ import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, ScalarNode}
 import amf.core.parser.Position.ZERO
 import amf.core.parser.{Annotations, FieldEntry, Position, Value}
 import amf.plugins.document.vocabularies.annotations.{CustomBase, CustomId, JsonPointerRef, RefInclude}
-import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
-import amf.plugins.document.vocabularies.model.document.{
-  Dialect,
-  DialectInstance,
-  DialectInstanceFragment,
-  DialectInstanceUnit
-}
+import amf.plugins.document.vocabularies.metamodel.domain.{DialectDomainElementModel, NodeMappableModel}
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceFragment, DialectInstanceUnit}
 import amf.plugins.document.vocabularies.model.domain._
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.YNode.MutRef
-import org.yaml.model.{YNode, YTag, YType}
+import org.yaml.model.{YNode, YType}
+
+import scala.language.existentials
 
 class RootDialectNodeEmitter(node: DialectDomainElement,
-                             nodeMappable: NodeMappable,
+                             nodeMappable: NodeMappable[_ <: NodeMappableModel],
                              instance: DialectInstanceUnit,
                              dialect: Dialect,
                              ordering: SpecOrdering,
@@ -72,8 +68,7 @@ class RootDialectNodeEmitter(node: DialectDomainElement,
     } yield {
       if (root.encoded().value() == node.id) {
         Nil
-      }
-      else {
+      } else {
         root.declaredNodes().foldLeft(Seq[EntryEmitter]()) {
           case (acc, publicNodeMapping) =>
             val publicMappings = findAllNodeMappings(publicNodeMapping.mappedNode().value()).map(_.id).toSet
@@ -100,8 +95,7 @@ class RootDialectNodeEmitter(node: DialectDomainElement,
                           renderOptions = renderOptions
                       ))
               }
-            }
-            else acc
+            } else acc
         }
       }
     }
@@ -110,7 +104,7 @@ class RootDialectNodeEmitter(node: DialectDomainElement,
 }
 
 case class DialectNodeEmitter(node: DialectDomainElement,
-                              nodeMappable: NodeMappable,
+                              nodeMappable: NodeMappable[_ <: NodeMappableModel],
                               references: Seq[BaseUnit],
                               dialect: Dialect,
                               ordering: SpecOrdering,
@@ -148,8 +142,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       }
       val customId = if (baseId.contains(dialect.location().getOrElse(""))) {
         baseId.replace(dialect.id, "")
-      }
-      else {
+      } else {
         baseId
       }
       emitters ++= Seq(MapEntryEmitter("$id", customId))
@@ -157,8 +150,9 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
     if (node.annotations.find(classOf[CustomBase]).isDefined) {
       node.annotations.find(classOf[CustomBase]) match {
-        case Some(customBase) if customBase.value != "true" => emitters ++= Seq(MapEntryEmitter("$base", customBase.value))
-        case _                                              => // Nothing
+        case Some(customBase) if customBase.value != "true" =>
+          emitters ++= Seq(MapEntryEmitter("$base", customBase.value))
+        case _ => // Nothing
       }
     }
 
@@ -190,7 +184,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                       .find(classOf[LexicalInformation])
                       .map(_.range.start)
                       .getOrElse(Position.ZERO)
-                    emitters ++= Seq(MapEntryEmitter(extensionName, extensionValue, tag = tagType, position = position))
+                    emitters ++= Seq(
+                        MapEntryEmitter(extensionName, extensionValue, tag = tagType, position = position))
                   case _ => // Ignore
                 }
 
@@ -311,8 +306,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               ).emit(l)
                             case _ => // ignore, error
                           }
-                        }
-                        else { // just link
+                        } else { // just link
                           emitCustomId(elem, l)
                           emitCustomBase(elem, l)
                         }
@@ -478,8 +472,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                         case _ =>
                           throw new Exception("Cannot generate object pair without scalar values for key and value")
                       }
-                    }
-                    else {
+                    } else {
                       throw new Exception("Cannot generate object pair with undefined key or value")
                     }
                   case _ => // ignore
@@ -527,16 +520,13 @@ case class DialectDomainElementLinkEmitter(node: DialectDomainElement, reference
       b.obj { m =>
         m.entry("$include", node.includeName)
       }
-    }
-    else if (node.annotations.contains(classOf[JsonPointerRef])) {
+    } else if (node.annotations.contains(classOf[JsonPointerRef])) {
       b.obj { m =>
         m.entry("$ref", node.linkLabel.option().getOrElse(node.linkTarget.get.id))
       }
-    }
-    else if (isFragmentRef(node, references)) {
+    } else if (isFragmentRef(node, references)) {
       b += YNode.include(node.includeName)
-    }
-    else {
+    } else {
       // case of library and declaration references
       TextScalarEmitter(node.linkLabel.value(), node.annotations).emit(b)
     }
@@ -629,12 +619,10 @@ private case class DialectObjectEntryEmitter(key: String,
     if (keyPropertyId.isDefined) {
       // emit map of nested objects by property
       emitMap(b, mappedElements)
-    }
-    else if (isArray) {
+    } else if (isArray) {
       // arrays of objects
       emitArray(b, mappedElements)
-    }
-    else {
+    } else {
       // single object
       emitSingleElement(b, mappedElements)
     }

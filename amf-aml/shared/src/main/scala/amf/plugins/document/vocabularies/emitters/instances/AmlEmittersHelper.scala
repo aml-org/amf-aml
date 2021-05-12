@@ -19,7 +19,8 @@ import scala.collection.mutable
 trait AmlEmittersHelper {
   val dialect: Dialect
 
-  type RefKey = String
+  type RefKey       = String
+  type NodeMappable = NodeMappable.AnyNodeMappable
 
   protected def buildReferenceAliasIndexFrom(unit: BaseUnit): Map[RefKey, (Alias, ImportLocation)] = {
     val aliases   = extractAliasesFrom(unit)
@@ -70,8 +71,7 @@ trait AmlEmittersHelper {
 
         if (location.contains(parent)) {
           location.replace(s"$parent/", "")
-        }
-        else {
+        } else {
           location.replace("file://", "")
         }
     }
@@ -100,8 +100,7 @@ trait AmlEmittersHelper {
             .getOrElse(ZERO)
         }
       })
-    }
-    else {
+    } else {
       Nil
     }
   }

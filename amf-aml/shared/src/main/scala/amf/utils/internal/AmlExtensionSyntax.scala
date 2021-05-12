@@ -6,13 +6,21 @@ import amf.core.model.domain.Linkable
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
-import amf.plugins.document.vocabularies.model.domain.{External, MergeableMapping, NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
+import amf.plugins.document.vocabularies.model.domain.{
+  External,
+  MergeableMapping,
+  NodeMappable,
+  NodeMapping,
+  PropertyMapping,
+  UnionNodeMapping
+}
 import amf.plugins.document.vocabularies.resolution.domain.NodeMappingResolver
 
 import scala.collection.mutable
 
 // Scala syntax extensions
 package object AmlExtensionSyntax {
+  type NodeMappable = NodeMappable.AnyNodeMappable
 
   implicit class RichExternalsSeq(val externals: Seq[External]) extends AnyVal {
 
@@ -89,7 +97,7 @@ package object AmlExtensionSyntax {
     }
   }
 
-  implicit class RichNodeMapping(val nodeMapping: NodeMapping){
+  implicit class RichNodeMapping(val nodeMapping: NodeMapping) {
     lazy val resolver: NodeMappingResolver = new NodeMappingResolver(nodeMapping)
   }
 

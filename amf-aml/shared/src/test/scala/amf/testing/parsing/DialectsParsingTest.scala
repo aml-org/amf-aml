@@ -17,7 +17,11 @@ trait DialectsParsingTest extends DialectTests {
   }
 
   multiGoldenTest("parse 1b test", "example1b.%s") { config =>
-    cycle("example1b.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example1b.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 2 test", "example2.%s") { config =>
@@ -53,55 +57,107 @@ trait DialectsParsingTest extends DialectTests {
   }
 
   multiGoldenTest("parse 10 test", "example10.%s") { config =>
-    cycle("example10.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example10.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 11 test", "example11.%s") { config =>
-    cycle("example11.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example11.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 12 test", "example12.%s") { config =>
-    cycle("example12.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example12.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 13 test", "example13.%s") { config =>
-    cycle("example13.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example13.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 14 test", "example14.%s") { config =>
-    cycle("example14.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example14.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 15 test", "example15.%s") { config =>
-    cycle("example15.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example15.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 16 test", "example16.%s") { config =>
-    cycle("example16.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example16.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 17 test", "example17.%s") { config =>
-    cycle("example17.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example17.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 18 test", "example18.%s") { config =>
-    cycle("example18.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example18.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 19 test", "example19.%s") { config =>
-    cycle("example19.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example19.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 20 test", "example20.%s") { config =>
-    cycle("example20.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example20.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 21 test", "example21.%s") { config =>
-    cycle("example21.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example21.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 22 test", "example22.%s") { config =>
-    cycle("example22.yaml", config.golden, VocabularyYamlHint, target = Amf, renderOptions = Some(config.renderOptions))
+    cycle("example22.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions))
   }
 
   multiGoldenTest("parse 23a test", "example23a.%s") { config =>
@@ -319,5 +375,25 @@ trait DialectsParsingTest extends DialectTests {
           VocabularyYamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions))
+  }
+
+  multiGoldenTest("Parse annotation mappings & semantic extensions", "dialect.%s") { config =>
+    cycle("dialect.yaml",
+          config.golden,
+          VocabularyYamlHint,
+          target = Amf,
+          renderOptions = Some(config.renderOptions),
+          directory = s"$basePath/annotation-mappings")
+  }
+
+  multiGoldenTest("Parse inexistent annotation mapping reference from semantic extensions", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/annotation-mappings-inexistent-ref"
+    )
   }
 }

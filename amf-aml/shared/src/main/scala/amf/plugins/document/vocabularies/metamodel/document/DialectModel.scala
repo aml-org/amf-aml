@@ -6,7 +6,7 @@ import amf.core.metamodel.document.{BaseUnitModel, DocumentModel}
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.model.domain.AmfObject
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, ExtensionMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, SemanticExtensionModel}
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.core.metamodel.Type.Array
 
@@ -23,7 +23,7 @@ object DialectModel extends DocumentModel with ExternalContextModel {
                                ModelDoc(ModelVocabularies.Meta, "documents", "Document mapping for the the dialect"))
 
   val Extensions: Field = Field(
-      Array(ExtensionMappingModel),
+      Array(SemanticExtensionModel),
       Namespace.Meta + "extensions",
       ModelDoc(ModelVocabularies.Meta,
                "extensions",
@@ -35,7 +35,7 @@ object DialectModel extends DocumentModel with ExternalContextModel {
   override val `type`: List[ValueType] = Namespace.Meta + "Dialect" :: DocumentModel.`type`
 
   override val fields
-    : List[Field] = Name :: Version :: Externals :: Documents :: BaseUnitModel.Location :: DocumentModel.fields
+    : List[Field] = Name :: Version :: Extensions :: Externals :: Documents :: BaseUnitModel.Location :: DocumentModel.fields
 
   override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Meta,

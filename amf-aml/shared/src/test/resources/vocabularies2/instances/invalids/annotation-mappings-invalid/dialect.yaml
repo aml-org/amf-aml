@@ -1,0 +1,13 @@
+#%Dialect 1.0
+dialect: Invalid
+version: 1.0
+
+annotationMappings:
+  InvalidAnnotationMapping: "I'm not a valid annotation mapping"
+
+extensions:
+  inexistent: InexistentAnnotationMapping
+  invalid:
+    I: am
+    An: invalid
+    Extension: null
