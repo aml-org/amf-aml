@@ -16,7 +16,7 @@ import amf.validation.DialectValidations.InvalidDialectPatch
 import scala.language.postfixOps
 
 class DialectPatchApplicationStage() extends TransformationStep {
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
     new DialectPatchApplication()(errorHandler).resolve(model)
   }
 }
