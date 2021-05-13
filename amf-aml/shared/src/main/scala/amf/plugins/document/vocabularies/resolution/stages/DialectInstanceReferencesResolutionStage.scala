@@ -10,7 +10,7 @@ import amf.core.resolution.stages.{TransformationStep}
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
 class DialectInstanceReferencesResolutionStage() extends TransformationStep {
-  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
+  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
     new DialectInstanceReferencesResolution()(errorHandler).resolve(model)
   }
 }

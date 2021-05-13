@@ -156,7 +156,10 @@ object AMLConfiguration extends PlatformSecrets {
     val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
     collector.collectFrom(url, mediaType).map { dialects =>
       dialects
-        .map(d => runner.run(d, DialectTransformationPipeline()))
+        .map { d =>
+          runner.run(d, DialectTransformationPipeline())
+          d
+        }
         .foldLeft(env) { (env, dialect) =>
           val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
           val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
