@@ -1,23 +1,29 @@
 package amf.client.convert
 
-import amf.client.model.document.{Dialect => ClientDialect}
+import amf.client.environment.{AMLConfiguration, AMLDialectInstanceResult, AMLDialectResult, AMLVocabularyResult}
+import amf.client.exported
+import amf.client.model.document.{
+  Dialect => ClientDialect,
+  DialectInstance => ClientDialectInstance,
+  Vocabulary => ClientVocabulary
+}
 import amf.client.model.domain.{
+  AnnotationMapping => ClientAnnotationMapping,
   ClassTerm => ClientClassTerm,
   DatatypePropertyTerm => ClientDatatypePropertyTerm,
   DialectDomainElement => ClientDialectDomainElement,
   DocumentMapping => ClientDocumentMapping,
   DocumentsModel => ClientDocumentsModel,
+  ExtensionMapping => ClientExtensionMapping,
   External => ClientExternal,
   NodeMapping => ClientNodeMapping,
   ObjectPropertyTerm => ClientObjectPropertyTerm,
   PropertyMapping => ClientPropertyMapping,
   PublicNodeMapping => ClientPublicNodeMapping,
-  VocabularyReference => ClientVocabularyReference,
-  AnnotationMapping => ClientAnnotationMapping,
-  ExtensionMapping => ClientExtensionMapping
+  VocabularyReference => ClientVocabularyReference
 }
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.vocabularies.model.document.Dialect
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 
 trait VocabulariesBaseConverter
@@ -27,6 +33,8 @@ trait VocabulariesBaseConverter
     with ExtensionMappingConverter
     with PublicNodeMappingConverter
     with DialectConverter
+    with DialectInstanceConverter
+    with VocabularyConverter
     with DocumentsModelConverter
     with DocumentMappingConverter
     with VocabularyReferenceConverter
@@ -36,6 +44,10 @@ trait VocabulariesBaseConverter
     with DatatypePropertyMappingConverter
     with ObjectPropertyMappingConverter
     with ClassTermMappingConverter
+    with AMLConfigurationConverter
+    with AMLDialectResultConverter
+    with AMLDialectInstanceResultConverter
+    with AMLVocabularyResultConverter
 
 trait DatatypePropertyMappingConverter extends PlatformSecrets {
 
@@ -62,6 +74,22 @@ trait DialectConverter extends PlatformSecrets {
   implicit object DialectConverter extends BidirectionalMatcher[Dialect, ClientDialect] {
     override def asClient(from: Dialect): ClientDialect   = ClientDialect(from)
     override def asInternal(from: ClientDialect): Dialect = from._internal
+  }
+}
+
+trait DialectInstanceConverter extends PlatformSecrets {
+
+  implicit object DialectInstanceConverter extends BidirectionalMatcher[DialectInstance, ClientDialectInstance] {
+    override def asClient(from: DialectInstance): ClientDialectInstance   = new ClientDialectInstance(from)
+    override def asInternal(from: ClientDialectInstance): DialectInstance = from._internal
+  }
+}
+
+trait VocabularyConverter extends PlatformSecrets {
+
+  implicit object VocabularyConverter extends BidirectionalMatcher[Vocabulary, ClientVocabulary] {
+    override def asClient(from: Vocabulary): ClientVocabulary   = new ClientVocabulary(from)
+    override def asInternal(from: ClientVocabulary): Vocabulary = from._internal
   }
 }
 
@@ -152,10 +180,44 @@ trait NodeMappingConverter extends PlatformSecrets {
 
 trait DialectDomainElementConverter extends PlatformSecrets {
 
-  implicit object DialectDomainElementConvertej
+  implicit object DialectDomainElementConverter
       extends BidirectionalMatcher[DialectDomainElement, ClientDialectDomainElement] {
     override def asClient(from: DialectDomainElement): ClientDialectDomainElement =
       platform.wrap[ClientDialectDomainElement](from)
     override def asInternal(from: ClientDialectDomainElement): DialectDomainElement = from._internal
+  }
+}
+
+trait AMLConfigurationConverter {
+  implicit object AMLConfigurationMatcher extends BidirectionalMatcher[AMLConfiguration, exported.AMLConfiguration] {
+    override def asClient(from: AMLConfiguration): exported.AMLConfiguration =
+      new exported.AMLConfiguration(from)
+    override def asInternal(from: exported.AMLConfiguration): AMLConfiguration = from._internal
+  }
+}
+
+trait AMLDialectResultConverter {
+  implicit object AMLDialectResultMatcher extends BidirectionalMatcher[AMLDialectResult, exported.AMLDialectResult] {
+    override def asClient(from: AMLDialectResult): exported.AMLDialectResult =
+      new exported.AMLDialectResult(from)
+    override def asInternal(from: exported.AMLDialectResult): AMLDialectResult = from._internal
+  }
+}
+
+trait AMLDialectInstanceResultConverter {
+  implicit object AMLDialectInstanceResultMatcher
+      extends BidirectionalMatcher[AMLDialectInstanceResult, exported.AMLDialectInstanceResult] {
+    override def asClient(from: AMLDialectInstanceResult): exported.AMLDialectInstanceResult =
+      new exported.AMLDialectInstanceResult(from)
+    override def asInternal(from: exported.AMLDialectInstanceResult): AMLDialectInstanceResult = from._internal
+  }
+}
+
+trait AMLVocabularyResultConverter {
+  implicit object AMLVocabularyResultMatcher
+      extends BidirectionalMatcher[AMLVocabularyResult, exported.AMLVocabularyResult] {
+    override def asClient(from: AMLVocabularyResult): exported.AMLVocabularyResult =
+      new exported.AMLVocabularyResult(from)
+    override def asInternal(from: exported.AMLVocabularyResult): AMLVocabularyResult = from._internal
   }
 }

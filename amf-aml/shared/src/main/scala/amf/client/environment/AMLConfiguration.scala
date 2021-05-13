@@ -1,6 +1,7 @@
 package amf.client.environment
 
 import amf.client.environment.AMLConfiguration.platform
+import amf.client.interface.config.AMFEventListener
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
@@ -56,6 +57,8 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                               options: AMFOptions): AMLConfiguration =
     new AMLConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options)
 
+  override def createClient(): AMLClient = new AMLClient(this)
+
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =
     super._withParsingOptions(parsingOptions)
 
@@ -94,10 +97,12 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMLConfiguration =
     super._withErrorHandlerProvider(provider)
 
+  override def withEventListener(listener: AMFEventListener): AMLConfiguration = super._withEventListener(listener)
+
+  override def withLogger(logger: AMFLogger): AMLConfiguration = super._withLogger(logger)
+
   def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
-  override def createClient(): AMLClient = new AMLClient(this)
-  // forInstnace ==  colecta dialects dinamicos
   /**
     *
     * @param path
@@ -122,7 +127,26 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     }
   }
 
-  def forInstance(d: DialectInstanceUnit) = throw new UnsupportedOperationException()
+  // TODO: what about nested $dialect references?
+  def forInstance(url: String): Future[AMLConfiguration] = {
+    val collector = new DialectReferencesCollector
+    val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
+    collector.collectFrom(url, None).map { dialects =>
+      dialects
+        .map { d =>
+          runner.run(d, DialectTransformationPipeline())
+          d
+        }
+        .foldLeft(this) { (env, dialect) =>
+          val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
+          val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
+          val profile                                      = new AMFDialectValidations(dialect).profile()
+          env
+            .withPlugins(List(parsing, rendering))
+            .withValidationProfile(profile)
+        }
+    }
+  }
 }
 
 object AMLConfiguration extends PlatformSecrets {
@@ -147,28 +171,6 @@ object AMLConfiguration extends PlatformSecrets {
         predefinedGraphConfiguration.options
     ).withPlugins(predefinedPlugins)
       .withTransformationPipeline(DefaultAMLTransformationPipeline())
-  }
-
-  // TODO: what about nested $dialect references?
-  def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
-    val env       = predefined()
-    val collector = new DialectReferencesCollector
-    val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
-    collector.collectFrom(url, mediaType).map { dialects =>
-      dialects
-        .map { d =>
-          runner.run(d, DialectTransformationPipeline())
-          d
-        }
-        .foldLeft(env) { (env, dialect) =>
-          val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
-          val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
-          val profile                                      = new AMFDialectValidations(dialect).profile()
-          env
-            .withPlugins(List(parsing, rendering))
-            .withValidationProfile(profile)
-        }
-    }
   }
 }
 
