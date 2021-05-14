@@ -3,12 +3,11 @@ package amf.client.exported
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.client.environment.{AMLClient => InternalAMLClient}
 import amf.client.convert.VocabulariesClientConverter._
-import amf.client.interface.AMFGraphClient
 
 import scala.concurrent.ExecutionContext
 
 @JSExportAll
-class AMLClient private (private val _internal: InternalAMLClient) extends AMFGraphClient(_internal) {
+class AMLClient private[amf] (private val _internal: InternalAMLClient) extends AMFGraphClient(_internal) {
 
   private implicit val ec: ExecutionContext = _internal.getConfiguration.getExecutionContext
 
