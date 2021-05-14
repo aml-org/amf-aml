@@ -3,7 +3,6 @@ package amf.client.exported
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.client.environment.{AMLClient => InternalAMLClient}
 import amf.client.convert.VocabulariesClientConverter._
-import amf.client.interface.AMFGraphClient
 
 import scala.concurrent.ExecutionContext
 

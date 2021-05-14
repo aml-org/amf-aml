@@ -1,17 +1,14 @@
 package amf.client.exported
 
-import amf.client.interface.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.client.environment.{AMLConfiguration => InternalAMLConfiguration}
 import amf.client.resolve.ClientErrorHandlerConverter._
 import amf.client.convert.VocabulariesClientConverter._
 import amf.client.convert.TransformationPipelineConverter._
-import amf.client.interface.{AMFGraphConfiguration, ErrorHandlerProvider}
-import amf.client.interface.resolve.TransformationPipeline
+import amf.client.exported.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
+import amf.client.exported.transform.TransformationPipeline
 import amf.client.model.document.Dialect
 import amf.client.reference.UnitCache
-import amf.client.remod.amfcore.config.AMFLogger
 import amf.client.resource.ResourceLoader
-import amf.plugins.document.vocabularies.model.document.DialectInstanceUnit
 
 import scala.concurrent.ExecutionContext
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

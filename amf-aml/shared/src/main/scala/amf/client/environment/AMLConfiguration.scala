@@ -1,7 +1,7 @@
 package amf.client.environment
 
 import amf.client.environment.AMLConfiguration.platform
-import amf.client.interface.config.AMFEventListener
+import amf.client.exported.config.{AMFEventListener, AMFLogger}
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
@@ -21,7 +21,7 @@ import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
 import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstanceUnit}
+import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
 import amf.plugins.document.vocabularies.resolution.pipelines.{
   DefaultAMLTransformationPipeline,
   DialectTransformationPipeline
@@ -34,11 +34,12 @@ import scala.concurrent.Future
 
 /**
   * The configuration object required for using AML
+  *
   * @param resolvers {@link amf.client.remod.amfcore.config.AMFResolvers}
   * @param errorHandlerProvider {@link amf.client.remod.ErrorHandlerProvider}
   * @param registry {@link amf.client.remod.amfcore.registry.AMFRegistry}
-  * @param logger {@link amf.client.remod.amfcore.config.AMFLogger}
-  * @param listeners a Set of {@link amf.client.remod.amfcore.config.AMFEventListener}
+  * @param logger {@link amf.client.exported.config.AMFLogger}
+  * @param listeners a Set of {@link amf.client.exported.config.AMFEventListener}
   * @param options {@link amf.client.remod.amfcore.config.AMFOptions}
   */
 class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
