@@ -3,9 +3,9 @@ package amf.plugins.features.validation
 import amf._
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.AMFValidationPlugin
-import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions}
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationConfiguration, ValidationOptions}
 import amf.core.annotations.SourceVendor
-import amf.core.errorhandling.AmfStaticReportBuilder
 import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
@@ -93,33 +93,19 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
   }
 
   def validate(model: BaseUnit,
-               given: ProfileName,
-               messageStyle: MessageStyle,
-               env: Environment,
-               resolved: Boolean = false,
-               exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
+               givenProfile: ProfileName,
+               resolved: Boolean,
+               config: ValidationConfiguration): Future[AMFValidationReport] = {
 
-    val profileName = profileForUnit(model, given)
+    implicit val executionContext: ExecutionContext = config.executionContext
+
+    val profileName = profileForUnit(model, givenProfile)
     // TODO: we shouldn't compute validations if there are parser errors. This will be removed after ErrorHandler is returned in parsing.
-    val report = new AmfStaticReportBuilder(model, profileName).buildFromStatic()
-
-    if (!report.conforms) Future.successful(report)
-    else validate(model, profileName, env, resolved, exec)
-  }
-
-  private def validate(model: BaseUnit,
-                       profileName: ProfileName,
-                       env: Environment,
-                       resolved: Boolean,
-                       exec: BaseExecutionEnvironment): Future[AMFValidationReport] = {
-
-    implicit val executionContext: ExecutionContext = exec.executionContext
-
     profilesPlugins
       .get(profileName.profile)
       .map { plugins =>
         val validations = computeValidations(profileName)
-        val options     = new ValidationOptions(profileName, env, validations)
+        val options     = new ValidationOptions(profileName, validations, config)
         if (resolved) model.resolved = true
         FailFastValidationRunner(plugins, options).run(model)
 

@@ -2,7 +2,7 @@ package amf.plugins.document.vocabularies
 
 import amf.ProfileName
 import amf.client.parse.DefaultErrorHandler
-import amf.client.remod.{AMFGraphConfiguration, AMLDialectInstancePlugin}
+import amf.client.remod.{AMFGraphConfiguration, AMLDialectInstancePlugin, ParseConfiguration}
 import amf.core.CompilerContextBuilder
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.metamodel.{Field, Obj, Type}
@@ -59,10 +59,13 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
     env().registry.constraintsRules.get(ProfileName(dialect.header))
 
   private[amf] def parseDialect(uri: String, environment: Environment)(implicit e: ExecutionContext) = {
+
+    val newEnv   = env().withResourceLoaders(environment.loaders.toList)
+    val finalEnv = environment.resolver.fold(newEnv)(r => newEnv.withUnitCache(r))
     val context =
-      new CompilerContextBuilder(uri, platform, UnhandledParserErrorHandler).withEnvironment(environment).build()
+      new CompilerContextBuilder(platform, new ParseConfiguration(finalEnv, uri)).build()
     RuntimeCompiler
-      .forContext(context, Some("application/yaml"), Some(Aml.name))
+      .forContext(context, Some("application/yaml"))
       .map {
         case dialect: Dialect if dialect.hasValidHeader => dialect
       }

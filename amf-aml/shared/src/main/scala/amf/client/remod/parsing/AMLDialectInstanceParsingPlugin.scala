@@ -1,7 +1,7 @@
 package amf.client.remod.parsing
 
 import amf.client.remod.AMLDialectInstancePlugin
-import amf.client.remod.amfcore.plugins.parse.{AMFParsePlugin, ParsingInfo}
+import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.core.Root
 import amf.core.client.ParsingOptions
@@ -13,7 +13,7 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanc
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.parser.instances._
 import amf.plugins.document.vocabularies.plugin.headers.DialectHeader
-import org.yaml.model.{YDocument, YMap}
+import org.yaml.model.YMap
 
 /**
   * Parsing plugin for dialect instance like units derived from a resolved dialect
@@ -21,7 +21,7 @@ import org.yaml.model.{YDocument, YMap}
   */
 class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
     extends AMFParsePlugin
-    with AMLDialectInstancePlugin[ParsingInfo] {
+    with AMLDialectInstancePlugin[Root] {
   override val id: String = s"${dialect.id}/dialect-instances-parsing-plugin"
 
   override def priority: PluginPriority = NormalPriority
@@ -52,7 +52,7 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
 
   override def allowRecursiveReferences: Boolean = true
 
-  override def applies(info: ParsingInfo): Boolean = documentKindFor(info.parsed).isDefined
+  override def applies(root: Root): Boolean = documentKindFor(root).isDefined
 
   private def documentKindFor(root: Root): Option[kind.DialectInstanceDocumentKind] = {
     if (dialect.usesKeyPropertyMatching) {
@@ -96,12 +96,16 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
         None
     }
   }
-/**
+
+  /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-override def mediaTypes: Seq[String] = Seq("application/aml")
-/**
+  override def mediaTypes: Seq[String] =
+    Seq("application/aml", "application/yaml", "application/aml+yaml", "application/json", "application/aml+json")
+
+  /**
     * media types which specifies vendors that may be referenced.
     */
-override def validMediaTypesToReference: Seq[String] = Seq("application/aml")
+  override def validMediaTypesToReference: Seq[String] =
+    Seq("application/aml", "application/yaml", "application/aml+yaml", "application/json", "application/aml+json")
 }

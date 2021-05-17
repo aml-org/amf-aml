@@ -1,6 +1,8 @@
 package amf.plugins.document.vocabularies
 
+import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.amfcore.plugins.validate.ValidationResult
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.services.{RuntimeValidator, ValidationOptions}
@@ -19,7 +21,7 @@ class AMLValidator(registry: DialectsRegistry) extends ShaclReportAdaptation {
 
     baseUnit match {
       case dialectInstance: DialectInstanceUnit =>
-        val pipelineRunner          = TransformationPipelineRunner(baseUnit.errorHandler())
+        val pipelineRunner          = TransformationPipelineRunner(UnhandledErrorHandler)
         val resolvedModel           = pipelineRunner.run(dialectInstance, DialectInstanceTransformationPipeline())
         val dependenciesValidations = computeValidationProfilesOfDependencies(dialectInstance)
 
@@ -29,7 +31,7 @@ class AMLValidator(registry: DialectsRegistry) extends ShaclReportAdaptation {
                                                           addValidations(validations, validationsFromDeps),
                                                           options = new ValidationOptions().withFullValidation())
         } yield {
-          val report = adaptToAmfReport(baseUnit, profile, shaclReport, Raml10Profile.messageStyle, validations)
+          val report = adaptToAmfReport(baseUnit, profile, shaclReport, validations)
           ValidationResult(resolvedModel, report)
         }
 

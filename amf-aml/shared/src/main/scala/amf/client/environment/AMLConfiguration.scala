@@ -1,6 +1,6 @@
 package amf.client.environment
 
-import amf.client.environment.AMLConfiguration.platform
+import amf.client.environment.AMLConfiguration.{platform, predefined}
 import amf.client.exported.config.AMFLogger
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.remod.amfcore.config._
@@ -13,6 +13,12 @@ import amf.client.remod.rendering.{
   AMLVocabularyRenderingPlugin
 }
 import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
+import amf.client.remod.rendering.{
+  AMLDialectInstanceRenderingPlugin,
+  AMLDialectRenderingPlugin,
+  AMLVocabularyRenderingPlugin
+}
+import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider, ParseConfiguration}
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.unsafe.PlatformSecrets
@@ -127,18 +133,15 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
       case _                                => this
     }
   }
-
   // TODO: what about nested $dialect references?
-  def forInstance(url: String): Future[AMLConfiguration] = {
+  def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
+    val env       = predefined()
     val collector = new DialectReferencesCollector
     val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
-    collector.collectFrom(url, None).map { dialects =>
+    collector.collectFrom(url, mediaType, this).map { dialects =>
       dialects
-        .map { d =>
-          runner.run(d, DialectTransformationPipeline())
-          d
-        }
-        .foldLeft(this) { (env, dialect) =>
+        .map(d => runner.run(d, DialectTransformationPipeline()))
+        .foldLeft(env) { (env, dialect) =>
           val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
           val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
           val profile                                      = new AMFDialectValidations(dialect).profile()
@@ -176,9 +179,12 @@ object AMLConfiguration extends PlatformSecrets {
 }
 
 class DialectReferencesCollector {
-  def collectFrom(url: String, mediaType: Option[String] = None): Future[Seq[Dialect]] = {
-    val ctx      = new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
-    val compiler = new AMFCompiler(ctx, mediaType, None)
+  def collectFrom(url: String,
+                  mediaType: Option[String] = None,
+                  amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
+    // todo
+    val ctx      = new CompilerContextBuilder(platform, new ParseConfiguration(amfConfig, url)).build()
+    val compiler = new AMFCompiler(ctx, mediaType)
     for {
       content                <- compiler.fetchContent()
       eitherContentOrAst     <- Future.successful(compiler.parseSyntax(content))
