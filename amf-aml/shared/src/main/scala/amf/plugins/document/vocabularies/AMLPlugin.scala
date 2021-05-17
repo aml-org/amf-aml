@@ -13,7 +13,7 @@ import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.parser.{ParserContext, ReferenceHandler, _}
 import amf.core.rdf.RdfModel
 import amf.core.registries.{AMFDomainEntityResolver, AMFPluginsRegistry}
-import amf.core.remote.{Aml, Platform}
+import amf.core.remote.Aml
 import amf.core.resolution.pipelines.TransformationPipeline
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
@@ -21,12 +21,11 @@ import amf.core.validation.ShaclReportAdaptation
 import amf.core.validation.core.ValidationProfile
 import amf.core.vocabulary.NamespaceAliases
 import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
-import amf.plugins.document.vocabularies.annotations._
+import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
+import amf.plugins.document.vocabularies.entities.AMLEntities
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
-import amf.plugins.document.vocabularies.metamodel.document._
-import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
@@ -60,36 +59,9 @@ trait AMLPlugin
 
   override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future { this }
 
-  override def modelEntities: Seq[Obj] = Seq(
-      VocabularyModel,
-      ExternalModel,
-      VocabularyReferenceModel,
-      ClassTermModel,
-      ObjectPropertyTermModel,
-      DatatypePropertyTermModel,
-      DialectModel,
-      NodeMappingModel,
-      UnionNodeMappingModel,
-      PropertyMappingModel,
-      DocumentsModelModel,
-      PublicNodeMappingModel,
-      DocumentMappingModel,
-      DialectLibraryModel,
-      DialectFragmentModel,
-      DialectInstanceModel,
-      DialectInstanceLibraryModel,
-      DialectInstanceFragmentModel,
-      DialectInstancePatchModel
-  )
+  override def modelEntities: Seq[Obj] = AMLEntities.entities.values.toSeq
 
-  override def serializableAnnotations(): Map[String, AnnotationGraphLoader] =
-    Map(
-        "aliases-location" -> AliasesLocation,
-        "custom-id"        -> CustomId,
-        "custom-base"      -> CustomBase,
-        "ref-include"      -> RefInclude,
-        "json-pointer-ref" -> JsonPointerRef
-    )
+  override def serializableAnnotations(): Map[String, AnnotationGraphLoader] = AMLSerializableAnnotations.annotations
 
   override val pipelines: Map[String, TransformationPipeline] = Map(
       DefaultAMLTransformationPipeline.name -> DefaultAMLTransformationPipeline(),
