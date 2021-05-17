@@ -63,8 +63,8 @@ object ValidationDialectText {
       |        propertyTerm: shacl.maxInclusive
       |        range: number
       |      datatype:
-      |         propertyTerm: shacl.datatype
-      |         range: string
+      |        propertyTerm: shacl.datatype
+      |        range: string
       |      in:
       |        propertyTerm: shacl.in
       |        allowMultiple: true
@@ -276,7 +276,7 @@ object ValidationDialectText {
       |        propertyTerm: validation.validations
       |        mapKey: name
       |        range: [ shapeValidationNode, queryValidationNode, functionValidationNode, xoneShapeValidationNode, orShapeValidationNode, notShapeValidationNode, andShapeValidationNode]
-
+      |
       |  validationShapesUnion:
       |    union:
       |      - shapeValidationNode

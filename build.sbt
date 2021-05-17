@@ -63,10 +63,22 @@ lazy val defaultProfilesGenerationTask = TaskKey[Unit](
 /** **********************************************
   * AMF-Custom-Validation
   * ********************************************* */
+
+lazy val runGeneration = taskKey[Unit]("Generate files")
+
+lazy val generateCode = {
+  val toReplace = IO.readLines(new File("templates/validation-dialect.yaml")).reduceLeft((acc, curr) => acc + s"\n      |$curr")
+  val toReplaceInto = IO.read(new File("templates/ValidationDialectText.scala"))
+  val finalCode = toReplaceInto.replaceAllLiterally("{replace-here}", toReplace)
+  IO.write(new File("amf-custom-validation/shared/src/main/scala/amf/plugins/features/validation/custom/model/ValidationDialectText.scala"), finalCode)
+}
+
 lazy val customValidation = crossProject(JSPlatform, JVMPlatform)
   .settings(
     Seq(
-      name := "amf-custom-validation"
+      name := "amf-custom-validation",
+      runGeneration := generateCode,
+      (compile in Compile) := ((compile in Compile) dependsOn runGeneration).value
     ))
   .in(file("./amf-custom-validation"))
   .dependsOn(aml % "compile->compile;test->test")
