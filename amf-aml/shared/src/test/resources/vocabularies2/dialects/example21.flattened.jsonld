@@ -798,7 +798,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Other/property/d/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Other/property/d",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(32,0)-(34,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(31,8)-(34,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Other/property/d/source-map/lexical/element_0",
@@ -813,7 +813,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Root/property/c/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Root/property/c",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(22,0)-(24,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(21,8)-(24,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Root/property/c/source-map/lexical/element_0",
@@ -823,7 +823,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Root/property/a/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Root/property/a",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(25,0)-(27,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(24,8)-(27,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Root/property/a/source-map/lexical/element_0",
@@ -843,7 +843,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Forward/property/e/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Forward/property/e",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(39,0)-(41,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(38,8)-(41,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Forward/property/e/source-map/lexical/element_0",
@@ -853,7 +853,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Simple/property/a/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Simple/property/a",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,0)-(11,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,8)-(11,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Simple/property/a/source-map/lexical/element_0",
@@ -863,7 +863,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Base/property/b/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Base/property/b",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(15,0)-(17,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(14,8)-(17,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example21.yaml#/declarations/Base/property/b/source-map/lexical/element_0",

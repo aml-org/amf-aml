@@ -540,7 +540,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                     .adopted(nodeMapping.id + "/property/" + entry.key.as[YScalar].text.urlComponentEncoded),
                 nodeMapping.id)
           }
-          val (withTerm, withourTerm) = properties.partition(_.nodePropertyMapping().option().nonEmpty)
+          val (withTerm, withoutTerm) = properties.partition(_.nodePropertyMapping().option().nonEmpty)
           val filterProperties: immutable.Iterable[PropertyMapping] = withTerm
             .filter(_.nodePropertyMapping().option().nonEmpty)
             .groupBy(p => p.nodePropertyMapping().value())
@@ -554,7 +554,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               case other => other._2.headOption
             })
           nodeMapping.setArrayWithoutId(NodeMappingModel.PropertiesMapping,
-                                        withourTerm ++ filterProperties.toSeq,
+                                        withoutTerm ++ filterProperties.toSeq,
                                         Annotations(entry))
         }
     )
@@ -667,7 +667,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     entry.value.tagType match {
       case YType.Map =>
         val map             = entry.value.as[YMap]
-        val propertyMapping = PropertyMapping(map).set(PropertyMappingModel.Name, name, Annotations(entry.key))
+        val propertyMapping = PropertyMapping(entry.value).set(PropertyMappingModel.Name, name, Annotations(entry.key))
 
         adopt(propertyMapping)
         ctx.closedNode("propertyMapping", propertyMapping.id, map)

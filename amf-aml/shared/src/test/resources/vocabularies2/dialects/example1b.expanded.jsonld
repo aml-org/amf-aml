@@ -570,7 +570,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(11,0)-(13,0)]"
+                        "@value": "[(10,9)-(13,0)]"
                       }
                     ]
                   },
@@ -809,7 +809,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(17,0)-(20,0)]"
+                        "@value": "[(16,8)-(20,0)]"
                       }
                     ]
                   },

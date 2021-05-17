@@ -380,7 +380,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(9,0)-(14,0)]"
+                        "@value": "[(8,8)-(14,0)]"
                       }
                     ]
                   },
@@ -564,7 +564,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(18,0)-(21,0)]"
+                        "@value": "[(17,8)-(21,0)]"
                       }
                     ]
                   }
@@ -785,7 +785,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(33,0)-(35,0)]"
+                        "@value": "[(32,12)-(35,0)]"
                       }
                     ]
                   },

@@ -274,7 +274,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example22.yaml#/declarations/Simple/property/a/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example22.yaml#/declarations/Simple/property/a",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,0)-(12,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,8)-(12,0)]"
     }
   ]
 }

@@ -498,7 +498,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/referencestyle/example19-referencestyle.yaml#/declarations/Local/property/a/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/referencestyle/example19-referencestyle.yaml#/declarations/Local/property/a",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,0)-(14,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,8)-(14,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/referencestyle/example19-referencestyle.yaml#/declarations/Local/property/a/source-map/lexical/element_0",
@@ -528,7 +528,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/referencestyle/example19-referencestyle.yaml#/declarations/myDeclarations/property/b/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/referencestyle/example19-referencestyle.yaml#/declarations/myDeclarations/property/b",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(18,0)-(21,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(17,8)-(21,0)]"
     }
   ]
 }
