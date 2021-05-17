@@ -2,17 +2,10 @@ package amf.client.environment
 
 import amf.client.environment.AMLConfiguration.{platform, predefined}
 import amf.client.exported.config.AMFLogger
-import amf.client.parse.DefaultParserErrorHandler
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
 import amf.client.remod.parsing.{AMLDialectInstanceParsingPlugin, AMLDialectParsingPlugin, AMLVocabularyParsingPlugin}
-import amf.client.remod.rendering.{
-  AMLDialectInstanceRenderingPlugin,
-  AMLDialectRenderingPlugin,
-  AMLVocabularyRenderingPlugin
-}
-import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
 import amf.client.remod.rendering.{
   AMLDialectInstanceRenderingPlugin,
   AMLDialectRenderingPlugin,
@@ -27,6 +20,8 @@ import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
 import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
+import amf.plugins.document.vocabularies.entities.AMLEntities
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
 import amf.plugins.document.vocabularies.resolution.pipelines.{
   DefaultAMLTransformationPipeline,
@@ -162,12 +157,14 @@ object AMLConfiguration extends PlatformSecrets {
 
     // we might need to register editing pipeline as well because of legacy behaviour.
     new AMLConfiguration(
-        predefinedGraphConfiguration.resolvers,
-        predefinedGraphConfiguration.errorHandlerProvider,
-        predefinedGraphConfiguration.registry,
-        predefinedGraphConfiguration.logger,
-        predefinedGraphConfiguration.listeners,
-        predefinedGraphConfiguration.options
+      predefinedGraphConfiguration.resolvers,
+      predefinedGraphConfiguration.errorHandlerProvider,
+      predefinedGraphConfiguration.registry
+        .withEntities(AMLEntities.entities)
+        .withAnnotations(AMLSerializableAnnotations.annotations),
+      predefinedGraphConfiguration.logger,
+      predefinedGraphConfiguration.listeners,
+      predefinedGraphConfiguration.options
     ).withPlugins(predefinedPlugins)
       .withTransformationPipeline(DefaultAMLTransformationPipeline())
   }
