@@ -1,7 +1,12 @@
 package amf.plugins.document.vocabularies
 
 import amf.client.plugins.AMFValidationPlugin
-import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions, ValidationResult}
+import amf.client.remod.amfcore.plugins.validate.{
+  AMFValidatePlugin,
+  ValidationConfiguration,
+  ValidationOptions,
+  ValidationResult
+}
 import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
 import amf.core.model.document.BaseUnit
 import amf.core.validation.AMFValidationReport
@@ -17,9 +22,10 @@ object AMLValidationLegacyPlugin {
   }
 }
 
-case class AMLValidationLegacyPlugin(plugin: AMLPlugin, legacyApplies: BaseUnit => Boolean) extends AMFValidatePlugin{
+case class AMLValidationLegacyPlugin(plugin: AMLPlugin, legacyApplies: BaseUnit => Boolean) extends AMFValidatePlugin {
 
-  override def validate(unit: BaseUnit, options: ValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationResult] = {
+  override def validate(unit: BaseUnit, options: ValidationOptions)(
+      implicit executionContext: ExecutionContext): Future[ValidationResult] = {
     new AMLValidator(plugin.registry).validate(unit, options.profileName, options.validations)
   }
 

@@ -2,9 +2,8 @@ package amf.client.remod.rendering
 
 import amf.client.remod.AMLDialectInstancePlugin
 import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.parse.ParsingInfo
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderInfo}
+import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.vocabularies.AMLPlugin
