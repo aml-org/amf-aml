@@ -7,7 +7,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel._
 import amf.plugins.document.vocabularies.metamodel.domain.{DialectDomainElementModel, PropertyMappingModel}
-import org.yaml.model.YMap
+import org.yaml.model.YPart
 
 class PropertyClassification
 object ExtensionPointProperty       extends PropertyClassification
@@ -156,7 +156,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
 object PropertyMapping {
   def apply(): PropertyMapping = apply(Annotations())
 
-  def apply(ast: YMap): PropertyMapping = apply(Annotations(ast))
+  def apply(ast: YPart): PropertyMapping = apply(Annotations(ast))
 
   def apply(annotations: Annotations): PropertyMapping =
     PropertyMapping(Fields(), annotations)
