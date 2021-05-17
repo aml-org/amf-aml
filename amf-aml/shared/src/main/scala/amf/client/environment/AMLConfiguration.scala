@@ -127,7 +127,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
 object AMLConfiguration extends PlatformSecrets {
 
-  /** Predefined environment to deal with AML documents based on AMFGraphConfiguration predefined() method */
+  /** Predefined environment to deal with AML documents based on AMFGraphConfiguration {@link amf.client.remod.AMFGraphConfiguration.predefined predefined()} method */
   def predefined(): AMLConfiguration = {
     val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
 
