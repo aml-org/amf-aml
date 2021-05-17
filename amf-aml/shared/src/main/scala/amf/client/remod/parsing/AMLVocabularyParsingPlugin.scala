@@ -1,6 +1,6 @@
 package amf.client.remod.parsing
 
-import amf.client.remod.amfcore.plugins.parse.{AMFParsePlugin, ParsingInfo}
+import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.core.Root
 import amf.core.client.ParsingOptions
@@ -22,20 +22,23 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
 
   override val id: String = "vocabulary-parsing-plugin"
 
-  override def applies(info: ParsingInfo): Boolean = {
-    DialectHeader.dialectHeaderDirective(info.parsed) match {
+  override def applies(root: Root): Boolean = {
+    DialectHeader.dialectHeaderDirective(root) match {
       case Some(ExtensionHeader.VocabularyHeader) => true
       case _                                      => false
     }
   }
 
   override def priority: PluginPriority = NormalPriority
-/**
+
+  /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-override def mediaTypes: Seq[String] = Seq("application/aml")
-/**
+  override def mediaTypes: Seq[String] = Seq("application/aml", "application/yaml", "application/aml+yaml")
+
+  /**
     * media types which specifies vendors that may be referenced.
     */
-override def validMediaTypesToReference: scala.Seq[String] = Seq("application/aml")
+  override def validMediaTypesToReference: scala.Seq[String] =
+    Seq("application/aml", "application/yaml", "application/aml+yaml")
 }

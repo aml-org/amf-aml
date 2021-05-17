@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies
 
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.validation.core.ValidationProfile
 import amf.plugins.document.vocabularies.model.document.Dialect
@@ -14,7 +15,7 @@ object DialectValidationProfileComputation {
       case _ =>
         val copied = dialect.cloneUnit().asInstanceOf[Dialect]
         if (!copied.resolved) {
-          val runner = TransformationPipelineRunner(copied.errorHandler())
+          val runner = TransformationPipelineRunner(UnhandledErrorHandler)
           runner.run(copied, DialectTransformationPipeline())
         }
         val profile = new AMFDialectValidations(copied).profile()

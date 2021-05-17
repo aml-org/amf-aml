@@ -5,6 +5,7 @@ import amf.client.execution.BaseExecutionEnvironment
 import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
+import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
 import amf.core.benchmark.ExecutionLog
 import amf.core.errorhandling.ErrorHandler
 import amf.core.model.document.BaseUnit
@@ -52,22 +53,27 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[ProfileName] = {
 
     implicit val executionContext: ExecutionContext = exec.executionContext
+    val handler                                     = errorHandlerToParser(errorHandler)
 
-    parseProfile(validationProfilePath, env, errorHandler)
+    val conf = AMFPluginsRegistry
+      .obtainStaticConfig()
+      .withErrorHandlerProvider(() => handler)
+      .withResourceLoaders(env.loaders.toList)
+    val finalConf = env.resolver.fold(conf)(e => conf.withUnitCache(e))
+
+    parseProfile(validationProfilePath, finalConf)
       .map { getEncodesOrExit }
       .map { loadProfilesFromDialectOrExit }
   }
 
-  private def parseProfile(validationProfilePath: String, env: Environment, errorHandler: ErrorHandler)(
+  private def parseProfile(validationProfilePath: String, amfConf: AMFGraphConfiguration)(
       implicit executionContext: ExecutionContext) = {
+
     RuntimeCompiler(
-        validationProfilePath,
         Some("application/yaml"),
-        Some(AMLPlugin.ID),
         Context(platform),
         cache = Cache(),
-        env = env,
-        errorHandler = errorHandlerToParser(errorHandler)
+        new ParseConfiguration(amfConf, validationProfilePath)
     )
   }
 
