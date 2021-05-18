@@ -569,7 +569,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping/property/surname/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping/property/surname",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(28,0)-(29,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(27,14)-(29,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping/property/surname/source-map/lexical/element_0",
@@ -579,7 +579,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping/property/name/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping/property/name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(26,0)-(27,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(25,11)-(27,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping/property/name/source-map/lexical/element_0",
@@ -589,7 +589,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping/property/email/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping/property/email",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(30,0)-(32,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(29,12)-(32,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping/property/email/source-map/lexical/element_0",

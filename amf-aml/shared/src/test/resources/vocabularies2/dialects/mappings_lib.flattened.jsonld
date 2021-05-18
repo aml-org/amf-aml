@@ -150,7 +150,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,0)-(9,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,9)-(9,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za/source-map/lexical/element_0",
