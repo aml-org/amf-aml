@@ -123,6 +123,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
       case _                                => this
     }
   }
+
   // TODO: what about nested $dialect references?
   def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
     val env       = predefined()
@@ -130,8 +131,11 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
     collector.collectFrom(url, mediaType, this).map { dialects =>
       dialects
-        .map(d => runner.run(d, DialectTransformationPipeline()))
-        .foldLeft(env) { (env, dialect) =>
+        .map { d =>
+          runner.run(d, DialectTransformationPipeline())
+          d
+        }
+        .foldLeft(this) { (env, dialect) =>
           val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
           val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
           val profile                                      = new AMFDialectValidations(dialect).profile()
@@ -157,14 +161,14 @@ object AMLConfiguration extends PlatformSecrets {
 
     // we might need to register editing pipeline as well because of legacy behaviour.
     new AMLConfiguration(
-      predefinedGraphConfiguration.resolvers,
-      predefinedGraphConfiguration.errorHandlerProvider,
-      predefinedGraphConfiguration.registry
-        .withEntities(AMLEntities.entities)
-        .withAnnotations(AMLSerializableAnnotations.annotations),
-      predefinedGraphConfiguration.logger,
-      predefinedGraphConfiguration.listeners,
-      predefinedGraphConfiguration.options
+        predefinedGraphConfiguration.resolvers,
+        predefinedGraphConfiguration.errorHandlerProvider,
+        predefinedGraphConfiguration.registry
+          .withEntities(AMLEntities.entities)
+          .withAnnotations(AMLSerializableAnnotations.annotations),
+        predefinedGraphConfiguration.logger,
+        predefinedGraphConfiguration.listeners,
+        predefinedGraphConfiguration.options
     ).withPlugins(predefinedPlugins)
       .withTransformationPipeline(DefaultAMLTransformationPipeline())
   }

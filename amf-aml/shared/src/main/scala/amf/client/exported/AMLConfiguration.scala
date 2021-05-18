@@ -25,9 +25,9 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
 
   override def withRenderOptions(renderOptions: RenderOptions): AMLConfiguration =
     _internal.withRenderOptions(renderOptions)
-
-  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMLConfiguration =
-    _internal.withErrorHandlerProvider(() => provider.errorHandler())
+  //TODO FIX EH
+//  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMLConfiguration =
+//    _internal.withErrorHandlerProvider(() => provider.errorHandler())
 
   override def withResourceLoader(rl: ResourceLoader): AMLConfiguration =
     _internal.withResourceLoader(ResourceLoaderMatcher.asInternal(rl))
