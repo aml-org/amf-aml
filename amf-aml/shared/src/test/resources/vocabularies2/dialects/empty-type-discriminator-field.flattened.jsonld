@@ -301,7 +301,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-type-discriminator-field.yaml#/declarations/A/property/text/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-type-discriminator-field.yaml#/declarations/A/property/text",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,0)-(11,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,11)-(11,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-type-discriminator-field.yaml#/declarations/A/property/text/source-map/lexical/element_0",
@@ -311,7 +311,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-type-discriminator-field.yaml#/declarations/B/property/text/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-type-discriminator-field.yaml#/declarations/B/property/text",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(14,0)-(17,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(13,11)-(17,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-type-discriminator-field.yaml#/declarations/B/property/text/source-map/lexical/element_0",
