@@ -238,33 +238,4 @@ trait AMLPlugin
       ParserContext(root.location, root.references, EmptyFutureDeclarations(), eh = wrapped.eh)
     new DialectContext(cleanNested)
   }
-  override def canGenerateNamespaceAliases(unit: BaseUnit): Boolean =
-    unit.isInstanceOf[DialectInstanceUnit] || unit.isInstanceOf[Dialect]
-
-  override def generateNamespaceAliases(unit: BaseUnit): NamespaceAliases = {
-    unit match {
-      case di: DialectInstanceUnit =>
-        registry.dialectFor(di) match {
-          case Some(dialect) => generateNamespaceAliasesFrom(dialect)
-          case None          => throw new IllegalStateException(s"No dialect registered with ID ${di.definedBy().value()}")
-        }
-      case dialect: Dialect => generateNamespaceAliasesFrom(dialect)
-      case _                => throw new IllegalStateException("Unreachable")
-    }
-  }
-
-  private def generateNamespaceAliasesFrom(dialect: Dialect): NamespaceAliases = {
-    val aliases = NamespaceAliases()
-
-    dialect.externals.foreach { external =>
-      aliases.registerNamespace(external.alias.value(), external.base.value())
-    }
-
-    dialect.annotations.find(classOf[Aliases]).foreach { aliasesAnnotation =>
-      aliasesAnnotation.aliases.foreach {
-        case (alias, (url, _)) => aliases.registerNamespace(alias, url)
-      }
-    }
-    aliases
-  }
 }
