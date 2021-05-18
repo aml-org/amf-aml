@@ -31,16 +31,6 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
   def mapTermKeyProperty(): StrField   = fields.field(MapTermKeyProperty)
   def mapTermValueProperty(): StrField = fields.field(MapTermValueProperty)
 
-  def minCount(): IntField            = fields.field(MinCount)
-  def pattern(): StrField             = fields.field(Pattern)
-  def minimum(): DoubleField          = fields.field(Minimum)
-  def maximum(): DoubleField          = fields.field(Maximum)
-  def allowMultiple(): BoolField      = fields.field(AllowMultiple)
-  def sorted(): BoolField             = fields.field(Sorted)
-  def enum(): Seq[AnyField]           = fields.field(PropertyMappingModel.Enum)
-  def unique(): BoolField             = fields.field(Unique)
-  def externallyLinkable(): BoolField = fields.field(ExternallyLinkable)
-
   def withMapKeyProperty(key: String, annotations: Annotations = Annotations()): PropertyMapping =
     set(MapKeyProperty, AmfScalar(key, annotations))
   def withMapValueProperty(value: String, annotations: Annotations = Annotations()): PropertyMapping =
@@ -49,17 +39,6 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     set(MapTermKeyProperty, AmfScalar(key, annotations))
   def withMapTermValueProperty(value: String, annotations: Annotations = Annotations()): PropertyMapping =
     set(MapTermValueProperty, AmfScalar(value, annotations))
-  def withMinCount(minCount: Int): PropertyMapping  = set(MinCount, minCount)
-  def withPattern(pattern: String): PropertyMapping = set(Pattern, pattern)
-  def withMinimum(min: Double): PropertyMapping     = set(Minimum, min)
-  def withMaximum(max: Double): PropertyMapping     = set(Maximum, max)
-  def withAllowMultiple(allow: Boolean): PropertyMapping =
-    set(AllowMultiple, allow)
-  def withEnum(values: Seq[Any]): PropertyMapping =
-    setArray(PropertyMappingModel.Enum, values.map(AmfScalar(_)))
-  def withSorted(sorted: Boolean): PropertyMapping               = set(Sorted, sorted)
-  def withUnique(unique: Boolean): PropertyMapping               = set(Unique, unique)
-  def withExternallyLinkable(linkable: Boolean): PropertyMapping = set(ExternallyLinkable, linkable)
 
   def classification(): PropertyClassification = {
     val isAnyNode = objectRange().exists { obj =>
@@ -89,18 +68,6 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     else
       ObjectPropertyCollection
   }
-
-  def nodesInRange: Seq[String] = {
-    val range = objectRange()
-    if (range.isEmpty) {
-      Option(typeDiscriminator()).getOrElse(Map()).values.toSeq
-    } else {
-      range.map(_.value())
-    }
-  }
-
-  def isUnion: Boolean     = nodesInRange.size > 1
-  def isMandatory: Boolean = minCount().option().getOrElse(0) == 1
 
   def toField: Field = {
     val iri = nodePropertyMapping()
