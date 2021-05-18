@@ -395,7 +395,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(28,0)-(29,0)]"
+                        "@value": "[(27,14)-(29,0)]"
                       }
                     ]
                   },
@@ -453,7 +453,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(26,0)-(27,0)]"
+                        "@value": "[(25,11)-(27,0)]"
                       }
                     ]
                   },
@@ -511,7 +511,7 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
-                        "@value": "[(30,0)-(32,0)]"
+                        "@value": "[(29,12)-(32,0)]"
                       }
                     ]
                   },
