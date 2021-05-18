@@ -190,7 +190,7 @@
           "@id": "http://a.ml/vocab#maintainer"
         }
       ],
-      "http://a.ml/vocabularies/document#target": [
+      "http://a.ml/vocabularies/amf/aml#domain": [
         {
           "@id": "http://a.ml/vocab#API"
         }
@@ -216,7 +216,7 @@
           "@id": "http://github.org/vocabulary#contributor"
         }
       ],
-      "http://a.ml/vocabularies/document#target": [
+      "http://a.ml/vocabularies/amf/aml#domain": [
         {
           "@id": "http://a.ml/vocab#API"
         }
@@ -538,7 +538,7 @@
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/MaintainerAnnotationMapping/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#target",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/amf/aml#domain",
       "http://a.ml/vocabularies/document-source-maps#value": "[(13,4)-(14,0)]"
     },
     {
@@ -553,7 +553,7 @@
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/ContributorAnnotationMapping/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#target",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/amf/aml#domain",
       "http://a.ml/vocabularies/document-source-maps#value": "[(18,4)-(19,0)]"
     },
     {

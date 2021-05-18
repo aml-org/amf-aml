@@ -10,12 +10,12 @@ external:
 
 annotationMappings:
   MaintainerAnnotationMapping:
-    target: aml.API
+    domain: aml.API
     propertyTerm: aml.maintainer
     range:  PersonNodeMapping
 
   ContributorAnnotationMapping:
-    target: aml.API
+    domain: aml.API
     propertyTerm: github.contributor
     range: PersonNodeMapping
 

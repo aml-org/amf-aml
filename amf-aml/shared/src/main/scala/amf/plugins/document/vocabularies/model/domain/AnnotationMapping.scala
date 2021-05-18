@@ -8,8 +8,8 @@ import org.yaml.model.YMap
 
 class AnnotationMapping(override val fields: Fields, override val annotations: Annotations)
     extends PropertyLikeMapping[AnnotationMappingModel.type] {
-  def target(): StrField                               = fields.field(Target)
-  def withTarget(targetIri: String): AnnotationMapping = set(Target, targetIri)
+  def domain(): StrField                               = fields.field(Domain)
+  def withDomain(domainIri: String): AnnotationMapping = set(Domain, domainIri)
 
   override def meta: AnnotationMappingModel.type = AnnotationMappingModel
 
