@@ -79,7 +79,7 @@ trait DialectWrapper {
         }
       case _ =>
     }
-    Namespace.staticAliases.ns.foreach {
+    Namespace.defaultAliases.ns.foreach {
       case (p, v) =>
         prefixMap.get(p) match {
           case Some(x) => // ignore
