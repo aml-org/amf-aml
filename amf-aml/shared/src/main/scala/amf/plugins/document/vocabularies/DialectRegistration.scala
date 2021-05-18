@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies
 
 import amf.client.execution.BaseExecutionEnvironment
+import amf.client.remod.namespace.AMLDialectNamespaceAliasesPlugin
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.client.remod.rendering.AMLDialectInstanceRenderingPlugin
 import amf.internal.environment.Environment
@@ -18,7 +19,9 @@ trait DialectRegistration { this: DialectsRegistry =>
     setEnv {
       env()
         .withPlugins(
-            new AMLDialectInstanceParsingPlugin(cloned) :: new AMLDialectInstanceRenderingPlugin(cloned) :: Nil)
+            new AMLDialectInstanceParsingPlugin(cloned) ::
+              new AMLDialectInstanceRenderingPlugin(cloned) ::
+              AMLDialectNamespaceAliasesPlugin(cloned) :: Nil)
         .withValidationProfile(profile)
     }
     invalidateCaches()
