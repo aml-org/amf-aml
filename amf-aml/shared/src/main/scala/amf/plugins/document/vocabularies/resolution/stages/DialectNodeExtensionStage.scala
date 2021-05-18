@@ -8,7 +8,7 @@ import amf.utils.internal.AmlExtensionSyntax._
 
 class DialectNodeExtensionStage() extends TransformationStep() {
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform[T <: BaseUnit](model: T, errorHandler: ErrorHandler): T = {
     model match {
       case declarationModel: DeclaresModel =>
         declarationModel.declares.foreach {

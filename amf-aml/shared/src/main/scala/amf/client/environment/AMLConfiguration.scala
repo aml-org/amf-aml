@@ -136,7 +136,6 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
       dialects
         .map { d =>
           runner.run(d, DialectTransformationPipeline())
-          d
         }
         .foldLeft(this) { (env, dialect) =>
           val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)

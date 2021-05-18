@@ -13,11 +13,12 @@ object DialectValidationProfileComputation {
       case Some(profile) => profile
       case _ =>
         val copied = dialect.cloneUnit().asInstanceOf[Dialect]
-        if (!copied.resolved) {
-          val runner = TransformationPipelineRunner(copied.errorHandler())
-          runner.run(copied, DialectTransformationPipeline())
-        }
-        val profile = new AMFDialectValidations(copied).profile()
+        val nextDialect =
+          if (!copied.resolved) {
+            val runner = TransformationPipelineRunner(copied.errorHandler())
+            runner.run(copied, DialectTransformationPipeline())
+          } else copied
+        val profile = new AMFDialectValidations(nextDialect).profile()
         profile
     }
   }
