@@ -14,7 +14,7 @@ case class AnnotationMapping(override private[amf] val _internal: InternalAnnota
 
   def name(): StrField                    = _internal.name()
   def nodePropertyMapping(): StrField     = _internal.nodePropertyMapping()
-  def target(): StrField                  = _internal.target()
+  def domain(): StrField                  = _internal.domain()
   def literalRange(): StrField            = _internal.literalRange()
   def objectRange(): ClientList[StrField] = _internal.objectRange().asClient
 
@@ -28,8 +28,8 @@ case class AnnotationMapping(override private[amf] val _internal: InternalAnnota
     this
   }
 
-  def withTarget(targetIri: String): AnnotationMapping = {
-    _internal.withTarget(targetIri)
+  def withDomain(domainIri: String): AnnotationMapping = {
+    _internal.withDomain(domainIri)
     this
   }
 

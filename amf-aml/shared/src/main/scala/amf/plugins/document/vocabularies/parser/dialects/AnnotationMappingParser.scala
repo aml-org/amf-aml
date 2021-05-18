@@ -18,7 +18,7 @@ case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit va
         ctx.closedNode("annotationMapping", annotationMapping.id, map)
         PropertyTermParser(map, annotationMapping).parse()
         RangeParser(map, annotationMapping).parse()
-        parseTarget(map, annotationMapping)
+        parseDomain(map, annotationMapping)
         Some(annotationMapping)
       case t =>
         ctx.eh
@@ -30,12 +30,12 @@ case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit va
     }
   }
 
-  private def parseTarget(ast: YMap, parsedAnnotationMapping: AnnotationMapping): Unit = {
+  private def parseDomain(ast: YMap, parsedAnnotationMapping: AnnotationMapping): Unit = {
     for {
-      targetEntry <- ast.key("target")
-      classTerm   <- ctx.declarations.findClassTerm(targetEntry.value.toString, SearchScope.All)
+      domainEntry <- ast.key("domain")
+      classTerm   <- ctx.declarations.findClassTerm(domainEntry.value.toString, SearchScope.All)
     } yield {
-      parsedAnnotationMapping.set(AnnotationMappingModel.Target, classTerm.id, Annotations(targetEntry))
+      parsedAnnotationMapping.set(AnnotationMappingModel.Domain, classTerm.id, Annotations(domainEntry))
     }
   }
 
