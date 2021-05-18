@@ -19,7 +19,9 @@ object AnnotationMappingModel extends DomainElementModel with PropertyLikeMappin
   )
 
   override def fields: List[Field] =
-    Name :: LiteralRange :: ObjectRange :: NodePropertyMapping :: Domain :: DomainElementModel.fields
+    NodePropertyMapping :: Name :: LiteralRange :: ObjectRange ::
+      MinCount :: Pattern :: Minimum :: Maximum :: AllowMultiple :: Sorted :: Enum :: TypeDiscriminator ::
+      Unique :: ExternallyLinkable :: TypeDiscriminatorName :: Domain :: DomainElementModel.fields
 
   override def modelInstance: AnnotationMapping = AnnotationMapping()
 
