@@ -1,9 +1,7 @@
 package amf.plugins.features.validation
 
 import amf._
-import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.AMFValidationPlugin
-import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationConfiguration, ValidationOptions}
 import amf.core.annotations.SourceVendor
 import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
@@ -15,7 +13,6 @@ import amf.core.services.{RuntimeValidator, ValidationOptions => LegacyValidatio
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
-import amf.internal.environment.Environment
 import amf.plugins.features.validation.emitters.ShaclJsonLdShapeGraphEmitter
 import amf.plugins.features.validation.shacl.FullShaclValidator
 import amf.plugins.features.validation.shacl.custom.CustomShaclValidator

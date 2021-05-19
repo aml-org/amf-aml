@@ -1,9 +1,7 @@
 package amf.testing.rdf
 
-import amf.client.parse.DefaultParserErrorHandler
 import amf.core.remote._
 import amf.core.unsafe.PlatformSecrets
-import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.testing.common.cycling.FunSuiteRdfCycleTests
 import amf.testing.common.utils.{DefaultAMLInitialization, DialectRegistrationHelper}
 
@@ -93,8 +91,8 @@ class DialectInstancesRDFTest
                                   target: Vendor,
                                   directory: String = basePath) = {
 
-    withDialect(s"file://$directory/$dialect") { _ =>
-      cycleRdf(source, golden, hint, target)
+    withDialect(s"file://$directory/$dialect") { (_, config) =>
+      cycleRdf(source, golden, hint, target, config)
     }
   }
 
@@ -104,8 +102,8 @@ class DialectInstancesRDFTest
                                       hint: Hint,
                                       target: Vendor,
                                       directory: String = basePath) = {
-    withDialect(s"file://$directory/$dialect") { _ =>
-      cycleFullRdf(source, golden, hint, target, directory)
+    withDialect(s"file://$directory/$dialect") { (_, config) =>
+      cycleFullRdf(source, golden, hint, target, directory, config)
     }
   }
 }

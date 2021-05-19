@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
 import amf.core.annotations.{ErrorDeclaration => DeclaredErrorDeclaration}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, EmptyFutureDeclarations, Fields, FutureDeclarations, SearchScope}
 import amf.plugins.document.vocabularies.metamodel.domain.{AnnotationMappingModel, NodeMappingModel}
@@ -11,7 +11,7 @@ import org.yaml.model.YPart
 
 class DialectDeclarations(var nodeMappings: Map[String, NodeMappable[_]] = Map(),
                           var annotationMappings: Map[String, AnnotationMapping] = Map(),
-                          errorHandler: ErrorHandler,
+                          errorHandler: AMFErrorHandler,
                           futureDeclarations: FutureDeclarations)
     extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
 

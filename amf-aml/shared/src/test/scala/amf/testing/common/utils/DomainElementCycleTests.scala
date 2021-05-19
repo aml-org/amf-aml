@@ -1,14 +1,12 @@
 package amf.testing.common.utils
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.environment.AMLConfiguration
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.io.FileAssertionTest
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
 import amf.core.parser.SyamlParsedDocument
-import amf.core.remote.{Aml, Hint}
-import amf.core.{AMFCompiler, CompilerContextBuilder}
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.core.remote.Hint
 import amf.plugins.document.vocabularies.emitters.instances.AmlDomainElementEmitter
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 import amf.plugins.syntax.SYamlSyntaxPlugin
@@ -34,8 +32,8 @@ trait DomainElementCycleTests
                               hint: Hint = baseHint,
                               directory: String = basePath): Future[Assertion] = {
 
-    withDialect(s"file://$directory/$dialect") { d =>
-      cycleElement(d, source, extractor, golden, hint, directory = directory)
+    withDialect(s"file://$directory/$dialect") { (d, amlConfig) =>
+      cycleElement(d, source, extractor, golden, hint, amlConfig, directory = directory)
     }
   }
 
@@ -44,9 +42,10 @@ trait DomainElementCycleTests
                          extractor: BaseUnit => Option[DomainElement],
                          golden: String,
                          hint: Hint,
+                         amlConfig: AMLConfiguration,
                          directory: String = basePath): Future[Assertion] = {
     for {
-      b <- parse(s"file://$directory/$source", platform, hint)
+      b <- parse(s"file://$directory/$source", platform, hint, amlConfig)
       t <- Future.successful { transform(b) }
       s <- Future.successful { renderDomainElement(extractor(t), t.asInstanceOf[DialectInstanceUnit], dialect) } // generated string
       d <- writeTemporaryFile(s"$directory/$golden")(s)

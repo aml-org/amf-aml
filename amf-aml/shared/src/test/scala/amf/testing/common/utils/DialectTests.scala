@@ -1,15 +1,12 @@
 package amf.testing.common.utils
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.environment.AMLConfiguration
+import amf.client.remod.ParseConfiguration
 import amf.core.emitter.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.io.FileAssertionTest
 import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.Syntax
 import amf.core.remote._
 import amf.core.{AMFCompiler, AMFSerializer, CompilerContextBuilder}
-import amf.plugins.document.vocabularies.AMLPlugin
-import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.testing.common.jsonld.MultiJsonLDAsyncFunSuite
 import org.scalatest.Assertion
 
@@ -31,12 +28,12 @@ trait DialectTests
                                  directory: String = basePath,
                                  renderOptions: Option[RenderOptions] = None,
                                  useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
-
-    withDialect(s"file://$directory/$dialect") { _ =>
+    withDialect(s"file://$directory/$dialect") { (_, configuration) =>
       cycle(source,
             golden,
             hint,
             target,
+            configuration,
             useAmfJsonldSerialization = useAmfJsonldSerialization,
             renderOptions = renderOptions,
             directory = directory)
@@ -48,10 +45,11 @@ trait DialectTests
                               hint: Hint,
                               directory: String = basePath): Future[BaseUnit] = {
 
-    withDialect(s"file://$directory/$dialect") { _ =>
+    withDialect(s"file://$directory/$dialect") { (_, configuration) =>
       val context =
-        new CompilerContextBuilder(s"file://$directory/$source", platform, DefaultParserErrorHandler.withRun()).build()
-      new AMFCompiler(context, None, Some(hint.vendor.name)).build()
+        new CompilerContextBuilder(platform, new ParseConfiguration(configuration, s"file://$directory/$source"))
+          .build()
+      new AMFCompiler(context, Some(hint.vendor.mediaType)).build()
     }
   }
 
@@ -72,13 +70,15 @@ trait DialectTests
                   golden: String,
                   hint: Hint,
                   target: Vendor,
+                  amlConfig: AMLConfiguration = AMLConfiguration.predefined(),
                   directory: String = basePath,
                   renderOptions: Option[RenderOptions] = None,
                   useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
     val options = renderOptions.getOrElse(defaultRenderOptions)
     if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
+
     for {
-      b <- parse(s"file://$directory/$source", platform, hint)
+      b <- parse(s"file://$directory/$source", platform, hint, amlConfig)
       t <- Future.successful { transform(b) }
       s <- new AMFSerializer(t, vendorToSyntax(target), target.name, options)
         .renderToString(scala.concurrent.ExecutionContext.Implicits.global)

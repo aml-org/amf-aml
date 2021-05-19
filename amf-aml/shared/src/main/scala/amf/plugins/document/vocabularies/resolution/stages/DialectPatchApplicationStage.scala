@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
 import amf.core.annotations.LexicalInformation
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Field
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
@@ -16,12 +16,12 @@ import amf.validation.DialectValidations.InvalidDialectPatch
 import scala.language.postfixOps
 
 class DialectPatchApplicationStage() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     new DialectPatchApplication()(errorHandler).resolve(model)
   }
 }
 
-private class DialectPatchApplication()(implicit val errorHandler: ErrorHandler) {
+private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandler) {
   // Define types for better readability
   type TargetDomainElement = DialectDomainElement // Domain element from target
   type PatchDomainElement  = DialectDomainElement // Domain element from patch

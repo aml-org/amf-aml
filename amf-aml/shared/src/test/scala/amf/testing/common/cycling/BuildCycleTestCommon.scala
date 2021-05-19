@@ -1,12 +1,12 @@
 package amf.testing.common.cycling
 
+import amf.client.environment.AMLConfiguration
+import amf.client.remod.ParseConfiguration
 import amf.client.remod.amfcore.config.ParsingOptionsConverter
 import amf.core.client.ParsingOptions
 import amf.core.emitter.RenderOptions
 import amf.core.io.FileAssertionTest
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Hint, Vendor}
 import amf.core.{AMFCompiler, CompilerContextBuilder}
@@ -33,9 +33,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   }
 
   /** Method to parse unit. Override if necessary. */
-  def build(config: CycleConfig,
-            eh: Option[ParserErrorHandler],
-            useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
+  def build(config: CycleConfig, amlConfig: AMLConfiguration, useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
 
     var options =
       if (!useAmfJsonldSerialisation) ParsingOptions().withoutAmfJsonLdSerialization
@@ -44,15 +42,14 @@ trait BuildCycleTestCommon extends FileAssertionTest {
     options = options.withBaseUnitUrl("file://" + config.goldenPath)
 
     val environment =
-      AMFPluginsRegistry.obtainStaticConfig().withParsingOptions(ParsingOptionsConverter.fromLegacy(options))
+      amlConfig.withParsingOptions(ParsingOptionsConverter.fromLegacy(options))
     val context =
-      new CompilerContextBuilder(s"file://${config.sourcePath}", platform, eh.getOrElse(UnhandledParserErrorHandler))
-        .withBaseEnvironment(environment)
+      new CompilerContextBuilder(platform, new ParseConfiguration(environment, s"file://${config.sourcePath}"))
         .build()
 
     val maybeSyntax = config.syntax.map(_.toString)
-    val maybeVendor = Some(config.hint.vendor.name)
-    new AMFCompiler(context, mediaType = maybeSyntax, vendor = maybeVendor).build()
+    val maybeVendor = Some(config.hint.vendor.mediaType)
+    new AMFCompiler(context, mediaType = maybeVendor).build()
   }
 
   /** Method to render parsed unit. Override if necessary. */

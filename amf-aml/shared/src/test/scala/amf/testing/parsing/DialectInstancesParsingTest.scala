@@ -1,9 +1,8 @@
 package amf.testing.parsing
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.environment.AMLConfiguration
 import amf.core.emitter.RenderOptions
 import amf.core.remote._
-import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.plugins.document.graph.{EmbeddedForm, FlattenedForm}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.testing.common.utils.DialectTests
@@ -210,11 +209,12 @@ trait DialectInstancesParsingTest extends DialectTests {
 
   multiGoldenTest("parse 12 test", "example12.%s") { config =>
     for {
-      _ <- AMLPlugin.registry.registerDialect(s"file://$basePath/dialect12.yaml")
+      amlConfig <- AMLConfiguration.predefined().withDialect(s"file://$basePath/dialect12.yaml")
       assertion <- withInlineDialect("example12.yaml",
                                      config.golden,
                                      VocabularyYamlHint,
                                      target = Amf,
+                                     amlConfig,
                                      renderOptions = Some(config.renderOptions))
     } yield {
       assertion
@@ -875,9 +875,9 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
   test("Clone instance from dialect") {
-    withDialect(s"file://$basePath/dialect31.yaml") { _ =>
+    withDialect(s"file://$basePath/dialect31.yaml") { (_, config) =>
       for {
-        bu <- parse(s"file://$basePath/dialect31.yaml", platform, Some(Aml.name))
+        bu <- parse(s"file://$basePath/dialect31.yaml", platform, Some(Aml.mediaType), config)
       } yield {
         val clone = bu.cloneUnit()
         clone.fields.foreach(f => assert(bu.fields.exists(f._1)))
@@ -1094,6 +1094,7 @@ trait DialectInstancesParsingTest extends DialectTests {
                                   golden: String,
                                   hint: Hint,
                                   target: Vendor,
+                                  amlConfig: AMLConfiguration,
                                   renderOptions: Option[RenderOptions] = None): Future[Assertion] =
-    cycle(source, golden, hint, target, renderOptions = renderOptions)
+    cycle(source, golden, hint, target, renderOptions = renderOptions, amlConfig = amlConfig)
 }

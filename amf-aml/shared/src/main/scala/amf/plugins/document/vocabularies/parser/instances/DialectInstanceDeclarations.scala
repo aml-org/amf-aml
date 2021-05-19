@@ -1,12 +1,12 @@
 package amf.plugins.document.vocabularies.parser.instances
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.parser.{EmptyFutureDeclarations, FutureDeclarations, SearchScope}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMappable}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
 
 class DialectInstanceDeclarations(var dialectDomainElements: Map[String, DialectDomainElement] = Map(),
-                                  errorHandler: ErrorHandler,
+                                  errorHandler: AMFErrorHandler,
                                   futureDeclarations: FutureDeclarations)
     extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations)
     with NodeMappableHelper {

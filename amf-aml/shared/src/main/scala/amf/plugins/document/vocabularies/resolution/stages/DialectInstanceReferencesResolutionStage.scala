@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.document.DocumentModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{DomainElement, Linkable}
@@ -10,12 +10,12 @@ import amf.core.resolution.stages.{TransformationStep}
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
 class DialectInstanceReferencesResolutionStage() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     new DialectInstanceReferencesResolution()(errorHandler).resolve(model)
   }
 }
 
-private class DialectInstanceReferencesResolution(implicit errorHandler: ErrorHandler) {
+private class DialectInstanceReferencesResolution(implicit errorHandler: AMFErrorHandler) {
   var model: Option[BaseUnit]                       = None
   var modelResolver: Option[ModelReferenceResolver] = None
   var mutuallyRecursive: Seq[String]                = Nil

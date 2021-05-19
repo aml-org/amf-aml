@@ -2,15 +2,13 @@ package amf.plugins.features.validation.custom
 
 import amf._
 import amf.client.execution.BaseExecutionEnvironment
-import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
 import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
 import amf.core.benchmark.ExecutionLog
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
-import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
 import amf.core.services.{RuntimeCompiler, RuntimeValidator}
@@ -49,15 +47,14 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
   override def loadValidationProfile(
       validationProfilePath: String,
       env: Environment = Environment(),
-      errorHandler: ErrorHandler,
+      errorHandler: AMFErrorHandler,
       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[ProfileName] = {
 
     implicit val executionContext: ExecutionContext = exec.executionContext
-    val handler                                     = errorHandlerToParser(errorHandler)
 
     val conf = AMFPluginsRegistry
       .obtainStaticConfig()
-      .withErrorHandlerProvider(() => handler)
+      .withErrorHandlerProvider(() => errorHandler)
       .withResourceLoaders(env.loaders.toList)
     val finalConf = env.resolver.fold(conf)(e => conf.withUnitCache(e))
 
@@ -76,9 +73,6 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
         new ParseConfiguration(amfConf, validationProfilePath)
     )
   }
-
-  private def errorHandlerToParser(eh: ErrorHandler): AmfParserErrorHandler =
-    DefaultParserErrorHandler.fromErrorHandler(eh)
 
   private val PROFILE_DIALECT_URL = "http://a.ml/dialects/profile.raml"
 
