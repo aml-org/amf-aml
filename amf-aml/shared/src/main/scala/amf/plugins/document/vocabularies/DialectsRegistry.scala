@@ -61,7 +61,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
     val newEnv   = env().withResourceLoaders(environment.loaders.toList)
     val finalEnv = environment.resolver.fold(newEnv)(r => newEnv.withUnitCache(r))
     val context =
-      new CompilerContextBuilder(platform, new ParseConfiguration(finalEnv, uri)).build()
+      new CompilerContextBuilder(platform, ParseConfiguration(finalEnv, uri)).build()
     RuntimeCompiler
       .forContext(context, Some("application/yaml"))
       .map {
