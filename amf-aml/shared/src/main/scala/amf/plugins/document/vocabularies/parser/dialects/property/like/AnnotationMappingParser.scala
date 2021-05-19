@@ -1,12 +1,15 @@
-package amf.plugins.document.vocabularies.parser.dialects
+package amf.plugins.document.vocabularies.parser.dialects.property.like
 
-import amf.plugins.document.vocabularies.model.domain.AnnotationMapping
-import org.yaml.model.{YMap, YMapEntry, YType}
 import amf.core.parser.{Annotations, SearchScope, YMapOps}
 import amf.plugins.document.vocabularies.metamodel.domain.AnnotationMappingModel
+import amf.plugins.document.vocabularies.model.domain.AnnotationMapping
+import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
+import amf.plugins.document.vocabularies.parser.dialects.DialectContext
 import amf.validation.DialectValidations.DialectError
+import org.yaml.model.{YMap, YMapEntry, YType}
 
-case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit val ctx: DialectContext) {
+case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit val ctx: DialectContext)
+    extends AnnotationsParser {
   def parse(): Option[AnnotationMapping] = {
     val name = entry.key.toString
     entry.value.tagType match {
@@ -16,9 +19,11 @@ case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit va
           .set(AnnotationMappingModel.Name, name, Annotations(entry.key))
           .withId(s"$parent/$name")
         ctx.closedNode("annotationMapping", annotationMapping.id, map)
-        PropertyTermParser(map, annotationMapping).parse()
-        RangeParser(map, annotationMapping).parse()
+
+        PropertyLikeMappingParser(map, annotationMapping).parse()
+
         parseDomain(map, annotationMapping)
+        parseAnnotations(map, annotationMapping, ctx.declarations)
         Some(annotationMapping)
       case t =>
         ctx.eh
