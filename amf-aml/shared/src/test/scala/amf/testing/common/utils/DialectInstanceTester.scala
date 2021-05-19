@@ -17,9 +17,8 @@ trait DialectInstanceTester extends DefaultAMLInitialization with DialectRegistr
                                  target: Vendor,
                                  directory: String = basePath,
                                  renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
-
-    withDialect(s"file://$directory/$dialect") { _ =>
-      cycle(source, golden, hint, target, directory, renderOptions)
+    withDialect(s"file://$directory/$dialect") { (_, config) =>
+      cycle(source, golden, hint, target, directory, config, renderOptions)
     }
   }
 

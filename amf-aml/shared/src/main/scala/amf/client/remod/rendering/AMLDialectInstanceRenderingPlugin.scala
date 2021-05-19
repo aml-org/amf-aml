@@ -4,7 +4,7 @@ import amf.client.remod.AMLDialectInstancePlugin
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderInfo}
 import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
@@ -24,7 +24,7 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
   override def emit[T](unit: BaseUnit,
                        builder: DocBuilder[T],
                        renderOptions: RenderOptions,
-                       errorHandler: ErrorHandler): Boolean =
+                       errorHandler: AMFErrorHandler): Boolean =
     AMLPlugin.emit(unit, builder, renderOptions, errorHandler)
 
   override def applies(element: RenderInfo): Boolean = element.unit match {

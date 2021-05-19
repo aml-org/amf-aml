@@ -5,7 +5,7 @@ import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.core.Root
 import amf.core.client.ParsingOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument, YMapOps, YNodeLikeOps}
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -47,7 +47,7 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
     maybeUnit.get
   }
 
-  override def referenceHandler(eh: ErrorHandler): ReferenceHandler =
+  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
     new SyntaxExtensionsReferenceHandler(AMLPlugin.registry, eh)
 
   override def allowRecursiveReferences: Boolean = true

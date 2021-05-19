@@ -1,5 +1,7 @@
 package amf.testing.rdf
 
+import amf.client.environment.AMLConfiguration
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel
 import amf.core.remote.Syntax.Syntax
@@ -48,6 +50,8 @@ class DialectShaclRdfTest
                         golden: String,
                         hint: Hint = VocabularyYamlHint,
                         target: Vendor = Amf,
+                        amlConfig: AMLConfiguration =
+                          AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
                         directory: String = basePath,
                         syntax: Option[Syntax] = None,
                         pipeline: Option[String] = None,
@@ -55,7 +59,7 @@ class DialectShaclRdfTest
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
-    build(config, None, useAmfJsonldSerialisation = true)
+    build(config, amlConfig, useAmfJsonldSerialisation = true)
       .map(transformRdf(_, config))
       .flatMap(renderRdf(_, config))
       .flatMap(writeTemporaryFile(golden))

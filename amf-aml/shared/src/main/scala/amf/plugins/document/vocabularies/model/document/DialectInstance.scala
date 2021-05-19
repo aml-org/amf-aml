@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
@@ -40,7 +40,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
 
   override def transform(selector: DomainElement => Boolean,
                          transformation: (DomainElement, Boolean) => Option[DomainElement])(
-      implicit errorHandler: ErrorHandler): BaseUnit = {
+      implicit errorHandler: AMFErrorHandler): BaseUnit = {
     val domainElementAdapter  = new DomainElementSelectorAdapter(selector)
     val transformationAdapter = new DomainElementTransformationAdapter(transformation)
     val transformationData    = TransformationData(domainElementAdapter, transformationAdapter)

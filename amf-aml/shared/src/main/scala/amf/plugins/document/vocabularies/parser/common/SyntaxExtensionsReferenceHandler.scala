@@ -1,21 +1,20 @@
 package amf.plugins.document.vocabularies.parser.common
 
-import amf.core.errorhandling.ErrorHandler
-import amf.core.parser.errorhandler.ParserErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.parser.{LibraryReference, LinkReference, ReferenceHandler, _}
 import amf.plugins.document.vocabularies.DialectsRegistry
 import amf.plugins.features.validation.CoreValidations.InvalidInclude
 import amf.validation.DialectValidations.InvalidModuleType
 import org.yaml.model._
 
-class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHandler) extends ReferenceHandler {
+class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: AMFErrorHandler) extends ReferenceHandler {
   private val collector = CompilerReferenceCollector()
 
   override def collect(parsedDoc: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     collect(parsedDoc)(ctx.eh)
   }
 
-  private def collect(parsedDoc: ParsedDocument)(implicit errorHandler: ParserErrorHandler) = {
+  private def collect(parsedDoc: ParsedDocument)(implicit errorHandler: AMFErrorHandler) = {
     parsedDoc match {
       case parsed: SyamlParsedDocument =>
         parsed.comment.filter(referencesDialect).foreach { comment =>
@@ -37,12 +36,11 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
       val si  = msk.indexOf("<")
       val se  = msk.lastIndexOf(">")
       msk.substring(si + 1, se)
-    }
-    else
+    } else
       ""
   }
 
-  private def libraries(document: YDocument)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def libraries(document: YDocument)(implicit errorHandler: AMFErrorHandler): Unit = {
     document.to[YMap] match {
       case Right(map) =>
         map
@@ -50,7 +48,8 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
           .foreach { entry =>
             entry.value.to[YMap] match {
               case Right(m) => m.entries.foreach(library)
-              case _        => errorHandler.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value)
+              case _ =>
+                errorHandler.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value)
             }
           }
       case _ =>
@@ -64,16 +63,15 @@ class SyntaxExtensionsReferenceHandler(registry: DialectsRegistry, eh: ErrorHand
       val si  = msk.indexOf("<")
       val se  = msk.lastIndexOf(">")
       si > 0 && se > si
-    }
-    else
+    } else
       false
   }
 
-  private def library(entry: YMapEntry)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def library(entry: YMapEntry)(implicit errorHandler: AMFErrorHandler): Unit = {
     collector += (entry.value, LibraryReference, entry.value)
   }
 
-  private def links(part: YPart)(implicit errorHandler: ParserErrorHandler): Unit = {
+  private def links(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
     part match {
       case entry: YMapEntry =>
         entry.key.as[YScalar].text match {

@@ -6,7 +6,7 @@ import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.client.ParsingOptions
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.AnnotationGraphLoader
@@ -118,7 +118,7 @@ trait AMLPlugin
 
   protected def unparseAsYDocument(unit: BaseUnit,
                                    renderOptions: RenderOptions,
-                                   errorHandler: ErrorHandler): Option[YDocument] = {
+                                   errorHandler: AMFErrorHandler): Option[YDocument] = {
     unit match {
       case vocabulary: Vocabulary  => Some(VocabularyEmitter(vocabulary).emitVocabulary())
       case dialect: Dialect        => Some(DialectEmitter(dialect).emitDialect())
@@ -145,7 +145,7 @@ trait AMLPlugin
     */
   override def canUnparse(unit: BaseUnit): Boolean = false
 
-  override def referenceHandler(eh: ErrorHandler): ReferenceHandler =
+  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
     new SyntaxExtensionsReferenceHandler(registry, eh)
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
