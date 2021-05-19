@@ -8,7 +8,7 @@ import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel._
 import amf.plugins.document.vocabularies.model.document.kind.DialectInstanceDocumentKind
-import amf.plugins.document.vocabularies.model.domain.{DocumentsModel, SemanticExtension}
+import amf.plugins.document.vocabularies.model.domain.{AnnotationMapping, DocumentsModel, SemanticExtension}
 import org.mulesoft.common.core._
 
 case class Dialect(fields: Fields, annotations: Annotations)
@@ -25,6 +25,9 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def version(): StrField                  = fields.field(Version)
   def documents(): DocumentsModel          = fields.field(Documents)
   def extensions(): Seq[SemanticExtension] = fields.field(Extensions)
+  def annotationMappings(): Seq[AnnotationMapping] = declares.collect {
+    case mapping: AnnotationMapping => mapping
+  }
 
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
 

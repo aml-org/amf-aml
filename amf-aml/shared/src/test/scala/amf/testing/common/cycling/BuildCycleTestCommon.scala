@@ -15,7 +15,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 trait BuildCycleTestCommon extends FileAssertionTest {
 
-  protected implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+  implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   def basePath: String
 
@@ -23,9 +23,9 @@ trait BuildCycleTestCommon extends FileAssertionTest {
                          golden: String,
                          hint: Hint,
                          target: Vendor,
-                         directory: String,
-                         syntax: Option[Syntax],
-                         pipeline: Option[String],
+                         directory: String = basePath,
+                         syntax: Option[Syntax] = None,
+                         pipeline: Option[String] = None,
                          transformWith: Option[Vendor] = None) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
