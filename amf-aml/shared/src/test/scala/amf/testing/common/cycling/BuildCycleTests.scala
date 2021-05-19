@@ -1,9 +1,9 @@
 package amf.testing.common.cycling
 
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.environment.AMLConfiguration
 import amf.core.emitter.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.ParserErrorHandler
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Hint, Vendor}
 import org.scalatest.Assertion
@@ -21,11 +21,11 @@ trait BuildCycleTests extends BuildCycleTestCommon {
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, directory: String, syntax: Option[Syntax]): Future[Assertion] =
-    cycle(source, source, hint, hint.vendor, directory, syntax = syntax, eh = None)
+    cycle(source, source, hint, hint.vendor, directory, syntax = syntax)
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, hint: Hint, directory: String): Future[Assertion] =
-    cycle(source, source, hint, hint.vendor, directory, eh = None)
+    cycle(source, source, hint, hint.vendor, directory)
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   final def cycle(source: String,
@@ -33,17 +33,18 @@ trait BuildCycleTests extends BuildCycleTestCommon {
                   hint: Hint,
                   target: Vendor,
                   directory: String = basePath,
+                  amlConfig: AMLConfiguration =
+                    AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
                   renderOptions: Option[RenderOptions] = None,
                   useAmfJsonldSerialization: Boolean = true,
                   syntax: Option[Syntax] = None,
                   pipeline: Option[String] = None,
-                  transformWith: Option[Vendor] = None,
-                  eh: Option[ParserErrorHandler] = None): Future[Assertion] = {
+                  transformWith: Option[Vendor] = None): Future[Assertion] = {
 
     val config                 = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
     val amfJsonLdSerialization = renderOptions.map(_.isAmfJsonLdSerilization).getOrElse(useAmfJsonldSerialization)
 
-    build(config, eh.orElse(Some(DefaultParserErrorHandler.withRun())), amfJsonLdSerialization)
+    build(config, amlConfig, amfJsonLdSerialization)
       .map(transform(_, config))
       .flatMap {
         renderOptions match {

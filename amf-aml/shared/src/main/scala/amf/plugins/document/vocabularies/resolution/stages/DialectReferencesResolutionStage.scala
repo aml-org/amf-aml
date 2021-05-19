@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
 import amf.core.annotations.Aliases
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
@@ -132,7 +132,7 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
     }
   }
 
-  override def transform(model: BaseUnit, errorHandler: ErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     val finalDeclarationsMap = mutable.Map[String, NodeMappable]()
     val unitDeclarations =
       model.asInstanceOf[DeclaresModel].declares.filter(_.isInstanceOf[NodeMappable]).asInstanceOf[Seq[NodeMappable]]

@@ -8,9 +8,7 @@ import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.Annotations
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
 import amf.core.registries.{AMFDomainEntityResolver, AMFPluginsRegistry}
-import amf.core.remote.Aml
 import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets

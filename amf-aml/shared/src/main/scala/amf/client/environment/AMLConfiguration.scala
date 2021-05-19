@@ -12,14 +12,14 @@ import amf.client.remod.rendering.{
   AMLVocabularyRenderingPlugin
 }
 import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider, ParseConfiguration}
-import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.{AMLPlugin, DialectRegistration}
 import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
 import amf.plugins.document.vocabularies.entities.AMLEntities
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
@@ -117,10 +117,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     }
   }
 
-  def withDialect(dialect: Dialect): AMLConfiguration = {
-    AMLPlugin.registry.register(dialect)
-    this
-  }
+  def withDialect(dialect: Dialect): AMLConfiguration = DialectRegistration.register(dialect, this)
 
   def withCustomProfile(instancePath: String): Future[AMLConfiguration] = {
     createClient().parse(instancePath: String).map {
@@ -176,6 +173,10 @@ object AMLConfiguration extends PlatformSecrets {
         predefinedGraphConfiguration.options
     ).withPlugins(predefinedPlugins)
       .withTransformationPipeline(DefaultAMLTransformationPipeline())
+  }
+  //TODO ARM remove
+  private[amf] def forEH(eh: AMFErrorHandler) = {
+    predefined().withErrorHandlerProvider(() => eh)
   }
 }
 

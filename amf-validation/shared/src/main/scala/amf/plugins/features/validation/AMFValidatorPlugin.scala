@@ -4,7 +4,7 @@ import amf._
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.benchmark.ExecutionLog
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.validation.ShaclReportAdaptation
 import amf.internal.environment.Environment
@@ -12,8 +12,6 @@ import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
-
-
 
 object AMFValidatorPlugin extends AMFFeaturePlugin with AMFValidator {
 
@@ -32,7 +30,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with AMFValidator {
   override def loadValidationProfile(
       validationProfilePath: String,
       env: Environment = Environment(),
-      errorHandler: ErrorHandler,
+      errorHandler: AMFErrorHandler,
       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[ProfileName] = {
 
     throw new Exception("Cannot load a custom validation profile for this")

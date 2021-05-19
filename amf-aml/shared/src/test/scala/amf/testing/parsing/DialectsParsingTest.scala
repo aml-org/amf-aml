@@ -1,5 +1,6 @@
 package amf.testing.parsing
 
+import amf.client.environment.AMLConfiguration
 import amf.core.remote.{Amf, AmfJsonHint, Aml, VocabularyYamlHint}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.testing.common.utils.DialectTests
@@ -325,7 +326,10 @@ trait DialectsParsingTest extends DialectTests {
   test("generate 20 test - without version") {
     val preRegistry = AMLPlugin().registry.allDialects().size
     for {
-      b <- parse(s"file://$basePath/invalid/example20-no-version.yaml", platform, VocabularyYamlHint)
+      b <- parse(s"file://$basePath/invalid/example20-no-version.yaml",
+                 platform,
+                 VocabularyYamlHint,
+                 AMLConfiguration.predefined())
     } yield {
       assert(AMLPlugin().registry.allDialects().size == preRegistry)
       assert(AMLPlugin().registry.dialectById(b.id).isEmpty)
@@ -336,7 +340,10 @@ trait DialectsParsingTest extends DialectTests {
 
     val preRegistry = AMLPlugin().registry.allDialects().size
     for {
-      b <- parse(s"file://$basePath/invalid/example21-no-name.yaml", platform, VocabularyYamlHint)
+      b <- parse(s"file://$basePath/invalid/example21-no-name.yaml",
+                 platform,
+                 VocabularyYamlHint,
+                 AMLConfiguration.predefined())
     } yield {
       assert(AMLPlugin().registry.allDialects().size == preRegistry)
       assert(AMLPlugin().registry.dialectById(b.id).isEmpty)
