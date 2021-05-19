@@ -32,25 +32,9 @@ trait DialectSyntax { this: DialectContext =>
       "extends"    -> false
   )
 
-  val annotationMapping = Map(
-      "targetNode"   -> true, // Might change to false
-      "range"        -> true,
-      "propertyTerm" -> false
-  )
-
-  val fragment: Map[String, Boolean] = Map(
-      "usage"    -> false,
-      "external" -> false,
-      "uses"     -> false
-  ) ++ nodeMapping
-
-  val propertyMapping: Map[String, Boolean] = Map(
-      "propertyTerm"          -> false,
+  val propertyLikeMapping = Map(
       "range"                 -> true,
-      "mapKey"                -> false,
-      "mapValue"              -> false,
-      "mapTermKey"            -> false,
-      "mapTermValue"          -> false,
+      "propertyTerm"          -> false,
       "isLink"                -> false,
       "mandatory"             -> false,
       "pattern"               -> false,
@@ -61,8 +45,25 @@ trait DialectSyntax { this: DialectContext =>
       "enum"                  -> false,
       "typeDiscriminatorName" -> false,
       "typeDiscriminator"     -> false,
-      "unique"                -> false,
-      "patch"                 -> false
+      "unique"                -> false
+  )
+
+  val annotationMapping: Map[String, Boolean] = propertyLikeMapping ++ Map(
+      "domain" -> false
+  )
+
+  val fragment: Map[String, Boolean] = Map(
+      "usage"    -> false,
+      "external" -> false,
+      "uses"     -> false
+  ) ++ nodeMapping
+
+  val propertyMapping: Map[String, Boolean] = propertyLikeMapping ++ Map(
+      "mapKey"       -> false,
+      "mapValue"     -> false,
+      "mapTermKey"   -> false,
+      "mapTermValue" -> false,
+      "patch"        -> false
   )
 
   val documentsMapping: Map[String, Boolean] = Map(

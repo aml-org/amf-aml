@@ -396,4 +396,15 @@ trait DialectsParsingTest extends DialectTests {
         directory = s"$basePath/annotation-mappings-inexistent-ref"
     )
   }
+
+  multiGoldenTest("Parse annotation mappings with extra facets", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions.withCompactUris),
+        directory = s"$basePath/annotation-mappings-with-extra-facets"
+    )
+  }
 }

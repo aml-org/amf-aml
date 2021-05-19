@@ -1,0 +1,84 @@
+#%Dialect 1.0
+dialect: Annotation mappings
+version: 1.0
+
+external:
+  aml: http://a.ml/vocab#
+
+annotationMappings:
+  RateLimitingAnnotationMapping:
+    domain: aml.Endpoint
+    propertyTerm: aml.rate-limit
+    range: Integer
+    minimum: 0
+    maximum: 10000
+    mandatory: true
+
+  MaintainerAnnotationMapping:
+    domain: aml.API
+    propertyTerm: aml.maintainer
+    range: PersonNodeMapping
+    allowMultiple: true
+    sorted: true
+
+  OwnerAnnotationMapping:
+    domain: aml.API
+    propertyTerm: aml.owner
+    range: [ PersonNodeMapping, OrganizationNodeMapping ]
+    typeDiscriminatorName: type
+    typeDiscriminator:
+      person: PersonNodeMapping
+      organization: OrganizationNodeMapping
+
+  AnypointIdAnnotationMapping:
+    domain: aml.API
+    propertyTerm: aml.anypointId
+    range: string
+    unique: true
+
+  AccountTypeAnnotationMapping:
+    domain: aml.API
+    propertyTerm: aml.account-type
+    range: string
+    enum:
+      - Titanium
+      - Platinum
+      - Gold
+      - Silver
+
+  ContactEmailAnnotationMapping:
+    domain: aml.API
+    propertyTerm: schema-org.email
+    range: string
+    pattern: ^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$
+
+  LDAPReferencesAnnotationMapping:
+    domain: aml.API
+    propertyTerm: aml.ldap-references
+    range: PersonNodeMapping
+    allowMultiple: true
+    isLink: true
+
+nodeMappings:
+  PersonNodeMapping:
+    mapping:
+      name:
+        range: string
+      surname:
+        range: string
+      email:
+        range: string
+
+  OrganizationNodeMapping:
+    mapping:
+      name:
+        range: string
+
+extensions:
+  maintainer: MaintainerAnnotationMapping
+  rateLimiting: RateLimitingAnnotationMapping
+  owner: OwnerAnnotationMapping
+  anypointId: AnypointIdAnnotationMapping
+  accountType: AccountTypeAnnotationMapping
+  contactEmail: ContactEmailAnnotationMapping
+  ldapReferences: LDAPReferencesAnnotationMapping

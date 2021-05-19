@@ -22,6 +22,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.UnionNodeMappingModel.
 import amf.plugins.document.vocabularies.metamodel.domain.{
   MergePolicies,
   NodeMappingModel,
+  PropertyLikeMappingModel,
   PropertyMappingModel,
   UnionNodeMappingModel
 }
@@ -29,6 +30,16 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragmen
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
+import amf.plugins.document.vocabularies.parser.dialects.property.like.{
+  AnnotationMappingParser,
+  EnumParser,
+  ExternalLinksParser,
+  MandatoryParser,
+  PropertyLikeMappingParser,
+  PropertyTermParser,
+  RangeParser,
+  TypeDiscriminatorParser
+}
 import amf.plugins.document.vocabularies.parser.instances.BaseDirective
 import amf.validation.DialectValidations
 import amf.validation.DialectValidations.{
@@ -649,19 +660,6 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
-  def checkGuidUniqueContraint(propertyMapping: PropertyMapping, ast: YPart): Unit = {
-    propertyMapping.literalRange().option() foreach { literal =>
-      if (literal == (Namespace.Shapes + "guid").iri() && !propertyMapping.unique().option().getOrElse(false)) {
-        ctx.eh.warning(
-            DialectValidations.GuidRangeWithoutUnique,
-            propertyMapping.id,
-            s"Declaration of property '${propertyMapping.name().value()}' with range GUID and without unique constraint",
-            ast
-        )
-      }
-    }
-  }
-
   def parsePropertyMapping(entry: YMapEntry, adopt: PropertyMapping => Any, nodeId: String): PropertyMapping = {
     val name = ScalarNode(entry.key).string()
     entry.value.tagType match {
@@ -672,100 +670,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         adopt(propertyMapping)
         ctx.closedNode("propertyMapping", propertyMapping.id, map)
 
-        PropertyTermParser(map, propertyMapping).parse()
-        RangeParser(map, propertyMapping).parse()
+        PropertyLikeMappingParser(map, propertyMapping).parse()
 
         parseMapKey(map, propertyMapping)
-
         parseMapValue(map, propertyMapping)
-
-        map.key(
-            "patch",
-            entry => {
-              val patchMethod = ScalarNode(entry.value).string()
-              propertyMapping.set(PropertyMappingModel.MergePolicy, patchMethod, Annotations(entry))
-              val patchMethodValue = patchMethod.toString
-              if (!MergePolicies.isAllowed(patchMethodValue)) {
-                ctx.eh.violation(DialectError,
-                                 propertyMapping.id,
-                                 s"Unsupported property mapping patch operation '$patchMethod'",
-                                 entry.value)
-              }
-            }
-        )
-
-        map.key(
-            "mandatory",
-            entry => {
-              val required = ScalarNode(entry.value).boolean().toBool
-              val value    = if (required) 1 else 0
-              propertyMapping.set(PropertyMappingModel.MinCount,
-                                  AmfScalar(value, Annotations(entry.value)),
-                                  Annotations(entry))
-            }
-        )
-
-        map.parse("pattern", propertyMapping setParsing PropertyMappingModel.Pattern)
-        map.parse("minimum", propertyMapping setParsing PropertyMappingModel.Minimum)
-        map.parse("unique", propertyMapping setParsing PropertyMappingModel.Unique)
-        map.parse("maximum", propertyMapping setParsing PropertyMappingModel.Maximum)
-
-        map.parse("allowMultiple", propertyMapping setParsing PropertyMappingModel.AllowMultiple)
-        map.parse("sorted", propertyMapping setParsing PropertyMappingModel.Sorted)
-
-        map.key(
-            "enum",
-            entry => {
-              val seq = entry.value.as[YSequence]
-              val values = seq.nodes.flatMap { node =>
-                node.value match {
-                  case scalar: YScalar => Some(ScalarNode(node).string())
-                  case _ =>
-                    ctx.eh.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
-                    None
-                }
-              }
-              propertyMapping.set(PropertyMappingModel.Enum, AmfArray(values, Annotations(seq)), Annotations(entry))
-            }
-        )
-
-        map.key(
-            "typeDiscriminator",
-            entry => {
-              val types = entry.value.as[YMap]
-              val typeMapping = types.entries.foldLeft(Map[String, String]()) {
-                case (acc, e) =>
-                  val nodeMappingId = e.value.as[YScalar].text
-                  acc + (e.key.as[YScalar].text -> nodeMappingId)
-              }
-              propertyMapping.withTypeDiscriminator(typeMapping, Annotations(entry), Annotations(types))
-            }
-        )
-
-        map.parse("typeDiscriminatorName", propertyMapping setParsing PropertyMappingModel.TypeDiscriminatorName)
-
-        // TODO: check dependencies among properties
-
-        map.key(
-            "isLink",
-            entry => {
-              val isLink = entry.value.as[Boolean]
-              propertyMapping.withExternallyLinkable(isLink)
-              propertyMapping.literalRange().option() match {
-                case Some(v) =>
-                  ctx.eh.violation(
-                      DialectError,
-                      s"Aml links support in property mappings only can be declared in object properties but scalar range detected: $v",
-                      entry.value)
-                case _ => // ignore
-              }
-            }
-        )
-
+        parsePatch(map, propertyMapping)
         parseAnnotations(map, propertyMapping, ctx.declarations)
-
-        // We check that if this is a GUID it also has the unique contraint
-        checkGuidUniqueContraint(propertyMapping, map)
 
         propertyMapping
       case _ =>
@@ -776,6 +686,23 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                          entry)
         p
     }
+  }
+
+  private def parsePatch(map: YMap, propertyMapping: PropertyMapping): Unit = {
+    map.key(
+        "patch",
+        entry => {
+          val patchMethod = ScalarNode(entry.value).string()
+          propertyMapping.set(PropertyMappingModel.MergePolicy, patchMethod, Annotations(entry))
+          val patchMethodValue = patchMethod.toString
+          if (!MergePolicies.isAllowed(patchMethodValue)) {
+            ctx.eh.violation(DialectError,
+                             propertyMapping.id,
+                             s"Unsupported property mapping patch operation '$patchMethod'",
+                             entry.value)
+          }
+        }
+    )
   }
 
   private def parseMapKey(map: YMap, propertyMapping: PropertyMapping): Unit = {
