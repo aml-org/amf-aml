@@ -49,6 +49,7 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   libraryDependencies ++= Seq(
     "org.scalatest"    %%% "scalatest"         % "3.0.5" % Test,
     "org.mule.common"  %%% "scala-common-test" % "0.0.6" % Test,
+    "org.slf4j" % "slf4j-nop" % "1.7.30" % Test
   ),
   logBuffered in Test := false
 )
