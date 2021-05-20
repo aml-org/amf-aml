@@ -6,8 +6,8 @@ nodeMappings:
     classTerm: 使2.エアウェイ
     mapping:
       za:
-        propertyTerm: 使用する.エア
         range: ノードA
+        propertyTerm: 使用する.エア
   ノードA:
     classTerm: 使用する.エアウェイ
     mapping:

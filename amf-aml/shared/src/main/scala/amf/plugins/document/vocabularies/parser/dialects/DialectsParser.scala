@@ -270,16 +270,25 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     *  3. checks for ambiguity
     */
   protected def checkNodeMappableReferences[T <: DomainElement](mappable: NodeWithDiscriminator[_]): Unit = {
-    val memberStream      = mappable.objectRange().toStream
-    val memberNamesStream = memberStream.map(member => member.value())
-    val memberIdsStream   = memberNamesStream.flatMap(name => memberIdFromName(name, mappable))
+    val memberStream = mappable.objectRange().toStream
+    val memberIdsStream = memberStream
+      .map(field => (memberIdFromName(field.value(), mappable), field.annotations()))
+      .filter {
+        case (optionalValue, _) => optionalValue.isDefined
+      }
+      .map(t => AmfScalar(t._1.get, t._2))
 
     mappable match {
       case p: PropertyMapping if p.isUnion && p.typeDiscriminatorName().option().isEmpty => checkAmbiguity(p)
       case u: UnionNodeMapping if u.typeDiscriminatorName().option().isEmpty             => checkAmbiguity(u)
       case _                                                                             => // Ignore
     }
-    if (memberIdsStream.nonEmpty) mappable.withObjectRange(memberIdsStream)
+    if (memberIdsStream.nonEmpty) {
+      val objectRangeValue = mappable.fields.getValue(ObjectRange)
+      mappable.set(ObjectRange,
+                   AmfArray(memberIdsStream, objectRangeValue.value.annotations),
+                   objectRangeValue.annotations)
+    }
 
     // Setting ids we left unresolved in typeDiscriminators
     Option(mappable.typeDiscriminator()) match {

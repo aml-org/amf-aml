@@ -10,8 +10,8 @@ nodeMappings:
     classTerm: v3.Local
     mapping:
       za:
-        propertyTerm: v3.za
         range: nodeB
+        propertyTerm: v3.za
 external:
   v2: http://test.com/v2#
   v3: http://test.com/v3#

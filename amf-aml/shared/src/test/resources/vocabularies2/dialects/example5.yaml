@@ -6,8 +6,8 @@ nodeMappings:
     classTerm: v2.A
     mapping:
       za:
-        propertyTerm: v2e.a
         range: nodeA
+        propertyTerm: v2e.a
   nodeA:
     classTerm: v2e.A
     mapping:
