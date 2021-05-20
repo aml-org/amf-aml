@@ -1068,6 +1068,18 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("mapValue with multiple values", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/mapValue-with-multiple/"
+    )
+  }
+
   //noinspection SameParameterValue
   protected def withInlineDialect(source: String,
                                   golden: String,
