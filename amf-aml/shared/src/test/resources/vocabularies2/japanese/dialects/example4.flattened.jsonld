@@ -8,7 +8,12 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#displayName": "\u4F7F\u7528\u3059\u308B",
-      "http://a.ml/vocabularies/meta#base": "http://test.com/v2#"
+      "http://a.ml/vocabularies/meta#base": "http://test.com/v2#",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example4.yaml/externals/%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B#/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example4.yaml/documents",
@@ -22,6 +27,17 @@
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example4.yaml/documents#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example4.yaml/externals/%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example4.yaml/externals/%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B#/source-map/lexical/element_0"
         }
       ]
     },
@@ -61,6 +77,11 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example4.yaml/documents#/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example4.yaml/externals/%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example4.yaml/externals/%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(23,2)-(24,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example4.yaml#/documents/root/declaration/%E3%83%BCB",

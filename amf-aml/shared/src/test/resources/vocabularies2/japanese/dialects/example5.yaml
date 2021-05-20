@@ -19,7 +19,7 @@ documents:
     encodes: ノードA
     declares:
       ーB: ノードB
-uses:
-  使2: vocab2.yaml
 external:
   使用する: http://test.com/v2#
+uses:
+  使2: vocab2.yaml

@@ -35,6 +35,29 @@
           {
             "@value": "https://www.w3.org/ns/activitystreams/"
           }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/externals/stream#/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/externals/stream#/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/production/streams/activity.yaml/externals/stream"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(7,2)-(9,0)]"
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
     ],

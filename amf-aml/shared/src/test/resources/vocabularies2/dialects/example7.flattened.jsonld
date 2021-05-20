@@ -244,7 +244,12 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#displayName": "v2",
-      "http://a.ml/vocabularies/meta#base": "http://test.com/v2#"
+      "http://a.ml/vocabularies/meta#base": "http://test.com/v2#",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml/externals/v2#/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB",
@@ -394,6 +399,17 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(18,0)]"
     },
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml/externals/v2#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml/externals/v2#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za",
       "@type": [
         "http://a.ml/vocabularies/meta#NodePropertyMapping",
@@ -514,6 +530,11 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example7.yaml#/declarations/Local/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(12,2)-(12,7)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml/externals/v2#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml/externals/v2",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(10,2)-(11,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml#/declarations/nodeB/property/za/source-map",

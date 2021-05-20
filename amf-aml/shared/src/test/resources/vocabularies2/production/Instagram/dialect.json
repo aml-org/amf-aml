@@ -35,6 +35,29 @@
           {
             "@value": "http://www.w3.org/ns/ldp#"
           }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml/externals/linked-data-platform#/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml/externals/linked-data-platform#/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml/externals/linked-data-platform"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(12,2)-(13,0)]"
+                  }
+                ]
+              }
+            ]
+          }
         ]
       },
       {
@@ -52,6 +75,29 @@
         "http://a.ml/vocabularies/meta#base": [
           {
             "@value": "http://a.ml/vocabularies/tests#"
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#sources": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml/externals/tests#/source-map",
+            "@type": [
+              "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#lexical": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml/externals/tests#/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml/externals/tests"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(13,2)-(15,0)]"
+                  }
+                ]
+              }
+            ]
           }
         ]
       }
