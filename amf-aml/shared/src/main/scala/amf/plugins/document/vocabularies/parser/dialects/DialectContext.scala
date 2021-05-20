@@ -6,7 +6,7 @@ import amf.core.utils.QName
 import amf.plugins.document.vocabularies.parser.common.{DeclarationContext, SyntaxErrorReporter}
 
 class DialectContext(private val wrapped: ParserContext, private val ds: Option[DialectDeclarations] = None)
-    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.eh)
+    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.config)
     with DialectSyntax
     with DeclarationContext
     with SyntaxErrorReporter {

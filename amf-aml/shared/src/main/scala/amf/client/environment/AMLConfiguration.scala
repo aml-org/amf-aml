@@ -185,7 +185,7 @@ class DialectReferencesCollector {
                   mediaType: Option[String] = None,
                   amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
     // todo
-    val ctx      = new CompilerContextBuilder(platform, ParseConfiguration(amfConfig, url)).build()
+    val ctx      = new CompilerContextBuilder(url, platform, ParseConfiguration(amfConfig)).build()
     val compiler = new AMFCompiler(ctx, mediaType)
     for {
       content                <- compiler.fetchContent()
