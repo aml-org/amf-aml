@@ -6,8 +6,8 @@ nodeMappings:
     classTerm: v3.Local
     mapping:
       za:
-        propertyTerm: v3.za
         range: lib.nodeB
+        propertyTerm: v3.za
 documents:
   root:
     encodes: Local

@@ -30,8 +30,8 @@ nodeMappings:
     classTerm: v3.Root
     mapping:
       union:
-        propertyTerm: v3.union
         range: UnionNode
+        propertyTerm: v3.union
 documents:
   root:
     encodes: Root

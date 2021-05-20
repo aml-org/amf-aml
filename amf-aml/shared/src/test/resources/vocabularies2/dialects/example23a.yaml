@@ -13,8 +13,8 @@ nodeMappings:
     mapping:
       other:
         unique: true
-        propertyTerm: v3.other
         range: bis.Other
+        propertyTerm: v3.other
   Simple:
     classTerm: v3.Simple
     mapping:

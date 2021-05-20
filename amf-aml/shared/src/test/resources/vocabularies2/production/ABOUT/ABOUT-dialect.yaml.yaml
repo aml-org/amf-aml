@@ -52,29 +52,29 @@ nodeMappings:
         propertyTerm: about.keyword
       discussion:
         mandatory: false
+        range: DiscussionChannelNode
         allowMultiple: true
         propertyTerm: about.discussionChannel
-        range: DiscussionChannelNode
       continuousIntegration:
         mandatory: false
+        range: ContinuousIntegrationNode
         allowMultiple: true
         propertyTerm: about.continuousIntegration
-        range: ContinuousIntegrationNode
       projectManagement:
         mandatory: false
+        range: ProjectManagementNode
         allowMultiple: true
         propertyTerm: about.projectManagementTool
-        range: ProjectManagementNode
       licenses:
         mandatory: false
+        range: LicenseNode
         allowMultiple: true
         propertyTerm: about.license
-        range: LicenseNode
       contributors:
         mandatory: false
+        range: ContributorNode
         allowMultiple: true
         propertyTerm: about.contributor
-        range: ContributorNode
       partOf:
         mandatory: false
         range: uri

@@ -6,8 +6,8 @@ nodeMappings:
     classTerm: vocab2.A
     mapping:
       za:
-        propertyTerm: vocab2.a
         range: nodeA
+        propertyTerm: vocab2.a
   nodeA:
     classTerm: vocab2.A
     mapping:
