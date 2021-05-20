@@ -47,7 +47,7 @@ trait DialectTests
 
     withDialect(s"file://$directory/$dialect") { (_, configuration) =>
       val context =
-        new CompilerContextBuilder(platform, new ParseConfiguration(configuration, s"file://$directory/$source"))
+        new CompilerContextBuilder(s"file://$directory/$source", platform, ParseConfiguration(configuration))
           .build()
       new AMFCompiler(context, Some(hint.vendor.mediaType)).build()
     }

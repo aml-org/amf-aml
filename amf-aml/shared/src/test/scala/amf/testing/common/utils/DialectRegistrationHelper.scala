@@ -3,11 +3,7 @@ package amf.testing.common.utils
 import amf.client.environment.AMLConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.remote.Aml
-import amf.core.remote.Vendor.AML
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.services.RuntimeResolver
 import amf.core.unsafe.PlatformBuilder.platform
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -20,7 +16,7 @@ trait DialectRegistrationHelper {
       implicit ec: ExecutionContext): Future[T] = {
     val eh            = DefaultErrorHandler()
     val configuration = AMLConfiguration.forEH(eh)
-    val context       = new CompilerContextBuilder(platform, new ParseConfiguration(configuration, uri)).build()
+    val context       = new CompilerContextBuilder(uri, platform, ParseConfiguration(configuration)).build()
     for {
       baseUnit      <- new AMFCompiler(context, Some(Aml.mediaType)).build()
       dialect       <- Future.successful { baseUnit.asInstanceOf[Dialect] }
