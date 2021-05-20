@@ -516,7 +516,7 @@
       "shacl:node": {
         "@id": "#/declarations/OwnerAnnotationMapping/list"
       },
-      "meta:typeDiscriminatorMap": "person->PersonNodeMapping,organization->OrganizationNodeMapping",
+      "meta:typeDiscriminatorMap": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-with-extra-facets/dialect.yaml#/declarations/PersonNodeMapping->person,file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-with-extra-facets/dialect.yaml#/declarations/OrganizationNodeMapping->organization",
       "meta:typeDiscriminatorName": "type",
       "http://a.ml/vocabularies/amf/aml#domain": [
         {
@@ -742,7 +742,7 @@
       "@id": "#/declarations/MaintainerAnnotationMapping/list",
       "@type": "rdfs:Seq",
       "rdfs:_1": {
-        "@id": "PersonNodeMapping"
+        "@id": "#/declarations/PersonNodeMapping"
       }
     },
     {
@@ -778,7 +778,7 @@
       "@id": "#/declarations/LDAPReferencesAnnotationMapping/list",
       "@type": "rdfs:Seq",
       "rdfs:_1": {
-        "@id": "PersonNodeMapping"
+        "@id": "#/declarations/PersonNodeMapping"
       }
     },
     {
@@ -866,10 +866,10 @@
       "@id": "#/declarations/OwnerAnnotationMapping/list",
       "@type": "rdfs:Seq",
       "rdfs:_1": {
-        "@id": "PersonNodeMapping"
+        "@id": "#/declarations/PersonNodeMapping"
       },
       "rdfs:_2": {
-        "@id": "OrganizationNodeMapping"
+        "@id": "#/declarations/OrganizationNodeMapping"
       }
     },
     {

@@ -6,49 +6,21 @@ import amf.core.metamodel.document.FragmentModel
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.parser.SearchScope.All
-import amf.core.parser.{
-  Annotations,
-  BaseSpecParser,
-  ScalarNode,
-  SearchScope,
-  SyamlParsedDocument,
-  ValueNode,
-  YNodeLikeOps
-}
+import amf.core.parser.{Annotations, BaseSpecParser, ScalarNode, SearchScope, SyamlParsedDocument, ValueNode, YNodeLikeOps}
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel.Externals
 import amf.plugins.document.vocabularies.metamodel.domain.UnionNodeMappingModel.ObjectRange
-import amf.plugins.document.vocabularies.metamodel.domain.{
-  MergePolicies,
-  NodeMappingModel,
-  PropertyLikeMappingModel,
-  PropertyMappingModel,
-  UnionNodeMappingModel
-}
+import amf.plugins.document.vocabularies.metamodel.domain.{MergePolicies, NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
-import amf.plugins.document.vocabularies.parser.dialects.property.like.{
-  AnnotationMappingParser,
-  EnumParser,
-  ExternalLinksParser,
-  MandatoryParser,
-  PropertyLikeMappingParser,
-  PropertyTermParser,
-  RangeParser,
-  TypeDiscriminatorParser
-}
+import amf.plugins.document.vocabularies.parser.dialects.property.like.{AnnotationMappingParser, PropertyLikeMappingParser}
 import amf.plugins.document.vocabularies.parser.instances.BaseDirective
 import amf.validation.DialectValidations
-import amf.validation.DialectValidations.{
-  DialectError,
-  EventualAmbiguity,
-  UnavoidableAmbiguity,
-  VariablesDefinedInBase
-}
+import amf.validation.DialectValidations.{DialectError, EventualAmbiguity, UnavoidableAmbiguity, VariablesDefinedInBase}
 import org.yaml.model._
 
 import scala.collection.{immutable, mutable}
@@ -108,13 +80,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       case unionNodeMapping: UnionNodeMapping =>
         checkNodeMappableReferences(unionNodeMapping)
 
-      case nodeMapping: NodeMapping =>
+      case nodeMapping: Member =>
         nodeMapping.propertiesMapping().foreach { propertyMapping =>
           checkNodeMappableReferences(propertyMapping)
         }
 
-      case annotationMapping: AnnotationMapping =>
-      // Ignore
+      case annotationMapping: AnnotationMapping => checkNodeMappableReferences(annotationMapping)
     }
     addDeclarationsToModel(dialect)
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
@@ -124,7 +95,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
     // resolve unresolved references
     dialect.declares.foreach {
-      case dec: NodeMapping =>
+      case dec: Member =>
         if (!dec.isUnresolved) {
           ctx.futureDeclarations.resolveRef(dec.name.value(), dec)
         }
@@ -833,6 +804,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         nodeMapping.propertiesMapping().foreach { propertyMapping =>
           checkNodeMappableReferences(propertyMapping)
         }
+
+      case annotationMapping: AnnotationMapping => checkNodeMappableReferences(annotationMapping)
     }
     addDeclarationsToModel(dialect)
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
