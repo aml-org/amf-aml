@@ -1,0 +1,9 @@
+#%Map List Test 1.0
+codes:
+  "FF0000":
+    - red
+    - RED
+    - Red
+    - rouge
+  "000000": black
+

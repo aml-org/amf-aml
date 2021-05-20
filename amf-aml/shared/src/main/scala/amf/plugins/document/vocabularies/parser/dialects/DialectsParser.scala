@@ -803,18 +803,18 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   }
 
   private def parseMapValue(map: YMap, propertyMapping: PropertyMapping): Unit = {
-    val mapValu      = map.key("mapValue")
+    val mapValue     = map.key("mapValue")
     val mapTermValue = map.key("mapTermValue")
 
     for {
-      _ <- mapValu
+      _ <- mapValue
       _ <- mapTermValue
     } yield {
       ctx.eh.violation(DialectError, propertyMapping.id, s"mapValue and mapTermValue are mutually exclusive", map)
     }
 
     mapTermValue.fold({
-      mapValu.foreach(entry => {
+      mapValue.foreach(entry => {
         val propertyLabel = ValueNode(entry.value).string().toString
         propertyMapping.withMapValueProperty(propertyLabel, Annotations(entry.value))
       })
