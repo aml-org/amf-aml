@@ -8,7 +8,12 @@
         "http://a.ml/vocabularies/document#DomainElement"
       ],
       "http://a.ml/vocabularies/core#displayName": "aml",
-      "http://a.ml/vocabularies/meta#base": "http://a.ml/vocab#"
+      "http://a.ml/vocabularies/meta#base": "http://a.ml/vocab#",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml/externals/aml#/source-map"
+        }
+      ]
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml/semantic-extensions/maintainer",
@@ -47,6 +52,17 @@
       ]
     },
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml/externals/aml#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml/externals/aml#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml/semantic-extensions/maintainer#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -67,6 +83,11 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml/semantic-extensions/contributor#/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml/externals/aml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml/externals/aml",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(11,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml/semantic-extensions/maintainer#/source-map/lexical/element_0",

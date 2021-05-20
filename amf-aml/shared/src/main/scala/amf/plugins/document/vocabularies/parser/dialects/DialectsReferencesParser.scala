@@ -4,7 +4,7 @@ import amf.core.annotations.Aliases
 import amf.core.annotations.Aliases._
 import amf.core.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
 import amf.core.model.domain.AmfObject
-import amf.core.parser.{CallbackReferenceCollector, ParsedReference, Reference, ReferenceCollector}
+import amf.core.parser.{Annotations, CallbackReferenceCollector, ParsedReference, Reference, ReferenceCollector}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain.External
 import amf.validation.DialectValidations.DialectError
@@ -87,7 +87,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
             .foreach(e => {
               val alias: String = e.key.as[YScalar].text
               val base: String  = e.value
-              val external      = External()
+              val external      = External(Annotations(e))
               result += (alias, external.withAlias(alias).withBase(base))
             })
     )
