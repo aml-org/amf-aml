@@ -4,7 +4,6 @@ import amf.client.remod.AMLDialectInstancePlugin
 import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument, YMapOps, YNodeLikeOps}
@@ -26,21 +25,19 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
 
   override def priority: PluginPriority = NormalPriority
 
-  override def parse(document: Root, ctx: ParserContext, options: ParsingOptions): BaseUnit = {
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+
     val maybeUnit = documentKindFor(document) map {
       case kind.DialectInstanceFragment =>
         val name = DialectHeader.dialectHeaderDirectiveRootPart(document).get // Should always be defined
         new DialectInstanceFragmentParser(document)(new DialectInstanceContext(dialect, ctx)).parse(name)
-
       case kind.DialectInstanceLibrary =>
         new DialectInstanceLibraryParser(document)(new DialectInstanceContext(dialect, ctx)).parse()
-
       case kind.DialectInstancePatch =>
-        new DialectInstancePatchParser(document)(new DialectInstanceContext(dialect, ctx).forPatch()).parse()
-
+        new DialectInstancePatchParser(document)(new DialectInstanceContext(dialect, ctx).forPatch())
+          .parse()
       case kind.DialectInstance =>
         new DialectInstanceParser(document)(new DialectInstanceContext(dialect, ctx)).parseDocument()
-
       case _ =>
         DialectInstance()
     }

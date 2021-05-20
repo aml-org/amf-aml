@@ -50,8 +50,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
       val validator = js.Dynamic.newInstance(nativeShacl)()
       loadLibrary(validator)
 
-      val dataModel   = platform.rdfFramework.get.syntaxToRdfModel(dataMediaType, data).get
-      val shapesModel = platform.rdfFramework.get.syntaxToRdfModel(shapesMediaType, shapes).get
+      val dataModel   = platform.rdfFramework.get.syntaxToRdfModel(dataMediaType, data)
+      val shapesModel = platform.rdfFramework.get.syntaxToRdfModel(shapesMediaType, shapes)
 
       validator.validateFromModels(
           dataModel.model.native().asInstanceOf[js.Dynamic],

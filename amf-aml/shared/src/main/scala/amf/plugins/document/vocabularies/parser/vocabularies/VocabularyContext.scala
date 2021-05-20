@@ -8,7 +8,7 @@ import amf.validation.DialectValidations
 import org.yaml.model.YPart
 
 class VocabularyContext(private val wrapped: ParserContext, private val ds: Option[VocabularyDeclarations] = None)
-    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.eh)
+    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.config)
     with VocabularySyntax
     with SyntaxErrorReporter {
 
@@ -67,10 +67,7 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
     }
   }
 
-  def resolveClassTermAlias(base: String,
-                            classTermAlias: String,
-                            where: YPart,
-                            strictLocal: Boolean): Option[String] = {
+  def resolveClassTermAlias(base: String, classTermAlias: String, where: YPart, strictLocal: Boolean): Option[String] = {
     if (classTermAlias.contains(".")) {
       val prefix = classTermAlias.split("\\.").head
       val value  = classTermAlias.split("\\.").last
