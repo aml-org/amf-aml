@@ -10,11 +10,11 @@ import org.yaml.model.YMap
 case class SemanticExtension(fields: Fields, annotations: Annotations) extends DomainElement {
   override def meta: SemanticExtensionModel.type = SemanticExtensionModel
 
-  def extensionName(): StrField                       = fields.field(ExtensionName)
-  def extensionMappingDefinition(): AnnotationMapping = fields.field(ExtensionMappingDefinition)
+  def extensionName(): StrField              = fields.field(ExtensionName)
+  def extensionMappingDefinition(): StrField = fields.field(ExtensionMappingDefinition)
 
   def withExtensionName(name: String): SemanticExtension = set(ExtensionName, name)
-  def withExtensionMappingDefinition(annotationMapping: AnnotationMapping): SemanticExtension =
+  def withExtensionMappingDefinition(annotationMapping: String): SemanticExtension =
     set(ExtensionMappingDefinition, annotationMapping)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */

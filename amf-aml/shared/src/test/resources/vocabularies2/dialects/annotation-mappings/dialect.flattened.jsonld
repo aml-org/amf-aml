@@ -403,7 +403,7 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/MaintainerAnnotationMapping/list",
       "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
       "http://www.w3.org/2000/01/rdf-schema#_1": {
-        "@id": "PersonNodeMapping"
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping"
       }
     },
     {
@@ -433,7 +433,7 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/ContributorAnnotationMapping/list",
       "@type": "http://www.w3.org/2000/01/rdf-schema#Seq",
       "http://www.w3.org/2000/01/rdf-schema#_1": {
-        "@id": "PersonNodeMapping"
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping"
       }
     },
     {

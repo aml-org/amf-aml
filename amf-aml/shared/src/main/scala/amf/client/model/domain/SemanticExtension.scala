@@ -14,14 +14,14 @@ case class SemanticExtension(override private[amf] val _internal: InternalSemant
 
   def extensionName(): StrField = _internal.extensionName()
 
-  def extensionMappingDefinition(): AnnotationMapping = _internal.extensionMappingDefinition()
+  def extensionMappingDefinition(): StrField = _internal.extensionMappingDefinition()
 
   def withExtensionName(name: String): SemanticExtension = {
     _internal.withExtensionName(name)
     this
   }
 
-  def withExtensionMappingDefinition(annotationMapping: AnnotationMapping): SemanticExtension = {
+  def withExtensionMappingDefinition(annotationMapping: String): SemanticExtension = {
     _internal.withExtensionMappingDefinition(annotationMapping)
     this
   }

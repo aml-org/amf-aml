@@ -868,7 +868,7 @@
             "@type": "rdfs:Seq",
             "rdfs:_1": [
               {
-                "@id": "PersonNodeMapping"
+                "@id": "#/declarations/PersonNodeMapping"
               }
             ]
           }
@@ -1012,7 +1012,7 @@
             "@type": "rdfs:Seq",
             "rdfs:_1": [
               {
-                "@id": "PersonNodeMapping"
+                "@id": "#/declarations/PersonNodeMapping"
               }
             ]
           }
@@ -1401,19 +1401,19 @@
             "@type": "rdfs:Seq",
             "rdfs:_1": [
               {
-                "@id": "PersonNodeMapping"
+                "@id": "#/declarations/PersonNodeMapping"
               }
             ],
             "rdfs:_2": [
               {
-                "@id": "OrganizationNodeMapping"
+                "@id": "#/declarations/OrganizationNodeMapping"
               }
             ]
           }
         ],
         "meta:typeDiscriminatorMap": [
           {
-            "@value": "person->PersonNodeMapping,organization->OrganizationNodeMapping"
+            "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-with-extra-facets/dialect.yaml#/declarations/PersonNodeMapping->person,file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-with-extra-facets/dialect.yaml#/declarations/OrganizationNodeMapping->organization"
           }
         ],
         "meta:typeDiscriminatorName": [
