@@ -28,7 +28,7 @@ trait DialectValidation extends AsyncFunSuite with PlatformSecrets with DefaultA
     for {
       dialect <- {
         new AMFCompiler(
-            new CompilerContextBuilder(platform, new ParseConfiguration(configuration, "file://" + path + dialectPath))
+            new CompilerContextBuilder("file://" + path + dialectPath, platform, ParseConfiguration(configuration))
               .build(),
             Some("application/aml")
         ).build()
