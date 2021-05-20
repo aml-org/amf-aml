@@ -19,184 +19,184 @@ nodeMappings:
     classTerm: about.SoftwareProject
     mapping:
       name:
-        mandatory: true
-        range: string
         propertyTerm: schema-org.name
+        mandatory: true
+        range: string
       description:
-        mandatory: false
-        range: string
         propertyTerm: schema-org.description
+        mandatory: false
+        range: string
       homepage:
-        mandatory: false
-        range: uri
         propertyTerm: about.homepage
+        mandatory: false
+        range: uri
       logo:
-        mandatory: false
-        range: uri
         propertyTerm: schema-org.logo
+        mandatory: false
+        range: uri
       copyrightHolder:
+        propertyTerm: schema-org.copyrightHolder
         mandatory: false
         range: string
-        propertyTerm: schema-org.copyrightHolder
       developmentStatus:
+        propertyTerm: about.developmentStatus
         mandatory: true
         range: string
-        propertyTerm: about.developmentStatus
       repository:
+        propertyTerm: schema-org.codeRepository
         mandatory: true
         range: uri
-        propertyTerm: schema-org.codeRepository
       keywords:
+        propertyTerm: about.keyword
         range: string
         allowMultiple: true
-        propertyTerm: about.keyword
       discussion:
+        propertyTerm: about.discussionChannel
         mandatory: false
         range: DiscussionChannelNode
         allowMultiple: true
-        propertyTerm: about.discussionChannel
       continuousIntegration:
+        propertyTerm: about.continuousIntegration
         mandatory: false
         range: ContinuousIntegrationNode
         allowMultiple: true
-        propertyTerm: about.continuousIntegration
       projectManagement:
+        propertyTerm: about.projectManagementTool
         mandatory: false
         range: ProjectManagementNode
         allowMultiple: true
-        propertyTerm: about.projectManagementTool
       licenses:
+        propertyTerm: about.license
         mandatory: false
         range: LicenseNode
         allowMultiple: true
-        propertyTerm: about.license
       contributors:
+        propertyTerm: about.contributor
         mandatory: false
         range: ContributorNode
         allowMultiple: true
-        propertyTerm: about.contributor
       partOf:
-        mandatory: false
-        range: uri
-        allowMultiple: true
         propertyTerm: about.partOf
+        mandatory: false
+        range: uri
+        allowMultiple: true
       hasPart:
-        mandatory: false
-        range: uri
-        allowMultiple: true
         propertyTerm: about.hasPart
-      sameAs:
         mandatory: false
         range: uri
         allowMultiple: true
+      sameAs:
         propertyTerm: about.sameAs
-      forkedFrom:
         mandatory: false
         range: uri
+        allowMultiple: true
+      forkedFrom:
         propertyTerm: about.forkedFrom
+        mandatory: false
+        range: uri
   DiscussionChannelNode:
     classTerm: about.DiscussionChannel
     mapping:
       name:
+        propertyTerm: about.discussionChannelName
         mandatory: false
         range: string
-        propertyTerm: about.discussionChannelName
       url:
+        propertyTerm: about.discussionChannelUrl
         mandatory: false
         range: uri
-        propertyTerm: about.discussionChannelUrl
       description:
-        mandatory: false
-        range: string
         propertyTerm: schema-org.description
-      type:
         mandatory: false
         range: string
+      type:
         propertyTerm: about.discussionChannelType
+        mandatory: false
+        range: string
   ContinuousIntegrationNode:
     classTerm: about.ContinuousIntegration
     mapping:
       name:
-        mandatory: false
-        range: string
         propertyTerm: about.serviceName
+        mandatory: false
+        range: string
       url:
-        mandatory: false
-        range: uri
         propertyTerm: about.serviceUrl
-      description:
-        mandatory: false
-        range: string
-        propertyTerm: schema-org.description
-      type:
-        mandatory: false
-        range: string
-        propertyTerm: about.serviceType
-      systemUrl:
         mandatory: false
         range: uri
+      description:
+        propertyTerm: schema-org.description
+        mandatory: false
+        range: string
+      type:
+        propertyTerm: about.serviceType
+        mandatory: false
+        range: string
+      systemUrl:
         propertyTerm: about.serviceSystemUrl
+        mandatory: false
+        range: uri
   ProjectManagementNode:
     classTerm: about.ProjectManagement
     mapping:
       name:
-        mandatory: false
-        range: string
         propertyTerm: about.serviceName
+        mandatory: false
+        range: string
       url:
-        mandatory: false
-        range: uri
         propertyTerm: about.serviceUrl
-      description:
-        mandatory: false
-        range: string
-        propertyTerm: schema-org.description
-      type:
-        mandatory: false
-        range: string
-        propertyTerm: about.serviceType
-      systemUrl:
         mandatory: false
         range: uri
+      description:
+        propertyTerm: schema-org.description
+        mandatory: false
+        range: string
+      type:
+        propertyTerm: about.serviceType
+        mandatory: false
+        range: string
+      systemUrl:
         propertyTerm: about.serviceSystemUrl
+        mandatory: false
+        range: uri
   LicenseNode:
     classTerm: about.License
     mapping:
       name:
+        propertyTerm: about.licenseName
         mandatory: false
         range: string
-        propertyTerm: about.licenseName
       url:
+        propertyTerm: about.licenseType
         mandatory: false
         range: uri
-        propertyTerm: about.licenseType
   ContributorNode:
     classTerm: about.Contributor
     mapping:
       givenName:
-        mandatory: false
-        range: string
         propertyTerm: schema-org.giveName
+        mandatory: false
+        range: string
       middleName:
-        mandatory: false
-        range: string
         propertyTerm: schema-org.middleName
+        mandatory: false
+        range: string
       familyName:
-        mandatory: false
-        range: string
         propertyTerm: schema-org.familyName
+        mandatory: false
+        range: string
       email:
-        mandatory: false
-        range: string
         propertyTerm: schema-org.email
+        mandatory: false
+        range: string
       repositoryUser:
+        propertyTerm: schema-org.name
         range: string
         mandatory: false
-        propertyTerm: schema-org.name
       roles:
+        propertyTerm: about.role
         mandatory: false
         range: string
         allowMultiple: true
-        propertyTerm: about.role
 uses:
   about: ABOUT-vocabulary.yaml
