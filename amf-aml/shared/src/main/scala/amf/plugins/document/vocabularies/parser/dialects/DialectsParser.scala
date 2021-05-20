@@ -18,6 +18,7 @@ import amf.core.parser.{
 import amf.core.utils._
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
+import amf.plugins.document.vocabularies.metamodel.document.DialectModel.Externals
 import amf.plugins.document.vocabularies.metamodel.domain.UnionNodeMappingModel.ObjectRange
 import amf.plugins.document.vocabularies.metamodel.domain.{
   MergePolicies,
@@ -93,8 +94,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
     val references = DialectsReferencesParser(dialect, map, root.references).parse()
 
-    if (ctx.declarations.externals.nonEmpty)
-      dialect.withExternals(ctx.declarations.externals.values.toSeq)
+    if (ctx.declarations.externals.nonEmpty) {
+      val entry = map.key("external").get
+      dialect.set(Externals,
+                  AmfArray(ctx.declarations.externals.values.toSeq, Annotations(entry.value)),
+                  Annotations(entry))
+    }
 
     parseDeclarations(root, map)
 
