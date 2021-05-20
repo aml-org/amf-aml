@@ -12,8 +12,8 @@ nodeMappings:
     classTerm: vocab2.A
     mapping:
       a:
-        propertyTerm: vocab2.a
         range: string
+        propertyTerm: vocab2.a
 documents:
   fragments:
     encodes:

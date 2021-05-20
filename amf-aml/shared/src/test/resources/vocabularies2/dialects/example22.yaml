@@ -7,8 +7,8 @@ nodeMappings:
     mapping:
       a:
         unique: true
-        propertyTerm: v3.a
         range: guid
+        propertyTerm: v3.a
 documents:
   root:
     encodes: Simple

@@ -27,14 +27,14 @@ nodeMappings:
         enum:
           - hey
           - ho
+        range: string
         propertyTerm: v2.a
-        range: string
       b:
+        range: string
         propertyTerm: v2.t
-        range: string
       c:
-        propertyTerm: v2.q
         range: string
+        propertyTerm: v2.q
 documents:
   root:
     encodes: nodeA

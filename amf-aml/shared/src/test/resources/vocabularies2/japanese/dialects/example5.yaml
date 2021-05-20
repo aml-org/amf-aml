@@ -12,8 +12,8 @@ nodeMappings:
     classTerm: 使用する.エアウェイ
     mapping:
       エア:
-        propertyTerm: 使2.エア
         range: string
+        propertyTerm: 使2.エア
 documents:
   root:
     encodes: ノードA

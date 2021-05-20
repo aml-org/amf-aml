@@ -251,6 +251,32 @@
                     ],
                     "http://a.ml/vocabularies/document-source-maps#lexical": [
                       {
+                        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/fragment.yaml/fragment/property/anotherProperty#/source-map/lexical/element_2",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://a.ml/vocabularies/core#name"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(3,2)-(3,17)]"
+                          }
+                        ]
+                      },
+                      {
+                        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/fragment.yaml/fragment/property/anotherProperty#/source-map/lexical/element_0",
+                        "http://a.ml/vocabularies/document-source-maps#element": [
+                          {
+                            "@value": "http://www.w3.org/ns/shacl#datatype"
+                          }
+                        ],
+                        "http://a.ml/vocabularies/document-source-maps#value": [
+                          {
+                            "@value": "[(4,4)-(4,17)]"
+                          }
+                        ]
+                      },
+                      {
                         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/fragment.yaml/fragment/property/anotherProperty#/source-map/lexical/element_1",
                         "http://a.ml/vocabularies/document-source-maps#element": [
                           {
@@ -260,19 +286,6 @@
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
                             "@value": "[(3,18)-(4,17)]"
-                          }
-                        ]
-                      },
-                      {
-                        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/fragment.yaml/fragment/property/anotherProperty#/source-map/lexical/element_0",
-                        "http://a.ml/vocabularies/document-source-maps#element": [
-                          {
-                            "@value": "http://a.ml/vocabularies/core#name"
-                          }
-                        ],
-                        "http://a.ml/vocabularies/document-source-maps#value": [
-                          {
-                            "@value": "[(3,2)-(3,17)]"
                           }
                         ]
                       }

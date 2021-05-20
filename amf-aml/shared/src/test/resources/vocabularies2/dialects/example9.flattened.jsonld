@@ -382,10 +382,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.yaml/fragment/property/za#/source-map/lexical/element_1"
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.yaml/fragment/property/za#/source-map/lexical/element_2"
         },
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.yaml/fragment/property/za#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.yaml/fragment/property/za#/source-map/lexical/element_1"
         }
       ]
     },
@@ -400,14 +403,19 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(7,0)]"
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.yaml/fragment/property/za#/source-map/lexical/element_1",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.yaml/fragment/property/za",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,5)-(7,0)]"
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.yaml/fragment/property/za#/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(4,4)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.yaml/fragment/property/za#/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(4,4)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/ns/shacl#datatype",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(7,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.yaml/fragment/property/za#/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mapping_fragment.yaml/fragment/property/za",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,5)-(7,0)]"
     }
   ]
 }

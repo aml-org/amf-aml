@@ -6,8 +6,8 @@ nodeMappings:
     classTerm: v3.Anchor
     mapping:
       value:
-        propertyTerm: v3.value
         range: string
+        propertyTerm: v3.value
   Base:
     classTerm: v3.Base
     mapping:
@@ -19,8 +19,8 @@ nodeMappings:
     classTerm: v3.Simple
     mapping:
       s:
-        propertyTerm: v3.s
         range: string
+        propertyTerm: v3.s
     extends: Base
 documents:
   root:

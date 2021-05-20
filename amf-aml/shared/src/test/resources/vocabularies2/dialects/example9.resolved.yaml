@@ -9,7 +9,7 @@ nodeMappings:
     classTerm: v2.B
     mapping:
       za:
-        propertyTerm: v2.b
         range: string
+        propertyTerm: v2.b
 dialect: Test
 version: "1.0"

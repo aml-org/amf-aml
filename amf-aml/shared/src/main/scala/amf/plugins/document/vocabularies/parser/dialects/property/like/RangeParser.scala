@@ -1,11 +1,13 @@
 package amf.plugins.document.vocabularies.parser.dialects.property.like
 
 import amf.core.model.DataType
-import amf.core.parser.{ValueNode, YMapOps}
+import amf.core.model.domain.AmfScalar
+import amf.core.parser.{Annotations, ValueNode, YMapOps}
 import amf.core.vocabulary.Namespace
-import amf.plugins.document.vocabularies.metamodel.domain.PropertyLikeMappingModel
 import amf.plugins.document.vocabularies.model.domain.PropertyLikeMapping
-import org.yaml.model.{YMap, YType}
+import org.yaml.model.{YMap, YMapEntry, YType}
+import amf.plugins.document.vocabularies.metamodel.domain.PropertyLikeMappingModel
+import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel.LiteralRange
 
 case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel]) {
   def parse(): Unit = {
@@ -20,15 +22,15 @@ case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: 
               val range = value.string().toString
               range match {
                 case "guid" =>
-                  propertyLikeMapping.withLiteralRange((Namespace.Shapes + "guid").iri())
+                  setLiteralRange((Namespace.Shapes + "guid").iri(), entry)
                 case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
                     "time" | "date" | "anyType" =>
-                  propertyLikeMapping.withLiteralRange((Namespace.Xsd + range).iri())
-                case "anyUri"  => propertyLikeMapping.withLiteralRange(DataType.AnyUri)
-                case "link"    => propertyLikeMapping.withLiteralRange((Namespace.Shapes + "link").iri())
-                case "number"  => propertyLikeMapping.withLiteralRange(DataType.Number)
-                case "uri"     => propertyLikeMapping.withLiteralRange(DataType.AnyUri)
-                case "any"     => propertyLikeMapping.withLiteralRange(DataType.Any)
+                  setLiteralRange((Namespace.Xsd + range).iri(), entry)
+                case "anyUri"  => setLiteralRange(DataType.AnyUri, entry)
+                case "link"    => setLiteralRange((Namespace.Shapes + "link").iri(), entry)
+                case "number"  => setLiteralRange(DataType.Number, entry)
+                case "uri"     => setLiteralRange(DataType.AnyUri, entry)
+                case "any"     => setLiteralRange(DataType.Any, entry)
                 case "anyNode" => propertyLikeMapping.withObjectRange(Seq((Namespace.Meta + "anyNode").iri()))
                 case nodeMappingId =>
                   propertyLikeMapping
@@ -37,5 +39,9 @@ case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: 
           }
         }
     )
+  }
+
+  private def setLiteralRange(iri: String, entry: YMapEntry) = {
+    propertyLikeMapping.set(LiteralRange, AmfScalar(iri, Annotations(entry.value)), Annotations(entry))
   }
 }
