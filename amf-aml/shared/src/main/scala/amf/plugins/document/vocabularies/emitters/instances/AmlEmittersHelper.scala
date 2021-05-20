@@ -4,7 +4,7 @@ import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.BaseEmitters.traverse
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.AmfObject
+import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -134,8 +134,8 @@ trait AmlEmittersHelper {
 
   def maybeFindNodeMappingById(nodeMappingId: NodeMappingId): Option[(Dialect, NodeMappable)] = {
     val inDialectMapping = dialect.declares
-      .find {
-        case nodeMapping: NodeMappable => nodeMapping.id == nodeMappingId
+      .find { element =>
+        element.id == nodeMappingId
       }
       .map { nodeMapping =>
         (dialect, nodeMapping)
