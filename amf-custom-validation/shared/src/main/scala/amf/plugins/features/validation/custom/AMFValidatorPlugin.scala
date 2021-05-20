@@ -67,10 +67,11 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
       implicit executionContext: ExecutionContext) = {
 
     RuntimeCompiler(
+        validationProfilePath,
         Some("application/yaml"),
         Context(platform),
         cache = Cache(),
-        ParseConfiguration(amfConf, validationProfilePath)
+        ParseConfiguration(amfConf)
     )
   }
 

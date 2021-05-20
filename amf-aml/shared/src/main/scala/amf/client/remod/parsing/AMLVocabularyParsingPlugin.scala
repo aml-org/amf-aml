@@ -3,7 +3,6 @@ package amf.client.remod.parsing
 import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.core.Root
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, ReferenceHandler}
@@ -12,8 +11,8 @@ import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReference
 import amf.plugins.document.vocabularies.plugin.headers.{DialectHeader, ExtensionHeader}
 
 class AMLVocabularyParsingPlugin extends AMFParsePlugin {
-  override def parse(document: Root, ctx: ParserContext, options: ParsingOptions): BaseUnit =
-    AMLPlugin.parse(document, ctx, options)
+
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = AMLPlugin.parse(document, ctx)
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
     new SyntaxExtensionsReferenceHandler(AMLPlugin.registry, eh)

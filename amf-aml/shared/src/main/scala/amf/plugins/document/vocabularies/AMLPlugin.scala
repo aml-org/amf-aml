@@ -5,7 +5,6 @@ import amf.client.remod.amfcore.config.RenderOptions
 import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
 import amf.core.Root
 import amf.core.annotations.Aliases
-import amf.core.client.ParsingOptions
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.metamodel.Obj
 import amf.core.model.document.BaseUnit
@@ -22,10 +21,10 @@ import amf.core.validation.core.ValidationProfile
 import amf.core.vocabulary.NamespaceAliases
 import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
 import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
-import amf.plugins.document.vocabularies.entities.AMLEntities
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
+import amf.plugins.document.vocabularies.entities.AMLEntities
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
@@ -88,20 +87,20 @@ trait AMLPlugin
   /**
     * Parses an accepted document returning an optional BaseUnit
     */
-  override def parse(document: Root, parentContext: ParserContext, options: ParsingOptions): BaseUnit = {
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
 
     val header = DialectHeader.dialectHeaderDirective(document)
 
     header match {
       case Some(ExtensionHeader.VocabularyHeader) =>
-        new VocabulariesParser(document)(new VocabularyContext(parentContext)).parseDocument()
+        new VocabulariesParser(document)(new VocabularyContext(ctx)).parseDocument()
       case Some(ExtensionHeader.DialectLibraryHeader) =>
-        new DialectsParser(document)(cleanDialectContext(parentContext, document)).parseLibrary()
+        new DialectsParser(document)(cleanDialectContext(ctx, document)).parseLibrary()
       case Some(ExtensionHeader.DialectFragmentHeader) =>
-        new DialectsParser(document)(new DialectContext(parentContext)).parseFragment()
+        new DialectsParser(document)(new DialectContext(ctx)).parseFragment()
       case Some(ExtensionHeader.DialectHeader) =>
-        parseDialect(document, cleanDialectContext(parentContext, document))
-      case _ => parseDialectInstance(document, header, parentContext)
+        parseDialect(document, cleanDialectContext(ctx, document))
+      case _ => parseDialectInstance(document, header, ctx)
     }
   }
 
@@ -207,7 +206,7 @@ trait AMLPlugin
   // context that opens a new context for declarations and copies the global JSON Schema declarations
   protected def cleanDialectContext(wrapped: ParserContext, root: Root): DialectContext = {
     val cleanNested =
-      ParserContext(root.location, root.references, EmptyFutureDeclarations(), eh = wrapped.eh)
+      ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.config)
     new DialectContext(cleanNested)
   }
 }

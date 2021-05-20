@@ -17,7 +17,7 @@ import scala.language.existentials
 class DialectInstanceContext(var dialect: Dialect,
                              private val wrapped: ParserContext,
                              private val ds: Option[DialectInstanceDeclarations] = None)
-    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.eh)
+    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.config)
     with DeclarationContext
     with SyntaxErrorReporter {
 
