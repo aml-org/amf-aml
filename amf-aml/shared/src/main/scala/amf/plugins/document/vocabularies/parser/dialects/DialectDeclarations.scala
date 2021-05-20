@@ -30,7 +30,7 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable[_]] = Map()
   }
 
   def +=(annotationMapping: AnnotationMapping): DialectDeclarations = {
-    annotationMappings += (annotationMapping.name().value() -> annotationMapping)
+    annotationMappings += (annotationMapping.name.value() -> annotationMapping)
     this
   }
 

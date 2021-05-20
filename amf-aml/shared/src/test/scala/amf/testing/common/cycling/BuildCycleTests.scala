@@ -27,6 +27,10 @@ trait BuildCycleTests extends BuildCycleTestCommon {
   def cycle(source: String, hint: Hint, directory: String): Future[Assertion] =
     cycle(source, source, hint, hint.vendor, directory, eh = None)
 
+  /** Compile source with specified hint. Dump to target and assert against same source file. */
+  def cycle(source: String, golden: String, hint: Hint, directory: String, eh: ParserErrorHandler): Future[Assertion] =
+    cycle(source, golden, hint, hint.vendor, directory, eh = Some(eh))
+
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   final def cycle(source: String,
                   golden: String,

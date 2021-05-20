@@ -6,7 +6,9 @@ import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies,
 import amf.core.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.AnnotationMapping
 
-object AnnotationMappingModel extends DomainElementModel with PropertyLikeMappingModel {
+object AnnotationMappingModel extends DomainElementModel with PropertyLikeMappingModel with NodeMappableModel {
+
+  override val Name: Field = NodeMappingModel.Name
 
   val Domain: Field = Field(
       Iri,

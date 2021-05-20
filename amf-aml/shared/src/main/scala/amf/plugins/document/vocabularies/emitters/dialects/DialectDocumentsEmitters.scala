@@ -10,7 +10,7 @@ import amf.core.parser.Position.ZERO
 import amf.plugins.document.vocabularies.emitters.common.ExternalEmitter
 import amf.plugins.document.vocabularies.emitters.instances.AmlEmittersHelper
 import amf.plugins.document.vocabularies.model.document.{Dialect, Vocabulary}
-import amf.plugins.document.vocabularies.model.domain.NodeMappable
+import amf.plugins.document.vocabularies.model.domain.{AnnotationMapping, NodeMappable, NodeMapping, UnionNodeMapping}
 import org.yaml.model.YDocument.EntryBuilder
 
 trait DialectDocumentsEmitters extends AmlEmittersHelper {
@@ -32,6 +32,8 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
   def rootLevelEmitters(ordering: SpecOrdering): Seq[EntryEmitter] =
     Seq(ReferencesEmitter(dialect, ordering, aliases)) ++
       nodeMappingDeclarationEmitters(dialect, ordering, aliases) ++
+      annotationMappingDeclarationEmitters(dialect, aliases, ordering) ++
+      extensionsEmitter(dialect, aliases, ordering) ++
       externalEmitters(ordering)
 
   def externalEmitters(ordering: SpecOrdering): Seq[EntryEmitter] = {
@@ -56,42 +58,34 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
     }
   }
 
-  def nodeMappingDeclarationEmitters(dialect: Dialect,
-                                     ordering: SpecOrdering,
-                                     aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
+  private def nodeMappingDeclarationEmitters(dialect: Dialect,
+                                             ordering: SpecOrdering,
+                                             aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
     type NodeMappable = NodeMappable.AnyNodeMappable
     val nodeMappingDeclarations: Seq[NodeMappable] = dialect.declares.collect {
-      case nm: NodeMappable => nm
+      case nm: NodeMapping      => nm
+      case um: UnionNodeMapping => um
     }
-    if (nodeMappingDeclarations.nonEmpty) {
-      Seq(new EntryEmitter {
-        override def emit(b: EntryBuilder): Unit = {
-          b.entry(
-              "nodeMappings",
-              _.obj { b =>
-                val nodeMappingEmitters: Seq[EntryEmitter] = nodeMappingDeclarations.map { n: NodeMappable =>
-                  NodeMappingEmitter(dialect, n, ordering, aliases)
-                }
-                traverse(ordering.sorted(nodeMappingEmitters), b)
-              }
-          )
-        }
+    if (nodeMappingDeclarations.nonEmpty)
+      Seq(NodeMappingsEntryEmitter(dialect, nodeMappingDeclarations, aliases, ordering))
+    else Nil
+  }
 
-        override def position(): Position = {
-          nodeMappingDeclarations
-            .map(
-                _.annotations
-                  .find(classOf[LexicalInformation])
-                  .map(_.range.start)
-                  .getOrElse(ZERO))
-            .filter(_ != ZERO)
-            .sorted
-            .headOption
-            .getOrElse(ZERO)
-        }
-      })
-    } else {
-      Nil
+  private def annotationMappingDeclarationEmitters(dialect: Dialect,
+                                                   aliases: Map[String, (String, String)],
+                                                   ordering: SpecOrdering): Seq[EntryEmitter] = {
+    val annotationMappings = dialect.declares.collect {
+      case mapping: AnnotationMapping => mapping
     }
+    if (annotationMappings.nonEmpty)
+      Seq(AnnotationMappingsEntryEmitter(dialect, annotationMappings, aliases, ordering))
+    else Seq.empty
+  }
+
+  private def extensionsEmitter(dialect: Dialect,
+                                aliases: Map[String, (String, String)],
+                                ordering: SpecOrdering): Seq[EntryEmitter] = {
+    if (dialect.extensions().nonEmpty) Seq(ExtensionMappingsEntryEmitter(dialect, aliases, ordering))
+    else Seq.empty
   }
 }
