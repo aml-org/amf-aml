@@ -9,7 +9,7 @@ annotationMappings:
   RateLimitingAnnotationMapping:
     domain: aml.Endpoint
     propertyTerm: aml.rate-limit
-    range: Integer
+    range: integer
     minimum: 0
     maximum: 10000
     mandatory: true
