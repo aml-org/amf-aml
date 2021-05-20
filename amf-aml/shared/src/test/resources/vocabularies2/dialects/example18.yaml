@@ -9,8 +9,8 @@ nodeMappings:
         patch: insert
         unique: true
         mandatory: true
-        propertyTerm: v3.a
         range: string
+        propertyTerm: v3.a
 documents:
   root:
     encodes: Local

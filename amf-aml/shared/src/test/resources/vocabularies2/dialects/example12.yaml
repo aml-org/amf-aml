@@ -18,14 +18,14 @@ nodeMappings:
     classTerm: v2.A
     mapping:
       a:
-        propertyTerm: v2.a
         range: string
+        propertyTerm: v2.a
   nodeC:
     classTerm: v2.C
     mapping:
       c:
-        propertyTerm: v2.c
         range: string
+        propertyTerm: v2.c
 documents:
   root:
     encodes: nodeA

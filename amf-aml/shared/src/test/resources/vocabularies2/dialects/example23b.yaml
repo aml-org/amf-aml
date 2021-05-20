@@ -7,8 +7,8 @@ nodeMappings:
     mapping:
       a:
         unique: true
-        propertyTerm: v3.a
         range: string
+        propertyTerm: v3.a
       ho:
         propertyTerm: v3.ho
         range: parent.Anchor

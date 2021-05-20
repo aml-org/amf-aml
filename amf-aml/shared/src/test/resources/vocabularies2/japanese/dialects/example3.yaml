@@ -12,8 +12,8 @@ nodeMappings:
     classTerm: 使用する.エアウェイ
     mapping:
       エア:
-        propertyTerm: 使用する.エア
         range: string
+        propertyTerm: 使用する.エア
 documents:
   library:
     declares:

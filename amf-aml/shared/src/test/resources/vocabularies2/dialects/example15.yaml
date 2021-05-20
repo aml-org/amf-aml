@@ -7,15 +7,15 @@ nodeMappings:
     mapping:
       a:
         mandatory: true
-        propertyTerm: v3.a
         range: string
+        propertyTerm: v3.a
       b:
         mandatory: true
+        range: string
         propertyTerm: v3.b
-        range: string
       c:
-        propertyTerm: v3.c
         range: string
+        propertyTerm: v3.c
     idTemplate: "#/{a}_{b}"
 documents:
   root:

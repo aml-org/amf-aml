@@ -6,38 +6,38 @@ nodeMappings:
     classTerm: v3.Simple
     mapping:
       a:
-        propertyTerm: v3.a
         range: string
+        propertyTerm: v3.a
   Base:
     classTerm: v3.Base
     mapping:
       b:
-        propertyTerm: v3.b
         range: integer
+        propertyTerm: v3.b
     extends: Simple
   Root:
     classTerm: v3.Root
     mapping:
       c:
-        propertyTerm: v3.c
         range: string
+        propertyTerm: v3.c
       a:
-        propertyTerm: v3.a
         range: integer
+        propertyTerm: v3.a
     extends: Base
   Other:
     classTerm: v3.Other
     mapping:
       d:
-        propertyTerm: v3.d
         range: string
+        propertyTerm: v3.d
     extends: Forward
   Forward:
     classTerm: v3.Forward
     mapping:
       e:
-        propertyTerm: v3.e
         range: string
+        propertyTerm: v3.e
 documents:
   root:
     encodes: Root

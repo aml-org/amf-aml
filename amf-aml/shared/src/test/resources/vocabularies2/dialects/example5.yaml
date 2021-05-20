@@ -12,8 +12,8 @@ nodeMappings:
     classTerm: v2e.A
     mapping:
       a:
-        propertyTerm: v2.a
         range: string
+        propertyTerm: v2.a
 documents:
   root:
     encodes: nodeA
