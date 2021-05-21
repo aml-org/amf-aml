@@ -6,9 +6,7 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanc
 
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  * The AML Client provides common AML use cases and handles typed results
-  */
+/** Contains common AML operations. Handles typed results. */
 class AMLClient private[amf] (protected override val configuration: AMLConfiguration)
     extends AMFGraphClient(configuration) {
 
@@ -17,9 +15,9 @@ class AMLClient private[amf] (protected override val configuration: AMLConfigura
   override def getConfiguration: AMLConfiguration = configuration
 
   /**
-    * parse a {@link amf.plugins.document.vocabularies.model.document.Dialect}
+    * parse a [[Dialect]]
     * @param url of the resource to parse
-    * @return a Future {@link amf.client.environment.AMLDialectResult}
+    * @return a Future [[AMLDialectResult]]
     */
   def parseDialect(url: String): Future[AMLDialectResult] = AMFParser.parse(url, configuration).map {
     case AMFResult(d: Dialect, r) => new AMLDialectResult(d, r)
@@ -28,9 +26,9 @@ class AMLClient private[amf] (protected override val configuration: AMLConfigura
   }
 
   /**
-    * parse a {@link amf.plugins.document.vocabularies.model.document.DialectInstance}
+    * parse a [[DialectInstance]]
     * @param url of the resource to parse
-    * @return a Future {@link amf.client.environment.AMLDialectInstanceResult}
+    * @return a Future [[AMLDialectInstanceResult]]
     */
   def parseDialectInstance(url: String): Future[AMLDialectInstanceResult] = AMFParser.parse(url, configuration).map {
     case AMFResult(d: DialectInstance, r) => new AMLDialectInstanceResult(d, r)
@@ -39,9 +37,9 @@ class AMLClient private[amf] (protected override val configuration: AMLConfigura
   }
 
   /**
-    * parse a {@link amf.plugins.document.vocabularies.model.document.Vocabulary}
+    * parse a [[Vocabulary]]
     * @param url of the resource to parse
-    * @return a Future {@link amf.client.environment.AMLVocabularyResult}
+    * @return a Future [[AMLVocabularyResult]]
     */
   def parseVocabulary(url: String): Future[AMLVocabularyResult] = AMFParser.parse(url, configuration).map {
     case AMFResult(d: Vocabulary, r) => new AMLVocabularyResult(d, r)
