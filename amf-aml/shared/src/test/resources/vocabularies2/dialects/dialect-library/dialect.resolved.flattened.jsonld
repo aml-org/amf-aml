@@ -1,6 +1,18 @@
 {
 "@graph": [
 {
+"@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml/unitActions",
+"@type": [
+"http://a.ml/vocabularies/meta#AmfProcessingData"
+],
+"http://a.ml/vocabularies/meta#version": "3.1.0",
+"http://a.ml/vocabularies/meta#unitTransformations": [
+"DialectReferencesResolutionStage",
+"DialectNodeExtensionStage",
+"RedirectResolutionByModel$"
+]
+},
+{
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml/documents",
 "@type": [
 "http://a.ml/vocabularies/meta#DocumentsModel",
@@ -47,8 +59,10 @@
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml/documents"
 },
 "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml",
-"http://a.ml/vocabularies/document#version": "3.1.0",
-"http://a.ml/vocabularies/document#root": false
+"http://a.ml/vocabularies/document#root": false,
+"http://a.ml/vocabularies/meta#unitActions": {
+"@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml/unitActions"
+}
 },
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml#/declarations/RootNode",

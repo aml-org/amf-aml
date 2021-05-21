@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0"
+    },
+    {
       "@id": "#/encodes",
       "@type": [
         "myVocab:MyClass",
@@ -65,8 +72,10 @@
       "doc:encodes": {
         "@id": "#/encodes"
       },
-      "doc:version": "3.1.0",
       "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      },
       "sourcemaps:sources": [
         {
           "@id": "#/source-map"

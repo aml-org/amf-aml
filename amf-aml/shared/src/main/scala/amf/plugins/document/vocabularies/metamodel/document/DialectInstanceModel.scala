@@ -11,12 +11,10 @@ object DialectInstanceModel extends DocumentModel with ExternalContextModel {
 
   val DefinedBy: Field = Field(Iri, Namespace.Meta + "definedBy")
 
-  val GraphDependencies: Field = Field(Array(Iri), Namespace.Document + "graphDependencies")
-
   override def modelInstance: AmfObject = DialectInstance()
 
   override val `type`: List[ValueType] =
     Namespace.Meta + "DialectInstance" :: DocumentModel.`type`
 
-  override val fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: DocumentModel.fields
+  override val fields: List[Field] = DefinedBy :: Externals :: DocumentModel.fields
 }
