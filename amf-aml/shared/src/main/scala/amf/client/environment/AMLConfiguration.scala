@@ -35,12 +35,12 @@ import scala.concurrent.Future
 /**
   * The configuration object required for using AML
   *
-  * @param resolvers {@link amf.client.remod.amfcore.config.AMFResolvers}
-  * @param errorHandlerProvider {@link amf.client.remod.ErrorHandlerProvider}
-  * @param registry {@link amf.client.remod.amfcore.registry.AMFRegistry}
-  * @param logger {@link amf.client.exported.config.AMFLogger}
-  * @param listeners a Set of {@link amf.client.exported.config.AMFEventListener}
-  * @param options {@link amf.client.remod.amfcore.config.AMFOptions}
+  * @param resolvers [[AMFResolvers]]
+  * @param errorHandlerProvider [[ErrorHandlerProvider]]
+  * @param registry [[AMFRegistry]]
+  * @param logger [[AMFLogger]]
+  * @param listeners a Set of [[AMFEventListener]]
+  * @param options [[AMFOptions]]
   */
 class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                      override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
@@ -104,11 +104,6 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
-  /**
-    *
-    * @param path
-    * @return
-    */
   def withDialect(path: String): Future[AMLConfiguration] = {
     createClient().parse(path).map {
       case AMFResult(d: Dialect, _) => withDialect(d)

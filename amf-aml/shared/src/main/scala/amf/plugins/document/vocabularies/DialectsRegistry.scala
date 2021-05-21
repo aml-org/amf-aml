@@ -39,7 +39,8 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
   // Private methods
   private[amf] def env(): AMFGraphConfiguration = AMFPluginsRegistry.staticConfiguration
 
-  private[amf] def setEnv(env: AMFGraphConfiguration): Unit = AMFPluginsRegistry.staticConfiguration = env
+  private[amf] def setEnv(configuration: AMFGraphConfiguration): Unit =
+    AMFPluginsRegistry.staticConfiguration = configuration
 
   private val pipelineRunner = TransformationPipelineRunner(DefaultErrorHandler())
   private[amf] def resolveDialect(dialect: Dialect) = {
