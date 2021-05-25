@@ -1,6 +1,6 @@
 package amf.testing.common.utils
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.{Hint, Vendor}
 import amf.testing.common.cycling.FunSuiteCycleTests
 import org.scalatest.Assertion
@@ -18,7 +18,10 @@ trait DialectInstanceTester extends DefaultAMLInitialization with DialectRegistr
                                  directory: String = basePath,
                                  renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
     withDialect(s"file://$directory/$dialect") { (_, config) =>
-      cycle(source, golden, hint, target, directory, config, renderOptions)
+      val configuration =
+        renderOptions.fold(config.withRenderOptions(RenderOptions().withSourceMaps.withPrettyPrint))(r =>
+          config.withRenderOptions(r))
+      cycle(source, golden, hint, target, directory, configuration)
     }
   }
 

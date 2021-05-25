@@ -23,7 +23,7 @@ class DialectDomainElementModel(val typeIri: Seq[String] = Seq(),
   override def modelInstance: AmfObject = {
     val element = DialectDomainElement()
     nodeMapping.foreach(element.withDefinedBy)
-    element.withInstanceTypes(typeIri)
+    element.withInstanceTypes(typeIri ++ nodeMapping.map(_.id))
     element
   }
 

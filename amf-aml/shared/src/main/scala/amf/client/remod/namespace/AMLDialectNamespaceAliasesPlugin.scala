@@ -8,7 +8,8 @@ import amf.core.model.document.BaseUnit
 import amf.core.vocabulary.{Namespace, NamespaceAliases}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 
-case class AMLDialectNamespaceAliasesPlugin(dialect: Dialect) extends NamespaceAliasesPlugin {
+case class AMLDialectNamespaceAliasesPlugin private (dialect: Dialect, aliases: NamespaceAliases)
+    extends NamespaceAliasesPlugin {
 
   override def applies(element: BaseUnit): Boolean = element match {
     case instance: DialectInstanceUnit => instance.definedBy().option().contains(dialect.id)
@@ -18,7 +19,14 @@ case class AMLDialectNamespaceAliasesPlugin(dialect: Dialect) extends NamespaceA
 
   override def aliases(_unit: BaseUnit): NamespaceAliases = aliases
 
-  lazy val aliases: NamespaceAliases = {
+  override val id: String = s"${dialect.id}/dialect-namespace-generation-plugin"
+
+  override def priority: PluginPriority = NormalPriority
+}
+
+object AMLDialectNamespaceAliasesPlugin {
+  def forDialect(dialect: Dialect): Option[AMLDialectNamespaceAliasesPlugin] = {
+
     val externalAliases: Seq[(String, Namespace)] = dialect.externals.map { external =>
       external.alias.value() -> Namespace(external.base.value())
     }
@@ -31,11 +39,12 @@ case class AMLDialectNamespaceAliasesPlugin(dialect: Dialect) extends NamespaceA
         }
       }
       .getOrElse(Nil)
-
-    NamespaceAliases.withCustomAliases((externalAliases ++ annotAliases).toMap)
+    val allAliases = externalAliases ++ annotAliases
+    if (allAliases.nonEmpty)
+      Some(
+          AMLDialectNamespaceAliasesPlugin(
+              dialect,
+              NamespaceAliases.withCustomAliases((externalAliases ++ annotAliases).toMap)))
+    else None
   }
-
-  override val id: String = s"${dialect.id}/dialect-namespace-generation-plugin"
-
-  override def priority: PluginPriority = NormalPriority
 }

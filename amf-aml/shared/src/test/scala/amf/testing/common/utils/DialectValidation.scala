@@ -1,6 +1,6 @@
 package amf.testing.common.utils
 
-import amf.ProfileName
+import amf.{ProfileName, ProfileNames}
 import amf.client.environment.AMLConfiguration
 import amf.client.parse.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
@@ -28,7 +28,7 @@ trait DialectValidation extends AsyncFunSuite with PlatformSecrets with DefaultA
     for {
       dialect <- {
         new AMFCompiler(
-            new CompilerContextBuilder("file://" + path + dialectPath, platform, ParseConfiguration(configuration))
+            new CompilerContextBuilder("file://" + path + dialectPath, platform, configuration.parseConfiguration)
               .build(),
             Some("application/aml")
         ).build()
@@ -36,7 +36,7 @@ trait DialectValidation extends AsyncFunSuite with PlatformSecrets with DefaultA
       report <- {
         RuntimeValidator(
             dialect,
-            ProfileName(dialect.asInstanceOf[Dialect].nameAndVersion()),
+            ProfileNames.AML,
             resolved = false,
             new ValidationConfiguration(configuration)
         )

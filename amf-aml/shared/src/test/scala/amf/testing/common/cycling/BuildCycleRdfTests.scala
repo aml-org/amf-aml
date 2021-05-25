@@ -1,7 +1,8 @@
 package amf.testing.common.cycling
 
 import amf.client.environment.AMLConfiguration
-import amf.core.emitter.RenderOptions
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel
@@ -20,19 +21,15 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
                    directory: String = basePath,
                    amlConfig: AMLConfiguration =
                      AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
-                   renderOptions: Option[RenderOptions] = None,
                    syntax: Option[Syntax] = None,
                    pipeline: Option[String] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, None)
 
-    build(config, amlConfig, useAmfJsonldSerialisation = true)
-      .map(transformThroughRdf(_, config))
+    build(config, amlConfig)
+      .map(transformThroughRdf(_, config, amlConfig))
       .flatMap {
-        renderOptions match {
-          case Some(options) => render(_, config, options)
-          case None          => render(_, config, useAmfJsonldSerialization = true)
-        }
+        render(_, config, amlConfig)
       }
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))
@@ -51,7 +48,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
 
-    build(config, amlConfig, useAmfJsonldSerialisation = true)
+    build(config, amlConfig)
       .map(transformRdf(_, config))
       .flatMap(renderRdf(_, config))
       .flatMap(writeTemporaryFile(golden))
@@ -64,9 +61,9 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
-  def transformThroughRdf(unit: BaseUnit, config: CycleConfig): BaseUnit = {
+  def transformThroughRdf(unit: BaseUnit, config: CycleConfig, amfConfig: AMFGraphConfiguration): BaseUnit = {
     val rdfModel = unit.toNativeRdfModel(RenderOptions().withSourceMaps)
-    BaseUnit.fromNativeRdfModel(unit.id, rdfModel, AMLConfiguration.predefined())
+    BaseUnit.fromNativeRdfModel(unit.id, rdfModel, amfConfig)
   }
 
   /** Method to render parsed unit. Override if necessary. */
