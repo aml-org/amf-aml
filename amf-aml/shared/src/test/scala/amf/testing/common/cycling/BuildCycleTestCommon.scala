@@ -1,10 +1,9 @@
 package amf.testing.common.cycling
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.ParseConfiguration
-import amf.client.remod.amfcore.config.ParsingOptionsConverter
+import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
+import amf.client.remod.amfcore.config.{ParsingOptionsConverter, RenderOptions}
 import amf.core.client.ParsingOptions
-import amf.core.emitter.RenderOptions
 import amf.core.io.FileAssertionTest
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax
@@ -33,18 +32,13 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   }
 
   /** Method to parse unit. Override if necessary. */
-  def build(config: CycleConfig, amlConfig: AMLConfiguration, useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
-
-    var options =
-      if (!useAmfJsonldSerialisation) ParsingOptions().withoutAmfJsonLdSerialization
-      else ParsingOptions().withAmfJsonLdSerialization
-
-    options = options.withBaseUnitUrl("file://" + config.goldenPath)
+  def build(config: CycleConfig, amlConfig: AMLConfiguration): Future[BaseUnit] = {
 
     val environment =
-      amlConfig.withParsingOptions(ParsingOptionsConverter.fromLegacy(options))
+      amlConfig.withParsingOptions(amlConfig.options.parsingOptions.withBaseUnitUrl("file://" + config.goldenPath))
+
     val context =
-      new CompilerContextBuilder(s"file://${config.sourcePath}", platform, ParseConfiguration(environment))
+      new CompilerContextBuilder(s"file://${config.sourcePath}", platform, environment.parseConfiguration)
         .build()
 
     val maybeSyntax = config.syntax.map(_.toString)
@@ -53,17 +47,8 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   }
 
   /** Method to render parsed unit. Override if necessary. */
-  def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    val target  = config.target
-    var options = RenderOptions().withSourceMaps.withPrettyPrint
-    options =
-      if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
-    new AMFRenderer(unit, target, options, config.syntax).renderToString
-  }
-
-  /** Method to render parsed unit. Override if necessary. */
-  def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
+  def render(unit: BaseUnit, config: CycleConfig, graphConfig: AMFGraphConfiguration): Future[String] = {
     val target = config.target
-    new AMFRenderer(unit, target, options, config.syntax).renderToString
+    new AMFRenderer(unit, target, graphConfig, config.syntax).renderToString
   }
 }

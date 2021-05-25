@@ -98,6 +98,7 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
 
     val profileName = profileForUnit(model, givenProfile)
     // TODO: we shouldn't compute validations if there are parser errors. This will be removed after ErrorHandler is returned in parsing.
+
     profilesPlugins
       .get(profileName.profile)
       .map { plugins =>

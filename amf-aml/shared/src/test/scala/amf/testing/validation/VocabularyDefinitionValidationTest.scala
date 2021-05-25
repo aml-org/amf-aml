@@ -38,7 +38,7 @@ class VocabularyDefinitionValidationTest
   }
 
   private def compilerContext(url: String, amfConfig: AMLConfiguration) =
-    new CompilerContextBuilder(url, platform, ParseConfiguration(amfConfig)).build()
+    new CompilerContextBuilder(url, platform, amfConfig.parseConfiguration).build()
 
   protected def validate(vocabulary: String,
                          goldenReport: Option[String] = None,

@@ -1,7 +1,5 @@
 package amf.plugins.features.validation
 
-import java.nio.charset.Charset
-
 import amf.AmfProfile
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
@@ -12,11 +10,11 @@ import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
 import org.apache.commons.io.IOUtils
 import org.apache.commons.lang3.StringUtils
-import org.apache.jena.query.{QueryExecutionFactory, QueryFactory}
 import org.apache.jena.rdf.model.{Model, ModelFactory}
 import org.apache.jena.shacl.{ShaclValidator, Shapes}
 import org.apache.jena.util.FileUtils
 
+import java.nio.charset.Charset
 import scala.concurrent.{ExecutionContext, Future}
 
 class SHACLValidator extends amf.core.validation.core.SHACLValidator with PlatformSecrets {

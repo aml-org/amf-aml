@@ -1,8 +1,8 @@
 package amf.testing.common.utils
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.ParseConfiguration
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.plugins.render.DefaultRenderConfiguration
 import amf.core.io.FileAssertionTest
 import amf.core.model.document.BaseUnit
 import amf.core.remote._
@@ -26,17 +26,10 @@ trait DialectTests
                                  hint: Hint,
                                  target: Vendor,
                                  directory: String = basePath,
-                                 renderOptions: Option[RenderOptions] = None,
-                                 useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
+                                 renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
     withDialect(s"file://$directory/$dialect") { (_, configuration) =>
-      cycle(source,
-            golden,
-            hint,
-            target,
-            configuration,
-            useAmfJsonldSerialization = useAmfJsonldSerialization,
-            renderOptions = renderOptions,
-            directory = directory)
+      val config = renderOptions.fold(configuration)(r => configuration.withRenderOptions(r))
+      cycle(source, golden, hint, target, config, directory = directory)
     }
   }
 
@@ -47,7 +40,7 @@ trait DialectTests
 
     withDialect(s"file://$directory/$dialect") { (_, configuration) =>
       val context =
-        new CompilerContextBuilder(s"file://$directory/$source", platform, ParseConfiguration(configuration))
+        new CompilerContextBuilder(s"file://$directory/$source", platform, configuration.parseConfiguration)
           .build()
       new AMFCompiler(context, Some(hint.vendor.mediaType)).build()
     }
@@ -71,16 +64,12 @@ trait DialectTests
                   hint: Hint,
                   target: Vendor,
                   amlConfig: AMLConfiguration = AMLConfiguration.predefined(),
-                  directory: String = basePath,
-                  renderOptions: Option[RenderOptions] = None,
-                  useAmfJsonldSerialization: Boolean = true): Future[Assertion] = {
-    val options = renderOptions.getOrElse(defaultRenderOptions)
-    if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
+                  directory: String = basePath): Future[Assertion] = {
 
     for {
       b <- parse(s"file://$directory/$source", platform, hint, amlConfig)
       t <- Future.successful { transform(b) }
-      s <- new AMFSerializer(t, vendorToSyntax(target), target.name, options)
+      s <- new AMFSerializer(t, target.mediaType, amlConfig.renderConfiguration)
         .renderToString(scala.concurrent.ExecutionContext.Implicits.global)
       d <- writeTemporaryFile(s"$directory/$golden")(s)
       r <- assertDifferences(d, s"$directory/$golden")

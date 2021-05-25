@@ -71,7 +71,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
         Some("application/yaml"),
         Context(platform),
         cache = Cache(),
-        ParseConfiguration(amfConf)
+        amfConf.parseConfiguration
     )
   }
 

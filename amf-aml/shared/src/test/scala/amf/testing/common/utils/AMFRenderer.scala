@@ -1,7 +1,10 @@
 package amf.testing.common.utils
 
+import amf.client.environment.AMLConfiguration
+import amf.client.remod.AMFGraphConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
+import amf.client.remod.amfcore.plugins.render.DefaultRenderConfiguration
 import amf.core.AMFSerializer
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.{Json, Syntax}
 import amf.core.remote._
@@ -9,7 +12,7 @@ import amf.core.remote._
 import scala.concurrent.{ExecutionContext, Future}
 
 // TODO: this is only here for compatibility with the test suite
-class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax: Option[Syntax]) {
+class AMFRenderer(unit: BaseUnit, vendor: Vendor, config: AMFGraphConfiguration, syntax: Option[Syntax]) {
 
   /** Print ast to string. */
   def renderToString(implicit executionContext: ExecutionContext): Future[String] = render()
@@ -28,11 +31,14 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax
       case _    => "application/yaml"
     })
 
-    new AMFSerializer(unit, mediaType, vendor.name, options).renderToString
+    new AMFSerializer(unit, vendor.mediaType, DefaultRenderConfiguration(config)).renderToString
   }
 }
 
 object AMFRenderer {
-  def apply(unit: BaseUnit, vendor: Vendor, options: RenderOptions, syntax: Option[Syntax] = None): AMFRenderer =
-    new AMFRenderer(unit, vendor, options, syntax)
+  def apply(unit: BaseUnit,
+            vendor: Vendor,
+            config: AMFGraphConfiguration,
+            syntax: Option[Syntax] = None): AMFRenderer =
+    new AMFRenderer(unit, vendor, config, syntax)
 }

@@ -1,6 +1,6 @@
 package amf.testing.render
 
-import amf.core.emitter.RenderOptions
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.{Aml, Vendor, VocabularyYamlHint}
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.testing.common.utils.DialectTests
