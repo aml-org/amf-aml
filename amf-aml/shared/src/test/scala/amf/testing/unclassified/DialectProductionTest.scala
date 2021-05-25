@@ -1,6 +1,8 @@
 package amf.testing.unclassified
 
-import amf.core.emitter.RenderOptions
+import amf.client.environment.AMLConfiguration
+import amf.client.remod.amfcore.config.RenderOptions
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.remote._
 import amf.testing.common.cycling.FunSuiteCycleTests
 import amf.testing.common.utils.DialectInstanceTester
@@ -24,27 +26,58 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   multiGoldenTest("Can parse ABOUT dialect", "ABOUT-dialect.%s") { config =>
-    cycle("ABOUT-dialect.yaml",
-          config.golden,
-          VocabularyYamlHint,
-          target = Amf,
-          directory = basePath + "ABOUT/",
-          renderOptions = Some(config.renderOptions))
+    cycle(
+        "ABOUT-dialect.yaml",
+        config.golden,
+        VocabularyYamlHint,
+        target = Amf,
+        directory = basePath + "ABOUT/",
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
+    )
   }
 
   // TODO migrate to multiGoldenTest
   test("Can parse validation dialect") {
-    cycle("validation_dialect.yaml", "validation_dialect.json", VocabularyYamlHint, target = Amf)
+    cycle(
+        "validation_dialect.yaml",
+        "validation_dialect.json",
+        VocabularyYamlHint,
+        target = Amf,
+        amlConfig = AMLConfiguration
+          .predefined()
+          .withErrorHandlerProvider(() => UnhandledErrorHandler)
+          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps)
+    )
   }
 
   // TODO migrate to multiGoldenTest
   test("Can parse and generate the Instagram dialect") {
-    cycle("dialect.yaml", "dialect.json", VocabularyYamlHint, target = Amf, basePath + "Instagram/")
+    cycle(
+        "dialect.yaml",
+        "dialect.json",
+        VocabularyYamlHint,
+        target = Amf,
+        basePath + "Instagram/",
+        amlConfig = AMLConfiguration
+          .predefined()
+          .withErrorHandlerProvider(() => UnhandledErrorHandler)
+          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps)
+    )
   }
 
   // TODO migrate to multiGoldenTest
   test("Can parse and generate the activity dialect") {
-    cycle("activity.yaml", "activity.json", VocabularyYamlHint, target = Amf, basePath + "streams/")
+    cycle(
+        "activity.yaml",
+        "activity.json",
+        VocabularyYamlHint,
+        target = Amf,
+        basePath + "streams/",
+        amlConfig = AMLConfiguration
+          .predefined()
+          .withErrorHandlerProvider(() => UnhandledErrorHandler)
+          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps)
+    )
   }
 
   test("Can parse validation dialect instance") {

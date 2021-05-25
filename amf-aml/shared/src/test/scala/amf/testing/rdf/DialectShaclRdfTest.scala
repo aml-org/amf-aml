@@ -59,7 +59,7 @@ class DialectShaclRdfTest
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
-    build(config, amlConfig, useAmfJsonldSerialisation = true)
+    build(config, amlConfig)
       .map(transformRdf(_, config))
       .flatMap(renderRdf(_, config))
       .flatMap(writeTemporaryFile(golden))

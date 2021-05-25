@@ -35,22 +35,16 @@ trait BuildCycleTests extends BuildCycleTestCommon {
                   directory: String = basePath,
                   amlConfig: AMLConfiguration =
                     AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
-                  renderOptions: Option[RenderOptions] = None,
-                  useAmfJsonldSerialization: Boolean = true,
                   syntax: Option[Syntax] = None,
                   pipeline: Option[String] = None,
                   transformWith: Option[Vendor] = None): Future[Assertion] = {
 
-    val config                 = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
-    val amfJsonLdSerialization = renderOptions.map(_.isAmfJsonLdSerilization).getOrElse(useAmfJsonldSerialization)
+    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
 
-    build(config, amlConfig, amfJsonLdSerialization)
+    build(config, amlConfig)
       .map(transform(_, config))
       .flatMap {
-        renderOptions match {
-          case Some(options) => render(_, config, options)
-          case None          => render(_, config, useAmfJsonldSerialization)
-        }
+        render(_, config, amlConfig)
       }
       .flatMap(writeTemporaryFile(golden))
       .flatMap(assertDifferences(_, config.goldenPath))

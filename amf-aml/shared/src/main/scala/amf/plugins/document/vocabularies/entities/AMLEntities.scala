@@ -1,13 +1,13 @@
 package amf.plugins.document.vocabularies.entities
 
 import amf.core.entities.Entities
-import amf.core.metamodel.Obj
+import amf.core.metamodel.ModelDefaultBuilder
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 
 private[amf] object AMLEntities extends Entities {
 
-  override protected val innerEntities: Seq[Obj] = Seq(
+  override protected val innerEntities: Seq[ModelDefaultBuilder] = Seq(
       VocabularyModel,
       ExternalModel,
       VocabularyReferenceModel,

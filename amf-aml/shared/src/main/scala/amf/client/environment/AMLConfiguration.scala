@@ -13,13 +13,14 @@ import amf.client.remod.rendering.{
 }
 import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider, ParseConfiguration}
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
+import amf.core.metamodel.{ModelDefaultBuilder, Obj}
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
-import amf.plugins.document.vocabularies.{AMLPlugin, DialectRegistration}
+import amf.plugins.document.vocabularies.{AMLPlugin, DialectRegister, DialectRegistration}
 import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
 import amf.plugins.document.vocabularies.entities.AMLEntities
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
@@ -103,6 +104,9 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withLogger(logger: AMFLogger): AMLConfiguration = super._withLogger(logger)
 
+  override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMLConfiguration =
+    super._withEntities(entities)
+
   def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
   /**
@@ -117,7 +121,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     }
   }
 
-  def withDialect(dialect: Dialect): AMLConfiguration = DialectRegistration.register(dialect, this)
+  def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
 
   def withCustomProfile(instancePath: String): Future[AMLConfiguration] = {
     createClient().parse(instancePath: String).map {
@@ -185,7 +189,7 @@ class DialectReferencesCollector {
                   mediaType: Option[String] = None,
                   amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
     // todo
-    val ctx      = new CompilerContextBuilder(url, platform, ParseConfiguration(amfConfig)).build()
+    val ctx      = new CompilerContextBuilder(url, platform, amfConfig.parseConfiguration).build()
     val compiler = new AMFCompiler(ctx, mediaType)
     for {
       content                <- compiler.fetchContent()

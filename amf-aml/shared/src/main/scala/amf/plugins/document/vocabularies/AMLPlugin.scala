@@ -118,14 +118,7 @@ trait AMLPlugin
   protected def unparseAsYDocument(unit: BaseUnit,
                                    renderOptions: RenderOptions,
                                    errorHandler: AMFErrorHandler): Option[YDocument] = {
-    unit match {
-      case vocabulary: Vocabulary  => Some(VocabularyEmitter(vocabulary).emitVocabulary())
-      case dialect: Dialect        => Some(DialectEmitter(dialect).emitDialect())
-      case library: DialectLibrary => Some(RamlDialectLibraryEmitter(library).emitDialectLibrary())
-      case instance: DialectInstanceUnit =>
-        Some(DialectInstancesEmitter(instance, registry.dialectFor(instance).get, renderOptions).emitInstance())
-      case _ => None
-    }
+    throw new UnsupportedOperationException("Message by pope: use the new render config :D")
   }
 
   /**
