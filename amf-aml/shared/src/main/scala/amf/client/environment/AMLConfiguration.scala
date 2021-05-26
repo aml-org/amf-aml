@@ -11,24 +11,26 @@ import amf.client.remod.rendering.{
   AMLDialectRenderingPlugin,
   AMLVocabularyRenderingPlugin
 }
-import amf.client.remod.{AMFGraphConfiguration, AMFParser, AMFResult, ErrorHandlerProvider, ParseConfiguration}
+import amf.client.remod.{AMFGraphConfiguration, AMFParser, AMFResult, ErrorHandlerProvider}
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.metamodel.{ModelDefaultBuilder, Obj}
+import amf.core.metamodel.ModelDefaultBuilder
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
-import amf.plugins.document.vocabularies.{AMLPlugin, DialectRegister, DialectRegistration}
 import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
+import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.entities.AMLEntities
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
+import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.document.vocabularies.resolution.pipelines.{
   DefaultAMLTransformationPipeline,
   DialectTransformationPipeline
 }
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
+import amf.plugins.document.vocabularies.{AMLValidationLegacyPlugin, DialectRegister}
 import amf.validation.ValidationDialectText
 import org.mulesoft.common.collections.FilterType
 
@@ -52,6 +54,8 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
     extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
+
+  private val PROFILE_DIALECT_URL = "http://a.ml/dialects/profile.raml"
 
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,
@@ -125,17 +129,25 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
 
   def withCustomValidationsEnabled: Future[AMLConfiguration] = {
-    val url = "http://a.ml/dialects/profile.raml"
-    AMFParser.parseContent(ValidationDialectText.text, url, None, this) map {
+    AMFParser.parseContent(ValidationDialectText.text, PROFILE_DIALECT_URL, None, this) map {
       case AMFResult(d: Dialect, _) => withDialect(d)
       case _                        => this
     }
   }
 
   def withCustomProfile(instancePath: String): Future[AMLConfiguration] = {
-    createClient().parse(instancePath: String).map {
-      case AMFResult(i: DialectInstance, _) => throw new UnsupportedOperationException() // SET REGISTRY PROFILE
-      case _                                => this
+    // TODO: should check that ValidationProfile dialect is defined first?
+    AMFParser.parse(instancePath, this).map {
+      case AMFResult(parsed: DialectInstance, _) =>
+        if (parsed.definedBy().is(PROFILE_DIALECT_URL)) {
+          val profile = ParsedValidationProfile(parsed.encodes.asInstanceOf[DialectDomainElement])
+          this.registry.withConstraints(profile)
+          this
+        } else {
+          // TODO: throw exception?
+          this
+        }
+      case _ => this
     }
   }
 
@@ -172,6 +184,7 @@ object AMLConfiguration extends PlatformSecrets {
       new AMLVocabularyParsingPlugin() ::
       new AMLDialectRenderingPlugin() ::
       new AMLVocabularyRenderingPlugin() ::
+      AMLValidationLegacyPlugin.amlPlugin() ::
       Nil
 
     // we might need to register editing pipeline as well because of legacy behaviour.

@@ -26,7 +26,7 @@ case class AMLValidationLegacyPlugin(plugin: AMLPlugin, legacyApplies: BaseUnit 
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
-    new AMLValidator(plugin.registry).validate(unit, options.profileName, options.validations)
+    new AMLValidator(plugin.registry).validate(unit, options.profile, options.effectiveValidations)
   }
 
   override val id: String = plugin.ID
