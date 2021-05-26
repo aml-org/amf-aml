@@ -43,17 +43,11 @@ class VocabularyDefinitionValidationTest
   protected def validate(vocabulary: String,
                          goldenReport: Option[String] = None,
                          path: String): Future[scalatest.Assertion] = {
-    val eh                = DefaultErrorHandler()
-    val configuration     = AMLConfiguration.forEH(eh)
-    val vocabularyContext = compilerContext(s"file://$basePath/$path/$vocabulary", configuration)
+    val eh            = DefaultErrorHandler()
+    val configuration = AMLConfiguration.forEH(eh)
+    AMFCompiler.init()
     val report = for {
-      vocabulary <- {
-        new AMFCompiler(
-            vocabularyContext,
-            Some("application/aml")
-        ).build()
-      }
-      report <- RuntimeValidator(vocabulary, AmlProfile, resolved = false, new ValidationConfiguration(configuration))
+      report <- configuration.createClient().parseVocabulary(s"file://$basePath/$path/$vocabulary").map(_.report)
     } yield {
       report
     }
