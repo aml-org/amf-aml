@@ -6,7 +6,6 @@ import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
 import amf.core.benchmark.ExecutionLog
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.services.RuntimeValidator
-import amf.core.validation.ShaclReportAdaptation
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
