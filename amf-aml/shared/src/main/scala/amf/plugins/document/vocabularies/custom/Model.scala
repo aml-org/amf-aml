@@ -1,4 +1,4 @@
-package amf.plugins.features.validation.custom.model
+package amf.plugins.document.vocabularies.custom
 
 import amf.ProfileName
 import amf.core.validation.SeverityLevels

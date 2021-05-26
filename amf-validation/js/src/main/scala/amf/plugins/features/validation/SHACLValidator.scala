@@ -2,8 +2,8 @@ package amf.plugins.features.validation
 
 import amf.AmfProfile
 import amf.client.execution.BaseExecutionEnvironment
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.benchmark.ExecutionLog
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfModel, RdfModelEmitter}
 import amf.core.services.ValidationOptions

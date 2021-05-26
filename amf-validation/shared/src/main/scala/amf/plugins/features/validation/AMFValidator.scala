@@ -12,7 +12,7 @@ import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.services.{RuntimeValidator, ValidationOptions => LegacyValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
-import amf.core.validation.{AMFValidationReport, EffectiveValidations}
+import amf.core.validation.{AMFValidationReport, EffectiveValidations, FailFastValidationRunner}
 import amf.plugins.features.validation.emitters.ShaclJsonLdShapeGraphEmitter
 import amf.plugins.features.validation.shacl.FullShaclValidator
 import amf.plugins.features.validation.shacl.custom.CustomShaclValidator

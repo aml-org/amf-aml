@@ -18,9 +18,10 @@ import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
+import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
-import amf.plugins.features.validation.custom.model.{ParsedValidationProfile, ValidationDialectText}
+import amf.plugins.features.validation.custom.model.ValidationDialectText
 import amf.plugins.features.validation.{AMFValidator, PlatformValidator}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 import amf.validation.ValidationDialectText

@@ -1,5 +1,6 @@
 package amf.plugins.document.vocabularies.model.document
 
+import amf.ProfileName
 import amf.core.model.StrField
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
@@ -28,6 +29,8 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
 
   def header: String = s"%${nameAndVersion()}".stripSpaces
+
+  override protected[amf] def profileName: Option[ProfileName] = Some(ProfileName(nameAndVersion()))
 
   override def componentId: String = ""
 

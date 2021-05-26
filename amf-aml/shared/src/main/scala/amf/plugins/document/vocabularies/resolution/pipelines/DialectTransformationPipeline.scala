@@ -17,6 +17,6 @@ class DialectTransformationPipeline private (override val name: String) extends 
 }
 
 object DialectTransformationPipeline {
-  val name: String = "DialectTranformationPipeline"
+  val name: String = DialectTransformationPipeline.getClass.getSimpleName
   def apply()      = new DialectTransformationPipeline(name)
 }
