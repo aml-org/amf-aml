@@ -1,4 +1,4 @@
-package amf.plugins.features.validation.custom.model
+package amf.validation
 
 object ValidationDialectText {
 

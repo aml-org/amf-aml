@@ -23,6 +23,7 @@ import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.features.validation.custom.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.features.validation.{AMFValidator, PlatformValidator}
 import amf.plugins.syntax.SYamlSyntaxPlugin
+import amf.validation.ValidationDialectText
 
 import scala.concurrent.{ExecutionContext, Future}
 

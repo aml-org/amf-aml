@@ -72,6 +72,7 @@ trait AMLPlugin
     * this domain
     */
   override def documentSyntaxes: Seq[String] = Seq(
+      Aml.mediaType,
       "application/aml+json",
       "application/aml+yaml",
       "application/raml",
