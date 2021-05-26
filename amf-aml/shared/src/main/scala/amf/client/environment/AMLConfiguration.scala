@@ -20,6 +20,7 @@ import amf.core.validation.core.ValidationProfile
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
+import amf.plugins.document.vocabularies.{AMLValidationLegacyPlugin, DialectRegister}
 import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
 import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.entities.AMLEntities
@@ -30,7 +31,7 @@ import amf.plugins.document.vocabularies.resolution.pipelines.{
   DialectTransformationPipeline
 }
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.plugins.document.vocabularies.{AMLValidationLegacyPlugin, DialectRegister}
+import amf.plugins.domain.VocabulariesRegister
 import amf.validation.ValidationDialectText
 import org.mulesoft.common.collections.FilterType
 
@@ -178,6 +179,7 @@ object AMLConfiguration extends PlatformSecrets {
   /** Predefined environment to deal with AML documents based on AMFGraphConfiguration {@link amf.client.remod.AMFGraphConfiguration.predefined predefined()} method */
   def predefined(): AMLConfiguration = {
     val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
+    VocabulariesRegister.register() // TODO ARM remove when APIMF-3000 is done
 
     val predefinedPlugins = new AMLDialectParsingPlugin() ::
       new AMLVocabularyParsingPlugin() ::
