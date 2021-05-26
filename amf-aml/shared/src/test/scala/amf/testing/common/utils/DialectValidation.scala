@@ -25,22 +25,9 @@ trait DialectValidation extends AsyncFunSuite with PlatformSecrets with DefaultA
 
     val eh            = DefaultErrorHandler()
     val configuration = AMLConfiguration.forEH(eh)
+    val client        = configuration.createClient()
     for {
-      dialect <- {
-        new AMFCompiler(
-            new CompilerContextBuilder("file://" + path + dialectPath, platform, configuration.parseConfiguration)
-              .build(),
-            Some("application/aml")
-        ).build()
-      }
-      report <- {
-        RuntimeValidator(
-            dialect,
-            ProfileNames.AML,
-            resolved = false,
-            new ValidationConfiguration(configuration)
-        )
-      }
+      report    <- client.parseDialect("file://" + path + dialectPath).map(_.report)
       assertion <- reportComparator.assertReport(report, goldenReport.map(g => s"$path/$g"), jsonldReport)
     } yield {
       assertion
