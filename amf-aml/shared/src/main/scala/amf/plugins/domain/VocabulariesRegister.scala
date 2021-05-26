@@ -12,8 +12,13 @@ import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.{document, domain}
+import amf.core.remote.Platform
+import amf.core.unsafe.PlatformSecrets
 
-object VocabulariesRegister {
+object VocabulariesRegister extends PlatformSecrets {
+
+  // TODO ARM remove when APIMF-3000 is done
+  def register(): Unit = register(platform)
 
   def register(platform: Platform): Unit = {
 
@@ -78,8 +83,7 @@ object VocabulariesRegister {
     }
 
     // Remod registering
-    AMFPluginsRegistry.staticConfiguration =
-      AMFPluginsRegistry.staticConfiguration.merge(AMLConfiguration.predefined())
+
     amf.Core.registerPlugin(AMLPlugin)
   }
 }
