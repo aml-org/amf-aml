@@ -11,7 +11,7 @@ import amf.client.remod.rendering.{
   AMLDialectRenderingPlugin,
   AMLVocabularyRenderingPlugin
 }
-import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider, ParseConfiguration}
+import amf.client.remod.{AMFGraphConfiguration, AMFParser, AMFResult, ErrorHandlerProvider, ParseConfiguration}
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.metamodel.{ModelDefaultBuilder, Obj}
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
@@ -29,6 +29,7 @@ import amf.plugins.document.vocabularies.resolution.pipelines.{
   DialectTransformationPipeline
 }
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
+import amf.validation.ValidationDialectText
 import org.mulesoft.common.collections.FilterType
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -122,6 +123,14 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   }
 
   def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
+
+  def withCustomValidationsEnabled: Future[AMLConfiguration] = {
+    val url = "http://a.ml/dialects/profile.raml"
+    AMFParser.parseContent(ValidationDialectText.text, url, None, this) map {
+      case AMFResult(d: Dialect, _) => withDialect(d)
+      case _                        => this
+    }
+  }
 
   def withCustomProfile(instancePath: String): Future[AMLConfiguration] = {
     createClient().parse(instancePath: String).map {
