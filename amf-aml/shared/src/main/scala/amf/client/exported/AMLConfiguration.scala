@@ -51,6 +51,8 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
     */
   def merge(other: AMLConfiguration): AMLConfiguration = _internal.merge(other)
 
+  def withCustomValidationsEnabled: ClientFuture[AMLConfiguration] = _internal.withCustomValidationsEnabled.asClient
+
   def withDialect(path: String): ClientFuture[AMLConfiguration] = _internal.withDialect(path).asClient
 
   def withDialect(dialect: Dialect): AMLConfiguration = _internal.withDialect(dialect)
