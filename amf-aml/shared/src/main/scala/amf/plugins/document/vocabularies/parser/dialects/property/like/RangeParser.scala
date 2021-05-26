@@ -1,12 +1,11 @@
-package amf.plugins.document.vocabularies.parser.dialects
+package amf.plugins.document.vocabularies.parser.dialects.property.like
 
 import amf.core.model.DataType
-import amf.core.parser.ValueNode
+import amf.core.parser.{ValueNode, YMapOps}
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.vocabularies.metamodel.domain.PropertyLikeMappingModel
 import amf.plugins.document.vocabularies.model.domain.PropertyLikeMapping
 import org.yaml.model.{YMap, YType}
-import amf.core.parser.YMapOps
-import amf.plugins.document.vocabularies.metamodel.domain.PropertyLikeMappingModel
 
 case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel]) {
   def parse(): Unit = {

@@ -99,14 +99,19 @@ case class PropertyMapping(override private[amf] val _internal: InternalProperty
     case None => mutable.Map[String, String]().asClient
   }
 
-  def withTypeDiscriminator(typesMapping: ClientMap[String]) = throw new Exception("Not implemented yet")
-  def typeDiscriminatorName(): StrField                      = _internal.typeDiscriminatorName()
+  def withTypeDiscriminator(typesMapping: ClientMap[String]): PropertyMapping = {
+    _internal.withTypeDiscriminator(typesMapping.asInternal)
+    this
+  }
+
+  def typeDiscriminatorName(): StrField = _internal.typeDiscriminatorName()
+
   def withTypeDiscriminatorName(name: String): PropertyMapping = {
     _internal.withTypeDiscriminatorName(name)
     this
   }
 
-  def withExternallyLinkable(linkable: Boolean): InternalPropertyMapping = _internal.withExternallyLinkable(linkable);
+  def withExternallyLinkable(linkable: Boolean): InternalPropertyMapping = _internal.withExternallyLinkable(linkable)
   def externallyLinkable(): BoolField                                    = _internal.externallyLinkable()
 
   def classification(): String = {
