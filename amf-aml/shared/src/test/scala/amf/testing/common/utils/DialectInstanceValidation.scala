@@ -1,6 +1,7 @@
 package amf.testing.common.utils
 
-import amf.ProfileName
+import amf.client.environment.AMLConfiguration
+import amf.{ProfileName, ProfileNames}
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
@@ -20,16 +21,20 @@ trait DialectInstanceValidation
   def basePath: String
 
   protected def validation(dialect: String, instance: String, path: String = basePath): Future[AMFValidationReport] = {
-    withDialect(s"$path/$dialect") { (dialect, configuration) =>
-      for {
-        instance <- parse(s"$path/$instance", platform, None, configuration)
-        report <- RuntimeValidator(instance,
-                                   ProfileName(dialect.nameAndVersion()),
-                                   resolved = false,
-                                   new ValidationConfiguration(configuration))
-      } yield {
-        report
+    val config       = AMLConfiguration.predefined()
+    val dialectPath  = s"$path/$dialect"
+    val instancePath = s"$path/$instance"
+    val client       = config.createClient()
+    for {
+      dialectResult  <- client.parseDialect(s"$path/$dialect")
+      nextConfig     <- config.withDialect(dialectPath)
+      instanceResult <- nextConfig.createClient().parseDialectInstance(instancePath)
+      report <- {
+        if (!instanceResult.report.conforms) Future.successful(instanceResult.report)
+        else nextConfig.createClient().validate(instanceResult.dialectInstance, dialectResult.dialect.profileName.get)
       }
+    } yield {
+      report
     }
   }
 
