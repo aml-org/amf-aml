@@ -1,6 +1,7 @@
 package amf.testing.unclassified
 
 import amf.client.convert.VocabulariesClientConverter._
+import amf.client.environment.AMLConfiguration
 import amf.client.model.document.{Dialect => ClientDialect}
 import amf.client.model.domain.{DomainElement => ClientDomainElement}
 import amf.client.parse.DefaultErrorHandler
@@ -14,7 +15,8 @@ import org.yaml.builder.YamlOutputBuilder
 trait ClientDomainElementTests extends DomainElementCycleTests {
   override def renderDomainElement(element: Option[DomainElement],
                                    instance: DialectInstanceUnit,
-                                   dialect: Dialect): String = {
+                                   dialect: Dialect,
+                                   config: AMLConfiguration): String = {
     val eh = ErrorHandlerConverter.asClient(DefaultErrorHandler())
     element
       .map { element =>

@@ -2,13 +2,13 @@ package amf.client.remod.rendering
 
 import amf.client.remod.AMLDialectInstancePlugin
 import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderInfo}
+import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
 import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
-import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
+import amf.plugins.document.vocabularies.emitters.instances.{DefaultNodeMappableFinder, DialectInstancesEmitter}
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit, DialectLibrary, Vocabulary}
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}
@@ -24,13 +24,10 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
 
   override def priority: PluginPriority = NormalPriority
 
-  override def emit[T](unit: BaseUnit,
-                       builder: DocBuilder[T],
-                       renderOptions: RenderOptions,
-                       errorHandler: AMFErrorHandler): Boolean = {
+  override def emit[T](unit: BaseUnit, builder: DocBuilder[T], config: RenderConfiguration): Boolean = {
     builder match {
       case sb: YDocumentBuilder =>
-        unparse(unit, renderOptions) exists { doc =>
+        unparse(unit, config) exists { doc =>
           sb.document = doc
           true
         }
@@ -38,10 +35,14 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
     }
   }
 
-  private def unparse(unit: BaseUnit, renderOptions: RenderOptions) = {
+  private def unparse(unit: BaseUnit, config: RenderConfiguration) = {
+    val dialects = config.renderPlugins.collect {
+      case plugin: AMLDialectInstanceRenderingPlugin => plugin.dialect
+    }
+    val finder = DefaultNodeMappableFinder(dialects)
     unit match {
       case instance: DialectInstanceUnit =>
-        Some(DialectInstancesEmitter(instance, dialect, renderOptions).emitInstance())
+        Some(DialectInstancesEmitter(instance, dialect, config.renderOptions)(finder).emitInstance())
       case _ => None
     }
   }

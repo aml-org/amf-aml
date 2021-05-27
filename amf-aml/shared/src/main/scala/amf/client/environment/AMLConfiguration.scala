@@ -23,6 +23,7 @@ import amf.internal.resource.ResourceLoader
 import amf.plugins.document.vocabularies.{AMLValidationLegacyPlugin, DialectRegister}
 import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
 import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
+import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
 import amf.plugins.document.vocabularies.entities.AMLEntities
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
@@ -158,9 +159,10 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
           d
         }
         .foldLeft(this) { (env, dialect) =>
+          val finder                                       = DefaultNodeMappableFinder(this).addDialect(dialect)
           val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
           val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
-          val profile                                      = new AMFDialectValidations(dialect).profile()
+          val profile                                      = new AMFDialectValidations(dialect)(finder).profile()
           env
             .withPlugins(List(parsing, rendering))
             .withValidationProfile(profile)

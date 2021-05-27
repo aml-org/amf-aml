@@ -22,7 +22,7 @@ import amf.core.vocabulary.NamespaceAliases
 import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
 import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
-import amf.plugins.document.vocabularies.emitters.instances.DialectInstancesEmitter
+import amf.plugins.document.vocabularies.emitters.instances.{DefaultNodeMappableFinder, DialectInstancesEmitter}
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
 import amf.plugins.document.vocabularies.entities.AMLEntities
 import amf.plugins.document.vocabularies.model.document._
@@ -32,6 +32,7 @@ import amf.plugins.document.vocabularies.parser.instances._
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.plugin.headers._
 import amf.plugins.document.vocabularies.resolution.pipelines.{AMLEditingPipeline, DefaultAMLTransformationPipeline}
+import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -50,7 +51,7 @@ trait AMLPlugin
     with PlatformSecrets
     with KeyPropertyHeaderExtractor {
 
-  val registry = new DialectsRegistry
+  private val registry = new DialectsRegistry
 
   override val ID: String = Aml.name
 
@@ -139,7 +140,7 @@ trait AMLPlugin
   override def canUnparse(unit: BaseUnit): Boolean = false
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
-    new SyntaxExtensionsReferenceHandler(registry, eh)
+    new SyntaxExtensionsReferenceHandler(eh)
 
   override def dependencies(): Seq[AMFPlugin] = Seq()
 
@@ -161,17 +162,20 @@ trait AMLPlugin
       header match {
         case Some(headerKey) if resolvedDialect.isFragmentHeader(headerKey) =>
           val name = headerKey.substring(1, headerKey.indexOf("/"))
-          new DialectInstanceFragmentParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
+          new DialectInstanceFragmentParser(document)(
+              new DialectInstanceContext(resolvedDialect, DefaultNodeMappableFinder.empty(), parentContext))
             .parse(name)
         case Some(headerKey) if resolvedDialect.isLibraryHeader(headerKey) =>
-          new DialectInstanceLibraryParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
+          new DialectInstanceLibraryParser(document)(
+              new DialectInstanceContext(resolvedDialect, DefaultNodeMappableFinder.empty(), parentContext))
             .parse()
         case Some(headerKey) if resolvedDialect.isPatchHeader(headerKey) =>
           new DialectInstancePatchParser(document)(
-              new DialectInstanceContext(resolvedDialect, parentContext).forPatch())
+              new DialectInstanceContext(resolvedDialect, DefaultNodeMappableFinder.empty(), parentContext).forPatch())
             .parse()
         case _ =>
-          new DialectInstanceParser(document)(new DialectInstanceContext(resolvedDialect, parentContext))
+          new DialectInstanceParser(document)(
+              new DialectInstanceContext(resolvedDialect, DefaultNodeMappableFinder.empty(), parentContext))
             .parseDocument()
       }
     }
@@ -182,17 +186,14 @@ trait AMLPlugin
     */
   override def domainValidationProfiles: Seq[ValidationProfile] = registry.env().registry.constraintsRules.values.toSeq
 
-  protected def computeValidationProfile(dialect: Dialect): ValidationProfile = {
-    DialectValidationProfileComputation.computeProfileFor(dialect, registry)
-  }
-
   /**
     * Does references in this type of documents be recursive?
     */
   override val allowRecursiveReferences: Boolean = true
 
-  def shapesForDialect(dialect: Dialect, validationFunctionsUrl: String): RdfModel = {
-    val validationProfile = computeValidationProfile(dialect)
+  def shapesForDialect(dialect: Dialect, knownDialects: Seq[Dialect], validationFunctionsUrl: String): RdfModel = {
+    val finder            = DefaultNodeMappableFinder(knownDialects)
+    val validationProfile = new AMFDialectValidations(dialect)(finder).profile()
     val validations       = validationProfile.validations
     RuntimeValidator.shaclModel(validations, validationFunctionsUrl)
   }

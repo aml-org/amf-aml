@@ -30,12 +30,14 @@ object AmlDomainElementEmitter extends DomainElementEmitter[Dialect] {
     val renderOptions = RenderOptions()
     val nodeMappable  = element.definedBy
     val discriminator = element.annotations.find(classOf[DiscriminatorField]).map(a => a.key -> a.value)
+    val dialects      = references.collect { case dialect: Dialect => dialect }
+    val finder        = DefaultNodeMappableFinder(dialects)
     DialectNodeEmitter(element,
                        nodeMappable,
                        references,
                        dialect,
                        SpecOrdering.Lexical,
                        discriminator = discriminator,
-                       renderOptions = renderOptions)
+                       renderOptions = renderOptions)(finder)
   }
 }

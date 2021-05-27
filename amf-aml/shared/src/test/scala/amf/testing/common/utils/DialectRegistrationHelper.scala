@@ -30,7 +30,6 @@ trait DialectRegistrationHelper {
             .asInstanceOf[Dialect])
       dialectConfig <- Future.successful(configuration.withDialect(resolved))
       result        <- fn(resolved, dialectConfig)
-      _             <- Future.successful(AMLPlugin.registry.reset()) // TODO ARM remove?
     } yield {
       result
     }

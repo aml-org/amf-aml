@@ -7,6 +7,8 @@ import amf.core.model.domain.AmfScalar
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
+import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies.metamodel.domain.{PropertyLikeMappingModel, PropertyMappingModel}
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{PropertyLikeMapping, PropertyMapping}
@@ -16,7 +18,7 @@ import org.yaml.model.YType
 case class PropertyRangeEmitters[T <: PropertyLikeMappingModel](dialect: Dialect,
                                                                 propertyMapping: PropertyLikeMapping[T],
                                                                 ordering: SpecOrdering,
-                                                                aliases: Map[String, (String, String)])
+                                                                aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
     extends AliasesConsumer
     with PosExtractor {
 

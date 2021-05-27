@@ -31,7 +31,7 @@ class RootDialectNodeEmitter(node: DialectDomainElement,
                              discriminator: Option[(String, String)] = None,
                              emitDialect: Boolean = false,
                              topLevelEmitters: Seq[EntryEmitter] = Nil,
-                             renderOptions: RenderOptions)
+                             renderOptions: RenderOptions)(implicit nodeMappableFinder: NodeMappableFinder)
     extends DialectNodeEmitter(node,
                                nodeMappable,
                                instance.references,
@@ -112,7 +112,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               discriminator: Option[(String, String)] = None,
                               emitDialect: Boolean = false,
                               topLevelEmitters: Seq[EntryEmitter] = Nil,
-                              renderOptions: RenderOptions)
+                              renderOptions: RenderOptions)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends PartEmitter
     with AmlEmittersHelper {
 
@@ -557,14 +557,15 @@ case class DialectDomainElementLinkEmitter(node: DialectDomainElement, reference
       .getOrElse(ZERO)
 }
 
-private case class DialectObjectEntryEmitter(key: String,
-                                             target: AmfElement,
-                                             propertyMapping: PropertyMapping,
-                                             references: Seq[BaseUnit],
-                                             dialect: Dialect,
-                                             ordering: SpecOrdering,
-                                             renderOptions: RenderOptions,
-                                             annotations: Option[Annotations] = None)
+private case class DialectObjectEntryEmitter(
+    key: String,
+    target: AmfElement,
+    propertyMapping: PropertyMapping,
+    references: Seq[BaseUnit],
+    dialect: Dialect,
+    ordering: SpecOrdering,
+    renderOptions: RenderOptions,
+    annotations: Option[Annotations] = None)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AmlEmittersHelper {
   // this can be multiple mappings if we have a union in the range or a range pointing to a union mapping
