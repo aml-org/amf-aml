@@ -2,8 +2,8 @@ package amf.plugins.document.vocabularies.parser.instances
 
 import amf.core.Root
 import amf.core.annotations.SourceAST
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Str
+import amf.core.metamodel.{Field, Type}
+import amf.core.metamodel.Type.{Array, Str}
 import amf.core.model.DataType
 import amf.core.model.document.EncodesModel
 import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DomainElement}
@@ -745,7 +745,8 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               .as[YScalar]
               .text
               .urlComponentEncoded
-            val effectiveTypes = typesFrom(nodeMapping)
+            val effectiveTypes      = typesFrom(nodeMapping)
+            val valueAllowsMultiple = extractAllowMultipleForProp(propertyValueMapping, nodeMapping).getOrElse(false)
             val nestedNode = DialectDomainElement(Annotations(pair))
               .withId(nestedId)
               .withDefinedBy(nodeMapping)
@@ -754,9 +755,26 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               nestedNode.set(Field(Str, ValueType(propertyKeyMapping.get)),
                              AmfScalar(pair.key.as[YScalar].text),
                              Annotations(pair.key))
-              nestedNode.set(Field(Str, ValueType(propertyValueMapping.get)),
-                             AmfScalar(pair.value.as[YScalar].text),
-                             Annotations(pair.value))
+
+              if (valueAllowsMultiple) {
+                pair.value.value match {
+                  case seq: YSequence =>
+                    nestedNode.set(
+                        Field(Array(Str), ValueType(propertyValueMapping.get)),
+                        AmfArray(seq.nodes.flatMap(_.asScalar).map(AmfScalar(_)), Annotations(seq)),
+                        Annotations(pair.value)
+                    )
+                  case scalar: YScalar =>
+                    nestedNode.set(Field(Array(Str), ValueType(propertyValueMapping.get)),
+                                   AmfArray(Seq(AmfScalar(scalar.text))),
+                                   Annotations(pair.value))
+                  case _ => // ignore
+                }
+              } else {
+                nestedNode.set(Field(Str, ValueType(propertyValueMapping.get)),
+                               AmfScalar(pair.value.as[YScalar].text),
+                               Annotations(pair.value))
+              }
             } catch {
               case e: UnknownMapKeyProperty =>
                 ctx.eh.violation(DialectError, e.id, s"Cannot find mapping for key map property ${e.id}", pair)
@@ -781,6 +799,13 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                        s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
                        propertyEntry)
     }
+  }
+
+  private def extractAllowMultipleForProp(propertyValueMapping: Option[String], nodeMapping: NodeMapping) = {
+    nodeMapping
+      .propertiesMapping()
+      .find(_.nodePropertyMapping().option().contains(propertyValueMapping.get))
+      .flatMap(_.allowMultiple().option())
   }
 
   protected def parseObjectCollectionProperty(id: String,

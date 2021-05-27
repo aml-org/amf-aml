@@ -1,0 +1,26 @@
+#%Dialect 1.0
+
+dialect: Map List Test
+version: 1.0
+
+documents:
+  root:
+    encodes: MapListNode
+
+nodeMappings:
+  CodeNames:
+    mapping:
+      code:
+        range: string
+        mandatory: true
+        unique: true
+      names:
+        range: string
+        mandatory: true
+        allowMultiple: true
+  MapListNode:
+    mapping:
+      codes:
+        range: CodeNames
+        mapKey: code
+        mapValue: names
