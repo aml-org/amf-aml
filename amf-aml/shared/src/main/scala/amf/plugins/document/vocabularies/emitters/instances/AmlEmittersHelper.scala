@@ -1,11 +1,13 @@
 package amf.plugins.document.vocabularies.emitters.instances
+import amf.client.environment.AMLConfiguration
+import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.annotations.Aliases.{Alias, FullUrl, ImportLocation, RefId}
 import amf.core.annotations.{Aliases, LexicalInformation}
 import amf.core.emitter.BaseEmitters.traverse
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.AmfObject
-import amf.core.parser.Position
+import amf.core.parser.{ParserContext, Position}
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
@@ -13,14 +15,55 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectLibrary
 import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, UnionNodeMapping}
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.utils.Regexes.Path
+import amf.plugins.document.vocabularies.model.domain.NodeMappable.AnyNodeMappable
+import org.mulesoft.common.core.CachedFunction
+import org.mulesoft.common.functional.MonadInstances.identityMonad
 
 import scala.collection.mutable
 
-trait AmlEmittersHelper {
-  val dialect: Dialect
+trait NodeMappableFinder {
+  def findNode(id: String): Option[(Dialect, AnyNodeMappable)]
+}
+
+object DefaultNodeMappableFinder {
+  def apply(dialects: Seq[Dialect]) = new DefaultNodeMappableFinder(dialects)
+  def apply(ctx: ParserContext) = {
+    val knownDialects = ctx.config.sortedParsePlugins.collect {
+      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
+    }
+    new DefaultNodeMappableFinder(knownDialects)
+  }
+  def apply(ctx: AMLConfiguration) = {
+    val knownDialects = ctx.registry.plugins.parsePlugins.collect {
+      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
+    }
+    new DefaultNodeMappableFinder(knownDialects)
+  }
+  def empty() = new DefaultNodeMappableFinder(Seq.empty)
+}
+
+case class DefaultNodeMappableFinder(dialects: Seq[Dialect]) extends NodeMappableFinder {
+
+  private val mappableQuery = CachedFunction.from[String, Option[(Dialect, AnyNodeMappable)]] { nodeMappableId =>
+    dialects
+      .find(dialect => nodeMappableId.contains(dialect.id))
+      .map { dialect =>
+        (dialect, dialect.declares.find(_.id == nodeMappableId))
+      }
+      .collectFirst {
+        case (dialect, Some(nodeMapping: NodeMapping)) => (dialect, nodeMapping)
+      }
+  }
+
+  override def findNode(id: String): Option[(Dialect, AnyNodeMappable)] = mappableQuery.runCached(id)
+
+  def addDialect(dialect: Dialect): DefaultNodeMappableFinder = copy(dialects :+ dialect)
+}
+
+trait DialectEmitterHelper {
 
   type RefKey       = String
-  type NodeMappable = NodeMappable.AnyNodeMappable
+  type NodeMappable = AnyNodeMappable
 
   protected def buildReferenceAliasIndexFrom(unit: BaseUnit): Map[RefKey, (Alias, ImportLocation)] = {
     val aliases   = extractAliasesFrom(unit)
@@ -55,9 +98,6 @@ trait AmlEmittersHelper {
   }
 
   // Override if necessary
-  protected def sanitize(importLocation: ImportLocation): ImportLocation = importLocation
-
-  // Override if necessary
   protected def referenceIndexKeyFor(unit: DeclaresModel): RefKey = unit.id
 
   protected def getImportLocation(unit: BaseUnit, reference: BaseUnit): String = {
@@ -76,6 +116,14 @@ trait AmlEmittersHelper {
         }
     }
   }
+
+  protected def sanitize(importLocation: ImportLocation): ImportLocation = importLocation
+}
+
+trait AmlEmittersHelper extends DialectEmitterHelper {
+
+  val dialect: Dialect
+  implicit val nodeMappableFinder: NodeMappableFinder
 
   def externalEmitters[T <: AmfObject](model: ExternalContext[T], ordering: SpecOrdering): Seq[EntryEmitter] = {
     if (model.externals.nonEmpty) {
@@ -158,5 +206,5 @@ trait AmlEmittersHelper {
   }
 
   def findNodeInRegistry(nodeMappingId: String): Option[(Dialect, NodeMappable)] =
-    AMLPlugin().registry.findNode(nodeMappingId)
+    nodeMappableFinder.findNode(nodeMappingId)
 }

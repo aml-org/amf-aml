@@ -7,16 +7,18 @@ import amf.core.model.domain.AmfScalar
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.core.vocabulary.Namespace
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.PropertyMapping
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 
-case class PropertyMappingEmitter(dialect: Dialect,
-                                  propertyMapping: PropertyMapping,
-                                  ordering: SpecOrdering,
-                                  aliases: Map[String, (String, String)])
+case class PropertyMappingEmitter(
+    dialect: Dialect,
+    propertyMapping: PropertyMapping,
+    ordering: SpecOrdering,
+    aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with DiscriminatorEmitter
     with AliasesConsumer
@@ -74,8 +76,7 @@ case class PropertyMappingEmitter(dialect: Dialect,
               .map { nodeId =>
                 if (nodeId.value() == (Namespace.Meta + "anyNode").iri()) {
                   Some("anyNode")
-                }
-                else {
+                } else {
                   aliasFor(nodeId.value()) match {
                     case Some(nodeMappingAlias) => Some(nodeMappingAlias)
                     case _                      => None
@@ -119,8 +120,9 @@ case class PropertyMappingEmitter(dialect: Dialect,
               propertyMapping.mapTermValueProperty().option().foreach { term =>
                 val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermValueProperty)
                 aliasFor(term) match {
-                  case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapTermValue", propertyId, YType.Str, pos))
-                  case _                =>
+                  case Some(propertyId) =>
+                    emitters ++= Seq(MapEntryEmitter("mapTermValue", propertyId, YType.Str, pos))
+                  case _ =>
                 }
               }
             })({ value =>

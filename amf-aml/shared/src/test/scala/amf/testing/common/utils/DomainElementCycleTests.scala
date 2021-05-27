@@ -1,6 +1,8 @@
 package amf.testing.common.utils
 
 import amf.client.environment.AMLConfiguration
+import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
+import amf.client.remod.rendering.{AMLDialectInstanceRenderingPlugin, AMLDialectRenderingPlugin}
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.io.FileAssertionTest
 import amf.core.model.document.BaseUnit
@@ -30,10 +32,12 @@ trait DomainElementCycleTests
                               extractor: BaseUnit => Option[DomainElement],
                               golden: String,
                               hint: Hint = baseHint,
-                              directory: String = basePath): Future[Assertion] = {
+                              directory: String = basePath,
+                              baseConfig: AMLConfiguration = AMLConfiguration.predefined()): Future[Assertion] = {
 
     withDialect(s"file://$directory/$dialect") { (d, amlConfig) =>
-      cycleElement(d, source, extractor, golden, hint, amlConfig, directory = directory)
+      val nextConfig = amlConfig.merge(baseConfig)
+      cycleElement(d, source, extractor, golden, hint, nextConfig, directory = directory)
     }
   }
 
@@ -47,14 +51,23 @@ trait DomainElementCycleTests
     for {
       b <- parse(s"file://$directory/$source", platform, hint, amlConfig)
       t <- Future.successful { transform(b) }
-      s <- Future.successful { renderDomainElement(extractor(t), t.asInstanceOf[DialectInstanceUnit], dialect) } // generated string
+      s <- Future.successful {
+        renderDomainElement(extractor(t), t.asInstanceOf[DialectInstanceUnit], dialect, amlConfig)
+      } // generated string
       d <- writeTemporaryFile(s"$directory/$golden")(s)
       r <- assertDifferences(d, s"$directory/$golden")
     } yield r
   }
 
-  def renderDomainElement(element: Option[DomainElement], instance: DialectInstanceUnit, dialect: Dialect): String = {
-    val node     = element.map(AmlDomainElementEmitter.emit(_, dialect, UnhandledErrorHandler)).getOrElse(YNode.Empty)
+  def renderDomainElement(element: Option[DomainElement],
+                          instance: DialectInstanceUnit,
+                          dialect: Dialect,
+                          config: AMLConfiguration): String = {
+    val references = config.registry.plugins.renderPlugins.collect {
+      case plugin: AMLDialectInstanceRenderingPlugin => plugin.dialect
+    }
+    val node =
+      element.map(AmlDomainElementEmitter.emit(_, dialect, UnhandledErrorHandler, references)).getOrElse(YNode.Empty)
     val document = SyamlParsedDocument(document = YDocument(node))
     SYamlSyntaxPlugin.unparse("application/yaml", document).getOrElse("").toString
   }

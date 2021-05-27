@@ -5,12 +5,14 @@ import amf.core.emitter.BaseEmitters.traverse
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentMappingModel
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{DocumentsModel, PublicNodeMapping}
 import org.yaml.model.YDocument.EntryBuilder
 
-case class DocumentsModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)])
+case class DocumentsModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)])(
+    implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasesConsumer {
   val documents: DocumentsModel   = dialect.documents()

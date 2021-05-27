@@ -11,12 +11,16 @@ import amf.plugins.document.vocabularies.model.document.{Dialect, DialectLibrary
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 import amf.plugins.document.vocabularies.emitters.dialects.FieldEntryImplicit.FieldEntryWithPosition
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 
-case class RamlDialectLibraryEmitter(library: DialectLibrary) extends DialectDocumentsEmitters {
+case class RamlDialectLibraryEmitter(library: DialectLibrary)(implicit val nodeMappableFinder: NodeMappableFinder)
+    extends DialectDocumentsEmitters {
 
-  val ordering: SpecOrdering                        = Lexical
-  override val dialect: Dialect                     = toDialect(library)
-  val aliases: Map[RefKey, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(dialect) ++ buildExternalsAliasIndexFrom(dialect)
+  val ordering: SpecOrdering    = Lexical
+  override val dialect: Dialect = toDialect(library)
+  val aliases
+    : Map[RefKey, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(dialect) ++ buildExternalsAliasIndexFrom(
+      dialect)
 
   def emitDialectLibrary(): YDocument = {
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)

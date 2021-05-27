@@ -7,12 +7,14 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
 import amf.plugins.document.vocabularies.emitters.dialects.FieldEntryImplicit._
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies.model.document.Dialect
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 
-case class DialectEmitter(dialect: Dialect) extends DialectDocumentsEmitters {
+case class DialectEmitter(dialect: Dialect)(implicit val nodeMappableFinder: NodeMappableFinder)
+    extends DialectDocumentsEmitters {
 
   val ordering: SpecOrdering = Lexical
   val aliases: Map[RefKey, (Alias, ImportLocation)] =

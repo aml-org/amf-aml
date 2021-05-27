@@ -29,7 +29,7 @@ import org.mulesoft.common.functional.MonadInstances._
 
 import scala.concurrent.ExecutionContext
 
-class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with DialectRegistration {
+class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   type NodeMappingId = String
 
@@ -118,11 +118,6 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
       .collectFirst {
         case (dialect, Some(nodeMapping: NodeMapping)) => (dialect, nodeMapping)
       }
-  }
-
-  def knowsHeader(header: String): Boolean = header.stripSpaces match {
-    case VocabularyHeader | DialectHeader | DialectLibraryHeader | DialectFragmentHeader => true
-    case instanceHeader                                                                  => findDialectForHeader(instanceHeader).isDefined
   }
 
   def knowsDialectInstance(instance: DialectInstanceUnit): Boolean = dialectFor(instance).isDefined

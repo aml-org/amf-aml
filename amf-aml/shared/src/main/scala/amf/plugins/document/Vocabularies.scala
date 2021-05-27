@@ -16,24 +16,4 @@ object Vocabularies extends PlatformSecrets {
   def register(): Unit = {
     VocabulariesRegister.register(platform)
   }
-
-  def registerDialect(url: String): ClientFuture[Dialect] = {
-    implicit val executionContext: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
-    AMLPlugin().registry.registerDialect(url).asClient
-  }
-
-  def registerDialect(url: String, env: Environment): ClientFuture[Dialect] = {
-    implicit val executionContext: ExecutionContext = env.executionEnvironment.executionContext
-    AMLPlugin().registry.registerDialect(url, env._internal, env.executionEnvironment).asClient
-  }
-
-  def registerDialect(url: String, dialectText: String): ClientFuture[Dialect] = {
-    implicit val executionContext: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
-    AMLPlugin().registry.registerDialect(url, dialectText).asClient
-  }
-
-  def registerDialect(url: String, dialectText: String, env: Environment): ClientFuture[Dialect] = {
-    implicit val executionContext: ExecutionContext = env.executionEnvironment.executionContext
-    AMLPlugin().registry.registerDialect(url, dialectText, env._internal, env.executionEnvironment).asClient
-  }
 }

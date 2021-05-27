@@ -25,7 +25,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                     declarationsPath: Seq[String],
                                     aliases: Map[String, (String, String)],
                                     keyPropertyId: Option[String] = None,
-                                    renderOptions: RenderOptions)
+                                    renderOptions: RenderOptions)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AmlEmittersHelper {
 
