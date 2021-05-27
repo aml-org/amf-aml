@@ -13,7 +13,8 @@ import org.yaml.model.YDocument
 import org.yaml.model.YDocument.PartBuilder
 import amf.client.remod.amfcore.config.RenderOptions
 
-case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Dialect, renderOptions: RenderOptions)
+case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Dialect, renderOptions: RenderOptions)(
+    implicit val nodeMappableFinder: NodeMappableFinder)
     extends AmlEmittersHelper {
 
   val ordering: SpecOrdering                           = Lexical

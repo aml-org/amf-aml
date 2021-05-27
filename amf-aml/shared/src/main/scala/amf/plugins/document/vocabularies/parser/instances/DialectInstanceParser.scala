@@ -445,7 +445,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
           case Some(nested) if nested.value.tagType == YType.Str =>
             val dialectNode = nested.value.as[YScalar].text
             // TODO: resolve dialect node URI to absolute normalised URI
-            AMLPlugin().registry.findNode(dialectNode) match {
+            ctx.nodeMappableFinder.findNode(dialectNode) match {
               case Some((dialect, nodeMapping)) =>
                 ctx.nestedDialects ++= Seq(dialect)
                 ctx.withCurrentDialect(dialect) {
@@ -1136,7 +1136,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     }
     refTuple match {
       case (text: String, Some(s)) =>
-        AMLPlugin().registry.findNode(s.definedBy.id) match {
+        ctx.nodeMappableFinder.findNode(s.definedBy.id) match {
           case Some((dialect, _)) =>
             ctx.nestedDialects ++= Seq(dialect)
             val linkedExternal = s
@@ -1180,7 +1180,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         .withId(id)
     } match {
       case Some(s) =>
-        AMLPlugin().registry.findNode(s.definedBy.id) match {
+        ctx.nodeMappableFinder.findNode(s.definedBy.id) match {
           case Some((dialect, _)) =>
             ctx.nestedDialects ++= Seq(dialect)
             val linkedExternal = s

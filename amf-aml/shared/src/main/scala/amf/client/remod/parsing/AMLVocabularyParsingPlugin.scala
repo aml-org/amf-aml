@@ -1,5 +1,6 @@
 package amf.client.remod.parsing
 
+import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.core.Root
@@ -15,7 +16,7 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
   override def parse(document: Root, ctx: ParserContext): BaseUnit = AMLPlugin.parse(document, ctx)
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
-    new SyntaxExtensionsReferenceHandler(AMLPlugin.registry, eh)
+    new SyntaxExtensionsReferenceHandler(eh)
 
   override def allowRecursiveReferences: Boolean = true
 

@@ -26,10 +26,12 @@ trait DialectTests
                                  hint: Hint,
                                  target: Vendor,
                                  directory: String = basePath,
-                                 renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
+                                 renderOptions: Option[RenderOptions] = None,
+                                 baseConfig: AMLConfiguration = AMLConfiguration.predefined()): Future[Assertion] = {
     withDialect(s"file://$directory/$dialect") { (_, configuration) =>
-      val config = renderOptions.fold(configuration)(r => configuration.withRenderOptions(r))
-      cycle(source, golden, hint, target, config, directory = directory)
+      val config     = renderOptions.fold(configuration)(r => configuration.withRenderOptions(r))
+      val nextConfig = config.merge(baseConfig)
+      cycle(source, golden, hint, target, nextConfig, directory = directory)
     }
   }
 

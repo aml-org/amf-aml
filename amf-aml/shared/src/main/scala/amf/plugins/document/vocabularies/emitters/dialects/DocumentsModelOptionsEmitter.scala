@@ -4,14 +4,16 @@ import amf.core.emitter.BaseEmitters.{MapEntryEmitter, pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.DocumentsModel
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 
-case class DocumentsModelOptionsEmitter(dialect: Dialect,
-                                        ordering: SpecOrdering,
-                                        aliases: Map[String, (String, String)] = Map())
+case class DocumentsModelOptionsEmitter(
+    dialect: Dialect,
+    ordering: SpecOrdering,
+    aliases: Map[String, (String, String)] = Map())(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasesConsumer {
 
@@ -54,8 +56,7 @@ case class DocumentsModelOptionsEmitter(dialect: Dialect,
       .toSeq
     val sorted: Seq[MapEntryEmitter] = ordering.sorted(optionNodes)
     sorted
-  }
-  else
+  } else
     Nil
 
   override def emit(b: EntryBuilder): Unit = {

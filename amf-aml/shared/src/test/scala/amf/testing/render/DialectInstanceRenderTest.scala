@@ -1,5 +1,6 @@
 package amf.testing.render
 
+import amf.client.environment.AMLConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.{Aml, Vendor, VocabularyYamlHint}
 import amf.plugins.document.vocabularies.AMLPlugin
@@ -260,13 +261,14 @@ class DialectInstanceRenderTest extends DialectTests {
 
   test("render 15 test") {
     for {
-      _ <- AMLPlugin.registry.registerDialect(s"file://$instances/dialect15b.yaml")
+      config <- AMLConfiguration.predefined().withDialect(s"file://$instances/dialect15b.yaml")
       assertion <- cycleWithDialect("dialect15a.yaml",
                                     "example15.yaml",
                                     "example15.yaml",
                                     VocabularyYamlHint,
                                     target = Aml,
-                                    directory = instances)
+                                    directory = instances,
+                                    baseConfig = config)
     } yield {
       assertion
     }
@@ -275,13 +277,14 @@ class DialectInstanceRenderTest extends DialectTests {
 
   test("render 16 test") {
     for {
-      _ <- AMLPlugin.registry.registerDialect(s"file://$instances/dialect16b.yaml")
+      config <- AMLConfiguration.predefined().withDialect(s"file://$instances/dialect16b.yaml")
       assertion <- cycleWithDialect("dialect16a.yaml",
                                     "example16a.yaml",
                                     "example16a.yaml",
                                     VocabularyYamlHint,
                                     target = Aml,
-                                    directory = instances)
+                                    directory = instances,
+                                    baseConfig = config)
     } yield {
       assertion
     }
@@ -289,13 +292,14 @@ class DialectInstanceRenderTest extends DialectTests {
 
   test("render 16 $include test") {
     for {
-      _ <- AMLPlugin.registry.registerDialect(s"file://$instances/dialect16b.yaml")
+      config <- AMLConfiguration.predefined().withDialect(s"file://$instances/dialect16b.yaml")
       assertion <- cycleWithDialect("dialect16a.yaml",
                                     "example16c.yaml",
                                     "example16c.yaml",
                                     VocabularyYamlHint,
                                     target = Aml,
-                                    directory = instances)
+                                    directory = instances,
+                                    baseConfig = config)
     } yield {
       assertion
     }

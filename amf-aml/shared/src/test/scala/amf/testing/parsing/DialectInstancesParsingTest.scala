@@ -789,8 +789,10 @@ trait DialectInstancesParsingTest extends DialectTests {
 
   multiGoldenTest("Parse instance with $dialect and includes", "instance.%s") { config =>
     for {
-      _ <- AMLPlugin.registry.registerDialect(
-          "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect-with-includes/dialectB.yaml")
+      amlConfig <- AMLConfiguration
+        .predefined()
+        .withDialect(
+            "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect-with-includes/dialectB.yaml")
       assertion <- cycleWithDialect(
           "dialect.yaml",
           "instance.yaml",
@@ -798,7 +800,8 @@ trait DialectInstancesParsingTest extends DialectTests {
           VocabularyYamlHint,
           target = Amf,
           renderOptions = Some(config.renderOptions),
-          directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect-with-includes"
+          directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect-with-includes",
+          baseConfig = amlConfig
       )
     } yield {
       assertion

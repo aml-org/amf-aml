@@ -8,6 +8,7 @@ import amf.client.remod.amfcore.plugins.validate.{
   ValidationResult
 }
 import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
+import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.model.document.BaseUnit
 import amf.core.validation.AMFValidationReport
 import amf.plugins.document.vocabularies.model.document.DialectInstanceUnit
@@ -26,8 +27,15 @@ case class AMLValidationLegacyPlugin(plugin: AMLPlugin, legacyApplies: BaseUnit 
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
-    new AMLValidator(plugin.registry).validate(unit, options.profile, options.effectiveValidations)
+    val dialects = knownDialects(options)
+    new AMLValidator(dialects, options.config.constraints)
+      .validate(unit, options.profile, options.effectiveValidations)
   }
+
+  private def knownDialects(options: ValidationOptions) =
+    options.config.amfConfig.registry.plugins.parsePlugins.collect {
+      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
+    }
 
   override val id: String = plugin.ID
 

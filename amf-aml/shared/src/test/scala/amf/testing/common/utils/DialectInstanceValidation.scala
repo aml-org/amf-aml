@@ -20,8 +20,10 @@ trait DialectInstanceValidation
 
   def basePath: String
 
-  protected def validation(dialect: String, instance: String, path: String = basePath): Future[AMFValidationReport] = {
-    val config       = AMLConfiguration.predefined()
+  protected def validation(dialect: String,
+                           instance: String,
+                           path: String = basePath,
+                           config: AMLConfiguration = AMLConfiguration.predefined()): Future[AMFValidationReport] = {
     val dialectPath  = s"$path/$dialect"
     val instancePath = s"$path/$instance"
     val client       = config.createClient()

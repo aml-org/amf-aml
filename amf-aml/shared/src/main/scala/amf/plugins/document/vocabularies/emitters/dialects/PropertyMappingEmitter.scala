@@ -16,7 +16,7 @@ import org.yaml.model.YType
 case class PropertyRangeEmitters[T <: PropertyLikeMappingModel](dialect: Dialect,
                                                                 propertyMapping: PropertyLikeMapping[T],
                                                                 ordering: SpecOrdering,
-                                                                aliases: Map[String, (String, String)])
+                                                                aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
     extends AliasesConsumer
     with PosExtractor {
 
@@ -83,7 +83,7 @@ case class PropertyRangeEmitters[T <: PropertyLikeMappingModel](dialect: Dialect
 case class PropertyLikeMappingEmitter[T <: PropertyLikeMappingModel](dialect: Dialect,
                                                                      propertyLikeMapping: PropertyLikeMapping[T],
                                                                      ordering: SpecOrdering,
-                                                                     aliases: Map[String, (String, String)])
+                                                                     aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
     extends AliasesConsumer
     with PosExtractor
     with DiscriminatorEmitter {
@@ -163,7 +163,7 @@ case class PropertyLikeMappingEmitter[T <: PropertyLikeMappingModel](dialect: Di
 case class PropertyMappingEmitter(dialect: Dialect,
                                   propertyMapping: PropertyMapping,
                                   ordering: SpecOrdering,
-                                  aliases: Map[String, (String, String)])
+                                  aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with DiscriminatorEmitter
     with AliasesConsumer

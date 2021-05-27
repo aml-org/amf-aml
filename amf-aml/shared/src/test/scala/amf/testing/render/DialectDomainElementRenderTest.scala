@@ -1,5 +1,6 @@
 package amf.testing.render
 
+import amf.client.environment.AMLConfiguration
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
 import amf.core.remote.{Amf, Hint, VocabularyYamlHint}
@@ -81,8 +82,12 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
 
   test("render 16 test") {
     for {
-      _         <- AMLPlugin.registry.registerDialect(s"file://$basePath/dialect16b.yaml")
-      assertion <- renderElement("dialect16a.yaml", "example16a.yaml", encodes, "example16a-encodes.yaml")
+      loadedConfig <- AMLConfiguration.predefined().withDialect(s"file://$basePath/dialect16b.yaml")
+      assertion <- renderElement("dialect16a.yaml",
+                                 "example16a.yaml",
+                                 encodes,
+                                 "example16a-encodes.yaml",
+                                 baseConfig = loadedConfig)
     } yield {
       assertion
     }
@@ -94,8 +99,12 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
 
   test("render 16 $include test") {
     for {
-      _         <- AMLPlugin.registry.registerDialect(s"file://$basePath/dialect16b.yaml")
-      assertion <- renderElement("dialect16a.yaml", "example16c.yaml", encodes, "example16c-encodes.yaml")
+      loadedConfig <- AMLConfiguration.predefined().withDialect(s"file://$basePath/dialect16b.yaml")
+      assertion <- renderElement("dialect16a.yaml",
+                                 "example16c.yaml",
+                                 encodes,
+                                 "example16c-encodes.yaml",
+                                 baseConfig = loadedConfig)
     } yield {
       assertion
     }

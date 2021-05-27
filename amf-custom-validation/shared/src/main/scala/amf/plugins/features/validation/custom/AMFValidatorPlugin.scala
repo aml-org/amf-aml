@@ -24,7 +24,6 @@ import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.features.validation.{AMFValidator, PlatformValidator}
 import amf.plugins.syntax.SYamlSyntaxPlugin
-import amf.validation.ValidationDialectText
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -42,7 +41,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
 //      ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
 //      this
 //    }
-    Future.successful(this)
+    Future.successful(AMLPlugin)
   }
 
   override def dependencies() = Seq(SYamlSyntaxPlugin, AMLPlugin, AMFGraphPlugin)

@@ -251,32 +251,34 @@ trait DialectsParsingTest extends DialectTests {
     cycle(config.source, "referencestyle/example19-referencestyle.yaml", AmfJsonHint, target = Aml)
   }
 
-  test("generate 20 test - without version") {
-    val preRegistry = AMLPlugin().registry.allDialects().size
-    for {
-      b <- parse(s"file://$basePath/invalid/example20-no-version.yaml",
-                 platform,
-                 VocabularyYamlHint,
-                 AMLConfiguration.predefined())
-    } yield {
-      assert(AMLPlugin().registry.allDialects().size == preRegistry)
-      assert(AMLPlugin().registry.dialectById(b.id).isEmpty)
-    }
-  }
+  // TODO: ARM meaningless test - delete
+//  test("generate 20 test - without version") {
+//    val preRegistry = AMLPlugin().registry.allDialects().size
+//    for {
+//      b <- parse(s"file://$basePath/invalid/example20-no-version.yaml",
+//                 platform,
+//                 VocabularyYamlHint,
+//                 AMLConfiguration.predefined())
+//    } yield {
+//      assert(AMLPlugin().registry.allDialects().size == preRegistry)
+//      assert(AMLPlugin().registry.dialectById(b.id).isEmpty)
+//    }
+//  }
 
-  test("generate 21 test - without name") {
-
-    val preRegistry = AMLPlugin().registry.allDialects().size
-    for {
-      b <- parse(s"file://$basePath/invalid/example21-no-name.yaml",
-                 platform,
-                 VocabularyYamlHint,
-                 AMLConfiguration.predefined())
-    } yield {
-      assert(AMLPlugin().registry.allDialects().size == preRegistry)
-      assert(AMLPlugin().registry.dialectById(b.id).isEmpty)
-    }
-  }
+  // TODO: ARM meaningless test - delete
+//  test("generate 21 test - without name") {
+//
+//    val preRegistry = AMLPlugin().registry.allDialects().size
+//    for {
+//      b <- parse(s"file://$basePath/invalid/example21-no-name.yaml",
+//                 platform,
+//                 VocabularyYamlHint,
+//                 AMLConfiguration.predefined())
+//    } yield {
+//      assert(AMLPlugin().registry.allDialects().size == preRegistry)
+//      assert(AMLPlugin().registry.dialectById(b.id).isEmpty)
+//    }
+//  }
 
   multiGoldenTest("Parse dialect with fragment", "dialect.%s") { config =>
     cycle("dialect.yaml",
