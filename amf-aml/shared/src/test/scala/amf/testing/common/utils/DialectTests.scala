@@ -70,7 +70,7 @@ trait DialectTests
 
     for {
       b <- parse(s"file://$directory/$source", platform, hint, amlConfig)
-      t <- Future.successful { transform(b) }
+      t <- Future.successful { transform(b, amlConfig) }
       s <- new AMFSerializer(t, target.mediaType, amlConfig.renderConfiguration)
         .renderToString(scala.concurrent.ExecutionContext.Implicits.global)
       d <- writeTemporaryFile(s"$directory/$golden")(s)
@@ -78,5 +78,5 @@ trait DialectTests
     } yield r
 
   }
-  def transform(unit: BaseUnit): BaseUnit = unit
+  def transform(unit: BaseUnit, amlConfig: AMLConfiguration): BaseUnit = unit
 }

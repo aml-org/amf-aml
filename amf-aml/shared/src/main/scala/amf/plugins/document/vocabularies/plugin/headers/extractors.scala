@@ -29,23 +29,4 @@ trait JsonHeaderExtractor {
   }
 }
 
-trait KeyPropertyHeaderExtractor {
-  def dialectByKeyProperty(root: YDocument, registry: DialectsRegistry): Option[Dialect] =
-    registry
-      .allDialects()
-      .find(d => Option(d.documents()).exists(_.keyProperty().value()) && containsVersion(root, d))
-
-  def dialectInKey(root: Root, registry:DialectsRegistry): Option[Dialect] =
-    root.parsed match {
-      case parsedInput: SyamlParsedDocument => dialectByKeyProperty(parsedInput.document, registry)
-      case _                                => None
-    }
-
-  private def containsVersion(document: YDocument, d: Dialect): Boolean =
-    document.node
-      .toOption[YMap]
-      .map(_.entries)
-      .getOrElse(Nil)
-      .collectFirst({ case e if e.key.asScalar.exists(scalar => d.name().is(scalar.text)) => e })
-      .exists(e => { e.value.asScalar.exists(_.text == d.version().value()) })
-}
+trait KeyPropertyHeaderExtractor {}

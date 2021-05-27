@@ -6,7 +6,7 @@ import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderConfigura
 import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.{DefaultNodeMappableFinder, DialectInstancesEmitter}
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter

@@ -6,11 +6,15 @@ import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
+import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.Dialect
+import amf.plugins.document.vocabularies.validation.AMFDialectValidations
+import amf.plugins.features.validation.CoreValidations
 import amf.testing.common.cycling.FunSuiteRdfCycleTests
 import amf.testing.common.utils.{AMLParsingHelper, DefaultAMLInitialization}
+import amf.validation.DialectValidations
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -35,7 +39,11 @@ class DialectShaclRdfTest
 
   /** Method for transforming parsed unit. Override if necessary. */
   override def transformRdf(unit: BaseUnit, config: CycleConfig): RdfModel = {
-    AMLPlugin().shapesForDialect(unit.asInstanceOf[Dialect], Seq.empty, "http://metadata.org/validations.js")
+    val finder            = DefaultNodeMappableFinder.empty()
+    val validationProfile = new AMFDialectValidations(unit.asInstanceOf[Dialect])(finder).profile()
+    val validations = validationProfile.validations.filter(v =>
+      !DialectValidations.validations.contains(v) && !CoreValidations.validations.contains(v))
+    RuntimeValidator.shaclModel(validations, "http://metadata.org/validations.js")
   }
 
   /** Method to render parsed unit. Override if necessary. */

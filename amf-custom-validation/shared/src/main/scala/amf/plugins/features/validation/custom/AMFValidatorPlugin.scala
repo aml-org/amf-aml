@@ -17,7 +17,7 @@ import amf.core.validation.ShaclReportAdaptation
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
 import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.model.document.DialectInstance
@@ -41,10 +41,16 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
 //      ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
 //      this
 //    }
-    Future.successful(AMLPlugin)
+    Future.successful(new AMFPlugin {
+      override val ID: String = "dummy"
+
+      override def dependencies(): Seq[AMFPlugin] = Seq.empty
+
+      override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful { this }
+    })
   }
 
-  override def dependencies() = Seq(SYamlSyntaxPlugin, AMLPlugin, AMFGraphPlugin)
+  override def dependencies() = Seq(SYamlSyntaxPlugin, AMFGraphPlugin)
 
   override def loadValidationProfile(
       validationProfilePath: String,

@@ -10,6 +10,7 @@ import amf.client.remod.amfcore.plugins.validate.{
 import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.model.document.BaseUnit
+import amf.core.remote.Aml
 import amf.core.validation.AMFValidationReport
 import amf.plugins.document.vocabularies.model.document.DialectInstanceUnit
 
@@ -19,11 +20,11 @@ object AMLValidationLegacyPlugin {
   def amlPlugin(): AMLValidationLegacyPlugin = {
     def legacyApplies = (unit: BaseUnit) => unit.isInstanceOf[DialectInstanceUnit]
 
-    AMLValidationLegacyPlugin(AMLPlugin(), legacyApplies)
+    AMLValidationLegacyPlugin(legacyApplies)
   }
 }
 
-case class AMLValidationLegacyPlugin(plugin: AMLPlugin, legacyApplies: BaseUnit => Boolean) extends AMFValidatePlugin {
+case class AMLValidationLegacyPlugin(legacyApplies: BaseUnit => Boolean) extends AMFValidatePlugin {
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
@@ -37,7 +38,7 @@ case class AMLValidationLegacyPlugin(plugin: AMLPlugin, legacyApplies: BaseUnit 
       case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
     }
 
-  override val id: String = plugin.ID
+  override val id: String = Aml.name
 
   override def applies(element: BaseUnit): Boolean = legacyApplies(element)
 

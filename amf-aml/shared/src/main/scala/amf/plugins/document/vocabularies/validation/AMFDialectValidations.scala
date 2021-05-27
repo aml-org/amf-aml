@@ -24,8 +24,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
 
   def profile(): ValidationProfile = {
     val parsedValidations = validations()
-    val severityMapping = SeverityMapping()
-      .set(parsedValidations.map(_.name), SeverityLevels.VIOLATION)
+    val severityMapping   = SeverityMapping().set(parsedValidations.map(_.name), SeverityLevels.VIOLATION)
 
     // TODO: dialect validation profile does not take into account severities of static validations
     ValidationProfile(
