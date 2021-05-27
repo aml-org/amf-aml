@@ -136,8 +136,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
       case AMFResult(parsed: DialectInstance, _) =>
         if (parsed.definedBy().is(PROFILE_DIALECT_URL)) {
           val profile = ParsedValidationProfile(parsed.encodes.asInstanceOf[DialectDomainElement])
-          this.registry.withConstraints(profile)
-          this
+          copy(registry = this.registry.withConstraints(profile))
         } else {
           // TODO: throw exception?
           this
