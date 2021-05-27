@@ -3,7 +3,7 @@ package amf.testing.render
 import amf.client.environment.AMLConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote.{Aml, Vendor, VocabularyYamlHint}
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.testing.common.utils.DialectTests
 
 import scala.concurrent.ExecutionContext

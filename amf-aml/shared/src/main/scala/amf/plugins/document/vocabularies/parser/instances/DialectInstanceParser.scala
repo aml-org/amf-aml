@@ -10,7 +10,7 @@ import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DomainElement}
 import amf.core.parser.{Annotations, SearchScope, _}
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.annotations.{
   CustomBase,
   CustomId,

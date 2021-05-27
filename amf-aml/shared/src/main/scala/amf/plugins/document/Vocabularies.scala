@@ -4,7 +4,7 @@ import amf.client.convert.VocabulariesClientConverter._
 import amf.client.environment.Environment
 import amf.client.model.document.Dialect
 import amf.core.unsafe.PlatformSecrets
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.domain.VocabulariesRegister
 
 import scala.concurrent.ExecutionContext

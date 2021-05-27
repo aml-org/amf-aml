@@ -11,7 +11,7 @@ import amf.core.parser.{ParserContext, Position}
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectLibrary, ExternalContext}
 import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, UnionNodeMapping}

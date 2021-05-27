@@ -4,7 +4,7 @@ import amf.client.environment.AMLConfiguration
 import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.model.domain.DomainElement
 import amf.core.remote.{Amf, Hint, VocabularyYamlHint}
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.testing.common.utils.DomainElementCycleTests
 
 import scala.concurrent.ExecutionContext

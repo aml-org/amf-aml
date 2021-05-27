@@ -3,17 +3,13 @@ package amf.plugins.domain
 import amf.client.environment.AMLConfiguration
 import amf.client.model.document._
 import amf.client.model.domain._
-import amf.client.remod.parsing.{AMLDialectParsingPlugin, AMLVocabularyParsingPlugin}
-import amf.client.remod.rendering.{AMLDialectRenderingPlugin, AMLVocabularyRenderingPlugin}
 import amf.core.metamodel.Obj
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Platform
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.{document, domain}
-import amf.core.remote.Platform
-import amf.core.unsafe.PlatformSecrets
 
 object VocabulariesRegister extends PlatformSecrets {
 
@@ -81,9 +77,5 @@ object VocabulariesRegister extends PlatformSecrets {
     platform.registerWrapper(DialectInstanceLibraryModel) {
       case s: document.DialectInstanceLibrary => new DialectInstanceLibrary(s)
     }
-
-    // Remod registering
-
-    amf.Core.registerPlugin(AMLPlugin)
   }
 }

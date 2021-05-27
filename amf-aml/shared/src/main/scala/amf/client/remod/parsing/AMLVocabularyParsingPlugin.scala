@@ -7,13 +7,23 @@ import amf.core.Root
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, ReferenceHandler}
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
+import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
+import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.plugin.headers.{DialectHeader, ExtensionHeader}
 
 class AMLVocabularyParsingPlugin extends AMFParsePlugin {
 
-  override def parse(document: Root, ctx: ParserContext): BaseUnit = AMLPlugin.parse(document, ctx)
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+    val header = DialectHeader(document)
+
+    header match {
+      case Some(ExtensionHeader.VocabularyHeader) =>
+        new VocabulariesParser(document)(new VocabularyContext(ctx)).parseDocument()
+      case _ => throw new Exception("Dunno") // TODO: ARM - what to do with this
+    }
+  }
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
     new SyntaxExtensionsReferenceHandler(eh)
@@ -23,7 +33,7 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
   override val id: String = "vocabulary-parsing-plugin"
 
   override def applies(root: Root): Boolean = {
-    DialectHeader.dialectHeaderDirective(root) match {
+    DialectHeader(root) match {
       case Some(ExtensionHeader.VocabularyHeader) => true
       case _                                      => false
     }

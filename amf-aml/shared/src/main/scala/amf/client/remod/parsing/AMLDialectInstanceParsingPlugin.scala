@@ -7,7 +7,7 @@ import amf.core.Root
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument, YMapOps, YNodeLikeOps}
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, kind}
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
@@ -30,7 +30,7 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
     val finder = DefaultNodeMappableFinder(ctx)
     val maybeUnit = documentKindFor(document) map {
       case kind.DialectInstanceFragment =>
-        val name = DialectHeader.dialectHeaderDirectiveRootPart(document).get // Should always be defined
+        val name = DialectHeader.root(document).get // Should always be defined
         new DialectInstanceFragmentParser(document)(new DialectInstanceContext(dialect, finder, ctx)).parse(name)
       case kind.DialectInstanceLibrary =>
         new DialectInstanceLibraryParser(document)(new DialectInstanceContext(dialect, finder, ctx)).parse()
@@ -62,7 +62,7 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
 
   private def matchByHeader(root: Root): Option[kind.DialectInstanceDocumentKind] = {
     for {
-      header <- DialectHeader.dialectHeaderDirective(root)
+      header <- DialectHeader(root)
       kind <- {
         header.split("\\|") match {
           case Array(header, dialectUri) =>

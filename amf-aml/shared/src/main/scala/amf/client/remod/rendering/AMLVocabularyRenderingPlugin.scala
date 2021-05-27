@@ -5,7 +5,7 @@ import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}

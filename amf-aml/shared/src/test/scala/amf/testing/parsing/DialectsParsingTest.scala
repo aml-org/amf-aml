@@ -2,7 +2,7 @@ package amf.testing.parsing
 
 import amf.client.environment.AMLConfiguration
 import amf.core.remote.{Amf, AmfJsonHint, Aml, VocabularyYamlHint}
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.testing.common.utils.DialectTests
 
 import scala.concurrent.ExecutionContext

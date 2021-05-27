@@ -7,7 +7,7 @@ import amf.client.remod.parsing.AMLDialectParsingPlugin
 import amf.core.annotations.DefaultNode
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}

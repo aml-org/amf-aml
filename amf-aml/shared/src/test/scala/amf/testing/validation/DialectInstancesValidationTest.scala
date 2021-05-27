@@ -1,7 +1,7 @@
 package amf.testing.validation
 
 import amf.client.environment.AMLConfiguration
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.testing.common.utils.{
   DefaultAMLInitialization,
   DialectInstanceValidation,

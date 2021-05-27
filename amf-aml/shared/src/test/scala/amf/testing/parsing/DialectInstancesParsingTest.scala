@@ -4,7 +4,7 @@ import amf.client.environment.AMLConfiguration
 import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.remote._
 import amf.plugins.document.graph.{EmbeddedForm, FlattenedForm}
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.testing.common.utils.DialectTests
 import org.scalatest.Assertion
 

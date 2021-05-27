@@ -9,7 +9,7 @@ import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipe
 import amf.core.services.RuntimeResolver
 import amf.core.unsafe.PlatformBuilder.platform
 import amf.core.{AMFCompiler, CompilerContextBuilder}
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectTransformationPipeline
 
