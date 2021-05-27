@@ -25,7 +25,8 @@ class AnnotationMapping(override val fields: Fields, override val annotations: A
   override def linkCopy(): Linkable = AnnotationMapping().withId(id)
 
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
-  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement = ???
+  override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
+    AnnotationMapping.apply
 }
 
 object AnnotationMapping {
@@ -34,4 +35,6 @@ object AnnotationMapping {
   def apply(ast: YMap): AnnotationMapping = apply(Annotations(ast))
 
   def apply(annotations: Annotations): AnnotationMapping = new AnnotationMapping(Fields(), annotations)
+
+  def apply(fields: Fields, annotations: Annotations): AnnotationMapping = new AnnotationMapping(fields, annotations)
 }
