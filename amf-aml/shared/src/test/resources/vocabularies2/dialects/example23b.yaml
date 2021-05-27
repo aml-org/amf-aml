@@ -7,15 +7,15 @@ nodeMappings:
     mapping:
       a:
         unique: true
-        propertyTerm: v3.a
         range: string
+        propertyTerm: v3.a
       ho:
-        propertyTerm: v3.ho
         range: parent.Anchor
+        propertyTerm: v3.ho
 documents:
   root:
     encodes: Other
-uses:
-  parent: example23a.yaml
 external:
   v3: http://test.com/v3#
+uses:
+  parent: example23a.yaml

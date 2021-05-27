@@ -8,6 +8,10 @@ uses:
 external:
   aml: http://a.ml/vocab#
 
+documents:
+  root:
+    encodes: PersonNodeMapping
+
 annotationMappings:
   MaintainerAnnotationMapping:
     domain: aml.API

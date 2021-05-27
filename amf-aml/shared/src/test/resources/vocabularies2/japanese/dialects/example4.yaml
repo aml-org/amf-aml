@@ -6,14 +6,14 @@ nodeMappings:
     classTerm: 使用する.エアウェイ
     mapping:
       za:
-        propertyTerm: 使用する.エア
         range: ノードA
+        propertyTerm: 使用する.エア
   ノードA:
     classTerm: 使用する.エアウェイ
     mapping:
       エア:
-        propertyTerm: 使用する.エア
         range: string
+        propertyTerm: 使用する.エア
 documents:
   root:
     encodes: ノードA

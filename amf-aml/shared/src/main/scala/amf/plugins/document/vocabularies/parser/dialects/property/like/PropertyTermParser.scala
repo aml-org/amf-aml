@@ -1,9 +1,11 @@
 package amf.plugins.document.vocabularies.parser.dialects.property.like
 
-import amf.core.parser.{SearchScope, ValueNode, YMapOps}
+import amf.core.model.domain.AmfScalar
+import amf.core.parser.{Annotations, SearchScope, ValueNode, YMapOps}
 import amf.core.utils.AmfStrings
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyLikeMappingModel
+import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel.NodePropertyMapping
 import amf.plugins.document.vocabularies.model.domain.PropertyLikeMapping
 import amf.plugins.document.vocabularies.parser.dialects.DialectContext
 import amf.validation.DialectValidations.DialectError
@@ -22,7 +24,9 @@ case class PropertyTermParser(map: YMap, propertyLikeMapping: PropertyLikeMappin
         val propertyTermId = value.string().toString
         ctx.declarations.findPropertyTerm(propertyTermId, SearchScope.All) match {
           case Some(propertyTerm) =>
-            propertyLikeMapping.withNodePropertyMapping(propertyTerm.id)
+            propertyLikeMapping.set(NodePropertyMapping,
+                                    AmfScalar(propertyTerm.id, Annotations(e.value)),
+                                    Annotations(e))
           case _ =>
             ctx.eh.violation(DialectError,
                              propertyLikeMapping.id,

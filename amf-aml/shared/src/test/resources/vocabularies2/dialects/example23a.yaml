@@ -6,26 +6,26 @@ nodeMappings:
     classTerm: v3.Anchor
     mapping:
       value:
-        propertyTerm: v3.value
         range: string
+        propertyTerm: v3.value
   Base:
     classTerm: v3.Base
     mapping:
       other:
         unique: true
-        propertyTerm: v3.other
         range: bis.Other
+        propertyTerm: v3.other
   Simple:
     classTerm: v3.Simple
     mapping:
       s:
-        propertyTerm: v3.s
         range: string
+        propertyTerm: v3.s
     extends: Base
 documents:
   root:
     encodes: Simple
-uses:
-  bis: example23b.yaml
 external:
   v3: http://test.com/v3#
+uses:
+  bis: example23b.yaml

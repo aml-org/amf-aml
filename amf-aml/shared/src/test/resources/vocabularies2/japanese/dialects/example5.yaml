@@ -6,20 +6,20 @@ nodeMappings:
     classTerm: 使2.エアウェイ
     mapping:
       za:
-        propertyTerm: 使用する.エア
         range: ノードA
+        propertyTerm: 使用する.エア
   ノードA:
     classTerm: 使用する.エアウェイ
     mapping:
       エア:
-        propertyTerm: 使2.エア
         range: string
+        propertyTerm: 使2.エア
 documents:
   root:
     encodes: ノードA
     declares:
       ーB: ノードB
-uses:
-  使2: vocab2.yaml
 external:
   使用する: http://test.com/v2#
+uses:
+  使2: vocab2.yaml

@@ -9,15 +9,15 @@ nodeMappings:
         patch: insert
         unique: true
         mandatory: true
-        propertyTerm: v3.a
         range: string
+        propertyTerm: v3.a
   Declarations:
     classTerm: v3.Decla
     mapping:
       b:
         mandatory: true
-        propertyTerm: v3.b
         range: string
+        propertyTerm: v3.b
   UnionNode:
     typeDiscriminatorName: lala
     typeDiscriminator:
@@ -30,8 +30,8 @@ nodeMappings:
     classTerm: v3.Root
     mapping:
       union:
-        propertyTerm: v3.union
         range: UnionNode
+        propertyTerm: v3.union
 documents:
   root:
     encodes: Root

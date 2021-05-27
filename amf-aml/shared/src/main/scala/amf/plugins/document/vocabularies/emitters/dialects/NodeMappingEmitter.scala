@@ -33,6 +33,7 @@ case class NodeMappingEmitter(dialect: Dialect,
       nodeMappable match {
         case nodeMapping: NodeMapping           => emitSingleNode(b, nodeMapping)
         case unionNodeMapping: UnionNodeMapping => emitUnioNode(b, unionNodeMapping)
+        case _                                  => // ignore
       }
     }
   }
