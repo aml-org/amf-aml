@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "some-id-45/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
+    },
+    {
       "@id": "some-id-24",
       "@type": [
         "http://a.ml/vocabularies/api-federation#DataGraphEdge",
@@ -27,8 +34,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "some-id-24"
       },
-      "http://a.ml/vocabularies/document#version": "2.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "some-id-45/unitActions"
+      }
     }
   ]
 }

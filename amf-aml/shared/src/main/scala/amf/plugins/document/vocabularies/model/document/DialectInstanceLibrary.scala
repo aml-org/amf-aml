@@ -5,12 +5,7 @@ import amf.core.model.document.{BaseUnit, DeclaresModel}
 import amf.core.model.domain.DomainElement
 import amf.core.parser.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceLibraryModel
-import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel.{
-  Declares,
-  DefinedBy,
-  GraphDependencies,
-  References
-}
+import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel.{Declares, DefinedBy, References}
 
 case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
     extends DialectInstanceUnit
@@ -19,7 +14,7 @@ case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
   override def meta: DialectInstanceLibraryModel.type = DialectInstanceLibraryModel
 
   def references: Seq[BaseUnit]        = fields.field(References)
-  def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
+  def graphDependencies: Seq[StrField] = amfProcessingData.graphDependencies
   def declares: Seq[DomainElement]     = fields.field(Declares)
   def definedBy(): StrField            = fields.field(DefinedBy)
 
@@ -27,8 +22,6 @@ case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
 
   def withDefinedBy(dialectId: String): DialectInstanceLibrary =
     set(DefinedBy, dialectId)
-  def withGraphDependencies(ids: Seq[String]): DialectInstanceLibrary =
-    set(GraphDependencies, ids)
 }
 
 object DialectInstanceLibrary {

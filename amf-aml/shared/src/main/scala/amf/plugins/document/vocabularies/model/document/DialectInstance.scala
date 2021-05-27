@@ -26,7 +26,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
 
   def encodes: DomainElement           = fields.field(Encodes)
   def references: Seq[BaseUnit]        = fields.field(References)
-  def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
+  def graphDependencies: Seq[StrField] = amfProcessingData.graphDependencies
   def definedBy(): StrField            = fields.field(DefinedBy)
   def declares: Seq[DomainElement]     = fields.field(Declares)
 
@@ -34,9 +34,6 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
 
   def withDefinedBy(dialectId: String): DialectInstance =
     set(DefinedBy, dialectId)
-
-  def withGraphDependencies(ids: Seq[String]): DialectInstance =
-    set(GraphDependencies, ids)
 
   override def transform(selector: DomainElement => Boolean,
                          transformation: (DomainElement, Boolean) => Option[DomainElement])(

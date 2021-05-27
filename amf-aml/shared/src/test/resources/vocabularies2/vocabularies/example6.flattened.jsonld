@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example6.yaml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example6.yaml/vocabularyReference/test",
       "@type": [
         "http://a.ml/vocabularies/meta#VocabularyReference",
@@ -38,8 +45,10 @@
       ],
       "http://a.ml/vocabularies/meta#base": "http://a.ml/vocabularies/test6#",
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example6.yaml",
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example6.yaml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example6.yaml#/source-map"
@@ -67,8 +76,10 @@
       ],
       "http://a.ml/vocabularies/meta#base": "http://a.ml/vocabularies/test2#",
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml",
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml#/source-map"
@@ -187,6 +198,13 @@
           "@id": "http://a.ml/vocabularies/test2#B/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml#/source-map",

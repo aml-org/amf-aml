@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml#/encodes/10_hey",
       "@type": [
         "http://test.com/tmp#Test",
@@ -111,8 +118,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml#/encodes/10_hey"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml#/source-map"

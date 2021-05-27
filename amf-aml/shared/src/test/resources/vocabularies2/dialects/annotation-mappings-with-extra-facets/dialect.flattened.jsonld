@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "/unitActions",
+      "@type": [
+        "meta:AmfProcessingData"
+      ],
+      "meta:version": "3.1.0"
+    },
+    {
       "@id": "/externals/aml",
       "@type": [
         "owl:Ontology",
@@ -338,8 +345,10 @@
         }
       ],
       "doc:location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-with-extra-facets/dialect.yaml",
-      "doc:version": "3.1.0",
       "doc:root": true,
+      "meta:unitActions": {
+        "@id": "/unitActions"
+      },
       "sourcemaps:sources": [
         {
           "@id": "#/source-map"
@@ -1389,8 +1398,8 @@
     "doc": "http://a.ml/vocabularies/document#",
     "core": "http://a.ml/vocabularies/core#",
     "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
-    "meta": "http://a.ml/vocabularies/meta#",
     "owl": "http://www.w3.org/2002/07/owl#",
+    "meta": "http://a.ml/vocabularies/meta#",
     "xsd": "http://www.w3.org/2001/XMLSchema#"
   }
 }

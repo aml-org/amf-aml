@@ -4,9 +4,8 @@ import amf._
 import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.AMFValidationPlugin
 import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions}
-import amf.core.annotations.SourceVendor
 import amf.core.errorhandling.AmfStaticReportBuilder
-import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
+import amf.core.model.document.BaseUnit
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
@@ -85,12 +84,7 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
 
   }
 
-  private def getSource(unit: BaseUnit): Option[Vendor] = unit match {
-    case d: Document => d.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    case m: Module   => m.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    case f: Fragment => f.encodes.annotations.find(classOf[SourceVendor]).map(_.vendor)
-    case _           => None
-  }
+  private def getSource(unit: BaseUnit): Option[Vendor] = unit.sourceVendor
 
   def validate(model: BaseUnit,
                given: ProfileName,

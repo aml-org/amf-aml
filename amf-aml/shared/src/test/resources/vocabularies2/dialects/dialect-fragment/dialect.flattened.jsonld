@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/dialect.yaml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/dialect.yaml/documents",
       "@type": [
         "http://a.ml/vocabularies/meta#DocumentsModel",
@@ -109,8 +116,10 @@
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/dialect.yaml/documents"
       },
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/dialect.yaml",
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/dialect.yaml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/dialect.yaml#/source-map"
@@ -128,9 +137,11 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/fragment.yaml/fragment"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#references": [],
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/fragment.yaml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/fragment.yaml#/source-map"
@@ -214,6 +225,13 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/fragment.yaml/fragment#/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/fragment.yaml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/fragment.yaml#/source-map",

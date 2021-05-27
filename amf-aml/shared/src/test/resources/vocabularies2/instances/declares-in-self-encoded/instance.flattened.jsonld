@@ -1,6 +1,19 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0",
+      "http://a.ml/vocabularies/meta#unitTransformations": [
+        "DialectInstanceReferencesResolutionStage",
+        "CleanReferencesStage",
+        "DeclarationsRemovalStage",
+        "RedirectResolutionByModel$"
+      ]
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/declaredOrg/Boca",
       "@type": [
         "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/dialect.yaml#/declarations/OrganizationMapping",
@@ -72,8 +85,10 @@
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map"

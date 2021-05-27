@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example4.yaml/unitActions",
+      "@type": [
+        "http://a.ml/vocabularies/meta#AmfProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#version": "3.1.0"
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example4.yaml/externals/v2",
       "@type": [
         "http://www.w3.org/2002/07/owl#Ontology",
@@ -203,8 +210,10 @@
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example4.yaml/documents"
       },
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example4.yaml",
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/meta#unitActions": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example4.yaml/unitActions"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example4.yaml#/source-map"

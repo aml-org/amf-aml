@@ -13,11 +13,6 @@
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect/dialect.yaml"
       }
     ],
-    "http://a.ml/vocabularies/document#graphDependencies": [
-      {
-        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect/dialectB.yaml"
-      }
-    ],
     "http://a.ml/vocabularies/document#encodes": [
       {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect/instance.yaml#/encodes",
@@ -169,14 +164,27 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/meta#unitActions": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect/instance.yaml/unitActions",
+        "@type": [
+          "http://a.ml/vocabularies/meta#AmfProcessingData"
+        ],
+        "http://a.ml/vocabularies/meta#version": [
+          {
+            "@value": "3.1.0"
+          }
+        ],
+        "http://a.ml/vocabularies/meta#graphDependencies": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect/dialectB.yaml"
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
