@@ -7,7 +7,7 @@ import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.TransformationPipelineRunner
 import amf.core.services.{RuntimeValidator, ValidationOptions}
 import amf.core.validation.core.ValidationProfile
-import amf.core.validation.{EffectiveValidations, ShaclReportAdaptation}
+import amf.core.validation.{AMFValidationReport, EffectiveValidations, ShaclReportAdaptation}
 import amf.plugins.document.vocabularies.model.document.DialectInstanceUnit
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectInstanceTransformationPipeline
 import amf.{ProfileName, Raml10Profile}
@@ -36,7 +36,8 @@ class AMLValidator(registry: DialectsRegistry) extends ShaclReportAdaptation {
         }
 
       case _ =>
-        throw new Exception(s"Cannot resolve base unit of type ${baseUnit.getClass}")
+        // TODO ARM: add logging that stage was skipped
+        Future.successful(ValidationResult(baseUnit, AMFValidationReport.empty(baseUnit.id, profile)))
     }
   }
 
