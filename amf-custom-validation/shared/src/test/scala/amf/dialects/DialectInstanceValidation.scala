@@ -6,7 +6,7 @@ import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationReport
 import amf.core.{AMFCompiler, CompilerContextBuilder}
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.custom.AMFValidatorPlugin
 import org.scalatest.AsyncFunSuite

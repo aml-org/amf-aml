@@ -42,7 +42,7 @@ trait BuildCycleTests extends BuildCycleTestCommon {
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
 
     build(config, amlConfig)
-      .map(transform(_, config))
+      .map(transform(_, config, amlConfig))
       .flatMap {
         render(_, config, amlConfig)
       }
@@ -51,5 +51,5 @@ trait BuildCycleTests extends BuildCycleTestCommon {
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
-  def transform(unit: BaseUnit, config: CycleConfig): BaseUnit = unit
+  def transform(unit: BaseUnit, config: CycleConfig, amlConfig: AMLConfiguration): BaseUnit = unit
 }

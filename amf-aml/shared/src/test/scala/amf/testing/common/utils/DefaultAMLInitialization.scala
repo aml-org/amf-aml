@@ -1,7 +1,7 @@
 package amf.testing.common.utils
 
 import amf.plugins.document.Vocabularies
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.features.validation.AMFValidatorPlugin
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
 
@@ -25,7 +25,6 @@ object DefaultAMLInitialization {
     for {
       _ <- amf.core.AMF.init()
       _ <- Future.successful { Vocabularies.register() }
-      _ <- AMLPlugin.init()
       _ <- Future.successful { amf.core.AMF.registerPlugin(AMFValidatorPlugin) }
       _ <- AMFValidatorPlugin.init()
     } yield {
