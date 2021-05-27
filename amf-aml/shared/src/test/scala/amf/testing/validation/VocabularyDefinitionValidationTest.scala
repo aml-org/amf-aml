@@ -45,7 +45,6 @@ class VocabularyDefinitionValidationTest
                          path: String): Future[scalatest.Assertion] = {
     val eh            = DefaultErrorHandler()
     val configuration = AMLConfiguration.forEH(eh)
-    AMFCompiler.init()
     val report = for {
       report <- configuration.createClient().parseVocabulary(s"file://$basePath/$path/$vocabulary").map(_.report)
     } yield {
