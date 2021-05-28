@@ -75,6 +75,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#from-union-node-mapping": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/0/source-map/from-union-node-mapping/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/0/source-map/lexical/element_1"
@@ -88,6 +93,11 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/1/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#from-union-node-mapping": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/1/source-map/from-union-node-mapping/element_0"
+        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -114,6 +124,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(10,0)]"
     },
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/0/source-map/from-union-node-mapping/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/0",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect13b.yaml#/declarations/Element"
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/0/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/0",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(7,0)]"
@@ -122,6 +137,11 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/0/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/vocab#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(6,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/1/source-map/from-union-node-mapping/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/1",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect13b.yaml#/declarations/Element"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/ls/1/source-map/lexical/element_1",
