@@ -21,6 +21,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#from-union-node-mapping": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13c.yaml#/encodes/source-map/from-union-node-mapping/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13c.yaml#/encodes/source-map/lexical/element_2"
@@ -32,6 +37,11 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13c.yaml#/encodes/source-map/lexical/element_1"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13c.yaml#/encodes/source-map/from-union-node-mapping/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13c.yaml#/encodes",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect13c.yaml#/declarations/AssetUnion"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13c.yaml#/encodes/source-map/lexical/element_2",
