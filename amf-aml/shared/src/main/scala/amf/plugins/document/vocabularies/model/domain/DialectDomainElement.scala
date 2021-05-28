@@ -224,8 +224,8 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       DialectDomainElementModel()
     } else {
       new DialectDomainElementModel(instanceTypes.distinct,
-                                    definedBy.propertiesMapping().map(_.toField),
-                                    Some(definedBy))
+                                    instanceDefinedBy.map(_.propertiesMapping().map(_.toField)).getOrElse(Seq.empty),
+                                    instanceDefinedBy)
     }
 
   override def adopted(newId: String, cycle: Seq[String] = Seq()): DialectDomainElement.this.type =
