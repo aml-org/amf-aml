@@ -56,7 +56,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                                      override private[amf] val options: AMFOptions)
     extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
 
-  private val PROFILE_DIALECT_URL = "http://a.ml/dialects/profile.raml"
+  private[amf] val PROFILE_DIALECT_URL = "http://a.ml/dialects/profile.raml"
 
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,

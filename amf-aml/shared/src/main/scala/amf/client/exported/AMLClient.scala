@@ -3,6 +3,8 @@ package amf.client.exported
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.client.environment.{AMLClient => InternalAMLClient}
 import amf.client.convert.VocabulariesClientConverter._
+import amf.client.model.document.DialectInstance
+import amf.core.validation.core.ValidationProfile
 
 import scala.concurrent.ExecutionContext
 
@@ -32,6 +34,14 @@ class AMLClient private[amf] (private val _internal: InternalAMLClient) extends 
     */
   def parseDialectInstance(url: String): ClientFuture[AMLDialectInstanceResult] =
     _internal.parseDialectInstance(url).asClient
+
+  // TODO ARM: export and addjava doc
+//  def parseValidationProfile(url: String): ClientFuture[ValidationProfile] =
+//    _internal.parseValidationProfile(url).asClient
+//
+//  // TODO ARM: export and addjava doc
+//  def parseValidationProfile(dialect: DialectInstance): ClientFuture[ValidationProfile] =
+//    _internal.parseValidationProfile(dialect).asClient
 
   /**
     * parse a {@link amf.plugins.document.vocabularies.model.document.Vocabulary}
