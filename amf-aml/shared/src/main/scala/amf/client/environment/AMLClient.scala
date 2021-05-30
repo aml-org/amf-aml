@@ -1,8 +1,11 @@
 package amf.client.environment
 
 import amf.client.remod._
+import amf.core.validation.core.ValidationProfile
+import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceModel, DialectModel, VocabularyModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, Vocabulary}
+import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -34,6 +37,24 @@ class AMLClient private[amf] (protected override val configuration: AMLConfigura
     case AMFResult(d: DialectInstance, r) => new AMLDialectInstanceResult(d, r)
     case other =>
       throw InvalidBaseUnitTypeException.forMeta(other.bu.meta, DialectInstanceModel)
+  }
+
+  /**
+    * parse a {@link amf.plugins.document.vocabularies.model.document.DialectInstance}
+    * @param url of the resource to parse
+    * @return a Future {@link amf.client.environment.AMLDialectInstanceResult}
+    */
+  def parseValidationProfile(url: String): Future[ValidationProfile] = AMFParser.parse(url, configuration).map {
+    case AMFResult(d: DialectInstance, _) => parseValidationProfile(d)
+    case other =>
+      throw InvalidBaseUnitTypeException.forMeta(other.bu.meta, DialectInstanceModel)
+  }
+
+  def parseValidationProfile(dialect: DialectInstance): ValidationProfile = {
+    if (dialect.definedBy().is(configuration.PROFILE_DIALECT_URL)) {
+      ParsedValidationProfile(dialect.encodes.asInstanceOf[DialectDomainElement])
+    } else
+      throw InvalidBaseUnitTypeException(dialect.definedBy().value(), configuration.PROFILE_DIALECT_URL)
   }
 
   /**
