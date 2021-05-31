@@ -2,8 +2,6 @@ package amf.plugins.document.vocabularies.plugin.headers
 
 import amf.core.Root
 import amf.core.parser.{SyamlParsedDocument, _}
-import amf.plugins.document.vocabularies.DialectsRegistry
-import amf.plugins.document.vocabularies.model.document.Dialect
 import org.yaml.model.{YComment, YDocument, YMap}
 
 trait RamlHeaderExtractor {
