@@ -2,17 +2,16 @@ package amf.plugins.document.vocabularies
 
 import amf.ProfileName
 import amf.client.parse.DefaultErrorHandler
-import amf.client.remod.{AMFGraphConfiguration, AMLDialectInstancePlugin, ParseConfiguration}
-import amf.core.CompilerContextBuilder
+import amf.client.remod.{AMFGraphConfiguration, AMLDialectInstancePlugin}
 import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.Annotations
 import amf.core.registries.{AMFDomainEntityResolver, AMFPluginsRegistry}
 import amf.core.resolution.pipelines.TransformationPipelineRunner
-import amf.core.services.RuntimeCompiler
 import amf.core.unsafe.PlatformSecrets
 import amf.core.vocabulary.ValueType
+import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.environment.Environment
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
@@ -62,8 +61,9 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets with
     val finalEnv = environment.resolver.fold(newEnv)(r => newEnv.withUnitCache(r))
     val context =
       new CompilerContextBuilder(uri, platform, finalEnv.parseConfiguration).build()
-    RuntimeCompiler
+    AMFCompiler
       .forContext(context, Some("application/yaml"))
+      .build()
       .map {
         case dialect: Dialect if dialect.hasValidHeader => dialect
       }
