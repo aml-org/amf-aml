@@ -26,10 +26,12 @@ trait DialectTests
                                  hint: Hint,
                                  target: Vendor,
                                  directory: String = basePath,
-                                 renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
+                                 renderOptions: Option[RenderOptions] = None,
+                                 baseConfig: AMLConfiguration = AMLConfiguration.predefined()): Future[Assertion] = {
     withDialect(s"file://$directory/$dialect") { (_, configuration) =>
-      val config = renderOptions.fold(configuration)(r => configuration.withRenderOptions(r))
-      cycle(source, golden, hint, target, config, directory = directory)
+      val config     = renderOptions.fold(configuration)(r => configuration.withRenderOptions(r))
+      val nextConfig = config.merge(baseConfig)
+      cycle(source, golden, hint, target, nextConfig, directory = directory)
     }
   }
 
@@ -68,7 +70,7 @@ trait DialectTests
 
     for {
       b <- parse(s"file://$directory/$source", platform, hint, amlConfig)
-      t <- Future.successful { transform(b) }
+      t <- Future.successful { transform(b, amlConfig) }
       s <- new AMFSerializer(t, target.mediaType, amlConfig.renderConfiguration)
         .renderToString(scala.concurrent.ExecutionContext.Implicits.global)
       d <- writeTemporaryFile(s"$directory/$golden")(s)
@@ -76,5 +78,5 @@ trait DialectTests
     } yield r
 
   }
-  def transform(unit: BaseUnit): BaseUnit = unit
+  def transform(unit: BaseUnit, amlConfig: AMLConfiguration): BaseUnit = unit
 }

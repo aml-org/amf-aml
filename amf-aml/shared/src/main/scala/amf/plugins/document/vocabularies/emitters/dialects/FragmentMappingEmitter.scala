@@ -5,14 +5,16 @@ import amf.core.emitter.BaseEmitters.MapEntryEmitter
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.DocumentMapping
 import org.yaml.model.YDocument.EntryBuilder
 
-case class FragmentMappingEmitter(dialect: Dialect,
-                                  fragment: DocumentMapping,
-                                  ordering: SpecOrdering,
-                                  aliases: Map[String, (String, String)])
+case class FragmentMappingEmitter(
+    dialect: Dialect,
+    fragment: DocumentMapping,
+    ordering: SpecOrdering,
+    aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasesConsumer {
 

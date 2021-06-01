@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies.parser.instances
 
 import amf.core.parser._
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.NodeMappable.AnyNodeMappable
 import amf.plugins.document.vocabularies.model.domain.{
@@ -15,6 +16,7 @@ import org.yaml.model._
 import scala.language.existentials
 
 class DialectInstanceContext(var dialect: Dialect,
+                             val nodeMappableFinder: NodeMappableFinder,
                              private val wrapped: ParserContext,
                              private val ds: Option[DialectInstanceDeclarations] = None)
     extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.config)

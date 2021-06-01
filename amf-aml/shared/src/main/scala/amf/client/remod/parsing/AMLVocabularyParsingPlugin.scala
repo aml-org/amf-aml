@@ -1,28 +1,39 @@
 package amf.client.remod.parsing
 
+import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
 import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
 import amf.core.Root
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.parser.{ParserContext, ReferenceHandler}
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
+import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
+import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.plugins.document.vocabularies.plugin.headers.{DialectHeader, ExtensionHeader}
 
 class AMLVocabularyParsingPlugin extends AMFParsePlugin {
 
-  override def parse(document: Root, ctx: ParserContext): BaseUnit = AMLPlugin.parse(document, ctx)
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+    val header = DialectHeader(document)
+
+    header match {
+      case Some(ExtensionHeader.VocabularyHeader) =>
+        new VocabulariesParser(document)(new VocabularyContext(ctx)).parseDocument()
+      case _ => throw new Exception("Dunno") // TODO: ARM - what to do with this
+    }
+  }
 
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
-    new SyntaxExtensionsReferenceHandler(AMLPlugin.registry, eh)
+    new SyntaxExtensionsReferenceHandler(eh)
 
   override def allowRecursiveReferences: Boolean = true
 
   override val id: String = "vocabulary-parsing-plugin"
 
   override def applies(root: Root): Boolean = {
-    DialectHeader.dialectHeaderDirective(root) match {
+    DialectHeader(root) match {
       case Some(ExtensionHeader.VocabularyHeader) => true
       case _                                      => false
     }
