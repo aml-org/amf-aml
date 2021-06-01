@@ -39,7 +39,7 @@ object ValidationReportJSONLDEmitter {
   private def emitResult(b: PartBuilder, result: AMFValidationResult): Unit = {
     b.obj { b =>
       b.entry(JsonLdKeywords.Type, shacl("ValidationResult"))
-      b.entry(shacl("resultSeverity"), emitViolation(_, result.level))
+      b.entry(shacl("resultSeverity"), emitViolation(_, result.severityLevel))
       b.entry(
           shacl("focusNode"),
           _.obj(_.entry(JsonLdKeywords.Id, result.targetNode))
