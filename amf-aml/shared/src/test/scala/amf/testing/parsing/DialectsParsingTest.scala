@@ -1,8 +1,8 @@
 package amf.testing.parsing
 
 import amf.client.environment.AMLConfiguration
+import amf.core.emitter.RenderOptions
 import amf.core.remote.{Amf, AmfJsonHint, Aml, VocabularyYamlHint}
-
 import amf.testing.common.utils.DialectTests
 
 import scala.concurrent.ExecutionContext
@@ -340,7 +340,7 @@ trait DialectsParsingTest extends DialectTests {
         config.golden,
         VocabularyYamlHint,
         target = Amf,
-        renderOptions = Some(config.renderOptions.withCompactUris),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
         directory = s"$basePath/annotation-mappings-with-extra-facets"
     )
   }

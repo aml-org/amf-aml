@@ -3,6 +3,7 @@ package amf.plugins.document.vocabularies.emitters.dialects
 import amf.core.emitter.BaseEmitters.{pos, traverse}
 import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.parser.Position
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.metamodel.domain.SemanticExtensionModel
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.SemanticExtension
@@ -11,7 +12,7 @@ import org.yaml.model.YType
 
 case class ExtensionMappingsEntryEmitter(dialect: Dialect,
                                          aliases: Map[String, (String, String)],
-                                         ordering: SpecOrdering)
+                                         ordering: SpecOrdering)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with GroupPosition {
 
@@ -33,7 +34,7 @@ case class ExtensionMappingsEntryEmitter(dialect: Dialect,
 case class SemanticExtensionEmitter(dialect: Dialect,
                                     element: SemanticExtension,
                                     aliases: Map[String, (String, String)],
-                                    ordering: SpecOrdering)
+                                    ordering: SpecOrdering)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasEmitter {
   override def emit(b: EntryBuilder): Unit = {
