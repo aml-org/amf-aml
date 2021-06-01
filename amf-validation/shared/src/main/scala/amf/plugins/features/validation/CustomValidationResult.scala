@@ -1,4 +1,4 @@
-package amf.plugins.features.validation.shacl.custom
+package amf.plugins.features.validation
 
 import amf.core.validation.core.ValidationResult
 

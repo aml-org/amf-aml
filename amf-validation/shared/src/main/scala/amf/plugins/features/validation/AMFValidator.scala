@@ -1,24 +1,23 @@
 package amf.plugins.features.validation
 
-import amf._
 import amf.client.execution.BaseExecutionEnvironment
-import amf.client.plugins.AMFValidationPlugin
-import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions}
+import amf.client.plugins.{AMFDocumentPlugin, AMFValidationPlugin}
 import amf.core.annotations.SourceVendor
+import amf.core.benchmark.ExecutionLog
 import amf.core.errorhandling.AmfStaticReportBuilder
 import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.{Oas30, Raml08, Vendor}
-import amf.core.services.RuntimeValidator.CustomShaclFunctions
+import amf.core.services.RuntimeValidator.{CustomShaclFunctions, validatorOption}
 import amf.core.services.{RuntimeValidator, ValidationOptions => LegacyValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations}
 import amf.internal.environment.Environment
-import amf.plugins.features.validation.emitters.ShaclJsonLdShapeGraphEmitter
-import amf.plugins.features.validation.shacl.FullShaclValidator
-import amf.plugins.features.validation.shacl.custom.{CustomShaclValidator, CustomValidationReport}
+import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ShaclJsonLdShapeGraphEmitter}
+import amf._
+import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions}
 
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
@@ -50,33 +49,29 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
   protected[amf] def computeValidations(
       profileName: ProfileName,
       computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
+    val maybeProfile = profiles.get(profileName.profile) match {
+      case Some(profileGenerator) => Some(profileGenerator())
+      case _                      => None
+    }
 
-    profiles
-      .get(profileName.profile)
-      .map { generator =>
-        generator()
-      }
-      .map { foundProfile =>
-        addBaseProfileValidations(computed, foundProfile)
-      }
-      .getOrElse(computed)
-  }
-
-  private def addBaseProfileValidations(computed: EffectiveValidations, foundProfile: ValidationProfile) = {
-    foundProfile.baseProfile
-      .map(base => computeValidations(base, computed).someEffective(foundProfile))
-      .getOrElse(computed.someEffective(foundProfile))
+    maybeProfile match {
+      case Some(foundProfile) =>
+        if (foundProfile.baseProfile.isDefined) {
+          computeValidations(foundProfile.baseProfile.get, computed).someEffective(foundProfile)
+        } else {
+          computed.someEffective(foundProfile)
+        }
+      case None => computed
+    }
   }
 
   def shaclValidation(
       model: BaseUnit,
       validations: EffectiveValidations,
       customFunctions: CustomShaclFunctions,
-      options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] = {
-    val validationSet = validations.effective.values.toSet
-    if (options.isPartialValidation) new CustomShaclValidator(model, customFunctions, options).run(validationSet)
-    else new FullShaclValidator().validate(model, validationSet.toSeq, options)
-  }
+      options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] =
+    if (options.isPartialValidation) new CustomShaclValidator(model, validations, customFunctions, options).run
+    else new FullShaclValidator().validate(model, validations, options)
 
   private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {
     given match {
@@ -146,11 +141,11 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
     * @return JSON-LD graph
     */
   def shapesGraph(validations: EffectiveValidations, profileName: ProfileName = RamlProfile): String = {
-    new ShaclJsonLdShapeGraphEmitter(profileName).emit(customValidations(validations.effective.values.toSeq))
+    new ShaclJsonLdShapeGraphEmitter(profileName).emit(customValidations(validations))
   }
 
-  def customValidations(validations: Seq[ValidationSpecification]): Seq[ValidationSpecification] =
-    validations.filter(s => !s.isParserSide)
+  def customValidations(validations: EffectiveValidations): Seq[ValidationSpecification] =
+    validations.effective.values.toSeq.filter(s => !s.isParserSide)
 
   /**
     * Returns a native RDF model with the SHACL shapes graph
