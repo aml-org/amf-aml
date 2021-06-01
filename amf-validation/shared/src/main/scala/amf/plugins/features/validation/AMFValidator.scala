@@ -66,9 +66,8 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
       validations: EffectiveValidations,
       customFunctions: CustomShaclFunctions,
       options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] = {
-    val validationSet = validations.effective.values.toSet
-    if (options.isPartialValidation) new CustomShaclValidator(model, customFunctions, options).run(validationSet)
-    else new FullShaclValidator().validate(model, validationSet.toSeq, options)
+
+    ShaclValidationRunner.validate(model, validations, customFunctions, options)
   }
 
   private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {
@@ -141,5 +140,17 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
   def emitShapesGraph(profileName: ProfileName): String = {
     val effectiveValidations = computeValidations(profileName)
     shapesGraph(effectiveValidations, profileName)
+  }
+}
+
+object ShaclValidationRunner {
+  def validate(
+      model: BaseUnit,
+      validations: EffectiveValidations,
+      customFunctions: CustomShaclFunctions,
+      options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] = {
+    val validationSet = validations.effective.values.toSet
+    if (options.isPartialValidation) new CustomShaclValidator(model, customFunctions, options).run(validationSet)
+    else new FullShaclValidator().validate(model, validationSet.toSeq, options)
   }
 }
