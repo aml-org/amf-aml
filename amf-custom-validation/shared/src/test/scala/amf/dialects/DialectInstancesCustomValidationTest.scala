@@ -1,6 +1,7 @@
 package amf.dialects
 
 import amf.ProfileName
+import amf.testing.common.utils.DialectInstanceValidation
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
