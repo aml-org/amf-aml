@@ -48,12 +48,10 @@ trait DialectInstanceValidation
 
     withDialect(s"$directory/$dialect") { (_, config) =>
       for {
-        _ <- {
-          AMFValidatorPlugin.loadValidationProfile(s"$directory/${profile.profile}",
-                                                   errorHandler = config.errorHandlerProvider.errorHandler())
-        }
-        instance <- parse(s"$directory/$instance", platform, None, config)
-        report   <- RuntimeValidator(instance, ProfileName(name), resolved = false, new ValidationConfiguration(config))
+        customValConfig <- config.withCustomValidationsEnabled
+        finalConfig     <- customValConfig.withCustomProfile(s"$directory/${profile.profile}")
+        instance        <- finalConfig.createClient().parseDialectInstance(s"$directory/$instance").map(_.dialectInstance)
+        report          <- finalConfig.createClient().validate(instance, ProfileName(name))
       } yield {
         report
       }
