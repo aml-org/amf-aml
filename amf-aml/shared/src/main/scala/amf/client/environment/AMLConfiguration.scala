@@ -14,6 +14,7 @@ import amf.client.remod.rendering.{
 import amf.client.remod.{AMFGraphConfiguration, AMFParser, AMFResult, ErrorHandlerProvider}
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.metamodel.ModelDefaultBuilder
+import amf.core.model.domain.AnnotationGraphLoader
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
@@ -113,6 +114,9 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMLConfiguration =
     super._withEntities(entities)
+
+  override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLConfiguration =
+    super._withAnnotations(annotations)
 
   def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
