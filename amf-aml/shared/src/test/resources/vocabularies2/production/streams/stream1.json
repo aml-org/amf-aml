@@ -72,7 +72,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(8,0)-(9,0)]"
+                            "@value": "[(7,10)-(9,0)]"
                           }
                         ]
                       },
@@ -124,7 +124,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(11,0)-(11,16)]"
+                            "@value": "[(10,11)-(11,16)]"
                           }
                         ]
                       },

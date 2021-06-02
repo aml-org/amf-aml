@@ -56,6 +56,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/encodes/b/source-map/synthesized-field/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/encodes/b/source-map/lexical/element_0"
@@ -71,6 +76,11 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#b",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,3)-(6,6)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/encodes/b/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/encodes/b/source-map/lexical/element_0",
@@ -266,14 +276,19 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#json-pointer-ref": [
+      "http://a.ml/vocabularies/document-source-maps#synthesized-field": [
         {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a/source-map/json-pointer-ref/element_0"
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a/source-map/synthesized-field/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#json-pointer-ref": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a/source-map/json-pointer-ref/element_0"
         }
       ]
     },
@@ -313,14 +328,19 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(5,10)]"
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a/source-map/json-pointer-ref/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a",
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a/source-map/synthesized-field/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#link-target",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(6,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a/source-map/json-pointer-ref/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9b.yaml#/Bs/Hey/a",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     }
   ]
 }

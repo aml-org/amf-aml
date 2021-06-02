@@ -2,11 +2,11 @@ package amf.plugins.document.vocabularies.parser.instances
 
 import amf.core.Root
 import amf.core.annotations.SourceAST
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Str
+import amf.core.metamodel.{Field, Type}
+import amf.core.metamodel.Type.{Array, Str}
 import amf.core.model.DataType
 import amf.core.model.document.EncodesModel
-import amf.core.model.domain.{AmfScalar, Annotation, DomainElement}
+import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DomainElement}
 import amf.core.parser.{Annotations, SearchScope, _}
 import amf.core.utils._
 import amf.core.vocabulary.{Namespace, ValueType}
@@ -18,10 +18,11 @@ import amf.plugins.document.vocabularies.annotations.{
   JsonPointerRef,
   RefInclude
 }
+import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
-import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
+import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.plugins.document.vocabularies.parser.instances.ClosedInstanceNode.{checkClosedNode, checkRootNode}
 import amf.validation.DialectValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
 import org.mulesoft.common.time.SimpleDateTime
@@ -34,6 +35,7 @@ import scala.collection.mutable
 // TODO:
 class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectInstanceContext)
     extends AnnotationsParser
+    with DeclarationKeyCollector
     with JsonPointerResolver
     with InstanceNodeIdHandling {
 
@@ -57,9 +59,9 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     // registering JSON pointer
     ctx.registerJsonPointerDeclaration(root.location + "#/", dialectDomainElement)
 
-    dialectInstance.withEncodes(dialectDomainElement)
-    if (ctx.declarations.declarables().nonEmpty)
-      dialectInstance.withDeclares(ctx.declarations.declarables())
+    dialectInstance.set(DialectInstanceModel.Encodes, dialectDomainElement, Annotations.inferred())
+    addDeclarationsToModel(dialectInstance)
+
     if (references.baseUnitReferences().nonEmpty)
       dialectInstance.withReferences(references.baseUnitReferences())
     if (ctx.nestedDialects.nonEmpty)
@@ -104,6 +106,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       declarationsNodeMappings.foreach {
         case (name, nodeMapping) =>
           declarationsMap.entries.find(_.key.as[YScalar].text == name).foreach { entry =>
+            addDeclarationKey(DeclarationKey(entry))
             val declarationsId = root.location + "#" + normalizedPath.getOrElse("/") + name.urlComponentEncoded
             entry.value.as[YMap].entries.foreach { declarationEntry =>
               val declarationName = declarationEntry.key.as[YScalar].text
@@ -206,7 +209,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
             mappable match {
               case mapping: NodeMapping =>
                 val node: DialectDomainElement =
-                  DialectDomainElement(givenAnnotations.getOrElse(Annotations(nodeMap))).withDefinedBy(mapping)
+                  DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast))).withDefinedBy(mapping)
                 val finalId =
                   generateNodeId(node, nodeMap, Seq(defaultId), defaultId, mapping, additionalProperties, rootNode)
                 node.withId(finalId)
@@ -742,7 +745,8 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               .as[YScalar]
               .text
               .urlComponentEncoded
-            val effectiveTypes = typesFrom(nodeMapping)
+            val effectiveTypes      = typesFrom(nodeMapping)
+            val valueAllowsMultiple = extractAllowMultipleForProp(propertyValueMapping, nodeMapping).getOrElse(false)
             val nestedNode = DialectDomainElement(Annotations(pair))
               .withId(nestedId)
               .withDefinedBy(nodeMapping)
@@ -751,9 +755,26 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               nestedNode.set(Field(Str, ValueType(propertyKeyMapping.get)),
                              AmfScalar(pair.key.as[YScalar].text),
                              Annotations(pair.key))
-              nestedNode.set(Field(Str, ValueType(propertyValueMapping.get)),
-                             AmfScalar(pair.value.as[YScalar].text),
-                             Annotations(pair.value))
+
+              if (valueAllowsMultiple) {
+                pair.value.value match {
+                  case seq: YSequence =>
+                    nestedNode.set(
+                        Field(Array(Str), ValueType(propertyValueMapping.get)),
+                        AmfArray(seq.nodes.flatMap(_.asScalar).map(AmfScalar(_)), Annotations(seq)),
+                        Annotations(pair.value)
+                    )
+                  case scalar: YScalar =>
+                    nestedNode.set(Field(Array(Str), ValueType(propertyValueMapping.get)),
+                                   AmfArray(Seq(AmfScalar(scalar.text))),
+                                   Annotations(pair.value))
+                  case _ => // ignore
+                }
+              } else {
+                nestedNode.set(Field(Str, ValueType(propertyValueMapping.get)),
+                               AmfScalar(pair.value.as[YScalar].text),
+                               Annotations(pair.value))
+              }
             } catch {
               case e: UnknownMapKeyProperty =>
                 ctx.eh.violation(DialectError, e.id, s"Cannot find mapping for key map property ${e.id}", pair)
@@ -778,6 +799,13 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                        s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
                        propertyEntry)
     }
+  }
+
+  private def extractAllowMultipleForProp(propertyValueMapping: Option[String], nodeMapping: NodeMapping) = {
+    nodeMapping
+      .propertiesMapping()
+      .find(_.nodePropertyMapping().option().contains(propertyValueMapping.get))
+      .flatMap(_.allowMultiple().option())
   }
 
   protected def parseObjectCollectionProperty(id: String,

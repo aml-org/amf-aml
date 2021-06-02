@@ -61,7 +61,7 @@
                         ],
                         "http://a.ml/vocabularies/document-source-maps#value": [
                           {
-                            "@value": "[(5,0)-(5,20)]"
+                            "@value": "[(4,9)-(5,20)]"
                           }
                         ]
                       },

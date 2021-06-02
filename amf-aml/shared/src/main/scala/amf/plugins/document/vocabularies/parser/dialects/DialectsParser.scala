@@ -29,7 +29,7 @@ import amf.plugins.document.vocabularies.metamodel.domain.{
 }
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.plugins.document.vocabularies.model.domain._
-import amf.plugins.document.vocabularies.parser.common.AnnotationsParser
+import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
 import amf.plugins.document.vocabularies.parser.instances.BaseDirective
 import amf.validation.DialectValidations
@@ -45,6 +45,7 @@ import scala.collection.{immutable, mutable}
 
 class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     extends BaseSpecParser
+    with DeclarationKeyCollector
     with AnnotationsParser {
 
   val map: YMap        = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
@@ -76,8 +77,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           checkNodeMappableReferences(propertyMapping)
         }
     }
-
-    if (declarables.nonEmpty) dialect.withDeclares(declarables)
+    addDeclarationsToModel(dialect)
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
 
     parseDocumentsMapping(map)
@@ -359,6 +359,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   private def parseNodeMappingDeclarations(map: YMap, parent: String): Unit = {
     map.key("nodeMappings").foreach { e =>
+      addDeclarationKey(DeclarationKey(e, isAbstract = true))
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
@@ -498,7 +499,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                     .adopted(nodeMapping.id + "/property/" + entry.key.as[YScalar].text.urlComponentEncoded),
                 nodeMapping.id)
           }
-          val (withTerm, withourTerm) = properties.partition(_.nodePropertyMapping().option().nonEmpty)
+          val (withTerm, withoutTerm) = properties.partition(_.nodePropertyMapping().option().nonEmpty)
           val filterProperties: immutable.Iterable[PropertyMapping] = withTerm
             .filter(_.nodePropertyMapping().option().nonEmpty)
             .groupBy(p => p.nodePropertyMapping().value())
@@ -512,7 +513,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               case other => other._2.headOption
             })
           nodeMapping.setArrayWithoutId(NodeMappingModel.PropertiesMapping,
-                                        withourTerm ++ filterProperties.toSeq,
+                                        withoutTerm ++ filterProperties.toSeq,
                                         Annotations(entry))
         }
     )
@@ -625,7 +626,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     entry.value.tagType match {
       case YType.Map =>
         val map             = entry.value.as[YMap]
-        val propertyMapping = PropertyMapping(map).set(PropertyMappingModel.Name, name, Annotations(entry.key))
+        val propertyMapping = PropertyMapping(entry.value).set(PropertyMappingModel.Name, name, Annotations(entry.key))
 
         adopt(propertyMapping)
         ctx.closedNode("propertyMapping", propertyMapping.id, map)
@@ -805,18 +806,18 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   }
 
   private def parseMapValue(map: YMap, propertyMapping: PropertyMapping): Unit = {
-    val mapValu      = map.key("mapValue")
+    val mapValue     = map.key("mapValue")
     val mapTermValue = map.key("mapTermValue")
 
     for {
-      _ <- mapValu
+      _ <- mapValue
       _ <- mapTermValue
     } yield {
       ctx.eh.violation(DialectError, propertyMapping.id, s"mapValue and mapTermValue are mutually exclusive", map)
     }
 
     mapTermValue.fold({
-      mapValu.foreach(entry => {
+      mapValue.foreach(entry => {
         val propertyLabel = ValueNode(entry.value).string().toString
         propertyMapping.withMapValueProperty(propertyLabel, Annotations(entry.value))
       })
@@ -895,7 +896,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           checkNodeMappableReferences(propertyMapping)
         }
     }
-    if (declarables.nonEmpty) dialect.withDeclares(declarables)
+    addDeclarationsToModel(dialect)
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
 
     // resolve unresolved references
@@ -920,7 +921,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     dialect.usage.option().foreach(usage => library.withUsage(usage))
 
     val declares = dialect.declares
-    if (declares.nonEmpty) library.withDeclares(declares)
+    addDeclarationsToModel(library, declares)
 
     val externals = dialect.externals
     if (externals.nonEmpty) library.withExternals(externals)

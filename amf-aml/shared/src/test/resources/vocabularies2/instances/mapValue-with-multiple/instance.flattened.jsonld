@@ -1,0 +1,191 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/dialect.yaml#/declarations/MapListNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#codes": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/dialect.yaml#/declarations/CodeNames",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#names": [
+        "red",
+        "RED",
+        "Red",
+        "rouge"
+      ],
+      "http://a.ml/vocabularies/data#code": "FF0000",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/dialect.yaml#/declarations/CodeNames",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#names": [
+        "black"
+      ],
+      "http://a.ml/vocabularies/data#code": "000000",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000/source-map/lexical/element_2"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000/source-map/lexical/element_0"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(10,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#codes",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,5)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#names",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,11)-(8,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#code",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,10)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/FF0000",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(8,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#names",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,12)-(8,17)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#code",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(8,10)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes/codes/000000",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,2)-(10,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/encodes"
+      },
+      "http://a.ml/vocabularies/document#version": "3.1.0",
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml#/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/mapValue-with-multiple/instance.yaml",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(10,0)]"
+    }
+  ]
+}

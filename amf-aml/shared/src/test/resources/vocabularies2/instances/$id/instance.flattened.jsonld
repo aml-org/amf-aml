@@ -125,7 +125,7 @@
     {
       "@id": "file://a.ml/NodeA#/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://a.ml/NodeA",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(5,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,2)-(5,0)]"
     },
     {
       "@id": "file://a.ml/NodeA#/source-map/lexical/element_0",
@@ -140,7 +140,7 @@
     {
       "@id": "file://a.ml/NodeB#/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://a.ml/NodeB",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,0)-(8,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(8,0)]"
     },
     {
       "@id": "file://a.ml/NodeB#/source-map/lexical/element_0",

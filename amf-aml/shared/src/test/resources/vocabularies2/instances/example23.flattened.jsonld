@@ -32,7 +32,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(5,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,5)-(5,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets/source-map/lexical/element_0",
