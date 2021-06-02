@@ -1,30 +1,29 @@
 package amf.plugins.document.vocabularies
 
-import amf.client.plugins.AMFValidationPlugin
 import amf.client.remod.amfcore.plugins.validate.{
   AMFValidatePlugin,
-  ValidationConfiguration,
+  ValidationInfo,
   ValidationOptions,
   ValidationResult
 }
 import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.model.document.BaseUnit
-import amf.core.remote.Aml
-import amf.core.validation.AMFValidationReport
-import amf.plugins.document.vocabularies.model.document.DialectInstanceUnit
+import amf.plugins.document.vocabularies.model.document.DialectInstance
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object AMLValidationLegacyPlugin {
-  def amlPlugin(): AMLValidationLegacyPlugin = {
-    def legacyApplies = (unit: BaseUnit) => unit.isInstanceOf[DialectInstanceUnit]
-
-    AMLValidationLegacyPlugin(legacyApplies)
-  }
+object AMLValidationPlugin {
+  protected val id: String = this.getClass.getSimpleName
 }
 
-case class AMLValidationLegacyPlugin(legacyApplies: BaseUnit => Boolean) extends AMFValidatePlugin {
+class AMLValidationPlugin() extends AMFValidatePlugin {
+
+  override val id: String = AMLValidationPlugin.id
+
+  override def priority: PluginPriority = HighPriority
+
+  override def applies(info: ValidationInfo): Boolean = info.baseUnit.isInstanceOf[DialectInstance]
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
@@ -37,10 +36,4 @@ case class AMLValidationLegacyPlugin(legacyApplies: BaseUnit => Boolean) extends
     options.config.amfConfig.registry.plugins.parsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
     }
-
-  override val id: String = Aml.name
-
-  override def applies(element: BaseUnit): Boolean = legacyApplies(element)
-
-  override def priority: PluginPriority = HighPriority
 }

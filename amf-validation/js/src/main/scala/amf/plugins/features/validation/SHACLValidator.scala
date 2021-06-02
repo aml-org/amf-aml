@@ -6,7 +6,7 @@ import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfModel, RdfModelEmitter}
-import amf.core.services.ValidationOptions
+import amf.core.services.ShaclValidationOptions
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
@@ -128,7 +128,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
     }
   }
 
-  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
+  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ShaclValidationOptions)(
       implicit executionContext: ExecutionContext): Future[String] = {
     val promise = Promise[String]()
     try {
@@ -160,7 +160,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
     }
   }
 
-  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
+  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ShaclValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationReport] = {
     val promise = Promise[ValidationReport]()
     try {

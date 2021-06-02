@@ -1,7 +1,7 @@
 package amf.plugins.features.validation.shacl.custom
 
 import amf.{MessageStyle, OASStyle, RAMLStyle}
-import amf.core.services.ValidationOptions
+import amf.core.services.ShaclValidationOptions
 import amf.core.validation.SeverityLevels
 import amf.core.validation.core.{
   PropertyConstraint,
@@ -17,7 +17,7 @@ object CustomValidationReport {
   def empty = new CustomValidationReport(Nil)
 }
 
-class ReportBuilder(options: ValidationOptions) {
+class ReportBuilder(options: ShaclValidationOptions) {
 
   def build(): CustomValidationReport = CustomValidationReport(results.toList)
 

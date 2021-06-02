@@ -20,7 +20,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with AMFValidator {
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
     ExecutionLog.log("Register RDF framework")
-    platform.rdfFramework = Some(PlatformValidator.instance)
+    platform.rdfFramework = Some(PlatformValidator.instance())
     Future.successful(this)
   }
 

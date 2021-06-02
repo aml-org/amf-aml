@@ -11,7 +11,7 @@ import amf.core.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.plugins.features.validation.CoreValidations
+import amf.plugins.features.validation.{CoreValidations, PlatformValidator}
 import amf.testing.common.cycling.FunSuiteRdfCycleTests
 import amf.testing.common.utils.{AMLParsingHelper, DefaultAMLInitialization}
 import amf.validation.DialectValidations
@@ -43,7 +43,7 @@ class DialectShaclRdfTest
     val validationProfile = new AMFDialectValidations(unit.asInstanceOf[Dialect])(finder).profile()
     val validations = validationProfile.validations.filter(v =>
       !DialectValidations.validations.contains(v) && !CoreValidations.validations.contains(v))
-    RuntimeValidator.shaclModel(validations, "http://metadata.org/validations.js")
+    PlatformValidator.instance().shapes(validations, "http://metadata.org/validations.js")
   }
 
   /** Method to render parsed unit. Override if necessary. */
