@@ -8,14 +8,11 @@ import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
-import amf.core.services.RuntimeValidator.CustomShaclFunctions
-import amf.core.services.{RuntimeValidator, ValidationOptions => LegacyValidationOptions}
+import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
+import amf.core.validation.core.{ValidationProfile, ValidationSpecification}
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, FailFastValidationRunner}
 import amf.plugins.features.validation.emitters.ShaclJsonLdShapeGraphEmitter
-import amf.plugins.features.validation.shacl.FullShaclValidator
-import amf.plugins.features.validation.shacl.custom.CustomShaclValidator
 
 import scala.concurrent.Future.successful
 import scala.concurrent.{ExecutionContext, Future}
@@ -59,15 +56,6 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
     foundProfile.baseProfile
       .map(base => computeValidations(base, computed).someEffective(foundProfile))
       .getOrElse(computed.someEffective(foundProfile))
-  }
-
-  def shaclValidation(
-      model: BaseUnit,
-      validations: EffectiveValidations,
-      customFunctions: CustomShaclFunctions,
-      options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] = {
-
-    ShaclValidationRunner.validate(model, validations, customFunctions, options)
   }
 
   private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {
@@ -131,7 +119,7 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
   def shaclModel(validations: Seq[ValidationSpecification],
                  functionUrls: String,
                  messageStyle: MessageStyle): RdfModel =
-    PlatformValidator.instance.shapes(validations, functionUrls)
+    PlatformValidator.instance().shapes(validations, functionUrls)
 
   /**
     * Generates a JSON-LD graph with the SHACL shapes for the requested profile name
@@ -140,17 +128,5 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
   def emitShapesGraph(profileName: ProfileName): String = {
     val effectiveValidations = computeValidations(profileName)
     shapesGraph(effectiveValidations, profileName)
-  }
-}
-
-object ShaclValidationRunner {
-  def validate(
-      model: BaseUnit,
-      validations: EffectiveValidations,
-      customFunctions: CustomShaclFunctions,
-      options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] = {
-    val validationSet = validations.effective.values.toSet
-    if (options.isPartialValidation) new CustomShaclValidator(model, customFunctions, options).run(validationSet)
-    else new FullShaclValidator().validate(model, validationSet.toSeq, options)
   }
 }

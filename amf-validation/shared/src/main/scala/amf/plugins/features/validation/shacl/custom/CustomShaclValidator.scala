@@ -3,9 +3,10 @@ package amf.plugins.features.validation.shacl.custom
 import amf.core.model.document.{BaseUnit, FieldsFilter}
 import amf.core.model.domain._
 import amf.core.services.RuntimeValidator.CustomShaclFunctions
-import amf.core.services.ValidationOptions
+import amf.core.services.ShaclValidationOptions
 import amf.core.traversal.iterator.AmfElementStrategy
 import amf.core.validation.core._
+import amf.plugins.features.validation.shacl.ShaclValidator
 import amf.plugins.features.validation.shacl.custom.CustomShaclValidator.{
   PROPERTY_CONSTRAINT_VALIDATORS,
   computeConstraints
@@ -45,8 +46,8 @@ object CustomShaclValidator {
   )
 }
 
-class CustomShaclValidator(model: BaseUnit, customFunctions: CustomShaclFunctions, options: ValidationOptions)(
-    implicit executionContext: ExecutionContext) {
+class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: ShaclValidationOptions)
+    extends ShaclValidator {
 
   private val reportBuilder: ReportBuilder = new ReportBuilder(options)
   private val constraints = Seq(
@@ -54,7 +55,8 @@ class CustomShaclValidator(model: BaseUnit, customFunctions: CustomShaclFunction
       TargetObjectsOfConstraint
   )
 
-  def run(validations: Set[ValidationSpecification]): Future[ValidationReport] = {
+  def validate(model: BaseUnit, validations: Seq[ValidationSpecification])(
+      implicit executionContext: ExecutionContext): Future[ValidationReport] = {
     model.iterator(AmfElementStrategy).foreach {
       case e: AmfObject => validateIdentityTransformation(validations, e)
       case _            =>
@@ -67,7 +69,7 @@ class CustomShaclValidator(model: BaseUnit, customFunctions: CustomShaclFunction
     validations.partition(v => constraints.exists(c => c.canValidate(v)))
   }
 
-  private def validateIdentityTransformation(validations: Set[ValidationSpecification], element: AmfObject): Unit = {
+  private def validateIdentityTransformation(validations: Seq[ValidationSpecification], element: AmfObject): Unit = {
     validations.foreach { specification =>
       constraints.foreach(_.validate(specification, element, reportBuilder))
     }

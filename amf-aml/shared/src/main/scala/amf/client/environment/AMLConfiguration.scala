@@ -20,7 +20,7 @@ import amf.core.validation.core.ValidationProfile
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
-import amf.plugins.document.vocabularies.{AMLValidationLegacyPlugin, DialectRegister}
+import amf.plugins.document.vocabularies.{AMLValidationPlugin, DialectRegister}
 import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
 import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
@@ -182,7 +182,7 @@ object AMLConfiguration extends PlatformSecrets {
       new AMLVocabularyParsingPlugin() ::
       new AMLDialectRenderingPlugin() ::
       new AMLVocabularyRenderingPlugin() ::
-      AMLValidationLegacyPlugin.amlPlugin() ::
+      new AMLValidationPlugin() ::
       Nil
 
     // we might need to register editing pipeline as well because of legacy behaviour.

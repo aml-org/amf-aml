@@ -5,11 +5,13 @@ import amf.client.remod.amfcore.plugins.validate.ValidationResult
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.resolution.pipelines.TransformationPipelineRunner
-import amf.core.services.{RuntimeValidator, ValidationOptions}
+import amf.core.services.{RuntimeValidator, ShaclValidationOptions}
 import amf.core.validation.core.ValidationProfile
 import amf.core.validation.{AMFValidationReport, EffectiveValidations, ShaclReportAdaptation}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectInstanceTransformationPipeline
+import amf.plugins.features.validation.PlatformValidator
+import amf.plugins.features.validation.shacl.FullShaclValidator
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -24,11 +26,10 @@ class AMLValidator(knownDialects: Seq[Dialect], constraints: Map[ProfileName, Va
         val pipelineRunner      = TransformationPipelineRunner(UnhandledErrorHandler)
         val resolvedModel       = pipelineRunner.run(dialectInstance, DialectInstanceTransformationPipeline())
         val validationsFromDeps = computeValidationProfilesOfDependencies(dialectInstance, knownDialects, constraints)
-
+        val validator           = new FullShaclValidator(PlatformValidator.instance(), new ShaclValidationOptions())
+        val finalValidations    = addValidations(validations, validationsFromDeps).effective.values.toSeq
         for {
-          shaclReport <- RuntimeValidator.shaclValidation(resolvedModel,
-                                                          addValidations(validations, validationsFromDeps),
-                                                          options = new ValidationOptions().withFullValidation())
+          shaclReport <- validator.validate(resolvedModel, finalValidations)
         } yield {
           val report = adaptToAmfReport(baseUnit, profile, shaclReport, validations)
           ValidationResult(resolvedModel, report)

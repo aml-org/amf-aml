@@ -17,8 +17,7 @@ import amf.core.validation.ShaclReportAdaptation
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
-
-import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
+import amf.plugins.document.vocabularies.AMLValidationPlugin
 import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
@@ -35,7 +34,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
     // Registering ourselves as the runtime validator
     RuntimeValidator.register(AMFValidatorPlugin)
     ExecutionLog.log("Register RDF framework")
-    platform.rdfFramework = Some(PlatformValidator.instance)
+    platform.rdfFramework = Some(PlatformValidator.instance())
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
 //    AMLPlugin.registry.registerDialect(PROFILE_DIALECT_URL, ValidationDialectText.text, executionContext) map { _ =>
 //      ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
@@ -96,7 +95,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
       val validationProfile = ParsedValidationProfile(encoded)
       val domainPlugin: Seq[AMFValidatePlugin] = getProfilePluginFor(validationProfile)
         .orElse(getProfilePluginFor(validationProfile.baseProfile.getOrElse(AmfProfile)))
-        .getOrElse(Seq(amlPlugin()))
+        .getOrElse(Seq(new AMLValidationPlugin()))
       AMFPluginsRegistry.registerValidationProfile(validationProfile)
       customValidationProfilesPlugins += (validationProfile.name.profile -> domainPlugin)
       validationProfile.name

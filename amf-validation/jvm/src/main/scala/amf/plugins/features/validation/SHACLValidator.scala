@@ -4,7 +4,7 @@ import amf.AmfProfile
 import amf.core.benchmark.ExecutionLog
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfModel, RdfModelEmitter}
-import amf.core.services.ValidationOptions
+import amf.core.services.ShaclValidationOptions
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
@@ -62,7 +62,7 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
     functionCode = Some(code)
   }
 
-  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
+  override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ShaclValidationOptions)(
       implicit executionContext: ExecutionContext): Future[String] =
     Future {
       ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
@@ -86,9 +86,9 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
       output
     }
 
-  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ValidationOptions)(
+  override def report(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ShaclValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationReport] =
-    validate(data, shapes, options: ValidationOptions).map(new JVMValidationReport(_))
+    validate(data, shapes, options: ShaclValidationOptions).map(new JVMValidationReport(_))
 
   override def shapes(shapes: Seq[ValidationSpecification], functionsUrl: String): RdfModel = {
     val shapesModel = new JenaRdfModel()
