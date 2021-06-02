@@ -1,5 +1,5 @@
 Model: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/unknown-map-key-property/dialect.yaml
-Profile: Cloudformation 1.0
+Profile: 
 Conforms? false
 Number of results: 1
 
