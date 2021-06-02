@@ -2,8 +2,8 @@ package amf.plugins.features.validation
 
 import amf.AmfProfile
 import amf.client.execution.BaseExecutionEnvironment
+import amf.client.remod.amfcore.config.RenderOptions
 import amf.core.benchmark.ExecutionLog
-import amf.core.emitter.RenderOptions
 import amf.core.model.document.BaseUnit
 import amf.core.rdf.{RdfModel, RdfModelEmitter}
 import amf.core.services.ValidationOptions
@@ -50,8 +50,8 @@ class SHACLValidator extends amf.core.validation.core.SHACLValidator with Platfo
       val validator = js.Dynamic.newInstance(nativeShacl)()
       loadLibrary(validator)
 
-      val dataModel   = platform.rdfFramework.get.syntaxToRdfModel(dataMediaType, data).get
-      val shapesModel = platform.rdfFramework.get.syntaxToRdfModel(shapesMediaType, shapes).get
+      val dataModel   = platform.rdfFramework.get.syntaxToRdfModel(dataMediaType, data)
+      val shapesModel = platform.rdfFramework.get.syntaxToRdfModel(shapesMediaType, shapes)
 
       validator.validateFromModels(
           dataModel.model.native().asInstanceOf[js.Dynamic],

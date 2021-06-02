@@ -1,12 +1,11 @@
 package amf.testing.common.utils
 
-import amf.ProfileName
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.environment.AMLConfiguration
+import amf.{ProfileName, ProfileNames}
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.AMFValidationReport
-import amf.core.{AMFCompiler, CompilerContextBuilder}
-import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.features.validation.AMFValidatorPlugin
 import org.scalatest.AsyncFunSuite
 
@@ -21,14 +20,23 @@ trait DialectInstanceValidation
 
   def basePath: String
 
-  protected def validation(dialect: String, instance: String, path: String = basePath): Future[AMFValidationReport] = {
-    withDialect(s"$path/$dialect") { dialect =>
-      for {
-        instance <- parse(s"$path/$instance", platform, None)
-        report   <- RuntimeValidator(instance, ProfileName(dialect.nameAndVersion()))
-      } yield {
-        report
+  protected def validation(dialect: String,
+                           instance: String,
+                           path: String = basePath,
+                           config: AMLConfiguration = AMLConfiguration.predefined()): Future[AMFValidationReport] = {
+    val dialectPath  = s"$path/$dialect"
+    val instancePath = s"$path/$instance"
+    val client       = config.createClient()
+    for {
+      dialectResult  <- client.parseDialect(s"$path/$dialect")
+      nextConfig     <- config.withDialect(dialectPath)
+      instanceResult <- nextConfig.createClient().parseDialectInstance(instancePath)
+      report <- {
+        if (!instanceResult.report.conforms) Future.successful(instanceResult.report)
+        else nextConfig.createClient().validate(instanceResult.dialectInstance, dialectResult.dialect.profileName.get)
       }
+    } yield {
+      report
     }
   }
 
@@ -37,16 +45,13 @@ trait DialectInstanceValidation
                                             profile: ProfileName,
                                             name: String,
                                             directory: String = basePath): Future[AMFValidationReport] = {
-    val ctx =
-      new CompilerContextBuilder(s"$directory/$dialect", platform, eh = DefaultParserErrorHandler.withRun()).build()
-    withDialect(s"$directory/$dialect") { _ =>
+
+    withDialect(s"$directory/$dialect") { (_, config) =>
       for {
-        _ <- {
-          AMFValidatorPlugin.loadValidationProfile(s"$directory/${profile.profile}",
-                                                   errorHandler = ctx.parserContext.eh)
-        }
-        instance <- parse(s"$directory/$instance", platform, None)
-        report   <- RuntimeValidator(instance, ProfileName(name))
+        customValConfig <- config.withCustomValidationsEnabled
+        finalConfig     <- customValConfig.withCustomProfile(s"$directory/${profile.profile}")
+        instance        <- finalConfig.createClient().parseDialectInstance(s"$directory/$instance").map(_.dialectInstance)
+        report          <- finalConfig.createClient().validate(instance, ProfileName(name))
       } yield {
         report
       }

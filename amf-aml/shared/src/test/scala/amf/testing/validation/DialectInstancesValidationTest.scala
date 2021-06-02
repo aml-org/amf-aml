@@ -1,6 +1,7 @@
 package amf.testing.validation
 
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.client.environment.AMLConfiguration
+
 import amf.testing.common.utils.{
   DefaultAMLInitialization,
   DialectInstanceValidation,
@@ -22,8 +23,9 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation with Defa
   def validate(dialect: String,
                instance: String,
                golden: Option[String] = None,
-               path: String = basePath): Future[Assertion] = {
-    validation(dialect, instance, path) flatMap {
+               path: String = basePath,
+               config: AMLConfiguration = AMLConfiguration.predefined()): Future[Assertion] = {
+    validation(dialect, instance, path, config) flatMap {
       reportComparator.assertReport(_, golden.map(g => s"$path/$g"))
     }
   }
@@ -94,8 +96,8 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation with Defa
 
   test("validation dialect 8 example 1 correct") {
     for {
-      _         <- AMLPlugin.registry.registerDialect(s"$basePath/dialect8b.yaml")
-      assertion <- validate("dialect8a.yaml", "instance8_correct1.yaml")
+      nextConfig <- AMLConfiguration.predefined().withDialect(s"$basePath/dialect8b.yaml")
+      assertion  <- validate("dialect8a.yaml", "instance8_correct1.yaml", config = nextConfig)
     } yield {
       assertion
     }
@@ -104,8 +106,11 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation with Defa
 
   test("validation dialect 8 example 1 incorrect") {
     for {
-      _         <- AMLPlugin.registry.registerDialect(s"$basePath/dialect8b.yaml")
-      assertion <- validate("dialect8a.yaml", "instance8_incorrect1.yaml", Some("instance8_incorrect1.report.json"))
+      nextConfig <- AMLConfiguration.predefined().withDialect(s"$basePath/dialect8b.yaml")
+      assertion <- validate("dialect8a.yaml",
+                            "instance8_incorrect1.yaml",
+                            Some("instance8_incorrect1.report.json"),
+                            config = nextConfig)
     } yield {
       assertion
     }

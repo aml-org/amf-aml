@@ -1,5 +1,5 @@
 package amf.plugins.document.vocabularies.parser.vocabularies
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.parser.{Declarations, EmptyFutureDeclarations, FutureDeclarations}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.document.Vocabulary
@@ -12,7 +12,7 @@ class VocabularyDeclarations(var externals: Map[String, External] = Map(),
                              var propertyTerms: Map[String, PropertyTerm] = Map(),
                              var usedVocabs: Map[String, Vocabulary] = Map(),
                              libs: Map[String, VocabularyDeclarations] = Map(),
-                             errorHandler: ErrorHandler,
+                             errorHandler: AMFErrorHandler,
                              futureDeclarations: FutureDeclarations)
     extends Declarations(libs, Map(), Map(), errorHandler, futureDeclarations) {
 

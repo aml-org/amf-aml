@@ -8,6 +8,7 @@ import amf.core.model.StrField
 import amf.core.model.domain.DomainElement
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.metamodel.domain.AnnotationMappingModel
 import amf.plugins.document.vocabularies.metamodel.domain.AnnotationMappingModel.Domain
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel.NodePropertyMapping
@@ -21,7 +22,7 @@ import scala.collection.mutable.ArrayBuffer
 case class AnnotationMappingsEntryEmitter(dialect: Dialect,
                                           annotationMappings: Seq[AnnotationMapping],
                                           aliases: Map[String, (String, String)],
-                                          ordering: SpecOrdering)
+                                          ordering: SpecOrdering)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasesConsumer
     with PosExtractor
@@ -44,7 +45,7 @@ case class AnnotationMappingsEntryEmitter(dialect: Dialect,
 case class AnnotationMappingEmitter(dialect: Dialect,
                                     element: AnnotationMapping,
                                     aliases: Map[String, (String, String)],
-                                    ordering: SpecOrdering)
+                                    ordering: SpecOrdering)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasEmitter {
   override def emit(b: EntryBuilder): Unit = {

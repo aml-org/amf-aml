@@ -2,26 +2,26 @@ package amf.plugins.features.validation.custom
 
 import amf._
 import amf.client.execution.BaseExecutionEnvironment
-import amf.client.parse.DefaultParserErrorHandler
 import amf.client.plugins.{AMFFeaturePlugin, AMFPlugin}
+import amf.client.remod.AMFGraphConfiguration
 import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
+import amf.core.AMFCompiler
 import amf.core.benchmark.ExecutionLog
-import amf.core.errorhandling.ErrorHandler
+import amf.core.errorhandling.AMFErrorHandler
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain.DomainElement
-import amf.core.parser.errorhandler.AmfParserErrorHandler
 import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote._
-import amf.core.services.{RuntimeCompiler, RuntimeValidator}
+import amf.core.services.RuntimeValidator
 import amf.core.validation.ShaclReportAdaptation
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
-import amf.plugins.document.vocabularies.AMLPlugin
+
 import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
+import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
-import amf.plugins.features.validation.custom.model.{ParsedValidationProfile, ValidationDialectText}
 import amf.plugins.features.validation.{AMFValidator, PlatformValidator}
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
@@ -37,42 +37,51 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
     ExecutionLog.log("Register RDF framework")
     platform.rdfFramework = Some(PlatformValidator.instance)
     ExecutionLog.log(s"AMFValidatorPlugin#init: registering validation dialect")
-    AMLPlugin.registry.registerDialect(PROFILE_DIALECT_URL, ValidationDialectText.text, executionContext) map { _ =>
-      ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
-      this
-    }
+//    AMLPlugin.registry.registerDialect(PROFILE_DIALECT_URL, ValidationDialectText.text, executionContext) map { _ =>
+//      ExecutionLog.log(s"AMFValidatorPlugin#init: validation dialect registered")
+//      this
+//    }
+    Future.successful(new AMFPlugin {
+      override val ID: String = "dummy"
+
+      override def dependencies(): Seq[AMFPlugin] = Seq.empty
+
+      override def init()(implicit executionContext: ExecutionContext): Future[AMFPlugin] = Future.successful { this }
+    })
   }
 
-  override def dependencies() = Seq(SYamlSyntaxPlugin, AMLPlugin, AMFGraphPlugin)
+  override def dependencies() = Seq(SYamlSyntaxPlugin, AMFGraphPlugin)
 
   override def loadValidationProfile(
       validationProfilePath: String,
       env: Environment = Environment(),
-      errorHandler: ErrorHandler,
+      errorHandler: AMFErrorHandler,
       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[ProfileName] = {
 
     implicit val executionContext: ExecutionContext = exec.executionContext
 
-    parseProfile(validationProfilePath, env, errorHandler)
+    val conf = AMFPluginsRegistry
+      .obtainStaticConfig()
+      .withErrorHandlerProvider(() => errorHandler)
+      .withResourceLoaders(env.loaders.toList)
+    val finalConf = env.resolver.fold(conf)(e => conf.withUnitCache(e))
+
+    parseProfile(validationProfilePath, finalConf)
       .map { getEncodesOrExit }
       .map { loadProfilesFromDialectOrExit }
   }
 
-  private def parseProfile(validationProfilePath: String, env: Environment, errorHandler: ErrorHandler)(
+  private def parseProfile(validationProfilePath: String, amfConf: AMFGraphConfiguration)(
       implicit executionContext: ExecutionContext) = {
-    RuntimeCompiler(
+
+    AMFCompiler(
         validationProfilePath,
-        Some("application/yaml"),
-        Some(AMLPlugin.ID),
+        Some("application/aml"),
         Context(platform),
         cache = Cache(),
-        env = env,
-        errorHandler = errorHandlerToParser(errorHandler)
-    )
+        amfConf.parseConfiguration
+    ).build()
   }
-
-  private def errorHandlerToParser(eh: ErrorHandler): AmfParserErrorHandler =
-    DefaultParserErrorHandler.fromErrorHandler(eh)
 
   private val PROFILE_DIALECT_URL = "http://a.ml/dialects/profile.raml"
 

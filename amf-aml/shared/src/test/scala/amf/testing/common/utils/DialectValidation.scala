@@ -1,12 +1,13 @@
 package amf.testing.common.utils
 
-import amf.ProfileName
+import amf.{ProfileName, ProfileNames}
 import amf.client.environment.AMLConfiguration
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.ParseConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.{AMFCompiler, CompilerContextBuilder}
-import amf.plugins.document.vocabularies.AMLPlugin
 import amf.plugins.document.vocabularies.model.document.Dialect
 import org.scalatest.{Assertion, AsyncFunSuite}
 
@@ -21,23 +22,12 @@ trait DialectValidation extends AsyncFunSuite with PlatformSecrets with DefaultA
                          goldenReport: Option[String],
                          jsonldReport: Boolean = true,
                          multiPlatform: Boolean = true): Future[Assertion] = {
+
+    val eh            = DefaultErrorHandler()
+    val configuration = AMLConfiguration.forEH(eh)
+    val client        = configuration.createClient()
     for {
-      dialect <- {
-        new AMFCompiler(
-            new CompilerContextBuilder("file://" + path + dialectPath,
-                                       platform,
-                                       eh = DefaultParserErrorHandler.withRun())
-              .build(),
-            Some("application/yaml"),
-            Some(AMLPlugin.ID)
-        ).build()
-      }
-      report <- {
-        RuntimeValidator(
-            dialect,
-            ProfileName(dialect.asInstanceOf[Dialect].nameAndVersion())
-        )
-      }
+      report    <- client.parseDialect("file://" + path + dialectPath).map(_.report)
       assertion <- reportComparator.assertReport(report, goldenReport.map(g => s"$path/$g"), jsonldReport)
     } yield {
       assertion

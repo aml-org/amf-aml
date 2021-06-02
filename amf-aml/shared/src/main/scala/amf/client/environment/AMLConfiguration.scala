@@ -1,8 +1,7 @@
 package amf.client.environment
 
-import amf.client.environment.AMLConfiguration.platform
+import amf.client.environment.AMLConfiguration.{platform, predefined}
 import amf.client.exported.config.AMFLogger
-import amf.client.parse.DefaultParserErrorHandler
 import amf.client.remod.amfcore.config._
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.amfcore.registry.AMFRegistry
@@ -12,21 +11,29 @@ import amf.client.remod.rendering.{
   AMLDialectRenderingPlugin,
   AMLVocabularyRenderingPlugin
 }
-import amf.client.remod.{AMFGraphConfiguration, AMFResult, ErrorHandlerProvider}
-import amf.core.errorhandling.UnhandledErrorHandler
+import amf.client.remod.{AMFGraphConfiguration, AMFParser, AMFResult, ErrorHandlerProvider}
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
+import amf.core.metamodel.ModelDefaultBuilder
 import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.ValidationProfile
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.internal.reference.UnitCache
 import amf.internal.resource.ResourceLoader
-import amf.plugins.document.vocabularies.AMLPlugin
+import amf.plugins.document.vocabularies.{AMLValidationLegacyPlugin, DialectRegister}
+import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
+import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
+import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
+import amf.plugins.document.vocabularies.entities.AMLEntities
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance}
+import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 import amf.plugins.document.vocabularies.resolution.pipelines.{
   DefaultAMLTransformationPipeline,
   DialectTransformationPipeline
 }
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
+import amf.plugins.domain.VocabulariesRegister
+import amf.validation.ValidationDialectText
 import org.mulesoft.common.collections.FilterType
 
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -49,6 +56,8 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
     extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
+
+  private[amf] val PROFILE_DIALECT_URL = "http://a.ml/dialects/profile.raml"
 
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,
@@ -102,6 +111,9 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withLogger(logger: AMFLogger): AMLConfiguration = super._withLogger(logger)
 
+  override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMLConfiguration =
+    super._withEntities(entities)
+
   def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
   def withDialect(path: String): Future[AMLConfiguration] = {
@@ -111,32 +123,46 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     }
   }
 
-  def withDialect(dialect: Dialect): AMLConfiguration = {
-    AMLPlugin.registry.register(dialect)
-    this
+  def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
+
+  def withCustomValidationsEnabled: Future[AMLConfiguration] = {
+    AMFParser.parseContent(ValidationDialectText.text, PROFILE_DIALECT_URL, None, this) map {
+      case AMFResult(d: Dialect, _) => withDialect(d)
+      case _                        => this
+    }
   }
 
   def withCustomProfile(instancePath: String): Future[AMLConfiguration] = {
-    createClient().parse(instancePath: String).map {
-      case AMFResult(i: DialectInstance, _) => throw new UnsupportedOperationException() // SET REGISTRY PROFILE
-      case _                                => this
+    // TODO: should check that ValidationProfile dialect is defined first?
+    AMFParser.parse(instancePath, this).map {
+      case AMFResult(parsed: DialectInstance, _) =>
+        if (parsed.definedBy().is(PROFILE_DIALECT_URL)) {
+          val profile = ParsedValidationProfile(parsed.encodes.asInstanceOf[DialectDomainElement])
+          copy(registry = this.registry.withConstraints(profile))
+        } else {
+          // TODO: throw exception?
+          this
+        }
+      case _ => this
     }
   }
 
   // TODO: what about nested $dialect references?
-  def forInstance(url: String): Future[AMLConfiguration] = {
+  def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
+    val env       = predefined()
     val collector = new DialectReferencesCollector
     val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
-    collector.collectFrom(url, None).map { dialects =>
+    collector.collectFrom(url, mediaType, this).map { dialects =>
       dialects
         .map { d =>
           runner.run(d, DialectTransformationPipeline())
           d
         }
         .foldLeft(this) { (env, dialect) =>
+          val finder                                       = DefaultNodeMappableFinder(this).addDialect(dialect)
           val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
           val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
-          val profile                                      = new AMFDialectValidations(dialect).profile()
+          val profile                                      = new AMFDialectValidations(dialect)(finder).profile()
           env
             .withPlugins(List(parsing, rendering))
             .withValidationProfile(profile)
@@ -150,30 +176,41 @@ object AMLConfiguration extends PlatformSecrets {
   /** Predefined environment to deal with AML documents based on AMFGraphConfiguration {@link amf.client.remod.AMFGraphConfiguration.predefined predefined()} method */
   def predefined(): AMLConfiguration = {
     val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
+    VocabulariesRegister.register() // TODO ARM remove when APIMF-3000 is done
 
     val predefinedPlugins = new AMLDialectParsingPlugin() ::
       new AMLVocabularyParsingPlugin() ::
       new AMLDialectRenderingPlugin() ::
       new AMLVocabularyRenderingPlugin() ::
+      AMLValidationLegacyPlugin.amlPlugin() ::
       Nil
 
     // we might need to register editing pipeline as well because of legacy behaviour.
     new AMLConfiguration(
         predefinedGraphConfiguration.resolvers,
         predefinedGraphConfiguration.errorHandlerProvider,
-        predefinedGraphConfiguration.registry,
+        predefinedGraphConfiguration.registry
+          .withEntities(AMLEntities.entities)
+          .withAnnotations(AMLSerializableAnnotations.annotations),
         predefinedGraphConfiguration.logger,
         predefinedGraphConfiguration.listeners,
         predefinedGraphConfiguration.options
     ).withPlugins(predefinedPlugins)
       .withTransformationPipeline(DefaultAMLTransformationPipeline())
   }
+  //TODO ARM remove
+  private[amf] def forEH(eh: AMFErrorHandler) = {
+    predefined().withErrorHandlerProvider(() => eh)
+  }
 }
 
 class DialectReferencesCollector {
-  def collectFrom(url: String, mediaType: Option[String] = None): Future[Seq[Dialect]] = {
-    val ctx      = new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
-    val compiler = new AMFCompiler(ctx, mediaType, None)
+  def collectFrom(url: String,
+                  mediaType: Option[String] = None,
+                  amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
+    // todo
+    val ctx      = new CompilerContextBuilder(url, platform, amfConfig.parseConfiguration).build()
+    val compiler = new AMFCompiler(ctx, mediaType)
     for {
       content                <- compiler.fetchContent()
       eitherContentOrAst     <- Future.successful(compiler.parseSyntax(content))

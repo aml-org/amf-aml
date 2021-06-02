@@ -8,26 +8,29 @@ import amf.core.validation.SeverityLevels
 import amf.core.validation.core.{PropertyConstraint, SeverityMapping, ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.Namespace
 import amf.plugins.document.graph.JsonLdKeywords
-import amf.plugins.document.vocabularies.emitters.instances.AmlEmittersHelper
+import amf.plugins.document.vocabularies.emitters.instances.{AmlEmittersHelper, NodeMappableFinder}
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
-import amf.plugins.features.validation.Validations
+import amf.plugins.document.vocabularies.validation.AMFDialectValidations.staticValidations
+import amf.plugins.features.validation.{CoreValidations, Validations}
+import amf.validation.DialectValidations
 import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class AMFDialectValidations(val dialect: Dialect) extends AmlEmittersHelper {
+class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinder: NodeMappableFinder)
+    extends AmlEmittersHelper {
 
   def profile(): ValidationProfile = {
     val parsedValidations = validations()
-    val severityMapping = SeverityMapping()
-      .set(parsedValidations.map(_.name), SeverityLevels.VIOLATION)
+    val severityMapping   = SeverityMapping().set(parsedValidations.map(_.name), SeverityLevels.VIOLATION)
 
+    // TODO: dialect validation profile does not take into account severities of static validations
     ValidationProfile(
         name = ProfileName(dialect.nameAndVersion()),
         baseProfile = None,
-        validations = parsedValidations ++ Validations.validations,
+        validations = parsedValidations ++ staticValidations,
         severities = severityMapping
     )
   }
@@ -349,4 +352,11 @@ class AMFDialectValidations(val dialect: Dialect) extends AmlEmittersHelper {
       case None     => throw new Exception("Cannot generate validation for dialect node without ID")
     }
 
+}
+
+object AMFDialectValidations {
+  type ConstraintSeverityOverrides = Map[String, Map[ProfileName, String]]
+
+  val staticValidations: Seq[ValidationSpecification] = CoreValidations.validations ++ DialectValidations.validations
+  val levels: ConstraintSeverityOverrides             = CoreValidations.levels ++ DialectValidations.levels
 }

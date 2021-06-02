@@ -1,11 +1,9 @@
 package amf.plugins.features.validation
 
 import amf._
-import amf.client.execution.BaseExecutionEnvironment
 import amf.client.plugins.AMFValidationPlugin
-import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions}
+import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationConfiguration, ValidationOptions}
 import amf.core.annotations.SourceVendor
-import amf.core.errorhandling.AmfStaticReportBuilder
 import amf.core.model.document.{BaseUnit, Document, Fragment, Module}
 import amf.core.rdf.RdfModel
 import amf.core.registries.AMFPluginsRegistry
@@ -14,8 +12,7 @@ import amf.core.services.RuntimeValidator.CustomShaclFunctions
 import amf.core.services.{RuntimeValidator, ValidationOptions => LegacyValidationOptions}
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.core.{ValidationProfile, ValidationReport, ValidationSpecification}
-import amf.core.validation.{AMFValidationReport, EffectiveValidations}
-import amf.internal.environment.Environment
+import amf.core.validation.{AMFValidationReport, EffectiveValidations, FailFastValidationRunner}
 import amf.plugins.features.validation.emitters.ShaclJsonLdShapeGraphEmitter
 import amf.plugins.features.validation.shacl.FullShaclValidator
 import amf.plugins.features.validation.shacl.custom.CustomShaclValidator
@@ -69,9 +66,8 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
       validations: EffectiveValidations,
       customFunctions: CustomShaclFunctions,
       options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] = {
-    val validationSet = validations.effective.values.toSet
-    if (options.isPartialValidation) new CustomShaclValidator(model, customFunctions, options).run(validationSet)
-    else new FullShaclValidator().validate(model, validationSet.toSeq, options)
+
+    ShaclValidationRunner.validate(model, validations, customFunctions, options)
   }
 
   private def profileForUnit(unit: BaseUnit, given: ProfileName): ProfileName = {
@@ -93,33 +89,20 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
   }
 
   def validate(model: BaseUnit,
-               given: ProfileName,
-               messageStyle: MessageStyle,
-               env: Environment,
-               resolved: Boolean = false,
-               exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[AMFValidationReport] = {
+               givenProfile: ProfileName,
+               resolved: Boolean,
+               config: ValidationConfiguration): Future[AMFValidationReport] = {
 
-    val profileName = profileForUnit(model, given)
+    implicit val executionContext: ExecutionContext = config.executionContext
+
+    val profileName = profileForUnit(model, givenProfile)
     // TODO: we shouldn't compute validations if there are parser errors. This will be removed after ErrorHandler is returned in parsing.
-    val report = new AmfStaticReportBuilder(model, profileName).buildFromStatic()
-
-    if (!report.conforms) Future.successful(report)
-    else validate(model, profileName, env, resolved, exec)
-  }
-
-  private def validate(model: BaseUnit,
-                       profileName: ProfileName,
-                       env: Environment,
-                       resolved: Boolean,
-                       exec: BaseExecutionEnvironment): Future[AMFValidationReport] = {
-
-    implicit val executionContext: ExecutionContext = exec.executionContext
 
     profilesPlugins
       .get(profileName.profile)
       .map { plugins =>
         val validations = computeValidations(profileName)
-        val options     = new ValidationOptions(profileName, env, validations)
+        val options     = new ValidationOptions(profileName, validations, config)
         if (resolved) model.resolved = true
         FailFastValidationRunner(plugins, options).run(model)
 
@@ -157,5 +140,17 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
   def emitShapesGraph(profileName: ProfileName): String = {
     val effectiveValidations = computeValidations(profileName)
     shapesGraph(effectiveValidations, profileName)
+  }
+}
+
+object ShaclValidationRunner {
+  def validate(
+      model: BaseUnit,
+      validations: EffectiveValidations,
+      customFunctions: CustomShaclFunctions,
+      options: LegacyValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationReport] = {
+    val validationSet = validations.effective.values.toSet
+    if (options.isPartialValidation) new CustomShaclValidator(model, customFunctions, options).run(validationSet)
+    else new FullShaclValidator().validate(model, validationSet.toSeq, options)
   }
 }

@@ -2,7 +2,9 @@ package amf.testing.validation
 
 import amf.AmlProfile
 import amf.client.environment.AMLConfiguration
-import amf.client.parse.DefaultParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
+import amf.client.remod.ParseConfiguration
+import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.io.FileAssertionTest
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
@@ -35,23 +37,16 @@ class VocabularyDefinitionValidationTest
     validate("vocabulary.yaml", Some("validation.jsonld"), "missing-property-term")
   }
 
-  private def compilerContext(url: String) =
-    new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
+  private def compilerContext(url: String, amfConfig: AMLConfiguration) =
+    new CompilerContextBuilder(url, platform, amfConfig.parseConfiguration).build()
 
   protected def validate(vocabulary: String,
                          goldenReport: Option[String] = None,
                          path: String): Future[scalatest.Assertion] = {
-
-    val vocabularyContext = compilerContext(s"file://$basePath/$path/$vocabulary")
+    val eh            = DefaultErrorHandler()
+    val configuration = AMLConfiguration.forEH(eh)
     val report = for {
-      vocabulary <- {
-        new AMFCompiler(
-            vocabularyContext,
-            Some("application/yaml"),
-            None
-        ).build()
-      }
-      report <- RuntimeValidator(vocabulary, AmlProfile)
+      report <- configuration.createClient().parseVocabulary(s"file://$basePath/$path/$vocabulary").map(_.report)
     } yield {
       report
     }

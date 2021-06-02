@@ -6,16 +6,18 @@ import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.model.domain.{AmfScalar, DomainElement, Linkable}
 import amf.core.parser.Position
 import amf.core.parser.Position.ZERO
+import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.metamodel.domain.{NodeMappableModel, UnionNodeMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment}
 import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 
-case class NodeMappingEmitter(dialect: Dialect,
-                              nodeMappable: NodeMappable[_ <: NodeMappableModel],
-                              ordering: SpecOrdering,
-                              aliases: Map[String, (String, String)])
+case class NodeMappingEmitter(
+    dialect: Dialect,
+    nodeMappable: NodeMappable[_ <: NodeMappableModel],
+    ordering: SpecOrdering,
+    aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with DiscriminatorEmitter
     with AliasesConsumer

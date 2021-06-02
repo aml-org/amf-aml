@@ -25,9 +25,9 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
 
   override def withRenderOptions(renderOptions: RenderOptions): AMLConfiguration =
     _internal.withRenderOptions(renderOptions)
-
-  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMLConfiguration =
-    _internal.withErrorHandlerProvider(() => provider.errorHandler())
+  //TODO FIX EH
+//  override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMLConfiguration =
+//    _internal.withErrorHandlerProvider(() => provider.errorHandler())
 
   override def withResourceLoader(rl: ResourceLoader): AMLConfiguration =
     _internal.withResourceLoader(ResourceLoaderMatcher.asInternal(rl))
@@ -50,6 +50,8 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
     * This is currently limited to: registry plugins, registry transformation pipelines.
     */
   def merge(other: AMLConfiguration): AMLConfiguration = _internal.merge(other)
+
+  def withCustomValidationsEnabled: ClientFuture[AMLConfiguration] = _internal.withCustomValidationsEnabled.asClient
 
   def withDialect(path: String): ClientFuture[AMLConfiguration] = _internal.withDialect(path).asClient
 

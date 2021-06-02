@@ -1,12 +1,11 @@
 package amf.testing.common.cycling
 
-import amf.client.remod.amfcore.config.ParsingOptionsConverter
+import amf.client.environment.AMLConfiguration
+import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
+import amf.client.remod.amfcore.config.{ParsingOptionsConverter, RenderOptions}
 import amf.core.client.ParsingOptions
-import amf.core.emitter.RenderOptions
 import amf.core.io.FileAssertionTest
 import amf.core.model.document.BaseUnit
-import amf.core.parser.errorhandler.{ParserErrorHandler, UnhandledParserErrorHandler}
-import amf.core.registries.AMFPluginsRegistry
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Hint, Vendor}
 import amf.core.{AMFCompiler, CompilerContextBuilder}
@@ -33,40 +32,23 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   }
 
   /** Method to parse unit. Override if necessary. */
-  def build(config: CycleConfig,
-            eh: Option[ParserErrorHandler],
-            useAmfJsonldSerialisation: Boolean): Future[BaseUnit] = {
-
-    var options =
-      if (!useAmfJsonldSerialisation) ParsingOptions().withoutAmfJsonLdSerialization
-      else ParsingOptions().withAmfJsonLdSerialization
-
-    options = options.withBaseUnitUrl("file://" + config.goldenPath)
+  def build(config: CycleConfig, amlConfig: AMLConfiguration): Future[BaseUnit] = {
 
     val environment =
-      AMFPluginsRegistry.obtainStaticConfig().withParsingOptions(ParsingOptionsConverter.fromLegacy(options))
+      amlConfig.withParsingOptions(amlConfig.options.parsingOptions.withBaseUnitUrl("file://" + config.goldenPath))
+
     val context =
-      new CompilerContextBuilder(s"file://${config.sourcePath}", platform, eh.getOrElse(UnhandledParserErrorHandler))
-        .withBaseEnvironment(environment)
+      new CompilerContextBuilder(s"file://${config.sourcePath}", platform, environment.parseConfiguration)
         .build()
 
     val maybeSyntax = config.syntax.map(_.toString)
-    val maybeVendor = Some(config.hint.vendor.name)
-    new AMFCompiler(context, mediaType = maybeSyntax, vendor = maybeVendor).build()
+    val maybeVendor = Some(config.hint.vendor.mediaType)
+    new AMFCompiler(context, mediaType = maybeVendor).build()
   }
 
   /** Method to render parsed unit. Override if necessary. */
-  def render(unit: BaseUnit, config: CycleConfig, useAmfJsonldSerialization: Boolean): Future[String] = {
-    val target  = config.target
-    var options = RenderOptions().withSourceMaps.withPrettyPrint
-    options =
-      if (!useAmfJsonldSerialization) options.withoutAmfJsonLdSerialization else options.withAmfJsonLdSerialization
-    new AMFRenderer(unit, target, options, config.syntax).renderToString
-  }
-
-  /** Method to render parsed unit. Override if necessary. */
-  def render(unit: BaseUnit, config: CycleConfig, options: RenderOptions): Future[String] = {
+  def render(unit: BaseUnit, config: CycleConfig, graphConfig: AMFGraphConfiguration): Future[String] = {
     val target = config.target
-    new AMFRenderer(unit, target, options, config.syntax).renderToString
+    new AMFRenderer(unit, target, graphConfig, config.syntax).renderToString
   }
 }

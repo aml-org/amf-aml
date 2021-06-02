@@ -1,9 +1,16 @@
 package amf.plugins.document.vocabularies
 
 import amf.client.plugins.AMFValidationPlugin
-import amf.client.remod.amfcore.plugins.validate.{AMFValidatePlugin, ValidationOptions, ValidationResult}
+import amf.client.remod.amfcore.plugins.validate.{
+  AMFValidatePlugin,
+  ValidationConfiguration,
+  ValidationOptions,
+  ValidationResult
+}
 import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
+import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.core.model.document.BaseUnit
+import amf.core.remote.Aml
 import amf.core.validation.AMFValidationReport
 import amf.plugins.document.vocabularies.model.document.DialectInstanceUnit
 
@@ -13,17 +20,25 @@ object AMLValidationLegacyPlugin {
   def amlPlugin(): AMLValidationLegacyPlugin = {
     def legacyApplies = (unit: BaseUnit) => unit.isInstanceOf[DialectInstanceUnit]
 
-    AMLValidationLegacyPlugin(AMLPlugin(), legacyApplies)
+    AMLValidationLegacyPlugin(legacyApplies)
   }
 }
 
-case class AMLValidationLegacyPlugin(plugin: AMLPlugin, legacyApplies: BaseUnit => Boolean) extends AMFValidatePlugin{
+case class AMLValidationLegacyPlugin(legacyApplies: BaseUnit => Boolean) extends AMFValidatePlugin {
 
-  override def validate(unit: BaseUnit, options: ValidationOptions)(implicit executionContext: ExecutionContext): Future[ValidationResult] = {
-    new AMLValidator(plugin.registry).validate(unit, options.profileName, options.validations)
+  override def validate(unit: BaseUnit, options: ValidationOptions)(
+      implicit executionContext: ExecutionContext): Future[ValidationResult] = {
+    val dialects = knownDialects(options)
+    new AMLValidator(dialects, options.config.constraints)
+      .validate(unit, options.profile, options.effectiveValidations)
   }
 
-  override val id: String = plugin.ID
+  private def knownDialects(options: ValidationOptions) =
+    options.config.amfConfig.registry.plugins.parsePlugins.collect {
+      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
+    }
+
+  override val id: String = Aml.name
 
   override def applies(element: BaseUnit): Boolean = legacyApplies(element)
 
