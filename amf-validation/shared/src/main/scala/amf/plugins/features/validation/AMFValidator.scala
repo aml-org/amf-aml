@@ -99,7 +99,7 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
   }
 
   protected def profileNotFoundWarningReport(model: BaseUnit, profileName: ProfileName): AMFValidationReport = {
-    AMFValidationReport(conforms = true, model.location().getOrElse(model.id), profileName, Seq())
+    AMFValidationReport(model.location().getOrElse(model.id), profileName, Seq())
   }
 
   /**

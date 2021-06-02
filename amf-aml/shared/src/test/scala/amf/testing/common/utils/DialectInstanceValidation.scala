@@ -32,7 +32,7 @@ trait DialectInstanceValidation
       nextConfig     <- config.withDialect(dialectPath)
       instanceResult <- nextConfig.createClient().parseDialectInstance(instancePath)
       report <- {
-        if (!instanceResult.report.conforms) Future.successful(instanceResult.report)
+        if (!instanceResult.conforms) Future.successful(AMFValidationReport.unknownProfile(instanceResult))
         else nextConfig.createClient().validate(instanceResult.dialectInstance, dialectResult.dialect.profileName.get)
       }
     } yield {

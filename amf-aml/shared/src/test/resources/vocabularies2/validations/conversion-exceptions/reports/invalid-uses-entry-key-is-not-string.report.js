@@ -1,5 +1,5 @@
 Model: file://amf-aml/shared/src/test/resources/vocabularies2/validations/conversion-exceptions/invalid-uses-entry-key-is-not-string.yaml
-Profile: Test 1.0
+Profile: 
 Conforms? false
 Number of results: 3
 

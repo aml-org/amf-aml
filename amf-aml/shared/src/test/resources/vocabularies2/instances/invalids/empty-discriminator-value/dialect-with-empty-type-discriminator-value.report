@@ -1,5 +1,5 @@
 Model: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/empty-discriminator-value/dialect-with-empty-type-discriminator-value.yaml
-Profile: Test Unions 1.0
+Profile: 
 Conforms? false
 Number of results: 3
 

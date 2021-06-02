@@ -28,7 +28,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
 
     build(config, amlConfig)
       .map(transformThroughRdf(_, config, amlConfig))
-      .flatMap {
+      .map {
         render(_, config, amlConfig)
       }
       .flatMap(writeTemporaryFile(golden))
