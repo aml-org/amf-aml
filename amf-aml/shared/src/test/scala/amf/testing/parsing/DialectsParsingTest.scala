@@ -340,7 +340,7 @@ trait DialectsParsingTest extends DialectTests {
         config.golden,
         VocabularyYamlHint,
         target = Amf,
-        renderOptions = Some(config.renderOptions.withCompactUris),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
         directory = s"$basePath/annotation-mappings-with-extra-facets"
     )
   }

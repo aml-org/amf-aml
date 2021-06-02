@@ -2,7 +2,7 @@ package amf.testing.common.cycling
 
 import amf.client.environment.AMLConfiguration
 import amf.core.emitter.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
+import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax
 import amf.core.remote.{Hint, Vendor}
@@ -28,8 +28,13 @@ trait BuildCycleTests extends BuildCycleTestCommon {
     cycle(source, source, hint, hint.vendor, directory)
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
-  def cycle(source: String, golden: String, hint: Hint, directory: String, eh: ParserErrorHandler): Future[Assertion] =
-    cycle(source, golden, hint, hint.vendor, directory, eh = Some(eh))
+  def cycle(source: String, golden: String, hint: Hint, directory: String, eh: AMFErrorHandler): Future[Assertion] =
+    cycle(source,
+          golden,
+          hint,
+          hint.vendor,
+          directory,
+          amlConfig = AMLConfiguration.predefined().withErrorHandlerProvider(() => eh))
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   final def cycle(source: String,

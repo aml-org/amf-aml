@@ -1,7 +1,7 @@
 package amf.testing.render
 
-import amf.client.parse.DefaultParserErrorHandler
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.client.parse.DefaultErrorHandler
+import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.remote.VocabularyYamlHint
 import amf.core.unsafe.PlatformSecrets
 import amf.testing.common.cycling.FunSuiteCycleTests
@@ -16,7 +16,7 @@ class ParsedDialectRenderTest extends FunSuiteCycleTests with DefaultAMLInitiali
           "dialect.cycled.yaml",
           VocabularyYamlHint,
           s"${basePath}annotation-mappings/",
-          UnhandledParserErrorHandler)
+          UnhandledErrorHandler)
   }
 
   if (platform.name == "jvm") {
@@ -26,7 +26,7 @@ class ParsedDialectRenderTest extends FunSuiteCycleTests with DefaultAMLInitiali
             "dialect.cycled.yaml",
             VocabularyYamlHint,
             s"${basePath}annotation-mappings-with-extra-facets/",
-            DefaultParserErrorHandler())
+            DefaultErrorHandler())
     }
   }
 }
