@@ -52,7 +52,7 @@ trait BuildCycleTests extends BuildCycleTestCommon {
 
     build(config, amlConfig)
       .map(transform(_, config, amlConfig))
-      .flatMap {
+      .map {
         render(_, config, amlConfig)
       }
       .flatMap(writeTemporaryFile(golden))

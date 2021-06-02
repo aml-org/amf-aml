@@ -71,8 +71,7 @@ trait DialectTests
     for {
       b <- parse(s"file://$directory/$source", platform, hint, amlConfig)
       t <- Future.successful { transform(b, amlConfig) }
-      s <- new AMFSerializer(t, target.mediaType, amlConfig.renderConfiguration)
-        .renderToString(scala.concurrent.ExecutionContext.Implicits.global)
+      s <- Future.successful { new AMFSerializer(t, target.mediaType, amlConfig.renderConfiguration).renderToString }
       d <- writeTemporaryFile(s"$directory/$golden")(s)
       r <- assertDifferences(d, s"$directory/$golden")
     } yield r

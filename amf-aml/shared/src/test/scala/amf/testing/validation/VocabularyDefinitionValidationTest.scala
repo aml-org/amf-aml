@@ -8,6 +8,7 @@ import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.io.FileAssertionTest
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
+import amf.core.validation.AMFValidationReport
 import amf.core.{AMFCompiler, CompilerContextBuilder}
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest
@@ -46,7 +47,10 @@ class VocabularyDefinitionValidationTest
     val eh            = DefaultErrorHandler()
     val configuration = AMLConfiguration.forEH(eh)
     val report = for {
-      report <- configuration.createClient().parseVocabulary(s"file://$basePath/$path/$vocabulary").map(_.report)
+      report <- configuration
+        .createClient()
+        .parseVocabulary(s"file://$basePath/$path/$vocabulary")
+        .map(AMFValidationReport.unknownProfile(_))
     } yield {
       report
     }

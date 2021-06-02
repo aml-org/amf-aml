@@ -47,7 +47,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   }
 
   /** Method to render parsed unit. Override if necessary. */
-  def render(unit: BaseUnit, config: CycleConfig, graphConfig: AMFGraphConfiguration): Future[String] = {
+  def render(unit: BaseUnit, config: CycleConfig, graphConfig: AMFGraphConfiguration): String = {
     val target = config.target
     new AMFRenderer(unit, target, graphConfig, config.syntax).renderToString
   }

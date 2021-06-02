@@ -15,13 +15,13 @@ import scala.concurrent.{ExecutionContext, Future}
 class AMFRenderer(unit: BaseUnit, vendor: Vendor, config: AMFGraphConfiguration, syntax: Option[Syntax]) {
 
   /** Print ast to string. */
-  def renderToString(implicit executionContext: ExecutionContext): Future[String] = render()
+  def renderToString(implicit executionContext: ExecutionContext): String = render()
 
   /** Print ast to file. */
   def renderToFile(remote: Platform, path: String)(implicit executionContext: ExecutionContext): Future[Unit] =
-    render().flatMap(s => remote.write(path, s))
+    remote.write(path, render())
 
-  private def render()(implicit executionContext: ExecutionContext): Future[String] = {
+  private def render()(implicit executionContext: ExecutionContext): String = {
     val mediaType = syntax.fold(vendor match {
       case Amf => "application/ld+json"
       case Aml => "application/yaml"
