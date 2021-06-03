@@ -7,7 +7,6 @@ import amf.core.benchmark.ExecutionLog
 import amf.core.errorhandling.AMFErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.internal.environment.Environment
-import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -24,7 +23,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with AMFValidator {
     Future.successful(this)
   }
 
-  override def dependencies() = Seq(SYamlSyntaxPlugin, AMFGraphPlugin)
+  override def dependencies() = Seq(SYamlSyntaxPlugin)
 
   override def loadValidationProfile(
       validationProfilePath: String,

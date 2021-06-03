@@ -16,7 +16,7 @@ import amf.core.services.RuntimeValidator
 import amf.core.validation.ShaclReportAdaptation
 import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
-import amf.plugins.document.graph.AMFGraphPlugin
+
 import amf.plugins.document.vocabularies.AMLValidationPlugin
 import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.model.document.DialectInstance
@@ -49,7 +49,7 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
     })
   }
 
-  override def dependencies() = Seq(SYamlSyntaxPlugin, AMFGraphPlugin)
+  override def dependencies() = Seq(SYamlSyntaxPlugin)
 
   override def loadValidationProfile(
       validationProfilePath: String,

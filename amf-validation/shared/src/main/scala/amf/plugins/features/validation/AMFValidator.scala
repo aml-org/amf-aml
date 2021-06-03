@@ -42,19 +42,22 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
 
   protected[amf] def computeValidations(
       profileName: ProfileName,
+      constraints: Map[String, ValidationProfile],
       computed: EffectiveValidations = new EffectiveValidations()): EffectiveValidations = {
 
-    profiles
+    constraints
       .get(profileName.profile)
       .map { foundProfile =>
-        addBaseProfileValidations(computed, foundProfile)
+        addBaseProfileValidations(computed, constraints, foundProfile)
       }
       .getOrElse(computed)
   }
 
-  private def addBaseProfileValidations(computed: EffectiveValidations, foundProfile: ValidationProfile) = {
+  private def addBaseProfileValidations(computed: EffectiveValidations,
+                                        constraints: Map[String, ValidationProfile],
+                                        foundProfile: ValidationProfile) = {
     foundProfile.baseProfile
-      .map(base => computeValidations(base, computed).someEffective(foundProfile))
+      .map(base => computeValidations(base, constraints, computed).someEffective(foundProfile))
       .getOrElse(computed.someEffective(foundProfile))
   }
 
@@ -89,7 +92,7 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
     profilesPlugins
       .get(profileName.profile)
       .map { plugins =>
-        val validations = computeValidations(profileName)
+        val validations = computeValidations(profileName, profiles)
         val options     = new ValidationOptions(profileName, validations, config)
         if (resolved) model.resolved = true
         FailFastValidationRunner(plugins, options).run(model)
@@ -125,8 +128,8 @@ protected[amf] trait AMFValidator extends RuntimeValidator with PlatformSecrets 
     * Generates a JSON-LD graph with the SHACL shapes for the requested profile name
     * @return JSON-LD graph
     */
-  def emitShapesGraph(profileName: ProfileName): String = {
-    val effectiveValidations = computeValidations(profileName)
+  def emitShapesGraph(profileName: ProfileName, constraints: Map[String, ValidationProfile]): String = {
+    val effectiveValidations = computeValidations(profileName, constraints)
     shapesGraph(effectiveValidations, profileName)
   }
 }
