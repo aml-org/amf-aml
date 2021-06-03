@@ -15,6 +15,7 @@ import amf.plugins.document.vocabularies.annotations.{
   CustomBase,
   CustomId,
   DiscriminatorField,
+  FromUnionNodeMapping,
   JsonPointerRef,
   RefInclude
 }
@@ -270,7 +271,11 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       case m: NodeMapping => Seq(m.nodetypeMapping.value(), mappable.id)
       case _              => Seq(mappable.id)
     }
-    val element = DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast)))
+    lazy val ann = mappable match {
+      case u: UnionNodeMapping => Annotations(ast) += FromUnionNodeMapping(u)
+      case _                   => Annotations(ast)
+    }
+    val element = DialectDomainElement(givenAnnotations.getOrElse(ann))
       .withId(defaultId)
       .withInstanceTypes(mappings)
     ctx.eh.warning(DialectError, defaultId, s"Empty map: ${mappings.head}", ast)
@@ -590,6 +595,10 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     ast.tagType match {
       case YType.Map =>
         val nodeMap = ast.as[YMap]
+        val annotations: Annotations = unionMapping match {
+          case unionNodeMapping: UnionNodeMapping => Annotations(nodeMap) += FromUnionNodeMapping(unionNodeMapping)
+          case _                                  => Annotations(nodeMap)
+        }
         dispatchNodeMap(nodeMap) match {
           case "$include" =>
             val link = resolveLinkUnion(ast, allPossibleMappings, defaultId)
@@ -614,9 +623,10 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                   s"Ambiguous node in union range, found 0 compatible mappings from ${allPossibleMappings.size} mappings: [${allPossibleMappings.map(_.id).mkString(",")}]",
                   ast
               )
-              DialectDomainElement(nodeMap).withId(defaultId)
+              DialectDomainElement(annotations)
+                .withId(defaultId)
             } else if (mappings.size == 1) {
-              val node: DialectDomainElement = DialectDomainElement(nodeMap).withDefinedBy(mappings.head)
+              val node: DialectDomainElement = DialectDomainElement(annotations).withDefinedBy(mappings.head)
               val finalId =
                 generateNodeId(node, nodeMap, path, defaultId, mappings.head, additionalProperties, rootNode = false)
               node.withId(finalId)
@@ -656,7 +666,8 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                   s"Ambiguous node, please provide a type disambiguator. Nodes ${mappings.map(_.id).mkString(",")} have been found compatible, only one is allowed",
                   map
               )
-              DialectDomainElement(nodeMap).withId(defaultId)
+              DialectDomainElement(annotations)
+                .withId(defaultId)
             }
         }
 

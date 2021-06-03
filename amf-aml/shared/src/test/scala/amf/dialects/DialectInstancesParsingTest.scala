@@ -432,6 +432,15 @@ trait DialectInstancesParsingTest extends DialectTests {
                 renderOptions = Some(config.renderOptions))
   }
 
+  multiGoldenTest("parse 33 test (Union with no type discriminator)", "example33.%s") { config =>
+    withDialect("dialect33.yaml",
+      "example33.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions))
+  }
+
   if (platform.name == "jvm") {
     ignore("generate 1 test") {
       withDialect("dialect1.yaml",
