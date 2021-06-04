@@ -25,12 +25,12 @@ private object RedirectResolutionByModel extends TransformationStep {
 }
 
 object DefaultAMLTransformationPipeline {
-  val name: String                              = PipelineName.from(Aml.name, TransformationPipeline.DEFAULT_PIPELINE)
+  val name: String                              = PipelineName.from(Aml.mediaType, TransformationPipeline.DEFAULT_PIPELINE)
   def apply(): DefaultAMLTransformationPipeline = new DefaultAMLTransformationPipeline(name)
   private[amf] def editing()                    = new DefaultAMLTransformationPipeline(name)
 }
 
 object AMLEditingPipeline {
-  val name: String                              = PipelineName.from(Aml.name, TransformationPipeline.EDITING_PIPELINE)
+  val name: String                              = PipelineName.from(Aml.mediaType, TransformationPipeline.EDITING_PIPELINE)
   def apply(): DefaultAMLTransformationPipeline = DefaultAMLTransformationPipeline.editing()
 }
