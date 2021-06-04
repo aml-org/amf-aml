@@ -43,6 +43,7 @@ private[amf] case class DialectRegister(d: Dialect) {
       .withPlugins(plugins)
       .withValidationProfile(profile)
       .withEntities(domainModels)
+      .withExtensions(dialect.extensions())
     newConfig
   }
 
