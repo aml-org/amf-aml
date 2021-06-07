@@ -1,6 +1,6 @@
 package amf.testing.render
 
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.core.errorhandling.UnhandledErrorHandler
 import amf.core.remote.VocabularyYamlHint
 import amf.core.unsafe.PlatformSecrets
