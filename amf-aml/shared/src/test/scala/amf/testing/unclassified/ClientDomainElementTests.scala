@@ -4,7 +4,7 @@ import amf.client.convert.VocabulariesClientConverter._
 import amf.client.environment.AMLConfiguration
 import amf.client.model.document.{Dialect => ClientDialect}
 import amf.client.model.domain.{DomainElement => ClientDomainElement}
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.render.{AmlDomainElementEmitter => ClientAmlDomainElementEmitter}
 import amf.client.resolve.ClientErrorHandlerConverter.ErrorHandlerConverter
 import amf.core.model.domain.DomainElement

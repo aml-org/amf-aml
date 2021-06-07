@@ -2,7 +2,7 @@ package amf.plugins.document.vocabularies
 
 import amf.client.environment.AMLConfiguration
 import amf.client.execution.BaseExecutionEnvironment
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.namespace.AMLDialectNamespaceAliasesPlugin
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin

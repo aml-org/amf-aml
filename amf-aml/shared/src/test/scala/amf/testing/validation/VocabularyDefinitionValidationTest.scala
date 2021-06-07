@@ -2,7 +2,7 @@ package amf.testing.validation
 
 import amf.AmlProfile
 import amf.client.environment.AMLConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
 import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
 import amf.core.io.FileAssertionTest

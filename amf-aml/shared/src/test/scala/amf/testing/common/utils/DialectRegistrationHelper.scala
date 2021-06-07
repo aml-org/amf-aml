@@ -1,7 +1,7 @@
 package amf.testing.common.utils
 
 import amf.client.environment.AMLConfiguration
-import amf.client.parse.DefaultErrorHandler
+import amf.client.errorhandling.DefaultErrorHandler
 import amf.client.remod.ParseConfiguration
 import amf.core.remote.Aml
 import amf.core.remote.Vendor.AML
