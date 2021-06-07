@@ -1,7 +1,6 @@
 package amf.testing.common.cycling
 
 import amf.client.environment.AMLConfiguration
-import amf.core.emitter.RenderOptions
 import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax

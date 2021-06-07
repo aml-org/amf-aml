@@ -2,8 +2,6 @@ package amf.testing.common.cycling
 
 import amf.client.environment.AMLConfiguration
 import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
-import amf.client.remod.amfcore.config.{ParsingOptionsConverter, RenderOptions}
-import amf.core.client.ParsingOptions
 import amf.core.io.FileAssertionTest
 import amf.core.model.document.BaseUnit
 import amf.core.remote.Syntax.Syntax
