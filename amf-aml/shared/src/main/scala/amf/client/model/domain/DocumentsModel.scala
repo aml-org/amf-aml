@@ -13,15 +13,15 @@ case class DocumentsModel(override private[amf] val _internal: InternalDocuments
   def this() = this(InternalDocumentsModel())
 
   def root(): DocumentMapping = DocumentMapping(_internal.root())
-  def withRoot(documentMapping: DocumentMapping): InternalDocumentsModel = {
+  def withRoot(documentMapping: DocumentMapping): DocumentsModel = {
     _internal.withRoot(documentMapping._internal)
   }
   def fragments(): ClientList[DocumentMapping] = _internal.fragments().asClient
-  def withFragments(fragments: ClientList[DocumentMapping]): InternalDocumentsModel = {
+  def withFragments(fragments: ClientList[DocumentMapping]): DocumentsModel = {
     _internal.withFragments(fragments.asInternal)
   }
   def library(): DocumentMapping = DocumentMapping(_internal.library())
-  def withLibrary(library: DocumentMapping): InternalDocumentsModel = {
+  def withLibrary(library: DocumentMapping): DocumentsModel = {
     _internal.withLibrary(library._internal)
   }
 

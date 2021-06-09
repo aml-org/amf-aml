@@ -111,8 +111,8 @@ case class PropertyMapping(override private[amf] val _internal: InternalProperty
     this
   }
 
-  def withExternallyLinkable(linkable: Boolean): InternalPropertyMapping = _internal.withExternallyLinkable(linkable)
-  def externallyLinkable(): BoolField                                    = _internal.externallyLinkable()
+  def withExternallyLinkable(linkable: Boolean): PropertyMapping = _internal.withExternallyLinkable(linkable)
+  def externallyLinkable(): BoolField                            = _internal.externallyLinkable()
 
   def classification(): String = {
     _internal.classification() match {
