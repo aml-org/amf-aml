@@ -133,11 +133,15 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
 
-  def withCustomValidationsEnabled: Future[AMLConfiguration] = {
+  def withCustomValidationsEnabled(): Future[AMLConfiguration] = {
     AMFParser.parseContent(ValidationDialectText.text, PROFILE_DIALECT_URL, None, this) map {
       case AMFResult(d: Dialect, _) => withDialect(d)
       case _                        => this
     }
+  }
+
+  def withCustomProfile(profile: ValidationProfile): AMLConfiguration = {
+    copy(registry = this.registry.withConstraints(profile))
   }
 
   def withCustomProfile(instancePath: String): Future[AMLConfiguration] = {
@@ -146,7 +150,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
       case AMFResult(parsed: DialectInstance, _) =>
         if (parsed.definedBy().is(PROFILE_DIALECT_URL)) {
           val profile = ParsedValidationProfile(parsed.encodes.asInstanceOf[DialectDomainElement])
-          copy(registry = this.registry.withConstraints(profile))
+          withCustomProfile(profile)
         } else {
           // TODO: throw exception?
           this

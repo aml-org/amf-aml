@@ -23,7 +23,7 @@ case class DocumentMapping(override private[amf] val _internal: InternalDocument
     this
   }
   def declaredNodes(): ClientList[PublicNodeMapping] = _internal.declaredNodes().asClient
-  def withDeclaredNodes(declarations: ClientList[PublicNodeMapping]): InternalDocumentMapping = {
+  def withDeclaredNodes(declarations: ClientList[PublicNodeMapping]): DocumentMapping = {
     _internal.withDeclaredNodes(declarations.asInternal)
   }
 }

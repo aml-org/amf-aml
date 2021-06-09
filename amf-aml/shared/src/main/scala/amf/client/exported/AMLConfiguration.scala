@@ -9,14 +9,14 @@ import amf.client.exported.transform.TransformationPipeline
 import amf.client.model.document.Dialect
 import amf.client.reference.UnitCache
 import amf.client.resource.ResourceLoader
+import amf.client.validate.ValidationProfile
 
 import scala.concurrent.ExecutionContext
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
 class AMLConfiguration private[amf] (private[amf] override val _internal: InternalAMLConfiguration)
-    extends AMFGraphConfiguration(_internal) {
-  private implicit val ec: ExecutionContext = _internal.getExecutionContext
+    extends BaseAMLConfiguration(_internal) {
 
   override def createClient(): AMLClient = new AMLClient(this)
 
@@ -45,20 +45,24 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
 
   override def withLogger(logger: AMFLogger): AMLConfiguration = _internal.withLogger(logger)
 
+  override def withDialect(dialect: Dialect): AMLConfiguration = _internal.withDialect(dialect)
+
   /**
     * Merges two environments taking into account specific attributes that can be merged.
     * This is currently limited to: registry plugins, registry transformation pipelines.
     */
   def merge(other: AMLConfiguration): AMLConfiguration = _internal.merge(other)
 
-  def withCustomValidationsEnabled: ClientFuture[AMLConfiguration] = _internal.withCustomValidationsEnabled.asClient
+  def withCustomValidationsEnabled(): ClientFuture[AMLConfiguration] =
+    _internal.withCustomValidationsEnabled().asClient
 
   def withDialect(path: String): ClientFuture[AMLConfiguration] = _internal.withDialect(path).asClient
 
-  def withDialect(dialect: Dialect): AMLConfiguration = _internal.withDialect(dialect)
-
   def withCustomProfile(instancePath: String): ClientFuture[AMLConfiguration] =
     _internal.withCustomProfile(instancePath).asClient
+
+  def withCustomProfile(profile: ValidationProfile): AMLConfiguration =
+    _internal.withCustomProfile(profile)
 
   def forInstance(url: String): ClientFuture[AMLConfiguration] = _internal.forInstance(url).asClient
 }
