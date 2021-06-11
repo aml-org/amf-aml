@@ -8,7 +8,14 @@ import amf.core.model.domain.Linkable
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
-import amf.plugins.document.vocabularies.model.domain.{External, NodeMappable, NodeMapping, UnionNodeMapping}
+import amf.plugins.document.vocabularies.model.domain.{
+  AnnotationMapping,
+  External,
+  HasObjectRange,
+  NodeMappable,
+  NodeMapping,
+  UnionNodeMapping
+}
 import amf.utils.internal.AmlExtensionSyntax._
 import org.mulesoft.common.collections.FilterType
 
@@ -100,6 +107,16 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
   }
 
   private def setName(nodeMappable: NodeMappable, allDeclarations: Map[String, NodeMappable]) = {
+    def genName(baseName: String, allDeclarations: Map[String, NodeMappable]): String = {
+      var c   = 1
+      var acc = baseName
+      while (allDeclarations.contains(acc)) {
+        c += 1
+        acc = s"$baseName$c"
+      }
+      acc
+    }
+
     if (nodeMappable.name
           .value()
           .contains(".")) { // this might come from a library TODO: check collisions in names
@@ -107,36 +124,28 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
     }
   }
 
-  private def genName(baseName: String, allDeclarations: Map[String, NodeMappable]): String = {
-    var c   = 1
-    var acc = baseName
-    while (allDeclarations.contains(acc)) {
-      c += 1
-      acc = s"$baseName$c"
-    }
-    acc
-  }
-
   private def collectReferencesFrom(nodeMappable: NodeMappable,
                                     allDeclarations: Map[String, NodeMappable]): Seq[NodeMappable] = {
+    def collectRange(element: HasObjectRange[_]) = {
+      for {
+        range            <- element.objectRange()
+        foundDeclaration <- allDeclarations.get(range.value())
+      } yield {
+        foundDeclaration
+      }
+    }
+
     val rangeReferences = nodeMappable match {
       case nodeMapping: NodeMapping =>
         // we add all object ranges to the list of pendings
         for {
-          property         <- nodeMapping.propertiesMapping()
-          range            <- property.objectRange()
-          foundDeclaration <- allDeclarations.get(range.value())
+          property <- nodeMapping.propertiesMapping()
+          range    <- collectRange(property)
         } yield {
-          foundDeclaration
+          range
         }
-      case union: UnionNodeMapping =>
-        // we add all union ranges to the list of pendings
-        for {
-          range            <- union.objectRange()
-          foundDeclaration <- allDeclarations.get(range.value())
-        } yield {
-          foundDeclaration
-        }
+      case union: UnionNodeMapping       => collectRange(union)
+      case annotation: AnnotationMapping => collectRange(annotation)
     }
 
     val extendsReferenceOption = nodeMappable.extend.headOption match {
