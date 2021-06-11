@@ -62,10 +62,18 @@ case class NodeMappingEmitter(
               )
             case _ => // ignore
           }
-          nodeMapping.extend.headOption match {
-            case Some(link: Linkable) =>
-              b.entry("extends", link.linkLabel.value())
-            case _ => // ignore
+          if (nodeMapping.extend.nonEmpty) {
+            if (nodeMapping.extend.length == 1) {
+              b.entry("extends", nodeMapping.extend.head.asInstanceOf[Linkable].linkLabel.value())
+            } else {
+              b.entry("extends", l => {
+                l.list { b =>
+                  nodeMapping.extend.foreach { e =>
+                    b.+=(YNode(e.asInstanceOf[Linkable].linkLabel.value()))
+                  }
+                }
+              })
+            }
           }
           nodeMapping.idTemplate.option().foreach { idTemplate =>
             b.entry("idTemplate", idTemplate)
