@@ -591,21 +591,32 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     map.key(
         "extends",
         entry => {
-          val reference = entry.value.toOption[YScalar]
-          val parsed = reference match {
-            case Some(_) => resolveNodeMappingLink(entry, adopt)
-            case _       => None
+          val references: Seq[YNode] = entry.value.tagType match {
+            case YType.Seq => entry.value.as[YSequence].nodes
+            case YType.Str => Seq(entry.value)
           }
-          parsed match {
-            case Some(resolvedNodeMapping: NodeMapping) =>
-              nodeMapping.withExtends(Seq(resolvedNodeMapping))
-            case _ =>
+          val parsed = references.map { node: YNode =>
+            val reference = node.toOption[YScalar]
+            reference match {
+              case Some(_) => (reference, resolveNodeMappingLink(node, adopt)) // we don't need to adopt, it is a link
+              case _ => (reference, None)
+            }
+          }
+          val resolved: Seq[NodeMapping] = parsed.flatMap {
+            case (_, Some(resolvedNodeMapping: NodeMapping)) =>
+              Seq(resolvedNodeMapping)
+            case (reference, None)                           =>
               ctx.eh.violation(
-                  DialectError,
-                  nodeMapping.id,
-                  s"Cannot find extended node mapping with reference '${reference.map(_.toString()).getOrElse("")}'",
-                  entry.value.location)
+                DialectError,
+                nodeMapping.id,
+                s"Cannot find extended node mapping with reference '${reference.map(_.toString()).getOrElse("")}'",
+                entry.value.location)
+              Nil
           }
+          // we need a different Id for each link, adopt makes them equal, but we cannot just reuse the link id because of the
+          // mechanism to resolve references, based on the URL of the base document.
+          // this is a hack to get unique IDs
+          nodeMapping.withExtends(resolved).extend.zipWithIndex.foreach { case (e,i) => e.withId(s"${e.id}-link-extends-${i}") }
         }
     )
 
@@ -647,7 +658,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
       // 2) reference linking a declared node mapping
       case YType.Str if entry.value.toOption[YScalar].isDefined =>
-        resolveNodeMappingLink(entry, adopt)
+        resolveNodeMappingLink(entry.value, adopt)
 
       // 3) node mapping included from a fragment
       case YType.Include if entry.value.toOption[YScalar].isDefined =>
@@ -926,12 +937,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     fragment
   }
 
-  protected def resolveNodeMappingLink(entry: YMapEntry, adopt: DomainElement => Any): Some[NodeMapping] = {
-    val refTuple = ctx.link(entry.value) match {
+  protected def resolveNodeMappingLink(entry: YNode, adopt: DomainElement => Any): Some[NodeMapping] = {
+    val refTuple = ctx.link(entry) match {
       case Left(key) =>
         (key, ctx.declarations.findNodeMapping(key, SearchScope.Fragments))
       case _ =>
-        val text = entry.value.as[YScalar].text
+        val text = entry.as[YScalar].text
         (text, ctx.declarations.findNodeMapping(text, SearchScope.Named))
     }
     refTuple match {
