@@ -8,18 +8,16 @@ import scala.collection.mutable
 class NodeMappingResolver(val child: NodeMapping) {
 
   def resolveExtension: NodeMapping = {
-    child.extend match {
-      case (parent: NodeMapping) :: _ =>
-        val resolvedParent = new NodeMappingResolver(parent).resolveExtension
+    child.extend.foreach { case parent: NodeMapping =>
+      val resolvedParent = new NodeMappingResolver(parent).resolveExtension
 
-        resolveIdTemplate(child, resolvedParent)
-        resolvePropertyMappings(child, resolvedParent)
+      resolveIdTemplate(child, resolvedParent)
+      resolvePropertyMappings(child, resolvedParent)
 
-        // we store the extended reference and remove the extends property
-        child.withResolvedExtends(Seq(parent.id))
-        child.fields.removeField(NodeMappingModel.Extends)
-      case _ => // Ignore
+      // we store the extended reference and remove the extends property
+      child.withResolvedExtends(child.resolvedExtends ++ Seq(parent.id))
     }
+    child.fields.removeField(NodeMappingModel.Extends)
     child
   }
 
