@@ -1,5 +1,5 @@
 package amf.testing.common.jsonld
 
-import amf.plugins.document.graph.JsonLdDocumentForm
+import amf.core.internal.plugins.document.graph.JsonLdDocumentForm
 
 abstract class WithJsonLDConfig(jsonLdDocumentForm: JsonLdDocumentForm)

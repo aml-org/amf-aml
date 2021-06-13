@@ -1,17 +1,16 @@
 package amf.plugins.document.vocabularies.emitters.instances
 
-import amf.core.annotations.Aliases.{Alias, ImportLocation, RefId}
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.SpecOrdering.Lexical
-import amf.core.emitter.SpecOrdering
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.model.document.{DeclaresModel, EncodesModel}
-import amf.core.parser.Position
+import amf.core.client.common.position.Position
+import amf.core.internal.annotations.Aliases.{Alias, ImportLocation, RefId}
+import amf.core.internal.render.BaseEmitters._
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.model.document.EncodesModel
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.SpecOrdering.Lexical
 import amf.plugins.document.vocabularies.model.document._
 import amf.plugins.document.vocabularies.model.domain._
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.PartBuilder
-import amf.client.remod.amfcore.config.RenderOptions
 
 case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Dialect, renderOptions: RenderOptions)(
     implicit val nodeMappableFinder: NodeMappableFinder)

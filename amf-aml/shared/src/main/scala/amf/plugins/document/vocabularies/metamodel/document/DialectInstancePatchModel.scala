@@ -1,10 +1,10 @@
 package amf.plugins.document.vocabularies.metamodel.document
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Iri}
-import amf.core.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel, FragmentModel}
-import amf.core.model.domain.AmfObject
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Array, Iri}
+import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel, FragmentModel}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.document.DialectInstancePatch
 
 object DialectInstancePatchModel extends DocumentModel with ExternalContextModel with ExtensionLikeModel {

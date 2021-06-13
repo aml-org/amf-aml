@@ -1,10 +1,11 @@
 package amf.plugins.features.validation.emitters
 
-import amf.core.annotations.LexicalInformation
-import amf.core.validation.{AMFValidationReport, AMFValidationResult, SeverityLevels}
-import amf.core.vocabulary.Namespace
-import amf.core.emitter.BaseEmitters._
-import amf.plugins.document.graph.JsonLdKeywords
+import amf.core.client.common.validation.SeverityLevels
+import amf.core.client.scala.validation.{AMFValidationReport, AMFValidationResult}
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.plugins.document.graph.JsonLdKeywords
+import amf.core.internal.render.BaseEmitters.raw
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YType}
 import org.yaml.render.JsonRender

@@ -1,7 +1,7 @@
 package amf.plugins.features.validation
 
-import amf.core.validation.core.{ValidationReport, ValidationResult}
-import amf.plugins.document.graph.JsonLdKeywords
+import amf.core.internal.plugins.document.graph.JsonLdKeywords
+import amf.core.internal.validation.core.{ValidationReport, ValidationResult}
 import org.json4s
 import org.json4s._
 import org.json4s.native.JsonMethods._

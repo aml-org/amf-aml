@@ -1,15 +1,12 @@
 package amf.dialects
 
-import amf.ProfileName
+import amf.core.client.common.validation.ProfileName
 import amf.testing.common.utils.DialectInstanceValidation
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DialectInstancesCustomValidationTest
-    extends DialectInstanceValidation
-    with ReportComparison
-    with DefaultAMLInitializationWithCustomValidation {
+class DialectInstancesCustomValidationTest extends DialectInstanceValidation with ReportComparison {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

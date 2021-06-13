@@ -1,15 +1,11 @@
 package amf.testing.rdf
 
-import amf.core.remote._
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.remote._
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.testing.common.cycling.FunSuiteRdfCycleTests
-import amf.testing.common.utils.{DefaultAMLInitialization, DialectRegistrationHelper}
+import amf.testing.common.utils.DialectRegistrationHelper
 
-class DialectInstancesRDFTest
-    extends FunSuiteRdfCycleTests
-    with PlatformSecrets
-    with DefaultAMLInitialization
-    with DialectRegistrationHelper {
+class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets with DialectRegistrationHelper {
 
   val basePath       = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
   val productionPath = "amf-aml/shared/src/test/resources/vocabularies2/production/"

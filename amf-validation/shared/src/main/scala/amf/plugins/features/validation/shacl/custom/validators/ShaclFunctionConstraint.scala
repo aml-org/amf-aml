@@ -1,8 +1,12 @@
 package amf.plugins.features.validation.shacl.custom.validators
 
-import amf.core.model.domain.AmfObject
-import amf.core.services.RuntimeValidator.{CustomShaclFunction, CustomShaclFunctions, PropertyInfo}
-import amf.core.validation.core.ValidationSpecification
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.internal.validation.core.ValidationSpecification
+import amf.plugins.features.validation.shacl.custom.CustomShaclValidator.{
+  CustomShaclFunction,
+  CustomShaclFunctions,
+  PropertyInfo
+}
 import amf.plugins.features.validation.shacl.custom.{ConstraintValidator, ReportBuilder}
 
 case class ShaclFunctionConstraint(customFunctions: CustomShaclFunctions) extends ConstraintValidator {

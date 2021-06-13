@@ -1,11 +1,11 @@
 package amf.client.remod.namespace
 
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.client.remod.amfcore.plugins.namespace.NamespaceAliasesPlugin
-import amf.core.annotations.Aliases
-import amf.core.annotations.Aliases.Alias
-import amf.core.model.document.BaseUnit
-import amf.core.vocabulary.{Namespace, NamespaceAliases}
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.internal.annotations.Aliases
+import amf.core.internal.annotations.Aliases.Alias
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.vocabulary.{Namespace, NamespaceAliases}
+import amf.core.internal.plugins.namespace.NamespaceAliasesPlugin
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 
 case class AMLDialectNamespaceAliasesPlugin private (dialect: Dialect, aliases: NamespaceAliases)

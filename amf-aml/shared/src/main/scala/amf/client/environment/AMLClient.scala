@@ -1,7 +1,9 @@
 package amf.client.environment
 
 import amf.client.remod._
-import amf.core.validation.core.ValidationProfile
+import amf.core.client.scala.{AMFGraphClient, AMFResult}
+import amf.core.client.scala.parse.{AMFParser, InvalidBaseUnitTypeException}
+import amf.core.internal.validation.core.ValidationProfile
 import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
 import amf.plugins.document.vocabularies.metamodel.document.{DialectInstanceModel, DialectModel, VocabularyModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, Vocabulary}

@@ -1,10 +1,11 @@
 package amf.client.model.domain
 
 import amf.client.convert.VocabulariesClientConverter._
-import amf.core.model.BoolField
-import amf.core.model.domain.{AmfArray, AmfObject}
-import amf.core.parser.Value
-import amf.core.vocabulary.Namespace
+import amf.core.client.platform.model.BoolField
+import amf.core.client.platform.model.domain.DomainElement
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject}
+import amf.core.internal.parser.domain.Value
+import amf.core.client.scala.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement => InternalDialectDomainElement}
 import org.yaml.model.{YMapEntry, YNode}
 
@@ -85,9 +86,9 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
         _internal.fields.getValueAsOption(mapping) match {
           case Some(value) =>
             value.value match {
-              case amfScalar: amf.core.model.domain.AmfScalar =>
+              case amfScalar: amf.core.client.scala.model.domain.AmfScalar =>
                 Seq(amfScalar.value)
-              case amfArray: amf.core.model.domain.AmfArray =>
+              case amfArray: amf.core.client.scala.model.domain.AmfArray =>
                 amfArray.scalars.map(_.value)
               case _: AmfObject =>
                 Nil

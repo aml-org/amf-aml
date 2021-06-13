@@ -1,5 +1,7 @@
 package amf.client.convert
 
+import amf.core.internal.convert.CoreClientConverters
+
 object VocabulariesClientConverter extends VocabulariesBaseConverter with VocabulariesBaseClientConverter {
   // Overriding to match type
   override type ClientOption[E] = CoreClientConverters.ClientOption[E]

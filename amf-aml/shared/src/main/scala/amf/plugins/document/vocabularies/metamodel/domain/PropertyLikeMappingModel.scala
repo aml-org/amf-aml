@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.metamodel.domain
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Any, Bool, Double, Int, Iri, SortedArray, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Any, Bool, Double, Int, Iri, SortedArray, Str}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
+import amf.core.client.scala.vocabulary.Namespace
 
 /**
   * Mappings form with which graph properties can be derived (annotation mappings, property mappings)

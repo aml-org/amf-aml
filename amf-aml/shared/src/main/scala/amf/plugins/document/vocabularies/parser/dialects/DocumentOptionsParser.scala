@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.model.domain.AmfScalar
+import amf.core.client.scala.model.domain.AmfScalar
 import org.yaml.model.{YMap, YMapEntry, YType}
-import amf.core.parser._
+import amf.core.internal.parser._
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentsModelModel
 import amf.plugins.document.vocabularies.model.domain.DocumentsModel
 import amf.validation.DialectValidations.DialectError

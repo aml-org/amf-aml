@@ -1,9 +1,10 @@
 package amf.plugins.document.vocabularies.parser.dialects.property.like
 
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, SearchScope, ValueNode, YMapOps}
-import amf.core.utils.AmfStrings
-import amf.core.vocabulary.Namespace
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.utils.AmfStrings
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.parser.domain.{Annotations, SearchScope, ValueNode}
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyLikeMappingModel
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel.NodePropertyMapping
 import amf.plugins.document.vocabularies.model.domain.PropertyLikeMapping

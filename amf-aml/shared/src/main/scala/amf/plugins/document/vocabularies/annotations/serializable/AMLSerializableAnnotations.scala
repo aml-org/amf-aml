@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.annotations.serializable
 
-import amf.core.annotations.serializable.SerializableAnnotations
-import amf.core.model.domain.AnnotationGraphLoader
+import amf.core.client.scala.model.domain.AnnotationGraphLoader
+import amf.core.internal.annotations.serializable.SerializableAnnotations
 import amf.plugins.document.vocabularies.annotations.{
   AliasesLocation,
   CustomBase,

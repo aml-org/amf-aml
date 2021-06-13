@@ -1,17 +1,19 @@
 package amf.plugins.document.vocabularies.emitters.instances
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.annotations.Aliases.{Alias, ImportLocation, RefId}
-import amf.core.annotations.{LexicalInformation, SourceNode}
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, PartEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.DataType
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.extensions.DomainExtension
-import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar, ScalarNode}
-import amf.core.parser.Position.ZERO
-import amf.core.parser.{Annotations, FieldEntry, Position, Value}
+import amf.core.client.common.position.Position
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.annotations.Aliases.{Alias, ImportLocation, RefId}
+import amf.core.internal.annotations.{LexicalInformation, SourceNode}
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.domain.DomainElementModel
+import amf.core.client.scala.model.domain.extensions.DomainExtension
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, ScalarNode}
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
+import amf.core.internal.render.SpecOrdering
 import amf.plugins.document.vocabularies.annotations.{CustomBase, CustomId, JsonPointerRef, RefInclude}
 import amf.plugins.document.vocabularies.metamodel.domain.{DialectDomainElementModel, NodeMappableModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceFragment, DialectInstanceUnit}

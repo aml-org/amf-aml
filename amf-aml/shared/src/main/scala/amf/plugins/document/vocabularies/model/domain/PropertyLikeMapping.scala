@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.model._
-import amf.core.model.domain.{AmfScalar, DomainElement}
+import amf.core.client.scala.model.{AnyField, BoolField, DoubleField, IntField, StrField}
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyLikeMappingModel
 
 trait PropertyLikeMapping[M <: PropertyLikeMappingModel]

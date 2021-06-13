@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
 
 trait MappingDeclarer { this: BaseUnit with DeclaresModel =>

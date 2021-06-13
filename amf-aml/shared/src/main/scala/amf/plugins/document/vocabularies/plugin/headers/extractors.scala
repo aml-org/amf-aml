@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.plugin.headers
 
-import amf.core.Root
-import amf.core.parser.{SyamlParsedDocument, _}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.parser.{Root, YNodeLikeOps}
 import org.yaml.model.{YComment, YDocument, YMap}
 
 trait RamlHeaderExtractor {

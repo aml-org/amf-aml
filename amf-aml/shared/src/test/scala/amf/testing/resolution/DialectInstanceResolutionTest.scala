@@ -1,7 +1,7 @@
 package amf.testing.resolution
 
-import amf.core.remote.{Amf, Aml, VocabularyYamlHint}
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.remote.{Amf, Aml, VocabularyYamlHint}
+import amf.core.internal.unsafe.PlatformSecrets
 
 import scala.concurrent.ExecutionContext
 

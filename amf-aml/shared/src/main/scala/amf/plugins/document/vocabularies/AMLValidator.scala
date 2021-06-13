@@ -1,13 +1,13 @@
 package amf.plugins.document.vocabularies
 
-import amf.ProfileName
-import amf.client.remod.amfcore.plugins.validate.ValidationResult
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.resolution.pipelines.TransformationPipelineRunner
-import amf.core.services.{RuntimeValidator, ShaclValidationOptions}
-import amf.core.validation.core.ValidationProfile
-import amf.core.validation.{AMFValidationReport, EffectiveValidations, ShaclReportAdaptation}
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.plugins.validation.ValidationResult
+import amf.core.internal.validation.{EffectiveValidations, ShaclReportAdaptation}
+import amf.core.internal.validation.core.{ShaclValidationOptions, ValidationProfile}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectInstanceTransformationPipeline
 import amf.plugins.features.validation.PlatformValidator

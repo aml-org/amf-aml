@@ -3,11 +3,11 @@ package amf.testing.unclassified
 import amf.client.convert.VocabulariesClientConverter._
 import amf.client.environment.AMLConfiguration
 import amf.client.model.document.{Dialect => ClientDialect}
-import amf.client.model.domain.{DomainElement => ClientDomainElement}
-import amf.client.errorhandling.DefaultErrorHandler
+import amf.core.client.platform.model.domain.{DomainElement => ClientDomainElement}
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.client.render.{AmlDomainElementEmitter => ClientAmlDomainElementEmitter}
-import amf.client.resolve.ClientErrorHandlerConverter.ErrorHandlerConverter
-import amf.core.model.domain.DomainElement
+import amf.core.internal.convert.ClientErrorHandlerConverter.ErrorHandlerConverter
+import amf.core.client.scala.model.domain.DomainElement
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 import amf.testing.common.utils.DomainElementCycleTests
 import org.yaml.builder.YamlOutputBuilder

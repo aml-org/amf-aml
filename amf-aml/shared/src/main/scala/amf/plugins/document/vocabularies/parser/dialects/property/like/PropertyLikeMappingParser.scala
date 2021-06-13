@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.parser.dialects.property.like
 
-import amf.core.vocabulary.Namespace
+import amf.core.client.scala.vocabulary.Namespace
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyLikeMappingModel
 import amf.plugins.document.vocabularies.model.domain.{PropertyLikeMapping, PropertyMapping}
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps.{DialectYMapOps, _}

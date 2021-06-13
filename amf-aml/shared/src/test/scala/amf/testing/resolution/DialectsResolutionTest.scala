@@ -1,7 +1,7 @@
 package amf.testing.resolution
 
 import amf.client.environment.AMLConfiguration
-import amf.core.remote.{Amf, Aml, VocabularyYamlHint}
+import amf.core.internal.remote.{Amf, Aml, VocabularyYamlHint}
 
 import scala.concurrent.ExecutionContext
 

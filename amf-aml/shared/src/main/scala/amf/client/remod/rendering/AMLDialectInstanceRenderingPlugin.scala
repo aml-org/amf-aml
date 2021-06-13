@@ -1,12 +1,11 @@
 package amf.client.remod.rendering
 
 import amf.client.remod.AMLDialectInstancePlugin
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
 import amf.plugins.document.vocabularies.emitters.dialects.{DialectEmitter, RamlDialectLibraryEmitter}
 import amf.plugins.document.vocabularies.emitters.instances.{DefaultNodeMappableFinder, DialectInstancesEmitter}
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter

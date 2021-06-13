@@ -2,17 +2,12 @@ package amf.testing.validation
 
 import amf.client.environment.AMLConfiguration
 
-import amf.testing.common.utils.{
-  DefaultAMLInitialization,
-  DialectInstanceValidation,
-  ReportComparator,
-  UniquePlatformReportComparator
-}
+import amf.testing.common.utils.{DialectInstanceValidation, ReportComparator, UniquePlatformReportComparator}
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DialectInstancesValidationTest extends DialectInstanceValidation with DefaultAMLInitialization {
+trait DialectInstancesValidationTest extends DialectInstanceValidation {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

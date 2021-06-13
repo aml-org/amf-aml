@@ -1,8 +1,9 @@
 package amf.client.model.document
 
 import amf.client.convert.VocabulariesClientConverter._
-import amf.client.model.StrField
+import amf.core.client.platform.model.StrField
 import amf.client.model.domain.{DialectDomainElement, External}
+import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.plugins.document.vocabularies.model.document.{DialectInstance => InternalDialectInstance}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement => InternalDialectDomainElement}
 

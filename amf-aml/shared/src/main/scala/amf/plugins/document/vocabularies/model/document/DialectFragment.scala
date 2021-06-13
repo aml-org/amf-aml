@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.model.document.{BaseUnit, EncodesModel}
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.document.{BaseUnit, EncodesModel}
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.document.DialectFragmentModel
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel.{Encodes, References}
 import amf.plugins.document.vocabularies.model.domain.NodeMapping

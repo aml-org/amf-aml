@@ -1,13 +1,14 @@
 package amf.client.remod.parsing
 
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{EmptyFutureDeclarations, ParserContext, ReferenceHandler}
-
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.parse.AMFParsePlugin
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.AMFParsePlugin
+import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext, ReferenceHandler}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.internal.parser.Root
+import amf.core.client.scala.model.document.BaseUnit
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler
 import amf.plugins.document.vocabularies.parser.dialects.{DialectContext, DialectsParser}
 import amf.plugins.document.vocabularies.parser.vocabularies.{VocabulariesParser, VocabularyContext}

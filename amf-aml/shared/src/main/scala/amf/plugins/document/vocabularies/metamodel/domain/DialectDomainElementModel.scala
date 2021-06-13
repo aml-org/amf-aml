@@ -1,10 +1,10 @@
 package amf.plugins.document.vocabularies.metamodel.domain
 
-import amf.core.metamodel.Type.{Bool, Str}
-import amf.core.metamodel.domain.{DomainElementModel, LinkableElementModel}
-import amf.core.metamodel.Field
-import amf.core.model.domain.AmfObject
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.Type.{Bool, Str}
+import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel}
+import amf.core.internal.metamodel.Field
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping}
 
 class DialectDomainElementModel(val typeIri: Seq[String] = Seq(),

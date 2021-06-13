@@ -1,9 +1,9 @@
 package amf.testing.parsing
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote._
-import amf.plugins.document.graph.{EmbeddedForm, FlattenedForm}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote._
+import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm}
 
 import amf.testing.common.utils.DialectTests
 import org.scalatest.Assertion

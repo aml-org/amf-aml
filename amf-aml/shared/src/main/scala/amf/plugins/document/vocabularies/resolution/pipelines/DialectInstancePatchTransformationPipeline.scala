@@ -1,12 +1,11 @@
 package amf.plugins.document.vocabularies.resolution.pipelines
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.resolution.pipelines.TransformationPipeline
-import amf.core.resolution.stages.{CleanReferencesStage, DeclarationsRemovalStage, TransformationStep}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.transform.pipelines.TransformationPipeline
+import amf.core.client.scala.transform.stages.{CleanReferencesStage, DeclarationsRemovalStage, TransformationStep}
 import amf.plugins.document.vocabularies.resolution.stages.{
   DialectInstanceReferencesResolutionStage,
   DialectPatchApplicationStage
 }
-import amf.{AmfProfile, ProfileName}
 
 class DialectInstancePatchTransformationPipeline private (override val name: String) extends TransformationPipeline() {
 

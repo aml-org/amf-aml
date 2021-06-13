@@ -1,11 +1,11 @@
 package amf.plugins.document.vocabularies.metamodel.document
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Str}
-import amf.core.metamodel.document.{BaseUnitModel, ModuleModel}
-import amf.core.metamodel.domain.{ModelVocabularies, ModelDoc, ExternalModelVocabularies}
-import amf.core.model.domain.AmfObject
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Array, Str}
+import amf.core.internal.metamodel.document.{BaseUnitModel, ModuleModel}
+import amf.core.internal.metamodel.domain.{ModelVocabularies, ModelDoc, ExternalModelVocabularies}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.metamodel.domain.{ExternalModel, VocabularyReferenceModel}
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 

@@ -1,7 +1,7 @@
 package amf.dialects
 
 import amf.core.io.FileAssertionTest
-import amf.core.validation.AMFValidationReport
+import amf.core.client.scala.validation.AMFValidationReport
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.{Assertion, AsyncFunSuite}
 

@@ -1,9 +1,9 @@
 package amf.testing.unclassified
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.remote.{Vendor, VocabularyYamlHint}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.internal.remote.{Vendor, VocabularyYamlHint}
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.semantic.{
   NameFieldExtractor,
@@ -12,17 +12,12 @@ import amf.plugins.document.vocabularies.semantic.{
   TargetFieldExtractor
 }
 import amf.testing.common.cycling.BuildCycleTestCommon
-import amf.testing.common.utils.DefaultAMLInitialization
 import org.scalatest.OptionValues._
 import org.scalatest.{AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class SemanticExtensionFinderTest
-    extends AsyncFunSuite
-    with BuildCycleTestCommon
-    with Matchers
-    with DefaultAMLInitialization {
+class SemanticExtensionFinderTest extends AsyncFunSuite with BuildCycleTestCommon with Matchers {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

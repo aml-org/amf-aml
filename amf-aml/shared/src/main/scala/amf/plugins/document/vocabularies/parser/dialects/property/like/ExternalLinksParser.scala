@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.parser.dialects.property.like
 
-import amf.core.parser.YMapOps
+import amf.core.internal.parser.YMapOps
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyLikeMappingModel
 import amf.plugins.document.vocabularies.model.domain.PropertyLikeMapping
 import amf.plugins.document.vocabularies.parser.dialects.DialectContext

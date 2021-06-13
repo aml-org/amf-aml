@@ -3,10 +3,9 @@ package amf.plugins.domain
 import amf.client.environment.AMLConfiguration
 import amf.client.model.document._
 import amf.client.model.domain._
-import amf.core.metamodel.Obj
-import amf.core.registries.AMFPluginsRegistry
-import amf.core.remote.Platform
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.metamodel.Obj
+import amf.core.internal.remote.Platform
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 import amf.plugins.document.vocabularies.model.{document, domain}

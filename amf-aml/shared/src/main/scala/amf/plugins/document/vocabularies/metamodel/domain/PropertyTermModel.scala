@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.metamodel.domain
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Array, Iri, Str}
-import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Array, Iri, Str}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
+import amf.core.client.scala.vocabulary.Namespace
 
 abstract class PropertyTermModel extends DomainElementModel {
   val Name: Field =

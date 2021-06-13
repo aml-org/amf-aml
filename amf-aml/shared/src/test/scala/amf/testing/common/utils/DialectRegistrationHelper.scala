@@ -1,14 +1,13 @@
 package amf.testing.common.utils
 
 import amf.client.environment.AMLConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.ParseConfiguration
-import amf.core.remote.Aml
-import amf.core.remote.Vendor.AML
-import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
-import amf.core.services.RuntimeResolver
-import amf.core.unsafe.PlatformBuilder.platform
-import amf.core.{AMFCompiler, CompilerContextBuilder}
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.remote.Aml
+import amf.core.internal.remote.Vendor.AML
+import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
+import amf.core.internal.unsafe.PlatformBuilder.platform
+import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectTransformationPipeline

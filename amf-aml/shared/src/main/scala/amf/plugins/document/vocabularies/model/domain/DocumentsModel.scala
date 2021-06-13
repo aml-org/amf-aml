@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.model.domain.DomainElement
-import amf.core.model.{BoolField, StrField}
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.model.{BoolField, StrField}
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentsModelModel
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentsModelModel._
 import org.yaml.model.YMap

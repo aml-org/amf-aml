@@ -14,15 +14,16 @@ import amf.client.model.domain.{
   DialectDomainElement => ClientDialectDomainElement,
   DocumentMapping => ClientDocumentMapping,
   DocumentsModel => ClientDocumentsModel,
-  SemanticExtension => ClientSemanticExtension,
   External => ClientExternal,
   NodeMapping => ClientNodeMapping,
   ObjectPropertyTerm => ClientObjectPropertyTerm,
   PropertyMapping => ClientPropertyMapping,
   PublicNodeMapping => ClientPublicNodeMapping,
+  SemanticExtension => ClientSemanticExtension,
   VocabularyReference => ClientVocabularyReference
 }
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain._
 

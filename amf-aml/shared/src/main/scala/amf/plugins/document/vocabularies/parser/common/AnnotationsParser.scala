@@ -1,9 +1,10 @@
 package amf.plugins.document.vocabularies.parser.common
 
-import amf.core.metamodel.domain.extensions.DomainExtensionModel
-import amf.core.model.domain.DomainElement
-import amf.core.model.domain.extensions.{CustomDomainProperty, DomainExtension}
-import amf.core.parser.{Annotations, ParserContext}
+import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.vocabularies.parser.DynamicExtensionParser
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
 import amf.validation.DialectValidations.MissingVocabulary
@@ -25,16 +26,14 @@ trait AnnotationsParser {
             case Array(suffix)         => Some(((None, suffix), key, v))
             case _                     => None
           }
-        }
-        else if (key.startsWith("x-")) {
+        } else if (key.startsWith("x-")) {
           val base = key.replace("x-", "")
           base.split("-") match {
             case Array(prefix, suffix) => Some(((Some(prefix), suffix), key, v))
             case Array(suffix)         => Some(((None, suffix), key, v))
             case _                     => None
           }
-        }
-        else {
+        } else {
           None
         }
     } collect {
@@ -66,7 +65,7 @@ trait AnnotationsParser {
                 val property         = CustomDomainProperty(Annotations(v)).withId(propertyId).withName(k)
                 val extension = DomainExtension()
                   .withId(id)
-                  .set(DomainExtensionModel.Extension,parsedAnnotation, Annotations.inferred())
+                  .set(DomainExtensionModel.Extension, parsedAnnotation, Annotations.inferred())
                   .withDefinedBy(property)
                   .withName(k)
                   .add(Annotations(v))

@@ -1,14 +1,9 @@
 package amf.plugins.document.vocabularies
 
-import amf.client.remod.amfcore.plugins.validate.{
-  AMFValidatePlugin,
-  ValidationInfo,
-  ValidationOptions,
-  ValidationResult
-}
-import amf.client.remod.amfcore.plugins.{HighPriority, PluginPriority}
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
-import amf.core.model.document.BaseUnit
+import amf.core.client.common.{HighPriority, PluginPriority}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.plugins.validation.{AMFValidatePlugin, ValidationInfo, ValidationOptions, ValidationResult}
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
 import scala.concurrent.{ExecutionContext, Future}

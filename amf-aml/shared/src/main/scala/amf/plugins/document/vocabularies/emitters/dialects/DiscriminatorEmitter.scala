@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.emitter.BaseEmitters.MapEntryEmitter
-import amf.core.emitter.EntryEmitter
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.Position
+import amf.core.internal.render.BaseEmitters.MapEntryEmitter
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.client.common.position.Position
 import amf.plugins.document.vocabularies.metamodel.domain.NodeWithDiscriminatorModel
 import amf.plugins.document.vocabularies.model.domain.NodeWithDiscriminator
 import org.yaml.model.YDocument.EntryBuilder

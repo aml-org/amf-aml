@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies.parser.instances
 
-import amf.core.parser._
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.parser.YMapOps
 import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.NodeMappable.AnyNodeMappable

@@ -1,9 +1,10 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.metamodel.{Field, Type}
-import amf.core.model.domain.{AmfObject, AmfScalar, DomainElement}
+import amf.core.client.scala.model.domain.{AmfObject, AmfScalar}
+import amf.core.internal.metamodel.{Field, Type}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode}
 import org.yaml.model.{YMap, YMapEntry, YNode, YType}
-import amf.core.parser.{Annotations, ScalarNode, YMapOps}
 
 abstract class DialectEntryParser()(implicit val ctx: DialectContext) {
   def parse(entry: YMapEntry): Unit

@@ -1,13 +1,12 @@
 package amf.client.remod.parsing
 
-import amf.client.remod.{AMFGraphConfiguration, AMLDialectInstancePlugin}
-import amf.client.remod.amfcore.plugins.parse.AMFParsePlugin
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.core.Root
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.parser.{ParserContext, ReferenceHandler, SyamlParsedDocument, YMapOps, YNodeLikeOps}
-
+import amf.client.remod.AMLDialectInstancePlugin
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.AMFParsePlugin
+import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument}
+import amf.core.internal.parser._
 import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, kind}
 import amf.plugins.document.vocabularies.parser.common.SyntaxExtensionsReferenceHandler

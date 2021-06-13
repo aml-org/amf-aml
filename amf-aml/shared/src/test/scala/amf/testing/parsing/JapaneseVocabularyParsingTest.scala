@@ -1,8 +1,8 @@
 package amf.testing.parsing
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.{Amf, AmfJsonHint, Aml, VocabularyYamlHint}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.{Amf, AmfJsonHint, Aml, VocabularyYamlHint}
 import amf.testing.common.utils.DialectTests
 
 import scala.concurrent.ExecutionContext

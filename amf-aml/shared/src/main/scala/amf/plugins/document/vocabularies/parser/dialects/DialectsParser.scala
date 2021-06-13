@@ -1,26 +1,40 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.Root
-import amf.core.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
-import amf.core.metamodel.document.FragmentModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.parser.SearchScope.All
-import amf.core.parser.{Annotations, BaseSpecParser, ScalarNode, SearchScope, SyamlParsedDocument, ValueNode, YNodeLikeOps}
-import amf.core.utils._
-import amf.core.vocabulary.Namespace
+import amf.core.internal.parser.{Root, YNodeLikeOps}
+import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
+import amf.core.internal.metamodel.document.FragmentModel
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.parser.domain.{Annotations, BaseSpecParser, ScalarNode, SearchScope, ValueNode}
+import amf.core.internal.utils._
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.parser.domain.SearchScope.All
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel.Externals
 import amf.plugins.document.vocabularies.metamodel.domain.UnionNodeMappingModel.ObjectRange
-import amf.plugins.document.vocabularies.metamodel.domain.{MergePolicies, NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
+import amf.plugins.document.vocabularies.metamodel.domain.{
+  MergePolicies,
+  NodeMappingModel,
+  PropertyMappingModel,
+  UnionNodeMappingModel
+}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
-import amf.plugins.document.vocabularies.parser.dialects.property.like.{AnnotationMappingParser, PropertyLikeMappingParser}
+import amf.plugins.document.vocabularies.parser.dialects.property.like.{
+  AnnotationMappingParser,
+  PropertyLikeMappingParser
+}
 import amf.plugins.document.vocabularies.parser.instances.BaseDirective
 import amf.validation.DialectValidations
-import amf.validation.DialectValidations.{DialectError, EventualAmbiguity, UnavoidableAmbiguity, VariablesDefinedInBase}
+import amf.validation.DialectValidations.{
+  DialectError,
+  EventualAmbiguity,
+  UnavoidableAmbiguity,
+  VariablesDefinedInBase
+}
 import org.yaml.model._
 
 import scala.collection.{immutable, mutable}

@@ -1,6 +1,7 @@
 package amf.plugins.document.vocabularies.parser.dialects.property.like
 
-import amf.core.parser.{Annotations, SearchScope, YMapOps}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.plugins.document.vocabularies.metamodel.domain.AnnotationMappingModel
 import amf.plugins.document.vocabularies.model.domain.AnnotationMapping
 import amf.plugins.document.vocabularies.parser.common.AnnotationsParser

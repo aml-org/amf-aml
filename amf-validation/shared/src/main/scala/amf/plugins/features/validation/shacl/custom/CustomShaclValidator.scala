@@ -1,13 +1,14 @@
 package amf.plugins.features.validation.shacl.custom
 
-import amf.core.model.document.{BaseUnit, FieldsFilter}
-import amf.core.model.domain._
-import amf.core.services.RuntimeValidator.CustomShaclFunctions
-import amf.core.services.ShaclValidationOptions
-import amf.core.traversal.iterator.AmfElementStrategy
-import amf.core.validation.core._
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.traversal.iterator.AmfElementStrategy
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.validation.core.{ShaclValidationOptions, ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.shacl.ShaclValidator
 import amf.plugins.features.validation.shacl.custom.CustomShaclValidator.{
+  CustomShaclFunctions,
   PROPERTY_CONSTRAINT_VALIDATORS,
   computeConstraints
 }
@@ -16,6 +17,11 @@ import amf.plugins.features.validation.shacl.custom.validators._
 import scala.concurrent.{ExecutionContext, Future}
 
 object CustomShaclValidator {
+
+  type PropertyInfo = (Annotations, Field)
+  // When no property info is provided violation is thrown in domain element level
+  type CustomShaclFunction  = (AmfObject, Option[PropertyInfo] => Unit) => Unit
+  type CustomShaclFunctions = Map[String, CustomShaclFunction]
 
   private val PROPERTY_CONSTRAINT_VALIDATORS = Seq(
       PropertyNodeConstraint,

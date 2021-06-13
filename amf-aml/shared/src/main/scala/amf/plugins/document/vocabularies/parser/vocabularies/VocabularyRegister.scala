@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.parser.vocabularies
 
-import amf.core.model.domain.AmfObject
-import amf.core.parser.CollectionSideEffect
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.parse.document.CollectionSideEffect
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.model.domain.{ClassTerm, External, PropertyTerm}
 
@@ -9,7 +9,7 @@ case class VocabularyRegister()(implicit ctx: VocabularyContext) extends Collect
 
   override def onCollect(alias: String, unit: AmfObject): Unit = {
     unit match {
-      case vocab: Vocabulary => collectVocabulary(alias, vocab)
+      case vocab: Vocabulary  => collectVocabulary(alias, vocab)
       case external: External => collectExternal(external)
     }
   }

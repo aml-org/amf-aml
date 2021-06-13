@@ -1,14 +1,15 @@
 package amf.plugins.features.validation.emitters
 
 import amf._
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.PartEmitter
-import amf.core.model.DataType
-import amf.core.parser.Position
-import amf.core.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
-import amf.core.validation.model.{AlternatePath, PredicatePath, PropertyPath, PropertyPathParser, SequencePath}
-import amf.core.vocabulary.Namespace
-import amf.plugins.document.graph.JsonLdKeywords
+import amf.core.client.common.position.Position
+import amf.core.client.common.validation.{Oas20Profile, ProfileName, Raml08Profile, Raml10Profile}
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.plugins.document.graph.JsonLdKeywords
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.emitters.PartEmitter
+import amf.core.internal.validation.core.{FunctionConstraint, PropertyConstraint, ValidationSpecification}
+import amf.core.internal.validation.model.{AlternatePath, PredicatePath, PropertyPath, SequencePath}
 import org.yaml.model.YDocument._
 import org.yaml.model.{YDocument, YType}
 import org.yaml.render.JsonRender

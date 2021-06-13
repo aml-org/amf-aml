@@ -1,10 +1,10 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.Field
-import amf.core.model.domain._
-import amf.core.model.{BoolField, StrField}
-import amf.core.parser.{Annotations, FieldEntry, Fields, Value}
-import amf.core.vocabulary.ValueType
+import amf.core.internal.metamodel.Field
+import amf.core.client.scala.model.domain._
+import amf.core.client.scala.model.{BoolField, StrField}
+import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields, Value}
+import amf.core.client.scala.vocabulary.ValueType
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.{YMap, YMapEntry, YNode}

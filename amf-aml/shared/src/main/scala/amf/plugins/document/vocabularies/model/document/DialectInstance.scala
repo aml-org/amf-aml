@@ -1,17 +1,19 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.StrField
-import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
-import amf.core.model.domain.DomainElement
-import amf.core.parser.{Annotations, Fields}
-import amf.core.traversal.{
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.client.scala.traversal.{
   DomainElementSelectorAdapter,
   DomainElementTransformationAdapter,
   TransformationData,
   TransformationTraversal
 }
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.metamodel.document.DocumentModel.Encodes
+import amf.core.internal.metamodel.document.ModuleModel.{Declares, References}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel._
 

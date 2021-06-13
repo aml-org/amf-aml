@@ -1,18 +1,15 @@
 package amf.plugins.document.vocabularies
 
 import amf.client.environment.AMLConfiguration
-import amf.client.execution.BaseExecutionEnvironment
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.amfcore.plugins.AMFPlugin
 import amf.client.remod.namespace.AMLDialectNamespaceAliasesPlugin
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
 import amf.client.remod.rendering.AMLDialectInstanceRenderingPlugin
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
-import amf.core.metamodel.{Field, Type}
-import amf.core.resolution.pipelines.TransformationPipelineRunner
-import amf.core.vocabulary.ValueType
-import amf.internal.environment.Environment
-import amf.internal.resource.StringResourceLoader
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.metamodel.{Field, Type}
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
+import amf.core.internal.plugins.AMFPlugin
 import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
 import amf.plugins.document.vocabularies.metamodel.domain.DialectDomainElementModel
 import amf.plugins.document.vocabularies.model.document.Dialect

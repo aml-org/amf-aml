@@ -1,10 +1,21 @@
 package amf.plugins.document.vocabularies.parser.common
 
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.parser.{LibraryReference, LinkReference, ReferenceHandler, _}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.parse.document.{
+  CompilerReferenceCollector,
+  LibraryReference,
+  LinkReference,
+  ParsedDocument,
+  ParserContext,
+  ReferenceHandler,
+  ReferenceKind,
+  SchemaReference,
+  SyamlParsedDocument
+}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.validation.CoreValidations.InvalidInclude
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.features.validation.CoreValidations.InvalidInclude
 import amf.validation.DialectValidations.InvalidModuleType
 import org.yaml.model._
 

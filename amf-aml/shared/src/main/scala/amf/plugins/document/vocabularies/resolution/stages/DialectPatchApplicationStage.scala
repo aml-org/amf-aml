@@ -1,12 +1,12 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
-import amf.core.annotations.LexicalInformation
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.Field
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{AmfArray, AmfElement, AmfScalar}
-import amf.core.parser.Value
-import amf.core.resolution.stages.TransformationStep
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.internal.metamodel.Field
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar}
+import amf.core.internal.parser.domain.Value
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.metamodel.domain.MergePolicies._
 import amf.plugins.document.vocabularies.model.document.{DialectInstance, DialectInstancePatch}

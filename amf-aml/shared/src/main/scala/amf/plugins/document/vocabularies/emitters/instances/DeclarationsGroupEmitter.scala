@@ -1,9 +1,10 @@
 package amf.plugins.document.vocabularies.emitters.instances
-import amf.core.annotations.LexicalInformation
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.internal.render.SpecOrdering
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 import amf.plugins.document.vocabularies.model.domain.{
   DialectDomainElement,
@@ -13,7 +14,7 @@ import amf.plugins.document.vocabularies.model.domain.{
 }
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
-import amf.core.utils.AmfStrings
+import amf.core.internal.utils.AmfStrings
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappableModel
 
 case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],

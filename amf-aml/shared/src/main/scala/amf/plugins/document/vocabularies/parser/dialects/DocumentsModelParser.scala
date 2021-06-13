@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.parser.Annotations
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.validation.CoreValidations.SyamlError
 import amf.plugins.document.vocabularies.model.domain.DocumentsModel
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
-import amf.plugins.features.validation.CoreValidations.SyamlError
 import org.yaml.model.{YMap, YNode, YType}
 // todo: should depend of SpecParserOps??? move to core??
 case class DocumentsModelParser(node: YNode, parentId: String, name: String)(implicit val ctx: DialectContext) {

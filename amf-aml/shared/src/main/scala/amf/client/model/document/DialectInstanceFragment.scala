@@ -1,6 +1,7 @@
 package amf.client.model.document
 
 import amf.client.model.domain.DialectDomainElement
+import amf.core.client.platform.model.document.{BaseUnit, EncodesModel}
 import amf.plugins.document.vocabularies.model.document.{DialectInstanceFragment => InternalDialectInstanceFragment}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement => InternalDialectDomainElement}
 

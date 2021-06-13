@@ -1,10 +1,13 @@
 package amf.plugins.features.validation.shacl
 
-import amf.core.benchmark.ExecutionLog.log
-import amf.core.model.document.BaseUnit
-import amf.core.services.ShaclValidationOptions
-import amf.core.validation.core.{SHACLValidator, ValidationReport, ValidationSpecification}
-import amf.plugins.features.validation.AMFValidatorPlugin.customValidations
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.benchmark.ExecutionLog.log
+import amf.core.internal.validation.core.{
+  SHACLValidator,
+  ShaclValidationOptions,
+  ValidationReport,
+  ValidationSpecification
+}
 import amf.plugins.features.validation.emitters.{JSLibraryEmitter, ShaclJsonLdShapeGraphEmitter}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -23,7 +26,7 @@ class FullShaclValidator(shacl: SHACLValidator, options: ShaclValidationOptions)
 
     if (shacl.supportsJSFunctions) loadJSFunctions(validations)
 
-    val shapes = customValidations(validations)
+    val shapes = validations.filter(s => !s.isParserSide)
 
     log(s"AMFValidatorPlugin#shaclValidation: Invoking platform validation")
 

@@ -1,19 +1,15 @@
 package amf.testing.rdf
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.{Amf, Aml, VocabularyYamlHint}
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.{Amf, Aml, VocabularyYamlHint}
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.testing.common.cycling.FunSuiteRdfCycleTests
-import amf.testing.common.utils.{AMLParsingHelper, DefaultAMLInitialization}
+import amf.testing.common.utils.AMLParsingHelper
 
 import scala.concurrent.ExecutionContext
 
-class DialectRDFTest
-    extends FunSuiteRdfCycleTests
-    with PlatformSecrets
-    with AMLParsingHelper
-    with DefaultAMLInitialization {
+class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets with AMLParsingHelper {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   val productionPath                                       = "amf-aml/shared/src/test/resources/vocabularies2/production/"

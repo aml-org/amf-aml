@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.parser.common
 
-import amf.core.metamodel.document.DocumentModel
-import amf.core.model.document.DeclaresModel
-import amf.core.model.domain.{AmfArray, Annotation, DomainElement}
-import amf.core.parser.{Annotations, Declarations}
+import amf.core.internal.metamodel.document.DocumentModel
+import amf.core.client.scala.model.document.DeclaresModel
+import amf.core.client.scala.model.domain.{AmfArray, Annotation, DomainElement}
+import amf.core.internal.parser.domain.{Annotations, Declarations}
 import org.yaml.model.YMapEntry
 
 trait DeclarationKeyCollector {

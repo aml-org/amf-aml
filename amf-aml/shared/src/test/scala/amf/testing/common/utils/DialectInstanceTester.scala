@@ -1,14 +1,13 @@
 package amf.testing.common.utils
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.remote.{Hint, Vendor}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.remote.{Hint, Vendor}
 import amf.testing.common.cycling.FunSuiteCycleTests
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
 
-trait DialectInstanceTester extends DefaultAMLInitialization with DialectRegistrationHelper {
-  this: FunSuiteCycleTests =>
+trait DialectInstanceTester extends DialectRegistrationHelper { this: FunSuiteCycleTests =>
 
   protected def cycleWithDialect(dialect: String,
                                  source: String,

@@ -1,9 +1,11 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.annotations.{ErrorDeclaration => DeclaredErrorDeclaration}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.domain.DomainElement
-import amf.core.parser.{Annotations, EmptyFutureDeclarations, Fields, FutureDeclarations, SearchScope}
+import amf.core.internal.annotations.{ErrorDeclaration => DeclaredErrorDeclaration}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.internal.parser.domain.SearchScope
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.parse.document.EmptyFutureDeclarations
+import amf.core.internal.parser.domain.{Annotations, Fields, FutureDeclarations, SearchScope}
 import amf.plugins.document.vocabularies.metamodel.domain.{AnnotationMappingModel, NodeMappingModel}
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations

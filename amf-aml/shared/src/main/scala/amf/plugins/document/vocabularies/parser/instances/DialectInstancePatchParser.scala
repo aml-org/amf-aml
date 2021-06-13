@@ -1,10 +1,9 @@
 package amf.plugins.document.vocabularies.parser.instances
 
-import amf.core.Root
+import amf.core.internal.parser.{Root, YMapOps}
 import amf.plugins.document.vocabularies.model.document.DialectInstancePatch
 import amf.validation.DialectValidations.DialectError
 import org.yaml.model.YType
-import amf.core.parser._
 
 class DialectInstancePatchParser(root: Root)(implicit override val ctx: DialectInstanceContext)
     extends DialectInstanceParser(root) {

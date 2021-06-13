@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.metamodel.domain
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Str
-import amf.core.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.Namespace
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.client.scala.vocabulary.Namespace
 
 trait NodeWithDiscriminatorModel extends DomainElementModel with HasObjectRangeModel {
   val TypeDiscriminator: Field = Field(

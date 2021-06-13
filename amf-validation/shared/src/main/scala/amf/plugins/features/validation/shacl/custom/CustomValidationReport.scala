@@ -1,11 +1,10 @@
 package amf.plugins.features.validation.shacl.custom
 
-import amf.{MessageStyle, OASStyle, RAMLStyle}
-import amf.core.services.ShaclValidationOptions
-import amf.core.validation.SeverityLevels
-import amf.core.validation.core.{
+import amf.core.client.common.validation.{MessageStyle, OASStyle, RAMLStyle, SeverityLevels}
+import amf.core.internal.validation.core.{
   PropertyConstraint,
   ShaclSeverityUris,
+  ShaclValidationOptions,
   ValidationReport,
   ValidationResult,
   ValidationSpecification

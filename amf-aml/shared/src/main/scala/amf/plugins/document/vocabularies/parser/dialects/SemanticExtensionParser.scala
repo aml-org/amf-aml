@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.{Annotations, SearchScope}
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.plugins.document.vocabularies.metamodel.domain.SemanticExtensionModel
 import amf.plugins.document.vocabularies.model.domain.SemanticExtension
 import amf.validation.DialectValidations.DialectError

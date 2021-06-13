@@ -4,7 +4,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.client.environment.{AMLClient => InternalAMLClient}
 import amf.client.convert.VocabulariesClientConverter._
 import amf.client.model.document.DialectInstance
-import amf.core.validation.core.ValidationProfile
+import amf.core.internal.validation.core.ValidationProfile
 
 import scala.concurrent.ExecutionContext
 

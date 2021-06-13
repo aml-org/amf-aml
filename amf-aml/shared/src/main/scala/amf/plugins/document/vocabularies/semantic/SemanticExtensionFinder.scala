@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.semantic
 
-import amf.core.model.domain.DomainElement
+import amf.core.client.scala.model.domain.DomainElement
 import amf.plugins.document.vocabularies.model.domain.SemanticExtension
 import org.mulesoft.common.collections.FilterType
 import org.mulesoft.common.core.CachedFunction

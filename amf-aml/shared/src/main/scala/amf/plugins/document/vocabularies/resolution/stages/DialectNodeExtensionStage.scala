@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.document.vocabularies.model.domain.NodeMapping
 import amf.utils.internal.AmlExtensionSyntax._
 

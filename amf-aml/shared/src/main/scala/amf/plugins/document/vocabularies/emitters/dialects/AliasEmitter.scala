@@ -1,10 +1,10 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.emitter.BaseEmitters.MapEntryEmitter
-import amf.core.emitter.EntryEmitter
-import amf.core.metamodel.Field
-import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.internal.render.BaseEmitters.MapEntryEmitter
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.metamodel.Field
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.DomainElement
 import org.yaml.model.YType
 
 trait AliasEmitter extends AliasesConsumer with PosExtractor {

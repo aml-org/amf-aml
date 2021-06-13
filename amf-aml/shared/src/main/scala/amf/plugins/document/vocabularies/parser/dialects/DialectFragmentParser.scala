@@ -1,12 +1,12 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, SearchScope}
-import amf.core.utils._
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.core.internal.utils._
+import amf.core.internal.validation.CoreValidations.DeclarationNotFound
 import amf.plugins.document.vocabularies.metamodel.domain.{DocumentMappingModel, DocumentsModelModel}
 import amf.plugins.document.vocabularies.model.domain.{DocumentMapping, DocumentsModel}
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
-import amf.plugins.features.validation.CoreValidations.DeclarationNotFound
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 case class DialectFragmentParser(into: DocumentsModel)(override implicit val ctx: DialectContext)
     extends DialectEntryParser {

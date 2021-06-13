@@ -1,8 +1,8 @@
 package amf.testing.common.utils
 
 import amf.core.io.FileAssertionTest
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.AMFValidationReport
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.client.scala.validation.AMFValidationReport
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.{Assertion, Matchers}
 

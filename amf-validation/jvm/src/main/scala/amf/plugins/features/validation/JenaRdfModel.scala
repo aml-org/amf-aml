@@ -1,15 +1,15 @@
 package amf.plugins.features.validation
 
-import java.io.{PrintWriter, StringWriter, Writer => JavaWriter}
-
-import amf.core.rdf._
-import amf.core.vocabulary.Namespace
+import amf.core.client.scala.rdf.{Literal, Node, PropertyObject, RdfModel, Uri}
+import amf.core.client.scala.vocabulary.Namespace
 import org.apache.jena.graph.Graph
 import org.apache.jena.rdf.model.{AnonId, Model, ModelFactory, Resource}
 import org.apache.jena.riot._
 import org.apache.jena.riot.system.RiotLib
 import org.apache.jena.sparql.util.Context
 import org.mulesoft.common.io.Output
+
+import java.io.{PrintWriter, StringWriter, Writer => JavaWriter}
 
 class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends RdfModel {
 
@@ -20,11 +20,11 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
   override def addTriple(subject: String, predicate: String, objResource: String): RdfModel = {
     nodesCache = nodesCache - subject
     model.add(
-      model.createStatement(
-        checkAnon(subject),
-        model.createProperty(predicate),
-        checkAnon(objResource)
-      )
+        model.createStatement(
+            checkAnon(subject),
+            model.createProperty(predicate),
+            checkAnon(objResource)
+        )
     )
     this
   }
@@ -35,14 +35,14 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
                          objLiteralType: Option[String]): RdfModel = {
     nodesCache = nodesCache - subject
     model.add(
-      model.createStatement(
-        checkAnon(subject),
-        model.createProperty(predicate),
-        objLiteralType match {
-          case Some(typeId) => model.createTypedLiteral(objLiteralValue, typeId)
-          case None         => model.createLiteral(objLiteralValue)
-        }
-      )
+        model.createStatement(
+            checkAnon(subject),
+            model.createProperty(predicate),
+            objLiteralType match {
+              case Some(typeId) => model.createTypedLiteral(objLiteralValue, typeId)
+              case None         => model.createLiteral(objLiteralValue)
+            }
+        )
     )
     this
   }
@@ -98,19 +98,19 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
               val lit = statement.getObject.asLiteral()
               resourceProperties = resourceProperties.updated(predicate,
                                                               oldProps ++ Seq(
-                                                                Literal(
-                                                                  value = lit.getLexicalForm,
-                                                                  literalType = Some(lit.getDatatypeURI)
-                                                                )
+                                                                  Literal(
+                                                                      value = lit.getLexicalForm,
+                                                                      literalType = Some(lit.getDatatypeURI)
+                                                                  )
                                                               ))
             } else if (statement.getObject.isResource) {
               resourceProperties = resourceProperties.updated(
-                predicate,
-                oldProps ++ Seq(
-                  Uri(
-                    value = statement.getObject.asResource().getURI
+                  predicate,
+                  oldProps ++ Seq(
+                      Uri(
+                          value = statement.getObject.asResource().getURI
+                      )
                   )
-                )
               )
             }
           }

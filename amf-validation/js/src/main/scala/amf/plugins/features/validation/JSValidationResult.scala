@@ -1,13 +1,13 @@
 package amf.plugins.features.validation
 
-import amf.core.validation.core.ValidationResult
-import amf.core.vocabulary.Namespace
+import amf.core.internal.validation.core.ValidationResult
+import amf.core.client.scala.vocabulary.Namespace
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportAll
 
 @JSExportAll
-class JSValidationResult(wrapped: js.Dynamic) extends  ValidationResult {
+class JSValidationResult(wrapped: js.Dynamic) extends ValidationResult {
   override def message: Option[String] = JSUtils.maybe(wrapped.message())
 
   override def path: String = {

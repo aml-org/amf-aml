@@ -1,11 +1,8 @@
 package amf.client.remod.rendering
 
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.{NormalPriority, PluginPriority}
-import amf.client.remod.amfcore.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
 import amf.plugins.document.vocabularies.emitters.vocabularies.VocabularyEmitter
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}

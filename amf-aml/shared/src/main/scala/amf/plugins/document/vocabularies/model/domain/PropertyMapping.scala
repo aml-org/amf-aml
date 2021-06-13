@@ -1,10 +1,10 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.{Field, Type}
-import amf.core.model._
-import amf.core.model.domain.{AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.client.scala.model._
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.{Field, Type}
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel._
 import amf.plugins.document.vocabularies.metamodel.domain.{DialectDomainElementModel, PropertyMappingModel}
 import org.yaml.model.YPart

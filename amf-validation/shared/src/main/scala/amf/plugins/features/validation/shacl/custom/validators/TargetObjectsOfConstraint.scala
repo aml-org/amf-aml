@@ -1,9 +1,9 @@
 package amf.plugins.features.validation.shacl.custom.validators
 
-import amf.core.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar, DomainElement}
-import amf.core.parser.Annotations
-import amf.core.validation.core.{NodeConstraint, ValidationSpecification}
-import amf.core.vocabulary.Namespace
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfObject, AmfScalar, DomainElement}
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.validation.core.{NodeConstraint, ValidationSpecification}
 import amf.plugins.features.validation.shacl.custom.PropertyConstraintValidator.extractPredicateValue
 import amf.plugins.features.validation.shacl.custom.{ConstraintValidator, ReportBuilder}
 

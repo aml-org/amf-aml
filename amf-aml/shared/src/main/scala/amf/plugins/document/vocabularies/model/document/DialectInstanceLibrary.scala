@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.model.StrField
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.DomainElement
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceLibraryModel
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel.{
   Declares,

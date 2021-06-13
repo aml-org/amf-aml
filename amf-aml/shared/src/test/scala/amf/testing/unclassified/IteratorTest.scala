@@ -1,7 +1,7 @@
 package amf.testing.unclassified
 
-import amf.core.model.domain.DomainElement
-import amf.core.remote.VocabularyYamlHint
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.remote.VocabularyYamlHint
 import amf.testing.common.utils.DialectTests
 import org.scalatest.Matchers
 

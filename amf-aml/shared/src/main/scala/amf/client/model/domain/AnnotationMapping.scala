@@ -1,7 +1,8 @@
 package amf.client.model.domain
 
 import amf.client.convert.VocabulariesClientConverter._
-import amf.client.model._
+import amf.core.client.platform.model.{AnyField, BoolField, DoubleField, IntField, StrField}
+import amf.core.client.platform.model.domain._
 import amf.plugins.document.vocabularies.model.domain.{AnnotationMapping => InternalAnnotationMapping}
 
 import scala.collection.mutable
@@ -13,7 +14,7 @@ case class AnnotationMapping(override private[amf] val _internal: InternalAnnota
   @JSExportTopLevel("model.domain.AnnotationMapping")
   def this() = this(InternalAnnotationMapping())
 
-  def name(): StrField                    = _internal.name()
+  def name(): StrField                    = _internal.name
   def nodePropertyMapping(): StrField     = _internal.nodePropertyMapping()
   def domain(): StrField                  = _internal.domain()
   def literalRange(): StrField            = _internal.literalRange()
