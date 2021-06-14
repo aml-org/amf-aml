@@ -140,7 +140,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base/instance.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#presidents",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,11)-(13,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(13,0)]"
     },
     {
       "@id": "http://overriden.com/presidents/encodes/presidents/0#/source-map/lexical/element_1",

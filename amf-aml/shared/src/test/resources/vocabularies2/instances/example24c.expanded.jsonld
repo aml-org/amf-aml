@@ -117,7 +117,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(8,3)-(10,0)]"
+                    "@value": "[(8,0)-(10,0)]"
                   }
                 ]
               },

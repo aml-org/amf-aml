@@ -110,7 +110,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,3)-(6,6)]"
+                    "@value": "[(6,0)-(6,6)]"
                   }
                 ]
               }
@@ -405,7 +405,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(4,6)-(6,0)]"
+                    "@value": "[(4,4)-(6,0)]"
                   }
                 ]
               },

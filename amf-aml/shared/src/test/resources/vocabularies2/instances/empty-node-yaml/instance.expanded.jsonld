@@ -84,7 +84,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(2,11)-(2,13)]"
+                    "@value": "[(2,0)-(2,13)]"
                   }
                 ]
               }

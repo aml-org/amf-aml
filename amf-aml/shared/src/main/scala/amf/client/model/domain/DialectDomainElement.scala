@@ -42,7 +42,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
   def setObjectProperty(propertyId: String, value: DialectDomainElement): this.type = {
     _internal.findPropertyMappingByTermPropertyId(Namespace.defaultAliases.expand(propertyId).iri()) match {
       case Some(mapping) =>
-        _internal.setObjectField(mapping, value._internal, YNode.Empty)
+        _internal.setObjectField(mapping, value._internal, Left(YNode.Empty))
         this
       case None =>
         throw new Exception(s"Cannot find node mapping for propertyId $propertyId")
@@ -52,7 +52,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
   def setObjectCollectionProperty(propertyId: String, value: ClientList[DialectDomainElement]): this.type = {
     _internal.findPropertyMappingByTermPropertyId(Namespace.defaultAliases.expand(propertyId).iri()) match {
       case Some(mapping) =>
-        _internal.setObjectField(mapping, value.asInternal, YNode.Empty)
+        _internal.setObjectField(mapping, value.asInternal, Left(YNode.Empty))
         this
       case None =>
         throw new Exception(s"Cannot find node mapping for propertyId $propertyId")

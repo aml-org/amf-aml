@@ -142,7 +142,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(7,14)-(7,18)]"
+                    "@value": "[(7,0)-(7,18)]"
                   }
                 ]
               },
