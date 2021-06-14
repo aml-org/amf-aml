@@ -89,7 +89,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value-without-classterm/instance.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#mule.agent.application.properties.service",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,42)-(5,32)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(5,32)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value-without-classterm/instance.yaml#/encodes/mule.agent.application.properties.service/properties/something/source-map",

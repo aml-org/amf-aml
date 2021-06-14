@@ -83,7 +83,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(6,6)-(6,31)]"
+                    "@value": "[(6,0)-(7,0)]"
                   }
                 ]
               },
@@ -96,7 +96,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "[(3,6)-(6,0)]"
+                    "@value": "[(3,0)-(6,0)]"
                   }
                 ]
               },

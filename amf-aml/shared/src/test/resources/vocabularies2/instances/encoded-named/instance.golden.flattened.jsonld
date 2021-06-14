@@ -1,0 +1,129 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes",
+      "@type": [
+        "schema.orgRoot",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/dialect.yaml#/declarations/Root",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "schema.orgmap": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes/map/one"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes/map/two"
+        }
+      ],
+      "schema.orgobj": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes/obj"
+      },
+      "schema.orgarrobj": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes/arrobj/0"
+        }
+      ],
+      "schema.orgsca": "scalar",
+      "schema.orgarr": [
+        "t",
+        "e",
+        "s",
+        "t"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes/map/one",
+      "@type": [
+        "schema.orgNested",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/dialect.yaml#/declarations/Nested",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "schema.orgn2": 1.0,
+      "schema.orgn1": "one"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes/map/two",
+      "@type": [
+        "schema.orgNested",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/dialect.yaml#/declarations/Nested",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "schema.orgn2": 2.0,
+      "schema.orgn1": "two"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes/obj",
+      "@type": [
+        "schema.orgNested",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/dialect.yaml#/declarations/Nested",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "schema.orgn2": 1.0
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes/arrobj/0",
+      "@type": [
+        "schema.orgNested",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/dialect.yaml#/declarations/Nested",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "schema.orgn2": 1.0,
+      "schema.orgn1": "one"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml",
+      "http://a.ml/vocabularies/document#declares": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/nested/newNested"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/nested/otherNested"
+        }
+      ],
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes"
+      },
+      "http://a.ml/vocabularies/document#version": "3.1.0",
+      "http://a.ml/vocabularies/document#root": true
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/nested/newNested",
+      "@type": [
+        "schema.orgNested",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/dialect.yaml#/declarations/Nested",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/meta#declarationName": "newNested",
+      "schema.orgn2": 101.0
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/nested/otherNested",
+      "@type": [
+        "schema.orgNested",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/dialect.yaml#/declarations/Nested",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/meta#declarationName": "otherNested",
+      "schema.orgn2": 102.0
+    }
+  ]
+}

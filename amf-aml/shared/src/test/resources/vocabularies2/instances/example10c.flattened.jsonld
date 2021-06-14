@@ -110,7 +110,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example10c.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#xs",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,3)-(9,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(9,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example10c.yaml#/encodes/xs/0/source-map/lexical/element_2",

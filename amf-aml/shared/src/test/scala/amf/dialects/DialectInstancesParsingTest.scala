@@ -1018,13 +1018,25 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  test("different encodes should be named") {
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      "instance.golden.flattened.jsonld",
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint),
+      directory = s"$basePath/encoded-named/"
+    )
+  }
+
   test("Cyclic references") {
     withDialect(
       "dialect.yaml",
       "instance.flattened.jsonld",
       "instance.golden.flattened.jsonld",
       AmfJsonHint,
-      target = Amf,
+      target = Aml,
       renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint),
       directory = s"$basePath/cyclic-references/"
     )
