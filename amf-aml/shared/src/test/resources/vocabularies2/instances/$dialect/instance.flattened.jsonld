@@ -73,7 +73,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect/instance.yaml#/encodes/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#c",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,2)-(8,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(8,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect/instance.yaml#/encodes/source-map/lexical/element_1",

@@ -113,7 +113,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#organization",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,14)-(7,18)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(7,0)-(7,18)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/declares-in-self-encoded/instance.yaml#/source-map/lexical/element_2",

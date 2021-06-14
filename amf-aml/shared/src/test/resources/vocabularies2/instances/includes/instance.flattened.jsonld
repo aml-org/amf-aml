@@ -76,7 +76,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/includes/instance.yaml#/encodes/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#c",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(4,3)-(4,25)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(4,25)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/includes/instance.yaml#/encodes/source-map/lexical/element_1",

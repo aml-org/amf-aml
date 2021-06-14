@@ -146,7 +146,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/cfg/example2_instance.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/cfg#configuredAsset",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,7)-(21,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(21,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/cfg/example2_instance.yaml#/encodes/assets/vdp-binary/source-map/lexical/element_6",

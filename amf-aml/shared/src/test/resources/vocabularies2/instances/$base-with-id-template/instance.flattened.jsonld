@@ -95,12 +95,12 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#presidentSlashId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,17)-(9,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(9,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#presidentHashId",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,16)-(5,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(5,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/$base-with-id-template/instance.yaml#/encodes/source-map/lexical/element_1",

@@ -37,7 +37,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#link",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,5)-(8,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(8,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/native-link-with-extra-properties/instance.yaml#/encodes/source-map/lexical/element_0",
