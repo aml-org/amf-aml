@@ -2,144 +2,36 @@ package amf.plugins.document.vocabularies.resolution.stages
 
 import amf.core.annotations.Aliases
 import amf.core.errorhandling.AMFErrorHandler
+import amf.core.metamodel.domain.DomainElementModel
 import amf.core.model.document.{BaseUnit, DeclaresModel}
+import amf.core.model.domain.Linkable
 import amf.core.resolution.stages.TransformationStep
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
-import amf.plugins.document.vocabularies.model.domain.{External, NodeMappable, NodeMapping, UnionNodeMapping}
+import amf.plugins.document.vocabularies.model.domain.{
+  AnnotationMapping,
+  External,
+  HasObjectRange,
+  NodeMappable,
+  NodeMapping,
+  UnionNodeMapping
+}
 import amf.utils.internal.AmlExtensionSyntax._
+import org.mulesoft.common.collections.FilterType
 
 import scala.collection.mutable
 
 class DialectReferencesResolutionStage() extends TransformationStep() {
   type NodeMappable = NodeMappable.AnyNodeMappable
 
-  def dereference(nodeMappable: NodeMappable, finalDeclarations: mutable.Map[String, NodeMappable]): NodeMappable = {
-    finalDeclarations.get(nodeMappable.id) match {
-      case Some(mappable) => mappable
-      case _ =>
-        nodeMappable match {
-          // Resolving links in node mappings declarations
-          case mapping: NodeMapping =>
-            val finalNode = if (mapping.isLink) {
-              val target = dereference(mapping.linkTarget.get.asInstanceOf[NodeMapping], finalDeclarations)
-                .asInstanceOf[NodeMapping]
-              target.withName(mapping.name.value()).withId(target.id)
-            } else {
-              mapping
-            }
-
-            val extended = finalNode.extend.map {
-              case superNode: NodeMapping =>
-                val target = dereference(superNode, finalDeclarations).asInstanceOf[NodeMapping]
-                Some(target)
-              case _ =>
-                None
-
-            }
-            finalNode.withExtends(extended.collect { case Some(n) => n })
-            finalDeclarations += (finalNode.id -> finalNode)
-            finalNode
-
-          // we ignore them in unions
-          case union: UnionNodeMapping => {
-            finalDeclarations += (union.id -> union)
-            union
-          }
-        }
-    }
-  }
-
-  def genName(baseName: String, allDeclarations: Map[String, NodeMappable]): String = {
-    var c   = 1
-    var acc = baseName
-    while (allDeclarations.contains(acc)) {
-      c += 1
-      acc = s"$baseName$c"
-    }
-    acc
-  }
-
-  def dereferencePendingDeclarations(pending: Seq[NodeMappable],
-                                     acc: mutable.Map[String, NodeMappable],
-                                     allDeclarations: Map[String, NodeMappable]): Unit = {
-    if (pending.nonEmpty) {
-      val nextPending = pending.head
-      // has this been already dereferenced with some alias
-      acc.get(nextPending.id) match {
-        case Some(_) => // ignore already added, ignore
-          dereferencePendingDeclarations(pending.tail, acc, allDeclarations)
-        case None =>
-          val effectiveNextPending = if (nextPending.isLink) {
-            // if this is a link, we clone
-            nextPending
-              .effectiveLinkTarget()
-              .asInstanceOf[NodeMappable]
-              .copyMapping
-              .withName(nextPending.name.value())
-              .withId(nextPending.id)
-          } else {
-            // otherwise we just introduce the node mapping
-            nextPending
-          }
-          val newPendingRange = effectiveNextPending match {
-            case nodeMapping: NodeMapping =>
-              // we add all object ranges to the list of pendings
-              pending.tail ++ nodeMapping
-                .propertiesMapping()
-                .flatMap(_.objectRange())
-                .map(r => allDeclarations.get(r.value()))
-                .collect { case Some(x) => x }
-            case union: UnionNodeMapping =>
-              // we add all union ranges to the list of pendings
-              pending.tail ++ union.objectRange().map(r => allDeclarations.get(r.value())).collect {
-                case Some(x) => x
-              }
-          }
-
-          val newPending = effectiveNextPending.extend.headOption match {
-            case Some(n: NodeMappable) if n.linkTarget.isDefined =>
-              newPendingRange ++ Seq(n.linkTarget.get.asInstanceOf[NodeMappable])
-            case _ => newPendingRange
-          }
-
-          if (effectiveNextPending.name
-                .value()
-                .contains(".")) { // this might come from a library TODO: check collisions in names
-            effectiveNextPending.withName(genName(effectiveNextPending.name.value().split(".").last, allDeclarations))
-          }
-
-          acc += (effectiveNextPending.id -> effectiveNextPending)
-
-          dereferencePendingDeclarations(newPending, acc, allDeclarations)
-
-      }
-
-    }
-  }
-
-  // Set the final extend references to the final list of node mappings
-  def linkExtendedNodes(acc: mutable.Map[String, NodeMappable]): Unit = {
-    acc.values.foreach { nodeMappable =>
-      nodeMappable.extend.headOption match {
-        case Some(extended: NodeMappable)
-            if extended.linkTarget.isDefined && acc.contains(extended.linkTarget.get.id) =>
-          val found = acc(extended.linkTarget.get.id)
-          nodeMappable.setArrayWithoutId(NodeMappingModel.Extends, Seq(found))
-        case _ =>
-        // ignore
-      }
-    }
-  }
-
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
     val finalDeclarationsMap = mutable.Map[String, NodeMappable]()
-    val unitDeclarations =
-      model.asInstanceOf[DeclaresModel].declares.filter(_.isInstanceOf[NodeMappable]).asInstanceOf[Seq[NodeMappable]]
+    val unitDeclarations     = model.asInstanceOf[DeclaresModel].declares.filterType[NodeMappable]
 
-    dereferencePendingDeclarations(pending = unitDeclarations,
-                                   acc = finalDeclarationsMap,
-                                   allDeclarations = model.recursivelyFindDeclarations())
+    iteratePending(pending = unitDeclarations,
+                   alreadyResolved = finalDeclarationsMap,
+                   allDeclarations = model.recursivelyFindDeclarations())
+
     linkExtendedNodes(finalDeclarationsMap)
 
     val finalDeclarations = finalDeclarationsMap.values.toSeq
@@ -180,6 +72,101 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
     }
 
     resolved
+  }
+
+  def iteratePending(pending: Seq[NodeMappable],
+                     alreadyResolved: mutable.Map[String, NodeMappable],
+                     allDeclarations: Map[String, NodeMappable]): Unit = {
+    if (pending.nonEmpty) {
+      (pending.head, pending.tail) match {
+        case (head, tail) if alreadyResolved.contains(head.id) =>
+          iteratePending(tail, alreadyResolved, allDeclarations)
+        case (head, tail) =>
+          val resolved = resolveNodeMappable(head)
+          setName(resolved, allDeclarations)
+          val collectedRefs = collectReferencesFrom(resolved, allDeclarations)
+          alreadyResolved += (resolved.id -> resolved)
+          iteratePending(tail ++ collectedRefs, alreadyResolved, allDeclarations)
+      }
+    }
+  }
+
+  private def resolveNodeMappable(nodeMappable: NodeMappable): NodeMappable = {
+    if (nodeMappable.isLink) {
+      // if this is a link, we clone
+      nodeMappable
+        .effectiveLinkTarget()
+        .asInstanceOf[NodeMappable]
+        .copyMapping
+        .withName(nodeMappable.name.value())
+        .withId(nodeMappable.id)
+    } else {
+      // otherwise we just introduce the node mapping
+      nodeMappable
+    }
+  }
+
+  private def setName(nodeMappable: NodeMappable, allDeclarations: Map[String, NodeMappable]) = {
+    def genName(baseName: String, allDeclarations: Map[String, NodeMappable]): String = {
+      var c   = 1
+      var acc = baseName
+      while (allDeclarations.contains(acc)) {
+        c += 1
+        acc = s"$baseName$c"
+      }
+      acc
+    }
+
+    if (nodeMappable.name
+          .value()
+          .contains(".")) { // this might come from a library TODO: check collisions in names
+      nodeMappable.withName(genName(nodeMappable.name.value().split(".").last, allDeclarations))
+    }
+  }
+
+  private def collectReferencesFrom(nodeMappable: NodeMappable,
+                                    allDeclarations: Map[String, NodeMappable]): Seq[NodeMappable] = {
+    def collectRange(element: HasObjectRange[_]) = {
+      for {
+        range            <- element.objectRange()
+        foundDeclaration <- allDeclarations.get(range.value())
+      } yield {
+        foundDeclaration
+      }
+    }
+
+    val rangeReferences = nodeMappable match {
+      case nodeMapping: NodeMapping =>
+        // we add all object ranges to the list of pendings
+        for {
+          property <- nodeMapping.propertiesMapping()
+          range    <- collectRange(property)
+        } yield {
+          range
+        }
+      case union: UnionNodeMapping       => collectRange(union)
+      case annotation: AnnotationMapping => collectRange(annotation)
+    }
+
+    val extendsReferenceOption = nodeMappable.extend.headOption match {
+      case Some(n: NodeMappable) => n.linkTarget.map(_.asInstanceOf[NodeMappable])
+      case _                     => None
+    }
+
+    rangeReferences ++ extendsReferenceOption.toSeq
+  }
+
+  private def linkExtendedNodes(alreadyResolved: mutable.Map[String, NodeMappable]): Unit = {
+    alreadyResolved.values.foreach { nodeMappable =>
+      nodeMappable.extend.headOption match {
+        case Some(extended: NodeMappable)
+            if extended.linkTarget.isDefined && alreadyResolved.contains(extended.linkTarget.get.id) =>
+          val found = alreadyResolved(extended.linkTarget.get.id)
+          nodeMappable.setArrayWithoutId(NodeMappingModel.Extends, Seq(found))
+        case _ =>
+        // ignore
+      }
+    }
   }
 
 }
