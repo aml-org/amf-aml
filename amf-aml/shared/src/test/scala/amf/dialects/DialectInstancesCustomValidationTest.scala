@@ -10,8 +10,8 @@ class DialectInstancesCustomValidationTest extends DialectInstanceValidation wit
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  val basePath       = "file://amf-custom-validation/shared/src/test/resources/vocabularies2/validation"
-  val productionPath = "file://amf-custom-validation/shared/src/test/resources/vocabularies2/production"
+  val basePath       = "file://amf-aml/shared/src/test/resources/vocabularies2/validation"
+  val productionPath = "file://amf-aml/shared/src/test/resources/vocabularies2/production"
 
   def validate(dialect: String,
                instance: String,
@@ -35,11 +35,11 @@ class DialectInstancesCustomValidationTest extends DialectInstanceValidation wit
 
   test("custom validation profile for dialect") {
     validateWithCustomProfile(
-        "eng_demos_dialect1.yaml",
+        "eng_demos_dialect1_modified.yaml",
         "eng_demos_instance1.yaml",
         ProfileName("eng_demos_profile.yaml"),
         "Custom Eng-Demos Validation",
-        golden = Some("eng_demos_instance1.report.json")
+        golden = Some("eng_demos_instance1_modified.report.json")
     )
   }
 
