@@ -1,27 +1,26 @@
 package amf.testing.common.utils
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
-import amf.client.remod.rendering.{AMLDialectInstanceRenderingPlugin, AMLDialectRenderingPlugin}
-import amf.core.errorhandling.UnhandledErrorHandler
+import amf.client.remod.rendering.AMLDialectInstanceRenderingPlugin
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
+import amf.core.internal.remote.Hint
 import amf.core.io.FileAssertionTest
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.DomainElement
-import amf.core.parser.SyamlParsedDocument
-import amf.core.remote.Hint
 import amf.plugins.document.vocabularies.emitters.instances.AmlDomainElementEmitter
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
-import amf.plugins.syntax.SYamlSyntaxPlugin
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YDocument, YNode}
 
+import java.io.StringWriter
 import scala.concurrent.Future
 
 trait DomainElementCycleTests
     extends AsyncFunSuite
     with FileAssertionTest
     with AMLParsingHelper
-    with DefaultAMLInitialization
     with DialectRegistrationHelper {
 
   val basePath: String
@@ -69,7 +68,8 @@ trait DomainElementCycleTests
     val node =
       element.map(AmlDomainElementEmitter.emit(_, dialect, UnhandledErrorHandler, references)).getOrElse(YNode.Empty)
     val document = SyamlParsedDocument(document = YDocument(node))
-    SYamlSyntaxPlugin.unparse("application/yaml", document).getOrElse("").toString
+    val w        = new StringWriter
+    SyamlSyntaxRenderPlugin.emit("application/yaml", document, w).map(_.toString).getOrElse("")
   }
   def transform(unit: BaseUnit): BaseUnit = unit
 }

@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.parser.instances
 
+import amf.core.internal.parser.YMapOps
 import org.yaml.model.{YMap, YMapEntry}
-import amf.core.parser.YMapOps
 import amf.plugins.document.vocabularies.parser.instances.BaseDirective.baseFrom
 
 import scala.util.matching.Regex

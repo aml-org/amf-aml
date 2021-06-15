@@ -1,27 +1,27 @@
 package amf.client.environment
 
 import amf.client.environment.AMLConfiguration.{platform, predefined}
-import amf.client.exported.config.AMFLogger
-import amf.client.remod.amfcore.config._
-import amf.client.remod.amfcore.plugins.AMFPlugin
-import amf.client.remod.amfcore.registry.AMFRegistry
+import amf.core.client.platform.config.AMFLogger
+import amf.core.client.scala.config._
+import amf.core.internal.plugins.AMFPlugin
+import amf.core.internal.registries.AMFRegistry
 import amf.client.remod.parsing.{AMLDialectInstanceParsingPlugin, AMLDialectParsingPlugin, AMLVocabularyParsingPlugin}
 import amf.client.remod.rendering.{
   AMLDialectInstanceRenderingPlugin,
   AMLDialectRenderingPlugin,
   AMLVocabularyRenderingPlugin
 }
-import amf.client.remod.{AMFGraphConfiguration, AMFParser, AMFResult, ErrorHandlerProvider}
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.metamodel.ModelDefaultBuilder
-import amf.core.model.domain.DomainElement
-import amf.core.model.domain.AnnotationGraphLoader
-import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.core.ValidationProfile
-import amf.core.{AMFCompiler, CompilerContextBuilder}
-import amf.internal.reference.UnitCache
-import amf.internal.resource.ResourceLoader
+import amf.core.client.scala.{AMFGraphConfiguration, AMFResult}
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, ErrorHandlerProvider, UnhandledErrorHandler}
+import amf.core.internal.metamodel.ModelDefaultBuilder
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.model.domain.AnnotationGraphLoader
+import amf.core.client.scala.parse.AMFParser
+import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.core.ValidationProfile
+import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
+import amf.core.internal.resource.{AMFResolvers, ResourceLoader}
 import amf.plugins.document.vocabularies.{AMLValidationPlugin, DialectRegister}
 import amf.plugins.document.vocabularies.annotations.serializable.AMLSerializableAnnotations
 import amf.plugins.document.vocabularies.custom.ParsedValidationProfile
@@ -35,6 +35,7 @@ import amf.plugins.document.vocabularies.resolution.pipelines.{
 }
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.plugins.domain.VocabulariesRegister
+import amf.plugins.features.validation.unsafe.PlatformValidatorSecret
 import amf.validation.ValidationDialectText
 import org.mulesoft.common.collections.FilterType
 
@@ -185,11 +186,11 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
 object AMLConfiguration extends PlatformSecrets {
 
-  /** Predefined environment to deal with AML documents based on AMFGraphConfiguration {@link amf.client.remod.AMFGraphConfiguration.predefined predefined()} method */
+  /** Predefined environment to deal with AML documents based on AMFGraphConfiguration {@link amf.core.client.scala.AMFGraphConfiguration.predefined predefined()} method */
   def predefined(): AMLConfiguration = {
     val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
     VocabulariesRegister.register() // TODO ARM remove when APIMF-3000 is done
-
+    PlatformValidatorSecret.init()
     val predefinedPlugins = new AMLDialectParsingPlugin() ::
       new AMLVocabularyParsingPlugin() ::
       new AMLDialectRenderingPlugin() ::

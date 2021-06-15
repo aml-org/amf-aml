@@ -1,11 +1,11 @@
 package amf.plugins.document.vocabularies.resolution.pipelines
 
-import amf.client.remod.amfcore.resolution.PipelineName
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.remote.Aml
-import amf.core.resolution.pipelines.{TransformationPipeline, TransformationPipelineRunner}
-import amf.core.resolution.stages.TransformationStep
+import amf.core.client.scala.transform.PipelineName
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.Aml
+import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstance, DialectInstancePatch}
 
 class DefaultAMLTransformationPipeline(override val name: String) extends TransformationPipeline {

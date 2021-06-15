@@ -1,6 +1,6 @@
 package amf.plugins.document
 
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.plugins.domain.VocabulariesRegister
 
 import scala.scalajs.js.annotation.JSExportAll

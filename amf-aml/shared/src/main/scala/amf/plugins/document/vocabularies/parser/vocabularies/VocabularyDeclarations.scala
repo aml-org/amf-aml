@@ -1,7 +1,8 @@
 package amf.plugins.document.vocabularies.parser.vocabularies
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.parser.{Declarations, EmptyFutureDeclarations, FutureDeclarations}
-import amf.core.vocabulary.Namespace
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.parse.document.EmptyFutureDeclarations
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.parser.domain.{Declarations, FutureDeclarations}
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.model.domain.{ClassTerm, External, PropertyTerm}
 

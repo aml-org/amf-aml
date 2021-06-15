@@ -1,17 +1,18 @@
 package amf.plugins.document.vocabularies.parser.vocabularies
 
-import amf.core.Root
-import amf.core.model.DataType
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{BaseSpecParser, _}
-import amf.core.vocabulary.Namespace
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.parser.domain.{Annotations, BaseSpecParser, DefaultArrayNode, ValueNode}
 import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel
 import amf.plugins.document.vocabularies.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.model.domain._
 import amf.plugins.document.vocabularies.parser.common.{DeclarationKey, DeclarationKeyCollector}
 import org.yaml.model._
+import amf.core.client.scala.vocabulary.Namespace
 
 class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContext)
     extends BaseSpecParser

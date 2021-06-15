@@ -1,6 +1,6 @@
 package amf.plugins.features.validation
 
-import amf.plugins.document.graph.JsonLdKeywords
+import amf.core.internal.plugins.document.graph.JsonLdKeywords
 import org.json4s.JsonAST.{JArray, JString}
 import org.json4s.{JObject, JValue}
 

@@ -1,6 +1,6 @@
 package amf.plugins.features.validation.shacl.custom
 
-import amf.core.validation.core.ValidationResult
+import amf.core.internal.validation.core.ValidationResult
 
 case class CustomValidationResult(message: Option[String],
                                   path: String,

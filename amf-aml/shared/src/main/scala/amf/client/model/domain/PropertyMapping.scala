@@ -1,7 +1,8 @@
 package amf.client.model.domain
 
 import amf.client.convert.VocabulariesClientConverter._
-import amf.client.model._
+import amf.core.client.platform.model.{AnyField, BoolField, DoubleField, IntField, StrField}
+import amf.core.client.platform.model.domain.DomainElement
 import amf.plugins.document.vocabularies.model.domain.{
   ExtensionPointProperty,
   LiteralProperty,

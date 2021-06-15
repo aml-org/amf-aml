@@ -1,8 +1,8 @@
 package amf.testing.render
 
-import amf.core.model.document.{BaseUnit, EncodesModel}
-import amf.core.model.domain.DomainElement
-import amf.core.remote.{Hint, VocabularyYamlHint}
+import amf.core.client.scala.model.document.{BaseUnit, EncodesModel}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.remote.{Hint, VocabularyYamlHint}
 import amf.testing.unclassified.ClientDomainElementTests
 
 import scala.concurrent.ExecutionContext
@@ -21,10 +21,10 @@ class ClientDialectDomainElementRenderTest extends ClientDomainElementTests {
 
   test("Simple node union rendering") {
     renderElement("dialect.yaml",
-      "instance.yaml",
-      encodes,
-      "instance-encodes.yaml",
-      directory = s"$rendering/simple-node-union")
+                  "instance.yaml",
+                  encodes,
+                  "instance-encodes.yaml",
+                  directory = s"$rendering/simple-node-union")
   }
 
   test("render 1 (AMF) test") {

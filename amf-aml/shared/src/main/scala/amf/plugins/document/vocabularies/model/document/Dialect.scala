@@ -1,10 +1,12 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.ProfileName
-import amf.core.model.StrField
-import amf.core.model.document.{BaseUnit, DeclaresModel, EncodesModel}
-import amf.core.model.domain.DomainElement
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.metamodel.document.DocumentModel.Encodes
+import amf.core.internal.metamodel.document.ModuleModel.{Declares, References}
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel._
 import amf.plugins.document.vocabularies.model.document.kind.DialectInstanceDocumentKind

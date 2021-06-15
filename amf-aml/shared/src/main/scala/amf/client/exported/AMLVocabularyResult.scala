@@ -3,6 +3,7 @@ package amf.client.exported
 import amf.client.environment.{AMLVocabularyResult => InternalAMLVocabularyResult}
 import amf.client.model.document.Vocabulary
 import amf.client.convert.VocabulariesClientConverter._
+import amf.core.client.platform.AMFResult
 
 import scala.scalajs.js.annotation.JSExportAll
 

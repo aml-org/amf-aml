@@ -1,14 +1,16 @@
 package amf.testing.validation
 
-import amf.testing.common.utils.{AMLParsingHelper, DefaultAMLInitialization, DialectInstanceValidation, ReportComparator, UniquePlatformReportComparator}
+import amf.testing.common.utils.{
+  AMLParsingHelper,
+  DialectInstanceValidation,
+  ReportComparator,
+  UniquePlatformReportComparator
+}
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class JapaneseDialectInstancesValidationTest
-    extends DialectInstanceValidation
-    with AMLParsingHelper
-    with DefaultAMLInitialization {
+class JapaneseDialectInstancesValidationTest extends DialectInstanceValidation with AMLParsingHelper {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   private val reportComparator: ReportComparator           = UniquePlatformReportComparator

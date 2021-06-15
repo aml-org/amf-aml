@@ -1,17 +1,11 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.annotations.LexicalInformation
-import amf.core.emitter.BaseEmitters.{MapEntryEmitter, pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.metamodel.Field
-import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.client.common.position.Position
+import amf.core.internal.render.BaseEmitters.{pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
-import amf.plugins.document.vocabularies.metamodel.domain.AnnotationMappingModel
 import amf.plugins.document.vocabularies.metamodel.domain.AnnotationMappingModel.Domain
-import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel.NodePropertyMapping
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.AnnotationMapping
 import org.yaml.model.YDocument.EntryBuilder

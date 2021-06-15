@@ -1,7 +1,7 @@
 package amf.testing.resolution
 
 import amf.client.environment.AMLConfiguration
-import amf.core.model.document.BaseUnit
+import amf.core.client.scala.model.document.BaseUnit
 import amf.plugins.document.vocabularies.resolution.pipelines.DefaultAMLTransformationPipeline
 import amf.testing.common.utils.DialectTests
 

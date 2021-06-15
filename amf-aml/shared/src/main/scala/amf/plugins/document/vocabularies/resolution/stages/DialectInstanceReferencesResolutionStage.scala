@@ -1,12 +1,12 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.document.DocumentModel
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.resolution.stages.helpers.ModelReferenceResolver
-import amf.core.resolution.stages.selectors.LinkSelector
-import amf.core.resolution.stages.{TransformationStep}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.internal.metamodel.document.DocumentModel
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.transform.stages.helpers.ModelReferenceResolver
+import amf.core.client.scala.transform.stages.selectors.LinkSelector
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.document.vocabularies.model.document.DialectInstance
 
 class DialectInstanceReferencesResolutionStage() extends TransformationStep {

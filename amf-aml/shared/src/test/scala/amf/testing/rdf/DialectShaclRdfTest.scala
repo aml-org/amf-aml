@@ -1,29 +1,25 @@
 package amf.testing.rdf
 
 import amf.client.environment.AMLConfiguration
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.rdf.RdfModel
-import amf.core.remote.Syntax.Syntax
-import amf.core.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
-import amf.core.services.RuntimeValidator
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.rdf.RdfModel
+import amf.core.internal.remote.Syntax.Syntax
+import amf.core.internal.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.plugins.features.validation.{CoreValidations, PlatformValidator}
+import amf.plugins.features.validation.PlatformValidator
 import amf.testing.common.cycling.FunSuiteRdfCycleTests
-import amf.testing.common.utils.{AMLParsingHelper, DefaultAMLInitialization}
+import amf.testing.common.utils.AMLParsingHelper
 import amf.validation.DialectValidations
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DialectShaclRdfTest
-    extends FunSuiteRdfCycleTests
-    with PlatformSecrets
-    with AMLParsingHelper
-    with DefaultAMLInitialization {
+class DialectShaclRdfTest extends FunSuiteRdfCycleTests with PlatformSecrets with AMLParsingHelper {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 

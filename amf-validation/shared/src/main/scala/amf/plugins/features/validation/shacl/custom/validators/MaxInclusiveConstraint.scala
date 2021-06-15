@@ -1,7 +1,7 @@
 package amf.plugins.features.validation.shacl.custom.validators
 
-import amf.core.model.domain.{AmfObject, AmfScalar, DomainElement}
-import amf.core.validation.core.{PropertyConstraint, ValidationSpecification}
+import amf.core.client.scala.model.domain.{AmfObject, AmfScalar}
+import amf.core.internal.validation.core.{PropertyConstraint, ValidationSpecification}
 import amf.plugins.features.validation.shacl.custom.PropertyConstraintValidator.extractPropertyValue
 import amf.plugins.features.validation.shacl.custom.{PropertyConstraintValidator, ReportBuilder}
 

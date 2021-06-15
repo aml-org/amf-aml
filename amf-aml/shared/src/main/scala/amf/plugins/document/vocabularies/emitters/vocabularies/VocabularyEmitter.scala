@@ -1,13 +1,14 @@
 package amf.plugins.document.vocabularies.emitters.vocabularies
 
-import amf.core.annotations.LexicalInformation
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
-import amf.core.remote.{Raml, Raml10}
-import amf.core.vocabulary.Namespace
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.remote.Raml10
+import amf.core.internal.render.SpecOrdering
 import amf.plugins.document.vocabularies.emitters.common.ExternalEmitter
 import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel
 import amf.plugins.document.vocabularies.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}

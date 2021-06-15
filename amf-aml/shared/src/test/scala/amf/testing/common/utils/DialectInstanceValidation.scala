@@ -1,12 +1,9 @@
 package amf.testing.common.utils
 
 import amf.client.environment.AMLConfiguration
-import amf.{ProfileName, ProfileNames}
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.services.RuntimeValidator
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.AMFValidationReport
-import amf.plugins.features.validation.AMFValidatorPlugin
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
 
 import scala.concurrent.Future
@@ -14,7 +11,6 @@ import scala.concurrent.Future
 trait DialectInstanceValidation
     extends AsyncFunSuite
     with PlatformSecrets
-    with DefaultAMLInitialization
     with DialectRegistrationHelper
     with AMLParsingHelper {
 

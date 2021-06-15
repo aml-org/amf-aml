@@ -1,6 +1,6 @@
 package amf.dialects
 
-import amf.core.remote.{AmfJsonHint, Aml}
+import amf.core.internal.remote.{AmfJsonHint, Aml}
 import amf.testing.parsing.DialectInstancesParsingTest
 
 class JsDialectInstancesParsingTest extends DialectInstancesParsingTest {

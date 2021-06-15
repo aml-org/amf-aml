@@ -1,13 +1,13 @@
 package amf.testing.common.utils
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.AMFGraphConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.render.DefaultRenderConfiguration
-import amf.core.AMFSerializer
-import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.{Json, Syntax}
-import amf.core.remote._
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.plugins.render.DefaultRenderConfiguration
+import amf.core.internal.render.AMFSerializer
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.Syntax.{Json, Syntax}
+import amf.core.internal.remote._
 
 import scala.concurrent.{ExecutionContext, Future}
 

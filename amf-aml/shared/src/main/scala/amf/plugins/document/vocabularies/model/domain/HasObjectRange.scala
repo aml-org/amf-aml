@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.model.StrField
-import amf.core.model.domain.DomainElement
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.DomainElement
 import amf.plugins.document.vocabularies.metamodel.domain.HasObjectRangeModel
 
 trait HasObjectRange[M <: HasObjectRangeModel] extends DomainElement {

@@ -1,8 +1,9 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.emitter.BaseEmitters.{pos, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.Position
+import amf.core.internal.render.BaseEmitters.{pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.client.common.position.Position
 import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.metamodel.domain.SemanticExtensionModel
 import amf.plugins.document.vocabularies.model.document.Dialect

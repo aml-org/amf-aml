@@ -1,12 +1,13 @@
 package amf.testing.common.utils
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.client.remod.amfcore.plugins.render.DefaultRenderConfiguration
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.plugins.render.DefaultRenderConfiguration
 import amf.core.io.FileAssertionTest
-import amf.core.model.document.BaseUnit
-import amf.core.remote._
-import amf.core.{AMFCompiler, AMFSerializer, CompilerContextBuilder}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote._
+import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
+import amf.core.internal.render.AMFSerializer
 import amf.testing.common.jsonld.MultiJsonLDAsyncFunSuite
 import org.scalatest.Assertion
 
@@ -16,7 +17,6 @@ trait DialectTests
     extends MultiJsonLDAsyncFunSuite
     with FileAssertionTest
     with AMLParsingHelper
-    with DefaultAMLInitialization
     with DialectRegistrationHelper {
   val basePath: String
 

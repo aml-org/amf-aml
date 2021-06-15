@@ -1,9 +1,9 @@
 package amf.testing.unclassified
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.remote._
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.internal.remote._
 import amf.testing.common.cycling.FunSuiteCycleTests
 import amf.testing.common.utils.DialectInstanceTester
 

@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.annotations
 
-import amf.core.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, SerializableAnnotation}
+import amf.core.client.scala.model.domain.{AmfElement, Annotation, AnnotationGraphLoader, SerializableAnnotation}
 import amf.plugins.document.vocabularies.model.domain.UnionNodeMapping
 
 case class FromUnionNodeMapping(id: String) extends SerializableAnnotation {

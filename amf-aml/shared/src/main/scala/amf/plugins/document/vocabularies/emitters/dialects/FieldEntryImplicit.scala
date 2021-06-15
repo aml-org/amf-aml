@@ -1,7 +1,8 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.annotations.LexicalInformation
-import amf.core.parser.{FieldEntry, Position}
+import amf.core.client.common.position.Position
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.parser.domain.FieldEntry
 
 private object FieldEntryImplicit {
   implicit class FieldEntryWithPosition(entry: FieldEntry) {

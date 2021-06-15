@@ -1,11 +1,11 @@
 package amf.plugins.document.vocabularies.parser.instances
 
-import amf.core.Root
-import amf.core.parser.Annotations
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMappable}
 import org.yaml.model.YMap
-import amf.core.parser._
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.parser.domain.BaseSpecParser
+import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.unsafe.PlatformSecrets
 
 /*
  * TODO: should be a class which is passed as parameter to the dialect instance parser. Most of all because of the resolvedPath(String) and basePath(String) methods.

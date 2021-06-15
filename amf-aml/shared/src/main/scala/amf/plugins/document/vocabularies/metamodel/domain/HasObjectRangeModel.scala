@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.metamodel.domain
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.{Iri, SortedArray}
-import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc}
-import amf.core.vocabulary.Namespace
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.{Iri, SortedArray}
+import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc}
+import amf.core.client.scala.vocabulary.Namespace
 
 trait HasObjectRangeModel extends DomainElementModel {
   val ObjectRange: Field = Field(

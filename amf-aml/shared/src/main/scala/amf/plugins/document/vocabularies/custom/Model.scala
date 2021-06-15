@@ -1,10 +1,9 @@
 package amf.plugins.document.vocabularies.custom
 
-import amf.ProfileName
-import amf.core.validation.SeverityLevels
-import amf.core.validation.core._
-import amf.core.validation.model.PropertyPathParser
-import amf.core.vocabulary.Namespace
+import amf.core.client.common.validation.{ProfileName, SeverityLevels}
+import amf.core.internal.validation.core._
+import amf.core.internal.validation.model.PropertyPathParser
+import amf.core.client.scala.vocabulary.Namespace
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement
 
 import scala.collection.mutable

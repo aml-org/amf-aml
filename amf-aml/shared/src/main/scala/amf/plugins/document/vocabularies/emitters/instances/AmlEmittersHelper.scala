@@ -1,20 +1,21 @@
 package amf.plugins.document.vocabularies.emitters.instances
 import amf.client.environment.AMLConfiguration
 import amf.client.remod.parsing.AMLDialectInstanceParsingPlugin
-import amf.core.annotations.Aliases.{Alias, FullUrl, ImportLocation, RefId}
-import amf.core.annotations.{Aliases, LexicalInformation}
-import amf.core.emitter.BaseEmitters.traverse
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.AmfObject
-import amf.core.parser.{ParserContext, Position}
-import amf.core.parser.Position.ZERO
-
+import amf.core.client.common.position.Position
+import amf.core.internal.annotations.Aliases.{Alias, FullUrl, ImportLocation, RefId}
+import amf.core.internal.annotations.{Aliases, LexicalInformation}
+import amf.core.internal.render.BaseEmitters.traverse
+import amf.core.internal.render.SpecOrdering
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.vocabularies.emitters.common.{ExternalEmitter, IdCounter}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectLibrary, ExternalContext}
 import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, UnionNodeMapping}
 import org.yaml.model.YDocument.EntryBuilder
-import amf.core.utils.Regexes.Path
+import amf.core.internal.utils.Regexes.Path
 import amf.plugins.document.vocabularies.model.domain.NodeMappable.AnyNodeMappable
 import org.mulesoft.common.core.CachedFunction
 import org.mulesoft.common.functional.MonadInstances.identityMonad

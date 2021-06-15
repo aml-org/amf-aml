@@ -1,10 +1,17 @@
 package amf.plugins.document.vocabularies.parser
 
-import amf.core.model.DataType
-import amf.core.model.domain.{DataNode, ScalarNode, ArrayNode => DataArrayNode, ObjectNode => DataObjectNode}
-import amf.core.parser.{Annotations, ParserContext}
-import amf.core.utils.{IdCounter, _}
-import amf.plugins.features.validation.CoreValidations
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.model.domain.{
+  DataNode,
+  ScalarNode,
+  ArrayNode => DataArrayNode,
+  ObjectNode => DataObjectNode
+}
+
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils.{AliasCounter, IdCounter}
+import amf.core.internal.validation.CoreValidations
 import amf.validation.DialectValidations.DialectError
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model._
@@ -25,17 +32,13 @@ case class DynamicExtensionParser(node: YNode,
     val rest = text.split("t").last
     val time = if (rest.contains("+")) {
       rest.split("\\+").head
-    }
-    else if (rest.contains("-")) {
+    } else if (rest.contains("-")) {
       rest.split("-").head
-    }
-    else if (rest.contains("z")) {
+    } else if (rest.contains("z")) {
       rest.split("z").head
-    }
-    else if (rest.contains(".")) {
+    } else if (rest.contains(".")) {
       rest.split(".").head
-    }
-    else {
+    } else {
       rest
     }
     val dateParts = date.split("-")
@@ -51,8 +54,7 @@ case class DynamicExtensionParser(node: YNode,
           "Exceeded maximum yaml references threshold"
       )
       DataObjectNode()
-    }
-    else {
+    } else {
       node.tag.tagType match {
         case YType.Str       => parseScalar(node.as[YScalar], "string") // Date/time types are evaluated with patterns
         case YType.Int       => parseScalar(node.as[YScalar], "integer")
@@ -93,8 +95,7 @@ case class DynamicExtensionParser(node: YNode,
       val path      = url.split("://").last
       val remaining = path.split("/").dropRight(1)
       s"$protocol://${remaining.mkString("/")}"
-    }
-    else {
+    } else {
       url.split("/").dropRight(1).mkString("/")
     }
   }
@@ -111,8 +112,7 @@ case class DynamicExtensionParser(node: YNode,
         case other => stack += other
       }
       s"$protocol://${stack.mkString("/")}"
-    }
-    else {
+    } else {
       url
     }
   }

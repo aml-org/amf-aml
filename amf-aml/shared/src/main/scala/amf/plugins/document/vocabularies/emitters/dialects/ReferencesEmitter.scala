@@ -1,10 +1,11 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.emitter.BaseEmitters.traverse
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.internal.render.BaseEmitters.traverse
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.vocabularies.annotations.AliasesLocation
 import org.yaml.model.YDocument.EntryBuilder
 

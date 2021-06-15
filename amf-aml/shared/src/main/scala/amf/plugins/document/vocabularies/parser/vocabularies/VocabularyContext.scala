@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.parser.vocabularies
-import amf.core.model.domain.DomainElement
-import amf.core.parser.ParserContext
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.parse.document.ParserContext
 import amf.plugins.document.vocabularies.model.document.Vocabulary
 import amf.plugins.document.vocabularies.model.domain.{ClassTerm, PropertyTerm}
 import amf.plugins.document.vocabularies.parser.common.SyntaxErrorReporter

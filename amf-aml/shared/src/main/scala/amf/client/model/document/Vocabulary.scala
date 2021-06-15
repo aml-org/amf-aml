@@ -1,10 +1,9 @@
 package amf.client.model.document
 
 import amf.client.convert.VocabulariesClientConverter._
-import amf.client.model.StrField
 import amf.client.model.domain._
-import amf.core.parser.Annotations
-import amf.plugins.document.vocabularies.metamodel.document.VocabularyModel
+import amf.core.client.platform.model.StrField
+import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel}
 import amf.plugins.document.vocabularies.model.document.{Vocabulary => InternalVocabulary}
 import amf.plugins.document.vocabularies.model.domain.{
   ClassTerm => InternalClassTerm,

@@ -1,15 +1,22 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.annotations.Aliases
-import amf.core.annotations.Aliases._
-import amf.core.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
-import amf.core.model.domain.AmfObject
-import amf.core.parser.{Annotations, CallbackReferenceCollector, ParsedReference, Reference, ReferenceCollector}
+import amf.core.internal.annotations.Aliases
+import amf.core.internal.annotations.Aliases._
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.parse.document.{
+  CallbackReferenceCollector,
+  ParsedReference,
+  Reference,
+  ReferenceCollector
+}
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain.External
 import amf.validation.DialectValidations.DialectError
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 import amf.plugins.document.vocabularies.parser.dialects.DialectAstOps._
+import amf.core.internal.parser.YScalarYRead
 
 case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq[ParsedReference])(
     implicit ctx: DialectContext) {

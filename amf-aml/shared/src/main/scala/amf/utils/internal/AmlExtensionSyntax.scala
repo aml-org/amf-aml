@@ -1,9 +1,9 @@
 package amf.utils.internal
 
-import amf.core.annotations.Aliases
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.Linkable
-import amf.core.parser.{Annotations, Fields}
+import amf.core.internal.annotations.Aliases
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.model.domain.Linkable
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.plugins.document.vocabularies.model.domain.{

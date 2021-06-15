@@ -1,15 +1,16 @@
 package amf.client.model.document
 
 import amf.client.convert.VocabulariesClientConverter._
-import amf.client.model.StrField
+import amf.core.client.platform.model.StrField
 import amf.client.model.domain.{DialectDomainElement, External}
+import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.plugins.document.vocabularies.model.document.{DialectInstancePatch => InternalPatchInstance}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement => InternalDialectDomainElement}
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 
 class DialectInstancePatch(private[amf] val _internal: InternalPatchInstance)
-  extends BaseUnit
+    extends BaseUnit
     with EncodesModel
     with DeclaresModel {
 

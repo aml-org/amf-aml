@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.model.document
 
-import amf.core.model.domain.AmfObject
+import amf.core.client.scala.model.domain.AmfObject
 import amf.plugins.document.vocabularies.metamodel.document.ExternalContextModelFields
 import amf.plugins.document.vocabularies.model.domain.External
 

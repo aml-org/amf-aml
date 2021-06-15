@@ -1,10 +1,10 @@
 package amf.testing.common.cycling
 
 import amf.client.environment.AMLConfiguration
-import amf.core.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
-import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.Syntax
-import amf.core.remote.{Hint, Vendor}
+import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.Syntax.Syntax
+import amf.core.internal.remote.{Hint, Vendor}
 import org.scalatest.Assertion
 
 import scala.concurrent.Future

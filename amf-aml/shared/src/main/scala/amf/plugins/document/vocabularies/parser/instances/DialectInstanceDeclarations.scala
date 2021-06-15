@@ -1,7 +1,8 @@
 package amf.plugins.document.vocabularies.parser.instances
 
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.parser.{EmptyFutureDeclarations, FutureDeclarations, SearchScope}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.parse.document.EmptyFutureDeclarations
+import amf.core.internal.parser.domain.{FutureDeclarations, SearchScope}
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMappable}
 import amf.plugins.document.vocabularies.parser.vocabularies.VocabularyDeclarations
 

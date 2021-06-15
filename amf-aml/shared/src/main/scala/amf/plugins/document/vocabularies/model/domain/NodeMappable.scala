@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.model.domain
-import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappableModel
 
 trait NodeMappable[+M <: NodeMappableModel] extends DomainElement with Linkable {

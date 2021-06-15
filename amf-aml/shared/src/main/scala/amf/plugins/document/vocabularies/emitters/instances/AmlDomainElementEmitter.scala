@@ -1,10 +1,11 @@
 package amf.plugins.document.vocabularies.emitters.instances
 
-import amf.core.emitter.{DomainElementEmitter, SpecOrdering}
-import amf.client.remod.amfcore.config.RenderOptions
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.model.document.BaseUnit
-import amf.core.model.domain.DomainElement
+import amf.core.internal.render.SpecOrdering
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.internal.render.emitters.DomainElementEmitter
 import amf.plugins.document.vocabularies.annotations.DiscriminatorField
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.DialectDomainElement

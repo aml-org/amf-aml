@@ -2,6 +2,7 @@ package amf.client.model.document
 
 import amf.client.convert.VocabulariesClientConverter._
 import amf.client.model.domain.{External, NodeMapping}
+import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel}
 import amf.plugins.document.vocabularies.model.document.{DialectLibrary => InternalDialectLibrary}
 import amf.plugins.document.vocabularies.model.domain.{NodeMapping => InternalNodeMapping}
 

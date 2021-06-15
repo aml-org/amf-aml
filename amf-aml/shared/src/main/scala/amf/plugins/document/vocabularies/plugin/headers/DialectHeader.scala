@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.plugin.headers
 
-import amf.core.Root
+import amf.core.internal.parser.Root
 import org.mulesoft.common.core._
 
 object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor with KeyPropertyHeaderExtractor {

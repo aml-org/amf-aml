@@ -1,8 +1,9 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.model.document.{DeclaresModel, RecursiveUnit}
-import amf.core.model.domain.AmfObject
-import amf.core.parser.{CollectionSideEffect, FragmentRef}
+import amf.core.client.scala.model.document.{DeclaresModel, RecursiveUnit}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.parse.document.CollectionSideEffect
+import amf.core.internal.parser.domain.FragmentRef
 import amf.plugins.document.vocabularies.model.document.{DialectFragment, Vocabulary}
 import amf.plugins.document.vocabularies.model.domain.{ClassTerm, External, NodeMappable, PropertyTerm}
 

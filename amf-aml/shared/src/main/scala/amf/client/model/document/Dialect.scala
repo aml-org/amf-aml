@@ -1,8 +1,9 @@
 package amf.client.model.document
 
 import amf.client.convert.VocabulariesClientConverter._
-import amf.client.model.StrField
-import amf.client.model.domain.{DocumentsModel, SemanticExtension, External}
+import amf.core.client.platform.model.StrField
+import amf.client.model.domain.{DocumentsModel, External, SemanticExtension}
+import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect => InternalDialect}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

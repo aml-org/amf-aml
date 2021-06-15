@@ -1,13 +1,12 @@
 package amf.testing.render
 
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.core.errorhandling.UnhandledErrorHandler
-import amf.core.remote.VocabularyYamlHint
-import amf.core.unsafe.PlatformSecrets
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.internal.remote.VocabularyYamlHint
+import amf.core.internal.unsafe.PlatformSecrets
 import amf.testing.common.cycling.FunSuiteCycleTests
-import amf.testing.common.utils.DefaultAMLInitialization
 
-class ParsedDialectRenderTest extends FunSuiteCycleTests with DefaultAMLInitialization with PlatformSecrets {
+class ParsedDialectRenderTest extends FunSuiteCycleTests with PlatformSecrets {
 
   override def basePath: String = "amf-aml/shared/src/test/resources/vocabularies2/dialects/"
 

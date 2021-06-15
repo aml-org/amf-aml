@@ -1,11 +1,9 @@
 package amf.plugins.document.vocabularies.resolution.stages
 
-import amf.core.annotations.Aliases
-import amf.core.errorhandling.AMFErrorHandler
-import amf.core.metamodel.domain.DomainElementModel
-import amf.core.model.document.{BaseUnit, DeclaresModel}
-import amf.core.model.domain.Linkable
-import amf.core.resolution.stages.TransformationStep
+import amf.core.internal.annotations.Aliases
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.transform.stages.TransformationStep
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.plugins.document.vocabularies.model.domain.{

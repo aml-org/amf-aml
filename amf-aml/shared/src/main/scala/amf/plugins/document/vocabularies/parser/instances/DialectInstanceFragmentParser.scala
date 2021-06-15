@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.parser.instances
 
-import amf.core.Root
+import amf.core.internal.parser.Root
 import org.mulesoft.common.core._
-import amf.core.parser.Annotations
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.vocabularies.metamodel.document.DialectInstanceModel
 import amf.plugins.document.vocabularies.model.document.DialectInstanceFragment
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, DocumentsModel}

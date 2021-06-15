@@ -1,10 +1,9 @@
 package amf.testing.common.utils
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.ParseConfiguration
-import amf.core.model.document.BaseUnit
-import amf.core.remote.{Hint, Platform}
-import amf.core.{AMFCompiler, CompilerContextBuilder}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.{Hint, Platform}
+import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 
 import scala.concurrent.{ExecutionContext, Future}
 

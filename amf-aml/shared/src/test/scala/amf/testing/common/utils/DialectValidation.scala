@@ -1,20 +1,18 @@
 package amf.testing.common.utils
 
-import amf.{ProfileName, ProfileNames}
 import amf.client.environment.AMLConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.ParseConfiguration
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
-import amf.core.services.RuntimeValidator
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.AMFValidationReport
-import amf.core.{AMFCompiler, CompilerContextBuilder}
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.validation.ValidationConfiguration
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.plugins.document.vocabularies.model.document.Dialect
 import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.Future
 
-trait DialectValidation extends AsyncFunSuite with PlatformSecrets with DefaultAMLInitialization {
+trait DialectValidation extends AsyncFunSuite with PlatformSecrets {
 
   protected val path: String
   protected val reportComparator: ReportComparator = UniquePlatformReportComparator

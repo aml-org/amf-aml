@@ -1,12 +1,13 @@
 package amf.plugins.features.validation
 
-import amf.AmfProfile
-import amf.core.benchmark.ExecutionLog
-import amf.core.model.document.BaseUnit
-import amf.core.rdf.{RdfModel, RdfModelEmitter}
-import amf.core.services.ShaclValidationOptions
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.core.{ValidationReport, ValidationSpecification}
+import amf.core.client.common.validation.AmfProfile
+import amf.core.internal.benchmark.ExecutionLog
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.rdf.RdfModel
+import amf.core.internal.rdf.RdfModelEmitter
+import amf.core.internal.validation.core.ShaclValidationOptions
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.core.{ValidationReport, ValidationSpecification}
 import amf.plugins.features.validation.emitters.ValidationRdfModelEmitter
 import org.apache.commons.io.IOUtils
 import org.apache.commons.lang3.StringUtils
@@ -17,7 +18,7 @@ import org.apache.jena.util.FileUtils
 import java.nio.charset.Charset
 import scala.concurrent.{ExecutionContext, Future}
 
-class SHACLValidator extends amf.core.validation.core.SHACLValidator with PlatformSecrets {
+class SHACLValidator extends amf.core.internal.validation.core.SHACLValidator with PlatformSecrets {
 
   var functionUrl: Option[String]  = None
   var functionCode: Option[String] = None

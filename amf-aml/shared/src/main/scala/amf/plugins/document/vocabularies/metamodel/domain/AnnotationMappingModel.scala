@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.metamodel.domain
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Iri
-import amf.core.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.Iri
+import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.domain.AnnotationMapping
 
 object AnnotationMappingModel extends DomainElementModel with PropertyLikeMappingModel with NodeMappableModel {

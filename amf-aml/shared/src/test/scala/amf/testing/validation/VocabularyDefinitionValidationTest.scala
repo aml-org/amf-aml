@@ -1,15 +1,13 @@
 package amf.testing.validation
 
-import amf.AmlProfile
 import amf.client.environment.AMLConfiguration
-import amf.client.errorhandling.DefaultErrorHandler
-import amf.client.remod.ParseConfiguration
-import amf.client.remod.amfcore.plugins.validate.ValidationConfiguration
+import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.internal.parser.ParseConfiguration
+import amf.core.internal.validation.ValidationConfiguration
 import amf.core.io.FileAssertionTest
-import amf.core.services.RuntimeValidator
-import amf.core.unsafe.PlatformSecrets
-import amf.core.validation.AMFValidationReport
-import amf.core.{AMFCompiler, CompilerContextBuilder}
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
 import org.scalatest
 import org.scalatest.{AsyncFunSuite, Matchers}

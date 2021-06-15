@@ -1,9 +1,10 @@
 package amf.plugins.document.vocabularies.emitters.instances
-import amf.core.emitter.BaseEmitters.MapEntryEmitter
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.document.BaseUnit
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.internal.render.BaseEmitters.MapEntryEmitter
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.internal.render.SpecOrdering
 import org.yaml.model.YDocument.EntryBuilder
 
 case class ReferenceEmitter(reference: BaseUnit, ordering: SpecOrdering, aliases: Map[String, (String, String)])

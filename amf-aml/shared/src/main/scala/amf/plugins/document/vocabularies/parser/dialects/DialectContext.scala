@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.model.document.RecursiveUnit
-import amf.core.parser.ParserContext
-import amf.core.utils.QName
+import amf.core.client.scala.model.document.RecursiveUnit
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.utils.QName
 import amf.plugins.document.vocabularies.parser.common.{DeclarationContext, SyntaxErrorReporter}
 
 class DialectContext(private val wrapped: ParserContext, private val ds: Option[DialectDeclarations] = None)

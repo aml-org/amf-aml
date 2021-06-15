@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.entities
 
-import amf.core.entities.Entities
-import amf.core.metamodel.ModelDefaultBuilder
+import amf.core.internal.entities.Entities
+import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.plugins.document.vocabularies.metamodel.document._
 import amf.plugins.document.vocabularies.metamodel.domain._
 

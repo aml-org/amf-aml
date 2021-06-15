@@ -1,7 +1,7 @@
 package amf.testing.parsing
 
 import amf.client.environment.AMLConfiguration
-import amf.core.remote.{Amf, AmfJsonHint, Aml, VocabularyYamlHint}
+import amf.core.internal.remote.{Amf, AmfJsonHint, Aml, VocabularyYamlHint}
 
 import amf.testing.common.utils.DialectTests
 

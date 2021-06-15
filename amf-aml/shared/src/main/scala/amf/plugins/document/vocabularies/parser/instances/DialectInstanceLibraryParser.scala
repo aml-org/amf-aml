@@ -1,7 +1,7 @@
 package amf.plugins.document.vocabularies.parser.instances
 
-import amf.core.Root
-import amf.core.parser.Annotations
+import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.vocabularies.model.document.DialectInstanceLibrary
 
 class DialectInstanceLibraryParser(root: Root)(implicit override val ctx: DialectInstanceContext)

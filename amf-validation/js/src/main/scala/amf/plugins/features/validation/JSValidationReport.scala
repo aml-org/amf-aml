@@ -1,6 +1,6 @@
 package amf.plugins.features.validation
 
-import amf.core.validation.core.{ValidationReport, ValidationResult}
+import amf.core.internal.validation.core.{ValidationReport, ValidationResult}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSExportAll

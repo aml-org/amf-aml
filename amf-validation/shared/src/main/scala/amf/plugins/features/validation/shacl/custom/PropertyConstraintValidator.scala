@@ -1,9 +1,9 @@
 package amf.plugins.features.validation.shacl.custom
 
-import amf.core.annotations.SourceAST
-import amf.core.model.domain.{AmfElement, AmfObject, AmfScalar, DomainElement}
-import amf.core.parser.Annotations
-import amf.core.validation.core.{NodeConstraint, PropertyConstraint, ValidationSpecification}
+import amf.core.client.scala.model.domain.{AmfElement, AmfObject, AmfScalar}
+import amf.core.internal.annotations.SourceAST
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.validation.core.{PropertyConstraint, ValidationSpecification}
 import org.yaml.model.YScalar
 
 object PropertyConstraintValidator {

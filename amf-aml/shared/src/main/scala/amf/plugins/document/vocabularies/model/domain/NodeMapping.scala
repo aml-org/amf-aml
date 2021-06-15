@@ -1,9 +1,9 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.model.StrField
-import amf.core.model.domain.{DomainElement, Linkable}
-import amf.core.parser.{Annotations, Fields}
-import amf.core.utils._
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils._
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel
 import amf.plugins.document.vocabularies.metamodel.domain.NodeMappingModel._
 import org.yaml.model.YMap

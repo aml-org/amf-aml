@@ -1,12 +1,12 @@
 package amf.validation
 
-import amf.core.validation.SeverityLevels._
-import amf.ProfileName
-import amf.core.validation.core.ValidationSpecification
-import amf.core.validation.core.ValidationSpecification.AML_VALIDATION
-import amf.core.vocabulary.Namespace
-import amf.core.vocabulary.Namespace.AmfAml
-import amf.plugins.features.validation.Validations
+import amf.core.client.common.validation.ProfileName
+import amf.core.client.common.validation.SeverityLevels.WARNING
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.client.scala.vocabulary.Namespace.AmfAml
+import amf.core.internal.validation.Validations
+import amf.core.internal.validation.core.ValidationSpecification
+import amf.core.internal.validation.core.ValidationSpecification.AML_VALIDATION
 
 // noinspection TypeAnnotation
 object DialectValidations extends Validations {

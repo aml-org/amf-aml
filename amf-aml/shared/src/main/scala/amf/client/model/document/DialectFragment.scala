@@ -2,6 +2,7 @@ package amf.client.model.document
 
 import amf.client.convert.VocabulariesClientConverter._
 import amf.client.model.domain.{External, NodeMapping}
+import amf.core.client.platform.model.document.{BaseUnit, EncodesModel}
 import amf.plugins.document.vocabularies.model.document.{DialectFragment => InternalDialectFragment}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}

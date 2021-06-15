@@ -1,14 +1,14 @@
 package amf.plugins.document.vocabularies.metamodel.document
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.Type.Str
-import amf.core.metamodel.document.{BaseUnitModel, DocumentModel}
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
-import amf.core.model.domain.AmfObject
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.Type.Str
+import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel}
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.metamodel.domain.{DocumentsModelModel, SemanticExtensionModel}
 import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.core.metamodel.Type.Array
+import amf.core.internal.metamodel.Type.Array
 
 object DialectModel extends DocumentModel with ExternalContextModel {
 

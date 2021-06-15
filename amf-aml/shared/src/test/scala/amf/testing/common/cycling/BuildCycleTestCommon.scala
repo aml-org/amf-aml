@@ -1,12 +1,12 @@
 package amf.testing.common.cycling
 
 import amf.client.environment.AMLConfiguration
-import amf.client.remod.{AMFGraphConfiguration, ParseConfiguration}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.io.FileAssertionTest
-import amf.core.model.document.BaseUnit
-import amf.core.remote.Syntax.Syntax
-import amf.core.remote.{Hint, Vendor}
-import amf.core.{AMFCompiler, CompilerContextBuilder}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.Syntax.Syntax
+import amf.core.internal.remote.{Hint, Vendor}
+import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.testing.common.utils.AMFRenderer
 
 import scala.concurrent.{ExecutionContext, Future}

@@ -1,18 +1,22 @@
 package amf.plugins.document.vocabularies.validation
 
-import amf.ProfileName
-import amf.core.model.DataType
-import amf.core.rdf.RdfModel
-import amf.core.utils.AmfStrings
-import amf.core.validation.SeverityLevels
-import amf.core.validation.core.{PropertyConstraint, SeverityMapping, ValidationProfile, ValidationSpecification}
-import amf.core.vocabulary.Namespace
-import amf.plugins.document.graph.JsonLdKeywords
+import amf.core.client.common.validation.{ProfileName, SeverityLevels}
+import amf.core.client.scala.model.DataType
+import amf.core.client.scala.rdf.RdfModel
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.plugins.document.graph.JsonLdKeywords
+import amf.core.internal.utils.AmfStrings
+import amf.core.internal.validation.CoreValidations
+import amf.core.internal.validation.core.{
+  PropertyConstraint,
+  SeverityMapping,
+  ValidationProfile,
+  ValidationSpecification
+}
 import amf.plugins.document.vocabularies.emitters.instances.{AmlEmittersHelper, NodeMappableFinder}
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations.staticValidations
-import amf.plugins.features.validation.{CoreValidations, Validations}
 import amf.validation.DialectValidations
 import org.yaml.model.YDocument.EntryBuilder
 

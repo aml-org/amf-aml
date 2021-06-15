@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.parser.Annotations
+import amf.core.internal.parser.domain.Annotations
 import amf.plugins.document.vocabularies.metamodel.domain.DocumentsModelModel
 import amf.plugins.document.vocabularies.model.domain.{DocumentMapping, DocumentsModel}
 import org.yaml.model.{YMap, YMapEntry}

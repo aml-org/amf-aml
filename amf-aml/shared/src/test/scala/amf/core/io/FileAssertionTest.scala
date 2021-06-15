@@ -1,6 +1,6 @@
 package amf.core.io
 
-import amf.core.unsafe.PlatformSecrets
+import amf.core.internal.unsafe.PlatformSecrets
 import org.mulesoft.common.io.{AsyncFile, FileSystem}
 import org.mulesoft.common.test.Tests.checkDiff
 import org.scalatest.Assertion

@@ -1,16 +1,16 @@
 package amf.plugins.document.vocabularies.parser.instances
 
-import amf.core.Root
-import amf.core.annotations.SourceAST
-import amf.core.metamodel.{Field, Type}
-import amf.core.metamodel.Type.{Array, Str}
-import amf.core.model.DataType
-import amf.core.model.document.EncodesModel
-import amf.core.model.domain.{AmfArray, AmfScalar, Annotation, DomainElement}
-import amf.core.parser.{Annotations, SearchScope, _}
-import amf.core.utils._
-import amf.core.vocabulary.{Namespace, ValueType}
-
+import amf.core.client.scala.model.DataType
+import amf.core.internal.annotations.SourceAST
+import amf.core.internal.metamodel.{Field, Type}
+import amf.core.internal.metamodel.Type.{Array, Str}
+import amf.core.client.scala.model.document.EncodesModel
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Annotation, DomainElement}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.parser.domain.{Annotations, SearchScope, _}
+import amf.core.internal.utils._
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
+import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
 import amf.plugins.document.vocabularies.annotations.{
   CustomBase,
   CustomId,

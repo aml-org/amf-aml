@@ -1,12 +1,12 @@
 package amf.plugins.document.vocabularies.parser.dialects
 
-import amf.core.model.domain.{AmfArray, AmfScalar}
-import amf.core.parser.{Annotations, ScalarNode, SearchScope}
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope}
+import amf.core.internal.utils.AmfStrings
+import amf.plugins.document.vocabularies.metamodel.domain.{DocumentMappingModel, PublicNodeMappingModel}
 import amf.plugins.document.vocabularies.model.domain.{DocumentMapping, PublicNodeMapping}
 import org.yaml.model.{YMap, YMapEntry, YScalar}
-import amf.core.utils._
-import amf.plugins.document.vocabularies.metamodel.domain.{DocumentMappingModel, PublicNodeMappingModel}
-import amf.core.parser._
 case class DialectDeclaresParser(into: DocumentMapping)(override implicit val ctx: DialectContext)
     extends DialectEntryParser {
 

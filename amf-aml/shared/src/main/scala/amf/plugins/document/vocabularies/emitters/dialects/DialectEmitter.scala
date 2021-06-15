@@ -1,11 +1,12 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.annotations.Aliases.{Alias, FullUrl, ImportLocation}
-import amf.core.emitter.BaseEmitters._
-import amf.core.emitter.SpecOrdering.Lexical
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.internal.annotations.Aliases.{Alias, FullUrl, ImportLocation}
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.SpecOrdering.Lexical
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.internal.render.SpecOrdering
 import amf.plugins.document.vocabularies.emitters.dialects.FieldEntryImplicit._
 import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.metamodel.document.DialectModel

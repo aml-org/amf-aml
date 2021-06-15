@@ -1,11 +1,12 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.annotations.LexicalInformation
-import amf.core.emitter.BaseEmitters.{MapEntryEmitter, ScalarEmitter, traverse}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.domain.{AmfScalar, DomainElement, Linkable}
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ScalarEmitter, traverse}
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Linkable}
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.internal.render.SpecOrdering
 import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
 import amf.plugins.document.vocabularies.metamodel.domain.{NodeMappableModel, UnionNodeMappingModel}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectFragment}

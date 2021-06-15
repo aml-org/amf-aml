@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.annotations.LexicalInformation
-import amf.core.model.domain.DomainElement
-import amf.core.parser.Position.ZERO
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.common.position.Position.ZERO
 
 trait GroupPosition {
   def groupPosition(elements: Seq[DomainElement]) =

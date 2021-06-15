@@ -1,10 +1,10 @@
 package amf.plugins.document.vocabularies.metamodel.document
 
-import amf.core.metamodel.Field
-import amf.core.metamodel.document.FragmentModel
-import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
-import amf.core.model.domain.AmfObject
-import amf.core.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.document.FragmentModel
+import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.plugins.document.vocabularies.model.document.DialectFragment
 
 object DialectFragmentModel extends FragmentModel with ExternalContextModel {

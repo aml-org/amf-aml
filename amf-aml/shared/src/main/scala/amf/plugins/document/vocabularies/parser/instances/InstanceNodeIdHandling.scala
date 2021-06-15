@@ -4,8 +4,8 @@ import amf.plugins.document.vocabularies.annotations.CustomId
 import amf.plugins.document.vocabularies.model.domain.{DialectDomainElement, NodeMapping}
 import amf.validation.DialectValidations.DialectError
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
-import amf.core.parser.YMapOps
-import amf.core.utils.AmfStrings
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.utils.AmfStrings
 
 import scala.collection.mutable
 
@@ -31,31 +31,31 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
                                mapping: NodeMapping,
                                additionalProperties: Map[String, Any] = Map(),
                                rootNode: Boolean): String = {
-    val generatedId = if (rootNode && isSelfEncoded)
-      defaultId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
-    else {
-      if (nodeMap.key("$id").isDefined) {
-        explicitNodeId(Some(node), nodeMap, path, defaultId, mapping)
-      }
-      else if (mapping.idTemplate.nonEmpty) {
-        idTemplate(node, nodeMap, path, mapping)
-      }
-      else if (mapping.primaryKey().nonEmpty) {
-        primaryKeyNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties)
-      }
+    val generatedId =
+      if (rootNode && isSelfEncoded)
+        defaultId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
       else {
-        defaultId
+        if (nodeMap.key("$id").isDefined) {
+          explicitNodeId(Some(node), nodeMap, path, defaultId, mapping)
+        } else if (mapping.idTemplate.nonEmpty) {
+          idTemplate(node, nodeMap, path, mapping)
+        } else if (mapping.primaryKey().nonEmpty) {
+          primaryKeyNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties)
+        } else {
+          defaultId
+        }
       }
-    }
     overrideBase(generatedId, nodeMap).urlEncoded
   }
-
 
   private def isSelfEncoded = {
     Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false)
   }
 
-  protected def idTemplate(node: DialectDomainElement, nodeMap: YMap, path: Seq[String], mapping: NodeMapping): String = {
+  protected def idTemplate(node: DialectDomainElement,
+                           nodeMap: YMap,
+                           path: Seq[String],
+                           mapping: NodeMapping): String = {
     val template = replaceTemplateVariables(node.id, nodeMap, mapping.idTemplate.value())
     prependRootIfIsRelative(template, path)
   }
@@ -72,8 +72,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
       val pathLocation = (path ++ template.split("/")).mkString("/")
       if (pathLocation.startsWith(templateRoot) || pathLocation.contains("#")) {
         pathLocation
-      }
-      else {
+      } else {
         templateRoot + "#" + pathLocation
       }
     }
@@ -89,8 +88,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
     val rawId = entry.value.as[YScalar].text
     val externalId = if (rawId.contains("://")) {
       rawId
-    }
-    else {
+    } else {
       (ctx.dialect.location().getOrElse(ctx.dialect.id).split("#").head + s"#$rawId").replace("##", "#")
     }
     node.foreach((n) => n.annotations += CustomId())
@@ -118,11 +116,11 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
   }
 
   private def primaryKeyNodeId(node: DialectDomainElement,
-                                 nodeMap: YMap,
-                                 path: Seq[String],
-                                 defaultId: String,
-                                 mapping: NodeMapping,
-                                 additionalProperties: Map[String, Any] = Map()): String = {
+                               nodeMap: YMap,
+                               path: Seq[String],
+                               defaultId: String,
+                               mapping: NodeMapping,
+                               additionalProperties: Map[String, Any] = Map()): String = {
     var allFound           = true
     var keyId: Seq[String] = Seq()
     mapping.primaryKey().foreach { key =>
@@ -134,13 +132,13 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
           additionalProperties.get(key.nodePropertyMapping().value()) match {
             case Some(v) => keyId = keyId ++ Seq(v.toString)
             case _ =>
-              ctx.eh.violation(DialectError, node.id, s"Cannot find unique mandatory property '$propertyName'", nodeMap)
+              ctx.eh
+                .violation(DialectError, node.id, s"Cannot find unique mandatory property '$propertyName'", nodeMap)
               allFound = false
           }
       }
     }
-    if (allFound) { path.mkString("/") + "/" + keyId.mkString("_") }
-    else { defaultId }
+    if (allFound) { path.mkString("/") + "/" + keyId.mkString("_") } else { defaultId }
   }
 
 }

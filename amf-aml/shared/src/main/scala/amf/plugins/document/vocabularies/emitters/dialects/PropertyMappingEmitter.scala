@@ -1,14 +1,14 @@
 package amf.plugins.document.vocabularies.emitters.dialects
 
-import amf.core.annotations.LexicalInformation
-import amf.core.emitter.BaseEmitters.{ArrayEmitter, MapEntryEmitter, ScalarEmitter}
-import amf.core.emitter.{EntryEmitter, SpecOrdering}
-import amf.core.model.domain.AmfScalar
-import amf.core.parser.Position
-import amf.core.parser.Position.ZERO
-import amf.core.vocabulary.Namespace
+import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.domain.AmfScalar
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.render.BaseEmitters.{ArrayEmitter, MapEntryEmitter, ScalarEmitter}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
 import amf.plugins.document.vocabularies.emitters.instances.NodeMappableFinder
-import amf.plugins.document.vocabularies.metamodel.domain.PropertyMappingModel
 import amf.plugins.document.vocabularies.metamodel.domain.{PropertyLikeMappingModel, PropertyMappingModel}
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.model.domain.{PropertyLikeMapping, PropertyMapping}

@@ -1,8 +1,8 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.model.StrField
-import amf.core.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.parser.{Annotations, Fields}
+import amf.core.client.scala.model.StrField
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.plugins.document.vocabularies.metamodel.domain.ObjectPropertyTermModel._
 import amf.plugins.document.vocabularies.metamodel.domain.{DatatypePropertyTermModel, ObjectPropertyTermModel}
 import org.yaml.model.YMap
