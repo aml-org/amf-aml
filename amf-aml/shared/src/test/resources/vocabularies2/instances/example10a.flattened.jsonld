@@ -106,12 +106,12 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example10a.yaml#/encodes/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#y",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(8,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(8,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example10a.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#x",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,2)-(5,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(5,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example10a.yaml#/encodes/source-map/lexical/element_1",

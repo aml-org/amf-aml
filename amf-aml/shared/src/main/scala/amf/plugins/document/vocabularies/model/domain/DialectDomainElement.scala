@@ -126,8 +126,10 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   def containsProperty(property: PropertyMapping): Boolean =
     fields.exists(property.toField)
 
-  def setObjectField(property: PropertyMapping, value: DialectDomainElement, node: YNode): DialectDomainElement = {
-
+  def setObjectField(property: PropertyMapping,
+                     value: DialectDomainElement,
+                     node: Either[YNode, YMapEntry]): DialectDomainElement = {
+    val annotations = annotationsFromEither(node)
     if (value.isUnresolved) {
       value.toFutureRef {
         case resolvedDialectDomainElement: DialectDomainElement =>
@@ -139,45 +141,62 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
                                       resolvedDialectDomainElement,
                                       value.supportsRecursion.option().getOrElse(false))
                 .withId(value.id),
-              Annotations(node)
+              annotations
           )
         case resolved =>
           throw new Exception(s"Cannot resolve reference with not dialect domain element value ${resolved.id}")
       }
     } else {
       val f = property.toField
-      set(f, value, Annotations(node))
+      set(f, value, annotations)
     }
 
     this
   }
 
-  def setObjectField(property: PropertyMapping, value: Seq[DialectDomainElement], node: YNode): DialectDomainElement = {
+  def setObjectField(property: PropertyMapping,
+                     value: Seq[DialectDomainElement],
+                     node: Either[YNode, YMapEntry]): DialectDomainElement = {
     val f = property.toField
+    val annotations = node match {
+      case Left(value)  => Annotations(value)
+      case Right(value) => Annotations(value)
+    }
+    val annotationsValue = node match {
+      case Left(value)  => Annotations(value.value)
+      case Right(value) => Annotations(value.value)
+    }
     value match {
-      case Nil if !fields.exists(f) => set(f, AmfArray(Nil, Annotations(node.value)), Annotations(node))
+      case Nil if !fields.exists(f) => set(f, AmfArray(Nil, annotationsValue), annotations)
       case _ =>
         val (unresolved, normal) = value.partition({
           case l: Linkable if l.isUnresolved => true
           case _                             => false
         })
-        set(f, AmfArray(normal), Annotations(node))
+        set(f, AmfArray(normal), annotations)
         unresolved.foreach {
           case linkable: Linkable if linkable.isUnresolved =>
             linkable.toFutureRef {
               case d: DialectDomainElement => setObjInCollection(f, node, d)
               case _                       => // ignore
             }
-          case other => // ignore
+          case _ => // ignore
         }
     }
     this
   }
 
-  private def setObjInCollection(f: Field, node: YNode, newObj: DialectDomainElement) = {
+  private def setObjInCollection(f: Field, node: Either[YNode, YMapEntry], newObj: DialectDomainElement) = {
+    val annotations                     = annotationsFromEither(node)
     val objs: Seq[DialectDomainElement] = fields.field(f)
-    set(f, AmfArray(objs :+ newObj), Annotations(node))
+    set(f, AmfArray(objs :+ newObj), annotations)
   }
+
+  private def annotationsFromEither(node: Either[YNode, YMapEntry]) =
+    node match {
+      case Left(value)  => Annotations(value)
+      case Right(value) => Annotations(value)
+    }
 
   def setProperty(property: PropertyMapping, value: String, entry: YMapEntry): DialectDomainElement = {
     set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))

@@ -116,7 +116,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/vocab#ls",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,3)-(10,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(10,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example13b.yaml#/encodes/source-map/lexical/element_1",
