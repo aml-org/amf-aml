@@ -11,10 +11,10 @@ import amf.core.internal.validation.CoreValidations
 import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
 import amf.plugins.document.vocabularies.model.document.Dialect
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.plugins.features.validation.PlatformValidator
 import amf.testing.common.cycling.FunSuiteRdfCycleTests
 import amf.testing.common.utils.AMLParsingHelper
 import amf.validation.DialectValidations
+import amf.validation.internal.PlatformValidator
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}

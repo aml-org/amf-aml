@@ -3,7 +3,7 @@ package amf.testing.common.utils
 import amf.core.io.FileAssertionTest
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
+import amf.validation.internal.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.{Assertion, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}

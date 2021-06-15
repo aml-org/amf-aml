@@ -35,8 +35,8 @@ import amf.plugins.document.vocabularies.resolution.pipelines.{
 }
 import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import amf.plugins.domain.VocabulariesRegister
-import amf.plugins.features.validation.unsafe.PlatformValidatorSecret
 import amf.validation.ValidationDialectText
+import amf.validation.internal.unsafe.PlatformValidatorSecret
 import org.mulesoft.common.collections.FilterType
 
 import scala.concurrent.ExecutionContext.Implicits.global

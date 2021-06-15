@@ -10,8 +10,8 @@ import amf.core.internal.validation.{EffectiveValidations, ShaclReportAdaptation
 import amf.core.internal.validation.core.{ShaclValidationOptions, ValidationProfile}
 import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
 import amf.plugins.document.vocabularies.resolution.pipelines.DialectInstanceTransformationPipeline
-import amf.plugins.features.validation.PlatformValidator
-import amf.plugins.features.validation.shacl.FullShaclValidator
+import amf.validation.internal.PlatformValidator
+import amf.validation.internal.shacl.FullShaclValidator
 
 import scala.concurrent.{ExecutionContext, Future}
 

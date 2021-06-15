@@ -8,7 +8,7 @@ import amf.core.io.FileAssertionTest
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
-import amf.plugins.features.validation.emitters.ValidationReportJSONLDEmitter
+import amf.validation.internal.emitters.ValidationReportJSONLDEmitter
 import org.scalatest
 import org.scalatest.{AsyncFunSuite, Matchers}
 
