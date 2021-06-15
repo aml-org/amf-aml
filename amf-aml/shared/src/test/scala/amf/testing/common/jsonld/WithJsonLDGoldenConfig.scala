@@ -1,6 +1,6 @@
 package amf.testing.common.jsonld
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.plugins.document.graph.JsonLdDocumentForm
 

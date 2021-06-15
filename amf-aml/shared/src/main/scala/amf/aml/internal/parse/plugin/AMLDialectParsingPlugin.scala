@@ -1,0 +1,72 @@
+package amf.aml.internal.parse.plugin
+
+import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.parse.AMFParsePlugin
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.parse.AMFParsePlugin
+import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext, ReferenceHandler}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.internal.parser.Root
+import amf.core.client.scala.model.document.BaseUnit
+import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
+import amf.aml.internal.parse.dialects.{DialectContext, DialectsParser}
+import amf.aml.internal.parse.vocabularies.{VocabulariesParser, VocabularyContext}
+import amf.aml.internal.parse.headers.{DialectHeader, ExtensionHeader}
+
+class AMLDialectParsingPlugin extends AMFParsePlugin {
+  val knownHeaders =
+    IndexedSeq(ExtensionHeader.DialectHeader,
+               ExtensionHeader.DialectFragmentHeader,
+               ExtensionHeader.DialectLibraryHeader)
+
+  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
+    val header = DialectHeader(document)
+
+    header match {
+      case Some(ExtensionHeader.DialectLibraryHeader) =>
+        new DialectsParser(document)(cleanDialectContext(ctx, document)).parseLibrary()
+      case Some(ExtensionHeader.DialectFragmentHeader) =>
+        new DialectsParser(document)(new DialectContext(ctx)).parseFragment()
+      case Some(ExtensionHeader.DialectHeader) =>
+        parseDialect(document, cleanDialectContext(ctx, document))
+      case _ => throw new Exception("Dunno") // TODO: ARM - what to do with this
+    }
+  }
+
+  private def parseDialect(document: Root, parentContext: ParserContext) =
+    new DialectsParser(document)(new DialectContext(parentContext)).parseDocument()
+
+  protected def cleanDialectContext(wrapped: ParserContext, root: Root): DialectContext = {
+    val cleanNested =
+      ParserContext(root.location, root.references, EmptyFutureDeclarations(), wrapped.config)
+    new DialectContext(cleanNested)
+  }
+
+  override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
+    new SyntaxExtensionsReferenceHandler(eh)
+
+  override def allowRecursiveReferences: Boolean = true
+
+  override val id: String = "dialect-parsing-plugin"
+
+  override def applies(root: Root): Boolean = {
+    DialectHeader(root) match {
+      case Some(header) => knownHeaders.contains(header)
+      case _            => false
+    }
+  }
+
+  override def priority: PluginPriority = NormalPriority
+
+  /**
+    * media types which specifies vendors that are parsed by this plugin.
+    */
+  override def mediaTypes: Seq[String] = Seq("application/aml", "application/yaml", "application/aml+yaml")
+
+  /**
+    * media types which specifies vendors that may be referenced.
+    */
+  override def validMediaTypesToReference: scala.Seq[String] =
+    Seq("application/aml", "application/yaml", "application/aml+yaml")
+}

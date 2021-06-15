@@ -1,7 +1,6 @@
 package amf.testing.validation
 
-import amf.client.environment.AMLConfiguration
-
+import amf.aml.client.scala.AMLConfiguration
 import amf.testing.common.utils.{DialectInstanceValidation, ReportComparator, UniquePlatformReportComparator}
 import org.scalatest.Assertion
 

@@ -1,11 +1,11 @@
 package amf.testing.unclassified
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.{Vendor, VocabularyYamlHint}
-import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.document.vocabularies.semantic.{
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.internal.semantic.{
   NameFieldExtractor,
   PropertyTermFieldExtractor,
   SemanticExtensionFinder,

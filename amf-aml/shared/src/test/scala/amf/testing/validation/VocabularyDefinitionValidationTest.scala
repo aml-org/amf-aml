@@ -1,6 +1,6 @@
 package amf.testing.validation
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.validation.ValidationConfiguration
