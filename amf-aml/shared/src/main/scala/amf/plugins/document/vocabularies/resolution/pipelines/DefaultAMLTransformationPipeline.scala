@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.resolution.pipelines
 
-import amf.core.client.scala.transform.PipelineName
+import amf.core.client.common.transform._
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Aml
@@ -25,12 +25,12 @@ private object RedirectResolutionByModel extends TransformationStep {
 }
 
 object DefaultAMLTransformationPipeline {
-  val name: String                              = PipelineName.from(Aml.name, TransformationPipeline.DEFAULT_PIPELINE)
+  val name: String                              = PipelineName.from(Aml.mediaType, PipelineId.Default)
   def apply(): DefaultAMLTransformationPipeline = new DefaultAMLTransformationPipeline(name)
   private[amf] def editing()                    = new DefaultAMLTransformationPipeline(name)
 }
 
 object AMLEditingPipeline {
-  val name: String                              = PipelineName.from(Aml.name, TransformationPipeline.EDITING_PIPELINE)
+  val name: String                              = PipelineName.from(Aml.mediaType, PipelineId.Editing)
   def apply(): DefaultAMLTransformationPipeline = DefaultAMLTransformationPipeline.editing()
 }
