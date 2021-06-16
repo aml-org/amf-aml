@@ -148,7 +148,13 @@
       ],
       "sourcemaps:lexical": [
         {
+          "@id": "/externals/aml#/source-map/lexical/element_2"
+        },
+        {
           "@id": "/externals/aml#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "/externals/aml#/source-map/lexical/element_1"
         }
       ]
     },
@@ -230,7 +236,17 @@
       ]
     },
     {
+      "@id": "/externals/aml#/source-map/lexical/element_2",
+      "sourcemaps:element": "core:displayName",
+      "sourcemaps:value": "[(6,2)-(6,5)]"
+    },
+    {
       "@id": "/externals/aml#/source-map/lexical/element_0",
+      "sourcemaps:element": "meta:base",
+      "sourcemaps:value": "[(6,7)-(6,25)]"
+    },
+    {
+      "@id": "/externals/aml#/source-map/lexical/element_1",
       "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-with-extra-facets/dialect.yaml/externals/aml",
       "sourcemaps:value": "[(6,2)-(8,0)]"
     },

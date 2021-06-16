@@ -44,7 +44,33 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example15.yaml/externals/v3#/source-map/lexical/element_2",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#displayName"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(24,2)-(24,4)]"
+                  }
+                ]
+              },
+              {
                 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example15.yaml/externals/v3#/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/meta#base"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(24,6)-(24,25)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example15.yaml/externals/v3#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example15.yaml/externals/v3"

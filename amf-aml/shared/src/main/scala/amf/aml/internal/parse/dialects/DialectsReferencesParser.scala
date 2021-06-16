@@ -94,8 +94,8 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
             .foreach(e => {
               val alias: String = e.key.as[YScalar].text
               val base: String  = e.value
-              val external      = External(Annotations(e))
-              result += (alias, external.withAlias(alias).withBase(base))
+              val external      = External(e)
+              result += (alias, external.withAlias(alias, Annotations(e.key)).withBase(base, Annotations(e.value)))
             })
     )
   }
