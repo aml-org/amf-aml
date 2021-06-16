@@ -19,7 +19,7 @@ documents:
     encodes: nodeA
     declares:
       DecB: nodeB
-uses:
-  v2: vocab2.yaml
 external:
   v2e: http://test.com/external#
+uses:
+  v2: vocab2.yaml
