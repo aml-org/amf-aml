@@ -62,35 +62,6 @@ lazy val defaultProfilesGenerationTask = TaskKey[Unit](
   "Generates the validation dialect documents for the standard profiles")
 
 /** **********************************************
-  * AMF-Custom-Validation
-  * ********************************************* */
-lazy val customValidation = crossProject(JSPlatform, JVMPlatform)
-  .settings(
-    Seq(
-      name := "amf-custom-validation"
-    ))
-  .in(file("./amf-custom-validation"))
-  .dependsOn(aml % "compile->compile;test->test")
-  .settings(commonSettings)
-  .jvmSettings(
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-custom-validation-javadoc.jar"
-  )
-  .jsSettings(
-    jsDependencies += ProvidedJS / "shacl.js",
-    jsDependencies += ProvidedJS / "ajv.min.js",
-    scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-custom-validation-module.js"
-  )
-  .disablePlugins(SonarPlugin)
-
-lazy val customValidationJVM =
-  customValidation.jvm.in(file("./amf-custom-validation/jvm"))
-
-lazy val customValidationJS = customValidation.js
-  .in(file("./amf-custom-validation/js"))
-  .disablePlugins(SonarPlugin)
-
-/** **********************************************
   * AMF-AML
   * ********************************************* */
 lazy val aml = crossProject(JSPlatform, JVMPlatform)

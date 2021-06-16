@@ -1,6 +1,6 @@
 package amf.testing.rdf
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.RdfModel
@@ -8,13 +8,12 @@ import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations
-import amf.plugins.document.vocabularies.emitters.instances.DefaultNodeMappableFinder
-import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.document.vocabularies.validation.AMFDialectValidations
-import amf.plugins.features.validation.PlatformValidator
+import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.internal.validate.{AMFDialectValidations, DialectValidations}
 import amf.testing.common.cycling.FunSuiteRdfCycleTests
 import amf.testing.common.utils.AMLParsingHelper
-import amf.validation.DialectValidations
+import amf.validation.internal.PlatformValidator
 import org.scalatest.Assertion
 
 import scala.concurrent.{ExecutionContext, Future}

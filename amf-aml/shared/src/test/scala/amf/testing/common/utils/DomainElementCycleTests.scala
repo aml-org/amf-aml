@@ -1,7 +1,6 @@
 package amf.testing.common.utils
 
-import amf.client.environment.AMLConfiguration
-import amf.client.remod.rendering.AMLDialectInstanceRenderingPlugin
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement
@@ -9,8 +8,9 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
 import amf.core.internal.remote.Hint
 import amf.core.io.FileAssertionTest
-import amf.plugins.document.vocabularies.emitters.instances.AmlDomainElementEmitter
-import amf.plugins.document.vocabularies.model.document.{Dialect, DialectInstanceUnit}
+import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
+import amf.aml.client.scala.render.AmlDomainElementEmitter
+import amf.aml.internal.render.plugin.AMLDialectInstanceRenderingPlugin
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YDocument, YNode}
 

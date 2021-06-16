@@ -1,0 +1,36 @@
+package amf.validation.internal.shacl.custom.validators
+
+import amf.core.client.scala.model.domain.{AmfArray, AmfObject, AmfScalar}
+import amf.core.internal.validation.core.{PropertyConstraint, ValidationSpecification}
+import amf.validation.internal.shacl.custom.PropertyConstraintValidator.extractPropertyValue
+import amf.validation.internal.shacl.custom.{PropertyConstraintValidator, ReportBuilder}
+
+case object PatternConstraint extends PropertyConstraintValidator {
+
+  override def canValidate(spec: PropertyConstraint): Boolean = spec.pattern.isDefined
+
+  override def validate(spec: ValidationSpecification,
+                        propertyConstraint: PropertyConstraint,
+                        parent: AmfObject,
+                        reportBuilder: ReportBuilder): Unit = {
+    propertyConstraint.pattern.foreach { pattern =>
+      extractPropertyValue(propertyConstraint, parent) match {
+        case Some((_, _: AmfScalar, Some(value))) =>
+          if (valueDoesntComplyWithPattern(propertyConstraint, value))
+            reportBuilder.reportFailure(spec, propertyConstraint, parent.id)
+        case Some((_, arr: AmfArray, _)) =>
+          arr.values.foreach {
+            case value: AmfScalar =>
+              if (Option(value).isDefined && propertyConstraint.pattern.get.r.findFirstIn(value.toString).isEmpty)
+                reportBuilder.reportFailure(spec, propertyConstraint, parent.id)
+            case _ => // ignore
+          }
+        case _ => // ignore
+      }
+    }
+  }
+
+  private def valueDoesntComplyWithPattern(propertyConstraint: PropertyConstraint, value: Any) = {
+    Option(value).isDefined && propertyConstraint.pattern.get.r.findFirstIn(value.toString).isEmpty
+  }
+}

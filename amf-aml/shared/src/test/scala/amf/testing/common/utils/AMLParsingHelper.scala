@@ -1,6 +1,6 @@
 package amf.testing.common.utils
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.{Hint, Platform}
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}

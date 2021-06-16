@@ -1,6 +1,6 @@
 package amf.testing.common.utils
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.remote.Aml
@@ -8,9 +8,8 @@ import amf.core.internal.remote.Vendor.AML
 import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.internal.unsafe.PlatformBuilder.platform
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
-
-import amf.plugins.document.vocabularies.model.document.Dialect
-import amf.plugins.document.vocabularies.resolution.pipelines.DialectTransformationPipeline
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.internal.transform.pipelines.DialectTransformationPipeline
 
 import scala.concurrent.{ExecutionContext, Future}
 

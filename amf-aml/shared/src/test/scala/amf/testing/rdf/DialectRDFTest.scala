@@ -1,6 +1,6 @@
 package amf.testing.rdf
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{Amf, Aml, VocabularyYamlHint}
 import amf.core.internal.unsafe.PlatformSecrets

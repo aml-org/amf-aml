@@ -1,10 +1,9 @@
 package amf.testing.render
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.remote.{Amf, Hint, VocabularyYamlHint}
-
 import amf.testing.common.utils.DomainElementCycleTests
 
 import scala.concurrent.ExecutionContext

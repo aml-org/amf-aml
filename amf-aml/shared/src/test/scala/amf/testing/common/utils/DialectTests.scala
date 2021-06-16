@@ -1,6 +1,6 @@
 package amf.testing.common.utils
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.plugins.render.DefaultRenderConfiguration
 import amf.core.io.FileAssertionTest

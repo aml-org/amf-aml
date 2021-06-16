@@ -1,6 +1,6 @@
 package amf.testing.common.cycling
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.io.FileAssertionTest
 import amf.core.client.scala.model.document.BaseUnit

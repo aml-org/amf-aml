@@ -1,0 +1,5 @@
+package amf.aml.internal.convert
+
+import amf.core.internal.convert.CoreBaseClientConverter
+
+trait VocabulariesBaseClientConverter extends VocabulariesBaseConverter with CoreBaseClientConverter

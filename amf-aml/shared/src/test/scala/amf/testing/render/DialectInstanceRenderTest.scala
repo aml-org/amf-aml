@@ -1,9 +1,8 @@
 package amf.testing.render
 
-import amf.client.environment.AMLConfiguration
+import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{Aml, Vendor, VocabularyYamlHint}
-
 import amf.testing.common.utils.DialectTests
 
 import scala.concurrent.ExecutionContext
