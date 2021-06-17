@@ -3,7 +3,11 @@ package amf.aml.client.scala
 import amf.aml.client.scala.AMLConfiguration.{platform, predefined}
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.client.scala.model.domain.{DialectDomainElement, SemanticExtension}
-import amf.aml.internal.parse.plugin.{AMLDialectInstanceParsingPlugin, AMLDialectParsingPlugin, AMLVocabularyParsingPlugin}
+import amf.aml.internal.parse.plugin.{
+  AMLDialectInstanceParsingPlugin,
+  AMLDialectParsingPlugin,
+  AMLVocabularyParsingPlugin
+}
 import amf.core.client.platform.config.AMFLogger
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, ErrorHandlerProvider, UnhandledErrorHandler}
@@ -15,17 +19,22 @@ import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.registries.AMFRegistry
-import amf.core.internal.resource.{AMFResolvers, ResourceLoader}
+import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationProfile
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
 import amf.aml.internal.validate.custom.ParsedValidationProfile
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.entities.AMLEntities
-import amf.aml.internal.render.plugin.{AMLDialectInstanceRenderingPlugin, AMLDialectRenderingPlugin, AMLVocabularyRenderingPlugin}
+import amf.aml.internal.render.plugin.{
+  AMLDialectInstanceRenderingPlugin,
+  AMLDialectRenderingPlugin,
+  AMLVocabularyRenderingPlugin
+}
 import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
 import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin, ValidationDialectText}
+import amf.core.client.scala.resource.ResourceLoader
 import amf.validation.internal.unsafe.PlatformValidatorSecret
 import org.mulesoft.common.collections.FilterType
 
