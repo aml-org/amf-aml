@@ -14,7 +14,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class DialectDomainElement(override private[amf] val _internal: InternalDialectDomainElement)
     extends DomainElement {
 
-  @JSExportTopLevel("model.domain.DialectDomainElement")
+  @JSExportTopLevel("DialectDomainElement")
   def this() = this(InternalDialectDomainElement())
 
   def isAbstract(): BoolField = _internal.isAbstract

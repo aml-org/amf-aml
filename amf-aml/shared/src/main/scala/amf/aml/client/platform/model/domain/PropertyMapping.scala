@@ -21,7 +21,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class PropertyMapping(override private[amf] val _internal: InternalPropertyMapping) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.PropertyMapping")
+  @JSExportTopLevel("PropertyMapping")
   def this() = this(InternalPropertyMapping())
 
   def withName(name: String): PropertyMapping = {

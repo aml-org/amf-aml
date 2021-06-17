@@ -12,7 +12,7 @@ class DialectInstanceFragment(private[amf] val _internal: InternalDialectInstanc
     extends BaseUnit
     with EncodesModel {
 
-  @JSExportTopLevel("model.document.DialectInstanceFragment")
+  @JSExportTopLevel("DialectInstanceFragment")
   def this() = this(InternalDialectInstanceFragment())
 
   override def encodes: DialectDomainElement =

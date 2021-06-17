@@ -15,7 +15,7 @@ class DialectInstance(private[amf] val _internal: InternalDialectInstance)
     with EncodesModel
     with DeclaresModel {
 
-  @JSExportTopLevel("model.document.DialectInstance")
+  @JSExportTopLevel("DialectInstance")
   def this() = this(InternalDialectInstance())
 
   def definedBy(): StrField                     = _internal.definedBy()

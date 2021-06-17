@@ -14,7 +14,7 @@ class DialectInstancePatch(private[amf] val _internal: InternalPatchInstance)
     with EncodesModel
     with DeclaresModel {
 
-  @JSExportTopLevel("model.document.DialectInstancePatch")
+  @JSExportTopLevel("DialectInstancePatch")
   def this() = this(InternalPatchInstance())
 
   def definedBy(): StrField                     = _internal.definedBy()

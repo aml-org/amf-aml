@@ -13,7 +13,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class ClassTerm(override private[amf] val _internal: InternalClassTerm) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.ClassTerm")
+  @JSExportTopLevel("ClassTerm")
   def this() = this(InternalClassTerm())
 
   /**

@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class SemanticExtension(override private[amf] val _internal: InternalSemanticExtension) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.SemanticExtension")
+  @JSExportTopLevel("SemanticExtension")
   def this() = this(InternalSemanticExtension())
 
   def extensionName(): StrField = _internal.extensionName()

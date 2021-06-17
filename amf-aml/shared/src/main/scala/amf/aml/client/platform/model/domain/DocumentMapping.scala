@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class DocumentMapping(override private[amf] val _internal: InternalDocumentMapping) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.DocumentMapping")
+  @JSExportTopLevel("DocumentMapping")
   def this() = this(InternalDocumentMapping())
 
   def documentName(): StrField = _internal.documentName()

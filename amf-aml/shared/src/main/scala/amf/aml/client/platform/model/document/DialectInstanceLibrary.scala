@@ -10,6 +10,6 @@ class DialectInstanceLibrary(private[amf] val _internal: InternalDialectInstance
     extends BaseUnit
     with DeclaresModel {
 
-  @JSExportTopLevel("model.document.DialectInstanceLibrary")
+  @JSExportTopLevel("DialectInstanceLibrary")
   def this() = this(InternalDialectInstanceLibrary())
 }

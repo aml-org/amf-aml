@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class Dialect(private[amf] val _internal: InternalDialect) extends BaseUnit with EncodesModel with DeclaresModel {
 
-  @JSExportTopLevel("model.document.Dialect")
+  @JSExportTopLevel("Dialect")
   def this() = this(InternalDialect())
 
   def name: StrField                              = _internal.name()

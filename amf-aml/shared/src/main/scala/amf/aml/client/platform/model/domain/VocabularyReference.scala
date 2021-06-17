@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 case class VocabularyReference(override private[amf] val _internal: InternalVocabularyReference)
     extends DomainElement {
 
-  @JSExportTopLevel("model.domain.VocabularyReference")
+  @JSExportTopLevel("VocabularyReference")
   def this() = this(InternalVocabularyReference())
 
   def alias: StrField     = _internal.alias
