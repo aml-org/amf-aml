@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class AnnotationMapping(override private[amf] val _internal: InternalAnnotationMapping) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.AnnotationMapping")
+  @JSExportTopLevel("AnnotationMapping")
   def this() = this(InternalAnnotationMapping())
 
   def name(): StrField                    = _internal.name

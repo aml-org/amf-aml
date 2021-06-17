@@ -11,7 +11,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 class DialectLibrary(private[amf] val _internal: InternalDialectLibrary) extends BaseUnit with DeclaresModel {
 
-  @JSExportTopLevel("model.document.DialectLibrary")
+  @JSExportTopLevel("DialectLibrary")
   def this() = this(InternalDialectLibrary())
 
   def externals: ClientList[External] = _internal.externals.asClient

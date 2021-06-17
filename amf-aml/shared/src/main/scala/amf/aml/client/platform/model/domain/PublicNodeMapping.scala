@@ -10,7 +10,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 case class PublicNodeMapping(override private[amf] val _internal: InternalPublicNodeMapping) extends DomainElement {
 
-  @JSExportTopLevel("model.domain.PublicNodeMapping")
+  @JSExportTopLevel("PublicNodeMapping")
   def this() = this(InternalPublicNodeMapping())
 
   def name(): StrField = _internal.name()

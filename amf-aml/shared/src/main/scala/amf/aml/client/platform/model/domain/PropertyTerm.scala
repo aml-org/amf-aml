@@ -51,7 +51,7 @@ abstract class PropertyTerm(override private[amf] val _internal: InternalPropert
 case class ObjectPropertyTerm(override private[amf] val _internal: InternalObjectPropertyTerm)
     extends PropertyTerm(_internal) {
 
-  @JSExportTopLevel("model.domain.ObjectPropertyTerm")
+  @JSExportTopLevel("ObjectPropertyTerm")
   def this() = this(InternalObjectPropertyTerm())
 
 }
@@ -64,7 +64,7 @@ case class ObjectPropertyTerm(override private[amf] val _internal: InternalObjec
 case class DatatypePropertyTerm(override private[amf] val _internal: InternalDatatypePropertyTerm)
     extends PropertyTerm(_internal) {
 
-  @JSExportTopLevel("model.domain.DatatypePropertyTerm")
+  @JSExportTopLevel("DatatypePropertyTerm")
   def this() = this(InternalDatatypePropertyTerm())
 
 }

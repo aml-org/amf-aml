@@ -12,7 +12,7 @@ case class UnionNodeMapping(override private[amf] val _internal: InternalUnionNo
     extends DomainElement
     with Linkable {
 
-  @JSExportTopLevel("model.domain.UnionNodeMapping")
+  @JSExportTopLevel("UnionNodeMapping")
   def this() = this(InternalUnionNodeMapping())
 
   def name: StrField = _internal.name

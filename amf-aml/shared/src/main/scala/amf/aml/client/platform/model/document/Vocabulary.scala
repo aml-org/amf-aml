@@ -16,7 +16,7 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 class Vocabulary(private[amf] val _internal: InternalVocabulary) extends BaseUnit with DeclaresModel {
 
-  @JSExportTopLevel("model.document.Vocabulary")
+  @JSExportTopLevel("Vocabulary")
   def this() = this(InternalVocabulary())
 
   def name: StrField        = _internal.name
