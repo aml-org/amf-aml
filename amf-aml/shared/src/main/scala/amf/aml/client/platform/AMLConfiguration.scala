@@ -71,6 +71,8 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: scala.
 @JSExportTopLevel("AMLConfiguration")
 object AMLConfiguration {
 
+  def empty(): AMLConfiguration = InternalAMLConfiguration.empty()
+
   /** Predefined environment to deal with AML documents based on AMLConfiguration predefined() method */
   def predefined(): AMLConfiguration = InternalAMLConfiguration.predefined()
 }
