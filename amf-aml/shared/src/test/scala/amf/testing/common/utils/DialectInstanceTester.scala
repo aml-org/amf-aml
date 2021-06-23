@@ -18,7 +18,8 @@ trait DialectInstanceTester extends DialectRegistrationHelper { this: FunSuiteCy
                                  renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
     withDialect(s"file://$directory/$dialect") { (_, config) =>
       val configuration =
-        renderOptions.fold(config.withRenderOptions(RenderOptions().withSourceMaps.withPrettyPrint))(r =>
+        renderOptions.fold(
+            config.withRenderOptions(RenderOptions().withSourceMaps.withPrettyPrint.withoutFlattenedJsonLd))(r =>
           config.withRenderOptions(r))
       cycle(source, golden, hint, target, directory, configuration)
     }

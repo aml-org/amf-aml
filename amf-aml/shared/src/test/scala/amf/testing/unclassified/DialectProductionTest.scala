@@ -46,7 +46,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
         amlConfig = AMLConfiguration
           .predefined()
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
-          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps)
+          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
     )
   }
 
@@ -61,7 +61,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
         amlConfig = AMLConfiguration
           .predefined()
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
-          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps)
+          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
     )
   }
 
@@ -76,7 +76,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
         amlConfig = AMLConfiguration
           .predefined()
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
-          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps)
+          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
     )
   }
 
