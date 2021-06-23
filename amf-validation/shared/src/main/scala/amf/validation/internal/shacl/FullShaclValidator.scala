@@ -1,7 +1,6 @@
 package amf.validation.internal.shacl
 
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.benchmark.ExecutionLog.log
 import amf.core.internal.validation.core.{
   SHACLValidator,
   ShaclValidationOptions,
@@ -22,17 +21,11 @@ class FullShaclValidator(shacl: SHACLValidator, options: ShaclValidationOptions)
   def validate(model: BaseUnit, validations: Seq[ValidationSpecification])(
       implicit executionContext: ExecutionContext): Future[ValidationReport] = {
 
-    log(s"AMFValidatorPlugin#shaclValidation: shacl validation for ${validations.size} validations")
-
     if (shacl.supportsJSFunctions) loadJSFunctions(validations)
 
     val shapes = validations.filter(s => !s.isParserSide)
 
-    log(s"AMFValidatorPlugin#shaclValidation: Invoking platform validation")
-
     val report = shacl.report(model, shapes, options)
-
-    log(s"AMFValidatorPlugin#shaclValidation: validation finished")
 
     report
   }
@@ -47,7 +40,5 @@ class FullShaclValidator(shacl: SHACLValidator, options: ShaclValidationOptions)
         shacl.registerLibrary(ShaclJsonLdShapeGraphEmitter.validationLibraryUrl, code)
       case _ => // ignore
     }
-
-    log(s"AMFValidatorPlugin#shaclValidation: jsLibrary generated")
   }
 }
