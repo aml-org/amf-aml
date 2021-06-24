@@ -39,6 +39,7 @@ import amf.aml.internal.render.plugin.{
 import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
 import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin, ValidationDialectText}
+import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.resource.ResourceLoader
 import amf.validation.internal.unsafe.PlatformValidatorSecret
 import org.mulesoft.common.collections.FilterType
@@ -126,6 +127,9 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLConfiguration =
     super._withAnnotations(annotations)
+
+  override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMLConfiguration =
+    super._withExecutionEnvironment(executionEnv)
 
   def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 

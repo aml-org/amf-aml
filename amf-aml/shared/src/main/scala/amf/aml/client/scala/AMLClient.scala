@@ -14,7 +14,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class AMLClient private[amf] (protected override val configuration: AMLConfiguration)
     extends AMFGraphClient(configuration) {
 
-  override implicit val exec: ExecutionContext = configuration.resolvers.executionContext.executionContext
+  override implicit val exec: ExecutionContext = configuration.getExecutionContext
 
   override def getConfiguration: AMLConfiguration = configuration
 
@@ -42,7 +42,7 @@ class AMLClient private[amf] (protected override val configuration: AMLConfigura
 
   /**
     * parse a {@link amf.aml.client.scala.model.document.DialectInstance}
- *
+    *
     * @param url of the resource to parse
     * @return a Future {@link AMLDialectInstanceResult}
     */
