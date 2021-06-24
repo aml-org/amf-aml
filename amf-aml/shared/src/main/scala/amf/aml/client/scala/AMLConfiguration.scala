@@ -8,9 +8,14 @@ import amf.aml.internal.parse.plugin.{
   AMLDialectParsingPlugin,
   AMLVocabularyParsingPlugin
 }
-import amf.core.client.platform.config.AMFLogger
+import amf.core.client.platform.config.{AMFLogger, MutedLogger}
 import amf.core.client.scala.config._
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, ErrorHandlerProvider, UnhandledErrorHandler}
+import amf.core.client.scala.errorhandling.{
+  AMFErrorHandler,
+  DefaultErrorHandlerProvider,
+  ErrorHandlerProvider,
+  UnhandledErrorHandler
+}
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.parse.AMFParser
 import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
@@ -213,6 +218,17 @@ object AMLConfiguration extends PlatformSecrets {
   //TODO ARM remove
   private[amf] def forEH(eh: AMFErrorHandler) = {
     predefined().withErrorHandlerProvider(() => eh)
+  }
+
+  def empty(): AMLConfiguration = {
+    new AMLConfiguration(
+        AMFResolvers.predefined(),
+        DefaultErrorHandlerProvider,
+        AMFRegistry.empty,
+        MutedLogger,
+        Set.empty,
+        AMFOptions.default()
+    )
   }
 }
 
