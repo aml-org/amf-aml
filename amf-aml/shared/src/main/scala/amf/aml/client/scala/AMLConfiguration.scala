@@ -39,12 +39,12 @@ import amf.aml.internal.render.plugin.{
 import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
 import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin, ValidationDialectText}
+import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.resource.ResourceLoader
 import amf.validation.internal.unsafe.PlatformValidatorSecret
 import org.mulesoft.common.collections.FilterType
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * The configuration object required for using AML
@@ -63,6 +63,8 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
     extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
+
+  private implicit val ec: ExecutionContext = this.getExecutionContext
 
   private[amf] val PROFILE_DIALECT_URL = "http://a.ml/dialects/profile.raml"
 
@@ -126,6 +128,9 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLConfiguration =
     super._withAnnotations(annotations)
+
+  override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMLConfiguration =
+    super._withExecutionEnvironment(executionEnv)
 
   def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
@@ -232,7 +237,7 @@ object AMLConfiguration extends PlatformSecrets {
   }
 }
 
-class DialectReferencesCollector {
+class DialectReferencesCollector(implicit val ec: ExecutionContext) {
   def collectFrom(url: String,
                   mediaType: Option[String] = None,
                   amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
