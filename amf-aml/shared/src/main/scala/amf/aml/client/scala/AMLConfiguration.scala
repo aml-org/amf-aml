@@ -28,7 +28,6 @@ import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationProfile
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
-import amf.aml.internal.validate.custom.ParsedValidationProfile
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.entities.AMLEntities
 import amf.aml.internal.render.plugin.{
@@ -142,32 +141,6 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   }
 
   def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
-
-  def withCustomValidationsEnabled(): Future[AMLConfiguration] = {
-    AMFParser.parseContent(ValidationDialectText.text, PROFILE_DIALECT_URL, None, this) map {
-      case AMFResult(d: Dialect, _) => withDialect(d)
-      case _                        => this
-    }
-  }
-
-  def withCustomProfile(profile: ValidationProfile): AMLConfiguration = {
-    copy(registry = this.registry.withConstraints(profile))
-  }
-
-  def withCustomProfile(instancePath: String): Future[AMLConfiguration] = {
-    // TODO: should check that ValidationProfile dialect is defined first?
-    AMFParser.parse(instancePath, this).map {
-      case AMFResult(parsed: DialectInstance, _) =>
-        if (parsed.definedBy().is(PROFILE_DIALECT_URL)) {
-          val profile = ParsedValidationProfile(parsed.encodes.asInstanceOf[DialectDomainElement])
-          withCustomProfile(profile)
-        } else {
-          // TODO: throw exception?
-          this
-        }
-      case _ => this
-    }
-  }
 
   // TODO: what about nested $dialect references?
   def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
