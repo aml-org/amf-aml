@@ -58,16 +58,7 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: scala.
     */
   def merge(other: AMLConfiguration): AMLConfiguration = _internal.merge(other)
 
-  def withCustomValidationsEnabled(): ClientFuture[AMLConfiguration] =
-    _internal.withCustomValidationsEnabled().asClient
-
   def withDialect(path: String): ClientFuture[AMLConfiguration] = _internal.withDialect(path).asClient
-
-  def withCustomProfile(instancePath: String): ClientFuture[AMLConfiguration] =
-    _internal.withCustomProfile(instancePath).asClient
-
-  def withCustomProfile(profile: ValidationProfile): AMLConfiguration =
-    _internal.withCustomProfile(profile)
 
   def forInstance(url: String): ClientFuture[AMLConfiguration] = _internal.forInstance(url).asClient
 }
