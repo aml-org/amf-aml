@@ -7,8 +7,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-
-version in ThisBuild := "5.1.6"
+version in ThisBuild := "5.1.7"
 
 
 publish := {}
@@ -36,8 +35,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-
-val amfCoreVersion = "4.2.218"
+val amfCoreVersion = "4.2.221"
 
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
@@ -132,6 +130,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.json4s"                 %% "json4s-native"          % "3.5.4",
     libraryDependencies += "org.apache.jena"            % "jena-shacl"              % "3.14.0",
     libraryDependencies += "org.apache.thrift"          % "libthrift"               % "0.14.1", // CVE-2020-13949
+    excludeDependencies += "org.apache.tomcat.embed"    % "tomcat-embed-core",
     libraryDependencies += "commons-io"                 % "commons-io"              % "2.6",
     libraryDependencies += "org.apache.commons"         % "commons-lang3"           % "3.9",
     libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.19",

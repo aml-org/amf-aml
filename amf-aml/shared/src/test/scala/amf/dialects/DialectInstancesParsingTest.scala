@@ -432,6 +432,15 @@ trait DialectInstancesParsingTest extends DialectTests {
                 renderOptions = Some(config.renderOptions))
   }
 
+  multiGoldenTest("parse 33 test (Union with no type discriminator)", "example33.%s") { config =>
+    withDialect("dialect33.yaml",
+      "example33.yaml",
+      config.golden,
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(config.renderOptions))
+  }
+
   if (platform.name == "jvm") {
     ignore("generate 1 test") {
       withDialect("dialect1.yaml",
@@ -1009,13 +1018,25 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  test("different encodes should be named") {
+    withDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      "instance.golden.flattened.jsonld",
+      VocabularyYamlHint,
+      target = Amf,
+      renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint),
+      directory = s"$basePath/encoded-named/"
+    )
+  }
+
   test("Cyclic references") {
     withDialect(
       "dialect.yaml",
       "instance.flattened.jsonld",
       "instance.golden.flattened.jsonld",
       AmfJsonHint,
-      target = Amf,
+      target = Aml,
       renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint),
       directory = s"$basePath/cyclic-references/"
     )

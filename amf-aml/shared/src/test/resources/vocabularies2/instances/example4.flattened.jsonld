@@ -166,7 +166,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example4.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#a",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,2)-(11,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(11,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example4.yaml#/encodes/a/0/source-map/lexical/element_1",

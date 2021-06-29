@@ -63,7 +63,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/empty-node-yaml/instance.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#emptyProp",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(2,11)-(2,13)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,13)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/empty-node-yaml/instance.yaml#/encodes/emptyProp/source-map/lexical/element_0",

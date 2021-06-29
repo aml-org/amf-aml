@@ -75,7 +75,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#b",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,3)-(7,6)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(7,0)-(8,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9.yaml#/encodes/b/source-map/synthesized-field/element_0",
@@ -315,7 +315,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9.yaml#/Bs/Hey/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#a1",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(6,7)-(6,13)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,4)-(7,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9.yaml#/Bs/Hey/source-map/lexical/element_1",

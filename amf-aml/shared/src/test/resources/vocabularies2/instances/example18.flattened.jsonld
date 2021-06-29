@@ -90,7 +90,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example18.yaml#/hey_ho/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/v3#rel",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(5,4)-(7,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(5,0)-(7,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example18.yaml#/hey_ho/source-map/lexical/element_3",

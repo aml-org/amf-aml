@@ -1,6 +1,8 @@
 #%Dialect 1.0
 dialect: ABOUT
 version: "0.1"
+external:
+  schema-org: http://schema.org/
 documents:
   library:
     declares:
@@ -198,5 +200,3 @@ nodeMappings:
         range: string
 uses:
   about: ABOUT-vocabulary.yaml
-external:
-  schema-org: http://schema.org/

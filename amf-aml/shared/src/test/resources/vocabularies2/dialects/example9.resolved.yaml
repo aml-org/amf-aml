@@ -2,6 +2,8 @@
 documents:
   root:
     encodes: Local
+external:
+  v2: http://test.com/v2#
 nodeMappings:
   Local:
     classTerm: v2.B
@@ -9,7 +11,5 @@ nodeMappings:
       za:
         propertyTerm: v2.b
         range: string
-external:
-  v2: http://test.com/v2#
 dialect: Test
 version: "1.0"

@@ -51,6 +51,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#from-union-node-mapping": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/encodes/union/source-map/from-union-node-mapping/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/encodes/union/source-map/lexical/element_1"
@@ -68,7 +73,12 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/v3#union",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(9,6)-(12,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(9,0)-(12,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/encodes/union/source-map/from-union-node-mapping/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/encodes/union",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect27.yaml#/declarations/UnionNode"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/encodes/union/source-map/lexical/element_1",
@@ -161,6 +171,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#from-union-node-mapping": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/a/source-map/from-union-node-mapping/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/a/source-map/lexical/element_2"
@@ -177,6 +192,11 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/let's%20go/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#from-union-node-mapping": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/let's%20go/source-map/from-union-node-mapping/element_0"
+        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -196,6 +216,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(12,0)]"
     },
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/a/source-map/from-union-node-mapping/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/a",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect27.yaml#/declarations/UnionNode"
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/a/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#declarationName",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(3,3)]"
@@ -209,6 +234,11 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/a/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/a",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(6,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/let's%20go/source-map/from-union-node-mapping/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/let's%20go",
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect27.yaml#/declarations/UnionNode"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example27a.yaml#/nodes/let's%20go/source-map/lexical/element_2",
