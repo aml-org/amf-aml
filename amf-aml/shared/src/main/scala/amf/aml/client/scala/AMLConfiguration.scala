@@ -8,9 +8,14 @@ import amf.aml.internal.parse.plugin.{
   AMLDialectParsingPlugin,
   AMLVocabularyParsingPlugin
 }
-import amf.core.client.platform.config.AMFLogger
+import amf.core.client.platform.config.{AMFLogger, MutedLogger}
 import amf.core.client.scala.config._
-import amf.core.client.scala.errorhandling.{AMFErrorHandler, ErrorHandlerProvider, UnhandledErrorHandler}
+import amf.core.client.scala.errorhandling.{
+  AMFErrorHandler,
+  DefaultErrorHandlerProvider,
+  ErrorHandlerProvider,
+  UnhandledErrorHandler
+}
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.parse.AMFParser
 import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
@@ -23,7 +28,6 @@ import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationProfile
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
-import amf.aml.internal.validate.custom.ParsedValidationProfile
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.entities.AMLEntities
 import amf.aml.internal.render.plugin.{
@@ -34,12 +38,12 @@ import amf.aml.internal.render.plugin.{
 import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
 import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin, ValidationDialectText}
+import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.resource.ResourceLoader
 import amf.validation.internal.unsafe.PlatformValidatorSecret
 import org.mulesoft.common.collections.FilterType
 
-import scala.concurrent.ExecutionContext.Implicits.global
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 /**
   * The configuration object required for using AML
@@ -58,6 +62,8 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
     extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
+
+  private implicit val ec: ExecutionContext = this.getExecutionContext
 
   private[amf] val PROFILE_DIALECT_URL = "http://a.ml/dialects/profile.raml"
 
@@ -122,6 +128,9 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLConfiguration =
     super._withAnnotations(annotations)
 
+  override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMLConfiguration =
+    super._withExecutionEnvironment(executionEnv)
+
   def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
   def withDialect(path: String): Future[AMLConfiguration] = {
@@ -132,32 +141,6 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   }
 
   def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
-
-  def withCustomValidationsEnabled(): Future[AMLConfiguration] = {
-    AMFParser.parseContent(ValidationDialectText.text, PROFILE_DIALECT_URL, None, this) map {
-      case AMFResult(d: Dialect, _) => withDialect(d)
-      case _                        => this
-    }
-  }
-
-  def withCustomProfile(profile: ValidationProfile): AMLConfiguration = {
-    copy(registry = this.registry.withConstraints(profile))
-  }
-
-  def withCustomProfile(instancePath: String): Future[AMLConfiguration] = {
-    // TODO: should check that ValidationProfile dialect is defined first?
-    AMFParser.parse(instancePath, this).map {
-      case AMFResult(parsed: DialectInstance, _) =>
-        if (parsed.definedBy().is(PROFILE_DIALECT_URL)) {
-          val profile = ParsedValidationProfile(parsed.encodes.asInstanceOf[DialectDomainElement])
-          withCustomProfile(profile)
-        } else {
-          // TODO: throw exception?
-          this
-        }
-      case _ => this
-    }
-  }
 
   // TODO: what about nested $dialect references?
   def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
@@ -214,9 +197,20 @@ object AMLConfiguration extends PlatformSecrets {
   private[amf] def forEH(eh: AMFErrorHandler) = {
     predefined().withErrorHandlerProvider(() => eh)
   }
+
+  def empty(): AMLConfiguration = {
+    new AMLConfiguration(
+        AMFResolvers.predefined(),
+        DefaultErrorHandlerProvider,
+        AMFRegistry.empty,
+        MutedLogger,
+        Set.empty,
+        AMFOptions.default()
+    )
+  }
 }
 
-class DialectReferencesCollector {
+class DialectReferencesCollector(implicit val ec: ExecutionContext) {
   def collectFrom(url: String,
                   mediaType: Option[String] = None,
                   amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {

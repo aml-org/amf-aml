@@ -11,8 +11,10 @@ import amf.core.client.platform.transform.TransformationPipeline
 import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.core.internal.convert.TransformationPipelineConverter._
 import amf.aml.client.scala.{AMLConfiguration => InternalAMLConfiguration}
+
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.aml.client.scala
+import amf.core.client.platform.execution.BaseExecutionEnvironment
 
 @JSExportAll
 class AMLConfiguration private[amf] (private[amf] override val _internal: scala.AMLConfiguration)
@@ -47,22 +49,16 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: scala.
 
   override def withDialect(dialect: Dialect): AMLConfiguration = _internal.withDialect(dialect)
 
+  override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): AMLConfiguration =
+    _internal.withExecutionEnvironment(executionEnv._internal)
+
   /**
     * Merges two environments taking into account specific attributes that can be merged.
     * This is currently limited to: registry plugins, registry transformation pipelines.
     */
   def merge(other: AMLConfiguration): AMLConfiguration = _internal.merge(other)
 
-  def withCustomValidationsEnabled(): ClientFuture[AMLConfiguration] =
-    _internal.withCustomValidationsEnabled().asClient
-
   def withDialect(path: String): ClientFuture[AMLConfiguration] = _internal.withDialect(path).asClient
-
-  def withCustomProfile(instancePath: String): ClientFuture[AMLConfiguration] =
-    _internal.withCustomProfile(instancePath).asClient
-
-  def withCustomProfile(profile: ValidationProfile): AMLConfiguration =
-    _internal.withCustomProfile(profile)
 
   def forInstance(url: String): ClientFuture[AMLConfiguration] = _internal.forInstance(url).asClient
 }
@@ -70,6 +66,8 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: scala.
 @JSExportAll
 @JSExportTopLevel("AMLConfiguration")
 object AMLConfiguration {
+
+  def empty(): AMLConfiguration = InternalAMLConfiguration.empty()
 
   /** Predefined environment to deal with AML documents based on AMLConfiguration predefined() method */
   def predefined(): AMLConfiguration = InternalAMLConfiguration.predefined()

@@ -35,22 +35,4 @@ trait DialectInstanceValidation
       report
     }
   }
-
-  protected def validationWithCustomProfile(dialect: String,
-                                            instance: String,
-                                            profile: ProfileName,
-                                            name: String,
-                                            directory: String = basePath): Future[AMFValidationReport] = {
-
-    withDialect(s"$directory/$dialect") { (_, config) =>
-      for {
-        customValConfig <- config.withCustomValidationsEnabled
-        finalConfig     <- customValConfig.withCustomProfile(s"$directory/${profile.profile}")
-        instance        <- finalConfig.createClient().parseDialectInstance(s"$directory/$instance").map(_.dialectInstance)
-        report          <- finalConfig.createClient().validate(instance, ProfileName(name))
-      } yield {
-        report
-      }
-    }
-  }
 }

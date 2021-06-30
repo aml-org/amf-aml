@@ -1,10 +1,19 @@
 package amf.validation.client.platform
 
 import amf.core.client.common.validation.AmfProfile
-import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.config.{
+  AMFEvent,
+  AMFEventListener,
+  RenderOptions,
+  ShaclLoadedJsLibrariesEvent,
+  ShaclLoadedRdfDataModelEvent,
+  ShaclLoadedRdfShapesModelEvent,
+  ShaclStartedEvent,
+  ShaclValidationFinishedEvent,
+  ShaclValidationStartedEvent
+}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.RdfModel
-import amf.core.internal.benchmark.ExecutionLog
 import amf.core.internal.rdf.RdfModelEmitter
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.{ShaclValidationOptions, ValidationReport, ValidationSpecification}
@@ -17,10 +26,14 @@ import scala.scalajs.js.JSConverters._
 import scala.scalajs.js.annotation.{JSExport, JSExportTopLevel}
 
 @JSExportTopLevel("SHACLValidator")
-class SHACLValidator extends amf.core.internal.validation.core.SHACLValidator with PlatformSecrets {
+class SHACLValidator(listeners: Seq[AMFEventListener])
+    extends amf.core.internal.validation.core.SHACLValidator
+    with PlatformSecrets {
 
   var functionUrl: Option[String]  = None
   var functionCode: Option[String] = None
+
+  private def notifyEvent(event: AMFEvent) = listeners.foreach(_.notifyEvent(event))
 
   def nativeShacl: js.Dynamic =
     if (js.isUndefined(js.Dynamic.global.GlobalSHACLValidator)) {
@@ -132,16 +145,20 @@ class SHACLValidator extends amf.core.internal.validation.core.SHACLValidator wi
       implicit executionContext: ExecutionContext): Future[String] = {
     val promise = Promise[String]()
     try {
-      ExecutionLog.log("SHACLValidator#validate: Creating SHACL-JS instance and loading JS libraries")
+      notifyEvent(ShaclStartedEvent(data.id))
       val validator = js.Dynamic.newInstance(nativeShacl)()
       loadLibrary(validator)
+      notifyEvent(ShaclLoadedJsLibrariesEvent(data.id))
 
-      ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
       val dataModel = new RdflibRdfModel()
       new RdfModelEmitter(dataModel).emit(data, options.toRenderOptions)
-      ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
+      notifyEvent(ShaclLoadedRdfDataModelEvent(data.id, dataModel))
+
       val shapesModel = new RdflibRdfModel()
       new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
+      notifyEvent(ShaclLoadedRdfShapesModelEvent(data.id, shapesModel))
+
+      notifyEvent(ShaclValidationStartedEvent(data.id))
       validator.validateFroModels(
           dataModel.model,
           shapesModel.model, { (e: js.Dynamic, r: js.Dynamic) =>
@@ -150,6 +167,7 @@ class SHACLValidator extends amf.core.internal.validation.core.SHACLValidator wi
             } else {
               promise.failure(js.JavaScriptException(e))
             }
+            notifyEvent(ShaclValidationFinishedEvent(data.id))
           }
       )
 
@@ -164,17 +182,21 @@ class SHACLValidator extends amf.core.internal.validation.core.SHACLValidator wi
       implicit executionContext: ExecutionContext): Future[ValidationReport] = {
     val promise = Promise[ValidationReport]()
     try {
-      ExecutionLog.log("SHACLValidator#validate: Creating SHACL-JS instance and loading JS libraries")
+      notifyEvent(ShaclStartedEvent(data.id))
+
       val validator = js.Dynamic.newInstance(nativeShacl)()
       loadLibrary(validator)
+      notifyEvent(ShaclLoadedJsLibrariesEvent(data.id))
 
-      ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
       val dataModel = new RdflibRdfModel()
       new RdfModelEmitter(dataModel).emit(data, RenderOptions().withValidation)
-      ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
+      notifyEvent(ShaclLoadedRdfDataModelEvent(data.id, dataModel))
+
       val shapesModel = new RdflibRdfModel()
       new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
+      notifyEvent(ShaclLoadedRdfShapesModelEvent(data.id, shapesModel))
 
+      notifyEvent(ShaclValidationStartedEvent(data.id))
       validator.validateFromModels(
           dataModel.model,
           shapesModel.model, { (e: js.Dynamic, report: js.Dynamic) =>
@@ -184,6 +206,7 @@ class SHACLValidator extends amf.core.internal.validation.core.SHACLValidator wi
             } else {
               promise.failure(js.JavaScriptException(e))
             }
+            notifyEvent(ShaclValidationFinishedEvent(data.id))
           }
       )
 

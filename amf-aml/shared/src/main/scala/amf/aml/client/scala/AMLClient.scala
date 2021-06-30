@@ -5,8 +5,8 @@ import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.core.client.scala.parse.{AMFParser, InvalidBaseUnitTypeException}
 import amf.core.client.scala.{AMFGraphClient, AMFResult}
 import amf.core.internal.validation.core.ValidationProfile
-import amf.aml.internal.validate.custom.ParsedValidationProfile
 import amf.aml.internal.metamodel.document.{DialectInstanceModel, DialectModel, VocabularyModel}
+import amf.aml.internal.validate.custom.ParsedValidationProfile
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -14,7 +14,7 @@ import scala.concurrent.{ExecutionContext, Future}
 class AMLClient private[amf] (protected override val configuration: AMLConfiguration)
     extends AMFGraphClient(configuration) {
 
-  override implicit val exec: ExecutionContext = configuration.resolvers.executionContext.executionContext
+  override implicit val exec: ExecutionContext = configuration.getExecutionContext
 
   override def getConfiguration: AMLConfiguration = configuration
 
@@ -42,7 +42,7 @@ class AMLClient private[amf] (protected override val configuration: AMLConfigura
 
   /**
     * parse a {@link amf.aml.client.scala.model.document.DialectInstance}
- *
+    *
     * @param url of the resource to parse
     * @return a Future {@link AMLDialectInstanceResult}
     */
