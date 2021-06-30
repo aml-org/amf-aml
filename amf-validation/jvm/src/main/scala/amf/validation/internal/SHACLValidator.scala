@@ -1,9 +1,20 @@
 package amf.validation.internal
 
 import amf.core.client.common.validation.AmfProfile
+import amf.core.client.scala.config.{
+  AMFEvent,
+  AMFEventListener,
+  JenaLoadedModelEvent,
+  ShaclFinishedEvent,
+  ShaclLoadedRdfDataModelEvent,
+  ShaclLoadedRdfShapesModelEvent,
+  ShaclReportPrintingFinishedEvent,
+  ShaclReportPrintingStartedEvent,
+  ShaclValidationFinishedEvent,
+  ShaclValidationStartedEvent
+}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.RdfModel
-import amf.core.internal.benchmark.ExecutionLog
 import amf.core.internal.rdf.RdfModelEmitter
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.{ShaclValidationOptions, ValidationReport, ValidationSpecification}
@@ -18,7 +29,9 @@ import org.apache.jena.util.FileUtils
 import java.nio.charset.Charset
 import scala.concurrent.{ExecutionContext, Future}
 
-class SHACLValidator extends amf.core.internal.validation.core.SHACLValidator with PlatformSecrets {
+class SHACLValidator(listeners: Seq[AMFEventListener] = Seq.empty)
+    extends amf.core.internal.validation.core.SHACLValidator
+    with PlatformSecrets {
 
   var functionUrl: Option[String]  = None
   var functionCode: Option[String] = None
@@ -30,6 +43,8 @@ class SHACLValidator extends amf.core.internal.validation.core.SHACLValidator wi
       "text/n3"             -> FileUtils.langN3,
       "test/turtle"         -> FileUtils.langTurtle
   )
+
+  private def notifyEvent(event: AMFEvent) = listeners.foreach(_.notifyEvent(event))
 
   override def validate(data: String, dataMediaType: String, shapes: String, shapesMediaType: String)(
       implicit executionContext: ExecutionContext): Future[String] =
@@ -66,24 +81,24 @@ class SHACLValidator extends amf.core.internal.validation.core.SHACLValidator wi
   override def validate(data: BaseUnit, shapes: Seq[ValidationSpecification], options: ShaclValidationOptions)(
       implicit executionContext: ExecutionContext): Future[String] =
     Future {
-      ExecutionLog.log("SHACLValidator#validate: loading Jena data model")
       val dataModel = new JenaRdfModel()
       new RdfModelEmitter(dataModel).emit(data, options.toRenderOptions)
-      ExecutionLog.log("SHACLValidator#validate: loading Jena shapes model")
+      notifyEvent(ShaclLoadedRdfDataModelEvent(data.id, dataModel))
+
       val shapesModel = new JenaRdfModel()
       new ValidationRdfModelEmitter(options.messageStyle.profileName, shapesModel).emit(shapes)
-      ExecutionLog.log(
-          s"SHACLValidator#validate: Number of data triples -> ${dataModel.model.listStatements().toList.size()}")
-      ExecutionLog.log(
-          s"SHACLValidator#validate: Number of shapes triples -> ${shapesModel.model.listStatements().toList.size()}")
-      ExecutionLog.log(s"SHACLValidator#validate: validating...")
-      ExecutionLog.log("SHACLValidator#validate: starting script engine")
-      val shaclShapes = Shapes.parse(shapesModel.native().asInstanceOf[Model])
-      val report      = ShaclValidator.get.validate(shaclShapes, dataModel.native().asInstanceOf[Model].getGraph)
+      notifyEvent(ShaclLoadedRdfShapesModelEvent(data.id, shapesModel))
 
-      ExecutionLog.log(s"SHACLValidator#validate: Generating JSON-LD report")
+      val shaclShapes = Shapes.parse(shapesModel.native().asInstanceOf[Model])
+      notifyEvent(JenaLoadedModelEvent(data.id))
+      notifyEvent(ShaclValidationStartedEvent(data.id))
+      val report = ShaclValidator.get.validate(shaclShapes, dataModel.native().asInstanceOf[Model].getGraph)
+      notifyEvent(ShaclValidationFinishedEvent(data.id))
+
+      notifyEvent(ShaclReportPrintingStartedEvent(data.id))
       val output = internal.RDFPrinter(report.getModel, "JSON-LD")
-      ExecutionLog.log(s"SHACLValidator#validate: finishing")
+      notifyEvent(ShaclReportPrintingFinishedEvent(data.id))
+      notifyEvent(ShaclFinishedEvent(data.id))
       output
     }
 

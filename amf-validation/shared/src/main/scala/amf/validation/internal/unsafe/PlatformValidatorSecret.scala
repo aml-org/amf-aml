@@ -5,6 +5,6 @@ import amf.validation.internal.PlatformValidator
 
 private[amf] object PlatformValidatorSecret extends PlatformSecrets {
   def init() = {
-    platform.rdfFramework = Some(PlatformValidator.instance())
+    platform.rdfFramework = Some(PlatformValidator.instance(Seq.empty))
   }
 }

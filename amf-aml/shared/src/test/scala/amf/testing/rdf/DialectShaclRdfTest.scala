@@ -38,7 +38,7 @@ class DialectShaclRdfTest extends FunSuiteRdfCycleTests with PlatformSecrets wit
     val validationProfile = new AMFDialectValidations(unit.asInstanceOf[Dialect])(finder).profile()
     val validations = validationProfile.validations.filter(v =>
       !DialectValidations.validations.contains(v) && !CoreValidations.validations.contains(v))
-    PlatformValidator.instance().shapes(validations, "http://metadata.org/validations.js")
+    PlatformValidator.instance(Seq.empty).shapes(validations, "http://metadata.org/validations.js")
   }
 
   /** Method to render parsed unit. Override if necessary. */
