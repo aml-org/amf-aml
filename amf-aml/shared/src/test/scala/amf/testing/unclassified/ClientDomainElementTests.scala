@@ -3,6 +3,7 @@ package amf.testing.unclassified
 import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.aml.client.platform.model.document.{Dialect => ClientDialect}
 import amf.aml.client.scala.AMLConfiguration
+import amf.aml.client.platform.{AMLConfiguration => ClientAMLConfiguration}
 import amf.core.client.platform.model.domain.{DomainElement => ClientDomainElement}
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.aml.client.platform.render.{AmlDomainElementEmitter => ClientAmlDomainElementEmitter}
@@ -17,13 +18,13 @@ trait ClientDomainElementTests extends DomainElementCycleTests {
                                    instance: DialectInstanceUnit,
                                    dialect: Dialect,
                                    config: AMLConfiguration): String = {
-    val eh = ErrorHandlerConverter.asClient(DefaultErrorHandler())
+    val clientConfig: ClientAMLConfiguration = config
     element
       .map { element =>
         val stringBuilder                      = YamlOutputBuilder()
         val clientDialect: ClientDialect       = dialect
         val clientElement: ClientDomainElement = element
-        ClientAmlDomainElementEmitter.emitToBuilder(clientElement, clientDialect, eh, stringBuilder)
+        clientConfig.elementClient().renderToBuilder(clientElement, clientDialect, stringBuilder)
         stringBuilder.result.toString
       }
       .getOrElse("")

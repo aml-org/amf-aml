@@ -3,16 +3,16 @@ package amf.aml.client.platform
 import amf.aml.client.platform.model.document.DialectInstance
 import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.core.client.common.validation.ValidationProfile
-import amf.core.client.platform.AMFGraphClient
-import amf.aml.client.scala.{AMLClient => InternalAMLClient}
+import amf.core.client.platform.AMFGraphDocumentClient
+import amf.aml.client.scala.{AMLDocumentClient => InternalAMLClient}
 
 import scala.concurrent.ExecutionContext
 import scala.scalajs.js.annotation.JSExportAll
 
 /** Contains common AML operations. Handles typed results. */
 @JSExportAll
-abstract class BaseAMLClient private[amf] (private val _internal: InternalAMLClient)
-    extends AMFGraphClient(_internal) {
+abstract class BaseAMLDocumentClient private[amf](private val _internal: InternalAMLClient)
+    extends AMFGraphDocumentClient(_internal) {
 
   protected implicit val ec: ExecutionContext = _internal.getConfiguration.getExecutionContext
 
