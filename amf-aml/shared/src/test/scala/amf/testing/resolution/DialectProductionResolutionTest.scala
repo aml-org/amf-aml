@@ -14,7 +14,7 @@ class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectIns
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def transform(unit: BaseUnit, config: CycleConfig, amlConfig: AMLConfiguration): BaseUnit =
-    amlConfig.createClient().transform(unit, DefaultAMLTransformationPipeline.name).bu
+    amlConfig.baseUnitClient().transform(unit, DefaultAMLTransformationPipeline.name).bu
 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
 
