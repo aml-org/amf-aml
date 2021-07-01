@@ -46,7 +46,7 @@ class VocabularyDefinitionValidationTest
     val configuration = AMLConfiguration.forEH(eh)
     val report = for {
       report <- configuration
-        .documentClient()
+        .baseUnitClient()
         .parseVocabulary(s"file://$basePath/$path/$vocabulary")
         .map(AMFValidationReport.unknownProfile(_))
     } yield {

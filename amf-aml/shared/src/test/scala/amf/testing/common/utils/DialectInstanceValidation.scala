@@ -22,15 +22,15 @@ trait DialectInstanceValidation
                            config: AMLConfiguration = AMLConfiguration.predefined()): Future[AMFValidationReport] = {
     val dialectPath  = s"$path/$dialect"
     val instancePath = s"$path/$instance"
-    val client       = config.documentClient()
+    val client       = config.baseUnitClient()
     for {
       dialectResult  <- client.parseDialect(s"$path/$dialect")
       nextConfig     <- config.withDialect(dialectPath)
-      instanceResult <- nextConfig.documentClient().parseDialectInstance(instancePath)
+      instanceResult <- nextConfig.baseUnitClient().parseDialectInstance(instancePath)
       report <- {
         if (!instanceResult.conforms) Future.successful(AMFValidationReport.unknownProfile(instanceResult))
         else
-          nextConfig.documentClient().validate(instanceResult.dialectInstance, dialectResult.dialect.profileName.get)
+          nextConfig.baseUnitClient().validate(instanceResult.dialectInstance, dialectResult.dialect.profileName.get)
       }
     } yield {
       report

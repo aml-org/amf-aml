@@ -75,7 +75,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                               options: AMFOptions): AMLConfiguration =
     new AMLConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options)
 
-  override def documentClient(): AMLDocumentClient = new AMLDocumentClient(this)
+  override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
   def elementClient(): AMLElementClient            = new AMLElementClient(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =
@@ -135,7 +135,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
   def withDialect(path: String): Future[AMLConfiguration] = {
-    documentClient().parse(path).map {
+    baseUnitClient().parse(path).map {
       case AMFResult(d: Dialect, _) => withDialect(d)
       case _                        => this
     }

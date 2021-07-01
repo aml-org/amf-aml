@@ -20,7 +20,7 @@ import amf.core.client.platform.execution.BaseExecutionEnvironment
 class AMLConfiguration private[amf] (private[amf] override val _internal: scala.AMLConfiguration)
     extends BaseAMLConfiguration(_internal) {
 
-  override def documentClient(): AMLDocumentClient = new AMLDocumentClient(this)
+  override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
   def elementClient(): AMLElementClient            = new AMLElementClient(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =

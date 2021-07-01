@@ -3,7 +3,7 @@ package amf.aml.client.scala
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance, Vocabulary}
 import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.core.client.scala.parse.{AMFParser, InvalidBaseUnitTypeException}
-import amf.core.client.scala.{AMFGraphDocumentClient, AMFResult}
+import amf.core.client.scala.{AMFGraphBaseUnitClient, AMFResult}
 import amf.core.internal.validation.core.ValidationProfile
 import amf.aml.internal.metamodel.document.{DialectInstanceModel, DialectModel, VocabularyModel}
 import amf.aml.internal.validate.custom.ParsedValidationProfile
@@ -11,8 +11,8 @@ import amf.aml.internal.validate.custom.ParsedValidationProfile
 import scala.concurrent.{ExecutionContext, Future}
 
 /** Contains common AML document operations. Handles typed results. */
-class AMLDocumentClient private[amf](protected override val configuration: AMLConfiguration)
-    extends AMFGraphDocumentClient(configuration) {
+class AMLBaseUnitClient private[amf](protected override val configuration: AMLConfiguration)
+    extends AMFGraphBaseUnitClient(configuration) {
 
   override implicit val exec: ExecutionContext = configuration.getExecutionContext
 
