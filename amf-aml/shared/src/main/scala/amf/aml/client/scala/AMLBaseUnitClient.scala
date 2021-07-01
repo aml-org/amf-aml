@@ -26,7 +26,7 @@ class AMLBaseUnitClient private[amf](protected override val configuration: AMLCo
   def parseDialect(url: String): Future[AMLDialectResult] = AMFParser.parse(url, configuration).map {
     case AMFResult(d: Dialect, r) => new AMLDialectResult(d, r)
     case other =>
-      throw InvalidBaseUnitTypeException.forMeta(other.bu.meta, DialectModel)
+      throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, DialectModel)
   }
 
   /**
@@ -37,7 +37,7 @@ class AMLBaseUnitClient private[amf](protected override val configuration: AMLCo
   def parseDialectInstance(url: String): Future[AMLDialectInstanceResult] = AMFParser.parse(url, configuration).map {
     case AMFResult(d: DialectInstance, r) => new AMLDialectInstanceResult(d, r)
     case other =>
-      throw InvalidBaseUnitTypeException.forMeta(other.bu.meta, DialectInstanceModel)
+      throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, DialectInstanceModel)
   }
 
   /**
@@ -49,7 +49,7 @@ class AMLBaseUnitClient private[amf](protected override val configuration: AMLCo
   def parseValidationProfile(url: String): Future[ValidationProfile] = AMFParser.parse(url, configuration).map {
     case AMFResult(d: DialectInstance, _) => parseValidationProfile(d)
     case other =>
-      throw InvalidBaseUnitTypeException.forMeta(other.bu.meta, DialectInstanceModel)
+      throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, DialectInstanceModel)
   }
 
   def parseValidationProfile(dialect: DialectInstance): ValidationProfile = {
@@ -67,6 +67,6 @@ class AMLBaseUnitClient private[amf](protected override val configuration: AMLCo
   def parseVocabulary(url: String): Future[AMLVocabularyResult] = AMFParser.parse(url, configuration).map {
     case AMFResult(d: Vocabulary, r) => new AMLVocabularyResult(d, r)
     case other =>
-      throw InvalidBaseUnitTypeException.forMeta(other.bu.meta, VocabularyModel)
+      throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, VocabularyModel)
   }
 }
