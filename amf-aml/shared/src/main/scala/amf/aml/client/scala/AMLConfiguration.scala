@@ -19,7 +19,6 @@ import amf.aml.internal.render.plugin.{
 import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
 import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin}
-import amf.core.client.platform.config.{AMFLogger, MutedLogger}
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{
   AMFErrorHandler,
@@ -50,17 +49,15 @@ import scala.concurrent.{ExecutionContext, Future}
   * @param resolvers [[AMFResolvers]]
   * @param errorHandlerProvider [[ErrorHandlerProvider]]
   * @param registry [[AMFRegistry]]
-  * @param logger [[AMFLogger]]
   * @param listeners a Set of [[AMFEventListener]]
   * @param options [[AMFOptions]]
   */
 class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                      override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
                                      override private[amf] val registry: AMFRegistry,
-                                     override private[amf] val logger: AMFLogger,
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
-    extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
+    extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
@@ -69,10 +66,9 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,
                               registry: AMFRegistry,
-                              logger: AMFLogger,
                               listeners: Set[AMFEventListener],
                               options: AMFOptions): AMLConfiguration =
-    new AMLConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options)
+    new AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options)
 
   override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
   def elementClient(): AMLElementClient            = new AMLElementClient(this)
@@ -117,8 +113,6 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     super._withErrorHandlerProvider(provider)
 
   override def withEventListener(listener: AMFEventListener): AMLConfiguration = super._withEventListener(listener)
-
-  override def withLogger(logger: AMFLogger): AMLConfiguration = super._withLogger(logger)
 
   override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMLConfiguration =
     super._withEntities(entities)
@@ -187,7 +181,6 @@ object AMLConfiguration extends PlatformSecrets {
         predefinedGraphConfiguration.registry
           .withEntities(AMLEntities.entities)
           .withAnnotations(AMLSerializableAnnotations.annotations),
-        predefinedGraphConfiguration.logger,
         predefinedGraphConfiguration.listeners,
         predefinedGraphConfiguration.options
     ).withPlugins(predefinedPlugins)
@@ -203,7 +196,6 @@ object AMLConfiguration extends PlatformSecrets {
         AMFResolvers.predefined(),
         DefaultErrorHandlerProvider,
         AMFRegistry.empty,
-        MutedLogger,
         Set.empty,
         AMFOptions.default()
     )

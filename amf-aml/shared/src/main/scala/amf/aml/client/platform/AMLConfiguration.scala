@@ -3,7 +3,7 @@ package amf.aml.client.platform
 import amf.aml.client.platform.model.document.Dialect
 import amf.aml.client.scala.{AMLConfiguration => InternalAMLConfiguration}
 import amf.aml.internal.convert.VocabulariesClientConverter._
-import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
+import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.reference.UnitCache
 import amf.core.client.platform.resource.ResourceLoader
@@ -39,14 +39,12 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: scala.
     _internal.withResourceLoaders(rl.asInternal.toList)
 
   override def withUnitCache(cache: UnitCache): AMLConfiguration =
-    _internal.withUnitCache(ReferenceResolverMatcher.asInternal(cache))
+    _internal.withUnitCache(UnitCacheMatcher.asInternal(cache))
 
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMLConfiguration =
     _internal.withTransformationPipeline(pipeline)
 
   override def withEventListener(listener: AMFEventListener): AMLConfiguration = _internal.withEventListener(listener)
-
-  override def withLogger(logger: AMFLogger): AMLConfiguration = _internal.withLogger(logger)
 
   override def withDialect(dialect: Dialect): AMLConfiguration = _internal.withDialect(dialect)
 
