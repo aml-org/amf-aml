@@ -13,7 +13,10 @@ import amf.core.internal.convert.TransformationPipelineConverter._
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.aml.client.scala
+import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.execution.BaseExecutionEnvironment
+import amf.core.client.platform.validation.payload.AMFShapePayloadValidationPlugin
+import amf.core.internal.convert.PayloadValidationPluginConverter.PayloadValidationPluginMatcher
 
 @JSExportAll
 class AMLConfiguration private[amf] (private[amf] override val _internal: scala.AMLConfiguration)
@@ -60,6 +63,9 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: scala.
   def withDialect(path: String): ClientFuture[AMLConfiguration] = _internal.withDialect(path).asClient
 
   def forInstance(url: String): ClientFuture[AMLConfiguration] = _internal.forInstance(url).asClient
+
+  override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): AMLConfiguration =
+    _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
 }
 
 @JSExportAll
