@@ -1,16 +1,12 @@
 package amf.testing.unclassified
 
 import amf.aml.client.scala.AMLConfiguration
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.internal.semantic.SemanticExtensionFinder
+import amf.aml.internal.semantic.SemanticExtensionHelper._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.{Vendor, VocabularyYamlHint}
-import amf.aml.client.scala.model.document.Dialect
-import amf.aml.internal.semantic.{
-  NameFieldExtractor,
-  PropertyTermFieldExtractor,
-  SemanticExtensionFinder,
-  TargetFieldExtractor
-}
 import amf.testing.common.cycling.BuildCycleTestCommon
 import org.scalatest.OptionValues._
 import org.scalatest.{AsyncFunSuite, Matchers}
@@ -62,13 +58,6 @@ class SemanticExtensionFinderTest extends AsyncFunSuite with BuildCycleTestCommo
       block(finder)
     }
   }
-
-  private def byPropertyTerm(dialect: Dialect): SemanticExtensionFinder =
-    SemanticExtensionFinder(dialect.extensions(), new PropertyTermFieldExtractor(dialect))
-  private def byTargetFinder(dialect: Dialect): SemanticExtensionFinder =
-    SemanticExtensionFinder(dialect.extensions(), new TargetFieldExtractor(dialect))
-  private def byNameFinder(dialect: Dialect): SemanticExtensionFinder =
-    SemanticExtensionFinder(dialect.extensions(), NameFieldExtractor)
 
   private def parseDialect(path: String): Future[Dialect] = {
     val config = CycleConfig(path, "", VocabularyYamlHint, Vendor.AML)

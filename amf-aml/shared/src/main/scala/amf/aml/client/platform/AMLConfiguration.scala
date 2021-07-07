@@ -1,8 +1,8 @@
 package amf.aml.client.platform
 
 import amf.aml.client.platform.model.document.Dialect
+import amf.aml.client.scala.{AMLConfiguration => InternalAMLConfiguration}
 import amf.aml.internal.convert.VocabulariesClientConverter._
-import amf.core.client.common.validation.ValidationProfile
 import amf.core.client.platform.config.{AMFEventListener, AMFLogger, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.reference.UnitCache
@@ -10,7 +10,6 @@ import amf.core.client.platform.resource.ResourceLoader
 import amf.core.client.platform.transform.TransformationPipeline
 import amf.core.internal.convert.ClientErrorHandlerConverter._
 import amf.core.internal.convert.TransformationPipelineConverter._
-import amf.aml.client.scala.{AMLConfiguration => InternalAMLConfiguration}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.aml.client.scala
@@ -22,6 +21,7 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: scala.
 
   override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
   def elementClient(): AMLElementClient            = new AMLElementClient(this)
+  def configurationState(): AMLConfigurationState  = new AMLConfigurationState(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =
     _internal.withParsingOptions(parsingOptions)

@@ -1,8 +1,9 @@
 package amf.aml.client.platform
 
-import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 import amf.aml.client.scala.{AMLBaseUnitClient => InternalAMLBaseUnitClient}
 import amf.aml.internal.convert.VocabulariesClientConverter._
+
+import scala.scalajs.js.annotation.JSExportAll
 
 /** Contains common AML operations. Handles typed results. */
 @JSExportAll
