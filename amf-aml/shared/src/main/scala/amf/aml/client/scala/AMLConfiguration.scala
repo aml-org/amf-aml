@@ -1,13 +1,24 @@
 package amf.aml.client.scala
 
 import amf.aml.client.scala.AMLConfiguration.{platform, predefined}
-import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
-import amf.aml.client.scala.model.domain.{DialectDomainElement, SemanticExtension}
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.domain.SemanticExtension
+import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
+import amf.aml.internal.entities.AMLEntities
 import amf.aml.internal.parse.plugin.{
   AMLDialectInstanceParsingPlugin,
   AMLDialectParsingPlugin,
   AMLVocabularyParsingPlugin
 }
+import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
+import amf.aml.internal.render.plugin.{
+  AMLDialectInstanceRenderingPlugin,
+  AMLDialectRenderingPlugin,
+  AMLVocabularyRenderingPlugin
+}
+import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
+import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
+import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin}
 import amf.core.client.platform.config.{AMFLogger, MutedLogger}
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{
@@ -16,8 +27,9 @@ import amf.core.client.scala.errorhandling.{
   ErrorHandlerProvider,
   UnhandledErrorHandler
 }
+import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
-import amf.core.client.scala.parse.AMFParser
+import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.client.scala.{AMFGraphConfiguration, AMFResult}
 import amf.core.internal.metamodel.ModelDefaultBuilder
@@ -27,19 +39,6 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationProfile
-import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
-import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
-import amf.aml.internal.entities.AMLEntities
-import amf.aml.internal.render.plugin.{
-  AMLDialectInstanceRenderingPlugin,
-  AMLDialectRenderingPlugin,
-  AMLVocabularyRenderingPlugin
-}
-import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
-import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
-import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin, ValidationDialectText}
-import amf.core.client.scala.execution.ExecutionEnvironment
-import amf.core.client.scala.resource.ResourceLoader
 import amf.validation.internal.unsafe.PlatformValidatorSecret
 import org.mulesoft.common.collections.FilterType
 
@@ -77,6 +76,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
   def elementClient(): AMLElementClient            = new AMLElementClient(this)
+  def configurationState(): AMLConfigurationState  = new AMLConfigurationState(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =
     super._withParsingOptions(parsingOptions)

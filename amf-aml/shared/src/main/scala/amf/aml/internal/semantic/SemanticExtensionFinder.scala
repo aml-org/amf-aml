@@ -1,13 +1,13 @@
 package amf.aml.internal.semantic
 
-import amf.core.client.scala.model.domain.DomainElement
 import amf.aml.client.scala.model.domain.SemanticExtension
+import amf.core.client.scala.model.domain.DomainElement
 import org.mulesoft.common.collections.FilterType
 import org.mulesoft.common.core.CachedFunction
 import org.mulesoft.common.functional.MonadInstances.seqMonad
 
 object SemanticExtensionFinder {
-  def apply(extensions: Seq[DomainElement], extractor: SearchFieldExtractor) = {
+  def apply(extensions: Seq[DomainElement], extractor: SearchFieldExtractor): SemanticExtensionFinder = {
     val semantic = extensions.filterType[SemanticExtension]
     new SemanticExtensionFinder(semantic, extractor)
   }
