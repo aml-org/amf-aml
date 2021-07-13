@@ -36,7 +36,7 @@ trait BuildCycleTestCommon extends FileAssertionTest {
       amlConfig.withParsingOptions(amlConfig.options.parsingOptions.withBaseUnitUrl("file://" + config.goldenPath))
 
     val context =
-      new CompilerContextBuilder(s"file://${config.sourcePath}", platform, environment.parseConfiguration)
+      new CompilerContextBuilder(s"file://${config.sourcePath}", platform, environment.compilerConfiguration)
         .build()
 
     val maybeSyntax = config.syntax.map(_.toString)

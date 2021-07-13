@@ -2,7 +2,6 @@ package amf.testing.validation
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
-import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.validation.ValidationConfiguration
 import amf.core.io.FileAssertionTest
 import amf.core.internal.unsafe.PlatformSecrets
@@ -37,7 +36,7 @@ class VocabularyDefinitionValidationTest
   }
 
   private def compilerContext(url: String, amfConfig: AMLConfiguration) =
-    new CompilerContextBuilder(url, platform, amfConfig.parseConfiguration).build()
+    new CompilerContextBuilder(url, platform, amfConfig.compilerConfiguration).build()
 
   protected def validate(vocabulary: String,
                          goldenReport: Option[String] = None,

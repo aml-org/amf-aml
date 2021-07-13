@@ -11,13 +11,13 @@ trait AMLParsingHelper {
 
   final def parse(uri: String, platform: Platform, hint: Hint, configuration: AMLConfiguration)(
       implicit ec: ExecutionContext): Future[BaseUnit] =
-    new AMFCompiler(new CompilerContextBuilder(uri, platform, configuration.parseConfiguration).build(),
+    new AMFCompiler(new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build(),
                     Some(hint.vendor.mediaType))
       .build()
 
   final def parse(uri: String, platform: Platform, vendor: Option[String], configuration: AMLConfiguration)(
       implicit ec: ExecutionContext): Future[BaseUnit] =
-    new AMFCompiler(new CompilerContextBuilder(uri, platform, configuration.parseConfiguration).build(), vendor)
+    new AMFCompiler(new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build(), vendor)
       .build()
 
 }

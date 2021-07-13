@@ -145,7 +145,6 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   // TODO: what about nested $dialect references?
   def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
-    val env       = predefined()
     val collector = new DialectReferencesCollector
     val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
     collector.collectFrom(url, mediaType, this).map { dialects =>
@@ -216,7 +215,7 @@ class DialectReferencesCollector(implicit val ec: ExecutionContext) {
                   mediaType: Option[String] = None,
                   amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
     // todo
-    val ctx      = new CompilerContextBuilder(url, platform, amfConfig.parseConfiguration).build()
+    val ctx      = new CompilerContextBuilder(url, platform, amfConfig.compilerConfiguration).build()
     val compiler = new AMFCompiler(ctx, mediaType)
     for {
       content                <- compiler.fetchContent()
