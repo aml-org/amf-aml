@@ -4,8 +4,10 @@ import amf.aml.client.platform.model.document.Dialect
 import amf.aml.client.platform.model.domain.SemanticExtension
 import amf.aml.client.scala.{AMLConfigurationState => InternalAMLConfigurationState}
 import amf.aml.internal.convert.VocabulariesClientConverter._
+import scala.scalajs.js.annotation.JSExportAll
 
 /* Contains methods to get information about the current state of the configuration */
+@JSExportAll
 class AMLConfigurationState private[amf] (private val _internal: InternalAMLConfigurationState) {
 
   private[amf] def this(configuration: AMLConfiguration) = {
