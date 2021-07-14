@@ -101,6 +101,9 @@ class SyntaxExtensionsReferenceHandler(eh: AMFErrorHandler) extends ReferenceHan
           case "$ref" => // $ref link
             entry.value.asScalar.map(_.text).foreach(ramlIncludeText)
 
+          case "$dialect" => // reference to nested dialect
+            entry.value.asScalar.map(_.text).foreach(ramlIncludeText)
+
           case _ => // no link, recur
             part.children.foreach(links)
         }
