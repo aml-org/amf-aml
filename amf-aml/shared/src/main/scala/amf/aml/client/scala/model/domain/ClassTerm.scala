@@ -30,7 +30,7 @@ case class ClassTerm(fields: Fields, annotations: Annotations) extends DomainEle
   def withSubClassOf(superClasses: Seq[String]): ClassTerm = set(SubClassOf, AmfArray(superClasses.map(AmfScalar(_))))
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = ""
+  private[amf] override def componentId: String = ""
 }
 
 object ClassTerm {

@@ -32,7 +32,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   def definedBy(): StrField            = fields.field(DefinedBy)
   def declares: Seq[DomainElement]     = fields.field(Declares)
 
-  override def componentId: String = ""
+  private[amf] override def componentId: String = ""
 
   def withDefinedBy(dialectId: String): DialectInstance =
     set(DefinedBy, dialectId)
