@@ -29,7 +29,7 @@ import amf.core.client.scala.errorhandling.{
 import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.resource.ResourceLoader
-import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
+import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.client.scala.{AMFGraphConfiguration, AMFResult}
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}

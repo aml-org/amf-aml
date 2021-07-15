@@ -6,12 +6,12 @@ import amf.core.internal.metamodel.Field
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar}
 import amf.core.internal.parser.domain.Value
-import amf.core.client.scala.transform.stages.TransformationStep
 import amf.aml.internal.metamodel.document.DialectInstanceModel
 import amf.aml.internal.metamodel.domain.MergePolicies._
 import amf.aml.client.scala.model.document.{DialectInstance, DialectInstancePatch}
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.validate.DialectValidations.InvalidDialectPatch
+import amf.core.client.scala.transform.TransformationStep
 
 import scala.language.postfixOps
 

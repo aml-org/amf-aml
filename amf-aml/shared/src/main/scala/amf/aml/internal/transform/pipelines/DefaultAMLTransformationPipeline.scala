@@ -4,9 +4,8 @@ import amf.core.client.common.transform._
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Aml
-import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
-import amf.core.client.scala.transform.stages.TransformationStep
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance, DialectInstancePatch}
+import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}
 
 class DefaultAMLTransformationPipeline(override val name: String) extends TransformationPipeline {
   override def steps: Seq[TransformationStep] = Seq(RedirectResolutionByModel)
