@@ -2,8 +2,8 @@ package amf.aml.client.platform.model.domain
 
 import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.core.client.platform.model.domain.{DomainElement, Linkable}
-import amf.core.client.scala.model.StrField
 import amf.aml.client.scala.model.domain.{NodeMapping => InternalNodeMapping}
+import amf.core.client.platform.model.StrField
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

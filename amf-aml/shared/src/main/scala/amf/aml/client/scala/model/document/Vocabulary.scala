@@ -33,7 +33,7 @@ case class Vocabulary(fields: Fields, annotations: Annotations)
   override def meta: VocabularyModel.type = VocabularyModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = ""
+  private[amf] override def componentId: String = ""
 }
 
 object Vocabulary {

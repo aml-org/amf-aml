@@ -4,11 +4,7 @@ import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.aml.internal.metamodel.domain.DocumentMappingModel
-import amf.aml.internal.metamodel.domain.DocumentMappingModel.{
-  DeclaredNodes,
-  DocumentName,
-  EncodedNode
-}
+import amf.aml.internal.metamodel.domain.DocumentMappingModel.{DeclaredNodes, DocumentName, EncodedNode}
 import org.yaml.model.YNode
 
 case class DocumentMapping(fields: Fields, annotations: Annotations) extends DomainElement {
@@ -32,7 +28,7 @@ case class DocumentMapping(fields: Fields, annotations: Annotations) extends Dom
   }
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = ""
+  private[amf] override def componentId: String = ""
 }
 
 object DocumentMapping {

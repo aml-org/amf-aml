@@ -6,12 +6,7 @@ import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.aml.internal.metamodel.document.DialectInstanceFragmentModel
 import amf.aml.internal.metamodel.document.DialectInstanceFragmentModel.Fragment
-import amf.aml.internal.metamodel.document.DialectInstanceModel.{
-  DefinedBy,
-  Encodes,
-  GraphDependencies,
-  References
-}
+import amf.aml.internal.metamodel.document.DialectInstanceModel.{DefinedBy, Encodes, GraphDependencies, References}
 
 case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
     extends DialectInstanceUnit
@@ -25,7 +20,7 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
   def definedBy(): StrField            = fields.field(DefinedBy)
   def fragment(): StrField             = fields.field(Fragment)
 
-  override def componentId: String = ""
+  private[amf] override def componentId: String = ""
 
   def withDefinedBy(dialectId: String): DialectInstanceFragment =
     set(DefinedBy, dialectId)

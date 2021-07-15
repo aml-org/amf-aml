@@ -7,8 +7,8 @@ import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, Encodes
 import amf.aml.client.scala.model.document.{DialectInstancePatch => InternalPatchInstance}
 import amf.aml.client.scala.model.domain.{DialectDomainElement => InternalDialectDomainElement}
 
-import scala.scalajs.js.annotation.JSExportTopLevel
-
+import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
+@JSExportAll
 class DialectInstancePatch(private[amf] val _internal: InternalPatchInstance)
     extends BaseUnit
     with EncodesModel

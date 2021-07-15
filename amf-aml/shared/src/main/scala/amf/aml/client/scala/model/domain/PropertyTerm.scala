@@ -16,12 +16,12 @@ abstract class PropertyTerm extends DomainElement {
     this
   }
 
-  override def componentId: String = ""
-  def name: StrField               = fields.field(Name)
-  def displayName: StrField        = fields.field(DisplayName)
-  def description: StrField        = fields.field(Description)
-  def range: StrField              = fields.field(Range)
-  def subPropertyOf: Seq[StrField] = fields.field(SubPropertyOf)
+  private[amf] override def componentId: String = ""
+  def name: StrField                            = fields.field(Name)
+  def displayName: StrField                     = fields.field(DisplayName)
+  def description: StrField                     = fields.field(Description)
+  def range: StrField                           = fields.field(Range)
+  def subPropertyOf: Seq[StrField]              = fields.field(SubPropertyOf)
 
   def withName(name: String): PropertyTerm               = set(Name, name)
   def withDisplayName(displayName: String): PropertyTerm = set(DisplayName, displayName)
