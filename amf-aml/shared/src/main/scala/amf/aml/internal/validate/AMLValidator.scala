@@ -6,7 +6,7 @@ import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.config.AMFEventListener
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.plugins.validation.ValidationResult
 import amf.core.internal.validation.core.{ShaclValidationOptions, ValidationProfile}

@@ -3,11 +3,18 @@ package amf.aml.internal.transform.steps
 import amf.core.internal.annotations.Aliases
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
-import amf.core.client.scala.transform.stages.TransformationStep
 import amf.aml.internal.metamodel.domain.NodeMappingModel
 import amf.aml.client.scala.model.document.{Dialect, DialectFragment, DialectLibrary}
-import amf.aml.client.scala.model.domain.{AnnotationMapping, External, HasObjectRange, NodeMappable, NodeMapping, UnionNodeMapping}
+import amf.aml.client.scala.model.domain.{
+  AnnotationMapping,
+  External,
+  HasObjectRange,
+  NodeMappable,
+  NodeMapping,
+  UnionNodeMapping
+}
 import amf.aml.internal.utils.AmlExtensionSyntax._
+import amf.core.client.scala.transform.TransformationStep
 import org.mulesoft.common.collections.FilterType
 
 import scala.collection.mutable

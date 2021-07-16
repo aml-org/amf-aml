@@ -1,0 +1,12 @@
+#%Test 1.0
+
+a: Some string
+b: true
+c:
+  $dialect: file://amf-aml/shared/src/test/resources/vocabularies2/instances/nested-dialects/nested-dialect-A.yaml#/declarations/RootNode
+  e: 32
+  f: false
+  g:
+    $dialect: file://amf-aml/shared/src/test/resources/vocabularies2/instances/nested-dialects/nested-dialect-B.yaml#/declarations/RootNode
+    h: true
+    i: Other other string

@@ -66,7 +66,7 @@ trait DomainElementCycleTests
       case plugin: AMLDialectInstanceRenderingPlugin => plugin.dialect
     }
     val node =
-      element.map(AmlDomainElementEmitter.emit(_, dialect, UnhandledErrorHandler, references)).getOrElse(YNode.Empty)
+      element.map(config.elementClient().renderElement(_, dialect, references)).getOrElse(YNode.Empty)
     val document = SyamlParsedDocument(document = YDocument(node))
     val w        = new StringWriter
     SyamlSyntaxRenderPlugin.emit("application/yaml", document, w).map(_.toString).getOrElse("")

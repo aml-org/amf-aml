@@ -1,14 +1,24 @@
 package amf.aml.client.scala
 
 import amf.aml.client.scala.AMLConfiguration.{platform, predefined}
-import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
-import amf.aml.client.scala.model.domain.{DialectDomainElement, SemanticExtension}
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.domain.SemanticExtension
+import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
+import amf.aml.internal.entities.AMLEntities
 import amf.aml.internal.parse.plugin.{
   AMLDialectInstanceParsingPlugin,
   AMLDialectParsingPlugin,
   AMLVocabularyParsingPlugin
 }
-import amf.core.client.platform.config.{AMFLogger, MutedLogger}
+import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
+import amf.aml.internal.render.plugin.{
+  AMLDialectInstanceRenderingPlugin,
+  AMLDialectRenderingPlugin,
+  AMLVocabularyRenderingPlugin
+}
+import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
+import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
+import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin}
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{
   AMFErrorHandler,
@@ -16,9 +26,10 @@ import amf.core.client.scala.errorhandling.{
   ErrorHandlerProvider,
   UnhandledErrorHandler
 }
+import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
-import amf.core.client.scala.parse.AMFParser
-import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
+import amf.core.client.scala.resource.ResourceLoader
+import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.client.scala.{AMFGraphConfiguration, AMFResult}
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
@@ -27,19 +38,6 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationProfile
-import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
-import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
-import amf.aml.internal.entities.AMLEntities
-import amf.aml.internal.render.plugin.{
-  AMLDialectInstanceRenderingPlugin,
-  AMLDialectRenderingPlugin,
-  AMLVocabularyRenderingPlugin
-}
-import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
-import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
-import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin, ValidationDialectText}
-import amf.core.client.scala.execution.ExecutionEnvironment
-import amf.core.client.scala.resource.ResourceLoader
 import amf.validation.internal.unsafe.PlatformValidatorSecret
 import org.mulesoft.common.collections.FilterType
 
@@ -51,17 +49,15 @@ import scala.concurrent.{ExecutionContext, Future}
   * @param resolvers [[AMFResolvers]]
   * @param errorHandlerProvider [[ErrorHandlerProvider]]
   * @param registry [[AMFRegistry]]
-  * @param logger [[AMFLogger]]
   * @param listeners a Set of [[AMFEventListener]]
   * @param options [[AMFOptions]]
   */
 class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                      override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
                                      override private[amf] val registry: AMFRegistry,
-                                     override private[amf] val logger: AMFLogger,
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
-    extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options) {
+    extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
@@ -70,12 +66,13 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,
                               registry: AMFRegistry,
-                              logger: AMFLogger,
                               listeners: Set[AMFEventListener],
                               options: AMFOptions): AMLConfiguration =
-    new AMLConfiguration(resolvers, errorHandlerProvider, registry, logger, listeners, options)
+    new AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options)
 
-  override def createClient(): AMLClient = new AMLClient(this)
+  override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
+  def elementClient(): AMLElementClient            = new AMLElementClient(this)
+  def configurationState(): AMLConfigurationState  = new AMLConfigurationState(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =
     super._withParsingOptions(parsingOptions)
@@ -95,7 +92,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMLConfiguration =
     super._withPlugins(plugins)
 
-  override def withValidationProfile(profile: ValidationProfile): AMLConfiguration =
+  private[amf] override def withValidationProfile(profile: ValidationProfile): AMLConfiguration =
     super._withValidationProfile(profile)
 
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMLConfiguration =
@@ -117,15 +114,13 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withEventListener(listener: AMFEventListener): AMLConfiguration = super._withEventListener(listener)
 
-  override def withLogger(logger: AMFLogger): AMLConfiguration = super._withLogger(logger)
-
-  override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMLConfiguration =
+  private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMLConfiguration =
     super._withEntities(entities)
 
-  def withExtensions(extensions: Seq[SemanticExtension]): AMLConfiguration =
+  private[amf] def withExtensions(extensions: Seq[SemanticExtension]): AMLConfiguration =
     copy(registry = registry.withExtensions(extensions))
 
-  override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLConfiguration =
+  private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLConfiguration =
     super._withAnnotations(annotations)
 
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMLConfiguration =
@@ -134,7 +129,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
   def withDialect(path: String): Future[AMLConfiguration] = {
-    createClient().parse(path).map {
+    baseUnitClient().parse(path).map {
       case AMFResult(d: Dialect, _) => withDialect(d)
       case _                        => this
     }
@@ -142,9 +137,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
 
-  // TODO: what about nested $dialect references?
   def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
-    val env       = predefined()
     val collector = new DialectReferencesCollector
     val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
     collector.collectFrom(url, mediaType, this).map { dialects =>
@@ -153,12 +146,12 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
           runner.run(d, DialectTransformationPipeline())
           d
         }
-        .foldLeft(this) { (env, dialect) =>
-          val finder                                       = DefaultNodeMappableFinder(this).addDialect(dialect)
+        .foldLeft(this) { (config, dialect) =>
+          val finder                                       = DefaultNodeMappableFinder(config).addDialect(dialect)
           val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
           val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
           val profile                                      = new AMFDialectValidations(dialect)(finder).profile()
-          env
+          config
             .withPlugins(List(parsing, rendering))
             .withValidationProfile(profile)
         }
@@ -187,7 +180,6 @@ object AMLConfiguration extends PlatformSecrets {
         predefinedGraphConfiguration.registry
           .withEntities(AMLEntities.entities)
           .withAnnotations(AMLSerializableAnnotations.annotations),
-        predefinedGraphConfiguration.logger,
         predefinedGraphConfiguration.listeners,
         predefinedGraphConfiguration.options
     ).withPlugins(predefinedPlugins)
@@ -203,19 +195,17 @@ object AMLConfiguration extends PlatformSecrets {
         AMFResolvers.predefined(),
         DefaultErrorHandlerProvider,
         AMFRegistry.empty,
-        MutedLogger,
         Set.empty,
         AMFOptions.default()
     )
   }
 }
 
-class DialectReferencesCollector(implicit val ec: ExecutionContext) {
+private class DialectReferencesCollector(implicit val ec: ExecutionContext) {
   def collectFrom(url: String,
                   mediaType: Option[String] = None,
                   amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
-    // todo
-    val ctx      = new CompilerContextBuilder(url, platform, amfConfig.parseConfiguration).build()
+    val ctx      = new CompilerContextBuilder(url, platform, amfConfig.compilerConfiguration).build()
     val compiler = new AMFCompiler(ctx, mediaType)
     for {
       content                <- compiler.fetchContent()

@@ -1,18 +1,14 @@
 package amf.aml.internal.parse.plugin
 
+import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
+import amf.aml.internal.parse.dialects.{DialectContext, DialectsParser}
+import amf.aml.internal.parse.headers.{DialectHeader, ExtensionHeader}
 import amf.core.client.common.{NormalPriority, PluginPriority}
-import amf.core.client.scala.AMFGraphConfiguration
-import amf.core.client.scala.parse.AMFParsePlugin
+import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext, ReferenceHandler}
-import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.internal.parser.Root
-import amf.core.client.scala.model.document.BaseUnit
-import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
-import amf.aml.internal.parse.dialects.{DialectContext, DialectsParser}
-import amf.aml.internal.parse.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.aml.internal.parse.headers.{DialectHeader, ExtensionHeader}
 
 class AMLDialectParsingPlugin extends AMFParsePlugin {
   val knownHeaders =

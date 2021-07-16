@@ -1,0 +1,17 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+documents:
+  root:
+    encodes: RootNode
+
+nodeMappings:
+  RootNode:
+    mapping:
+      a:
+        range: string
+      b:
+        range: boolean
+      c:
+        range: anyNode

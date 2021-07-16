@@ -21,7 +21,7 @@ case class DialectInstancePatch(fields: Fields, annotations: Annotations)
   def extendsModel: StrField           = fields.field(DialectInstancePatchModel.Extends)
   override def encodes: DomainElement  = fields.field(Encodes)
 
-  override def componentId: String = ""
+  private[amf] override def componentId: String = ""
 
   def withDefinedBy(dialectId: String): DialectInstancePatch =
     set(DefinedBy, dialectId)

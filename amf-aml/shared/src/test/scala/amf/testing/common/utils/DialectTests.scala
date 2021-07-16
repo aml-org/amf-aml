@@ -42,7 +42,7 @@ trait DialectTests
 
     withDialect(s"file://$directory/$dialect") { (_, configuration) =>
       val context =
-        new CompilerContextBuilder(s"file://$directory/$source", platform, configuration.parseConfiguration)
+        new CompilerContextBuilder(s"file://$directory/$source", platform, configuration.compilerConfiguration)
           .build()
       new AMFCompiler(context, Some(hint.vendor.mediaType)).build()
     }

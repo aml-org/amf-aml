@@ -1,0 +1,5 @@
+#%Test 1.0 | <file://amf-aml/shared/src/test/resources/vocabularies2/nested-dialects/base-dialect.yaml>
+
+a: Some string
+b: false
+c: Other thing

@@ -1,0 +1,17 @@
+#%Dialect 1.0
+dialect: FirstNested
+version: 1.0
+
+documents:
+  root:
+    encodes: RootNode
+
+nodeMappings:
+  RootNode:
+    mapping:
+      e:
+        range: number
+      f:
+        range: boolean
+      g:
+        range: anyNode

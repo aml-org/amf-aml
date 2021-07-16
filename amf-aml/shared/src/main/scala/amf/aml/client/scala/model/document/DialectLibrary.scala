@@ -15,7 +15,7 @@ case class DialectLibrary(fields: Fields, annotations: Annotations)
   def references: Seq[BaseUnit]    = fields.field(References)
   def declares: Seq[DomainElement] = fields.field(Declares)
 
-  override def componentId: String = ""
+  private[amf] override def componentId: String = ""
 
   def meta: DialectLibraryModel.type = DialectLibraryModel
 }

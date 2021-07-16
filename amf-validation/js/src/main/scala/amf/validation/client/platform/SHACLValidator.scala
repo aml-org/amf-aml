@@ -52,7 +52,8 @@ class SHACLValidator(listeners: Seq[AMFEventListener])
     */
   @JSExport("validate")
   def validateJS(data: String, dataMediaType: String, shapes: String, shapesMediaType: String): js.Promise[String] = {
-    implicit val executionContext: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
+    // no risk in using global execution context as this is in js package.
+    implicit val executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
     validate(data, dataMediaType, shapes, shapesMediaType).toJSPromise
   }
 
@@ -99,7 +100,8 @@ class SHACLValidator(listeners: Seq[AMFEventListener])
                dataMediaType: String,
                shapes: String,
                shapesMediaType: String): js.Promise[ValidationReport] = {
-    implicit val executionContext: ExecutionContext = platform.defaultExecutionEnvironment.executionContext
+    // no risk in using global execution context as this is in js package.
+    implicit val executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
     report(data, dataMediaType, shapes, shapesMediaType).toJSPromise
   }
 

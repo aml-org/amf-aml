@@ -2,7 +2,6 @@ package amf.testing.common.utils
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
-import amf.core.internal.parser.ParseConfiguration
 import amf.core.internal.validation.ValidationConfiguration
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.client.scala.validation.AMFValidationReport
@@ -24,7 +23,7 @@ trait DialectValidation extends AsyncFunSuite with PlatformSecrets {
 
     val eh            = DefaultErrorHandler()
     val configuration = AMLConfiguration.forEH(eh)
-    val client        = configuration.createClient()
+    val client        = configuration.baseUnitClient()
     for {
       report    <- client.parseDialect("file://" + path + dialectPath).map(AMFValidationReport.unknownProfile(_))
       assertion <- reportComparator.assertReport(report, goldenReport.map(g => s"$path/$g"), jsonldReport)

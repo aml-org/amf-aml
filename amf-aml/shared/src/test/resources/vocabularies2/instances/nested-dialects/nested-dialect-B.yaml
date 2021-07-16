@@ -1,0 +1,15 @@
+#%Dialect 1.0
+dialect: SecondNested
+version: 1.0
+
+documents:
+  root:
+    encodes: RootNode
+
+nodeMappings:
+  RootNode:
+    mapping:
+      h:
+        range: boolean
+      i:
+        range: string

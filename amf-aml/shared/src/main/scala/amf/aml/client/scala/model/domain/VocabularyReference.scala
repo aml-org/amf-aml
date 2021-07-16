@@ -21,7 +21,7 @@ case class VocabularyReference(fields: Fields, annotations: Annotations) extends
   override def meta: VocabularyReferenceModel.type = VocabularyReferenceModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = alias.option() match {
+  private[amf] override def componentId: String = alias.option() match {
     case Some(alias) => "/vocabularyReference/" + alias.urlComponentEncoded
     case None        => throw new Exception("Cannot set ID of VocabularyReference without alias")
   }
