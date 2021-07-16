@@ -242,9 +242,10 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: 
       case Some(_) => validateMinLength(validationSpecification, propertyConstraint, element)
       case _       =>
     }
-    propertyConstraint.in.toList match {
-      case Nil => // ignore
-      case l   => validateIn(validationSpecification, propertyConstraint, element)
+    propertyConstraint.in match {
+      case Nil                        => // ignore
+      case Seq(_)                     => validateIn(validationSpecification, propertyConstraint, element)
+      case _: mutable.WrappedArray[_] => validateIn(validationSpecification, propertyConstraint, element)
     }
     propertyConstraint.maxExclusive match {
       case Some(_) => validateMaxExclusive(validationSpecification, propertyConstraint, element)
