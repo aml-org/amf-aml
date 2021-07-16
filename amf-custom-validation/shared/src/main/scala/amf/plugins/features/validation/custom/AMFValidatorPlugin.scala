@@ -45,15 +45,22 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
 
   override def dependencies() = Seq(SYamlSyntaxPlugin, AMLPlugin, AMFGraphPlugin)
 
+  def isValProfile(d: DialectInstance): Boolean = {
+    d.definedBy().is(PROFILE_DIALECT_URL) && d.encodes != null && d.encodes
+      .isInstanceOf[DialectDomainElement] && d.encodes
+      .asInstanceOf[DialectDomainElement]
+      .definedBy
+      .name
+      .is("profileNode")
+  }
+
   override def loadValidationProfile(
       validationProfilePath: String,
       env: Environment = Environment(),
       errorHandler: ErrorHandler,
       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[ProfileName] = {
 
-  def isValProfile(d:DialectInstance): Boolean = {
-    d.definedBy().is(url) && d.encodes !=null && d.encodes.isInstanceOf[domain.DialectDomainElement] && d.encodes.asInstanceOf[domain.DialectDomainElement].definedBy.name.is("profileNode")
-  }
+    implicit val executionContext: ExecutionContext = exec.executionContext
 
     parseProfile(validationProfilePath, env, errorHandler)
       .map { getEncodesOrExit }
@@ -84,6 +91,9 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
       throw new Exception("Trying to load as a validation profile that does not match the Validation Profile dialect")
   }
 
+  def parseProfile(d: DialectInstance): ValidationProfile =
+    ParsedValidationProfile(d.encodes.asInstanceOf[DialectDomainElement])
+
   private def loadProfilesFromDialectOrExit(domainElement: DomainElement) = domainElement match {
     case encoded: DialectDomainElement if encoded.definedBy.name.is("profileNode") =>
       val validationProfile = ParsedValidationProfile(encoded)
@@ -104,4 +114,16 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with RuntimeValidator with Sh
     profilesPlugins.get(profileName.profile)
   private def getProfilePluginFor(validationProfile: ValidationProfile): Option[Seq[AMFValidatePlugin]] =
     getProfilePluginFor(validationProfile.name)
+
+  override def loadValidationProfileInstance(profile: ValidationProfile): ProfileName = {
+    val domainPlugin: Seq[AMFValidatePlugin] = getProfilePluginFor(profile)
+      .orElse(getProfilePluginFor(profile.baseProfile.getOrElse(AmfProfile)))
+      .getOrElse(Seq(amlPlugin()))
+    customValidationProfiles += (profile.name.profile -> { () =>
+      profile
+    })
+    customValidationProfilesPlugins += (profile.name.profile -> domainPlugin)
+    profile.name
+  }
+
 }

@@ -1,6 +1,6 @@
 package amf.plugins.document.vocabularies.model.domain
 
-import amf.core.metamodel.{Field, Type}
+import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model._
 import amf.core.model.domain.{AmfScalar, DomainElement}
 import amf.core.parser.{Annotations, Fields}
@@ -156,7 +156,7 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     }
   }
 
-  override def meta: PropertyMappingModel.type = PropertyMappingModel
+  override def meta: Obj = PropertyMappingModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
   override def componentId: String = ""

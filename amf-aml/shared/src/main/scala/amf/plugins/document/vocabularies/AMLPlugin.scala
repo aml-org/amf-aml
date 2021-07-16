@@ -8,6 +8,7 @@ import amf.client.remod.amfcore.plugins.validate.AMFValidatePlugin
 import amf.core.Root
 import amf.core.annotations.Aliases
 import amf.core.client.ParsingOptions
+import amf.core.emitter.{EntryEmitter, SpecOrdering}
 import amf.core.errorhandling.ErrorHandler
 import amf.core.metamodel.{Field, Obj}
 import amf.core.model.document.BaseUnit
@@ -20,7 +21,7 @@ import amf.core.resolution.pipelines.ResolutionPipeline
 import amf.core.services.RuntimeValidator
 import amf.core.unsafe.PlatformSecrets
 import amf.core.validation.ShaclReportAdaptation
-import amf.core.validation.core.ValidationProfile
+import amf.core.validation.core.{ValidationProfile, ValidationSpecification}
 import amf.core.vocabulary.NamespaceAliases
 import amf.plugins.document.vocabularies.AMLValidationLegacyPlugin.amlPlugin
 import amf.plugins.document.vocabularies.annotations._
@@ -41,6 +42,7 @@ import amf.plugins.document.vocabularies.resolution.pipelines.{
   DialectInstanceResolutionPipeline,
   DialectResolutionPipeline
 }
+import amf.plugins.document.vocabularies.validation.AMFDialectValidations
 import org.yaml.model._
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -315,21 +317,18 @@ trait AMLPlugin
 
   override def canParseVendorExtension(name: String): Boolean = registry.vendorExtensionFor(name).isDefined
 
-  override def parserVendorExtension(extensionName: String, entry: YMapEntry, parent: DomainElement, context: ParserContext): Unit = {
+  override def parserVendorExtension(extensionName: String,
+                                     entry: YMapEntry,
+                                     parent: DomainElement,
+                                     context: ParserContext): Unit = {
     registry.vendorExtensionFor(extensionName) match {
       case Some((annotationMapping, dialect)) =>
         val dialectInstanceContext = new DialectInstanceContext(dialect, context)
 
-        val fakeRoot = Root(
-          SyamlParsedDocument(YDocument.parseYaml("{}")),
-          "",
-          "",
-          Nil,
-          LinkReference,
-          "")
-        val parser = new DialectInstanceParser(fakeRoot)(dialectInstanceContext)
+        val fakeRoot = Root(SyamlParsedDocument(YDocument.parseYaml("{}")), "", "", Nil, LinkReference, "")
+        val parser   = new DialectInstanceParser(fakeRoot)(dialectInstanceContext)
         parser.parseVendorExtension(entry, annotationMapping, parent)
-      case _                       => None
+      case _ => None
     }
   }
 
@@ -338,22 +337,24 @@ trait AMLPlugin
 
   override def canEmitExtension(field: Field): Boolean = registry.vendorExtensionForId(field.value.iri()).nonEmpty
 
-  override def emitVendorExtensions(element: DomainElement, field: Field, keyDecorator: String => String): Seq[EntryEmitter] = {
+  override def emitVendorExtensions(element: DomainElement,
+                                    field: Field,
+                                    keyDecorator: String => String): Seq[EntryEmitter] = {
     registry.vendorExtensionForId(field.value.iri()) match {
       case Some((alias, annotationMapping, dialect)) =>
         val wrapper = new DialectDomainElement(element.extendedFields, element.annotations)
         wrapper.withId(element.id)
         val emitter = DialectNodeEmitter(
-          wrapper,
-          null,
-          Nil,
-          dialect,
-          SpecOrdering.Default,
-          None,
-          None,
-          false,
-          Nil,
-          RenderOptions()
+            wrapper,
+            null,
+            Nil,
+            dialect,
+            SpecOrdering.Default,
+            None,
+            None,
+            false,
+            Nil,
+            RenderOptions()
         )
         emitter.emitVendorExtension(keyDecorator(alias), annotationMapping, field, element.extendedFields)
       case None => Nil
@@ -361,9 +362,12 @@ trait AMLPlugin
   }
 
   override def vendorExtensionsValidations(): Seq[ValidationSpecification] = {
-    this.registry.allDialects().flatMap((d) => {
-      new AMFDialectValidations(d).annotationValidations()
-    }).toSeq
+    this.registry
+      .allDialects()
+      .flatMap((d) => {
+        new AMFDialectValidations(d).annotationValidations()
+      })
+      .toSeq
   }
 
 }

@@ -7,13 +7,12 @@ import amf.core.benchmark.ExecutionLog
 import amf.core.errorhandling.ErrorHandler
 import amf.core.services.RuntimeValidator
 import amf.core.validation.ShaclReportAdaptation
+import amf.core.validation.core.ValidationProfile
 import amf.internal.environment.Environment
 import amf.plugins.document.graph.AMFGraphPlugin
 import amf.plugins.syntax.SYamlSyntaxPlugin
 
 import scala.concurrent.{ExecutionContext, Future}
-
-
 
 object AMFValidatorPlugin extends AMFFeaturePlugin with AMFValidator {
 
@@ -29,12 +28,40 @@ object AMFValidatorPlugin extends AMFFeaturePlugin with AMFValidator {
 
   override def dependencies() = Seq(SYamlSyntaxPlugin, AMFGraphPlugin)
 
+  override def loadValidationProfileString(content: String,
+                                           errorHandler: ErrorHandler,
+                                           exec: BaseExecutionEnvironment): Future[ProfileName] = {
+
+    throw new Exception("Cannot load a custom validation profile for this")
+  }
+
+  override def loadValidationProfileString(content: String,
+                                           env: Environment,
+                                           errorHandler: ErrorHandler,
+                                           exec: BaseExecutionEnvironment): Future[ProfileName] = {
+
+    throw new Exception("Cannot load a custom validation profile for this")
+  }
+
+  override def loadValidationProfile(validationProfilePath: String,
+                                     errorHandler: ErrorHandler,
+                                     exec: BaseExecutionEnvironment): Future[ProfileName] = {
+
+    throw new Exception("Cannot load a custom validation profile for this")
+  }
+
   override def loadValidationProfile(
       validationProfilePath: String,
       env: Environment = Environment(),
       errorHandler: ErrorHandler,
       exec: BaseExecutionEnvironment = platform.defaultExecutionEnvironment): Future[ProfileName] = {
-
     throw new Exception("Cannot load a custom validation profile for this")
+
   }
+
+  override def loadValidationProfileInstance(profile: ValidationProfile): ProfileName = {
+    throw new Exception("Cannot load a custom validation profile for this")
+
+  }
+
 }
