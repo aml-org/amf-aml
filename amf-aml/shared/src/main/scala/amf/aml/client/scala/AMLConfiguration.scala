@@ -29,7 +29,7 @@ import amf.core.client.scala.errorhandling.{
 import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.resource.ResourceLoader
-import amf.core.client.scala.transform.pipelines.{TransformationPipeline, TransformationPipelineRunner}
+import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.client.scala.{AMFGraphConfiguration, AMFResult}
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
@@ -92,7 +92,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMLConfiguration =
     super._withPlugins(plugins)
 
-  override def withValidationProfile(profile: ValidationProfile): AMLConfiguration =
+  private[amf] override def withValidationProfile(profile: ValidationProfile): AMLConfiguration =
     super._withValidationProfile(profile)
 
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMLConfiguration =
@@ -114,13 +114,13 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withEventListener(listener: AMFEventListener): AMLConfiguration = super._withEventListener(listener)
 
-  override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMLConfiguration =
+  private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMLConfiguration =
     super._withEntities(entities)
 
-  def withExtensions(extensions: Seq[SemanticExtension]): AMLConfiguration =
+  private[amf] def withExtensions(extensions: Seq[SemanticExtension]): AMLConfiguration =
     copy(registry = registry.withExtensions(extensions))
 
-  override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLConfiguration =
+  private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLConfiguration =
     super._withAnnotations(annotations)
 
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMLConfiguration =

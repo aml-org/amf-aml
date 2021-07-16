@@ -1,12 +1,8 @@
 package amf.aml.internal.transform.pipelines
 
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.transform.pipelines.TransformationPipeline
-import amf.core.client.scala.transform.stages.TransformationStep
-import amf.aml.internal.transform.steps.{
-  DialectNodeExtensionStage,
-  DialectReferencesResolutionStage
-}
+import amf.aml.internal.transform.steps.{DialectNodeExtensionStage, DialectReferencesResolutionStage}
+import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
 
 class DialectTransformationPipeline private (override val name: String) extends TransformationPipeline() {
 

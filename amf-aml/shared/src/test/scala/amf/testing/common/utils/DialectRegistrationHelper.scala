@@ -4,7 +4,7 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.internal.transform.pipelines.DialectTransformationPipeline
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
-import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.core.internal.remote.Aml
 import amf.core.internal.unsafe.PlatformBuilder.platform

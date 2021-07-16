@@ -2,8 +2,8 @@ package amf.aml.client.platform.model.domain
 
 import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.core.client.platform.model.domain.DomainElement
-import amf.core.client.scala.model.{BoolField, StrField}
 import amf.aml.client.scala.model.domain.{DocumentsModel => InternalDocumentsModel}
+import amf.core.client.platform.model.{BoolField, StrField}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 

@@ -4,10 +4,10 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.internal.metamodel.document.DocumentModel
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
-import amf.core.client.scala.transform.stages.helpers.ModelReferenceResolver
-import amf.core.client.scala.transform.stages.selectors.LinkSelector
-import amf.core.client.scala.transform.stages.TransformationStep
+import amf.core.internal.transform.stages.helpers.ModelReferenceResolver
+import amf.core.internal.transform.stages.selectors.LinkSelector
 import amf.aml.client.scala.model.document.DialectInstance
+import amf.core.client.scala.transform.TransformationStep
 
 class DialectInstanceReferencesResolutionStage() extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {

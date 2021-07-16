@@ -14,7 +14,7 @@ case class DialectFragment(fields: Fields, annotations: Annotations)
   def references: Seq[BaseUnit]     = fields.field(References)
   override def encodes: NodeMapping = fields.field(Encodes)
 
-  override def componentId: String = ""
+  private[amf] override def componentId: String = ""
 
   def withEncodes(nodeMapping: NodeMapping): DialectFragment = set(Encodes, nodeMapping)
 

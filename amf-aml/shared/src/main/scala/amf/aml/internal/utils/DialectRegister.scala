@@ -11,7 +11,7 @@ import amf.aml.internal.render.plugin.AMLDialectInstanceRenderingPlugin
 import amf.aml.internal.transform.pipelines.DialectTransformationPipeline
 import amf.aml.internal.validate.AMFDialectValidations
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
-import amf.core.client.scala.transform.pipelines.TransformationPipelineRunner
+import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.internal.metamodel.{Field, Type}

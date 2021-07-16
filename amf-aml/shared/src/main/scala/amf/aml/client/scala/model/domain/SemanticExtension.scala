@@ -18,7 +18,7 @@ case class SemanticExtension(fields: Fields, annotations: Annotations) extends D
     set(ExtensionMappingDefinition, annotationMapping)
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  override def componentId: String = s"extensionMappings/${extensionName().value()}"
+  private[amf] override def componentId: String = s"extensionMappings/${extensionName().value()}"
 }
 
 object SemanticExtension {
