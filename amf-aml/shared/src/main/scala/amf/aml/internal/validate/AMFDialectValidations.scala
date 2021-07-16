@@ -7,12 +7,7 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.plugins.document.graph.JsonLdKeywords
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations
-import amf.core.internal.validation.core.{
-  PropertyConstraint,
-  SeverityMapping,
-  ValidationProfile,
-  ValidationSpecification
-}
+import amf.core.internal.validation.core.{PropertyConstraint, SeverityMapping, ValidationProfile, ValidationSpecification}
 import amf.aml.internal.render.emitters.instances.{AmlEmittersHelper, NodeMappableFinder}
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
@@ -207,47 +202,46 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                       ramlPropertyId = prop.nodePropertyMapping().value(),
                       name = validationId(node, prop.name().value(), "dialectRange") + "/prop",
                       message = Some(message),
-                      datatype = Some(DataType.Double)
-//                      custom = Some((b: EntryBuilder, _: String) => {
-//                        b.entry(
-//                            (Namespace.Shacl + "or").iri(),
-//                            _.obj(_.entry(
-//                                JsonLdKeywords.List,
-//                                _.list { l =>
-//                                  l.obj { v =>
-//                                    v.entry((Namespace.Shacl + "datatype").iri(),
-//                                            _.obj(_.entry(JsonLdKeywords.Id, DataType.Integer.trim)))
-//                                  }
-//                                  l.obj { v =>
-//                                    v.entry((Namespace.Shacl + "datatype").iri(),
-//                                            _.obj(_.entry(JsonLdKeywords.Id, DataType.Double.trim)))
-//                                  }
-//                                }
-//                            ))
-//                        )
-//                      }),
-//                      customRdf = Some((rdfModel: RdfModel, subject: String) => {
-//                        val propId                = rdfModel.nextAnonId()
-//                        val firstConstraintListId = propId + "_ointdoub1"
-//                        val nextConstraintListId  = propId + "_ointdoub2"
-//                        rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
-//                        rdfModel.addTriple(firstConstraintListId,
-//                                           (Namespace.Rdf + "first").iri(),
-//                                           firstConstraintListId + "_v")
-//                        rdfModel.addTriple(firstConstraintListId + "_v",
-//                                           (Namespace.Shacl + "datatype").iri(),
-//                                           DataType.Integer.trim)
-//                        rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
-//                        rdfModel.addTriple(nextConstraintListId,
-//                                           (Namespace.Rdf + "first").iri(),
-//                                           nextConstraintListId + "_v")
-//                        rdfModel.addTriple(nextConstraintListId + "_v",
-//                                           (Namespace.Shacl + "datatype").iri(),
-//                                           DataType.Double.trim)
-//                        rdfModel.addTriple(nextConstraintListId,
-//                                           (Namespace.Rdf + "rest").iri(),
-//                                           (Namespace.Rdf + "nil").iri())
-//                      })
+                      custom = Some((b: EntryBuilder, _: String) => {
+                        b.entry(
+                            (Namespace.Shacl + "or").iri(),
+                            _.obj(_.entry(
+                                JsonLdKeywords.List,
+                                _.list { l =>
+                                  l.obj { v =>
+                                    v.entry((Namespace.Shacl + "datatype").iri(),
+                                            _.obj(_.entry(JsonLdKeywords.Id, DataType.Integer.trim)))
+                                  }
+                                  l.obj { v =>
+                                    v.entry((Namespace.Shacl + "datatype").iri(),
+                                            _.obj(_.entry(JsonLdKeywords.Id, DataType.Double.trim)))
+                                  }
+                                }
+                            ))
+                        )
+                      }),
+                      customRdf = Some((rdfModel: RdfModel, subject: String) => {
+                        val propId                = rdfModel.nextAnonId()
+                        val firstConstraintListId = propId + "_ointdoub1"
+                        val nextConstraintListId  = propId + "_ointdoub2"
+                        rdfModel.addTriple(subject, (Namespace.Shacl + "or").iri(), firstConstraintListId)
+                        rdfModel.addTriple(firstConstraintListId,
+                                           (Namespace.Rdf + "first").iri(),
+                                           firstConstraintListId + "_v")
+                        rdfModel.addTriple(firstConstraintListId + "_v",
+                                           (Namespace.Shacl + "datatype").iri(),
+                                           DataType.Integer.trim)
+                        rdfModel.addTriple(firstConstraintListId, (Namespace.Rdf + "rest").iri(), nextConstraintListId)
+                        rdfModel.addTriple(nextConstraintListId,
+                                           (Namespace.Rdf + "first").iri(),
+                                           nextConstraintListId + "_v")
+                        rdfModel.addTriple(nextConstraintListId + "_v",
+                                           (Namespace.Shacl + "datatype").iri(),
+                                           DataType.Double.trim)
+                        rdfModel.addTriple(nextConstraintListId,
+                                           (Namespace.Rdf + "rest").iri(),
+                                           (Namespace.Rdf + "nil").iri())
+                      })
                   ))
           )
 
