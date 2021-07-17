@@ -5,7 +5,7 @@ import amf.core.model.DataType
 import amf.core.model.document.BaseUnit
 import amf.core.model.domain._
 import amf.core.parser.Annotations
-import amf.core.services.RuntimeValidator.{CustomShaclFunction, CustomShaclFunctions, PropertyInfo}
+import amf.core.services.RuntimeValidator.{CustomShaclFunction, CustomShaclFunctions, ValidationInfo}
 import amf.core.services.ValidationOptions
 import amf.core.validation.EffectiveValidations
 import amf.core.validation.core._
@@ -148,28 +148,29 @@ class CustomShaclValidator(model: BaseUnit,
 
   private def validateCustom(validationSpecification: ValidationSpecification): Unit = {
     throw new Exception(
-        s"Arbitray SHACL validations not supported in custom SHACL validator: ${validationSpecification.id}")
+        s"Arbitrary SHACL validations not supported in custom SHACL validator: ${validationSpecification.id}")
   }
 
   private def validateFunctionConstraint(validationSpecification: ValidationSpecification,
                                          element: DomainElement): Unit = {
     val functionConstraint = validationSpecification.functionConstraint.get
-    functionConstraint.internalFunction.foreach(name => {
+    functionConstraint.internalFunction.map(name => {
       val validationFunction = getFunctionForName(name)
       // depending if propertyInfo is provided, violation is thrown at a given property, or by default on element
-      val onViolation = (propertyInfo: Option[PropertyInfo]) =>
-        propertyInfo match {
-          case Some((_, field)) => reportFailure(validationSpecification, element.id, Some(field.toString))
-          case _                => reportFailure(validationSpecification, element.id)
+      val onValidation = (validationInfo: Option[ValidationInfo]) =>
+        validationInfo match {
+          case Some(ValidationInfo(field, customMessage)) => // why annotations are never used?
+            reportFailure(validationSpecification, element.id, field.toString, customMessage)
+          case _ => reportFailure(validationSpecification, element.id, "")
       }
-      validationFunction(element, onViolation)
+      validationFunction.run(element, onValidation)
     })
   }
 
   private def getFunctionForName(name: String): CustomShaclFunction = customFunctions.get(name) match {
     case Some(validationFunction) => validationFunction
     case None =>
-      throw new Exception(s"Custom function validations not supported in customm SHACL validator: $name")
+      throw new Exception(s"Custom function validations not supported in custom SHACL validator: $name")
   }
 
   private def validateNodeConstraint(validationSpecification: ValidationSpecification,
@@ -186,7 +187,7 @@ class CustomShaclValidator(model: BaseUnit,
               extractPredicateValue(targetObject, element) match {
                 case Some((_, _: AmfScalar, Some(value: String))) =>
                   if (!value.contains("://")) {
-                    reportFailure(validationSpecification, element.id)
+                    reportFailure(validationSpecification, element.id, "")
                   }
                 case _ => // ignore
               }
@@ -688,26 +689,19 @@ class CustomShaclValidator(model: BaseUnit,
     }
   }
 
-  private def reportFailure(validationSpecification: ValidationSpecification, id: String): Unit = {
-    reportFailure(validationSpecification, id, "")
-  }
-
   private def reportFailure(validationSpecification: ValidationSpecification,
                             propertyConstraint: PropertyConstraint,
                             id: String): Unit = {
     reportFailure(validationSpecification, id, propertyConstraint.ramlPropertyId)
   }
 
-  private def reportFailure(validationSpecification: ValidationSpecification,
+  private def reportFailure(validationSpec: ValidationSpecification,
                             id: String,
-                            propertyPath: Option[String] = None): Unit = {
-    reportFailure(validationSpecification, id, propertyPath.getOrElse(""))
-  }
-
-  private def reportFailure(validationSpec: ValidationSpecification, id: String, path: String): Unit = {
+                            path: String,
+                            customMessage: Option[String] = None): Unit = {
     validationReport.registerResult(
         CustomValidationResult(
-            message = getMessageOf(validationSpec, options.messageStyle),
+            message = customMessage.orElse(getMessageOf(validationSpec, options.messageStyle)),
             path = path,
             sourceConstraintComponent = validationSpec.id,
             focusNode = id,
