@@ -12,7 +12,7 @@ import amf.validation.internal.shacl.ShaclValidator
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   CustomShaclFunction,
   CustomShaclFunctions,
-  PropertyInfo
+  ValidationInfo
 }
 import org.yaml.model.YScalar
 
@@ -21,9 +21,12 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object CustomShaclValidator {
 
-  type PropertyInfo = (Annotations, Field)
-  // When no property info is provided violation is thrown in domain element level
-  type CustomShaclFunction  = (AmfObject, Option[PropertyInfo] => Unit) => Unit
+  case class ValidationInfo(field: Field, message: Option[String] = None)
+  trait CustomShaclFunction {
+    val name: String
+    // When no validation info is provided, the validation is thrown in domain element level
+    def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit
+  }
   type CustomShaclFunctions = Map[String, CustomShaclFunction]
 }
 
@@ -157,7 +160,7 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
 
   private def validateCustom(validationSpecification: ValidationSpecification): Unit = {
     throw new Exception(
-        s"Arbitray SHACL validations not supported in custom SHACL validator: ${validationSpecification.id}")
+        s"Arbitrary SHACL validations not supported in custom SHACL validator: ${validationSpecification.id}")
   }
 
   private def validateFunctionConstraint(validationSpecification: ValidationSpecification,
@@ -166,19 +169,20 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
     functionConstraint.internalFunction.foreach(name => {
       val validationFunction = getFunctionForName(name)
       // depending if propertyInfo is provided, violation is thrown at a given property, or by default on element
-      val onViolation = (propertyInfo: Option[PropertyInfo]) =>
-        propertyInfo match {
-          case Some((_, field)) => reportFailure(validationSpecification, element.id, Some(field.toString))
-          case _                => reportFailure(validationSpecification, element.id)
+      val onValidation = (validationInfo: Option[ValidationInfo]) =>
+        validationInfo match {
+          case Some(ValidationInfo(field, customMessage)) => // why annotations are never used?
+            reportFailure(validationSpecification, element.id, field.toString, customMessage)
+          case _ => reportFailure(validationSpecification, element.id, "")
       }
-      validationFunction(element, onViolation)
+      validationFunction.run(element, onValidation)
     })
   }
 
   private def getFunctionForName(name: String): CustomShaclFunction = customFunctions.get(name) match {
     case Some(validationFunction) => validationFunction
     case None =>
-      throw new Exception(s"Custom function validations not supported in customm SHACL validator: $name")
+      throw new Exception(s"Custom function validations not supported in custom SHACL validator: $name")
   }
 
   private def validateNodeConstraint(validationSpecification: ValidationSpecification,
@@ -195,7 +199,7 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
               extractPredicateValue(targetObject, element) match {
                 case Some((_, _: AmfScalar, Some(value: String))) =>
                   if (!value.contains("://")) {
-                    reportFailure(validationSpecification, element.id)
+                    reportFailure(validationSpecification, element.id, "")
                   }
                 case _ => // ignore
               }
@@ -697,23 +701,16 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
     }
   }
 
-  private def reportFailure(validationSpecification: ValidationSpecification, id: String): Unit = {
-    reportFailure(validationSpecification, id, "")
-  }
-
   private def reportFailure(validationSpecification: ValidationSpecification,
                             propertyConstraint: PropertyConstraint,
                             id: String): Unit = {
     reportBuilder.reportFailure(validationSpecification, propertyConstraint, id)
   }
 
-  private def reportFailure(validationSpecification: ValidationSpecification,
+  private def reportFailure(validationSpec: ValidationSpecification,
                             id: String,
-                            propertyPath: Option[String] = None): Unit = {
-    reportBuilder.reportFailure(validationSpecification, id, propertyPath)
-  }
-
-  private def reportFailure(validationSpec: ValidationSpecification, id: String, path: String): Unit = {
-    reportBuilder.reportFailure(validationSpec, id, path)
+                            path: String,
+                            customMessage: Option[String] = None): Unit = {
+    reportBuilder.reportFailure(validationSpec, id, path, customMessage)
   }
 }
