@@ -100,17 +100,18 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
     extractPredicateValue(propertyConstraint.ramlPropertyId, element)
   }
 
-  private def extractPredicateValue(predicate: String,
-                                    element: DomainElement): Option[(Annotations, AmfElement, Option[Any])] = {
+  private def extractPredicateValue(predicate: String, element: DomainElement): Seq[(AmfElement, Option[Any])] = {
     element.meta.fields.find { f =>
       f.value.iri() == predicate
     } match {
       case Some(f) =>
         Option(element.fields.getValue(f)) match {
           case Some(value) if value.value.isInstanceOf[AmfScalar] =>
-            Some((value.annotations, value.value, Some(amfScalarToScala(value.value.asInstanceOf[AmfScalar]))))
+            Seq((value.value, Some(amfScalarToScala(value.value.asInstanceOf[AmfScalar]))))
+          case Some(value) if value.value.isInstanceOf[AmfArray] =>
+            Some((value.value, None))
           case Some(value) =>
-            Some((value.annotations, value.value, None))
+            Seq((value.annotations, value.value, None))
           case _ =>
             None
         }
@@ -235,10 +236,9 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
       case Some(_) => validateMinLength(validationSpecification, propertyConstraint, element)
       case _       =>
     }
-    propertyConstraint.in match {
-      case Nil                        => // ignore
-      case Seq(_)                     => validateIn(validationSpecification, propertyConstraint, element)
-      case _: mutable.WrappedArray[_] => validateIn(validationSpecification, propertyConstraint, element)
+    propertyConstraint.in.toList match {
+      case Nil => // ignore
+      case l   => validateIn(validationSpecification, propertyConstraint, element)
     }
     propertyConstraint.maxExclusive match {
       case Some(_) => validateMaxExclusive(validationSpecification, propertyConstraint, element)
@@ -269,12 +269,11 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
     //
     propertyConstraint.`class` match {
       case Nil => // ignore
-      case _   => throw new Exception(s"class property constraint not supported yet ${validationSpecification.id}")
+      case _   => validateClass(validationSpecification, propertyConstraint, element)
     }
     if (propertyConstraint.custom.isDefined) {
       throw new Exception(s"custom property constraint not supported yet ${validationSpecification.id}")
-    }
-    if (propertyConstraint.customRdf.isDefined) {
+    } else if (propertyConstraint.customRdf.isDefined) {
       throw new Exception(s"customRdf property constraint not supported yet ${validationSpecification.id}")
     }
     if (propertyConstraint.multipleOf.isDefined) {
@@ -282,6 +281,19 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
     }
     if (propertyConstraint.patternedProperty.isDefined) {
       throw new Exception(s"patternedProperty property constraint not supported yet ${validationSpecification.id}")
+    }
+  }
+
+  private def validateClass(validationSpecification: ValidationSpecification,
+                            propertyConstraint: PropertyConstraint,
+                            element: DomainElement): Unit = {
+    extractPropertyValue(propertyConstraint, element) match {
+      case Some((_, obj: AmfObject, _)) =>
+        val current = obj.meta.`type`.map(_.iri())
+        if (propertyConstraint.`class`.exists(t => !current.contains(t)))
+          reportBuilder.reportFailure(validationSpecification, propertyConstraint, element.id)
+      case Some((_, obj: AmfElement, _)) =>
+      case _                             => // ignore
     }
   }
 
