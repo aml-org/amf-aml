@@ -14,6 +14,8 @@ import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   CustomShaclFunctions,
   ValidationInfo
 }
+import org.mulesoft.common.time
+import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YScalar
 
 import scala.collection.mutable
@@ -641,10 +643,15 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
   private def validateDataType(validationSpecification: ValidationSpecification,
                                propertyConstraint: PropertyConstraint,
                                parentElement: DomainElement): Unit = {
-    val xsdString  = DataType.String
-    val xsdBoolean = DataType.Boolean
-    val xsdInteger = DataType.Integer
-    val xsdDouble  = DataType.Double
+    val xsdString       = DataType.String
+    val xsdBoolean      = DataType.Boolean
+    val xsdInteger      = DataType.Integer
+    val xsdDouble       = DataType.Double
+    val xsdDate         = DataType.Date
+    val xsdDateTime     = DataType.DateTime
+    val xsdDateTimeOnly = DataType.DateTimeOnly
+    val xsdTime         = DataType.Time
+
     extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
       case (a: AmfScalar, maybeScalarValue) =>
         propertyConstraint.datatype match {
@@ -674,6 +681,26 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
                 reportFailure(validationSpecification, propertyConstraint, parentElement.id)
             }
 
+          case Some(s) if s == xsdDate =>
+            SimpleDateTime.parseDate(maybeScalarValue.map(_.toString).getOrElse("")) match {
+              case Left(_) => reportFailure(validationSpecification, propertyConstraint, parentElement.id)
+              case _       =>
+            }
+          case Some(s) if s == xsdDateTime =>
+            SimpleDateTime.parse(maybeScalarValue.map(_.toString).getOrElse("")) match {
+              case Left(_) => reportFailure(validationSpecification, propertyConstraint, parentElement.id)
+              case _       =>
+            }
+          case Some(s) if s == xsdDateTimeOnly =>
+            SimpleDateTime.parseFullTime(maybeScalarValue.map(_.toString).getOrElse("")) match {
+              case Left(_) => reportFailure(validationSpecification, propertyConstraint, parentElement.id)
+              case _       =>
+            }
+          case Some(s) if s == xsdTime =>
+            SimpleDateTime.parsePartialTime(maybeScalarValue.map(_.toString).getOrElse("")) match {
+              case Left(_) => reportFailure(validationSpecification, propertyConstraint, parentElement.id)
+              case _       =>
+            }
           case Some(other) =>
             throw new Exception(s"Data type '$other' for sh:datatype property constraint not supported yet")
 
