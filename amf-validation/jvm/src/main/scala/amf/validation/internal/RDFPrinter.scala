@@ -15,13 +15,13 @@ object RDFPrinter {
   def apply(model: Model, syntax: String): String = {
     val writer = new StringWriter()
     val format = syntax match {
-      case FileUtils.langN3                                                 => RDFFormat.NT
-      case FileUtils.langNTriple                                            => RDFFormat.NTRIPLES
-      case FileUtils.langTurtle                                             => RDFFormat.TURTLE
-      case FileUtils.langXML                                                => RDFFormat.RDFXML
-      case FileUtils.langXMLAbbrev                                          => RDFFormat.RDFXML_ABBREV
-      case Lang.JSONLD.getName | `application/ld+json` | `application/json` => RDFFormat.JSONLD_EXPAND_PRETTY
-      case _                                                                => RDFFormat.TURTLE // default case
+      case FileUtils.langN3                                       => RDFFormat.NT
+      case FileUtils.langNTriple                                  => RDFFormat.NTRIPLES
+      case FileUtils.langTurtle                                   => RDFFormat.TURTLE
+      case FileUtils.langXML                                      => RDFFormat.RDFXML
+      case FileUtils.langXMLAbbrev                                => RDFFormat.RDFXML_ABBREV
+      case "JSON-LD" | `application/ld+json` | `application/json` => RDFFormat.JSONLD_EXPAND_PRETTY
+      case _                                                      => RDFFormat.TURTLE // default case
     }
     RDFDataMgr.write(writer, model, format)
     writer.toString
