@@ -6,6 +6,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.plugins.render.DefaultRenderConfiguration
 import amf.core.internal.render.AMFSerializer
 import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.Syntax.{Json, Syntax}
 import amf.core.internal.remote._
 
@@ -23,12 +24,12 @@ class AMFRenderer(unit: BaseUnit, vendor: Vendor, config: AMFGraphConfiguration,
 
   private def render()(implicit executionContext: ExecutionContext): String = {
     val mediaType = syntax.fold(vendor match {
-      case Amf => "application/ld+json"
-      case Aml => "application/yaml"
-      case _   => "text/plain"
+      case Amf => `application/ld+json`
+      case Aml => `application/yaml`
+      case _   => `text/plain`
     })({
-      case Json => "application/json"
-      case _    => "application/yaml"
+      case Json => `application/json`
+      case _    => `application/yaml`
     })
 
     new AMFSerializer(unit, vendor.mediaType, DefaultRenderConfiguration(config)).renderToString

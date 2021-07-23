@@ -7,6 +7,7 @@ import amf.core.io.FileAssertionTest
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote._
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.render.AMFSerializer
 import amf.testing.common.jsonld.MultiJsonLDAsyncFunSuite
 import org.scalatest.Assertion
@@ -51,11 +52,11 @@ trait DialectTests
   def vendorToSyntax(vendor: Vendor): String = {
 
     vendor match {
-      case Amf                   => "application/ld+json"
-      case Payload               => "application/amf+json"
-      case Raml10 | Raml08 | Aml => "application/yaml"
-      case Oas20 | Oas30         => "application/json"
-      case _                     => "text/plain"
+      case Amf                   => `application/ld+json`
+      case Payload               => `application/amf+json`
+      case Raml10 | Raml08 | Aml => `application/yaml`
+      case Oas20 | Oas30         => `application/json`
+      case _                     => `text/plain`
     }
   }
 

@@ -10,6 +10,7 @@ import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
 import amf.aml.internal.parse.dialects.{DialectContext, DialectsParser}
 import amf.aml.internal.parse.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.aml.internal.parse.headers.{DialectHeader, ExtensionHeader}
+import amf.core.internal.remote.Mimes._
 
 class AMLVocabularyParsingPlugin extends AMFParsePlugin {
 
@@ -42,11 +43,11 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
   /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-  override def mediaTypes: Seq[String] = Seq("application/aml", "application/yaml", "application/aml+yaml")
+  override def mediaTypes: Seq[String] = Seq(`application/aml`, `application/yaml`, `application/aml+yaml`)
 
   /**
     * media types which specifies vendors that may be referenced.
     */
   override def validMediaTypesToReference: scala.Seq[String] =
-    Seq("application/aml", "application/yaml", "application/aml+yaml")
+    Seq(`application/aml`, `application/yaml`, `application/aml+yaml`)
 }

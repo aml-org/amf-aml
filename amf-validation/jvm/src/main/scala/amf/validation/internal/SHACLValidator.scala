@@ -16,6 +16,7 @@ import amf.core.client.scala.config.{
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.RdfModel
 import amf.core.internal.rdf.RdfModelEmitter
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.{ShaclValidationOptions, ValidationReport, ValidationSpecification}
 import amf.validation.internal
@@ -37,11 +38,10 @@ class SHACLValidator(listeners: Seq[AMFEventListener] = Seq.empty)
   var functionCode: Option[String] = None
 
   val formats = Map(
-      "application/ld+json" -> "JSON-LD",
-      "application/json"    -> "JSON-LD",
-      "JSON-LD"             -> "JSON-LD",
-      "text/n3"             -> FileUtils.langN3,
-      "test/turtle"         -> FileUtils.langTurtle
+      `application/ld+json` -> "JSON-LD",
+      `application/json`    -> "JSON-LD",
+      `text/n3`             -> FileUtils.langN3,
+      `text/turtle`         -> FileUtils.langTurtle
   )
 
   private def notifyEvent(event: AMFEvent) = listeners.foreach(_.notifyEvent(event))
