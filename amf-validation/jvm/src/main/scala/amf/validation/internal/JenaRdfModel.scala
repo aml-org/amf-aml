@@ -2,6 +2,7 @@ package amf.validation.internal
 
 import amf.core.client.scala.rdf._
 import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.remote.Mimes._
 import amf.validation.internal
 import org.apache.jena.graph.Graph
 import org.apache.jena.rdf.model.{AnonId, Model, ModelFactory, Resource}
@@ -127,15 +128,15 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
   override def load(mediaType: String, text: String): Unit = {
     val parser = RDFParser.create().fromString(text)
     mediaType match {
-      case "application/ld+json" | "application/json" =>
+      case `application/ld+json` | `application/json` =>
         parser.lang(RDFLanguages.JSONLD)
-      case "text/n3" | "text/rdf+n3" =>
+      case `text/n3` | `text/rdf+n3` =>
         parser.lang(RDFLanguages.N3)
-      case "application/x-turtle" | "text/turtle" =>
+      case `application/x-turtle` | `text/turtle` =>
         parser.lang(RDFLanguages.TURTLE)
-      case "text/plain" =>
+      case `text/plain` =>
         parser.lang(RDFLanguages.NTRIPLES)
-      case "application/rdf+xml" =>
+      case `application/rdf+xml` =>
         parser.lang(RDFLanguages.RDFXML)
       case _ =>
         throw new Exception(s"Unsupported RDF media type $mediaType")
@@ -174,15 +175,15 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
 
   protected def formatForMediaType(mediaType: String) = {
     mediaType match {
-      case "application/ld+json" =>
+      case `application/ld+json` =>
         RDFFormat.JSONLD_EXPAND_FLAT // flatten and without context
-      case "text/n3" | "text/rdf+n3" =>
+      case `text/n3` | `text/rdf+n3` =>
         RDFFormat.NT
-      case "application/x-turtle" | "text/turtle" =>
+      case `application/x-turtle` | `text/turtle` =>
         RDFFormat.TURTLE
-      case "text/plain" =>
+      case `text/plain` =>
         RDFFormat.NTRIPLES
-      case "application/rdf+xml" =>
+      case `application/rdf+xml` =>
         RDFFormat.RDFXML
       case _ =>
         throw new Exception(s"Unsupported RDF media type $mediaType")

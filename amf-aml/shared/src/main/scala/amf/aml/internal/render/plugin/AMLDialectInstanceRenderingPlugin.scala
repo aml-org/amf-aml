@@ -7,6 +7,7 @@ import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}
+import amf.core.internal.remote.Mimes._
 
 /**
   * Parsing plugin for dialect instance like units derived from a resolved dialect
@@ -47,8 +48,8 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
     case _                         => false
   }
 
-  override def defaultSyntax(): String = "application/yaml"
+  override def defaultSyntax(): String = `application/yaml`
 
   override def mediaTypes: Seq[String] =
-    Seq("application/aml", "application/yaml", "application/aml+yaml", "application/json", "application/aml+json")
+    Seq(`application/aml`, `application/yaml`, `application/aml+yaml`, `application/json`, `application/aml+json`)
 }

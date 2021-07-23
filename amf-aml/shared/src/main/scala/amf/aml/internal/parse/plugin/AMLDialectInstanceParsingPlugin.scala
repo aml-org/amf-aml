@@ -13,6 +13,7 @@ import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
 import amf.aml.internal.parse.instances._
 import amf.aml.internal.parse.headers.DialectHeader
 import org.yaml.model.YMap
+import amf.core.internal.remote.Mimes._
 
 /**
   * Parsing plugin for dialect instance like units derived from a resolved dialect
@@ -99,11 +100,11 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
     * media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] =
-    Seq("application/aml", "application/yaml", "application/aml+yaml", "application/json", "application/aml+json")
+    Seq(`application/aml`, `application/yaml`, `application/aml+yaml`, `application/json`, `application/aml+json`)
 
   /**
     * media types which specifies vendors that may be referenced.
     */
   override def validMediaTypesToReference: Seq[String] =
-    Seq("application/aml", "application/yaml", "application/aml+yaml", "application/json", "application/aml+json")
+    Seq(`application/aml`, `application/yaml`, `application/aml+yaml`, `application/json`, `application/aml+json`)
 }

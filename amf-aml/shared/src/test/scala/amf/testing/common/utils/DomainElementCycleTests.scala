@@ -6,11 +6,12 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
-import amf.core.internal.remote.Hint
+import amf.core.internal.remote.{Hint, Mimes}
 import amf.core.io.FileAssertionTest
 import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
 import amf.aml.client.scala.render.AmlDomainElementEmitter
 import amf.aml.internal.render.plugin.AMLDialectInstanceRenderingPlugin
+import amf.core.internal.remote.Mimes._
 import org.scalatest.{Assertion, AsyncFunSuite}
 import org.yaml.model.{YDocument, YNode}
 
@@ -69,7 +70,7 @@ trait DomainElementCycleTests
       element.map(config.elementClient().renderElement(_, dialect, references)).getOrElse(YNode.Empty)
     val document = SyamlParsedDocument(document = YDocument(node))
     val w        = new StringWriter
-    SyamlSyntaxRenderPlugin.emit("application/yaml", document, w).map(_.toString).getOrElse("")
+    SyamlSyntaxRenderPlugin.emit(`application/yaml`, document, w).map(_.toString).getOrElse("")
   }
   def transform(unit: BaseUnit): BaseUnit = unit
 }
