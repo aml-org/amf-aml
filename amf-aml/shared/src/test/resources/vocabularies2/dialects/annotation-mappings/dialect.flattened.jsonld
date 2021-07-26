@@ -610,7 +610,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/source-map/aliases-array/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "github->http://github.org/vocabulary#::github.vocabulary.yaml"
+      "http://a.ml/vocabularies/document-source-maps#value": "github->http://github.org/vocabulary#::http://github.org/vocabulary#::github.vocabulary.yaml"
     },
     {
       "@id": "http://github.org/vocabulary#contributor/source-map",

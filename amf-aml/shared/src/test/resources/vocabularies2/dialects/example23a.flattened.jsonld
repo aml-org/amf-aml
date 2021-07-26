@@ -586,7 +586,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23a.yaml#/source-map/aliases-array/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23a.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "bis->file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23b.yaml::example23b.yaml"
+      "http://a.ml/vocabularies/document-source-maps#value": "bis->file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23b.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23b.yaml::example23b.yaml"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23b.yaml/externals/v3#/source-map",

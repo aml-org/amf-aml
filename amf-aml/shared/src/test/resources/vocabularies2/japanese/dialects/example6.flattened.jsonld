@@ -251,7 +251,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example6.yaml#/source-map/aliases-array/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example6.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "\u56F3\u66F8\u9928->file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/mappings_lib.yaml::mappings_lib.yaml"
+      "http://a.ml/vocabularies/document-source-maps#value": "\u56F3\u66F8\u9928->file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/mappings_lib.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/mappings_lib.yaml::mappings_lib.yaml"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/mappings_lib.yaml/externals/v2#/source-map",

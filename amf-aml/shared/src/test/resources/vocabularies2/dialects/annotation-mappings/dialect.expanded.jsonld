@@ -395,7 +395,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "github->http://github.org/vocabulary#::github.vocabulary.yaml"
+                "@value": "github->http://github.org/vocabulary#::http://github.org/vocabulary#::github.vocabulary.yaml"
               }
             ]
           }

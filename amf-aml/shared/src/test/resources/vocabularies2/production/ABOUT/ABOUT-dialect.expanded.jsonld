@@ -618,7 +618,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "about->http://mulesoft.com/vocabularies/about#::ABOUT-vocabulary.yaml"
+                "@value": "about->http://mulesoft.com/vocabularies/about#::http://mulesoft.com/vocabularies/about#::ABOUT-vocabulary.yaml"
               }
             ]
           }

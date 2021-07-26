@@ -1,5 +1,5 @@
 package amf.aml.internal.parse.vocabularies
-import amf.core.internal.annotations.Aliases
+import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.parse.document.{CallbackReferenceCollector, ParsedReference, ReferenceCollector}
@@ -33,7 +33,8 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
                   val url: String   = e.value.as[YScalar].text
                   target(url)
                     .foreach {
-                      case module: DeclaresModel => result += (alias, collectAlias(module, alias -> (module.id, url)))
+                      case module: DeclaresModel =>
+                        result += (alias, collectAlias(module, alias -> ReferencedInfo(module.id, module.id, url)))
                       case other =>
                         ctx.eh.violation(ExpectedVocabularyModule,
                                          id,
@@ -60,8 +61,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
     )
   }
 
-  private def collectAlias(module: BaseUnit,
-                           alias: (Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl))): BaseUnit = {
+  private def collectAlias(module: BaseUnit, alias: (Aliases.Alias, ReferencedInfo)): BaseUnit = {
     module.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         module.annotations.reject(_.isInstanceOf[Aliases])

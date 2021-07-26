@@ -126,4 +126,6 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
     * media types which specifies vendors that may be referenced.
     */
   override def validSpecsToReference: Seq[Spec] = Nil
+
+  override def withIdAdoption: Boolean = false
 }

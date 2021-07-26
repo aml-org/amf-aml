@@ -106,7 +106,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "lib->file://amf-aml/shared/src/test/resources/vocabularies2/instances/library24.yaml::library24.yaml"
+                "@value": "lib->file://amf-aml/shared/src/test/resources/vocabularies2/instances/library24.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/instances/library24.yaml::library24.yaml"
               }
             ]
           }

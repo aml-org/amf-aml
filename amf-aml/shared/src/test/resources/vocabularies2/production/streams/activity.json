@@ -300,7 +300,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "crm->http://crm.com/vocabularies/core#::crm.yaml"
+                "@value": "crm->http://crm.com/vocabularies/core#::http://crm.com/vocabularies/core#::crm.yaml"
               }
             ]
           }

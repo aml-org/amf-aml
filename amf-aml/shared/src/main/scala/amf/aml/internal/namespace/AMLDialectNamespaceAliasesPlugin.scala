@@ -1,7 +1,7 @@
 package amf.aml.internal.namespace
 
 import amf.core.client.common.{NormalPriority, PluginPriority}
-import amf.core.internal.annotations.Aliases
+import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.internal.annotations.Aliases.Alias
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.vocabulary.{Namespace, NamespaceAliases}
@@ -35,7 +35,7 @@ object AMLDialectNamespaceAliasesPlugin {
       .find(classOf[Aliases])
       .map { aliasesAnnotation =>
         aliasesAnnotation.aliases.toList.map {
-          case (alias, (url, _)) => alias -> Namespace(url)
+          case (alias, ReferencedInfo(_, url, _)) => alias -> Namespace(url)
         }
       }
       .getOrElse(Nil)
