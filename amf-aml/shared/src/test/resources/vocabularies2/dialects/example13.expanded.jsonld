@@ -308,7 +308,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "lib->file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml::mappings_lib.yaml"
+                "@value": "lib->file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml::mappings_lib.yaml"
               }
             ]
           }

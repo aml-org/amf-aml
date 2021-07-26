@@ -334,7 +334,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "test->file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml::example3.yaml"
+                    "@value": "test->file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml::example3.yaml"
                   }
                 ]
               }

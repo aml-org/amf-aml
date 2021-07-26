@@ -509,7 +509,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml#/source-map/aliases-array/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "\u4F7F2->http://a.ml/vocabularies/vocab2#::vocab2.yaml"
+      "http://a.ml/vocabularies/document-source-maps#value": "\u4F7F2->http://a.ml/vocabularies/vocab2#::http://a.ml/vocabularies/vocab2#::vocab2.yaml"
     },
     {
       "@id": "http://a.ml/vocabularies/vocab2#\u30A8\u30A2\u30A6\u30A7\u30A4/source-map",

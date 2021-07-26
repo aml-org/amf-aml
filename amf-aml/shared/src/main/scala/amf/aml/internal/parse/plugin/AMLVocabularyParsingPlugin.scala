@@ -51,4 +51,6 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
     * media types which specifies vendors that may be referenced.
     */
   override def validSpecsToReference: scala.Seq[Spec] = Seq(Spec.AML)
+
+  override def withIdAdoption: Boolean = false
 }

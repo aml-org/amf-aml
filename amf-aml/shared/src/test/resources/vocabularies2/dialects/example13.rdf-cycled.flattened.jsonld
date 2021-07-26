@@ -373,7 +373,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example13.yaml#/source-map/aliases-array/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example13.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "lib->file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml::mappings_lib.yaml"
+      "http://a.ml/vocabularies/document-source-maps#value": "lib->file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml::mappings_lib.yaml"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/mappings_lib.yaml/externals/v2#/source-map",

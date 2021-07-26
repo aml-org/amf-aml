@@ -307,7 +307,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "\u4F7F\u7528\u3059\u308B->http://a.ml/vocabularies/vocab2#::vocab2.yaml"
+                "@value": "\u4F7F\u7528\u3059\u308B->http://a.ml/vocabularies/vocab2#::http://a.ml/vocabularies/vocab2#::vocab2.yaml"
               }
             ]
           }

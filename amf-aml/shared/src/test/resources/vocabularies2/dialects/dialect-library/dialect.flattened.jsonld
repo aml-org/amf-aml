@@ -336,7 +336,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml#/source-map/aliases-array/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "lib->file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/library.yaml::library.yaml"
+      "http://a.ml/vocabularies/document-source-maps#value": "lib->file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/library.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/library.yaml::library.yaml"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/library.yaml#/declarations/AnotherNode/property/anotherProperty",
