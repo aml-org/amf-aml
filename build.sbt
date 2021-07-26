@@ -7,7 +7,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-version in ThisBuild := "5.1.8-RC.0"
+version in ThisBuild := "5.1.8-RC.1"
 
 publish := {}
 
@@ -131,7 +131,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
     excludeDependencies += "org.apache.tomcat.embed"    % "tomcat-embed-core",
     libraryDependencies += "commons-io"                 % "commons-io"              % "2.6",
     libraryDependencies += "org.apache.commons"         % "commons-lang3"           % "3.9",
-    libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.19",
+    libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.21", // CVE-2021-35515 upto CVE-2021-35517
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.11.0",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
