@@ -9,6 +9,7 @@ name := "amf-aml"
 
 version in ThisBuild := "5.1.8-RC.1"
 
+
 publish := {}
 
 jsEnv := new org.scalajs.jsenv.nodejs.NodeJSEnv()
@@ -35,6 +36,7 @@ lazy val workspaceDirectory: File =
   }
 
 val amfCoreVersion = "4.2.223"
+
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
