@@ -62,7 +62,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
             declarations += (alias, r)
           case None =>
             val node = dialect.location().getOrElse(dialect.id)
-            ctx.eh.violation(DialectError, node, s"Expected vocabulary module but found: $other", e) // todo Uses should only reference modules...
+            ctx.eh.violation(DialectError, node, s"Expected vocabulary module but found: $other", e.location) // todo Uses should only reference modules...
         }
     }
   }

@@ -63,7 +63,7 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable[_]] = Map()
     findNodeMapping(key, scope) match {
       case Some(result) => result
       case _ =>
-        error(s"NodeMappable $key not found", ast)
+        error(s"NodeMappable $key not found", ast.location)
         ErrorNodeMappable(key, ast)
     }
 
@@ -71,7 +71,7 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable[_]] = Map()
     findAnnotationMapping(key, scope) match {
       case Some(result) => result
       case _ =>
-        error(s"Annotation mapping $key not found", ast)
+        error(s"Annotation mapping $key not found", ast.location)
         ErrorAnnotationMapping(key, ast)
     }
 

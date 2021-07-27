@@ -34,12 +34,12 @@ trait JsonPointerResolver extends NodeMappableHelper with PlatformSecrets with B
           .withInstanceTypes(Seq(mapping.id))
       } else {
         val linkedNode = DialectDomainElement(map).withId(id).withInstanceTypes(Seq(mapping.id))
-        linkedNode.unresolved(fullPointer, map)
+        linkedNode.unresolved(fullPointer, Nil, Some(map.location))
         linkedNode
       }
     } getOrElse {
       val linkedNode = DialectDomainElement(map).withId(id).withInstanceTypes(Seq(mapping.id))
-      linkedNode.unresolved(fullPointer, map)
+      linkedNode.unresolved(fullPointer, Nil, Some(map.location))
       linkedNode
     }
   }

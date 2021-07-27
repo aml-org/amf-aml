@@ -38,7 +38,7 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
                         ctx.eh.violation(ExpectedVocabularyModule,
                                          id,
                                          s"Expected vocabulary module but found: $other",
-                                         e) // todo Uses should only reference modules...
+                                         e.location) // todo Uses should only reference modules...
                     }
                 })
     )
