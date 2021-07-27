@@ -6,19 +6,18 @@ import amf.core.client.scala.model.domain._
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.SourceAST
 import amf.core.internal.metamodel.Field
-import amf.core.internal.parser.domain.{Annotations, Value}
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.utils._
 import amf.core.internal.validation.core._
-import amf.validation.internal.shacl.ShaclValidator
 import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   CustomShaclFunction,
   CustomShaclFunctions,
   ValidationInfo
 }
-import org.mulesoft.common.time
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YScalar
 
-import scala.collection.mutable
+import java.net.URISyntaxException
 import scala.concurrent.{ExecutionContext, Future}
 
 object CustomShaclValidator {
@@ -32,8 +31,7 @@ object CustomShaclValidator {
   type CustomShaclFunctions = Map[String, CustomShaclFunction]
 }
 
-class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: ShaclValidationOptions)
-    extends ShaclValidator {
+class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: ShaclValidationOptions) {
 
   private val reportBuilder: ReportBuilder = new ReportBuilder(options)
 
@@ -49,7 +47,8 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
   private def validateIdentityTransformation(validations: Seq[ValidationSpecification], element: DomainElement): Unit = {
     validations.foreach { specification =>
       val classes = element.meta.`type`.map(_.iri())
-      if (matchingClass(specification, classes) || matchingInstance(specification, element)) {
+      if (!element.isExternalLink.value() && (matchingClass(specification, classes) || matchingInstance(specification,
+                                                                                                        element))) {
         validate(specification, element)
       }
       validateObjectsOf(specification, element)
@@ -651,6 +650,7 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
     val xsdDateTime     = DataType.DateTime
     val xsdDateTimeOnly = DataType.DateTimeOnly
     val xsdTime         = DataType.Time
+    val xsdAnyURI       = DataType.AnyUri
 
     extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
       case (a: AmfScalar, maybeScalarValue) =>
@@ -701,12 +701,31 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
               case Left(_) => reportFailure(validationSpecification, propertyConstraint, parentElement.id)
               case _       =>
             }
+          case Some(s) if s == xsdAnyURI =>
+            validateURI(validationSpecification, propertyConstraint, parentElement.id, maybeScalarValue)
           case Some(other) =>
             throw new Exception(s"Data type '$other' for sh:datatype property constraint not supported yet")
 
           case _ => // ignore
         }
       case _ => // ignore
+    }
+  }
+
+  /**
+    * Check if argument is a valid URI, URL or URN
+    */
+  def validateURI(validationSpecification: ValidationSpecification,
+                  propertyConstraint: PropertyConstraint,
+                  id: String,
+                  value: Option[Any]): Unit = {
+    value.foreach { v =>
+      try {
+        v.toString.normalizePath
+      } catch {
+        case e: URISyntaxException =>
+          reportFailure(validationSpecification, propertyConstraint, id)
+      }
     }
   }
 
