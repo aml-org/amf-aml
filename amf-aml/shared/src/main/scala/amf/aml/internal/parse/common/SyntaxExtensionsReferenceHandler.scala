@@ -33,7 +33,7 @@ class SyntaxExtensionsReferenceHandler(eh: AMFErrorHandler) extends ReferenceHan
     parsedDoc match {
       case parsed: SyamlParsedDocument =>
         parsed.comment.filter(referencesDialect).foreach { comment =>
-          collector += (dialectDefinitionUrl(comment), SchemaReference, parsed.document.node)
+          collector += (dialectDefinitionUrl(comment), SchemaReference, parsed.document.node.location)
         }
         libraries(parsed.document)
         links(parsed.document)
@@ -83,7 +83,7 @@ class SyntaxExtensionsReferenceHandler(eh: AMFErrorHandler) extends ReferenceHan
   }
 
   private def library(entry: YMapEntry)(implicit errorHandler: AMFErrorHandler): Unit = {
-    collector += (entry.value, LibraryReference, entry.value)
+    collector += (entry.value, LibraryReference, entry.value.location)
   }
 
   private def links(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
@@ -119,7 +119,7 @@ class SyntaxExtensionsReferenceHandler(eh: AMFErrorHandler) extends ReferenceHan
 
   private def ramlInclude(node: YNode, reference: ReferenceKind = LinkReference): Unit = {
     node.value match {
-      case scalar: YScalar => collector += (scalar.text, reference, node)
+      case scalar: YScalar => collector += (scalar.text, reference, node.location)
       case _               => eh.violation(InvalidInclude, "", s"Unexpected !include or dialect with ${node.value}", node)
     }
   }

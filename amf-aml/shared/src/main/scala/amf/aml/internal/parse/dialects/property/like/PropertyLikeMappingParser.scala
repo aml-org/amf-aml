@@ -40,7 +40,7 @@ case class PropertyLikeMappingParser[T <: PropertyLikeMapping[_ <: PropertyLikeM
             DialectValidations.GuidRangeWithoutUnique,
             propertyLikeMapping.id,
             s"Declaration of property '${propertyLikeMapping.name().value()}' with range GUID and without unique constraint",
-            ast
+            ast.location
         )
       }
     }

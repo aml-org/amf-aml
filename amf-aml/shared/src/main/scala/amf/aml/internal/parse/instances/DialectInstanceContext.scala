@@ -5,13 +5,9 @@ import amf.core.internal.parser.YMapOps
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
-import amf.aml.client.scala.model.domain.{
-  DialectDomainElement,
-  DocumentMapping,
-  NodeMappable,
-  PublicNodeMapping
-}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, DocumentMapping, NodeMappable, PublicNodeMapping}
 import amf.aml.internal.parse.common.{DeclarationContext, SyntaxErrorReporter}
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import org.yaml.model._
 
 import scala.language.existentials

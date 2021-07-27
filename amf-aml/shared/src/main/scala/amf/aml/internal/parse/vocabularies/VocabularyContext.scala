@@ -5,6 +5,7 @@ import amf.aml.client.scala.model.document.Vocabulary
 import amf.aml.client.scala.model.domain.{ClassTerm, PropertyTerm}
 import amf.aml.internal.parse.common.SyntaxErrorReporter
 import amf.aml.internal.validate.DialectValidations
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import org.yaml.model.YPart
 
 class VocabularyContext(private val wrapped: ParserContext, private val ds: Option[VocabularyDeclarations] = None)

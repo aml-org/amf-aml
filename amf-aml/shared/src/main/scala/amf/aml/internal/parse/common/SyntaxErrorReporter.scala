@@ -21,15 +21,15 @@ trait SyntaxErrorReporter { this: ParserContext =>
   }
 
   def missingClassTermWarning(term: String, node: String, ast: YPart): Unit = {
-    eh.warning(MissingClassTermSpecification, node, s"Cannot find class vocabulary term $term", ast)
+    eh.warning(MissingClassTermSpecification, node, s"Cannot find class vocabulary term $term", ast.location)
   }
 
   def missingPropertyTermWarning(term: String, node: String, ast: YPart): Unit = {
-    eh.warning(MissingPropertyTermSpecification, node, s"Cannot find property vocabulary term $term", ast)
+    eh.warning(MissingPropertyTermSpecification, node, s"Cannot find property vocabulary term $term", ast.location)
   }
 
   def missingFragmentViolation(fragment: String, node: String, ast: YPart): Unit = {
-    eh.violation(MissingFragmentSpecification, node, s"Cannot find fragment $fragment", ast)
+    eh.violation(MissingFragmentSpecification, node, s"Cannot find fragment $fragment", ast.location)
   }
 
   def missingPropertyRangeViolation(term: String, node: String, annotations: Annotations): Unit = {
@@ -86,7 +86,7 @@ trait SyntaxErrorReporter { this: ParserContext =>
         ClosedShapeSpecification,
         id,
         s"Property: '$property' not supported in a $nodeType node",
-        ast
+        ast.location
     )
   }
 
@@ -95,7 +95,7 @@ trait SyntaxErrorReporter { this: ParserContext =>
         MissingPropertySpecification,
         id,
         s"Property: '$property' mandatory in a $nodeType node",
-        ast
+        ast.location
     )
   }
 }
