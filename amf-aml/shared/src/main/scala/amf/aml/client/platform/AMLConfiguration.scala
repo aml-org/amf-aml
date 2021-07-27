@@ -52,12 +52,6 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
   override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): AMLConfiguration =
     _internal.withExecutionEnvironment(executionEnv._internal)
 
-  /**
-    * Merges two environments taking into account specific attributes that can be merged.
-    * This is currently limited to: registry plugins, registry transformation pipelines.
-    */
-  def merge(other: AMLConfiguration): AMLConfiguration = _internal.merge(other)
-
   def withDialect(path: String): ClientFuture[AMLConfiguration] = _internal.withDialect(path).asClient
 
   def forInstance(url: String): ClientFuture[AMLConfiguration] = _internal.forInstance(url).asClient
