@@ -402,7 +402,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             val nodeName = entry.key.toString
             if (AmlScalars.all.contains(nodeName)) {
               ctx.eh
-                .violation(DialectError, parent, s"Error parsing node mapping: '$nodeName' is a reserved name", entry)
+                .violation(DialectError, parent, s"Error parsing node mapping: '$nodeName' is a reserved name", entry.location)
             } else {
               val adopt: DomainElement => Any = {
                 case nodeMapping: NodeMappable =>
@@ -419,14 +419,14 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                   ctx.eh.violation(DialectError,
                                    parent,
                                    s"Error only valid node mapping or union mapping can be declared",
-                                   entry)
+                                   entry.location)
                   None
               }
 
               parseNodeMapping(entry, adopt) match {
                 case Some(nodeMapping: NodeMapping)      => ctx.declarations += nodeMapping
                 case Some(nodeMapping: UnionNodeMapping) => ctx.declarations += nodeMapping
-                case _                                   => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry)
+                case _                                   => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry.location)
               }
 
             }
@@ -587,7 +587,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             ctx.eh.warning(VariablesDefinedInBase,
                            nodeMapping.id,
                            s"Base $base contains idTemplate variables overridable by $$base directive",
-                           entry.value)
+                           entry.value.location)
           }
         }
     )
@@ -669,7 +669,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         ctx.eh.violation(DialectValidations.PropertyMappingMustBeAMap,
                          nodeId,
                          s"Property mapping $name must be a map",
-                         entry)
+                         entry.location)
         p
     }
   }
@@ -699,7 +699,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       _ <- mapKey
       _ <- mapTermKey
     } yield {
-      ctx.eh.violation(DialectError, propertyMapping.id, s"mapKey and mapTermKey are mutually exclusive", map)
+      ctx.eh.violation(DialectError, propertyMapping.id, s"mapKey and mapTermKey are mutually exclusive", map.location)
     }
 
     mapTermKey.fold({
@@ -723,7 +723,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       _ <- mapValue
       _ <- mapTermValue
     } yield {
-      ctx.eh.violation(DialectError, propertyMapping.id, s"mapValue and mapTermValue are mutually exclusive", map)
+      ctx.eh.violation(DialectError, propertyMapping.id, s"mapValue and mapTermValue are mutually exclusive", map.location)
     }
 
     mapTermValue.fold({
@@ -747,7 +747,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         ctx.declarations.findPropertyTerm(iri, All) match {
           case Some(term) => Some(term.id)
           case _ =>
-            ctx.eh.violation(DialectError, propertyMappingId, s"Cannot find property term with alias $iri", ast)
+            ctx.eh.violation(DialectError, propertyMappingId, s"Cannot find property term with alias $iri", ast.location)
             None
         }
     }
@@ -760,9 +760,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           ctx.eh.violation(DialectError,
                            prop.id,
                            s"PropertyMapping for idTemplate variable '$variable' must be mandatory",
-                           map)
+                           map.location)
         case None =>
-          ctx.eh.violation(DialectError, "", s"Missing propertyMapping for idTemplate variable '$variable'", map)
+          ctx.eh.violation(DialectError, "", s"Missing propertyMapping for idTemplate variable '$variable'", map.location)
         case _ => // ignore
       }
     }
@@ -905,7 +905,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       case (text: String, _) =>
         val linkedNode = NodeMapping(map)
         adopt(linkedNode)
-        linkedNode.unresolved(text, map)
+        linkedNode.unresolved(text, Nil, Some(map.location))
         Some(linkedNode)
     }
   }

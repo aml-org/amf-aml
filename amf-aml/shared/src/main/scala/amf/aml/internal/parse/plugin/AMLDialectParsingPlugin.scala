@@ -9,6 +9,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext, ReferenceHandler}
 import amf.core.internal.parser.Root
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 
 class AMLDialectParsingPlugin extends AMFParsePlugin {
   val knownHeaders =

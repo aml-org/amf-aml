@@ -109,7 +109,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
           }
           template = template.replace(varMatch, value)
         case None =>
-          ctx.eh.violation(DialectError, nodeId, s"Missing ID template variable '$variable' in node", nodeMap)
+          ctx.eh.violation(DialectError, nodeId, s"Missing ID template variable '$variable' in node", nodeMap.location)
       }
     }
     template
@@ -133,7 +133,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
             case Some(v) => keyId = keyId ++ Seq(v.toString)
             case _ =>
               ctx.eh
-                .violation(DialectError, node.id, s"Cannot find unique mandatory property '$propertyName'", nodeMap)
+                .violation(DialectError, node.id, s"Cannot find unique mandatory property '$propertyName'", nodeMap.location)
               allFound = false
           }
       }

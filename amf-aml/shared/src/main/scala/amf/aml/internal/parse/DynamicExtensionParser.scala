@@ -83,7 +83,7 @@ case class DynamicExtensionParser(node: YNode,
 
         case other =>
           val parsed = parseScalar(YScalar(other.toString()), "string")
-          ctx.eh.violation(DialectError, parsed.id, None, s"Cannot parse data node from AST structure '$other'", node)
+          ctx.eh.violation(DialectError, parsed.id, None, s"Cannot parse data node from AST structure '$other'", node.location)
           parsed
       }
     }
