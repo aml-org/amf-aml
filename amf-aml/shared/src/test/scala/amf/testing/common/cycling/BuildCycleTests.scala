@@ -4,7 +4,7 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.errorhandling.{AMFErrorHandler, UnhandledErrorHandler}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{Hint, Vendor}
+import amf.core.internal.remote.{Hint, SpecId}
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
@@ -39,13 +39,13 @@ trait BuildCycleTests extends BuildCycleTestCommon {
   final def cycle(source: String,
                   golden: String,
                   hint: Hint,
-                  target: Vendor,
+                  target: SpecId,
                   directory: String = basePath,
                   amlConfig: AMLConfiguration =
                     AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
                   syntax: Option[Syntax] = None,
                   pipeline: Option[String] = None,
-                  transformWith: Option[Vendor] = None): Future[Assertion] = {
+                  transformWith: Option[SpecId] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
 

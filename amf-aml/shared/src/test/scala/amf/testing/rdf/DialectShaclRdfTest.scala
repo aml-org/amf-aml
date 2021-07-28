@@ -5,7 +5,7 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.RdfModel
 import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{Amf, Hint, Vendor, VocabularyYamlHint}
+import amf.core.internal.remote.{Amf, Hint, SpecId, VocabularyYamlHint}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.CoreValidations
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
@@ -52,13 +52,13 @@ class DialectShaclRdfTest extends FunSuiteRdfCycleTests with PlatformSecrets wit
   override def cycleRdf(source: String,
                         golden: String,
                         hint: Hint = VocabularyYamlHint,
-                        target: Vendor = Amf,
+                        target: SpecId = Amf,
                         amlConfig: AMLConfiguration =
                           AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
                         directory: String = basePath,
                         syntax: Option[Syntax] = None,
                         pipeline: Option[String] = None,
-                        transformWith: Option[Vendor] = None): Future[Assertion] = {
+                        transformWith: Option[SpecId] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
 
