@@ -7,7 +7,7 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.rdf.{RdfModel, RdfUnitConverter}
 import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{Amf, Hint, Vendor}
+import amf.core.internal.remote.{Amf, Hint, SpecId}
 import org.scalatest.Assertion
 
 import scala.concurrent.Future
@@ -17,7 +17,7 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   def cycleFullRdf(source: String,
                    golden: String,
                    hint: Hint,
-                   target: Vendor = Amf,
+                   target: SpecId = Amf,
                    directory: String = basePath,
                    amlConfig: AMLConfiguration =
                      AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
@@ -39,12 +39,12 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   def cycleRdf(source: String,
                golden: String,
                hint: Hint,
-               target: Vendor = Amf,
+               target: SpecId = Amf,
                amlConfig: AMLConfiguration,
                directory: String = basePath,
                syntax: Option[Syntax] = None,
                pipeline: Option[String] = None,
-               transformWith: Option[Vendor] = None): Future[Assertion] = {
+               transformWith: Option[SpecId] = None): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline, transformWith)
 
