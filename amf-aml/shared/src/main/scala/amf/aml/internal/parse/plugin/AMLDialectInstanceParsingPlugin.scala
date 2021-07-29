@@ -7,11 +7,19 @@ import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument}
 import amf.core.internal.parser._
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
-import amf.aml.client.scala.model.document.{Dialect, DialectInstance, kind}
+import amf.aml.client.scala.model.document.{
+  Dialect,
+  DialectInstance,
+  DialectInstanceFragment,
+  DialectInstanceLibrary,
+  kind
+}
 import amf.aml.internal.AMLDialectInstancePlugin
 import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
 import amf.aml.internal.parse.instances._
 import amf.aml.internal.parse.headers.DialectHeader
+import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.remote.AmlDialectSpec
 import org.yaml.model.YMap
 import amf.core.internal.remote.Mimes._
 
@@ -42,6 +50,17 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
         new DialectInstanceParser(document)(new DialectInstanceContext(dialect, finder, ctx)).parseDocument()
       case _ =>
         DialectInstance()
+    }
+    maybeUnit match {
+      case Some(instance: DialectInstance) =>
+        instance.encodes.annotations += SourceVendor(AmlDialectSpec(dialect.nameAndVersion()))
+        instance.annotations += SourceVendor(AmlDialectSpec(dialect.nameAndVersion()))
+      case Some(instance: DialectInstanceFragment) =>
+        instance.encodes.annotations += SourceVendor(AmlDialectSpec(dialect.nameAndVersion()))
+        instance.annotations += SourceVendor(AmlDialectSpec(dialect.nameAndVersion()))
+      case Some(instance: DialectInstanceLibrary) =>
+        instance.annotations += SourceVendor(AmlDialectSpec(dialect.nameAndVersion()))
+      case _ => // ignore
     }
     maybeUnit.get
   }

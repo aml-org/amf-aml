@@ -13,6 +13,9 @@ import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
 import org.yaml.model._
 import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.annotations.SourceVendor
+import amf.core.internal.remote.Spec
+import amf.core.internal.remote.Spec.AML
 
 class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContext)
     extends BaseSpecParser
@@ -72,6 +75,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
         }
     }
 
+    vocabulary.annotations += SourceVendor(AML)
     vocabulary
   }
 
