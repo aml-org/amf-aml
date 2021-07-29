@@ -6,7 +6,7 @@ import amf.aml.internal.semantic.SemanticExtensionFinder
 import amf.aml.internal.semantic.SemanticExtensionHelper._
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.internal.remote.{SpecId, VocabularyYamlHint}
+import amf.core.internal.remote.{Spec, VocabularyYamlHint}
 import amf.testing.common.cycling.BuildCycleTestCommon
 import org.scalatest.OptionValues._
 import org.scalatest.{AsyncFunSuite, Matchers}
@@ -60,7 +60,7 @@ class SemanticExtensionFinderTest extends AsyncFunSuite with BuildCycleTestCommo
   }
 
   private def parseDialect(path: String): Future[Dialect] = {
-    val config = CycleConfig(path, "", VocabularyYamlHint, SpecId.AML)
+    val config = CycleConfig(path, "", VocabularyYamlHint, Spec.AML)
     val amlConfig = AMLConfiguration
       .predefined()
       .withRenderOptions(RenderOptions().withAmfJsonLdSerialization)

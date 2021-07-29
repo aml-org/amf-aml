@@ -5,7 +5,7 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.io.FileAssertionTest
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{Hint, SpecId}
+import amf.core.internal.remote.{Hint, Spec}
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.testing.common.utils.AMFRenderer
 
@@ -20,11 +20,11 @@ trait BuildCycleTestCommon extends FileAssertionTest {
   case class CycleConfig(source: String,
                          golden: String,
                          hint: Hint,
-                         target: SpecId,
+                         target: Spec,
                          directory: String = basePath,
                          syntax: Option[Syntax] = None,
                          pipeline: Option[String] = None,
-                         transformWith: Option[SpecId] = None) {
+                         transformWith: Option[Spec] = None) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
   }

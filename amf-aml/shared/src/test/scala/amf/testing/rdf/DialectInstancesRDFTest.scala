@@ -84,7 +84,7 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
                                   source: String,
                                   golden: String,
                                   hint: Hint,
-                                  target: SpecId,
+                                  target: Spec,
                                   directory: String = basePath) = {
 
     withDialect(s"file://$directory/$dialect") { (_, config) =>
@@ -96,7 +96,7 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
                                       source: String,
                                       golden: String,
                                       hint: Hint,
-                                      target: SpecId,
+                                      target: Spec,
                                       directory: String = basePath) = {
     withDialect(s"file://$directory/$dialect") { (_, config) =>
       cycleFullRdf(source, golden, hint, target, directory, config)
