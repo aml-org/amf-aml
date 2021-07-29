@@ -31,7 +31,7 @@ import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner}
-import amf.core.client.scala.{AMFGraphConfiguration, AMFResult}
+import amf.core.client.scala.{AMFGraphConfiguration, AMFParseResult, AMFResult}
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.core.internal.plugins.AMFPlugin
@@ -129,8 +129,8 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   protected[amf] def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
 
   def withDialect(path: String): Future[AMLConfiguration] = {
-    baseUnitClient().parse(path).map {
-      case AMFResult(d: Dialect, _) => withDialect(d)
+    baseUnitClient().parseDialect(path).map {
+      case result: AMLDialectResult => withDialect(result.dialect)
       case _                        => this
     }
   }

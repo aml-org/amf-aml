@@ -1,6 +1,6 @@
 package amf.aml.client.scala
 
-import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.semantic.SemanticExtensionHelper
@@ -88,6 +88,10 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     */
   def findSemanticByName(dialect: Dialect, name: String): Option[SemanticExtension] =
     SemanticExtensionHelper.byNameFinder(dialect).find(name).headOption
+
+  def findDialectFor(dialectInstance: DialectInstance): Option[Dialect] = {
+    getDialects().find(dialect => dialectInstance.definedBy().value() == dialect.id)
+  }
 
   private def getDialectsByCondition(filter: (AMLDialectInstanceParsingPlugin) => Boolean): immutable.Seq[Dialect] =
     configuration.registry.plugins.parsePlugins.collect {
