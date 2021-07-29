@@ -1,6 +1,6 @@
 package amf.aml.client.scala
 
-import amf.aml.client.scala.AMLConfiguration.{platform, predefined}
+import amf.aml.client.scala.AMLConfiguration.platform
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
@@ -17,6 +17,7 @@ import amf.aml.internal.render.plugin.{
   AMLVocabularyRenderingPlugin
 }
 import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
+import amf.aml.internal.unsafe.RdfFrameworkSecret
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
 import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin}
 import amf.core.client.scala.config._
@@ -38,7 +39,6 @@ import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationProfile
-import amf.validation.internal.unsafe.PlatformValidatorSecret
 import org.mulesoft.common.collections.FilterType
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -165,7 +165,7 @@ object AMLConfiguration extends PlatformSecrets {
   def predefined(): AMLConfiguration = {
     val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
     VocabulariesRegister.register() // TODO ARM remove when APIMF-3000 is done
-    PlatformValidatorSecret.init()
+    RdfFrameworkSecret.init()
     val predefinedPlugins = new AMLDialectParsingPlugin() ::
       new AMLVocabularyParsingPlugin() ::
       new AMLDialectRenderingPlugin() ::

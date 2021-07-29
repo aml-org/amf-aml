@@ -98,7 +98,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
   .settings(commonSettings)
   .jvmSettings(
     libraryDependencies += "org.json4s"                 %% "json4s-native"          % "3.5.4",
-    libraryDependencies += "org.apache.jena"            % "jena-shacl"              % "3.14.0",
+    libraryDependencies += "org.apache.jena" % "jena-arq" % "3.17.0",
     libraryDependencies += "org.apache.thrift"          % "libthrift"               % "0.14.1", // CVE-2020-13949
     excludeDependencies += "org.apache.tomcat.embed"    % "tomcat-embed-core",
     libraryDependencies += "commons-io"                 % "commons-io"              % "2.6",

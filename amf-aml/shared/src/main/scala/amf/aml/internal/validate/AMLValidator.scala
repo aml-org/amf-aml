@@ -11,8 +11,7 @@ import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.plugins.validation.ValidationResult
 import amf.core.internal.validation.core.{ShaclValidationOptions, ValidationProfile}
 import amf.core.internal.validation.{EffectiveValidations, ShaclReportAdaptation}
-import amf.validation.internal.PlatformValidator
-import amf.validation.internal.shacl.FullShaclValidator
+import amf.validation.internal.shacl.custom.CustomShaclValidator
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -29,7 +28,7 @@ class AMLValidator(knownDialects: Seq[Dialect],
         val pipelineRunner      = TransformationPipelineRunner(UnhandledErrorHandler)
         val resolvedModel       = pipelineRunner.run(dialectInstance, DialectInstanceTransformationPipeline())
         val validationsFromDeps = computeValidationProfilesOfDependencies(dialectInstance, knownDialects, constraints)
-        val validator           = new FullShaclValidator(PlatformValidator.instance(listeners), new ShaclValidationOptions())
+        val validator           = new CustomShaclValidator(Map.empty, new ShaclValidationOptions())
         val finalValidations    = addValidations(validations, validationsFromDeps).effective.values.toSeq
         for {
           shaclReport <- validator.validate(resolvedModel, finalValidations)
