@@ -3,7 +3,7 @@ package amf.testing.render
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Amf, Aml, VocabularyYamlHint}
+import amf.core.internal.remote.{Aml, Spec, VocabularyYamlHint}
 import amf.testing.common.utils.DialectTests
 
 import scala.concurrent.ExecutionContext
@@ -19,7 +19,7 @@ class DialectInstanceRenderTest extends DialectTests {
         "instance.yaml",
         "instance-golden.yaml",
         VocabularyYamlHint,
-        target = SpecId.AML,
+        target = Spec.AML,
         renderOptions = Some(RenderOptions().withNodeIds),
         directory = s"$basePath/simple-dialect"
     )
@@ -30,7 +30,7 @@ class DialectInstanceRenderTest extends DialectTests {
                      "instance.yaml",
                      "instance-golden.yaml",
                      VocabularyYamlHint,
-                     target = SpecId.AML,
+                     target = Spec.AML,
                      directory = s"$basePath/simple-nesting")
   }
 
@@ -39,7 +39,7 @@ class DialectInstanceRenderTest extends DialectTests {
                      "instance.yaml",
                      "instance-golden.yaml",
                      VocabularyYamlHint,
-                     target = SpecId.AML,
+                     target = Spec.AML,
                      directory = s"$basePath/simple-node-union")
   }
 
@@ -463,7 +463,7 @@ class ResolvedDialectInstancesRenderTest extends DialectTests {
         "dog.yaml",
         "dog.flattened.jsonld",
         VocabularyYamlHint,
-        target = Amf,
+        target = Spec.AMF,
         directory = s"$instances/many-documents/",
         renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint.withCompactUris)
     )

@@ -13,7 +13,7 @@ import amf.core.internal.remote._
 import scala.concurrent.{ExecutionContext, Future}
 
 // TODO: this is only here for compatibility with the test suite
-class AMFRenderer(unit: BaseUnit, vendor: SpecId, config: AMFGraphConfiguration, syntax: Option[Syntax]) {
+class AMFRenderer(unit: BaseUnit, vendor: Spec, config: AMFGraphConfiguration, syntax: Option[Syntax]) {
 
   /** Print ast to string. */
   def renderToString(implicit executionContext: ExecutionContext): String = render()
@@ -37,9 +37,6 @@ class AMFRenderer(unit: BaseUnit, vendor: SpecId, config: AMFGraphConfiguration,
 }
 
 object AMFRenderer {
-  def apply(unit: BaseUnit,
-            vendor: SpecId,
-            config: AMFGraphConfiguration,
-            syntax: Option[Syntax] = None): AMFRenderer =
+  def apply(unit: BaseUnit, vendor: Spec, config: AMFGraphConfiguration, syntax: Option[Syntax] = None): AMFRenderer =
     new AMFRenderer(unit, vendor, config, syntax)
 }

@@ -1111,7 +1111,7 @@ trait DialectInstancesParsingTest extends DialectTests {
   protected def withInlineDialect(source: String,
                                   golden: String,
                                   hint: Hint,
-                                  target: SpecId,
+                                  target: Spec,
                                   amlConfig: AMLConfiguration,
                                   renderOptions: Option[RenderOptions] = None): Future[Assertion] =
     cycle(source, golden, hint, target, amlConfig = amlConfig)

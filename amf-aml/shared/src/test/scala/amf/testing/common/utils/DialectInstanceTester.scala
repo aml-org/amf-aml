@@ -1,7 +1,7 @@
 package amf.testing.common.utils
 
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.{Hint, SpecId}
+import amf.core.internal.remote.{Hint, Spec}
 import amf.testing.common.cycling.FunSuiteCycleTests
 import org.scalatest.Assertion
 
@@ -13,7 +13,7 @@ trait DialectInstanceTester extends DialectRegistrationHelper { this: FunSuiteCy
                                  source: String,
                                  golden: String,
                                  hint: Hint,
-                                 target: SpecId,
+                                 target: Spec,
                                  directory: String = basePath,
                                  renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
     withDialect(s"file://$directory/$dialect") { (_, config) =>

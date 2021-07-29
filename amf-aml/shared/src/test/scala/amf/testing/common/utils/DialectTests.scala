@@ -25,7 +25,7 @@ trait DialectTests
                                  source: String,
                                  golden: String,
                                  hint: Hint,
-                                 target: SpecId,
+                                 target: Spec,
                                  directory: String = basePath,
                                  renderOptions: Option[RenderOptions] = None,
                                  baseConfig: AMLConfiguration = AMLConfiguration.predefined()): Future[Assertion] = {
@@ -49,7 +49,7 @@ trait DialectTests
     }
   }
 
-  def vendorToSyntax(vendor: SpecId): String = {
+  def vendorToSyntax(vendor: Spec): String = {
 
     vendor match {
       case Amf                   => `application/ld+json`
@@ -65,7 +65,7 @@ trait DialectTests
   final def cycle(source: String,
                   golden: String,
                   hint: Hint,
-                  target: SpecId,
+                  target: Spec,
                   amlConfig: AMLConfiguration = AMLConfiguration.predefined(),
                   directory: String = basePath): Future[Assertion] = {
 
