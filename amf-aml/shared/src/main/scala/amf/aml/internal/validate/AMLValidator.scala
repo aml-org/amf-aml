@@ -28,7 +28,7 @@ class AMLValidator(knownDialects: Seq[Dialect],
         val pipelineRunner      = TransformationPipelineRunner(UnhandledErrorHandler)
         val resolvedModel       = pipelineRunner.run(dialectInstance, DialectInstanceTransformationPipeline())
         val validationsFromDeps = computeValidationProfilesOfDependencies(dialectInstance, knownDialects, constraints)
-        val validator           = new CustomShaclValidator(Map.empty, new ShaclValidationOptions())
+        val validator           = new CustomShaclValidator(Map.empty, profile.messageStyle)
         val finalValidations    = addValidations(validations, validationsFromDeps).effective.values.toSeq
         for {
           shaclReport <- validator.validate(resolvedModel, finalValidations)

@@ -9,7 +9,7 @@ object CustomValidationReport {
   def empty = new CustomValidationReport(Nil)
 }
 
-class ReportBuilder(options: ShaclValidationOptions) {
+class ReportBuilder(style: MessageStyle) {
 
   def build(): CustomValidationReport = CustomValidationReport(results.toList)
 
@@ -29,7 +29,7 @@ class ReportBuilder(options: ShaclValidationOptions) {
                     customMessage: Option[String] = None): Unit = {
     registerResult(
         CustomValidationResult(
-            message = customMessage.orElse(getMessageOf(validationSpec, options.messageStyle)),
+            message = customMessage.orElse(getMessageOf(validationSpec, style)),
             path = path,
             sourceConstraintComponent = validationSpec.id,
             focusNode = id,
