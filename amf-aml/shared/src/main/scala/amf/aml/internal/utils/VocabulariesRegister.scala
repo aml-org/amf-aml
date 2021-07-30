@@ -54,6 +54,12 @@ object VocabulariesRegister extends PlatformSecrets {
     platform.registerWrapper(VocabularyReferenceModel) {
       case s: domain.VocabularyReference => VocabularyReference(s)
     }
+    platform.registerWrapper(AnnotationMappingModel) {
+      case s: domain.AnnotationMapping => AnnotationMapping(s)
+    }
+    platform.registerWrapper(SemanticExtensionModel) {
+      case s: domain.SemanticExtension => SemanticExtension(s)
+    }
     platform.registerWrapper(VocabularyModel) {
       case s: document.Vocabulary => new Vocabulary(s)
     }
@@ -68,6 +74,9 @@ object VocabulariesRegister extends PlatformSecrets {
     }
     platform.registerWrapper(DialectInstanceModel) {
       case s: document.DialectInstance => new DialectInstance(s)
+    }
+    platform.registerWrapper(DialectInstancePatchModel) {
+      case s: document.DialectInstancePatch => new DialectInstancePatch(s)
     }
     platform.registerWrapper(DialectInstanceFragmentModel) {
       case s: document.DialectInstanceFragment => new DialectInstanceFragment(s)
