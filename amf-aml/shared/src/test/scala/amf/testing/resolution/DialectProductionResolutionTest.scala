@@ -2,7 +2,7 @@ package amf.testing.resolution
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Aml, VocabularyYamlHint}
+import amf.core.internal.remote.{Aml, Syntax, VocabularyYamlHint}
 import amf.aml.internal.transform.pipelines.DefaultAMLTransformationPipeline
 import amf.testing.common.cycling.FunSuiteCycleTests
 import amf.testing.common.utils.DialectInstanceTester
@@ -23,8 +23,7 @@ class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectIns
     cycleWithDialect("dialect6.yaml",
                      "patch6.yaml",
                      "patch6.resolved.yaml",
-                     VocabularyYamlHint,
-                     Aml,
+                     syntax = Some(Syntax.Yaml),
                      basePath + "asyncapi/")
   }
 

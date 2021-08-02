@@ -47,5 +47,5 @@ class AMLDialectRenderingPlugin extends AMFRenderPlugin {
 
   override def defaultSyntax(): String = `application/yaml`
 
-  override def mediaTypes: Seq[String] = Seq(`application/aml`, `application/aml+yaml`)
+  override def mediaTypes: Seq[String] = Seq(`application/yaml`)
 }

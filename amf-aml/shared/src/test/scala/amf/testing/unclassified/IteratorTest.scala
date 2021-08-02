@@ -13,7 +13,7 @@ trait IteratorTest extends DialectTests with Matchers {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Domain element iterator in self encoded dialect instance") {
-    parseInstance("dialect23.yaml", "example23.yaml", VocabularyYamlHint).map(baseUnit => {
+    parseInstance("dialect23.yaml", "example23.yaml").map(baseUnit => {
       val ids =
         baseUnit.iterator().collect { case e: DomainElement => e.id }.toStream
       ids should contain inOrderOnly
@@ -23,7 +23,7 @@ trait IteratorTest extends DialectTests with Matchers {
   }
 
   test("findById in self encoded dialect instance") {
-    parseInstance("dialect23.yaml", "example23.yaml", VocabularyYamlHint).map(baseUnit => {
+    parseInstance("dialect23.yaml", "example23.yaml").map(baseUnit => {
       assert(
           baseUnit
             .findById("file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets")

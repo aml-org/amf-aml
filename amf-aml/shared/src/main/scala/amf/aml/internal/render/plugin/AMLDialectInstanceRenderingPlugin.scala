@@ -51,5 +51,5 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
   override def defaultSyntax(): String = `application/yaml`
 
   override def mediaTypes: Seq[String] =
-    Seq(`application/aml`, `application/yaml`, `application/aml+yaml`, `application/json`, `application/aml+json`)
+    Seq(`application/yaml`, `application/json`)
 }

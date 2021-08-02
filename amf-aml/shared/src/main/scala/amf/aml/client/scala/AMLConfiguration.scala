@@ -1,6 +1,6 @@
 package amf.aml.client.scala
 
-import amf.aml.client.scala.AMLConfiguration.{platform, predefined}
+import amf.aml.client.scala.AMLConfiguration.platform
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
@@ -19,6 +19,7 @@ import amf.aml.internal.render.plugin.{
 import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
 import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{
   AMFErrorHandler,
@@ -30,7 +31,6 @@ import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner}
-import amf.core.client.scala.{AMFGraphConfiguration, AMFParseResult, AMFResult}
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.core.internal.plugins.AMFPlugin
@@ -60,8 +60,6 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
-
-  private[amf] val PROFILE_DIALECT_URL = "http://a.ml/dialects/profile.raml"
 
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,
@@ -137,10 +135,10 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
 
-  def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
+  def forInstance(url: String): Future[AMLConfiguration] = {
     val collector = new DialectReferencesCollector
     val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
-    collector.collectFrom(url, mediaType, this).map { dialects =>
+    collector.collectFrom(url, this).map { dialects =>
       dialects
         .map { d =>
           runner.run(d, DialectTransformationPipeline())
@@ -202,11 +200,9 @@ object AMLConfiguration extends PlatformSecrets {
 }
 
 private class DialectReferencesCollector(implicit val ec: ExecutionContext) {
-  def collectFrom(url: String,
-                  mediaType: Option[String] = None,
-                  amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
+  def collectFrom(url: String, amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
     val ctx      = new CompilerContextBuilder(url, platform, amfConfig.compilerConfiguration).build()
-    val compiler = new AMFCompiler(ctx, mediaType)
+    val compiler = new AMFCompiler(ctx)
     for {
       content                <- compiler.fetchContent()
       eitherContentOrAst     <- Future.successful(compiler.parseSyntax(content))

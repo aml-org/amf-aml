@@ -14,17 +14,13 @@ import amf.testing.common.utils.DomainElementCycleTests
 import org.yaml.builder.YamlOutputBuilder
 
 trait ClientDomainElementTests extends DomainElementCycleTests {
-  override def renderDomainElement(element: Option[DomainElement],
-                                   instance: DialectInstanceUnit,
-                                   dialect: Dialect,
-                                   config: AMLConfiguration): String = {
+  override def renderDomainElement(element: Option[DomainElement], config: AMLConfiguration): String = {
     val clientConfig: ClientAMLConfiguration = config
     element
       .map { element =>
         val stringBuilder                      = YamlOutputBuilder()
-        val clientDialect: ClientDialect       = dialect
         val clientElement: ClientDomainElement = element
-        clientConfig.elementClient().renderToBuilder(clientElement, clientDialect, stringBuilder)
+        clientConfig.elementClient().renderToBuilder(clientElement, stringBuilder)
         stringBuilder.result.toString
       }
       .getOrElse("")

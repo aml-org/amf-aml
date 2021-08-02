@@ -13,6 +13,4 @@ class AMLElementClient private[amf] (private val _internal: InternalAMLElementCl
     this(new InternalAMLElementClient(configuration))
   }
 
-  override def getConfiguration(): AMLConfiguration = _internal.getConfiguration
-
 }

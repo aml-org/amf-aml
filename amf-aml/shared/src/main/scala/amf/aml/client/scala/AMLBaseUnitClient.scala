@@ -43,26 +43,6 @@ class AMLBaseUnitClient private[amf] (protected override val configuration: AMLC
   }
 
   /**
-    * parse a {@link amf.aml.client.scala.model.document.DialectInstance}
-    *
-    * @param url of the resource to parse
-    * @return a Future {@link AMLDialectInstanceResult}
-    */
-  def parseValidationProfile(url: String): Future[ValidationProfile] = AMFParser.parse(url, configuration).map {
-    case result: AMFParseResult if result.baseUnit.isInstanceOf[DialectInstance] =>
-      parseValidationProfile(result.baseUnit.asInstanceOf[DialectInstance])
-    case other =>
-      throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, DialectInstanceModel)
-  }
-
-  def parseValidationProfile(dialect: DialectInstance): ValidationProfile = {
-    if (dialect.definedBy().is(configuration.PROFILE_DIALECT_URL)) {
-      ParsedValidationProfile(dialect.encodes.asInstanceOf[DialectDomainElement])
-    } else
-      throw InvalidBaseUnitTypeException(dialect.definedBy().value(), configuration.PROFILE_DIALECT_URL)
-  }
-
-  /**
     * parse a [[Vocabulary]]
     * @param url of the resource to parse
     * @return a Future [[AMLVocabularyResult]]

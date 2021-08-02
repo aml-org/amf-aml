@@ -51,8 +51,6 @@ class DialectShaclRdfTest extends FunSuiteRdfCycleTests with PlatformSecrets wit
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
   override def cycleRdf(source: String,
                         golden: String,
-                        hint: Hint = VocabularyYamlHint,
-                        target: Spec = Amf,
                         amlConfig: AMLConfiguration =
                           AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
                         directory: String = basePath,
@@ -60,7 +58,7 @@ class DialectShaclRdfTest extends FunSuiteRdfCycleTests with PlatformSecrets wit
                         pipeline: Option[String] = None,
                         transformWith: Option[Spec] = None): Future[Assertion] = {
 
-    val config = CycleConfig(source, golden, hint, target, directory, syntax, pipeline)
+    val config = CycleConfig(source, golden, directory, syntax, pipeline)
 
     build(config, amlConfig)
       .map(transformRdf(_, config))
