@@ -1,7 +1,6 @@
 package amf.testing.common.utils
 
 import amf.aml.client.scala.AMLConfiguration
-import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.unsafe.PlatformSecrets
 import org.scalatest.AsyncFunSuite
@@ -30,7 +29,7 @@ trait DialectInstanceValidation
       report <- {
         if (!instanceResult.conforms) Future.successful(AMFValidationReport.unknownProfile(instanceResult))
         else
-          nextConfig.baseUnitClient().validate(instanceResult.dialectInstance, dialectResult.dialect.profileName.get)
+          nextConfig.baseUnitClient().validate(instanceResult.dialectInstance)
       }
     } yield {
       report

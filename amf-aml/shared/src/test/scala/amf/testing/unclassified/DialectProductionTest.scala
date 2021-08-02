@@ -18,19 +18,18 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
 
   test("Can parse and generated ABOUT dialect") {
-    cycle("ABOUT-dialect.yaml", "ABOUT-dialect.yaml.yaml", VocabularyYamlHint, Aml, basePath + "ABOUT/")
+    cycle("ABOUT-dialect.yaml", "ABOUT-dialect.yaml.yaml", syntax = Some(Syntax.JsonLd), basePath + "ABOUT/")
   }
 
   ignore("Can parse the canonical webapi dialect") {
-    cycle("canonical_webapi.yaml", "canonical_webapi.json", VocabularyYamlHint, target = Amf, "vocabularies/dialects/")
+    cycle("canonical_webapi.yaml", "canonical_webapi.json", syntax = Some(Syntax.JsonLd), "vocabularies/dialects/")
   }
 
   multiGoldenTest("Can parse ABOUT dialect", "ABOUT-dialect.%s") { config =>
     cycle(
         "ABOUT-dialect.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        syntax = Some(Syntax.JsonLd),
         directory = basePath + "ABOUT/",
         AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
     )
@@ -41,12 +40,11 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
     cycle(
         "validation_dialect.yaml",
         "validation_dialect.json",
-        VocabularyYamlHint,
-        target = Amf,
         amlConfig = AMLConfiguration
           .predefined()
           .withErrorHandlerProvider(() => UnhandledErrorHandler)
-          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
+          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd),
+        syntax = Some(Syntax.JsonLd)
     )
   }
 
@@ -55,8 +53,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
     cycle(
         "dialect.yaml",
         "dialect.json",
-        VocabularyYamlHint,
-        target = Amf,
+        syntax = Some(Syntax.JsonLd),
         basePath + "Instagram/",
         amlConfig = AMLConfiguration
           .predefined()
@@ -70,8 +67,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
     cycle(
         "activity.yaml",
         "activity.json",
-        VocabularyYamlHint,
-        target = Amf,
+        syntax = Some(Syntax.JsonLd),
         basePath + "streams/",
         amlConfig = AMLConfiguration
           .predefined()
@@ -81,11 +77,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   test("Can parse validation dialect instance") {
-    cycleWithDialect("validation_dialect.yaml",
-                     "validation_instance1.yaml",
-                     "validation_instance1.yaml.yaml",
-                     VocabularyYamlHint,
-                     Aml)
+    cycleWithDialect("validation_dialect.yaml", "validation_instance1.yaml", "validation_instance1.yaml.yaml", None)
   }
 
   multiGoldenTest("Can parse validation dialect cfg1 instance", "example1_instance.%s") { config =>
@@ -93,10 +85,9 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
         "example1.yaml",
         "example1_instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
         directory = s"${basePath}cfg/",
-        renderOptions = Some(config.renderOptions)
+        renderOptions = Some(config.renderOptions),
+        syntax = Some(Syntax.JsonLd)
     )
   }
 
@@ -105,10 +96,9 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
         "example2.yaml",
         "example2_instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
         directory = basePath + "cfg/",
-        renderOptions = Some(config.renderOptions)
+        renderOptions = Some(config.renderOptions),
+        syntax = Some(Syntax.JsonLd)
     )
   }
 
@@ -117,28 +107,21 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
         "example3.yaml",
         "example3_instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
         directory = basePath + "cfg/",
-        renderOptions = Some(config.renderOptions)
+        renderOptions = Some(config.renderOptions),
+        syntax = Some(Syntax.JsonLd)
     )
   }
 
   test("Can parse and generate ABOUT dialect instance") {
-    cycleWithDialect("ABOUT-dialect.yaml",
-                     "ABOUT.yaml",
-                     "ABOUT.yaml.yaml",
-                     VocabularyYamlHint,
-                     Aml,
-                     basePath + "ABOUT/")
+    cycleWithDialect("ABOUT-dialect.yaml", "ABOUT.yaml", "ABOUT.yaml.yaml", None, basePath + "ABOUT/")
   }
 
   test("Can parse and generate ABOUT-github dialect instance") {
     cycleWithDialect("ABOUT-GitHub-dialect.yaml",
                      "example.yaml",
                      "example.yaml.yaml",
-                     VocabularyYamlHint,
-                     Aml,
+                     None,
                      basePath + "ABOUT/github/")
   }
 
@@ -147,10 +130,9 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
         "ABOUT-hosted-vcs-dialect.yaml",
         "ABOUT_hosted.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
         directory = s"${basePath}ABOUT/",
-        renderOptions = Some(config.renderOptions)
+        renderOptions = Some(config.renderOptions),
+        syntax = Some(Syntax.JsonLd)
     )
   }
 
@@ -159,8 +141,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
     cycleWithDialect("dialect.yaml",
                      "instance1.yaml",
                      "instance1.json",
-                     VocabularyYamlHint,
-                     target = Amf,
+                     syntax = Some(Syntax.JsonLd),
                      basePath + "Instagram/")
   }
 
@@ -168,8 +149,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
     cycleWithDialect("dialect.yaml",
                      "instance2.yaml",
                      "instance2.json",
-                     VocabularyYamlHint,
-                     target = Amf,
+                     syntax = Some(Syntax.JsonLd),
                      basePath + "Instagram/")
   }
 
@@ -177,8 +157,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
     cycleWithDialect("activity.yaml",
                      "stream1.yaml",
                      "stream1.json",
-                     VocabularyYamlHint,
-                     target = Amf,
+                     syntax = Some(Syntax.JsonLd),
                      basePath + "streams/")
   }
 
@@ -186,8 +165,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
     cycleWithDialect("dialect.yaml",
                      "deployment.yaml",
                      "deployment.json",
-                     VocabularyYamlHint,
-                     target = Amf,
+                     syntax = Some(Syntax.JsonLd),
                      basePath + "deployments_demo/")
   }
 }

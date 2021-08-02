@@ -19,8 +19,6 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 
   case class CycleConfig(source: String,
                          golden: String,
-                         hint: Hint,
-                         target: Spec,
                          directory: String = basePath,
                          syntax: Option[Syntax] = None,
                          pipeline: Option[String] = None,
@@ -39,14 +37,11 @@ trait BuildCycleTestCommon extends FileAssertionTest {
       new CompilerContextBuilder(s"file://${config.sourcePath}", platform, environment.compilerConfiguration)
         .build()
 
-    val maybeSyntax = config.syntax.map(_.toString)
-    val maybeVendor = Some(config.hint.vendor.mediaType)
-    new AMFCompiler(context, mediaType = maybeVendor).build()
+    new AMFCompiler(context).build()
   }
 
   /** Method to render parsed unit. Override if necessary. */
   def render(unit: BaseUnit, config: CycleConfig, graphConfig: AMFGraphConfiguration): String = {
-    val target = config.target
-    new AMFRenderer(unit, target, graphConfig, config.syntax).renderToString
+    new AMFRenderer(unit, graphConfig, config.syntax).renderToString
   }
 }

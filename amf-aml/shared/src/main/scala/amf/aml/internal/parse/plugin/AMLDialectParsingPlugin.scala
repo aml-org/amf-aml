@@ -10,8 +10,12 @@ import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext, ReferenceHandler}
 import amf.core.internal.parser.Root
 import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote.Spec
 
 class AMLDialectParsingPlugin extends AMFParsePlugin {
+
+  override def spec: Spec = Spec.AML
+
   val knownHeaders =
     IndexedSeq(ExtensionHeader.DialectHeader,
                ExtensionHeader.DialectFragmentHeader,
@@ -59,11 +63,5 @@ class AMLDialectParsingPlugin extends AMFParsePlugin {
   /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-  override def mediaTypes: Seq[String] = Seq(`application/aml`, `application/yaml`, `application/aml+yaml`)
-
-  /**
-    * media types which specifies vendors that may be referenced.
-    */
-  override def validMediaTypesToReference: scala.Seq[String] =
-    Seq(`application/aml`, `application/yaml`, `application/aml+yaml`)
+  override def mediaTypes: Seq[String] = Seq(`application/yaml`)
 }

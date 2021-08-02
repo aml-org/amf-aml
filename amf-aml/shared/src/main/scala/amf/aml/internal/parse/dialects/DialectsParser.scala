@@ -1,7 +1,7 @@
 package amf.aml.internal.parse.dialects
 
 import amf.core.internal.parser.{Root, YNodeLikeOps}
-import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode, SourceVendor}
+import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode, SourceSpec}
 import amf.core.internal.metamodel.document.FragmentModel
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
@@ -111,7 +111,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
     ctx.futureDeclarations.resolve()
 
-    dialect.annotations += SourceVendor(AML)
+    dialect.annotations += SourceSpec(AML)
     dialect
   }
 
@@ -845,7 +845,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     val externals = dialect.externals
     if (externals.nonEmpty) library.withExternals(externals)
 
-    library.annotations += SourceVendor(AML)
+    library.annotations += SourceSpec(AML)
     library
   }
 
@@ -878,7 +878,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       case _                            => // ignore
     }
 
-    fragment.encodes.annotations += SourceVendor(AML)
+    fragment.encodes.annotations += SourceSpec(AML)
     fragment
   }
 

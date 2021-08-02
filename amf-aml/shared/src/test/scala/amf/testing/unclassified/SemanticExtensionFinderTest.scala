@@ -60,7 +60,7 @@ class SemanticExtensionFinderTest extends AsyncFunSuite with BuildCycleTestCommo
   }
 
   private def parseDialect(path: String): Future[Dialect] = {
-    val config = CycleConfig(path, "", VocabularyYamlHint, Spec.AML)
+    val config = CycleConfig(path, "")
     val amlConfig = AMLConfiguration
       .predefined()
       .withRenderOptions(RenderOptions().withAmfJsonLdSerialization)

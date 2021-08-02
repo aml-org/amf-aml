@@ -56,9 +56,6 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
 
   def forInstance(url: String): ClientFuture[AMLConfiguration] = _internal.forInstance(url).asClient
 
-  def forInstance(url: String, mediaType: String): ClientFuture[AMLConfiguration] =
-    _internal.forInstance(url, Some(mediaType)).asClient
-
   override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): AMLConfiguration =
     _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
 }

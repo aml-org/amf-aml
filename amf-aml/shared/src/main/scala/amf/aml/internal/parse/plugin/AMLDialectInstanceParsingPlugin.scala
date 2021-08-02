@@ -18,8 +18,8 @@ import amf.aml.internal.AMLDialectInstancePlugin
 import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
 import amf.aml.internal.parse.instances._
 import amf.aml.internal.parse.headers.DialectHeader
-import amf.core.internal.annotations.SourceVendor
-import amf.core.internal.remote.AmlDialectSpec
+import amf.core.internal.annotations.SourceSpec
+import amf.core.internal.remote.{AmlDialectSpec, Mimes, Spec}
 import org.yaml.model.YMap
 import amf.core.internal.remote.Mimes._
 
@@ -53,13 +53,13 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
     }
     maybeUnit match {
       case Some(instance: DialectInstance) =>
-        instance.encodes.annotations += SourceVendor(AmlDialectSpec(dialect.nameAndVersion()))
-        instance.annotations += SourceVendor(AmlDialectSpec(dialect.nameAndVersion()))
+        instance.encodes.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
+        instance.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
       case Some(instance: DialectInstanceFragment) =>
-        instance.encodes.annotations += SourceVendor(AmlDialectSpec(dialect.nameAndVersion()))
-        instance.annotations += SourceVendor(AmlDialectSpec(dialect.nameAndVersion()))
+        instance.encodes.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
+        instance.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
       case Some(instance: DialectInstanceLibrary) =>
-        instance.annotations += SourceVendor(AmlDialectSpec(dialect.nameAndVersion()))
+        instance.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
       case _ => // ignore
     }
     maybeUnit.get
@@ -118,12 +118,7 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
   /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-  override def mediaTypes: Seq[String] =
-    Seq(`application/aml`, `application/yaml`, `application/aml+yaml`, `application/json`, `application/aml+json`)
+  override def mediaTypes: Seq[String] = Seq(Mimes.`application/yaml`, `application/json`)
 
-  /**
-    * media types which specifies vendors that may be referenced.
-    */
-  override def validMediaTypesToReference: Seq[String] =
-    Seq(`application/aml`, `application/yaml`, `application/aml+yaml`, `application/json`, `application/aml+json`)
+  override def spec: Spec = new AmlDialectSpec(dialect.nameAndVersion())
 }
