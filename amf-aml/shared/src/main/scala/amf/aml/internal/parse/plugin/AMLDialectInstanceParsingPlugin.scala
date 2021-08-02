@@ -2,7 +2,7 @@ package amf.aml.internal.parse.plugin
 
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument}
 import amf.core.internal.parser._
@@ -18,7 +18,9 @@ import amf.aml.internal.AMLDialectInstancePlugin
 import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
 import amf.aml.internal.parse.instances._
 import amf.aml.internal.parse.headers.DialectHeader
+import amf.core.client.scala.model.Annotable
 import amf.core.internal.annotations.SourceSpec
+import amf.core.internal.metamodel.document.{FragmentModel, ModuleModel}
 import amf.core.internal.remote.{AmlDialectSpec, Mimes, Spec}
 import org.yaml.model.YMap
 import amf.core.internal.remote.Mimes._
@@ -51,14 +53,12 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
       case _ =>
         DialectInstance()
     }
-    maybeUnit match {
-      case Some(instance: DialectInstance) =>
-        instance.encodes.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
+    maybeUnit.foreach {
+      case instance: DialectInstance if Option(instance.encodes).isDefined && instance.isSelfEncoded =>
         instance.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
-      case Some(instance: DialectInstanceFragment) =>
+      case instance: EncodesModel if Option(instance.encodes).isDefined =>
         instance.encodes.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
-        instance.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
-      case Some(instance: DialectInstanceLibrary) =>
+      case instance: DeclaresModel =>
         instance.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
       case _ => // ignore
     }
@@ -120,5 +120,10 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
     */
   override def mediaTypes: Seq[String] = Seq(Mimes.`application/yaml`, `application/json`)
 
-  override def spec: Spec = new AmlDialectSpec(dialect.nameAndVersion())
+  override def spec: Spec = AmlDialectSpec(dialect.nameAndVersion())
+
+  /**
+    * media types which specifies vendors that may be referenced.
+    */
+  override def validSpecsToReference: Seq[Spec] = Nil
 }

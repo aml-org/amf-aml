@@ -35,6 +35,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml#/encodes/10_hey/source-map/source-vendor/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml#/encodes/10_hey/source-map/lexical/element_6"
@@ -58,6 +63,11 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml#/encodes/10_hey/source-map/lexical/element_5"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml#/encodes/10_hey/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml#/encodes/10_hey",
+      "http://a.ml/vocabularies/document-source-maps#value": "TestInstance 1.19"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example19.yaml#/encodes/10_hey/source-map/lexical/element_6",

@@ -1,6 +1,7 @@
 package amf.testing.resolution
 
 import amf.aml.client.scala.AMLConfiguration
+import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.remote.Syntax
 
 import scala.concurrent.ExecutionContext
@@ -11,11 +12,11 @@ class DialectsResolutionTest extends DialectResolutionCycleTests {
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/dialects/"
 
   test("resolve include test") {
-    cycle(source = "example9.yaml", directory = "example9.resolved.yaml", syntax = Some(Syntax.Yaml))
+    cycle("example9.yaml", "example9.resolved.yaml", basePath, UnhandledErrorHandler)
   }
 
   test("resolve 13 test") {
-    cycle("example13.yaml", "example13.resolved.yaml", syntax = Some(Syntax.Yaml))
+    cycle("example13.yaml", "example13.resolved.yaml", basePath, UnhandledErrorHandler)
   }
 
   multiGoldenTest("Resolve dialect with fragment", "dialect.resolved.%s") { config =>

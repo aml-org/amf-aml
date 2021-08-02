@@ -802,9 +802,9 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
         {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/source-map/aliases-array/element_0"
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/source-map/source-vendor/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -822,6 +822,11 @@
         },
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/source-map/lexical/element_3"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/source-map/aliases-array/element_0"
         }
       ]
     },
@@ -1523,6 +1528,11 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.yaml#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.yaml#/source-map/source-vendor/element_0"
+        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -2577,9 +2587,9 @@
       ]
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/source-map/aliases-array/element_0",
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/source-map/source-vendor/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "about->http://mulesoft.com/vocabularies/about#::ABOUT-vocabulary.yaml"
+      "http://a.ml/vocabularies/document-source-maps#value": "AML 1.0"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/source-map/lexical/element_4",
@@ -2605,6 +2615,11 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/source-map/lexical/element_3",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
       "http://a.ml/vocabularies/document-source-maps#value": "[(4,0)-(6,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/source-map/aliases-array/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml",
+      "http://a.ml/vocabularies/document-source-maps#value": "about->http://mulesoft.com/vocabularies/about#::ABOUT-vocabulary.yaml"
     },
     {
       "@id": "http://mulesoft.com/vocabularies/about#ContinuousIntegration/source-map",
@@ -2947,6 +2962,11 @@
           "@id": "http://mulesoft.com/vocabularies/about#discussionChannelUrl/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.yaml#/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.yaml",
+      "http://a.ml/vocabularies/document-source-maps#value": "AML 1.0"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.yaml#/source-map/lexical/element_3",

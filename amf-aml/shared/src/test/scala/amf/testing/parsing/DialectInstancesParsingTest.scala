@@ -4,6 +4,7 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote._
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm}
+import amf.core.internal.remote.Syntax.Yaml
 import amf.testing.common.utils.DialectTests
 import org.scalatest.Assertion
 
@@ -450,95 +451,95 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
   multiSourceTest("generate 1 (AMF) test", "example1.amf.%s") { config =>
-    cycleWithDialect("dialect1.yaml", config.source, "example1.yaml", None)
+    cycleWithDialect("dialect1.yaml", config.source, "example1.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 1b (AMF) test", "example1b.amf.%s") { config =>
-    cycleWithDialect("dialect1.yaml", config.source, "example1b.yaml", None)
+    cycleWithDialect("dialect1.yaml", config.source, "example1b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 2 test", "example2.%s") { config =>
-    cycleWithDialect("dialect2.yaml", config.source, "example2.yaml", None)
+    cycleWithDialect("dialect2.yaml", config.source, "example2.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 3 test", "example3.%s") { config =>
-    cycleWithDialect("dialect3.yaml", config.source, "example3.yaml", None)
+    cycleWithDialect("dialect3.yaml", config.source, "example3.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 4 test", "example4.%s") { config =>
-    cycleWithDialect("dialect4.yaml", config.source, "example4.yaml", None)
+    cycleWithDialect("dialect4.yaml", config.source, "example4.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 5 test", "example5.%s") { config =>
-    cycleWithDialect("dialect5.yaml", config.source, "example5.yaml", None)
+    cycleWithDialect("dialect5.yaml", config.source, "example5.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 6 test", "example6.%s") { config =>
-    cycleWithDialect("dialect6.yaml", config.source, "example6.yaml", None)
+    cycleWithDialect("dialect6.yaml", config.source, "example6.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 6b $ref test", "example6b.%s") { config =>
-    cycleWithDialect("dialect6.yaml", config.source, "example6b.yaml", None)
+    cycleWithDialect("dialect6.yaml", config.source, "example6b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 7 test", "example7.%s") { config =>
-    cycleWithDialect("dialect7.yaml", config.source, "example7.yaml", None)
+    cycleWithDialect("dialect7.yaml", config.source, "example7.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 8 test", "example8.%s") { config =>
-    cycleWithDialect("dialect8.yaml", config.source, "example8.yaml", None)
+    cycleWithDialect("dialect8.yaml", config.source, "example8.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 8b $include test", "example8b.%s") { config =>
-    cycleWithDialect("dialect8.yaml", config.source, "example8b.yaml", None)
+    cycleWithDialect("dialect8.yaml", config.source, "example8b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 8c $ref test", "example8c.%s") { config =>
-    cycleWithDialect("dialect8.yaml", config.source, "example8c.yaml", None)
+    cycleWithDialect("dialect8.yaml", config.source, "example8c.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 8 (fragment) test", "fragment8.%s") { config =>
-    cycleWithDialect("dialect8.yaml", config.source, "fragment8.yaml", None)
+    cycleWithDialect("dialect8.yaml", config.source, "fragment8.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 9 test", "example9.%s") { config =>
-    cycleWithDialect("dialect9.yaml", config.source, "example9.yaml", None)
+    cycleWithDialect("dialect9.yaml", config.source, "example9.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 9b $ref test", "example9b.%s") { config =>
-    cycleWithDialect("dialect9.yaml", config.source, "example9b.json.yaml", None)
+    cycleWithDialect("dialect9.yaml", config.source, "example9b.json.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 10a test", "example10a.%s") { config =>
-    cycleWithDialect("dialect10.yaml", config.source, "example10a.yaml", None)
+    cycleWithDialect("dialect10.yaml", config.source, "example10a.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 10b test", "example10b.%s") { config =>
-    cycleWithDialect("dialect10.yaml", config.source, "example10b.yaml", None)
+    cycleWithDialect("dialect10.yaml", config.source, "example10b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 10c test", "example10c.%s") { config =>
-    cycleWithDialect("dialect10.yaml", config.source, "example10c.yaml", None)
+    cycleWithDialect("dialect10.yaml", config.source, "example10c.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 11 test", "example11.%s") { config =>
-    cycleWithDialect("dialect11.yaml", config.source, "example11.yaml", None)
+    cycleWithDialect("dialect11.yaml", config.source, "example11.yaml", Some(Mimes.`application/yaml`))
   }
 
   ignore("generate 13a test") {
-    cycleWithDialect("dialect13a.yaml", "example13a.json", "example13a.yaml", None)
+    cycleWithDialect("dialect13a.yaml", "example13a.json", "example13a.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 13b test", "example13b.%s") { config =>
-    cycleWithDialect("dialect13b.yaml", config.source, "example13b.yaml", None)
+    cycleWithDialect("dialect13b.yaml", config.source, "example13b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 13c test", "example13c.%s") { config =>
-    cycleWithDialect("dialect13c.yaml", config.source, "example13c.yaml", None)
+    cycleWithDialect("dialect13c.yaml", config.source, "example13c.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 14 test", "example14.%s") { config =>
-    cycleWithDialect("dialect14.yaml", config.source, "example14.yaml", None)
+    cycleWithDialect("dialect14.yaml", config.source, "example14.yaml", Some(Mimes.`application/yaml`))
   }
 
   //TODO ARM for instance needed
@@ -571,39 +572,39 @@ trait DialectInstancesParsingTest extends DialectTests {
 //  }
 
   multiSourceTest("generate 18 test", "example18.%s") { config =>
-    cycleWithDialect("dialect18.yaml", config.source, "example18.yaml", None)
+    cycleWithDialect("dialect18.yaml", config.source, "example18.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 18b test", "example18b.%s") { config =>
-    cycleWithDialect("dialect18.yaml", config.source, "example18b.yaml", None)
+    cycleWithDialect("dialect18.yaml", config.source, "example18b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 19 test", "example19.%s") { config =>
-    cycleWithDialect("dialect19.yaml", config.source, "example19.yaml", None)
+    cycleWithDialect("dialect19.yaml", config.source, "example19.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 23 test", "example23.%s") { config =>
-    cycleWithDialect("dialect23.yaml", config.source, "example23.yaml", None)
+    cycleWithDialect("dialect23.yaml", config.source, "example23.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 24 test", "example24.%s") { config =>
-    cycleWithDialect("dialect24.yaml", config.source, "example24.yaml", None)
+    cycleWithDialect("dialect24.yaml", config.source, "example24.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 24 b test", "example24b.%s") { config =>
-    cycleWithDialect("dialect24.yaml", config.source, "example24b.yaml", None)
+    cycleWithDialect("dialect24.yaml", config.source, "example24b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 24 c test", "example24c.%s") { config =>
-    cycleWithDialect("dialect24.yaml", config.source, "example24c.yaml", None)
+    cycleWithDialect("dialect24.yaml", config.source, "example24c.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 27a test", "example27a.%s") { config =>
-    cycleWithDialect("dialect27.yaml", config.source, "example27a.yaml", None)
+    cycleWithDialect("dialect27.yaml", config.source, "example27a.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 28 test", "example28.%s") { config =>
-    cycleWithDialect("dialect28.yaml", config.source, "example28.yaml", None)
+    cycleWithDialect("dialect28.yaml", config.source, "example28.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiGoldenTest("parse 29 test - keyproperty", "example29.%s") { config =>
@@ -615,7 +616,7 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
   multiSourceTest("generate 29 test - keyproperty", "example29.%s") { config =>
-    cycleWithDialect("dialect29.yaml", config.source, "example29.yaml", None)
+    cycleWithDialect("dialect29.yaml", config.source, "example29.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiGoldenTest("parse 29 invalid test - keyproperty", "example29.%s") { config =>
@@ -627,11 +628,11 @@ trait DialectInstancesParsingTest extends DialectTests {
   }
 
   multiSourceTest("generate 30 test", "example30.%s") { config =>
-    cycleWithDialect("dialect30.yaml", config.source, "example30.yaml", None)
+    cycleWithDialect("dialect30.yaml", config.source, "example30.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 31 test", "example31.%s") { config =>
-    cycleWithDialect("dialect31.yaml", config.source, "example31.yaml", None)
+    cycleWithDialect("dialect31.yaml", config.source, "example31.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiGoldenTest("Generate instance with invalid property terms", "/invalids/schema-uri/instance.%s") { config =>
@@ -876,7 +877,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect.yaml",
                      config.source,
                      "instance.yaml",
-                     None,
+                     Some(Mimes.`application/yaml`),
                      directory = s"$basePath/simple-native-links/")
   }
 
@@ -884,7 +885,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect.yaml",
                      config.source,
                      "instance.yaml",
-                     None,
+                     Some(Mimes.`application/yaml`),
                      directory = s"$basePath/native-links-with-template-ids/")
   }
 
@@ -898,7 +899,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         config.source,
         golden,
-        None,
+        Some(Mimes.`application/yaml`),
         directory = s"$basePath/native-links-with-native-target/"
     )
   }
@@ -996,7 +997,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.flattened.jsonld",
         "instance.golden.flattened.jsonld",
-        None,
+        Some(Mimes.`application/yaml`),
         renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint),
         directory = s"$basePath/cyclic-references/"
     )

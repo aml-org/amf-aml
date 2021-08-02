@@ -39,6 +39,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8.yaml#/encodes/source-map/source-vendor/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8.yaml#/encodes/source-map/lexical/element_1"
@@ -81,6 +86,11 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8.yaml#/encodes/b/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8.yaml#/encodes/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8.yaml#/encodes",
+      "http://a.ml/vocabularies/document-source-maps#value": "TestInstance 1.8"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8.yaml#/encodes/source-map/lexical/element_1",
@@ -230,6 +240,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/fragment8.yaml#/encodes/source-map/source-vendor/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/fragment8.yaml#/encodes/source-map/lexical/element_2"
@@ -246,6 +261,11 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/fragment8.yaml#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/fragment8.yaml",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(4,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/fragment8.yaml#/encodes/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/fragment8.yaml#/encodes",
+      "http://a.ml/vocabularies/document-source-maps#value": "TestInstance 1.8"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/fragment8.yaml#/encodes/source-map/lexical/element_2",

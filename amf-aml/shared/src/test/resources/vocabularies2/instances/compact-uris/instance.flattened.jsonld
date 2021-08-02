@@ -21,6 +21,11 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
+      "sourcemaps:source-vendor": [
+        {
+          "@id": "#/encodes/source-map/source-vendor/element_0"
+        }
+      ],
       "sourcemaps:lexical": [
         {
           "@id": "#/encodes/source-map/lexical/element_2"
@@ -32,6 +37,11 @@
           "@id": "#/encodes/source-map/lexical/element_1"
         }
       ]
+    },
+    {
+      "@id": "#/encodes/source-map/source-vendor/element_0",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/compact-uris/instance.yaml#/encodes",
+      "sourcemaps:value": "Test 1.0"
     },
     {
       "@id": "#/encodes/source-map/lexical/element_2",

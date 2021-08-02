@@ -22,6 +22,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "https://a.ml/domain/elements#DialectDomainElement/source-map/source-vendor/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "https://a.ml/domain/elements#DialectDomainElement/source-map/lexical/element_4"
@@ -39,6 +44,11 @@
           "@id": "https://a.ml/domain/elements#DialectDomainElement/source-map/lexical/element_3"
         }
       ]
+    },
+    {
+      "@id": "https://a.ml/domain/elements#DialectDomainElement/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "https://a.ml/domain/elements#DialectDomainElement",
+      "http://a.ml/vocabularies/document-source-maps#value": "Resource 1.0"
     },
     {
       "@id": "https://a.ml/domain/elements#DialectDomainElement/source-map/lexical/element_4",
