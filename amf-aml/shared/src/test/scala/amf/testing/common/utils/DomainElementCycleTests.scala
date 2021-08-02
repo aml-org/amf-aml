@@ -56,9 +56,7 @@ trait DomainElementCycleTests
   }
 
   def renderDomainElement(element: Option[DomainElement], config: AMLConfiguration): String = {
-    val references = config.registry.plugins.renderPlugins.collect {
-      case plugin: AMLDialectInstanceRenderingPlugin => plugin.dialect
-    }
+    val references = config.configurationState().getDialects()
     val node =
       element.map(config.elementClient().renderElement(_, references)).getOrElse(YNode.Empty)
     val document = SyamlParsedDocument(document = YDocument(node))

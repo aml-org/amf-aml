@@ -3,6 +3,7 @@ package amf.testing.unclassified
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.internal.remote.Syntax.Yaml
 import amf.core.internal.remote._
 import amf.testing.common.cycling.FunSuiteCycleTests
 import amf.testing.common.utils.DialectInstanceTester
@@ -18,7 +19,7 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
 
   test("Can parse and generated ABOUT dialect") {
-    cycle("ABOUT-dialect.yaml", "ABOUT-dialect.yaml.yaml", syntax = Some(Syntax.JsonLd), basePath + "ABOUT/")
+    cycle("ABOUT-dialect.yaml", "ABOUT-dialect.yaml.yaml", syntax = Some(Syntax.Yaml), basePath + "ABOUT/")
   }
 
   ignore("Can parse the canonical webapi dialect") {
@@ -77,7 +78,10 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   test("Can parse validation dialect instance") {
-    cycleWithDialect("validation_dialect.yaml", "validation_instance1.yaml", "validation_instance1.yaml.yaml", None)
+    cycleWithDialect("validation_dialect.yaml",
+                     "validation_instance1.yaml",
+                     "validation_instance1.yaml.yaml",
+                     Some(Yaml))
   }
 
   multiGoldenTest("Can parse validation dialect cfg1 instance", "example1_instance.%s") { config =>
@@ -114,14 +118,14 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   test("Can parse and generate ABOUT dialect instance") {
-    cycleWithDialect("ABOUT-dialect.yaml", "ABOUT.yaml", "ABOUT.yaml.yaml", None, basePath + "ABOUT/")
+    cycleWithDialect("ABOUT-dialect.yaml", "ABOUT.yaml", "ABOUT.yaml.yaml", Some(Yaml), basePath + "ABOUT/")
   }
 
   test("Can parse and generate ABOUT-github dialect instance") {
     cycleWithDialect("ABOUT-GitHub-dialect.yaml",
                      "example.yaml",
                      "example.yaml.yaml",
-                     None,
+                     Some(Yaml),
                      basePath + "ABOUT/github/")
   }
 

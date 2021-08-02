@@ -610,6 +610,11 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
+      "sourcemaps:source-vendor": [
+        {
+          "@id": "#/source-map/source-vendor/element_0"
+        }
+      ],
       "sourcemaps:lexical": [
         {
           "@id": "#/source-map/lexical/element_4"
@@ -988,6 +993,11 @@
           "@id": "#/declarations/AnypointIdAnnotationMapping/source-map/lexical/element_4"
         }
       ]
+    },
+    {
+      "@id": "#/source-map/source-vendor/element_0",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-with-extra-facets/dialect.yaml",
+      "sourcemaps:value": "AML 1.0"
     },
     {
       "@id": "#/source-map/lexical/element_4",

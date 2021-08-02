@@ -24,7 +24,7 @@ trait DialectInstanceValidation
     val client       = config.baseUnitClient()
     for {
       dialectResult  <- client.parseDialect(s"$path/$dialect")
-      nextConfig     <- config.withDialect(dialectPath)
+      nextConfig     <- Future.successful(config.withDialect(dialectResult.dialect))
       instanceResult <- nextConfig.baseUnitClient().parseDialectInstance(instancePath)
       report <- {
         if (!instanceResult.conforms) Future.successful(AMFValidationReport.unknownProfile(instanceResult))

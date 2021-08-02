@@ -78,6 +78,21 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/encodes/source-map/source-vendor/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/encodes"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "ABOUT-hosted-vcs 0.1"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT_hosted.yaml#/encodes/source-map/lexical/element_9",

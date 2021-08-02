@@ -32,9 +32,9 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#from-union-node-mapping": [
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
               {
-                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/from-union-node-mapping/element_0",
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/source-vendor/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes"
@@ -42,7 +42,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect33.yaml#/declarations/RootNode"
+                    "@value": "NonExplicit 1"
                   }
                 ]
               }
@@ -71,6 +71,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(2,0)-(2,18)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#from-union-node-mapping": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/from-union-node-mapping/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect33.yaml#/declarations/RootNode"
                   }
                 ]
               }
