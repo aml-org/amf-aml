@@ -127,8 +127,6 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMLConfiguration =
     super._withExecutionEnvironment(executionEnv)
 
-  protected[amf] def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
-
   def withDialect(path: String): Future[AMLConfiguration] = {
     baseUnitClient().parseDialect(path).map {
       case result: AMLDialectResult => withDialect(result.dialect)

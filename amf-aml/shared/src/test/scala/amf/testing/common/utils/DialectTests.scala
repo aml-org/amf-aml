@@ -44,9 +44,9 @@ trait DialectTests
     }
   }
 
-  def vendorToSyntax(vendor: Spec): String = {
+  def vendorToSyntax(spec: Spec): String = {
 
-    vendor match {
+    spec match {
       case Amf                   => `application/ld+json`
       case Payload               => `application/yaml`
       case Raml10 | Raml08 | Aml => `application/yaml`

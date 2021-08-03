@@ -14,7 +14,7 @@ trait AMLParsingHelper {
     new AMFCompiler(new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build())
       .build()
 
-  final def parse(uri: String, platform: Platform, vendor: Option[String], configuration: AMLConfiguration)(
+  final def parse(uri: String, platform: Platform, spec: Option[String], configuration: AMLConfiguration)(
       implicit ec: ExecutionContext): Future[BaseUnit] =
     new AMFCompiler(new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build())
       .build()
