@@ -34,7 +34,9 @@ trait DomainElementCycleTests
                               baseConfig: AMLConfiguration = AMLConfiguration.predefined()): Future[Assertion] = {
 
     withDialect(s"file://$directory/$dialect") { (d, amlConfig) =>
-      val nextConfig = amlConfig.merge(baseConfig)
+      val nextConfig = baseConfig.configurationState().getDialects().foldLeft(amlConfig) { (config, dialect) =>
+        config.withDialect(dialect)
+      }
       cycleElement(source, extractor, golden, nextConfig, directory = directory)
     }
   }

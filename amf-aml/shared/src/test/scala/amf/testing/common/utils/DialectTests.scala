@@ -28,8 +28,10 @@ trait DialectTests
                                  renderOptions: Option[RenderOptions] = None,
                                  baseConfig: AMLConfiguration = AMLConfiguration.predefined()): Future[Assertion] = {
     withDialect(s"file://$directory/$dialect") { (_, configuration) =>
-      val config     = renderOptions.fold(configuration)(r => configuration.withRenderOptions(r))
-      val nextConfig = config.merge(baseConfig)
+      val config = renderOptions.fold(configuration)(r => configuration.withRenderOptions(r))
+      val nextConfig = baseConfig.configurationState().getDialects().foldLeft(config) { (config, dialect) =>
+        config.withDialect(dialect)
+      }
       cycle(source, golden, mediaType, nextConfig, directory = directory)
     }
   }
