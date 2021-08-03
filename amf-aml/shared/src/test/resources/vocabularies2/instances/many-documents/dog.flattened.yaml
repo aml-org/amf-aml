@@ -1,0 +1,9 @@
+#%Pets 1.0
+uses:
+  people: people.library.yaml
+name: Dogge
+owner:
+  -
+    name: Juan Roman Riquelme
+  -
+    name: Martin Palermo
