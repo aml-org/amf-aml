@@ -2,7 +2,8 @@ package amf.testing.render
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.{Aml, Vendor, VocabularyYamlHint}
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.{Amf, AmfJsonHint, Aml, Vendor, VocabularyYamlHint}
 import amf.testing.common.utils.DialectTests
 
 import scala.concurrent.ExecutionContext
@@ -440,4 +441,35 @@ class DialectInstanceRenderTest extends DialectTests {
                      directory = instances)
   }
 
+}
+
+class ResolvedDialectInstancesRenderTest extends DialectTests {
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+  override val basePath: String                            = "amf-aml/shared/src/test/resources/vocabularies2/rendering"
+  val instances                                            = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
+
+  test("Flatten multiple documents YAML") {
+    cycleWithDialect("dialect.yaml",
+                     "dog.yaml",
+                     "dog.flattened.yaml",
+                     VocabularyYamlHint,
+                     target = Aml,
+                     directory = s"$instances/many-documents/")
+  }
+
+  test("Flatten multiple documents JSON-LD") {
+    cycleWithDialect(
+        "dialect.yaml",
+        "dog.yaml",
+        "dog.flattened.jsonld",
+        VocabularyYamlHint,
+        target = Amf,
+        directory = s"$instances/many-documents/",
+        renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint.withCompactUris)
+    )
+  }
+
+  override def transform(unit: BaseUnit, amlConfig: AMLConfiguration): BaseUnit = {
+    amlConfig.baseUnitClient().transform(unit).baseUnit
+  }
 }

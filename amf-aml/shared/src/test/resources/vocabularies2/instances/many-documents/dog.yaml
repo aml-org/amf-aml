@@ -1,0 +1,7 @@
+#%Pets 1.0
+uses:
+  people: people.library.yaml
+name: Dogge
+owner:
+  - !include person.fragment.yaml
+  - people.MP9

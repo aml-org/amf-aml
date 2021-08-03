@@ -1,0 +1,36 @@
+#%Dialect 1.0
+dialect: Pets
+version: 1.0
+external:
+  a: http://a.org#
+
+nodeMappings:
+  HasName:
+    classTerm: a.HasName
+    mapping:
+      name:
+        propertyTerm: a.Name
+        range: string
+
+  Person:
+    classTerm: a.Person
+    extends: HasName
+
+  Dog:
+    classTerm: a.Dog
+    extends: HasName
+    mapping:
+      owner:
+        propertyTerm: a.owner
+        range: Person
+        allowMultiple: true
+
+documents:
+  root:
+    encodes: Dog
+  library:
+    declares:
+      owners: Person
+  fragments:
+    encodes:
+      Owner: Person
