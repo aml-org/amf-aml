@@ -34,6 +34,7 @@ import amf.core.client.scala.transform.{TransformationPipeline, TransformationPi
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.core.internal.plugins.AMFPlugin
+import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.unsafe.PlatformSecrets
@@ -83,6 +84,8 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withUnitCache(cache: UnitCache): AMLConfiguration =
     super._withUnitCache(cache)
+
+  override def withFallback(plugin: DomainParsingFallback): AMLConfiguration = super._withFallback(plugin)
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMLConfiguration =
     super._withPlugin(amfPlugin)
