@@ -10,6 +10,7 @@ import amf.core.client.platform.model.domain.DomainElement
 import amf.core.internal.convert.ClientErrorHandlerConverter
 import org.yaml.builder.DocBuilder
 import amf.aml.internal.convert.VocabulariesClientConverter._
+import amf.core.client.scala.render.AMFElementRenderer
 
 import scala.scalajs.js.annotation.JSExportAll
 
@@ -22,14 +23,6 @@ abstract class BaseAMLElementClient private[amf] (private val _internal: Interna
     * Currently supports rendering of dialect domain elements
     * @param references : optional parameter which will improve emission of references defined in element
     */
-  def renderToBuilder[T](element: DomainElement, builder: DocBuilder[T]): Unit = {
-
-    AmlDomainElementEmitter.emitToBuilder(element, getConfiguration(), builder)
-  }
-
-  private def obtainEH: ClientErrorHandler =
-    ClientErrorHandlerConverter.convertToClient(_internal.getConfiguration.errorHandlerProvider.errorHandler())
-
-  override def getConfiguration(): AMLConfiguration = _internal.getConfiguration
+  def renderToBuilder[T](element: DomainElement, builder: DocBuilder[T]): Unit
 
 }
