@@ -6,7 +6,6 @@ import amf.validation.internal.RdflibRdfModel
 
 import scala.scalajs.js.annotation.JSExportTopLevel
 
-@JSExportTopLevel("RdfFrameworkInstance")
 class RdfFrameworkInstance() extends RdfFramework {
 
   override def emptyRdfModel(): RdfModel = new RdflibRdfModel()
