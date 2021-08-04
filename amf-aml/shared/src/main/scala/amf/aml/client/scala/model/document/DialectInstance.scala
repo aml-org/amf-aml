@@ -51,7 +51,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
     this
   }
 
-  private def isSelfEncoded: Boolean = encodes.id == id
+  private[amf] def isSelfEncoded: Boolean = encodes.id == id
 }
 
 object DialectInstance {

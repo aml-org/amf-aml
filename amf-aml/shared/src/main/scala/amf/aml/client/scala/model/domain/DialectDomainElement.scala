@@ -9,8 +9,6 @@ import amf.aml.internal.metamodel.domain.DialectDomainElementModel
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
-import scala.collection.mutable
-
 class UnknownMapKeyProperty(val id: String) extends Exception
 
 case class DialectDomainElement(override val fields: Fields, annotations: Annotations)
@@ -126,6 +124,9 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   def containsProperty(property: PropertyMapping): Boolean =
     fields.exists(property.toField)
 
+  def setObjectField(property: PropertyMapping, value: DialectDomainElement, node: YNode): DialectDomainElement =
+    setObjectField(property, value, Left(node))
+
   def setObjectField(property: PropertyMapping,
                      value: DialectDomainElement,
                      node: Either[YNode, YMapEntry]): DialectDomainElement = {
@@ -153,6 +154,9 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
     this
   }
+
+  def setObjectField(property: PropertyMapping, value: Seq[DialectDomainElement], node: YNode): DialectDomainElement =
+    setObjectField(property, value, Left(node))
 
   def setObjectField(property: PropertyMapping,
                      value: Seq[DialectDomainElement],

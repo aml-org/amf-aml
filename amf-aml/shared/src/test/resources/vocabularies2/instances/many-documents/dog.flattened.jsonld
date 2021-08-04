@@ -1,0 +1,69 @@
+{
+  "@graph": [
+    {
+      "@id": "#/encodes",
+      "@type": [
+        "a:Dog",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/many-documents/dialect.yaml#/declarations/Dog",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "a:owner": [
+        {
+          "@id": "./person.fragment.yaml#/encodes"
+        },
+        {
+          "@id": "./people.library.yaml#/owners/MP9"
+        }
+      ],
+      "a:Name": "Dogge"
+    },
+    {
+      "@id": "./person.fragment.yaml#/encodes",
+      "@type": [
+        "a:Person",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/many-documents/dialect.yaml#/declarations/Person",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "a:Name": "Juan Roman Riquelme"
+    },
+    {
+      "@id": "./people.library.yaml#/owners/MP9",
+      "@type": [
+        "a:Person",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/many-documents/dialect.yaml#/declarations/Person",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "meta:declarationName": "MP9",
+      "a:Name": "Martin Palermo"
+    },
+    {
+      "@id": "",
+      "@type": [
+        "meta:DialectInstance",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "./dialect.yaml"
+        }
+      ],
+      "doc:encodes": {
+        "@id": "#/encodes"
+      },
+      "doc:version": "3.1.0",
+      "doc:root": true
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/many-documents/dog.yaml",
+    "doc": "http://a.ml/vocabularies/document#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "a": "http://a.org#"
+  }
+}

@@ -1,6 +1,6 @@
 package amf.aml.client.scala
 
-import amf.aml.client.scala.AMLConfiguration.{platform, predefined}
+import amf.aml.client.scala.AMLConfiguration.platform
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
@@ -17,8 +17,10 @@ import amf.aml.internal.render.plugin.{
   AMLVocabularyRenderingPlugin
 }
 import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
+import amf.aml.internal.unsafe.RdfFrameworkSecret
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
 import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{
   AMFErrorHandler,
@@ -30,15 +32,14 @@ import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner}
-import amf.core.client.scala.{AMFGraphConfiguration, AMFResult}
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.core.internal.plugins.AMFPlugin
+import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.internal.validation.core.ValidationProfile
-import amf.validation.internal.unsafe.PlatformValidatorSecret
 import org.mulesoft.common.collections.FilterType
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -60,8 +61,6 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
-
-  private[amf] val PROFILE_DIALECT_URL = "http://a.ml/dialects/profile.raml"
 
   override protected def copy(resolvers: AMFResolvers,
                               errorHandlerProvider: ErrorHandlerProvider,
@@ -85,6 +84,8 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withUnitCache(cache: UnitCache): AMLConfiguration =
     super._withUnitCache(cache)
+
+  override def withFallback(plugin: DomainParsingFallback): AMLConfiguration = super._withFallback(plugin)
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMLConfiguration =
     super._withPlugin(amfPlugin)
@@ -126,21 +127,19 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMLConfiguration =
     super._withExecutionEnvironment(executionEnv)
 
-  def merge(other: AMLConfiguration): AMLConfiguration = super._merge(other)
-
   def withDialect(path: String): Future[AMLConfiguration] = {
-    baseUnitClient().parse(path).map {
-      case AMFResult(d: Dialect, _) => withDialect(d)
+    baseUnitClient().parseDialect(path).map {
+      case result: AMLDialectResult => withDialect(result.dialect)
       case _                        => this
     }
   }
 
   def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
 
-  def forInstance(url: String, mediaType: Option[String] = None): Future[AMLConfiguration] = {
+  def forInstance(url: String): Future[AMLConfiguration] = {
     val collector = new DialectReferencesCollector
     val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
-    collector.collectFrom(url, mediaType, this).map { dialects =>
+    collector.collectFrom(url, this).map { dialects =>
       dialects
         .map { d =>
           runner.run(d, DialectTransformationPipeline())
@@ -165,7 +164,7 @@ object AMLConfiguration extends PlatformSecrets {
   def predefined(): AMLConfiguration = {
     val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
     VocabulariesRegister.register() // TODO ARM remove when APIMF-3000 is done
-    PlatformValidatorSecret.init()
+    RdfFrameworkSecret.init()
     val predefinedPlugins = new AMLDialectParsingPlugin() ::
       new AMLVocabularyParsingPlugin() ::
       new AMLDialectRenderingPlugin() ::
@@ -202,11 +201,9 @@ object AMLConfiguration extends PlatformSecrets {
 }
 
 private class DialectReferencesCollector(implicit val ec: ExecutionContext) {
-  def collectFrom(url: String,
-                  mediaType: Option[String] = None,
-                  amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
+  def collectFrom(url: String, amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
     val ctx      = new CompilerContextBuilder(url, platform, amfConfig.compilerConfiguration).build()
-    val compiler = new AMFCompiler(ctx, mediaType)
+    val compiler = new AMFCompiler(ctx)
     for {
       content                <- compiler.fetchContent()
       eitherContentOrAst     <- Future.successful(compiler.parseSyntax(content))

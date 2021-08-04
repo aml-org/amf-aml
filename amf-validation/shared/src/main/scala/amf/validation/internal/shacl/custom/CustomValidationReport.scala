@@ -1,14 +1,7 @@
 package amf.validation.internal.shacl.custom
 
 import amf.core.client.common.validation.{MessageStyle, OASStyle, RAMLStyle, SeverityLevels}
-import amf.core.internal.validation.core.{
-  PropertyConstraint,
-  ShaclSeverityUris,
-  ShaclValidationOptions,
-  ValidationReport,
-  ValidationResult,
-  ValidationSpecification
-}
+import amf.core.internal.validation.core._
 
 import scala.collection.mutable
 
@@ -24,26 +17,19 @@ class ReportBuilder(options: ShaclValidationOptions) {
 
   private val results: mutable.ListBuffer[ValidationResult] = mutable.ListBuffer.empty
 
-  def reportFailure(validationSpecification: ValidationSpecification, id: String): Unit = {
-    reportFailure(validationSpecification, id, "")
-  }
-
   def reportFailure(validationSpecification: ValidationSpecification,
                     propertyConstraint: PropertyConstraint,
                     id: String): Unit = {
     reportFailure(validationSpecification, id, propertyConstraint.ramlPropertyId)
   }
 
-  def reportFailure(validationSpecification: ValidationSpecification,
+  def reportFailure(validationSpec: ValidationSpecification,
                     id: String,
-                    propertyPath: Option[String] = None): Unit = {
-    reportFailure(validationSpecification, id, propertyPath.getOrElse(""))
-  }
-
-  def reportFailure(validationSpec: ValidationSpecification, id: String, path: String): Unit = {
+                    path: String,
+                    customMessage: Option[String] = None): Unit = {
     registerResult(
         CustomValidationResult(
-            message = getMessageOf(validationSpec, options.messageStyle),
+            message = customMessage.orElse(getMessageOf(validationSpec, options.messageStyle)),
             path = path,
             sourceConstraintComponent = validationSpec.id,
             focusNode = id,

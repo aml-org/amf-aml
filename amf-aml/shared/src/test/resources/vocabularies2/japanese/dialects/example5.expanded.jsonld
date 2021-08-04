@@ -44,7 +44,33 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml/externals/%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B#/source-map/lexical/element_2",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/core#displayName"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(23,2)-(23,6)]"
+                  }
+                ]
+              },
+              {
                 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml/externals/%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B#/source-map/lexical/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/meta#base"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "[(23,8)-(23,27)]"
+                  }
+                ]
+              },
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml/externals/%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B#/source-map/lexical/element_1",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml/externals/%E4%BD%BF%E7%94%A8%E3%81%99%E3%82%8B"
@@ -263,9 +289,9 @@
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
-        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+        "http://a.ml/vocabularies/document-source-maps#source-vendor": [
           {
-            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml#/source-map/aliases-array/element_0",
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml#/source-map/source-vendor/element_0",
             "http://a.ml/vocabularies/document-source-maps#element": [
               {
                 "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml"
@@ -273,7 +299,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "\u4F7F2->http://a.ml/vocabularies/vocab2#::vocab2.yaml"
+                "@value": "AML 1.0"
               }
             ]
           }
@@ -341,6 +367,21 @@
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
                 "@value": "[(2,0)-(3,0)]"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml#/source-map/aliases-array/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/example5.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "\u4F7F2->http://a.ml/vocabularies/vocab2#::vocab2.yaml"
               }
             ]
           }
@@ -453,6 +494,21 @@
             "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/vocab2.yaml#/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
+            ],
+            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/vocab2.yaml#/source-map/source-vendor/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/vocab2.yaml"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "AML 1.0"
+                  }
+                ]
+              }
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {

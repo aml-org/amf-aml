@@ -18,7 +18,7 @@ trait DialectRegistrationHelper {
     val configuration = AMLConfiguration.forEH(eh)
     val context       = new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build()
     for {
-      baseUnit <- new AMFCompiler(context, Some(Aml.mediaType)).build()
+      baseUnit <- new AMFCompiler(context).build()
       dialect  <- Future.successful { baseUnit.asInstanceOf[Dialect] }
       resolved <- Future.successful(
           TransformationPipelineRunner(DefaultErrorHandler())

@@ -6,6 +6,8 @@ import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
+import amf.core.internal.remote.Mimes
+import amf.core.internal.remote.Mimes._
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}
 
 class AMLDialectRenderingPlugin extends AMFRenderPlugin {
@@ -43,7 +45,7 @@ class AMLDialectRenderingPlugin extends AMFRenderPlugin {
 
   override def priority: PluginPriority = NormalPriority
 
-  override def defaultSyntax(): String = "application/yaml"
+  override def defaultSyntax(): String = `application/yaml`
 
-  override def mediaTypes: Seq[String] = Seq("application/aml", "application/aml+yaml")
+  override def mediaTypes: Seq[String] = Seq(`application/yaml`)
 }

@@ -1,7 +1,8 @@
 package amf.testing.common.utils
 
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.{Hint, Vendor}
+import amf.core.internal.remote.Syntax.Syntax
+import amf.core.internal.remote.{Hint, Spec}
 import amf.testing.common.cycling.FunSuiteCycleTests
 import org.scalatest.Assertion
 
@@ -12,8 +13,7 @@ trait DialectInstanceTester extends DialectRegistrationHelper { this: FunSuiteCy
   protected def cycleWithDialect(dialect: String,
                                  source: String,
                                  golden: String,
-                                 hint: Hint,
-                                 target: Vendor,
+                                 syntax: Option[Syntax],
                                  directory: String = basePath,
                                  renderOptions: Option[RenderOptions] = None): Future[Assertion] = {
     withDialect(s"file://$directory/$dialect") { (_, config) =>
@@ -21,7 +21,7 @@ trait DialectInstanceTester extends DialectRegistrationHelper { this: FunSuiteCy
         renderOptions.fold(
             config.withRenderOptions(RenderOptions().withSourceMaps.withPrettyPrint.withoutFlattenedJsonLd))(r =>
           config.withRenderOptions(r))
-      cycle(source, golden, hint, target, directory, configuration)
+      cycle(source, golden, syntax, directory, configuration)
     }
   }
 

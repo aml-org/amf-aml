@@ -1,8 +1,9 @@
 package amf.validation.internal
 
 import org.apache.jena.rdf.model.Model
-import org.apache.jena.riot.{RDFDataMgr, RDFFormat}
+import org.apache.jena.riot.{Lang, RDFDataMgr, RDFFormat}
 import org.apache.jena.util.FileUtils
+import amf.core.internal.remote.Mimes._
 
 import java.io.StringWriter
 
@@ -19,7 +20,7 @@ object RDFPrinter {
       case FileUtils.langTurtle                                   => RDFFormat.TURTLE
       case FileUtils.langXML                                      => RDFFormat.RDFXML
       case FileUtils.langXMLAbbrev                                => RDFFormat.RDFXML_ABBREV
-      case "JSON-LD" | "application/ld+json" | "application/json" => RDFFormat.JSONLD_EXPAND_PRETTY
+      case "JSON-LD" | `application/ld+json` | `application/json` => RDFFormat.JSONLD_EXPAND_PRETTY
       case _                                                      => RDFFormat.TURTLE // default case
     }
     RDFDataMgr.write(writer, model, format)

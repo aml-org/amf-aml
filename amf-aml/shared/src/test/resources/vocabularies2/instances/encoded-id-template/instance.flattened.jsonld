@@ -19,6 +19,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "http://someUri/Lionel%20Messi#/source-map/source-vendor/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "http://someUri/Lionel%20Messi#/source-map/lexical/element_1"
@@ -27,6 +32,11 @@
           "@id": "http://someUri/Lionel%20Messi#/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "http://someUri/Lionel%20Messi#/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://someUri/Lionel%20Messi",
+      "http://a.ml/vocabularies/document-source-maps#value": "Football_Players 1.0"
     },
     {
       "@id": "http://someUri/Lionel%20Messi#/source-map/lexical/element_1",
