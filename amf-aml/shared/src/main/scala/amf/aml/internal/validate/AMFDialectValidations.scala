@@ -1,10 +1,12 @@
 package amf.aml.internal.validate
 
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.domain.{NodeMapping, PropertyMapping, UnionNodeMapping}
+import amf.aml.internal.render.emitters.instances.{AmlEmittersHelper, NodeMappableFinder}
+import amf.aml.internal.validate.AMFDialectValidations.staticValidations
 import amf.core.client.common.validation.{ProfileName, SeverityLevels}
 import amf.core.client.scala.model.DataType
-import amf.core.client.scala.rdf.RdfModel
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.plugins.document.graph.JsonLdKeywords
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations
 import amf.core.internal.validation.core.{
@@ -13,11 +15,6 @@ import amf.core.internal.validation.core.{
   ValidationProfile,
   ValidationSpecification
 }
-import amf.aml.internal.render.emitters.instances.{AmlEmittersHelper, NodeMappableFinder}
-import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
-import amf.aml.internal.validate.AMFDialectValidations.staticValidations
-import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer

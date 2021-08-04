@@ -70,6 +70,7 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
       name := "amf-aml"
     ))
   .in(file("./amf-aml"))
+  .dependsOn(rdf % "test")
   .settings(commonSettings)
   .dependsOn(validation)
   .jvmSettings(
@@ -97,19 +98,9 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
   .in(file("./amf-validation"))
   .settings(commonSettings)
   .jvmSettings(
-    libraryDependencies += "org.json4s"                 %% "json4s-native"          % "3.5.4",
-    libraryDependencies += "org.apache.jena" % "jena-arq" % "3.17.0",
-    libraryDependencies += "org.apache.thrift"          % "libthrift"               % "0.14.1", // CVE-2020-13949
-    excludeDependencies += "org.apache.tomcat.embed"    % "tomcat-embed-core",
-    libraryDependencies += "commons-io"                 % "commons-io"              % "2.6",
-    libraryDependencies += "org.apache.commons"         % "commons-lang3"           % "3.9",
-    libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.21", // CVE-2021-35515 upto CVE-2021-35517
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.11.0",
     artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
   .jsSettings(
-    jsDependencies += ProvidedJS / "shacl.js",
-    jsDependencies += ProvidedJS / "ajv.min.js",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
     artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
   )
@@ -120,3 +111,42 @@ lazy val validationJS = validation.js
   .in(file("./amf-validation/js"))
   .sourceDependency(amfCoreJSRef, amfCoreLibJS)
   .disablePlugins(SonarPlugin)
+
+/** **********************************************
+  * AMF-RDF
+  * ********************************************* */
+
+lazy val rdf = crossProject(JSPlatform, JVMPlatform)
+  .settings(
+    Seq(
+      name := "amf-rdf"
+    ))
+  .in(file("./amf-rdf"))
+  .settings(commonSettings)
+  .jvmSettings(
+    libraryDependencies += "org.scala-js"                      %% "scalajs-stubs"         % scalaJSVersion % "provided",
+    libraryDependencies += "org.json4s"                 %% "json4s-native"          % "3.5.4",
+    libraryDependencies += "org.apache.jena" % "jena-arq" % "3.17.0",
+    libraryDependencies += "org.apache.thrift"          % "libthrift"               % "0.14.1", // CVE-2020-13949
+    excludeDependencies += "org.apache.tomcat.embed"    % "tomcat-embed-core",
+    libraryDependencies += "commons-io"                 % "commons-io"              % "2.6",
+    libraryDependencies += "org.apache.commons"         % "commons-lang3"           % "3.9",
+    libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.21", // CVE-2021-35515 upto CVE-2021-35517
+    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.11.0",
+    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-rdf-javadoc.jar",
+  )
+  .jsSettings(
+    jsDependencies += ProvidedJS / "shacl.js",
+    scalaJSModuleKind := ModuleKind.CommonJSModule,
+    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-rdf-module.js",
+    scalacOptions += "-P:scalajs:suppressExportDeprecations"
+  )
+  .disablePlugins(SonarPlugin)
+
+lazy val rdfJVM =
+  rdf.jvm.in(file("./amf-rdf/jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
+
+lazy val rdfJS =
+  rdf.js
+    .in(file("./amf-rdf/js"))
+    .sourceDependency(amfCoreJSRef, amfCoreLibJS)
