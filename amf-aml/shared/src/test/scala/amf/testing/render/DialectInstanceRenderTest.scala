@@ -1,6 +1,7 @@
 package amf.testing.render
 
 import amf.aml.client.scala.AMLConfiguration
+import amf.aml.internal.transform.pipelines.DefaultAMLTransformationPipeline
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Mimes.`application/ld+json`
@@ -404,8 +405,7 @@ class ResolvedDialectInstancesRenderTest extends DialectTests {
   override val basePath: String                            = "amf-aml/shared/src/test/resources/vocabularies2/rendering"
   val instances                                            = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
 
-  // TODO ARM Rebase: Before it wasn't calling resolution. Revisit
-  ignore("Flatten multiple documents YAML") {
+  test("Flatten multiple documents YAML") {
     cycleWithDialect("dialect.yaml",
                      "dog.yaml",
                      "dog.flattened.yaml",
@@ -413,8 +413,7 @@ class ResolvedDialectInstancesRenderTest extends DialectTests {
                      directory = s"$instances/many-documents/")
   }
 
-  // TODO ARM Rebase: Before it wasn't calling resolution. Revisit
-  ignore("Flatten multiple documents JSON-LD") {
+  test("Flatten multiple documents JSON-LD") {
     cycleWithDialect(
         "dialect.yaml",
         "dog.yaml",
@@ -426,6 +425,6 @@ class ResolvedDialectInstancesRenderTest extends DialectTests {
   }
 
   override def transform(unit: BaseUnit, amlConfig: AMLConfiguration): BaseUnit = {
-    amlConfig.baseUnitClient().transform(unit).baseUnit
+    amlConfig.baseUnitClient().transform(unit, DefaultAMLTransformationPipeline.name).baseUnit
   }
 }
