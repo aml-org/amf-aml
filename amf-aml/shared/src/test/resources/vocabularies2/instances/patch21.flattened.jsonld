@@ -21,6 +21,11 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
+      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/patch21.yaml#/encodes/source-map/source-vendor/element_0"
+        }
+      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/patch21.yaml#/encodes/source-map/lexical/element_1"
@@ -29,6 +34,11 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/patch21.yaml#/encodes/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/patch21.yaml#/encodes/source-map/source-vendor/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/patch21.yaml#/encodes",
+      "http://a.ml/vocabularies/document-source-maps#value": "TestInstance 1.21"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/patch21.yaml#/encodes/source-map/lexical/element_1",

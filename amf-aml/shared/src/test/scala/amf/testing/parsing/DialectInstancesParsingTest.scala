@@ -4,6 +4,7 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote._
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm}
+import amf.core.internal.remote.Syntax.Yaml
 import amf.testing.common.utils.DialectTests
 import org.scalatest.Assertion
 
@@ -20,8 +21,7 @@ trait DialectInstancesParsingTest extends DialectTests {
       cycleWithDialect("dialect1.yaml",
                        "example1b.yaml",
                        "example1b.json",
-                       VocabularyYamlHint,
-                       Amf,
+                       Some(Mimes.`application/ld+json`),
                        renderOptions = Some(RenderOptions().withoutAmfJsonLdSerialization))
     }
   }
@@ -30,8 +30,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect1.yaml",
                      "example1.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -39,8 +38,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect1.yaml",
                      "example1b.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -48,8 +46,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect1.yaml",
                      "example1_annotations.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -57,8 +54,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect2.yaml",
                      "example2.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -66,8 +62,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect3.yaml",
                      "example3.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -75,8 +70,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect4.yaml",
                      "example4.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -84,8 +78,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect5.yaml",
                      "example5.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -93,8 +86,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect6.yaml",
                      "example6.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -102,8 +94,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect6.yaml",
                      "example6b.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -111,8 +102,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect7.yaml",
                      "example7.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -120,8 +110,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect8.yaml",
                      "example8.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -129,8 +118,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect8.yaml",
                      "example8b.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -138,8 +126,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect8.yaml",
                      "example8c.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -147,8 +134,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect8.yaml",
                      "fragment8.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -156,8 +142,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect9.yaml",
                      "example9.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -165,8 +150,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect9.yaml",
                      "example9b.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -174,8 +158,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect10.yaml",
                      "example10a.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -183,8 +166,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect10.yaml",
                      "example10b.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -192,8 +174,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect10.yaml",
                      "example10c.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -201,8 +182,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect11.yaml",
                      "example11.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -211,8 +191,7 @@ trait DialectInstancesParsingTest extends DialectTests {
       amlConfig <- AMLConfiguration.predefined().withDialect(s"file://$basePath/dialect12.yaml")
       assertion <- withInlineDialect("example12.yaml",
                                      config.golden,
-                                     VocabularyYamlHint,
-                                     target = Amf,
+                                     mediaType = Some(Mimes.`application/ld+json`),
                                      amlConfig.withRenderOptions(config.renderOptions))
     } yield {
       assertion
@@ -223,8 +202,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect13a.yaml",
                      "example13a.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -232,8 +210,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect13b.yaml",
                      "example13b.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -241,8 +218,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect13c.yaml",
                      "example13c.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -250,8 +226,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect14.yaml",
                      "example14.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -263,8 +238,7 @@ trait DialectInstancesParsingTest extends DialectTests {
 //      assertion <- cycleWithDialect("dialect15a.yaml",
 //                                    "example15.yaml",
 //                                    config.golden,
-//                                    VocabularyYamlHint,
-//                                    target = Amf,
+//                                    //                                    mediaType = Some(Mimes.`application/ld+json`,
 //                                    renderOptions = Some(config.renderOptions))
 //    } yield {
 //      assertion
@@ -279,8 +253,7 @@ trait DialectInstancesParsingTest extends DialectTests {
 //      assertion <- cycleWithDialect("dialect16a.yaml",
 //                                    "example16a.yaml",
 //                                    config.golden,
-//                                    VocabularyYamlHint,
-//                                    target = Amf,
+//                                    //                                    mediaType = Some(Mimes.`application/ld+json`,
 //                                    renderOptions = Some(config.renderOptions))
 //    } yield {
 //      assertion
@@ -294,8 +267,7 @@ trait DialectInstancesParsingTest extends DialectTests {
 //      assertion <- cycleWithDialect("dialect16a.yaml",
 //                                    "example16c.yaml",
 //                                    config.golden,
-//                                    VocabularyYamlHint,
-//                                    target = Amf,
+//                                    //                                    mediaType = Some(Mimes.`application/ld+json`,
 //                                    renderOptions = Some(config.renderOptions))
 //    } yield {
 //      assertion
@@ -306,8 +278,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect17.input.json",
                      "example17.input.json",
                      config.golden,
-                     VocabularyJsonHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -315,8 +286,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect18.yaml",
                      "example18.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -324,8 +294,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect18.yaml",
                      "example18b.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -333,8 +302,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect19.yaml",
                      "example19.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -342,8 +310,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect20.yaml",
                      "example20.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -351,8 +318,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect21.yaml",
                      "patch21.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -360,8 +326,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect21.yaml",
                      "patch21b.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -369,19 +334,19 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect23.yaml",
                      "example23.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
   if (platform.name == "jvm") {
     ignore("parse 23 (non-amf) test") {
-      cycleWithDialect("dialect23.yaml",
-                       "example23.yaml",
-                       "example23.rdf.json",
-                       VocabularyYamlHint,
-                       Amf,
-                       renderOptions = Some(RenderOptions().withoutAmfJsonLdSerialization))
+      cycleWithDialect(
+          "dialect23.yaml",
+          "example23.yaml",
+          "example23.rdf.json",
+          Some(Mimes.`application/ld+json`),
+          renderOptions = Some(RenderOptions().withoutAmfJsonLdSerialization)
+      )
     }
   }
 
@@ -389,8 +354,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect24.yaml",
                      "example24.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -398,8 +362,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect24.yaml",
                      "example24b.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -407,8 +370,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect24.yaml",
                      "example24c.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -416,8 +378,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect27.yaml",
                      "example27a.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -425,8 +386,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect28.yaml",
                      "example28.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -434,8 +394,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect30.yaml",
                      "example30.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -443,8 +402,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect31.yaml",
                      "example31.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -452,8 +410,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect32.yaml",
                      "example32.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -461,8 +418,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect33.yaml",
                      "example33.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
@@ -471,8 +427,7 @@ trait DialectInstancesParsingTest extends DialectTests {
       cycleWithDialect("dialect1.yaml",
                        "example1.json",
                        "example1.yaml",
-                       AmfJsonHint,
-                       target = Aml,
+                       None,
                        renderOptions = Some(RenderOptions().withoutAmfJsonLdSerialization))
     }
   }
@@ -482,8 +437,7 @@ trait DialectInstancesParsingTest extends DialectTests {
       cycleWithDialect("dialect23.yaml",
                        "example23.rdf.json",
                        "example23.yaml",
-                       AmfJsonHint,
-                       target = Aml,
+                       None,
                        renderOptions = Some(RenderOptions().withoutAmfJsonLdSerialization))
     }
   }
@@ -492,108 +446,107 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect1.yaml",
                      "example1b.json",
                      "example1b.yaml",
-                     AmfJsonHint,
-                     target = Aml,
+                     None,
                      renderOptions = Some(RenderOptions().withoutAmfJsonLdSerialization))
   }
 
   multiSourceTest("generate 1 (AMF) test", "example1.amf.%s") { config =>
-    cycleWithDialect("dialect1.yaml", config.source, "example1.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect1.yaml", config.source, "example1.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 1b (AMF) test", "example1b.amf.%s") { config =>
-    cycleWithDialect("dialect1.yaml", config.source, "example1b.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect1.yaml", config.source, "example1b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 2 test", "example2.%s") { config =>
-    cycleWithDialect("dialect2.yaml", config.source, "example2.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect2.yaml", config.source, "example2.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 3 test", "example3.%s") { config =>
-    cycleWithDialect("dialect3.yaml", config.source, "example3.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect3.yaml", config.source, "example3.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 4 test", "example4.%s") { config =>
-    cycleWithDialect("dialect4.yaml", config.source, "example4.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect4.yaml", config.source, "example4.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 5 test", "example5.%s") { config =>
-    cycleWithDialect("dialect5.yaml", config.source, "example5.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect5.yaml", config.source, "example5.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 6 test", "example6.%s") { config =>
-    cycleWithDialect("dialect6.yaml", config.source, "example6.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect6.yaml", config.source, "example6.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 6b $ref test", "example6b.%s") { config =>
-    cycleWithDialect("dialect6.yaml", config.source, "example6b.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect6.yaml", config.source, "example6b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 7 test", "example7.%s") { config =>
-    cycleWithDialect("dialect7.yaml", config.source, "example7.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect7.yaml", config.source, "example7.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 8 test", "example8.%s") { config =>
-    cycleWithDialect("dialect8.yaml", config.source, "example8.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect8.yaml", config.source, "example8.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 8b $include test", "example8b.%s") { config =>
-    cycleWithDialect("dialect8.yaml", config.source, "example8b.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect8.yaml", config.source, "example8b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 8c $ref test", "example8c.%s") { config =>
-    cycleWithDialect("dialect8.yaml", config.source, "example8c.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect8.yaml", config.source, "example8c.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 8 (fragment) test", "fragment8.%s") { config =>
-    cycleWithDialect("dialect8.yaml", config.source, "fragment8.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect8.yaml", config.source, "fragment8.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 9 test", "example9.%s") { config =>
-    cycleWithDialect("dialect9.yaml", config.source, "example9.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect9.yaml", config.source, "example9.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 9b $ref test", "example9b.%s") { config =>
-    cycleWithDialect("dialect9.yaml", config.source, "example9b.json.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect9.yaml", config.source, "example9b.json.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 10a test", "example10a.%s") { config =>
-    cycleWithDialect("dialect10.yaml", config.source, "example10a.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect10.yaml", config.source, "example10a.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 10b test", "example10b.%s") { config =>
-    cycleWithDialect("dialect10.yaml", config.source, "example10b.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect10.yaml", config.source, "example10b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 10c test", "example10c.%s") { config =>
-    cycleWithDialect("dialect10.yaml", config.source, "example10c.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect10.yaml", config.source, "example10c.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 11 test", "example11.%s") { config =>
-    cycleWithDialect("dialect11.yaml", config.source, "example11.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect11.yaml", config.source, "example11.yaml", Some(Mimes.`application/yaml`))
   }
 
   ignore("generate 13a test") {
-    cycleWithDialect("dialect13a.yaml", "example13a.json", "example13a.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect13a.yaml", "example13a.json", "example13a.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 13b test", "example13b.%s") { config =>
-    cycleWithDialect("dialect13b.yaml", config.source, "example13b.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect13b.yaml", config.source, "example13b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 13c test", "example13c.%s") { config =>
-    cycleWithDialect("dialect13c.yaml", config.source, "example13c.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect13c.yaml", config.source, "example13c.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 14 test", "example14.%s") { config =>
-    cycleWithDialect("dialect14.yaml", config.source, "example14.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect14.yaml", config.source, "example14.yaml", Some(Mimes.`application/yaml`))
   }
 
   //TODO ARM for instance needed
 //  multiSourceTest("generate 15 test", "example15.%s") { config =>
 //    for {
 //      _         <- AMLPlugin.registry.registerDialect(s"file://$basePath/dialect15b.yaml")
-//      assertion <- cycleWithDialect("dialect15a.yaml", config.source, "example15.yaml", AmfJsonHint, target = Aml)
+//      assertion <- cycleWithDialect("dialect15a.yaml", config.source, "example15.yaml", arget = Aml)
 //    } yield {
 //      assertion
 //    }
@@ -603,7 +556,7 @@ trait DialectInstancesParsingTest extends DialectTests {
 //  multiSourceTest("generate 16 test", "example16a.%s") { config =>
 //    for {
 //      _         <- AMLPlugin.registry.registerDialect(s"file://$basePath/dialect16b.yaml")
-//      assertion <- cycleWithDialect("dialect16a.yaml", config.source, "example16a.yaml", AmfJsonHint, target = Aml)
+//      assertion <- cycleWithDialect("dialect16a.yaml", config.source, "example16a.yaml", arget = Aml)
 //    } yield {
 //      assertion
 //    }
@@ -612,76 +565,74 @@ trait DialectInstancesParsingTest extends DialectTests {
 //  multiSourceTest("generate 16c test", "example16c.%s") { config =>
 //    for {
 //      _         <- AMLPlugin.registry.registerDialect(s"file://$basePath/dialect16b.yaml")
-//      assertion <- cycleWithDialect("dialect16a.yaml", config.source, "example16c.yaml", AmfJsonHint, target = Aml)
+//      assertion <- cycleWithDialect("dialect16a.yaml", config.source, "example16c.yaml", arget = Aml)
 //    } yield {
 //      assertion
 //    }
 //  }
 
   multiSourceTest("generate 18 test", "example18.%s") { config =>
-    cycleWithDialect("dialect18.yaml", config.source, "example18.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect18.yaml", config.source, "example18.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 18b test", "example18b.%s") { config =>
-    cycleWithDialect("dialect18.yaml", config.source, "example18b.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect18.yaml", config.source, "example18b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 19 test", "example19.%s") { config =>
-    cycleWithDialect("dialect19.yaml", config.source, "example19.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect19.yaml", config.source, "example19.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 23 test", "example23.%s") { config =>
-    cycleWithDialect("dialect23.yaml", config.source, "example23.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect23.yaml", config.source, "example23.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 24 test", "example24.%s") { config =>
-    cycleWithDialect("dialect24.yaml", config.source, "example24.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect24.yaml", config.source, "example24.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 24 b test", "example24b.%s") { config =>
-    cycleWithDialect("dialect24.yaml", config.source, "example24b.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect24.yaml", config.source, "example24b.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 24 c test", "example24c.%s") { config =>
-    cycleWithDialect("dialect24.yaml", config.source, "example24c.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect24.yaml", config.source, "example24c.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 27a test", "example27a.%s") { config =>
-    cycleWithDialect("dialect27.yaml", config.source, "example27a.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect27.yaml", config.source, "example27a.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 28 test", "example28.%s") { config =>
-    cycleWithDialect("dialect28.yaml", config.source, "example28.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect28.yaml", config.source, "example28.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiGoldenTest("parse 29 test - keyproperty", "example29.%s") { config =>
     cycleWithDialect("dialect29.yaml",
                      "example29.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
   multiSourceTest("generate 29 test - keyproperty", "example29.%s") { config =>
-    cycleWithDialect("dialect29.yaml", config.source, "example29.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect29.yaml", config.source, "example29.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiGoldenTest("parse 29 invalid test - keyproperty", "example29.%s") { config =>
     cycleWithDialect("dialect29.yaml",
                      "example29.yaml",
                      config.golden,
-                     VocabularyYamlHint,
-                     target = Amf,
+                     mediaType = Some(Mimes.`application/ld+json`),
                      renderOptions = Some(config.renderOptions))
   }
 
   multiSourceTest("generate 30 test", "example30.%s") { config =>
-    cycleWithDialect("dialect30.yaml", config.source, "example30.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect30.yaml", config.source, "example30.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiSourceTest("generate 31 test", "example31.%s") { config =>
-    cycleWithDialect("dialect31.yaml", config.source, "example31.yaml", AmfJsonHint, target = Aml)
+    cycleWithDialect("dialect31.yaml", config.source, "example31.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiGoldenTest("Generate instance with invalid property terms", "/invalids/schema-uri/instance.%s") { config =>
@@ -689,8 +640,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "/invalids/schema-uri/dialect.yaml",
         "/invalids/schema-uri/instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions)
     )
   }
@@ -700,8 +650,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "minor.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments"
     )
@@ -712,8 +661,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "publicMinor.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments"
     )
@@ -724,8 +672,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-value"
     )
@@ -736,8 +683,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/empty-node-yaml"
     )
@@ -748,8 +694,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.json",
         config.golden,
-        VocabularyJsonHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/empty-node-json"
     )
@@ -764,8 +709,7 @@ trait DialectInstancesParsingTest extends DialectTests {
 //          "dialect.yaml",
 //          "instance.yaml",
 //          config.golden,
-//          VocabularyYamlHint,
-//          target = Amf,
+//          //          mediaType = Some(Mimes.`application/ld+json`,
 //          renderOptions = Some(config.renderOptions),
 //          directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect"
 //      )
@@ -779,8 +723,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/includes"
     )
@@ -796,8 +739,7 @@ trait DialectInstancesParsingTest extends DialectTests {
           "dialect.yaml",
           "instance.yaml",
           config.golden,
-          VocabularyYamlHint,
-          target = Amf,
+          mediaType = Some(Mimes.`application/ld+json`),
           renderOptions = Some(config.renderOptions),
           directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$dialect-with-includes",
           baseConfig = amlConfig
@@ -812,8 +754,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/$id"
     )
@@ -824,8 +765,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/id-template"
     )
@@ -836,8 +776,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = "amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key"
     )
@@ -849,8 +788,7 @@ trait DialectInstancesParsingTest extends DialectTests {
           "dialect.yaml",
           "instance.source.flattened.jsonld",
           config.golden,
-          hint = AmfJsonHint,
-          target = Amf,
+          mediaType = Some(Mimes.`application/ld+json`),
           directory = basePath + "jsonld-extended-term-definitions/",
           renderOptions = Some(config.renderOptions)
       )
@@ -861,8 +799,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        hint = VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         directory = basePath + "$base/",
         renderOptions = Some(config.renderOptions)
     )
@@ -873,8 +810,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        hint = VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         directory = basePath + "$base-with-id-template/",
         renderOptions = Some(config.renderOptions)
     )
@@ -898,8 +834,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/simple-native-links/"
     )
@@ -910,8 +845,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/native-links-with-template-ids/"
     )
@@ -922,8 +856,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/native-link-with-extra-properties/"
     )
@@ -934,8 +867,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/native-links-with-native-target/"
     )
@@ -945,8 +877,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect.yaml",
                      config.source,
                      "instance.yaml",
-                     AmfJsonHint,
-                     target = Aml,
+                     Some(Mimes.`application/yaml`),
                      directory = s"$basePath/simple-native-links/")
   }
 
@@ -954,8 +885,7 @@ trait DialectInstancesParsingTest extends DialectTests {
     cycleWithDialect("dialect.yaml",
                      config.source,
                      "instance.yaml",
-                     AmfJsonHint,
-                     target = Aml,
+                     Some(Mimes.`application/yaml`),
                      directory = s"$basePath/native-links-with-template-ids/")
   }
 
@@ -969,8 +899,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         config.source,
         golden,
-        AmfJsonHint,
-        target = Aml,
+        Some(Mimes.`application/yaml`),
         directory = s"$basePath/native-links-with-native-target/"
     )
   }
@@ -980,8 +909,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions.withCompactUris),
         directory = s"$basePath/compact-uris/"
     )
@@ -992,8 +920,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/encoded-id-template/"
     )
@@ -1004,8 +931,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/simple-node-mapping-extension/"
     )
@@ -1016,8 +942,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/node-mapping-extension-with-overriden-properties/"
     )
@@ -1028,8 +953,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/node-mapping-extension-with-id-templates/"
     )
@@ -1040,8 +964,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.jsonld",
         config.golden,
-        AmfJsonHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/array-property-mappings-with-single-string-element/"
     )
@@ -1052,8 +975,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.jsonld",
         config.golden,
-        AmfJsonHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/array-property-mappings-with-single-object-element/"
     )
@@ -1064,8 +986,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/map-key-value-without-classterm/"
     )
@@ -1076,8 +997,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.flattened.jsonld",
         "instance.golden.flattened.jsonld",
-        AmfJsonHint,
-        target = Aml,
+        Some(Mimes.`application/yaml`),
         renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint),
         directory = s"$basePath/cyclic-references/"
     )
@@ -1088,8 +1008,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/mapValue-with-multiple/"
     )
@@ -1100,8 +1019,7 @@ trait DialectInstancesParsingTest extends DialectTests {
         "dialect.yaml",
         "instance.yaml",
         "instance.golden.flattened.jsonld",
-        VocabularyYamlHint,
-        target = Amf,
+        mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint),
         directory = s"$basePath/encoded-named/"
     )
@@ -1110,9 +1028,8 @@ trait DialectInstancesParsingTest extends DialectTests {
   //noinspection SameParameterValue
   protected def withInlineDialect(source: String,
                                   golden: String,
-                                  hint: Hint,
-                                  target: Vendor,
+                                  mediaType: Option[String],
                                   amlConfig: AMLConfiguration,
                                   renderOptions: Option[RenderOptions] = None): Future[Assertion] =
-    cycle(source, golden, hint, target, amlConfig = amlConfig)
+    cycle(source, golden, mediaType, amlConfig = amlConfig)
 }

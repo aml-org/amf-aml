@@ -41,14 +41,6 @@
     },
     {
       "@id": "",
-      "doc:references": [
-        {
-          "@id": "./people.library.yaml"
-        },
-        {
-          "@id": "./person.fragment.yaml"
-        }
-      ],
       "@type": [
         "meta:DialectInstance",
         "doc:Document",
@@ -66,45 +58,6 @@
       },
       "doc:version": "3.1.0",
       "doc:root": true
-    },
-    {
-      "@id": "./people.library.yaml",
-      "@type": [
-        "meta:DialectInstanceLibrary",
-        "doc:Module",
-        "doc:Unit"
-      ],
-      "meta:definedBy": [
-        {
-          "@id": "./dialect.yaml"
-        }
-      ],
-      "doc:declares": [
-        {
-          "@id": "./people.library.yaml#/owners/MP9"
-        }
-      ],
-      "doc:version": "3.1.0",
-      "doc:root": false
-    },
-    {
-      "@id": "./person.fragment.yaml",
-      "@type": [
-        "meta:DialectInstanceFragment",
-        "doc:Fragment",
-        "doc:Unit"
-      ],
-      "meta:definedBy": [
-        {
-          "@id": "./dialect.yaml"
-        }
-      ],
-      "meta:fragment": "Owner",
-      "doc:encodes": {
-        "@id": "./person.fragment.yaml#/encodes"
-      },
-      "doc:version": "3.1.0",
-      "doc:root": false
     }
   ],
   "@context": {

@@ -1,7 +1,7 @@
 package amf.aml.internal.parse.dialects
 
 import amf.core.internal.parser.{Root, YNodeLikeOps}
-import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode}
+import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode, SourceSpec}
 import amf.core.internal.metamodel.document.FragmentModel
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
@@ -21,7 +21,14 @@ import amf.aml.internal.parse.dialects.DialectAstOps._
 import amf.aml.internal.parse.dialects.property.like.{AnnotationMappingParser, PropertyLikeMappingParser}
 import amf.aml.internal.parse.instances.BaseDirective
 import amf.aml.internal.validate.DialectValidations
-import amf.aml.internal.validate.DialectValidations.{DialectError, EventualAmbiguity, UnavoidableAmbiguity, VariablesDefinedInBase}
+import amf.aml.internal.validate.DialectValidations.{
+  DialectError,
+  EventualAmbiguity,
+  UnavoidableAmbiguity,
+  VariablesDefinedInBase
+}
+import amf.core.internal.remote.Spec
+import amf.core.internal.remote.Spec.AML
 import org.yaml.model._
 
 import scala.collection.{immutable, mutable}
@@ -104,6 +111,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
     ctx.futureDeclarations.resolve()
 
+    dialect.annotations += SourceSpec(AML)
     dialect
   }
 
@@ -820,7 +828,6 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       case _ => //
     }
     ctx.futureDeclarations.resolve()
-
     toLibrary(dialect)
   }
 
@@ -838,6 +845,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     val externals = dialect.externals
     if (externals.nonEmpty) library.withExternals(externals)
 
+    library.annotations += SourceSpec(AML)
     library
   }
 
@@ -870,6 +878,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       case _                            => // ignore
     }
 
+    fragment.encodes.annotations += SourceSpec(AML)
     fragment
   }
 

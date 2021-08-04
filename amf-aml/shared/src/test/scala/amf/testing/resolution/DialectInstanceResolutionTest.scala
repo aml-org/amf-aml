@@ -1,6 +1,8 @@
 package amf.testing.resolution
 
-import amf.core.internal.remote.{Amf, Aml, VocabularyYamlHint}
+import amf.core.internal.remote.Mimes.`application/yaml`
+import amf.core.internal.remote.Syntax.Yaml
+import amf.core.internal.remote.{Amf, Aml, Mimes, VocabularyYamlHint}
 import amf.core.internal.unsafe.PlatformSecrets
 
 import scala.concurrent.ExecutionContext
@@ -12,35 +14,34 @@ class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
 
   test("resolve fragment test") {
-    cycleWithDialect("dialect8.yaml", "example8.yaml", "example8.resolved.yaml", VocabularyYamlHint, Aml)
+    cycleWithDialect("dialect8.yaml", "example8.yaml", "example8.resolved.yaml", mediaType = Some(`application/yaml`))
   }
 
   test("resolve library test") {
-    cycleWithDialect("dialect9.yaml", "example9.yaml", "example9.resolved.yaml", VocabularyYamlHint, Aml)
+    cycleWithDialect("dialect9.yaml", "example9.yaml", "example9.resolved.yaml", mediaType = Some(`application/yaml`))
   }
 
   test("resolve patch 22a test") {
-    cycleWithDialect("dialect22.yaml", "patch22.yaml", "patch22.resolved.yaml", VocabularyYamlHint, Aml)
+    cycleWithDialect("dialect22.yaml", "patch22.yaml", "patch22.resolved.yaml", mediaType = Some(`application/yaml`))
   }
 
   test("resolve patch 22b test") {
-    cycleWithDialect("dialect22.yaml", "patch22b.yaml", "patch22b.resolved.yaml", VocabularyYamlHint, Aml)
+    cycleWithDialect("dialect22.yaml", "patch22b.yaml", "patch22b.resolved.yaml", mediaType = Some(`application/yaml`))
   }
 
   test("resolve patch 22c test") {
-    cycleWithDialect("dialect22.yaml", "patch22c.yaml", "patch22c.resolved.yaml", VocabularyYamlHint, Aml)
+    cycleWithDialect("dialect22.yaml", "patch22c.yaml", "patch22c.resolved.yaml", mediaType = Some(`application/yaml`))
   }
 
   test("resolve patch 22d test") {
-    cycleWithDialect("dialect22.yaml", "patch22d.yaml", "patch22d.resolved.yaml", VocabularyYamlHint, Aml)
+    cycleWithDialect("dialect22.yaml", "patch22d.yaml", "patch22d.resolved.yaml", mediaType = Some(`application/yaml`))
   }
 
   test("Resolve patch properties to AML") {
     cycleWithDialect("dialect.yaml",
                      "patch.yaml",
                      "patch.resolved.yaml",
-                     VocabularyYamlHint,
-                     target = Aml,
+                     Some(`application/yaml`),
                      directory = s"$basePath/patch-properties/")
   }
 
@@ -49,9 +50,8 @@ class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests 
         "dialect.yaml",
         "instance.yaml",
         config.golden,
-        VocabularyYamlHint,
+        Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
-        target = Amf,
         directory = s"$basePath/declares-in-self-encoded/"
     )
   }
@@ -61,8 +61,7 @@ class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests 
         "dialect.yaml",
         "patch.yaml",
         config.golden,
-        VocabularyYamlHint,
-        target = Amf,
+        Some(Mimes.`application/ld+json`),
         renderOptions = Some(config.renderOptions),
         directory = s"$basePath/patch-properties/"
     )

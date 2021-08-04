@@ -1,6 +1,4 @@
 #%Pets 1.0
-uses:
-  people: people.library.yaml
 name: Dogge
 owner:
   -

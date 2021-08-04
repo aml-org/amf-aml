@@ -1,17 +1,20 @@
 package amf.aml.internal.parse.plugin
 
+import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
+import amf.aml.internal.parse.headers.{DialectHeader, ExtensionHeader}
+import amf.aml.internal.parse.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler}
 import amf.core.internal.parser.Root
-import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
-import amf.aml.internal.parse.dialects.{DialectContext, DialectsParser}
-import amf.aml.internal.parse.vocabularies.{VocabulariesParser, VocabularyContext}
-import amf.aml.internal.parse.headers.{DialectHeader, ExtensionHeader}
+import amf.core.internal.remote.Mimes._
+import amf.core.internal.remote.Spec
 
 class AMLVocabularyParsingPlugin extends AMFParsePlugin {
+
+  override def spec: Spec = Spec.AML
 
   override def parse(document: Root, ctx: ParserContext): BaseUnit = {
     val header = DialectHeader(document)
@@ -42,11 +45,10 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
   /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-  override def mediaTypes: Seq[String] = Seq("application/aml", "application/yaml", "application/aml+yaml")
+  override def mediaTypes: Seq[String] = Seq(`application/yaml`)
 
   /**
     * media types which specifies vendors that may be referenced.
     */
-  override def validMediaTypesToReference: scala.Seq[String] =
-    Seq("application/aml", "application/yaml", "application/aml+yaml")
+  override def validSpecsToReference: scala.Seq[Spec] = Seq(Spec.AML)
 }

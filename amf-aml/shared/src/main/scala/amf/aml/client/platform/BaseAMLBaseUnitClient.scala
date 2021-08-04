@@ -34,20 +34,6 @@ abstract class BaseAMLBaseUnitClient private[amf] (private val _internal: Intern
     _internal.parseDialectInstance(url).asClient
 
   /**
-    * @param url of the validation profile to parse
-    * @return a CompletableFuture [[ValidationProfile]]
-    */
-  def parseValidationProfile(url: String): ClientFuture[ValidationProfile] =
-    _internal.parseValidationProfile(url).asClient
-
-  /**
-    * @param instance of the validation profile dialect to parse
-    * @return a [[ValidationProfile]]
-    */
-  def parseValidationProfile(instance: DialectInstance): ValidationProfile =
-    _internal.parseValidationProfile(instance)
-
-  /**
     * parse a [[amf.aml.client.scala.model.document.Vocabulary]]
     *
     * @param url of the resource to parse
