@@ -1,0 +1,32 @@
+{
+  "@type": "http://www.w3.org/ns/shacl#ValidationReport",
+  "http://www.w3.org/ns/shacl#conforms": false,
+  "http://www.w3.org/ns/shacl#result": [
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/validations/vocabularies/missing-vocabulary-term/vocabulary.yaml"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Cannot find required 'base' term",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#missing-base-term"
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Warning"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/validations/vocabularies/missing-vocabulary-term/vocabulary.yaml"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Cannot find required 'vocabulary' term",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#missing-vocabulary-term"
+      }
+    }
+  ]
+}

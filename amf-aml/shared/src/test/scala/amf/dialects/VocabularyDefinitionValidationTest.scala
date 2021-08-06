@@ -36,6 +36,14 @@ class VocabularyDefinitionValidationTest
     validate("vocabulary.yaml", Some("validation.jsonld"), "missing-property-term")
   }
 
+  test("Test missing vocabulary term") {
+    validate("vocabulary.yaml", Some("validation.jsonld"), "missing-vocabulary-term")
+  }
+
+  test("Test missing base term") {
+    validate("vocabulary.yaml", Some("validation.jsonld"), "missing-base-term")
+  }
+
   private def compilerContext(url: String) =
     new CompilerContextBuilder(url, platform, eh = DefaultParserErrorHandler.withRun()).build()
 
