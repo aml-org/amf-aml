@@ -12,6 +12,14 @@ import amf.core.client.common.position.Range
 
 trait SyntaxErrorReporter { this: ParserContext =>
 
+  def missingVocabularyTermWarning(node: String, ast: YPart): Unit = {
+    eh.warning(MissingVocabularyTerm, node, "Cannot find required 'vocabulary' term", ast)
+  }
+
+  def missingBaseTermViolation(node: String, ast: YPart): Unit = {
+    eh.violation(MissingBaseTerm, node, "Cannot find required 'base' term", ast)
+  }
+
   def missingClassTermWarning(term: String, node: String, ast: YPart): Unit = {
     eh.warning(MissingClassTermSpecification, node, s"Cannot find class vocabulary term $term", ast)
   }
