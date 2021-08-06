@@ -34,10 +34,8 @@ object DefaultNodeMappableFinder {
     }
     new DefaultNodeMappableFinder(knownDialects)
   }
-  def apply(ctx: AMLConfiguration) = {
-    val knownDialects = ctx.registry.plugins.parsePlugins.collect {
-      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
-    }
+  def apply(config: AMLConfiguration) = {
+    val knownDialects = config.configurationState().getDialects()
     new DefaultNodeMappableFinder(knownDialects)
   }
   def empty() = new DefaultNodeMappableFinder(Seq.empty)

@@ -16,7 +16,7 @@ import amf.core.internal.remote.Mimes._
 class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
     extends AMFRenderPlugin
     with AMLDialectInstancePlugin[RenderInfo] {
-  override val id: String = s"${dialect.id}/dialect-instances-rendering-plugin"
+  override val id: String = s"${dialect.nameAndVersion()}/dialect-instances-rendering-plugin"
 
   override def priority: PluginPriority = NormalPriority
 

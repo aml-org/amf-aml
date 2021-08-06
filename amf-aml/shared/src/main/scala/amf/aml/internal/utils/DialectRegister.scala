@@ -29,11 +29,9 @@ private[amf] case class DialectRegister(d: Dialect) {
   }
 
   def register(amlConfig: AMLConfiguration): AMLConfiguration = {
-    val existingDialects = amlConfig.registry.plugins.parsePlugins.collect {
-      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
-    }
-    val finder  = DefaultNodeMappableFinder(existingDialects)
-    val profile = new AMFDialectValidations(dialect)(finder).profile() // TODO ARM if i use resolved dialect this throws null pointer
+    val existingDialects = amlConfig.configurationState().getDialects()
+    val finder           = DefaultNodeMappableFinder(existingDialects)
+    val profile          = new AMFDialectValidations(dialect)(finder).profile() // TODO ARM if i use resolved dialect this throws null pointer
     val newConfig = amlConfig
       .withPlugins(plugins)
       .withValidationProfile(profile)

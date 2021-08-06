@@ -19,7 +19,7 @@ case class AMLDialectNamespaceAliasesPlugin private (dialect: Dialect, aliases: 
 
   override def aliases(_unit: BaseUnit): NamespaceAliases = aliases
 
-  override val id: String = s"${dialect.id}/dialect-namespace-generation-plugin"
+  override val id: String = s"${dialect.nameAndVersion()}/dialect-namespace-generation-plugin"
 
   override def priority: PluginPriority = NormalPriority
 }

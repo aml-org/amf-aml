@@ -33,7 +33,7 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
     extends AMFParsePlugin
     with AMLDialectInstancePlugin[Root] {
 
-  override val id: String = s"${dialect.id}/dialect-instances-parsing-plugin"
+  override val id: String = s"${dialect.nameAndVersion()}/dialect-instances-parsing-plugin"
 
   override def priority: PluginPriority = NormalPriority
 
