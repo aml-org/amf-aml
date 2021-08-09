@@ -8,9 +8,11 @@ import amf.core.internal.parser.domain.{Annotations, ScalarNode, ValueNode}
 import amf.aml.internal.metamodel.domain.PropertyLikeMappingModel
 import amf.aml.internal.metamodel.domain.PropertyMappingModel.{LiteralRange, ObjectRange}
 import amf.aml.client.scala.model.domain.PropertyLikeMapping
+import amf.aml.internal.parse.dialects.DialectContext
 import org.yaml.model.{YMap, YMapEntry, YSequence, YType}
 
-case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel]) {
+case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(
+    implicit val ctx: DialectContext) {
   def parse(): Unit = {
     map.key(
         "range",
