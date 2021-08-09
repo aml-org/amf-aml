@@ -17,7 +17,6 @@ import amf.aml.internal.render.plugin.{
   AMLVocabularyRenderingPlugin
 }
 import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
-import amf.aml.internal.unsafe.RdfFrameworkSecret
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
 import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin}
 import amf.core.client.scala.AMFGraphConfiguration
@@ -164,7 +163,6 @@ object AMLConfiguration extends PlatformSecrets {
   def predefined(): AMLConfiguration = {
     val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
     VocabulariesRegister.register() // TODO ARM remove when APIMF-3000 is done
-    RdfFrameworkSecret.init()
     val predefinedPlugins = new AMLDialectParsingPlugin() ::
       new AMLVocabularyParsingPlugin() ::
       new AMLDialectRenderingPlugin() ::
