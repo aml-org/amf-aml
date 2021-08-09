@@ -110,4 +110,11 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
         jsonldReport = false
     )
   }
+
+  test("Property mapping with null range") {
+    validate(
+        "/null-range/dialect.yaml",
+        Some("/null-range/report.json")
+    )
+  }
 }
