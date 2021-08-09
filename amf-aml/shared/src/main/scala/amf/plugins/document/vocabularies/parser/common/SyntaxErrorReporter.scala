@@ -10,6 +10,14 @@ import org.yaml.model.{YNode, YPart}
 
 trait SyntaxErrorReporter { this: ParserContext =>
 
+  def missingVocabularyTermWarning(node: String, ast: YPart): Unit = {
+    eh.warning(MissingVocabularyTerm, node, "Cannot find required 'vocabulary' term", ast)
+  }
+
+  def missingBaseTermViolation(node: String, ast: YPart): Unit = {
+    eh.violation(MissingBaseTerm, node, "Cannot find required 'base' term", ast)
+  }
+
   def missingClassTermWarning(term: String, node: String, ast: YPart): Unit = {
     eh.warning(MissingClassTermSpecification, node, s"Cannot find class vocabulary term $term", ast)
   }
@@ -24,34 +32,34 @@ trait SyntaxErrorReporter { this: ParserContext =>
 
   def missingPropertyRangeViolation(term: String, node: String, annotations: Annotations): Unit = {
     eh.violation(
-      MissingPropertyRangeSpecification,
-      node,
-      Some(PropertyMappingModel.ObjectRange.value.iri()),
-      s"Cannot find property range term $term",
-      annotations.find(classOf[LexicalInformation]),
-      annotations.find(classOf[SourceLocation]).map(_.location)
+        MissingPropertyRangeSpecification,
+        node,
+        Some(PropertyMappingModel.ObjectRange.value.iri()),
+        s"Cannot find property range term $term",
+        annotations.find(classOf[LexicalInformation]),
+        annotations.find(classOf[SourceLocation]).map(_.location)
     )
   }
 
   def missingPropertyKeyViolation(node: String, field: String, label: String, annotations: Annotations): Unit = {
     eh.violation(
-      MissingPropertyRangeSpecification,
-      node,
-      Some(field),
-      s"Cannot find property $label in mapping range",
-      annotations.find(classOf[LexicalInformation]),
-      annotations.find(classOf[SourceLocation]).map(_.location)
+        MissingPropertyRangeSpecification,
+        node,
+        Some(field),
+        s"Cannot find property $label in mapping range",
+        annotations.find(classOf[LexicalInformation]),
+        annotations.find(classOf[SourceLocation]).map(_.location)
     )
   }
 
   def differentTermsInMapKey(node: String, field: String, label: String, annotations: Annotations): Unit = {
     eh.violation(
-      DifferentTermsInMapKey,
-      node,
-      Some(field),
-      s"Cannot find property $label in mapping range",
-      annotations.find(classOf[LexicalInformation]),
-      annotations.find(classOf[SourceLocation]).map(_.location)
+        DifferentTermsInMapKey,
+        node,
+        Some(field),
+        s"Cannot find property $label in mapping range",
+        annotations.find(classOf[LexicalInformation]),
+        annotations.find(classOf[SourceLocation]).map(_.location)
     )
   }
 
@@ -61,31 +69,31 @@ trait SyntaxErrorReporter { this: ParserContext =>
                                               found: String,
                                               valueNode: YNode): Unit = {
     eh.violation(
-      InconsistentPropertyRangeValueSpecification,
-      node,
-      Some(property.nodePropertyMapping().value()),
-      s"Cannot find expected range for property ${property.nodePropertyMapping().value()} (${property.name().value()}). Found '$found', expected '$expected'",
-      Some(new LexicalInformation(Range(valueNode.range))),
-      valueNode.sourceName.option
+        InconsistentPropertyRangeValueSpecification,
+        node,
+        Some(property.nodePropertyMapping().value()),
+        s"Cannot find expected range for property ${property.nodePropertyMapping().value()} (${property.name().value()}). Found '$found', expected '$expected'",
+        Some(new LexicalInformation(Range(valueNode.range))),
+        valueNode.sourceName.option
     )
 
   }
 
   def closedNodeViolation(id: String, property: String, nodeType: String, ast: YPart): Unit = {
     eh.violation(
-      ClosedShapeSpecification,
-      id,
-      s"Property: '$property' not supported in a $nodeType node",
-      ast
+        ClosedShapeSpecification,
+        id,
+        s"Property: '$property' not supported in a $nodeType node",
+        ast
     )
   }
 
   def missingPropertyViolation(id: String, property: String, nodeType: String, ast: YPart): Unit = {
     eh.violation(
-      MissingPropertySpecification,
-      id,
-      s"Property: '$property' mandatory in a $nodeType node",
-      ast
+        MissingPropertySpecification,
+        id,
+        s"Property: '$property' mandatory in a $nodeType node",
+        ast
     )
   }
 }
