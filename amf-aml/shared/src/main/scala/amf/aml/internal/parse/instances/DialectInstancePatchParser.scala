@@ -21,7 +21,7 @@ class DialectInstancePatchParser(root: Root)(implicit override val ctx: DialectI
         patch.withExtendsModel(platform.resolvePath(entry.value.as[String]))
 
       case Some(entry) =>
-        ctx.eh.violation(DialectError, patch.id, "Patch $target must be a valid URL", entry.value)
+        ctx.eh.violation(DialectError, patch.id, "Patch $target must be a valid URL", entry.value.location)
 
       case _ => // ignore
     }

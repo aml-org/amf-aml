@@ -1,6 +1,6 @@
 package amf.aml.internal.parse.instances
 
-import amf.core.client.scala.parse.document.ParserContext
+import amf.core.client.scala.parse.document.{ParserContext, SyamlBasedParserErrorHandler}
 import amf.core.internal.parser.YMapOps
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.aml.client.scala.model.document.Dialect
@@ -16,7 +16,10 @@ class DialectInstanceContext(var dialect: Dialect,
                              val nodeMappableFinder: NodeMappableFinder,
                              private val wrapped: ParserContext,
                              private val ds: Option[DialectInstanceDeclarations] = None)
-    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.config)
+    extends SyamlBasedParserErrorHandler(wrapped.rootContextDocument,
+                                         wrapped.refs,
+                                         wrapped.futureDeclarations,
+                                         wrapped.config)
     with DeclarationContext
     with SyntaxErrorReporter {
 

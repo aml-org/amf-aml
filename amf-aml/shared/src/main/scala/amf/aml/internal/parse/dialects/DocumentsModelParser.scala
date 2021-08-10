@@ -11,7 +11,7 @@ case class DocumentsModelParser(node: YNode, parentId: String, name: String)(imp
     node.tagType match {
       case YType.Map => parseMap(node.as[YMap])
       case _ =>
-        ctx.eh.violation(SyamlError, "", s"Map expected inside documents, found [${node.tagType}]", node)
+        ctx.eh.violation(SyamlError, "", s"Map expected inside documents, found [${node.tagType}]", node.location)
         noMap
     }
 
