@@ -32,7 +32,7 @@ case class PropertyTermParser(map: YMap, propertyLikeMapping: PropertyLikeMappin
             ctx.eh.violation(DialectError,
                              propertyLikeMapping.id,
                              s"Cannot find property term with alias $propertyTermId",
-                             e.value)
+                             e.value.location)
         }
       case _ =>
         val name = propertyLikeMapping.name().value()

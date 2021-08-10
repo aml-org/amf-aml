@@ -127,7 +127,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             }
           }
         case YType.Null =>
-        case t          => ctx.eh.violation(DialectError, parent, s"Invalid type $t for 'annotationMappings' node", e.value)
+        case t =>
+          ctx.eh.violation(DialectError, parent, s"Invalid type $t for 'annotationMappings' node", e.value.location)
       }
     }
   }
@@ -410,7 +411,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             val nodeName = entry.key.toString
             if (AmlScalars.all.contains(nodeName)) {
               ctx.eh
-                .violation(DialectError, parent, s"Error parsing node mapping: '$nodeName' is a reserved name", entry.location)
+                .violation(DialectError,
+                           parent,
+                           s"Error parsing node mapping: '$nodeName' is a reserved name",
+                           entry.location)
             } else {
               val adopt: DomainElement => Any = {
                 case nodeMapping: NodeMappable =>
@@ -440,7 +444,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             }
           }
         case YType.Null =>
-        case t          => ctx.eh.violation(DialectError, parent, s"Invalid type $t for 'nodeMappings' node.", e.value)
+        case t          => ctx.eh.violation(DialectError, parent, s"Invalid type $t for 'nodeMappings' node.", e.value.location)
       }
     }
   }
@@ -465,13 +469,13 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                   ctx.eh.violation(DialectError,
                                    unionNodeMapping.id,
                                    s"Union node mappings must be declared as lists of node mapping references",
-                                   entry.value)
+                                   entry.value.location)
               }
             case _ =>
               ctx.eh.violation(DialectError,
                                unionNodeMapping.id,
                                s"Union node mappings must be declared as lists of node mapping references",
-                               entry.value)
+                               entry.value.location)
           }
         }
     )
@@ -514,7 +518,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               ctx.eh.violation(DialectError,
                                nodeMapping.id,
                                s"Cannot find class term with alias $classTermId",
-                               entry.value)
+                               entry.value.location)
           }
         }
     )
@@ -529,7 +533,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             ctx.eh.violation(DialectError,
                              nodeMapping.id,
                              s"Unsupported node mapping patch operation '$patchMethod'",
-                             entry.value)
+                             entry.value.location)
           }
         }
     )
@@ -580,7 +584,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                   DialectError,
                   nodeMapping.id,
                   s"Cannot find extended node mapping with reference '${reference.map(_.toString()).getOrElse("")}'",
-                  entry.value)
+                  entry.value.location)
           }
         }
     )
@@ -693,7 +697,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             ctx.eh.violation(DialectError,
                              propertyMapping.id,
                              s"Unsupported property mapping patch operation '$patchMethod'",
-                             entry.value)
+                             entry.value.location)
           }
         }
     )
@@ -731,7 +735,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       _ <- mapValue
       _ <- mapTermValue
     } yield {
-      ctx.eh.violation(DialectError, propertyMapping.id, s"mapValue and mapTermValue are mutually exclusive", map.location)
+      ctx.eh
+        .violation(DialectError, propertyMapping.id, s"mapValue and mapTermValue are mutually exclusive", map.location)
     }
 
     mapTermValue.fold({
@@ -755,7 +760,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         ctx.declarations.findPropertyTerm(iri, All) match {
           case Some(term) => Some(term.id)
           case _ =>
-            ctx.eh.violation(DialectError, propertyMappingId, s"Cannot find property term with alias $iri", ast.location)
+            ctx.eh
+              .violation(DialectError, propertyMappingId, s"Cannot find property term with alias $iri", ast.location)
             None
         }
     }
@@ -770,7 +776,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                            s"PropertyMapping for idTemplate variable '$variable' must be mandatory",
                            map.location)
         case None =>
-          ctx.eh.violation(DialectError, "", s"Missing propertyMapping for idTemplate variable '$variable'", map.location)
+          ctx.eh.violation(DialectError,
+                           "",
+                           s"Missing propertyMapping for idTemplate variable '$variable'",
+                           map.location)
         case _ => // ignore
       }
     }

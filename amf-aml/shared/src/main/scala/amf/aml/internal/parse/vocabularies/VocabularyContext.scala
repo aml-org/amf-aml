@@ -1,6 +1,6 @@
 package amf.aml.internal.parse.vocabularies
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.client.scala.parse.document.ParserContext
+import amf.core.client.scala.parse.document.{ParserContext, SyamlBasedParserErrorHandler}
 import amf.aml.client.scala.model.document.Vocabulary
 import amf.aml.client.scala.model.domain.{ClassTerm, PropertyTerm}
 import amf.aml.internal.parse.common.SyntaxErrorReporter
@@ -9,7 +9,10 @@ import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import org.yaml.model.YPart
 
 class VocabularyContext(private val wrapped: ParserContext, private val ds: Option[VocabularyDeclarations] = None)
-    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.config)
+    extends SyamlBasedParserErrorHandler(wrapped.rootContextDocument,
+                                         wrapped.refs,
+                                         wrapped.futureDeclarations,
+                                         wrapped.config)
     with VocabularySyntax
     with SyntaxErrorReporter {
 

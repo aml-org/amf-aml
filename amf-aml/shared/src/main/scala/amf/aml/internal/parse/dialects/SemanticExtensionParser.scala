@@ -29,7 +29,7 @@ case class SemanticExtensionParser(entry: YMapEntry, parent: String)(implicit va
         ctx.eh.violation(DialectError,
                          parent,
                          s"Invalid type $t (expected ${YType.Str}) for semantic extension node $name",
-                         entry.value)
+                         entry.value.location)
         None
     }
   }

@@ -17,7 +17,7 @@ case class DocumentOptionsParser(into: DocumentsModel)(override implicit val ctx
         ctx.closedNode("documentsMappingOptions", into.id, optionsMap)
         parseOptions(optionsMap)
       case _ =>
-        ctx.eh.violation(DialectError, into.id, "Options for a documents mapping must be a map", entry.value)
+        ctx.eh.violation(DialectError, into.id, "Options for a documents mapping must be a map", entry.value.location)
     }
   }
 

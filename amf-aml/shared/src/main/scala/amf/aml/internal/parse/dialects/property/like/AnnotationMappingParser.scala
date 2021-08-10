@@ -31,7 +31,7 @@ case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit va
           .violation(DialectError,
                      parent,
                      s"Invalid type $t (expected ${YType.Map}) for annotation mapping node $name",
-                     entry.value)
+                     entry.value.location)
         None
     }
   }
