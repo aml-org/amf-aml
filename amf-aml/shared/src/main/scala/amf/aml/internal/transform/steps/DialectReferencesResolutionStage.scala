@@ -51,6 +51,7 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
           .withExternals(finalExternals)
           .withName(dialect.name().value())
           .withVersion(dialect.version().value())
+          .withExtensions(dialect.extensions())
       case library: DialectLibrary =>
         DialectLibrary()
           .withId(library.id)
