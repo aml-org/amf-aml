@@ -69,7 +69,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     new AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options)
 
   override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
-  def elementClient(): AMLElementClient            = new AMLElementClient(this)
+  override def elementClient(): AMLElementClient   = new AMLElementClient(this)
   def configurationState(): AMLConfigurationState  = new AMLConfigurationState(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =
