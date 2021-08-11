@@ -42,6 +42,7 @@
 ],
 "http://a.ml/vocabularies/core#name": "Test",
 "http://a.ml/vocabularies/core#version": "1.0",
+"http://a.ml/vocabularies/meta#extensions": [],
 "http://a.ml/vocabularies/meta#externals": [],
 "http://a.ml/vocabularies/meta#documents": {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-fragment/dialect.yaml/documents"
