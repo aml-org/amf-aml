@@ -301,7 +301,7 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: 
     extractPropertyValue(propertyConstraint, element).foreach {
       case ExtractedPropertyValue(obj: AmfObject, _) =>
         val current = obj.meta.`type`.map(_.iri())
-        if (propertyConstraint.`class`.exists(t => !current.contains(t)))
+        if (!propertyConstraint.`class`.exists(t => current.contains(t)))
           reportBuilder.reportFailure(validationSpecification, propertyConstraint, element.id)
       case _ => // ignore
     }
