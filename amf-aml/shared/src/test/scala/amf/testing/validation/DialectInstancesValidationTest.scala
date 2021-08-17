@@ -213,4 +213,7 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
     validate("dialect.yaml", "instance.yaml", Some("report.json"), path = s"$basePath/additional-nodes-in-union-node")
   }
 
+  test("Union range should conform") {
+    validate("dialect.yaml", "instance.yaml", Some("conforms.json"), path = s"$basePath/union-range")
+  }
 }
