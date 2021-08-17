@@ -4,25 +4,29 @@ import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
 import amf.aml.internal.AMLDialectInstancePlugin
 import amf.aml.internal.render.emitters.instances.{DefaultNodeMappableFinder, DialectInstancesEmitter}
 import amf.core.client.common.{NormalPriority, PluginPriority}
+import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.plugins.render.{AMFRenderPlugin, RenderConfiguration, RenderInfo}
-import org.yaml.builder.{DocBuilder, YDocumentBuilder}
+import amf.core.internal.plugins.render.{RenderConfiguration, RenderInfo, SYAMLASTBuilder, SYAMLBasedRenderPlugin}
+import amf.core.internal.plugins.syntax.ASTBuilder
 import amf.core.internal.remote.Mimes._
+import org.yaml.builder.{DocBuilder, YDocumentBuilder}
+import org.yaml.model.YDocument
 
 /**
   * Parsing plugin for dialect instance like units derived from a resolved dialect
   * @param dialect resolved dialect
   */
 class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
-    extends AMFRenderPlugin
+    extends SYAMLBasedRenderPlugin
     with AMLDialectInstancePlugin[RenderInfo] {
   override val id: String = s"${dialect.nameAndVersion()}/dialect-instances-rendering-plugin"
 
   override def priority: PluginPriority = NormalPriority
 
-  override def emit[T](unit: BaseUnit, builder: DocBuilder[T], config: RenderConfiguration): Boolean = {
+  override def emit[T](unit: BaseUnit, builder: ASTBuilder[T], config: RenderConfiguration): Boolean = {
     builder match {
-      case sb: YDocumentBuilder =>
+      case sb: SYAMLASTBuilder =>
         unparse(unit, config) exists { doc =>
           sb.document = doc
           true
@@ -52,4 +56,9 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
 
   override def mediaTypes: Seq[String] =
     Seq(`application/yaml`, `application/json`)
+
+  override protected def unparseAsYDocument(unit: BaseUnit,
+                                            renderOptions: RenderOptions,
+                                            errorHandler: AMFErrorHandler): Option[YDocument] =
+    throw new UnsupportedOperationException("Unreachable code")
 }
