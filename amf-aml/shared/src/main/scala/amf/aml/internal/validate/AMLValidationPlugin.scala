@@ -1,6 +1,6 @@
 package amf.aml.internal.validate
 
-import amf.aml.client.scala.model.document.DialectInstance
+import amf.aml.client.scala.model.document.{DialectInstance, DialectInstanceUnit}
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.core.client.common.{HighPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
@@ -18,7 +18,7 @@ class AMLValidationPlugin() extends AMFValidatePlugin {
 
   override def priority: PluginPriority = HighPriority
 
-  override def applies(info: ValidationInfo): Boolean = info.baseUnit.isInstanceOf[DialectInstance]
+  override def applies(info: ValidationInfo): Boolean = info.baseUnit.isInstanceOf[DialectInstanceUnit]
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
