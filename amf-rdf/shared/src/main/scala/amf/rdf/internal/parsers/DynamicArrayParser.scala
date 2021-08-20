@@ -3,8 +3,8 @@ package amf.rdf.internal.parsers
 import amf.core.client.scala.model.domain.{ArrayNode, DataNode}
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.parser.domain.Annotations
+import amf.rdf.client.scala.{PropertyObject, Uri}
 import amf.rdf.internal.graph.NodeFinder
-import amf.rdf.client.scala.{Literal, Node, PropertyObject, Uri}
 import amf.rdf.internal.{RdfParserCommon, RdfParserContext}
 
 class DynamicArrayParser(linkFinder: NodeFinder, sourcesRetriever: SourcesRetriever)(

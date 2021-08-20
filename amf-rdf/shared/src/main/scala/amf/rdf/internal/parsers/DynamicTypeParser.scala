@@ -6,8 +6,8 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.metamodel.domain.{ArrayNodeModel, DomainElementModel, LinkNodeModel, ScalarNodeModel}
 import amf.core.internal.parser.domain.Annotations
 import amf.rdf.client.scala.{Literal, Node, PropertyObject, Uri}
-import amf.rdf.internal.graph.NodeFinder
 import amf.rdf.internal._
+import amf.rdf.internal.graph.NodeFinder
 
 import scala.collection.mutable
 
