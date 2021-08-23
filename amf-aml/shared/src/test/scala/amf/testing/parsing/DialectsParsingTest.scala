@@ -113,7 +113,7 @@ trait DialectsParsingTest extends DialectTests {
   }
 
   multiGoldenTest("parse 24 test", "example24.%s") { config =>
-    cycle("example24.yaml", config.golden, VocabularyYamlHint, target = Amf, amlConfig = config.config)
+    cycle("example24.yaml", config.golden, Some(Mimes.`application/ld+json`), amlConfig = config.config)
   }
 
   multiGoldenTest("parse mappings_lib test", "mappings_lib.%s") { config =>
@@ -217,7 +217,7 @@ trait DialectsParsingTest extends DialectTests {
   }
 
   multiSourceTest("generate 24 test", "example24.%s") { config =>
-    cycle(config.source, "example24.yaml", AmfJsonHint, target = Aml)
+    cycle(config.source, "example24.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiGoldenTest("no documents on dialect (raml -> json)", "no-documents.%s") { config =>
