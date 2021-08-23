@@ -48,13 +48,13 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
 
   def containsProperty(property: PropertyMapping): Boolean = _internal.containsProperty(property)
 
-  def setObjectProperty(uri: String, value: DialectDomainElement): this.type = {
-    _internal.setObjectProperty(uri, value)
+  def withObjectProperty(uri: String, value: DialectDomainElement): this.type = {
+    _internal.withObjectProperty(uri, value)
     this
   }
 
-  def setObjectCollectionProperty(propertyId: String, value: ClientList[DialectDomainElement]): this.type = {
-    _internal.setObjectCollectionProperty(propertyId, value.asInternal)
+  def withObjectCollectionProperty(propertyId: String, value: ClientList[DialectDomainElement]): this.type = {
+    _internal.withObjectCollectionProperty(propertyId, value.asInternal)
     this
   }
 
@@ -64,32 +64,32 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
 
   override def linkCopy(): DialectDomainElement = _internal.linkCopy()
 
-  def setLiteralProperty(propertyId: String, value: String): this.type = {
+  def withLiteralProperty(propertyId: String, value: String): this.type = {
     _internal.setLiteralProperty(propertyId, value)
     this
   }
 
-  def setLiteralProperty(propertyId: String, value: Int): this.type = {
+  def withLiteralProperty(propertyId: String, value: Int): this.type = {
     _internal.setLiteralProperty(propertyId, value)
     this
   }
 
-  def setLiteralProperty(propertyId: String, value: Double): this.type = {
+  def withLiteralProperty(propertyId: String, value: Double): this.type = {
     _internal.setLiteralProperty(propertyId, value)
     this
   }
 
-  def setLiteralProperty(propertyId: String, value: Float): this.type = {
+  def withLiteralProperty(propertyId: String, value: Float): this.type = {
     _internal.setLiteralProperty(propertyId, value)
     this
   }
 
-  def setLiteralProperty(propertyId: String, value: Boolean): this.type = {
+  def withLiteralProperty(propertyId: String, value: Boolean): this.type = {
     _internal.setLiteralProperty(propertyId, value)
     this
   }
 
-  def setLiteralProperty(propertyId: String, value: ClientList[Any]): this.type = {
+  def withLiteralProperty(propertyId: String, value: ClientList[Any]): this.type = {
     _internal.setLiteralProperty(propertyId, value)
     this
   }

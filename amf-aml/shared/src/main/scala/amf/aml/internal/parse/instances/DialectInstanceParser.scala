@@ -417,12 +417,12 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
           case YType.Str if !allowMultiple =>
             // plain link -> we generate an anonymous node and set the id to the ref and correct type information
             generateExternalLink(id, rangeNode, mapping).foreach { elem =>
-              node.setObjectField(property, elem, Right(propertyEntry))
+              node.withObjectField(property, elem, Right(propertyEntry))
             }
           case YType.Map if !allowMultiple => // reference
             val refMap = rangeNode.as[YMap]
             generateExternalLink(id, refMap, mapping) foreach { elem =>
-              node.setObjectField(property, elem, Right(propertyEntry))
+              node.withObjectField(property, elem, Right(propertyEntry))
             }
           case YType.Seq if allowMultiple => // sequence of links or references
             val seq = rangeNode.as[YSequence]
@@ -462,7 +462,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                 ctx.nestedDialects ++= Seq(dialect)
                 ctx.withCurrentDialect(dialect) {
                   val dialectDomainElement = parseNestedNode(id, nestedObjectId, propertyEntry.value, nodeMapping)
-                  node.setObjectField(property, dialectDomainElement, Right(propertyEntry))
+                  node.withObjectField(property, dialectDomainElement, Right(propertyEntry))
                 }
               case None =>
                 ctx.eh.violation(DialectError,
@@ -706,13 +706,13 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       case range: Seq[String] if range.size > 1 =>
         val parsedRange =
           parseObjectUnion(nestedObjectId, Seq(path), propertyEntry.value, property, additionalProperties)
-        node.setObjectField(property, parsedRange, Right(propertyEntry))
+        node.withObjectField(property, parsedRange, Right(propertyEntry))
       case range: Seq[String] if range.size == 1 =>
         ctx.dialect.declares.find(_.id == range.head) match {
           case Some(nodeMapping: NodeMappable) =>
             val dialectDomainElement =
               parseNestedNode(id, nestedObjectId, propertyEntry.value, nodeMapping, additionalProperties)
-            node.setObjectField(property, dialectDomainElement, Right(propertyEntry))
+            node.withObjectField(property, dialectDomainElement, Right(propertyEntry))
           case _ => // ignore
         }
       case _ => // TODO: throw exception, illegal range
@@ -1166,7 +1166,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               .asInstanceOf[DialectDomainElement]
               .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
             if (isRef) linkedExternal.annotations += RefInclude()
-            node.setObjectField(mapping, linkedExternal, Right(propertyEntry))
+            node.withObjectField(mapping, linkedExternal, Right(propertyEntry))
           case None =>
             ctx.eh.violation(DialectError,
                              id,
@@ -1209,7 +1209,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               .link(pointer, Annotations(map))
               .asInstanceOf[DialectDomainElement]
               .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
-            node.setObjectField(mapping, linkedExternal, Right(entry))
+            node.withObjectField(mapping, linkedExternal, Right(entry))
           case None =>
             ctx.eh.violation(DialectError,
                              id,
