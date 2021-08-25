@@ -1,0 +1,10 @@
+#%Vocabulary 1.0
+
+base: http://a.ml/vocabularies/simple-vocab#
+vocabulary: simple-vocab
+
+classTerms:
+  A:
+
+propertyTerms:
+  a:
