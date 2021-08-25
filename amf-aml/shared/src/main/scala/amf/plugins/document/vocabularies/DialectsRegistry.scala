@@ -7,7 +7,7 @@ import amf.core.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.metamodel.{Field, Obj, Type}
 import amf.core.model.domain.{AmfObject, DomainElement}
 import amf.core.parser.Annotations
-import amf.core.parser.errorhandler.UnhandledParserErrorHandler
+import amf.core.parser.errorhandler.ViolationUnhandledParserErrorHandler
 import amf.core.registries.AMFDomainEntityResolver
 import amf.core.remote.Aml
 import amf.core.services.RuntimeCompiler
@@ -179,7 +179,9 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
         }
       case _ =>
         val context =
-          new CompilerContextBuilder(uri, platform, UnhandledParserErrorHandler).withEnvironment(environment).build()
+          new CompilerContextBuilder(uri, platform, ViolationUnhandledParserErrorHandler)
+            .withEnvironment(environment)
+            .build()
         RuntimeCompiler
           .forContext(context, Some("application/yaml"), Some(Aml.name))
           .map {
@@ -191,7 +193,7 @@ class DialectsRegistry extends AMFDomainEntityResolver with PlatformSecrets {
 
   }
 
-  private def invalidateCaches() = {
+  private def invalidateCaches(): Unit = {
     findType.invalidateCache()
     buildType.invalidateCache()
     metamodelCache.invalidate()
