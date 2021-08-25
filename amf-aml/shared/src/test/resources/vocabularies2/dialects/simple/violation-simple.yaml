@@ -1,0 +1,15 @@
+#%Dialect 1.0
+dialect: Test
+
+documents:
+  root:
+    encodes: SomeNode
+
+nodeMappings:
+  SomeNode:
+    classTerm: vocab.A
+    mapping:
+      a:
+        propertyTerm: vocab.a
+        range: string
+
