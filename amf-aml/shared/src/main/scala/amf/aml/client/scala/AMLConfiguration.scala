@@ -61,11 +61,11 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
-  override protected def copy(resolvers: AMFResolvers,
-                              errorHandlerProvider: ErrorHandlerProvider,
-                              registry: AMFRegistry,
-                              listeners: Set[AMFEventListener],
-                              options: AMFOptions): AMLConfiguration =
+  override protected def copy(resolvers: AMFResolvers = resolvers,
+                              errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
+                              registry: AMFRegistry = registry,
+                              listeners: Set[AMFEventListener] = listeners,
+                              options: AMFOptions = options): AMLConfiguration =
     new AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options)
 
   override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
