@@ -1,0 +1,19 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+uses:
+  vocab: warning-vocabulary.yaml
+
+documents:
+  root:
+    encodes: SomeNode
+
+nodeMappings:
+  SomeNode:
+    classTerm: vocab.A
+    mapping:
+      a:
+        propertyTerm: vocab.a
+        range: string
+
