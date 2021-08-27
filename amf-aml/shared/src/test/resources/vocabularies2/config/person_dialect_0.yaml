@@ -1,0 +1,24 @@
+#%Dialect 1.0
+
+dialect: Person
+version: 1.0
+
+external:
+  schema: https://schema.org/
+
+documents:
+  root:
+    encodes: PersonNode
+
+nodeMappings:
+  PersonNode:
+    classTerm: schema.Person
+    mapping:
+      name:
+        propertyTerm: schema.name
+        mandatory: true
+        range: string
+      familyName:
+        propertyTerm: schema.familyName
+        mandatory: true
+        range: string
