@@ -1,21 +1,11 @@
 package amf.aml.internal.parse.dialects
 
-import amf.core.internal.parser.{Root, YNodeLikeOps}
-import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceLocation, SourceNode, SourceSpec}
-import amf.core.internal.metamodel.document.FragmentModel
-import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
-import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.parser.domain.{Annotations, BaseSpecParser, ScalarNode, SearchScope, ValueNode}
-import amf.core.internal.utils._
-import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.parser.domain.SearchScope.All
+import amf.aml.client.scala.model.document.{Dialect, DialectFragment, DialectLibrary}
+import amf.aml.client.scala.model.domain._
 import amf.aml.internal.metamodel.document.DialectModel
 import amf.aml.internal.metamodel.document.DialectModel.Externals
 import amf.aml.internal.metamodel.domain.UnionNodeMappingModel.ObjectRange
 import amf.aml.internal.metamodel.domain.{MergePolicies, NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
-import amf.aml.client.scala.model.document.{Dialect, DialectFragment, DialectLibrary}
-import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.aml.internal.parse.dialects.DialectAstOps._
 import amf.aml.internal.parse.dialects.property.like.{AnnotationMappingParser, PropertyLikeMappingParser}
@@ -27,8 +17,18 @@ import amf.aml.internal.validate.DialectValidations.{
   UnavoidableAmbiguity,
   VariablesDefinedInBase
 }
-import amf.core.internal.remote.Spec
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
+import amf.core.client.scala.parse.AMFParser
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.annotations._
+import amf.core.internal.metamodel.document.FragmentModel
+import amf.core.internal.parser.domain.SearchScope.All
+import amf.core.internal.parser.domain._
+import amf.core.internal.parser.{Root, YNodeLikeOps}
 import amf.core.internal.remote.Spec.AML
+import amf.core.internal.utils._
 import org.yaml.model._
 
 import scala.collection.{immutable, mutable}
@@ -40,7 +40,26 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   type NodeMappable = NodeMappable.AnyNodeMappable
   val map: YMap        = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
-  val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(root.location)
+  val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(id())
+
+  // Need to do this before parsing so every ID set during parsing is relative to this ID
+  private def id(): String = {
+    root.location match {
+      case AMFParser.DEFAULT_DOCUMENT_URL =>
+        val nameAndVersionId = for {
+          dialectEntry <- map.key("dialect")
+          versionEntry <- map.key("version")
+        } yield {
+          val dialect = dialectEntry.value.toString.toLowerCase.noSpaces
+          val version = versionEntry.value.toString.toLowerCase.noSpaces
+          s"${AMFParser.DEFAULT_DOCUMENT_URL}/$dialect/$version"
+        }
+
+        nameAndVersionId
+          .getOrElse(AMFParser.DEFAULT_DOCUMENT_URL) // Name and version will always be defined otherwise dialect is invalid
+      case other => other
+    }
+  }
 
   def parseSemanticExtensions(map: YMap): Unit = {
     map.key("extensions").foreach { extensionsEntry =>
