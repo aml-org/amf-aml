@@ -1,16 +1,17 @@
 package amf.aml.client.platform
 
 import amf.aml.client.platform.model.document.Dialect
-import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.aml.client.scala.{AMLConfiguration => InternalAMLConfiguration}
+import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.core.client.platform.AMFGraphConfiguration
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.reference.UnitCache
 import amf.core.client.platform.resource.ResourceLoader
 import amf.core.client.platform.transform.TransformationPipeline
-import amf.core.internal.convert.TransformationPipelineConverter._
 import amf.core.internal.convert.ClientErrorHandlerConverter._
+import amf.core.internal.convert.TransformationPipelineConverter._
+
 import scala.concurrent.ExecutionContext
 import scala.scalajs.js.annotation.JSExportAll
 
