@@ -90,7 +90,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
   }
 
   def withLiteralProperty(propertyId: String, value: ClientList[Any]): this.type = {
-    _internal.withLiteralProperty(propertyId, value)
+    _internal.withLiteralProperty(propertyId, value.asInternal.toList)
     this
   }
 }
