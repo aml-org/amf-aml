@@ -65,32 +65,32 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
   override def linkCopy(): DialectDomainElement = _internal.linkCopy()
 
   def withLiteralProperty(propertyId: String, value: String): this.type = {
-    _internal.setLiteralProperty(propertyId, value)
+    _internal.withLiteralProperty(propertyId, value)
     this
   }
 
   def withLiteralProperty(propertyId: String, value: Int): this.type = {
-    _internal.setLiteralProperty(propertyId, value)
+    _internal.withLiteralProperty(propertyId, value)
     this
   }
 
   def withLiteralProperty(propertyId: String, value: Double): this.type = {
-    _internal.setLiteralProperty(propertyId, value)
+    _internal.withLiteralProperty(propertyId, value)
     this
   }
 
   def withLiteralProperty(propertyId: String, value: Float): this.type = {
-    _internal.setLiteralProperty(propertyId, value)
+    _internal.withLiteralProperty(propertyId, value)
     this
   }
 
   def withLiteralProperty(propertyId: String, value: Boolean): this.type = {
-    _internal.setLiteralProperty(propertyId, value)
+    _internal.withLiteralProperty(propertyId, value)
     this
   }
 
   def withLiteralProperty(propertyId: String, value: ClientList[Any]): this.type = {
-    _internal.setLiteralProperty(propertyId, value)
+    _internal.withLiteralProperty(propertyId, value)
     this
   }
 }

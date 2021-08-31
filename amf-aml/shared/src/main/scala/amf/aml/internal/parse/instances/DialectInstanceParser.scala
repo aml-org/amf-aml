@@ -430,7 +430,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
               generateExternalLink(id, node, mapping)
             }
             if (elems.nonEmpty)
-              node.setObjectField(property, elems, Right(propertyEntry))
+              node.withObjectCollectionProperty(property, elems, Right(propertyEntry))
           case YType.Seq if !allowMultiple => // error
             ctx.eh.violation(DialectError,
                              id,
@@ -754,7 +754,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         case None                       => None
       }
     }
-    node.setObjectField(property, nested.flatten, Right(propertyEntry))
+    node.withObjectCollectionProperty(property, nested.flatten, Right(propertyEntry))
   }
 
   protected def parseObjectPairProperty(id: String,
@@ -820,7 +820,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
           Nil
       }
 
-      node.setObjectField(property, nested, Left(propertyEntry.key))
+      node.withObjectCollectionProperty(property, nested, Left(propertyEntry.key))
 
     } else {
       ctx.eh.violation(DialectError,
@@ -871,7 +871,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
           case _ => None
         }
     }
-    node.setObjectField(property, elems, Right(propertyEntry))
+    node.withObjectCollectionProperty(property, elems, Right(propertyEntry))
   }
 
   def checkDuplicated(dialectDomainElement: DialectDomainElement,
