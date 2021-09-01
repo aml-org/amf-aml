@@ -23,6 +23,16 @@ object DialectValidations extends Validations {
       "Missing vocabulary"
   )
 
+  val MissingVocabularyTerm = validation(
+      "missing-vocabulary-term",
+      "Missing vocabulary term"
+  )
+
+  val MissingBaseTerm = validation(
+      "missing-base-term",
+      "Missing base term"
+  )
+
   val MissingClassTermSpecification = validation(
       "missing-class-term",
       "Missing class term"
@@ -119,7 +129,8 @@ object DialectValidations extends Validations {
   override val levels: Map[String, Map[ProfileName, String]] = Map(
       ClosedShapeSpecificationWarning.id  -> all(WARNING),
       MissingClassTermSpecification.id    -> all(WARNING),
-      MissingPropertyTermSpecification.id -> all(WARNING)
+      MissingPropertyTermSpecification.id -> all(WARNING),
+      MissingVocabularyTerm.id            -> all(WARNING)
   )
 
   override val validations: List[ValidationSpecification] = List(
@@ -134,6 +145,8 @@ object DialectValidations extends Validations {
       MissingPropertySpecification,
       InvalidModuleType,
       MissingVocabulary,
+      MissingVocabularyTerm,
+      MissingBaseTerm,
       InvalidUnionType,
       InvalidDialectPatch,
       DialectError,

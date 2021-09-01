@@ -25,16 +25,21 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
   val vocabulary: Vocabulary = Vocabulary(Annotations(map)).withLocation(root.location).withId(root.location)
 
   def parseDocument(): BaseUnit = {
+    map.key("vocabulary") match {
+      case Some(entry) => {
+        val value = ValueNode(entry.value)
+        vocabulary.set(VocabularyModel.Name, value.string(), Annotations(entry))
+      }
+      case None => ctx.missingVocabularyTermWarning(vocabulary.id, map)
+    }
 
-    map.key("base", entry => {
-      val value = ValueNode(entry.value)
-      vocabulary.set(VocabularyModel.Base, value.string(), Annotations(entry))
-    })
-
-    map.key("vocabulary", entry => {
-      val value = ValueNode(entry.value)
-      vocabulary.set(VocabularyModel.Name, value.string(), Annotations(entry))
-    })
+    map.key("base") match {
+      case Some(entry) => {
+        val value = ValueNode(entry.value)
+        vocabulary.set(VocabularyModel.Base, value.string(), Annotations(entry))
+      }
+      case None => ctx.missingBaseTermViolation(vocabulary.id, map)
+    }
 
     map.key("usage", entry => {
       val value = ValueNode(entry.value)

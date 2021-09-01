@@ -1,5 +1,6 @@
 package amf.validation.internal.shacl.custom
 
+import amf.core.client.common.validation.MessageStyle
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain._
@@ -31,9 +32,9 @@ object CustomShaclValidator {
   type CustomShaclFunctions = Map[String, CustomShaclFunction]
 }
 
-class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: ShaclValidationOptions) {
+class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: MessageStyle) {
 
-  private val reportBuilder: ReportBuilder = new ReportBuilder(options)
+  private val reportBuilder: ReportBuilder = new ReportBuilder(messageStyle)
 
   def validate(unit: BaseUnit, validations: Seq[ValidationSpecification])(
       implicit executionContext: ExecutionContext): Future[ValidationReport] = {
@@ -285,8 +286,6 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
     }
     if (propertyConstraint.custom.isDefined) {
       throw new Exception(s"custom property constraint not supported yet ${validationSpecification.id}")
-    } else if (propertyConstraint.customRdf.isDefined) {
-      throw new Exception(s"customRdf property constraint not supported yet ${validationSpecification.id}")
     }
     if (propertyConstraint.multipleOf.isDefined) {
       throw new Exception(s"multipleOf property constraint not supported yet ${validationSpecification.id}")
@@ -302,7 +301,7 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, options: Shacl
     extractPropertyValue(propertyConstraint, element).foreach {
       case ExtractedPropertyValue(obj: AmfObject, _) =>
         val current = obj.meta.`type`.map(_.iri())
-        if (propertyConstraint.`class`.exists(t => !current.contains(t)))
+        if (!propertyConstraint.`class`.exists(t => current.contains(t)))
           reportBuilder.reportFailure(validationSpecification, propertyConstraint, element.id)
       case _ => // ignore
     }

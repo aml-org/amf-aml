@@ -5,10 +5,10 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.rdf.{RdfModel, RdfUnitConverter}
 import amf.core.internal.remote.Spec
 import amf.core.internal.remote.Syntax.Syntax
 import org.scalatest.Assertion
+import amf.rdf.client.scala.{RdfModel, RdfUnitConverter}
 
 import scala.concurrent.Future
 

@@ -1,39 +1,32 @@
 package amf.aml.internal.parse.common
 
-import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
-import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.parse.document.{
-  CompilerReferenceCollector,
-  LibraryReference,
-  LinkReference,
-  ParsedDocument,
-  ParserContext,
-  ReferenceHandler,
-  ReferenceKind,
-  SchemaReference,
-  SyamlParsedDocument
-}
-import amf.core.internal.parser.YMapOps
-import amf.core.internal.validation.CoreValidations.InvalidInclude
 import amf.aml.client.scala.model.document.Dialect
+import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.validate.DialectValidations.InvalidModuleType
+import amf.core.client.scala.errorhandling.AMFErrorHandler
+import amf.core.client.scala.parse.document._
+import amf.core.internal.parser.YMapOps
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
+import amf.core.internal.validation.CoreValidations.InvalidInclude
 import org.yaml.model._
 
-class SyntaxExtensionsReferenceHandler(eh: AMFErrorHandler) extends ReferenceHandler {
+class SyntaxExtensionsReferenceHandler(errorHandler: AMFErrorHandler) extends ReferenceHandler {
   private val collector = CompilerReferenceCollector()
+
+  implicit val eh: SYamlAMFParserErrorHandler = new SYamlAMFParserErrorHandler(errorHandler)
 
   override def collect(parsedDoc: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     val dialects = ctx.config.sortedParsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
     }
-    collect(parsedDoc, dialects)(ctx.eh)
+    collect(parsedDoc, dialects)
   }
 
-  private def collect(parsedDoc: ParsedDocument, dialects: Seq[Dialect])(implicit errorHandler: AMFErrorHandler) = {
+  private def collect(parsedDoc: ParsedDocument, dialects: Seq[Dialect]) = {
     parsedDoc match {
       case parsed: SyamlParsedDocument =>
         parsed.comment.filter(referencesDialect).foreach { comment =>
-          collector += (dialectDefinitionUrl(comment), SchemaReference, parsed.document.node)
+          collector += (dialectDefinitionUrl(comment), SchemaReference, parsed.document.node.location)
         }
         libraries(parsed.document)
         links(parsed.document)
@@ -55,7 +48,7 @@ class SyntaxExtensionsReferenceHandler(eh: AMFErrorHandler) extends ReferenceHan
       ""
   }
 
-  private def libraries(document: YDocument)(implicit errorHandler: AMFErrorHandler): Unit = {
+  private def libraries(document: YDocument): Unit = {
     document.to[YMap] match {
       case Right(map) =>
         map
@@ -64,7 +57,8 @@ class SyntaxExtensionsReferenceHandler(eh: AMFErrorHandler) extends ReferenceHan
             entry.value.to[YMap] match {
               case Right(m) => m.entries.foreach(library)
               case _ =>
-                errorHandler.violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value)
+                errorHandler
+                  .violation(InvalidModuleType, "", s"Expected map but found: ${entry.value}", entry.value.location)
             }
           }
       case _ =>
@@ -82,11 +76,11 @@ class SyntaxExtensionsReferenceHandler(eh: AMFErrorHandler) extends ReferenceHan
       false
   }
 
-  private def library(entry: YMapEntry)(implicit errorHandler: AMFErrorHandler): Unit = {
-    collector += (entry.value, LibraryReference, entry.value)
+  private def library(entry: YMapEntry): Unit = {
+    collector += (entry.value, LibraryReference, entry.value.location)
   }
 
-  private def links(part: YPart)(implicit errorHandler: AMFErrorHandler): Unit = {
+  private def links(part: YPart): Unit = {
     part match {
       case entry: YMapEntry =>
         entry.key.as[YScalar].text match {
@@ -119,8 +113,9 @@ class SyntaxExtensionsReferenceHandler(eh: AMFErrorHandler) extends ReferenceHan
 
   private def ramlInclude(node: YNode, reference: ReferenceKind = LinkReference): Unit = {
     node.value match {
-      case scalar: YScalar => collector += (scalar.text, reference, node)
-      case _               => eh.violation(InvalidInclude, "", s"Unexpected !include or dialect with ${node.value}", node)
+      case scalar: YScalar => collector += (scalar.text, reference, node.location)
+      case _ =>
+        errorHandler.violation(InvalidInclude, "", s"Unexpected !include or dialect with ${node.value}", node.location)
     }
   }
 }

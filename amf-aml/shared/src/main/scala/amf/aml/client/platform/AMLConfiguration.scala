@@ -21,7 +21,7 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
     extends BaseAMLConfiguration(_internal) {
 
   override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
-  def elementClient(): AMLElementClient            = new AMLElementClient(this)
+  override def elementClient(): AMLElementClient   = new AMLElementClient(this)
   def configurationState(): AMLConfigurationState  = new AMLConfigurationState(this)
 
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =

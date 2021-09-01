@@ -1,12 +1,16 @@
 package amf.aml.internal.parse.dialects
 
 import amf.core.client.scala.model.document.RecursiveUnit
-import amf.core.client.scala.parse.document.ParserContext
+import amf.core.client.scala.parse.document.{ParserContext, SyamlBasedParserErrorHandler}
 import amf.core.internal.utils.QName
 import amf.aml.internal.parse.common.{DeclarationContext, SyntaxErrorReporter}
+import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 
 class DialectContext(private val wrapped: ParserContext, private val ds: Option[DialectDeclarations] = None)
-    extends ParserContext(wrapped.rootContextDocument, wrapped.refs, wrapped.futureDeclarations, wrapped.config)
+    extends SyamlBasedParserErrorHandler(wrapped.rootContextDocument,
+                                         wrapped.refs,
+                                         wrapped.futureDeclarations,
+                                         wrapped.config)
     with DialectSyntax
     with DeclarationContext
     with SyntaxErrorReporter {

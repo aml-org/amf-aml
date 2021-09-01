@@ -31,7 +31,7 @@ case class DialectFragmentParser(into: DocumentsModel)(override implicit val ctx
                                  Annotations(entry))
           }
         case _ =>
-          ctx.eh.violation(DeclarationNotFound, "", s"NodeMappable ${entry.value} not found", entry)
+          ctx.eh.violation(DeclarationNotFound, "", s"NodeMappable ${entry.value} not found", entry.location)
           val documentMapping = DocumentMapping(entry.value)
           val nodeMapping     = ctx.declarations.ErrorNodeMappable(entry.key, entry.value)
           documentMapping.set(DocumentMappingModel.EncodedNode,

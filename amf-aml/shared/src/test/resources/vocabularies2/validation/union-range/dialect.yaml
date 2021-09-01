@@ -1,0 +1,30 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+external:
+  aml: http://a.ml#
+
+nodeMappings:
+  RootNode:
+    classTerm: aml.RootNode
+    mapping:
+      propertyRootNode:
+        propertyTerm: aml.propertyRootNode
+        range: [ NodeA, NodeB ]
+  NodeA:
+    classTerm: aml.NodeA
+    mapping:
+      propertyNodeA:
+        propertyTerm: aml.propertyNodeA
+        range: string
+  NodeB:
+    classTerm: aml.NodeB
+    mapping:
+      propertyNodeB:
+        propertyTerm: aml.propertyNodeB
+          range: string
+
+documents:
+  root:
+    encodes: RootNode

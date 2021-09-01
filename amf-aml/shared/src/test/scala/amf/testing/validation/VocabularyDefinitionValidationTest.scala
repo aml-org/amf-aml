@@ -23,6 +23,14 @@ class VocabularyDefinitionValidationTest
 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/validations/vocabularies"
 
+  test("Test missing vocabulary term") {
+    validate("vocabulary.yaml", Some("validation.jsonld"), "missing-vocabulary-term")
+  }
+
+  test("Test missing base term") {
+    validate("vocabulary.yaml", Some("validation.jsonld"), "missing-base-term")
+  }
+
   test("Test repeated term in property terms and class terms") {
     validate("vocabulary.yaml", Some("validation.jsonld"), "repeated-term")
   }

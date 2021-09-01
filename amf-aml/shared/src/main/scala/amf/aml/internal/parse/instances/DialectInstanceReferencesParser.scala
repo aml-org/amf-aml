@@ -63,7 +63,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
                   collectAlias(dialectInstance, alias -> (module.id, url))
                   result += (alias, module)
                 case other =>
-                  ctx.eh.violation(DialectError, id, s"Expected vocabulary module but found: '$other'", e) // todo Uses should only reference modules...
+                  ctx.eh.violation(DialectError, id, s"Expected vocabulary module but found: '$other'", e.location) // todo Uses should only reference modules...
               }
             })
         }

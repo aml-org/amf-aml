@@ -4,9 +4,11 @@ import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.Annotations
 import amf.aml.internal.metamodel.domain.PropertyLikeMappingModel
 import amf.aml.client.scala.model.domain.PropertyLikeMapping
+import amf.aml.internal.parse.dialects.DialectContext
 import org.yaml.model.{YMap, YScalar}
 
-case class TypeDiscriminatorParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel]) {
+case class TypeDiscriminatorParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(
+    implicit val ctx: DialectContext) {
   def parse(): Unit = {
     map.key(
         "typeDiscriminator",

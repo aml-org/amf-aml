@@ -1,11 +1,12 @@
 package amf.aml.client.scala.model.domain
 
-import amf.core.internal.metamodel.Field
+import amf.aml.internal.annotations.YNodeAnnotationOperations.getAnnotationsOf
+import amf.aml.internal.metamodel.domain.DialectDomainElementModel
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.{BoolField, StrField}
-import amf.core.internal.parser.domain.{Annotations, FieldEntry, Fields, Value}
-import amf.core.client.scala.vocabulary.ValueType
-import amf.aml.internal.metamodel.domain.DialectDomainElementModel
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
@@ -15,68 +16,22 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     extends DomainElement
     with Linkable {
 
-  def objectCollectionProperty(f: Field): Seq[DialectDomainElement] = {
-    fields
-      .getValueAsOption(f)
-      .collect({
-        case Value(arr: AmfArray, _) =>
-          arr.values.collect({ case d: DialectDomainElement => d })
-      })
-      .getOrElse(Nil)
-  }
-
-  def objectProperty(f: Field): Option[DialectDomainElement] =
-    fields.getValueAsOption(f).collect({ case Value(d: DialectDomainElement, _) => d })
-
-  def literalProperty(f: Field): Option[Any] =
-    fields.getValueAsOption(f).collect({ case Value(v: AmfScalar, _) => v.value })
-
-  def literalProperties(f: Field): Seq[Any] =
-    fields
-      .getValueAsOption(f)
-      .collect({
-        case Value(v: AmfArray, _) =>
-          v.values.collect({ case s: AmfScalar => s.value })
-      })
-      .getOrElse(Nil)
-
-  def fieldsToProperties: Iterable[(PropertyMapping, FieldEntry)] =
-    fields
-      .fields()
-      .flatMap(fe => propertyForField(fe.field).map(pm => (pm, fe)))
-
-  def propertyForField(f: Field): Option[PropertyMapping] =
-    definedBy
-      .propertiesMapping()
-      .find(_.nodePropertyMapping().option().contains(f.toString))
-
-  def isAbstract: BoolField =
-    fields.field(DialectDomainElementModel.Abstract)
-  def withAbstract(isAbstract: Boolean): DialectDomainElement = {
-    set(DialectDomainElementModel.Abstract, isAbstract)
-    this
-  }
-
-  def declarationName: StrField =
-    fields.field(DialectDomainElementModel.DeclarationName)
-  def withDeclarationName(name: String): DialectDomainElement = {
-    set(DialectDomainElementModel.DeclarationName, name)
-    this
-  }
-
   // Types of the instance
-  protected var instanceTypes: Seq[String] = Nil
-  def withInstanceTypes(types: Seq[String]): DialectDomainElement = {
-    instanceTypes = types
-    this
-  }
-
+  private var instanceTypes: Seq[String] = Nil
   // Dialect mapping defining the instance
-  protected var instanceDefinedBy: Option[NodeMapping] = None
-  def withDefinedBy(nodeMapping: NodeMapping): DialectDomainElement = {
-    instanceDefinedBy = Some(nodeMapping)
-    this
-  }
+  private var instanceDefinedBy: Option[NodeMapping] = None
+
+  def getObjectByProperty(uri: String): Seq[DialectDomainElement] =
+    graph
+      .getObjectByProperty(Namespace.defaultAliases.expand(uri).iri())
+      .collect({ case d: DialectDomainElement => d })
+
+  def getScalarByProperty(uri: String): Seq[Any] = graph.scalarByProperty(uri)
+
+  def isAbstract: BoolField                                = fields.field(DialectDomainElementModel.Abstract)
+  def declarationName: StrField                            = fields.field(DialectDomainElementModel.DeclarationName)
+  def containsProperty(property: PropertyMapping): Boolean = graph.containsField(property.toField)
+
   def definedBy: NodeMapping = instanceDefinedBy match {
     case Some(mapping) => mapping
     case None          => throw new Exception("NodeMapping for the instance not defined")
@@ -101,36 +56,64 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       throw new Exception(s"Cannot produce include reference without linked element at elem $id")
   }
 
-  def iriToValue(iri: String) = ValueType(iri)
-
-  def findPropertyByTermPropertyId(termPropertyId: String): String =
-    findPropertyMappingByTermPropertyId(termPropertyId)
-      .map(_.id)
-      .getOrElse(termPropertyId)
-
-  def findPropertyMappingByTermPropertyId(termPropertyId: String): Option[PropertyMapping] =
-    definedBy
-      .propertiesMapping()
-      .find(_.nodePropertyMapping().value() == termPropertyId)
-
-  def fieldForPropertyId(propertyId: String): Option[Field] =
-    meta.fields.find(_.toString == propertyId)
-
-  protected def propertyMappingForField(field: Field): Option[PropertyMapping] = {
-    val iri = field.value.iri()
-    definedBy.propertiesMapping().find(_.nodePropertyMapping().value() == iri)
+  def withAbstract(isAbstract: Boolean): DialectDomainElement = {
+    set(DialectDomainElementModel.Abstract, isAbstract)
+    this
   }
 
-  def containsProperty(property: PropertyMapping): Boolean =
-    fields.exists(property.toField)
+  def withDeclarationName(name: String): DialectDomainElement = {
+    set(DialectDomainElementModel.DeclarationName, name)
+    this
+  }
 
-  def setObjectField(property: PropertyMapping, value: DialectDomainElement, node: YNode): DialectDomainElement =
-    setObjectField(property, value, Left(node))
+  def withInstanceTypes(types: Seq[String]): DialectDomainElement = {
+    instanceTypes = types
+    this
+  }
 
-  def setObjectField(property: PropertyMapping,
-                     value: DialectDomainElement,
-                     node: Either[YNode, YMapEntry]): DialectDomainElement = {
-    val annotations = annotationsFromEither(node)
+  def withDefinedBy(nodeMapping: NodeMapping): DialectDomainElement = {
+    instanceDefinedBy = Some(nodeMapping)
+    this
+  }
+
+  def withObjectProperty(uri: String, value: DialectDomainElement, node: YNode = YNode.Empty): DialectDomainElement = {
+    findPropertyMappingByTermPropertyId(Namespace.defaultAliases.expand(uri).iri()) match {
+      case Some(mapping) =>
+        withObjectField(mapping, value, Left(node))
+        this
+      case None =>
+        throw new Exception(s"Cannot find node mapping for propertyId $uri")
+    }
+  }
+
+  def withObjectCollectionProperty(propertyId: String, value: Seq[DialectDomainElement]): this.type = {
+    findPropertyMappingByTermPropertyId(Namespace.defaultAliases.expand(propertyId).iri()) match {
+      case Some(mapping) =>
+        withObjectCollectionProperty(mapping, value, Left(YNode.Empty))
+        this
+      case None =>
+        throw new Exception(s"Cannot find node mapping for propertyId $propertyId")
+    }
+  }
+
+  def withLiteralProperty(propertyId: String, value: String): this.type  = setLiteralPropertyBase(propertyId, value)
+  def withLiteralProperty(propertyId: String, value: Int): this.type     = setLiteralPropertyBase(propertyId, value)
+  def withLiteralProperty(propertyId: String, value: Double): this.type  = setLiteralPropertyBase(propertyId, value)
+  def withLiteralProperty(propertyId: String, value: Float): this.type   = setLiteralPropertyBase(propertyId, value)
+  def withLiteralProperty(propertyId: String, value: Boolean): this.type = setLiteralPropertyBase(propertyId, value)
+  def withLiteralProperty(propertyId: String, dateTime: SimpleDateTime): this.type =
+    setLiteralPropertyBase(propertyId, dateTime)
+  def withLiteralProperty(propertyId: String, value: List[Any]): this.type = setLiteralPropertyBase(propertyId, value)
+
+  private[amf] def setObjectField(property: PropertyMapping,
+                                  value: DialectDomainElement,
+                                  node: YNode): DialectDomainElement =
+    withObjectField(property, value, Left(node))
+
+  private[amf] def withObjectField(property: PropertyMapping,
+                                   value: DialectDomainElement,
+                                   node: Either[YNode, YMapEntry]): DialectDomainElement = {
+    val (annotations, _) = getAnnotationsOf(node)
     if (value.isUnresolved) {
       value.toFutureRef {
         case resolvedDialectDomainElement: DialectDomainElement =>
@@ -155,21 +138,16 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
-  def setObjectField(property: PropertyMapping, value: Seq[DialectDomainElement], node: YNode): DialectDomainElement =
-    setObjectField(property, value, Left(node))
+  private[amf] def withObjectCollectionProperty(property: PropertyMapping,
+                                                value: Seq[DialectDomainElement],
+                                                node: YNode): DialectDomainElement =
+    withObjectCollectionProperty(property, value, Left(node))
 
-  def setObjectField(property: PropertyMapping,
-                     value: Seq[DialectDomainElement],
-                     node: Either[YNode, YMapEntry]): DialectDomainElement = {
-    val f = property.toField
-    val annotations = node match {
-      case Left(value)  => Annotations(value)
-      case Right(value) => Annotations(value)
-    }
-    val annotationsValue = node match {
-      case Left(value)  => Annotations(value.value)
-      case Right(value) => Annotations(value.value)
-    }
+  private[amf] def withObjectCollectionProperty(property: PropertyMapping,
+                                                value: Seq[DialectDomainElement],
+                                                node: Either[YNode, YMapEntry]): DialectDomainElement = {
+    val f                               = property.toField
+    val (annotations, annotationsValue) = getAnnotationsOf(node)
     value match {
       case Nil if !fields.exists(f) => set(f, AmfArray(Nil, annotationsValue), annotations)
       case _ =>
@@ -190,75 +168,64 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
-  private def setObjInCollection(f: Field, node: Either[YNode, YMapEntry], newObj: DialectDomainElement) = {
-    val annotations                     = annotationsFromEither(node)
-    val objs: Seq[DialectDomainElement] = fields.field(f)
-    set(f, AmfArray(objs :+ newObj), annotations)
-  }
-
-  private def annotationsFromEither(node: Either[YNode, YMapEntry]) =
-    node match {
-      case Left(value)  => Annotations(value)
-      case Right(value) => Annotations(value)
-    }
-
-  def setProperty(property: PropertyMapping, value: String, entry: YMapEntry): DialectDomainElement = {
+  private[amf] def setProperty(property: PropertyMapping, value: Any, entry: YMapEntry): DialectDomainElement = {
     set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
-  def setProperty(property: PropertyMapping, value: Int, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
-    this
-  }
-
-  def setProperty(property: PropertyMapping, value: SimpleDateTime, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
-    this
-  }
-
-  def setProperty(property: PropertyMapping, value: Boolean, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
-    this
-  }
-
-  def setProperty(property: PropertyMapping, value: Float, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
-    this
-  }
-
-  def setProperty(property: PropertyMapping, value: Double, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
-    this
-  }
-
-  def setProperty(property: PropertyMapping, entry: YMapEntry): DialectDomainElement = {
+  // TODO: WHY???
+  private[amf] def setProperty(property: PropertyMapping, entry: YMapEntry): DialectDomainElement = {
     set(property.toField, AmfScalar(entry.value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
-  def setProperty(property: PropertyMapping, value: Seq[Any], entry: YMapEntry): DialectDomainElement = {
+  private[amf] def setProperty(property: PropertyMapping, value: Seq[Any], entry: YMapEntry): DialectDomainElement = {
     set(property.toField, AmfArray(value.map(AmfScalar(_)), Annotations(entry.value)), Annotations(entry))
     this
   }
 
+  private[amf] def objectCollectionProperty(f: Field): Seq[DialectDomainElement] = getObjectByProperty(f.value.iri())
+  private[amf] def objectProperty(f: Field): Option[DialectDomainElement]        = objectCollectionProperty(f).headOption
+  private[amf] def literalProperty(f: Field): Option[Any]                        = literalProperties(f).headOption
+  private[amf] def literalProperties(f: Field): Seq[Any]                         = graph.scalarByField(f)
+
+  private[amf] override def componentId: String = ""
+
+  private def setObjInCollection(f: Field, node: Either[YNode, YMapEntry], newObj: DialectDomainElement) = {
+    val (annotations, _)                = getAnnotationsOf(node)
+    val objs: Seq[DialectDomainElement] = fields.field(f)
+    set(f, AmfArray(objs :+ newObj), annotations)
+  }
+
+  private def findPropertyMappingByTermPropertyId(termPropertyId: String): Option[PropertyMapping] =
+    definedBy
+      .propertiesMapping()
+      .find(_.nodePropertyMapping().value() == termPropertyId)
+
+  private def setLiteralPropertyBase(propertyId: String, value: Any): this.type = {
+    findPropertyMappingByTermPropertyId(Namespace.defaultAliases.expand(propertyId).iri()) match {
+      case Some(mapping) =>
+        set(mapping.toField, AmfScalar(value))
+        this
+      case None =>
+        throw new Exception(s"Cannot find node mapping for propertyId $propertyId")
+    }
+  }
+
   override def meta: DialectDomainElementModel =
-    if (instanceTypes.isEmpty) {
-      DialectDomainElementModel()
-    } else {
+    if (instanceTypes.isEmpty) DialectDomainElementModel()
+    else {
       new DialectDomainElementModel(instanceTypes.distinct,
                                     instanceDefinedBy.map(_.propertiesMapping().map(_.toField)).getOrElse(Seq.empty),
                                     instanceDefinedBy)
     }
 
-  override def adopted(newId: String, cycle: Seq[String] = Seq()): DialectDomainElement.this.type =
-    if (Option(this.id).isEmpty) simpleAdoption(newId) else this
-
-  override def linkCopy(): Linkable =
+  override def linkCopy(): DialectDomainElement = {
     DialectDomainElement()
       .withId(id)
       .withDefinedBy(definedBy)
       .withInstanceTypes(instanceTypes)
+  }
 
   override def resolveUnreferencedLink[T](label: String,
                                           annotations: Annotations,
@@ -272,11 +239,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   }
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = ""
-
   /** apply method for create a new instance with fields and annotations. Aux method for copy */
   override protected def classConstructor: (Fields, Annotations) => Linkable with DomainElement =
     DialectDomainElement.apply
+
+  override def adopted(newId: String, cycle: Seq[String] = Seq()): DialectDomainElement.this.type =
+    if (Option(this.id).isEmpty) simpleAdoption(newId) else this
 }
 
 object DialectDomainElement {
