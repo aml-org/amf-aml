@@ -46,10 +46,10 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: 
   }
 
   private def validateIdentityTransformation(validations: Seq[ValidationSpecification], element: DomainElement): Unit = {
+    val classes        = element.meta.`type`.map(_.iri())
+    val isExternalLink = element.isExternalLink.value()
     validations.foreach { specification =>
-      val classes = element.meta.`type`.map(_.iri())
-      if (!element.isExternalLink.value() && (matchingClass(specification, classes) || matchingInstance(specification,
-                                                                                                        element))) {
+      if (!isExternalLink && (matchingClass(specification, classes) || matchingInstance(specification, element))) {
         validate(specification, element)
       }
       validateObjectsOf(specification, element)
@@ -73,6 +73,7 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: 
     }
   }
 
+  // TODO: could this made be faster by using Sets? -> We would have to propagate Sets to several places
   private def matchingClass(specification: ValidationSpecification, classes: Seq[String]): Boolean = {
     specification.targetClass.exists(classes.contains)
   }
