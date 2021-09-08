@@ -73,7 +73,7 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
     out.close()
   }
 
-  override def native(): Any = model
+  override def getNative(): Any = model
 
   var nodesCache: Map[String, Node] = Map()
 

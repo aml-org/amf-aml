@@ -81,7 +81,7 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
     (model.toNTSync() + "")
   }
 
-  override def native(): Any = model
+  override def getNative(): Any = model
 
   var nodesCache: Map[String, Node] = Map()
 

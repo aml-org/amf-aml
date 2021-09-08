@@ -56,5 +56,5 @@ abstract class RdfModel {
   def toN3(): String
 
   // returns the native representation of the model
-  def native(): Any
+  def getNative(): Any
 }

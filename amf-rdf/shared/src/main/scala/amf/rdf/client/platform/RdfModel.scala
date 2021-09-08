@@ -50,5 +50,5 @@ class RdfModel(private[amf] var internal: InternalRdfModel) {
 
   def toN3(): String = internal.toN3()
 
-  def native(): Any = internal.native()
+  def getNative(): Any = internal.getNative()
 }
