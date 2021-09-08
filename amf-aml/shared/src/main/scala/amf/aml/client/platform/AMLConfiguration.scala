@@ -99,10 +99,10 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
 
   /**
     * Register a Dialect
-    * @param path path of the Dialect to register
+    * @param url URL of the Dialect to register
     * @return A CompletableFuture of [[AMLConfiguration]]
     */
-  def withDialect(path: String): ClientFuture[AMLConfiguration] = _internal.withDialect(path).asClient
+  def withDialect(url: String): ClientFuture[AMLConfiguration] = _internal.withDialect(url).asClient
 
   def forInstance(url: String): ClientFuture[AMLConfiguration] = _internal.forInstance(url).asClient
 

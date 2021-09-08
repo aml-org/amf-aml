@@ -168,11 +168,11 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   /**
     * Register a Dialect
-    * @param path path of the Dialect to register
+    * @param url URL of the Dialect to register
     * @return A CompletableFuture of [[AMLConfiguration]]
     */
-  def withDialect(path: String): Future[AMLConfiguration] = {
-    baseUnitClient().parseDialect(path).map {
+  def withDialect(url: String): Future[AMLConfiguration] = {
+    baseUnitClient().parseDialect(url).map {
       case result: AMLDialectResult => withDialect(result.dialect)
       case _                        => this
     }
