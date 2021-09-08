@@ -7,7 +7,7 @@ import amf.aml.internal.semantic.SemanticExtensionHelper
 
 import scala.collection.immutable
 
-/* Contains methods to get information about the current state of the configuration */
+/** Contains methods to get information about the current state of the configuration */
 class AMLConfigurationState private[amf] (protected val configuration: AMLConfiguration) {
 
   /**

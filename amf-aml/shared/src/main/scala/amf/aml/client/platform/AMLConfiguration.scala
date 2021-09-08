@@ -1,6 +1,7 @@
 package amf.aml.client.platform
 
 import amf.aml.client.platform.model.document.Dialect
+import amf.aml.client.platform.model.document.DialectInstance
 import amf.aml.client.scala.{AMLConfiguration => InternalAMLConfiguration}
 import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
@@ -27,6 +28,7 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
   /** Contains functionality associated with specific elements of the AMF model */
   override def elementClient(): AMLElementClient = new AMLElementClient(this)
 
+  /** Contains methods to get information about the current state of the configuration */
   def configurationState(): AMLConfigurationState = new AMLConfigurationState(this)
 
   /**
@@ -104,6 +106,11 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
     */
   def withDialect(url: String): ClientFuture[AMLConfiguration] = _internal.withDialect(url).asClient
 
+  /**
+    * Register a [[Dialect]] linked from a [[DialectInstance]]
+    * @param url of the [[DialectInstance]]
+    * @return A CompletableFuture of [[AMLConfiguration]]
+    */
   def forInstance(url: String): ClientFuture[AMLConfiguration] = _internal.forInstance(url).asClient
 
   override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): AMLConfiguration =

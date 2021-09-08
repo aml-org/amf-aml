@@ -39,8 +39,8 @@ class DialectForInstanceTest extends AsyncFunSuite with Matchers {
                   expectedNames: Seq[String],
                   initialDialect: Option[String] = Some(baseDialect)): Future[Assertion] = {
     val initialConfig = initialDialect match {
-      case Some(path) => AMLConfiguration.predefined().withDialect(path)
-      case None       => Future(AMLConfiguration.predefined())
+      case Some(url) => AMLConfiguration.predefined().withDialect(url)
+      case None      => Future(AMLConfiguration.predefined())
     }
     initialConfig.flatMap { baseConfig =>
       baseConfig.forInstance(instancePath).map { newConfig =>

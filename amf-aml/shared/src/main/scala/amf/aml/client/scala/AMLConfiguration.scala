@@ -2,6 +2,7 @@ package amf.aml.client.scala
 
 import amf.aml.client.scala.AMLConfiguration.platform
 import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.document.DialectInstance
 import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
 import amf.aml.internal.entities.AMLEntities
@@ -68,9 +69,14 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
                               options: AMFOptions = options): AMLConfiguration =
     new AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options)
 
+  /** Contains common AMF graph operations associated to documents */
   override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
-  override def elementClient(): AMLElementClient   = new AMLElementClient(this)
-  def configurationState(): AMLConfigurationState  = new AMLConfigurationState(this)
+
+  /** Contains functionality associated with specific elements of the AMF model */
+  override def elementClient(): AMLElementClient = new AMLElementClient(this)
+
+  /** Contains methods to get information about the current state of the configuration */
+  def configurationState(): AMLConfigurationState = new AMLConfigurationState(this)
 
   /**
     * Set [[ParsingOptions]]
@@ -185,6 +191,11 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     */
   def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
 
+  /**
+    * Register a [[Dialect]] linked from a [[DialectInstance]]
+    * @param url of the [[DialectInstance]]
+    * @return A CompletableFuture of [[AMLConfiguration]]
+    */
   def forInstance(url: String): Future[AMLConfiguration] = {
     val collector = new DialectReferencesCollector
     val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
