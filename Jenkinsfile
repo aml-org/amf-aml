@@ -10,13 +10,13 @@ pipeline {
     GITHUB_REPO = 'amf-aml'
   }
   stages {
-    stage('Test') {
-      steps {
-        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-          sh 'sbt -mem 4096 -Dfile.encoding=UTF-8 clean coverage test coverageReport'
-        }
-      }
-    }
+//    stage('Test') {
+//      steps {
+//        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+//          sh 'sbt -mem 4096 -Dfile.encoding=UTF-8 clean coverage test coverageReport'
+//        }
+//      }
+//    }
     stage('Coverage') {
       when {
         anyOf {
@@ -38,6 +38,7 @@ pipeline {
           branch 'master'
           branch 'develop'
           branch 'remod-breaking'
+          branch 'APIMF-3093'
         }
       }
       steps {
