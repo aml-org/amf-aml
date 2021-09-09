@@ -204,6 +204,13 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
   private def setLiteralPropertyBase(propertyId: String, value: Any): this.type = {
     findPropertyMappingByTermPropertyId(Namespace.defaultAliases.expand(propertyId).iri()) match {
+      case Some(mapping) if mapping.allowMultiple().is(true) =>
+        value match {
+          case seq: Seq[_] =>
+            set(mapping.toField, AmfArray(seq.map(AmfScalar(_))))
+          case other =>
+            set(mapping.toField, AmfArray(Seq(AmfScalar(other))))
+        }
       case Some(mapping) =>
         set(mapping.toField, AmfScalar(value))
         this

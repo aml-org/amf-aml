@@ -1,0 +1,19 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+external:
+  test: http://test.org#
+
+nodeMappings:
+  RootNode:
+    classTerm: test.RootNode
+    mapping:
+      numbers:
+        propertyTerm: test.numbers
+        range: integer
+        allowMultiple: true
+
+documents:
+  root:
+    encodes: RootNode
