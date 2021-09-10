@@ -21,12 +21,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   // Dialect mapping defining the instance
   private var instanceDefinedBy: Option[NodeMapping] = None
 
-  def getObjectByProperty(uri: String): Seq[DialectDomainElement] =
+  def getObjectByProperty(iri: String): Seq[DialectDomainElement] =
     graph
-      .getObjectByProperty(Namespace.defaultAliases.expand(uri).iri())
+      .getObjectByProperty(Namespace.defaultAliases.expand(iri).iri())
       .collect({ case d: DialectDomainElement => d })
 
-  def getScalarByProperty(uri: String): Seq[Any] = graph.scalarByProperty(uri)
+  def getScalarByProperty(iri: String): Seq[Any] = graph.scalarByProperty(iri)
 
   def isAbstract: BoolField                                = fields.field(DialectDomainElementModel.Abstract)
   def declarationName: StrField                            = fields.field(DialectDomainElementModel.DeclarationName)
@@ -76,34 +76,35 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
-  def withObjectProperty(uri: String, value: DialectDomainElement, node: YNode = YNode.Empty): DialectDomainElement = {
-    findPropertyMappingByTermPropertyId(Namespace.defaultAliases.expand(uri).iri()) match {
+  def withObjectProperty(iri: String, value: DialectDomainElement, node: YNode = YNode.Empty): DialectDomainElement = {
+    findPropertyMappingByIri(Namespace.defaultAliases.expand(iri).iri()) match {
       case Some(mapping) =>
         withObjectField(mapping, value, Left(node))
         this
       case None =>
-        throw new Exception(s"Cannot find node mapping for propertyId $uri")
+        throw new Exception(s"Cannot find node mapping for property IRI $iri")
     }
   }
 
-  def withObjectCollectionProperty(propertyId: String, value: Seq[DialectDomainElement]): this.type = {
-    findPropertyMappingByTermPropertyId(Namespace.defaultAliases.expand(propertyId).iri()) match {
+  def withObjectCollectionProperty(propertyIri: String, value: Seq[DialectDomainElement]): this.type = {
+    findPropertyMappingByIri(Namespace.defaultAliases.expand(propertyIri).iri()) match {
       case Some(mapping) =>
         withObjectCollectionProperty(mapping, value, Left(YNode.Empty))
         this
       case None =>
-        throw new Exception(s"Cannot find node mapping for propertyId $propertyId")
+        throw new Exception(s"Cannot find node mapping for property IRI $propertyIri")
     }
   }
 
-  def withLiteralProperty(propertyId: String, value: String): this.type  = setLiteralPropertyBase(propertyId, value)
-  def withLiteralProperty(propertyId: String, value: Int): this.type     = setLiteralPropertyBase(propertyId, value)
-  def withLiteralProperty(propertyId: String, value: Double): this.type  = setLiteralPropertyBase(propertyId, value)
-  def withLiteralProperty(propertyId: String, value: Float): this.type   = setLiteralPropertyBase(propertyId, value)
-  def withLiteralProperty(propertyId: String, value: Boolean): this.type = setLiteralPropertyBase(propertyId, value)
-  def withLiteralProperty(propertyId: String, dateTime: SimpleDateTime): this.type =
-    setLiteralPropertyBase(propertyId, dateTime)
-  def withLiteralProperty(propertyId: String, value: List[Any]): this.type = setLiteralPropertyBase(propertyId, value)
+  def withLiteralProperty(propertyIri: String, value: String): this.type  = setLiteralPropertyBase(propertyIri, value)
+  def withLiteralProperty(propertyIri: String, value: Int): this.type     = setLiteralPropertyBase(propertyIri, value)
+  def withLiteralProperty(propertyIri: String, value: Double): this.type  = setLiteralPropertyBase(propertyIri, value)
+  def withLiteralProperty(propertyIri: String, value: Float): this.type   = setLiteralPropertyBase(propertyIri, value)
+  def withLiteralProperty(propertyIri: String, value: Boolean): this.type = setLiteralPropertyBase(propertyIri, value)
+  def withLiteralProperty(propertyIri: String, dateTime: SimpleDateTime): this.type =
+    setLiteralPropertyBase(propertyIri, dateTime)
+  def withLiteralProperty(propertyIri: String, value: List[Any]): this.type =
+    setLiteralPropertyBase(propertyIri, value)
 
   private[amf] def setObjectField(property: PropertyMapping,
                                   value: DialectDomainElement,
@@ -197,18 +198,25 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     set(f, AmfArray(objs :+ newObj), annotations)
   }
 
-  private def findPropertyMappingByTermPropertyId(termPropertyId: String): Option[PropertyMapping] =
+  private def findPropertyMappingByIri(propertyIri: String): Option[PropertyMapping] =
     definedBy
       .propertiesMapping()
-      .find(_.nodePropertyMapping().value() == termPropertyId)
+      .find(_.nodePropertyMapping().value() == propertyIri)
 
-  private def setLiteralPropertyBase(propertyId: String, value: Any): this.type = {
-    findPropertyMappingByTermPropertyId(Namespace.defaultAliases.expand(propertyId).iri()) match {
+  private def setLiteralPropertyBase(propertyIri: String, value: Any): this.type = {
+    findPropertyMappingByIri(Namespace.defaultAliases.expand(propertyIri).iri()) match {
+      case Some(mapping) if mapping.allowMultiple().is(true) =>
+        value match {
+          case seq: Seq[_] =>
+            set(mapping.toField, AmfArray(seq.map(AmfScalar(_))))
+          case other =>
+            set(mapping.toField, AmfArray(Seq(AmfScalar(other))))
+        }
       case Some(mapping) =>
         set(mapping.toField, AmfScalar(value))
         this
       case None =>
-        throw new Exception(s"Cannot find node mapping for propertyId $propertyId")
+        throw new Exception(s"Cannot find node mapping for property IRI $propertyIri")
     }
   }
 

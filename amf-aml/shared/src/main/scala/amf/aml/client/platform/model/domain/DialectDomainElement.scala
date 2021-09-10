@@ -14,7 +14,7 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
   @JSExportTopLevel("DialectDomainElement")
   def this() = this(InternalDialectDomainElement())
 
-  def getObjectByProperty(uri: String): ClientList[DialectDomainElement] = _internal.getObjectByProperty(uri).asClient
+  def getObjectByProperty(iri: String): ClientList[DialectDomainElement] = _internal.getObjectByProperty(iri).asClient
 
   def isAbstract(): BoolField = _internal.isAbstract
 
@@ -48,49 +48,49 @@ case class DialectDomainElement(override private[amf] val _internal: InternalDia
 
   def containsProperty(property: PropertyMapping): Boolean = _internal.containsProperty(property)
 
-  def withObjectProperty(uri: String, value: DialectDomainElement): this.type = {
-    _internal.withObjectProperty(uri, value)
+  def withObjectProperty(iri: String, value: DialectDomainElement): this.type = {
+    _internal.withObjectProperty(iri, value)
     this
   }
 
-  def withObjectCollectionProperty(propertyId: String, value: ClientList[DialectDomainElement]): this.type = {
-    _internal.withObjectCollectionProperty(propertyId, value.asInternal)
+  def withObjectCollectionProperty(propertyIri: String, value: ClientList[DialectDomainElement]): this.type = {
+    _internal.withObjectCollectionProperty(propertyIri, value.asInternal)
     this
   }
 
-  def getTypeUris(): ClientList[String] = _internal.meta.`type`.map(_.iri()).asClient
+  def getTypeIris(): ClientList[String] = _internal.meta.`type`.map(_.iri()).asClient
 
-  def getPropertyUris(): ClientList[String] = _internal.meta.fields.map(_.value.iri()).asClient
+  def getPropertyIris(): ClientList[String] = _internal.meta.fields.map(_.value.iri()).asClient
 
   override def linkCopy(): DialectDomainElement = _internal.linkCopy()
 
-  def withLiteralProperty(propertyId: String, value: String): this.type = {
-    _internal.withLiteralProperty(propertyId, value)
+  def withLiteralProperty(propertyIri: String, value: String): this.type = {
+    _internal.withLiteralProperty(propertyIri, value)
     this
   }
 
-  def withLiteralProperty(propertyId: String, value: Int): this.type = {
-    _internal.withLiteralProperty(propertyId, value)
+  def withLiteralProperty(propertyIri: String, value: Int): this.type = {
+    _internal.withLiteralProperty(propertyIri, value)
     this
   }
 
-  def withLiteralProperty(propertyId: String, value: Double): this.type = {
-    _internal.withLiteralProperty(propertyId, value)
+  def withLiteralProperty(propertyIri: String, value: Double): this.type = {
+    _internal.withLiteralProperty(propertyIri, value)
     this
   }
 
-  def withLiteralProperty(propertyId: String, value: Float): this.type = {
-    _internal.withLiteralProperty(propertyId, value)
+  def withLiteralProperty(propertyIri: String, value: Float): this.type = {
+    _internal.withLiteralProperty(propertyIri, value)
     this
   }
 
-  def withLiteralProperty(propertyId: String, value: Boolean): this.type = {
-    _internal.withLiteralProperty(propertyId, value)
+  def withLiteralProperty(propertyIri: String, value: Boolean): this.type = {
+    _internal.withLiteralProperty(propertyIri, value)
     this
   }
 
-  def withLiteralProperty(propertyId: String, value: ClientList[Any]): this.type = {
-    _internal.withLiteralProperty(propertyId, value.asInternal.toList)
+  def withLiteralProperty(propertyIri: String, value: ClientList[Any]): this.type = {
+    _internal.withLiteralProperty(propertyIri, value.asInternal.toList)
     this
   }
 }

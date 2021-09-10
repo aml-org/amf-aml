@@ -1,15 +1,10 @@
 package amf.testing.unclassified
 
-import amf.aml.internal.convert.VocabulariesClientConverter._
-import amf.aml.client.platform.model.document.{Dialect => ClientDialect}
-import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.platform.{AMLConfiguration => ClientAMLConfiguration}
+import amf.aml.client.scala.AMLConfiguration
+import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.core.client.platform.model.domain.{DomainElement => ClientDomainElement}
-import amf.core.client.scala.errorhandling.DefaultErrorHandler
-import amf.aml.client.platform.render.{AmlDomainElementEmitter => ClientAmlDomainElementEmitter}
-import amf.core.internal.convert.ClientErrorHandlerConverter.ErrorHandlerConverter
 import amf.core.client.scala.model.domain.DomainElement
-import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
 import amf.testing.common.utils.DomainElementCycleTests
 import org.yaml.builder.YamlOutputBuilder
 
