@@ -11,12 +11,15 @@ import amf.aml.internal.metamodel.domain.MergePolicies._
 import amf.aml.client.scala.model.document.{DialectInstance, DialectInstancePatch}
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.validate.DialectValidations.InvalidDialectPatch
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.transform.TransformationStep
 
 import scala.language.postfixOps
 
 class DialectPatchApplicationStage() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     new DialectPatchApplication()(errorHandler).transform(model)
   }
 }

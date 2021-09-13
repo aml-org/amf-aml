@@ -4,11 +4,14 @@ import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.aml.client.scala.model.domain.NodeMapping
 import amf.aml.internal.utils.AmlExtensionSyntax._
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.transform.TransformationStep
 
 class DialectNodeExtensionStage() extends TransformationStep() {
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     model match {
       case declarationModel: DeclaresModel =>
         declarationModel.declares.foreach {

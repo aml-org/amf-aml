@@ -7,10 +7,13 @@ import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.internal.transform.stages.helpers.ModelReferenceResolver
 import amf.core.internal.transform.stages.selectors.LinkSelector
 import amf.aml.client.scala.model.document.DialectInstance
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.transform.TransformationStep
 
 class DialectInstanceReferencesResolutionStage() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     new DialectInstanceReferencesResolution()(errorHandler).transform(model)
   }
 }

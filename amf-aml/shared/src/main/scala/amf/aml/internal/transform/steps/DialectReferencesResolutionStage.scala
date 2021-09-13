@@ -14,6 +14,7 @@ import amf.aml.client.scala.model.domain.{
   UnionNodeMapping
 }
 import amf.aml.internal.utils.AmlExtensionSyntax._
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.transform.TransformationStep
 import org.mulesoft.common.collections.FilterType
 
@@ -22,7 +23,9 @@ import scala.collection.mutable
 class DialectReferencesResolutionStage() extends TransformationStep() {
   type NodeMappable = NodeMappable.AnyNodeMappable
 
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
     val finalDeclarationsMap = mutable.Map[String, NodeMappable]()
     val unitDeclarations     = model.asInstanceOf[DeclaresModel].declares.filterType[NodeMappable]
 
