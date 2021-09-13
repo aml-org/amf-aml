@@ -11,7 +11,7 @@ import amf.core.client.scala.transform.TransformationStep
 
 class DialectInstanceReferencesResolutionStage() extends TransformationStep {
   override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
-    new DialectInstanceReferencesResolution()(errorHandler).resolve(model)
+    new DialectInstanceReferencesResolution()(errorHandler).transform(model)
   }
 }
 
@@ -20,16 +20,16 @@ private class DialectInstanceReferencesResolution(implicit errorHandler: AMFErro
   var modelResolver: Option[ModelReferenceResolver] = None
   var mutuallyRecursive: Seq[String]                = Nil
 
-  def resolve[T <: BaseUnit](model: T): T = {
+  def transform[T <: BaseUnit](model: T): T = {
     this.model = Some(model)
     this.modelResolver = Some(new ModelReferenceResolver(model))
     model.transform(LinkSelector, transform).asInstanceOf[T]
   }
 
   // Internal request that checks for mutually recursive types
-  protected def recursiveResolveInvocation(model: BaseUnit,
-                                           modelResolver: Option[ModelReferenceResolver],
-                                           mutuallyRecursive: Seq[String]): BaseUnit = {
+  protected def recursiveTransformInvocation(model: BaseUnit,
+                                             modelResolver: Option[ModelReferenceResolver],
+                                             mutuallyRecursive: Seq[String]): BaseUnit = {
     this.mutuallyRecursive = mutuallyRecursive
     this.model = Some(model)
     this.modelResolver = Some(modelResolver.getOrElse(new ModelReferenceResolver(model)))
@@ -58,7 +58,7 @@ private class DialectInstanceReferencesResolution(implicit errorHandler: AMFErro
       val nested = DialectInstance()
       nested.fields.setWithoutId(DocumentModel.Encodes, element)
       val result = new DialectInstanceReferencesResolution()
-        .recursiveResolveInvocation(nested, modelResolver, mutuallyRecursive ++ Seq(element.id))
+        .recursiveTransformInvocation(nested, modelResolver, mutuallyRecursive ++ Seq(element.id))
       result.asInstanceOf[DialectInstance].encodes
     }
   }
