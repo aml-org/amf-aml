@@ -1,14 +1,14 @@
-Model: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/invalid-union-objectRange/dialect.yaml
+ModelId: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/invalid-union-objectRange/dialect.yaml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/aml#missing-node-mapping-range-term
+- Constraint: http://a.ml/vocabularies/amf/aml#missing-node-mapping-range-term
   Message: Cannot find property range term EC2ResourceNode
-  Level: Violation
+  Severity: Violation
   Target: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/invalid-union-objectRange/dialect.yaml#/declarations/ResourceNode
   Property: http://www.w3.org/ns/shacl#node
-  Position: Some(LexicalInformation([(19,8)-(19,23)]))
+  Range: [(19,8)-(19,23)]
   Location: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/invalid-union-objectRange/dialect.yaml

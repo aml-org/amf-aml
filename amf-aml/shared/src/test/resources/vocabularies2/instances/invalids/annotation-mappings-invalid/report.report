@@ -1,30 +1,30 @@
-Model: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/annotation-mappings-invalid/dialect.yaml
+ModelId: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/annotation-mappings-invalid/dialect.yaml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 3
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/aml#dialect-error
+- Constraint: http://a.ml/vocabularies/amf/aml#dialect-error
   Message: Invalid type !!str (expected !!map) for annotation mapping node InvalidAnnotationMapping
-  Level: Violation
+  Severity: Violation
   Target: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/annotation-mappings-invalid/dialect.yaml#/declarations
   Property: 
-  Position: Some(LexicalInformation([(6,28)-(6,64)]))
+  Range: [(6,28)-(6,64)]
   Location: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/annotation-mappings-invalid/dialect.yaml
 
-- Source: http://a.ml/vocabularies/amf/core#declaration-not-found
+- Constraint: http://a.ml/vocabularies/amf/core#declaration-not-found
   Message: Annotation mapping InexistentAnnotationMapping not found
-  Level: Violation
+  Severity: Violation
   Target: 
   Property: 
-  Position: Some(LexicalInformation([(9,14)-(9,41)]))
+  Range: [(9,14)-(9,41)]
   Location: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/annotation-mappings-invalid/dialect.yaml
 
-- Source: http://a.ml/vocabularies/amf/aml#dialect-error
+- Constraint: http://a.ml/vocabularies/amf/aml#dialect-error
   Message: Invalid type !!map (expected !!str) for semantic extension node invalid
-  Level: Violation
+  Severity: Violation
   Target: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/annotation-mappings-invalid/dialect.yaml/semantic-extensions
   Property: 
-  Position: Some(LexicalInformation([(10,10)-(13,19)]))
+  Range: [(10,10)-(13,19)]
   Location: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/annotation-mappings-invalid/dialect.yaml

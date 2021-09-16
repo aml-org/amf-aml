@@ -1,14 +1,14 @@
-Model: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/unknown-map-key-property/dialect.yaml
+ModelId: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/unknown-map-key-property/dialect.yaml
 Profile: 
-Conforms? false
+Conforms: false
 Number of results: 1
 
 Level: Violation
 
-- Source: http://a.ml/vocabularies/amf/aml#missing-node-mapping-range-term
+- Constraint: http://a.ml/vocabularies/amf/aml#missing-node-mapping-range-term
   Message: Cannot find property name in mapping range
-  Level: Violation
+  Severity: Violation
   Target: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/unknown-map-key-property/dialect.yaml#/declarations/CloudformationRoot/property/Resources
   Property: http://a.ml/vocabularies/meta#mapProperty
-  Position: Some(LexicalInformation([(16,16)-(16,20)]))
+  Range: [(16,16)-(16,20)]
   Location: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/unknown-map-key-property/dialect.yaml
