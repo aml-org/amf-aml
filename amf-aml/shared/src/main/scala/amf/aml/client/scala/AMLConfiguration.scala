@@ -1,8 +1,7 @@
 package amf.aml.client.scala
 
 import amf.aml.client.scala.AMLConfiguration.platform
-import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.document.DialectInstance
+import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
 import amf.aml.internal.entities.AMLEntities
@@ -189,7 +188,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     * @param dialect [[Dialect]] to register
     * @return [[AMLConfiguration]] with [[Dialect]] registered
     */
-  def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect).register(this)
+  def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect, this).register()
 
   /**
     * Register a [[Dialect]] linked from a [[DialectInstance]]
@@ -198,7 +197,7 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     */
   def forInstance(url: String): Future[AMLConfiguration] = {
     val collector = new DialectReferencesCollector
-    val runner    = TransformationPipelineRunner(UnhandledErrorHandler)
+    val runner    = TransformationPipelineRunner(UnhandledErrorHandler, this)
     collector.collectFrom(url, this).map { dialects =>
       dialects
         .map { d =>

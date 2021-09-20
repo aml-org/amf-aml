@@ -11,13 +11,16 @@ import amf.aml.internal.metamodel.domain.MergePolicies._
 import amf.aml.client.scala.model.document.{DialectInstance, DialectInstancePatch}
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.validate.DialectValidations.InvalidDialectPatch
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.transform.TransformationStep
 
 import scala.language.postfixOps
 
 class DialectPatchApplicationStage() extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
-    new DialectPatchApplication()(errorHandler).resolve(model)
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
+    new DialectPatchApplication()(errorHandler).transform(model)
   }
 }
 
@@ -28,7 +31,7 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
   type MergedDomainElement = DialectDomainElement // Domain element resulting from target-patch merge
   type NeutralId           = String               // ID relative to a location
 
-  def resolve[T <: BaseUnit](model: T): T = {
+  def transform[T <: BaseUnit](model: T): T = {
     model match {
       case patch: DialectInstancePatch => resolvePatch(patch).asInstanceOf[T]
       case _                           => model

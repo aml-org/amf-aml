@@ -3,8 +3,8 @@ package amf.aml.internal.transform.pipelines
 import amf.core.client.common.transform._
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.Aml
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance, DialectInstancePatch}
+import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}
 
 class DefaultAMLTransformationPipeline(override val name: String) extends TransformationPipeline {
@@ -12,8 +12,10 @@ class DefaultAMLTransformationPipeline(override val name: String) extends Transf
 }
 
 private object RedirectResolutionByModel extends TransformationStep {
-  override def transform(model: BaseUnit, errorHandler: AMFErrorHandler): BaseUnit = {
-    val runner = TransformationPipelineRunner(errorHandler)
+  override def transform(model: BaseUnit,
+                         errorHandler: AMFErrorHandler,
+                         configuration: AMFGraphConfiguration): BaseUnit = {
+    val runner = TransformationPipelineRunner(errorHandler, configuration)
     model match {
       case _: DialectInstancePatch => runner.run(model, DialectInstancePatchTransformationPipeline())
       case _: Dialect              => runner.run(model, DialectTransformationPipeline())

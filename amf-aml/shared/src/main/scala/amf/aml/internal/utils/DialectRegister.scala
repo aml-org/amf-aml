@@ -18,7 +18,7 @@ import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.plugins.AMFPlugin
 
 // TODO ARM check this object
-private[amf] case class DialectRegister(d: Dialect) {
+private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfiguration) {
 
   val dialect: Dialect = {
     if (d.resolved) d
@@ -28,11 +28,11 @@ private[amf] case class DialectRegister(d: Dialect) {
     }
   }
 
-  def register(amlConfig: AMLConfiguration): AMLConfiguration = {
-    val existingDialects = amlConfig.configurationState().getDialects()
+  def register(): AMLConfiguration = {
+    val existingDialects = configuration.configurationState().getDialects()
     val finder           = DefaultNodeMappableFinder(existingDialects)
     val profile          = new AMFDialectValidations(dialect)(finder).profile() // TODO ARM if i use resolved dialect this throws null pointer
-    val newConfig = amlConfig
+    val newConfig = configuration
       .withPlugins(plugins)
       .withValidationProfile(profile)
       .withEntities(domainModels)
@@ -46,7 +46,7 @@ private[amf] case class DialectRegister(d: Dialect) {
   }
 
   private[amf] def resolveDialect(cloned: Dialect) = {
-    TransformationPipelineRunner(DefaultErrorHandler())
+    TransformationPipelineRunner(DefaultErrorHandler(), configuration)
       .run(cloned, DialectTransformationPipeline())
       .asInstanceOf[Dialect]
   }

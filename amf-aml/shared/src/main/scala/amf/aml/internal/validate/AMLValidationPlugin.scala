@@ -22,13 +22,7 @@ class AMLValidationPlugin() extends AMFValidatePlugin {
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
-    val dialects = knownDialects(options)
-    new AMLValidator(dialects, options.config.constraints, options.config.amfConfig.listeners.toSeq)
-      .validate(unit, options.profile, options.effectiveValidations)
+    new AMLValidator().validate(unit, options)
   }
 
-  private def knownDialects(options: ValidationOptions) =
-    options.config.amfConfig.registry.plugins.parsePlugins.collect {
-      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
-    }
 }
