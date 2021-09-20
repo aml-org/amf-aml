@@ -21,7 +21,7 @@ import amf.core.internal.plugins.AMFPlugin
 private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfiguration) {
 
   val dialect: Dialect = {
-    if (d.resolved) d
+    if (d.processingData.transformed.is(true)) d
     else {
       val cloned = d.cloneUnit().asInstanceOf[Dialect]
       resolveDialect(cloned)

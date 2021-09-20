@@ -12,7 +12,7 @@ case class AMLDialectNamespaceAliasesPlugin private (dialect: Dialect, aliases: 
     extends NamespaceAliasesPlugin {
 
   override def applies(element: BaseUnit): Boolean = element match {
-    case instance: DialectInstanceUnit => instance.definedBy().option().contains(dialect.id)
+    case instance: DialectInstanceUnit => instance.processingData.definedBy().option().contains(dialect.id)
     case currentDialect: Dialect       => currentDialect.id == dialect.id
     case _                             => false
   }

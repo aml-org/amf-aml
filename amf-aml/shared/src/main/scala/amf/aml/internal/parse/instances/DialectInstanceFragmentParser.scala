@@ -4,7 +4,7 @@ import amf.core.internal.parser.Root
 import org.mulesoft.common.core._
 import amf.core.internal.parser.domain.Annotations
 import amf.aml.internal.metamodel.document.DialectInstanceModel
-import amf.aml.client.scala.model.document.DialectInstanceFragment
+import amf.aml.client.scala.model.document.{DialectInstanceFragment, DialectInstanceProcessingData}
 import amf.aml.client.scala.model.domain.{DialectDomainElement, DocumentsModel}
 import amf.aml.internal.validate.DialectValidations.DialectError
 
@@ -15,7 +15,7 @@ class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: Diale
     val dialectInstanceFragment: DialectInstanceFragment = DialectInstanceFragment(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
-      .withDefinedBy(ctx.dialect.id)
+      .withProcessingData(DialectInstanceProcessingData().withTransformed(false).withDefinedBy(ctx.dialect.id))
       .withFragment(name)
 
     DialectInstanceReferencesParser(dialectInstanceFragment, map, root.references).parse(root.location)

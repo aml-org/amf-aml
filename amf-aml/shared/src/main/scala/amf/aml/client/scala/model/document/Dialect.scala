@@ -2,7 +2,7 @@ package amf.aml.client.scala.model.document
 
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.StrField
-import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
+import amf.core.client.scala.model.document.{BaseUnit, BaseUnitProcessingData, DeclaresModel, EncodesModel}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.metamodel.document.DocumentModel.Encodes
 import amf.core.internal.metamodel.document.ModuleModel.{Declares, References}

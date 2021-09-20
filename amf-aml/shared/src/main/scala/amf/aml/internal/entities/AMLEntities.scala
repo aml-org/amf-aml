@@ -26,7 +26,8 @@ private[amf] object AMLEntities extends Entities {
       DialectInstanceModel,
       DialectInstanceLibraryModel,
       DialectInstanceFragmentModel,
-      DialectInstancePatchModel
+      DialectInstancePatchModel,
+      DialectInstanceProcessingDataModel
   )
 
 }

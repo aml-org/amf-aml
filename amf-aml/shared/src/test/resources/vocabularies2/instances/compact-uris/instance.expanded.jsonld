@@ -8,11 +8,6 @@
       "doc:Module",
       "doc:Unit"
     ],
-    "meta:definedBy": [
-      {
-        "@id": "./dialect.yaml"
-      }
-    ],
     "doc:encodes": [
       {
         "@id": "#/encodes",
@@ -98,14 +93,27 @@
         ]
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "/BaseUnitProcessingData",
+        "@type": [
+          "doc:DialectInstanceProcessingData"
+        ],
+        "meta:definedBy": [
+          {
+            "@id": "./dialect.yaml"
+          }
+        ],
+        "doc:transformed": [
+          {
+            "@value": false
+          }
+        ]
       }
     ],
     "sourcemaps:sources": [

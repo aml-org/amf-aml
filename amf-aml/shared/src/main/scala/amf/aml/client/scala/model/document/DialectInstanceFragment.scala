@@ -14,20 +14,14 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
     with ComposedInstancesSupport {
   override def meta: DialectInstanceFragmentModel.type = DialectInstanceFragmentModel
 
-  def references: Seq[BaseUnit]        = fields.field(References)
-  def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
-  def encodes: DomainElement           = fields.field(Encodes)
-  def definedBy(): StrField            = fields.field(DefinedBy)
-  def fragment(): StrField             = fields.field(Fragment)
+  def encodes: DomainElement = fields.field(Encodes)
+
+  def fragment(): StrField = fields.field(Fragment)
 
   private[amf] override def componentId: String = ""
 
-  def withDefinedBy(dialectId: String): DialectInstanceFragment =
-    set(DefinedBy, dialectId)
   def withFragment(fragmentId: String): DialectInstanceFragment =
     set(Fragment, fragmentId)
-  def withGraphDepencies(ids: Seq[String]): DialectInstanceFragment =
-    set(GraphDependencies, ids)
 }
 
 object DialectInstanceFragment {

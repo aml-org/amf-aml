@@ -1,6 +1,18 @@
 {
   "@graph": [
     {
+      "@id": "/BaseUnitProcessingData",
+      "@type": [
+        "doc:DialectInstanceProcessingData"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "./dialect.yaml"
+        }
+      ],
+      "doc:transformed": false
+    },
+    {
       "@id": "#/encodes",
       "@type": [
         "myVocab:MyClass",
@@ -67,16 +79,13 @@
         "doc:Module",
         "doc:Unit"
       ],
-      "meta:definedBy": [
-        {
-          "@id": "./dialect.yaml"
-        }
-      ],
       "doc:encodes": {
         "@id": "#/encodes"
       },
-      "doc:version": "3.1.0",
       "doc:root": true,
+      "doc:processingData": {
+        "@id": "/BaseUnitProcessingData"
+      },
       "sourcemaps:sources": [
         {
           "@id": "#/source-map"

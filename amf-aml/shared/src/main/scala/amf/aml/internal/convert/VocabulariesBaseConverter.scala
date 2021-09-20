@@ -1,12 +1,31 @@
 package amf.aml.internal.convert
 
 import amf.aml.client.platform
-import amf.aml.client.platform.model.document.{Dialect => ClientDialect, DialectInstance => ClientDialectInstance, Vocabulary => ClientVocabulary}
-import amf.aml.client.platform.model.domain.{AnnotationMapping => ClientAnnotationMapping, ClassTerm => ClientClassTerm, DatatypePropertyTerm => ClientDatatypePropertyTerm, DialectDomainElement => ClientDialectDomainElement, DocumentMapping => ClientDocumentMapping, DocumentsModel => ClientDocumentsModel, External => ClientExternal, NodeMapping => ClientNodeMapping, ObjectPropertyTerm => ClientObjectPropertyTerm, PropertyMapping => ClientPropertyMapping, PublicNodeMapping => ClientPublicNodeMapping, SemanticExtension => ClientSemanticExtension, VocabularyReference => ClientVocabularyReference}
+import amf.aml.client.platform.model.document
+import amf.aml.client.platform.model.document.{
+  Dialect => ClientDialect,
+  DialectInstance => ClientDialectInstance,
+  Vocabulary => ClientVocabulary
+}
+import amf.aml.client.platform.model.domain.{
+  AnnotationMapping => ClientAnnotationMapping,
+  ClassTerm => ClientClassTerm,
+  DatatypePropertyTerm => ClientDatatypePropertyTerm,
+  DialectDomainElement => ClientDialectDomainElement,
+  DocumentMapping => ClientDocumentMapping,
+  DocumentsModel => ClientDocumentsModel,
+  External => ClientExternal,
+  NodeMapping => ClientNodeMapping,
+  ObjectPropertyTerm => ClientObjectPropertyTerm,
+  PropertyMapping => ClientPropertyMapping,
+  PublicNodeMapping => ClientPublicNodeMapping,
+  SemanticExtension => ClientSemanticExtension,
+  VocabularyReference => ClientVocabularyReference
+}
 import amf.aml.client.scala.{AMLConfiguration, AMLDialectInstanceResult, AMLDialectResult, AMLVocabularyResult}
 import amf.core.internal.convert.{BidirectionalMatcher, CoreBaseConverter}
 import amf.core.internal.unsafe.PlatformSecrets
-import amf.aml.client.scala.model.document.{Dialect, DialectInstance, Vocabulary}
+import amf.aml.client.scala.model.document.{Dialect, DialectInstance, DialectInstanceProcessingData, Vocabulary}
 import amf.aml.client.scala.model.domain._
 
 trait VocabulariesBaseConverter
@@ -31,6 +50,7 @@ trait VocabulariesBaseConverter
     with AMLDialectResultConverter
     with AMLDialectInstanceResultConverter
     with AMLVocabularyResultConverter
+    with DialectInstanceProcessingDataConverter
 
 trait DatatypePropertyMappingConverter extends PlatformSecrets {
 
@@ -202,5 +222,17 @@ trait AMLVocabularyResultConverter {
     override def asClient(from: AMLVocabularyResult): platform.AMLVocabularyResult =
       new platform.AMLVocabularyResult(from)
     override def asInternal(from: platform.AMLVocabularyResult): AMLVocabularyResult = from._internal
+  }
+}
+
+trait DialectInstanceProcessingDataConverter {
+  implicit object DialectInstanceProcessingDataMatcher
+      extends BidirectionalMatcher[DialectInstanceProcessingData,
+                                   platform.model.document.DialectInstanceProcessingData] {
+    override def asClient(from: DialectInstanceProcessingData): platform.model.document.DialectInstanceProcessingData =
+      new platform.model.document.DialectInstanceProcessingData(from)
+
+    override def asInternal(
+        from: platform.model.document.DialectInstanceProcessingData): DialectInstanceProcessingData = from._internal
   }
 }

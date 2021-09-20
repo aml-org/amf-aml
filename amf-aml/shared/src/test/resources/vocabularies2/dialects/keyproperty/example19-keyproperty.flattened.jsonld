@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml/externals/v3",
       "@type": [
         "http://www.w3.org/2002/07/owl#Ontology",
@@ -277,8 +284,10 @@
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml/documents"
       },
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml",
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml#/source-map"

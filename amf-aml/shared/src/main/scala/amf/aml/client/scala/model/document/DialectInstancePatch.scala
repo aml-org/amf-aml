@@ -14,19 +14,12 @@ case class DialectInstancePatch(fields: Fields, annotations: Annotations)
 
   override def meta: DialectInstancePatchModel.type = DialectInstancePatchModel
 
-  def references: Seq[BaseUnit]        = fields.field(References)
-  def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
-  def declares: Seq[DomainElement]     = fields.field(Declares)
-  def definedBy(): StrField            = fields.field(DefinedBy)
-  def extendsModel: StrField           = fields.field(DialectInstancePatchModel.Extends)
-  override def encodes: DomainElement  = fields.field(Encodes)
+  def declares: Seq[DomainElement]    = fields.field(Declares)
+  def extendsModel: StrField          = fields.field(DialectInstancePatchModel.Extends)
+  override def encodes: DomainElement = fields.field(Encodes)
 
   private[amf] override def componentId: String = ""
 
-  def withDefinedBy(dialectId: String): DialectInstancePatch =
-    set(DefinedBy, dialectId)
-  def withGraphDependencies(ids: Seq[String]): DialectInstancePatch =
-    set(GraphDependencies, ids)
   def withExtendsModel(target: String): DialectInstancePatch =
     set(DialectInstancePatchModel.Extends, target)
 }

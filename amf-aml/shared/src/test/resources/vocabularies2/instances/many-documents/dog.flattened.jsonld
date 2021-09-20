@@ -1,6 +1,18 @@
 {
   "@graph": [
     {
+      "@id": "/BaseUnitProcessingData",
+      "@type": [
+        "doc:DialectInstanceProcessingData"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "./dialect.yaml"
+        }
+      ],
+      "doc:transformed": true
+    },
+    {
       "@id": "#/encodes",
       "@type": [
         "a:Dog",
@@ -48,22 +60,19 @@
         "doc:Module",
         "doc:Unit"
       ],
-      "meta:definedBy": [
-        {
-          "@id": "./dialect.yaml"
-        }
-      ],
       "doc:encodes": {
         "@id": "#/encodes"
       },
-      "doc:version": "3.1.0",
-      "doc:root": true
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "/BaseUnitProcessingData"
+      }
     }
   ],
   "@context": {
     "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/many-documents/dog.yaml",
     "doc": "http://a.ml/vocabularies/document#",
-    "meta": "http://a.ml/vocabularies/meta#",
-    "a": "http://a.org#"
+    "a": "http://a.org#",
+    "meta": "http://a.ml/vocabularies/meta#"
   }
 }

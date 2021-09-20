@@ -8,11 +8,6 @@
       "http://a.ml/vocabularies/document#Module",
       "http://a.ml/vocabularies/document#Unit"
     ],
-    "http://a.ml/vocabularies/meta#definedBy": [
-      {
-        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/cfg/example3.yaml"
-      }
-    ],
     "http://a.ml/vocabularies/document#encodes": [
       {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.yaml#/encodes",
@@ -375,14 +370,27 @@
         ]
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/cfg/example3_instance.yaml/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#DialectInstanceProcessingData"
+        ],
+        "http://a.ml/vocabularies/meta#definedBy": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/cfg/example3.yaml"
+          }
+        ],
+        "http://a.ml/vocabularies/document#transformed": [
+          {
+            "@value": false
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
