@@ -13,17 +13,9 @@ case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
     with ComposedInstancesSupport {
   override def meta: DialectInstanceLibraryModel.type = DialectInstanceLibraryModel
 
-  def references: Seq[BaseUnit]        = fields.field(References)
-  def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
-  def declares: Seq[DomainElement]     = fields.field(Declares)
-  def definedBy(): StrField            = fields.field(DefinedBy)
+  def declares: Seq[DomainElement] = fields.field(Declares)
 
   private[amf] override def componentId: String = ""
-
-  def withDefinedBy(dialectId: String): DialectInstanceLibrary =
-    set(DefinedBy, dialectId)
-  def withGraphDependencies(ids: Seq[String]): DialectInstanceLibrary =
-    set(GraphDependencies, ids)
 }
 
 object DialectInstanceLibrary {

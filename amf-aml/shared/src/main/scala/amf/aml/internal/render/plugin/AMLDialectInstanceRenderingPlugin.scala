@@ -48,7 +48,7 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
   }
 
   override def applies(element: RenderInfo): Boolean = element.unit match {
-    case unit: DialectInstanceUnit => unit.definedBy().option().contains(dialect.id)
+    case unit: DialectInstanceUnit => unit.processingData.definedBy().option().contains(dialect.id)
     case _                         => false
   }
 

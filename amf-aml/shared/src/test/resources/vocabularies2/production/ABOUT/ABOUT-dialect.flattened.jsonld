@@ -1,6 +1,13 @@
 {
   "@graph": [
     {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml/externals/schema-org",
       "@type": [
         "http://www.w3.org/2002/07/owl#Ontology",
@@ -429,8 +436,10 @@
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml/documents"
       },
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml",
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/source-map"
@@ -544,10 +553,12 @@
       ],
       "http://a.ml/vocabularies/meta#base": "http://mulesoft.com/vocabularies/about#",
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.yaml",
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#references": [],
       "http://a.ml/vocabularies/document#usage": "A human and machine friendly software repository metadata vocabulary",
       "http://a.ml/vocabularies/document#root": false,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.yaml#/source-map"

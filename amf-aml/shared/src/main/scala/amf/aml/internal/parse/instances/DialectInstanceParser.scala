@@ -51,7 +51,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     val dialectInstance: DialectInstance = DialectInstance(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
-      .withDefinedBy(ctx.dialect.id)
+      .withProcessingData(DialectInstanceProcessingData().withTransformed(false).withDefinedBy(ctx.dialect.id))
     parseDeclarations("root")
 
     val references =
@@ -71,7 +71,8 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     if (references.baseUnitReferences().nonEmpty)
       dialectInstance.withReferences(references.baseUnitReferences())
     if (ctx.nestedDialects.nonEmpty)
-      dialectInstance.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
+      dialectInstance.processingData.withGraphDependencies(ctx.nestedDialects.map(nd =>
+        nd.location().getOrElse(nd.id)))
 
     // resolve unresolved references
     ctx.futureDeclarations.resolve()

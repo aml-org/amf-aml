@@ -17,7 +17,7 @@ import amf.aml.internal.validate.DialectValidations.{
   UnavoidableAmbiguity,
   VariablesDefinedInBase
 }
-import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.model.document.{BaseUnit, BaseUnitProcessingData}
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.AMFParser
 import amf.core.client.scala.parse.document.SyamlParsedDocument
@@ -39,7 +39,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     with AnnotationsParser {
 
   type NodeMappable = NodeMappable.AnyNodeMappable
-  val map: YMap        = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
+  val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
+//  val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(id()).withProcessingData(BaseUnitProcessingData())
   val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(id())
 
   // Need to do this before parsing so every ID set during parsing is relative to this ID

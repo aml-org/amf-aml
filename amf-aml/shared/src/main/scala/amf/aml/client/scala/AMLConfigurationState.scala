@@ -90,7 +90,7 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     SemanticExtensionHelper.byNameFinder(dialect).find(name).headOption
 
   def findDialectFor(dialectInstance: DialectInstance): Option[Dialect] = {
-    getDialects().find(dialect => dialectInstance.definedBy().value() == dialect.id)
+    getDialects().find(dialect => dialectInstance.processingData.definedBy().value() == dialect.id)
   }
 
   private def getDialectsByCondition(filter: (AMLDialectInstanceParsingPlugin) => Boolean): immutable.Seq[Dialect] =

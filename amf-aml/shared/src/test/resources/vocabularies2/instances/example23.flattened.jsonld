@@ -1,6 +1,18 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#DialectInstanceProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect23.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets",
       "@type": [
         "http://test.com#Nested",
@@ -56,16 +68,13 @@
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets"
       },
       "http://test.com#a": "hey ho",
-      "http://a.ml/vocabularies/meta#definedBy": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect23.yaml"
-        }
-      ],
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
       "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml/BaseUnitProcessingData"
+      },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/source-map"

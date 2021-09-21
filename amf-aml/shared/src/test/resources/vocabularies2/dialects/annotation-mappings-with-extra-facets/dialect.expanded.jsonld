@@ -374,14 +374,22 @@
         "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-with-extra-facets/dialect.yaml"
       }
     ],
-    "doc:version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "doc:root": [
       {
         "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "null/BaseUnitProcessingData",
+        "@type": [
+          "doc:BaseUnitProcessingData"
+        ],
+        "doc:transformed": [
+          {
+            "@value": false
+          }
+        ]
       }
     ],
     "sourcemaps:sources": [

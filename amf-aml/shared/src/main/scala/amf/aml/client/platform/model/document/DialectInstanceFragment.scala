@@ -10,7 +10,8 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 class DialectInstanceFragment(private[amf] val _internal: InternalDialectInstanceFragment)
     extends BaseUnit
-    with EncodesModel {
+    with EncodesModel
+    with DialectInstanceUnit {
 
   @JSExportTopLevel("DialectInstanceFragment")
   def this() = this(InternalDialectInstanceFragment())

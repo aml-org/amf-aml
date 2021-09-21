@@ -259,14 +259,22 @@
         "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml"
       }
     ],
-    "http://a.ml/vocabularies/document#version": [
-      {
-        "@value": "3.1.0"
-      }
-    ],
     "http://a.ml/vocabularies/document#root": [
       {
         "@value": true
+      }
+    ],
+    "http://a.ml/vocabularies/document#processingData": [
+      {
+        "@id": "null/BaseUnitProcessingData",
+        "@type": [
+          "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+        ],
+        "http://a.ml/vocabularies/document#transformed": [
+          {
+            "@value": false
+          }
+        ]
       }
     ],
     "http://a.ml/vocabularies/document-source-maps#sources": [
@@ -508,11 +516,6 @@
             "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/vocabulary.yaml"
           }
         ],
-        "http://a.ml/vocabularies/document#version": [
-          {
-            "@value": "3.1.0"
-          }
-        ],
         "http://a.ml/vocabularies/document#usage": [
           {
             "@value": "Learn AMF"
@@ -521,6 +524,19 @@
         "http://a.ml/vocabularies/document#root": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#processingData": [
+          {
+            "@id": "null/BaseUnitProcessingData",
+            "@type": [
+              "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+            ],
+            "http://a.ml/vocabularies/document#transformed": [
+              {
+                "@value": false
+              }
+            ]
           }
         ],
         "http://a.ml/vocabularies/document-source-maps#sources": [

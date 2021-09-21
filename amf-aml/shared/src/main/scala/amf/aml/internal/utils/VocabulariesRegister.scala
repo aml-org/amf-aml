@@ -5,6 +5,7 @@ import amf.aml.client.platform.model.domain._
 import amf.aml.client.scala.model.{document, domain}
 import amf.aml.internal.metamodel.document._
 import amf.aml.internal.metamodel.domain._
+import amf.core.internal.convert.CoreRegister
 import amf.core.internal.metamodel.Obj
 import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
@@ -15,6 +16,7 @@ object VocabulariesRegister extends PlatformSecrets {
   def register(): Unit = register(platform)
 
   def register(platform: Platform): Unit = {
+    CoreRegister.register(platform)
 
     val p: (Obj) => Boolean = (x: Obj) => x.isInstanceOf[DialectDomainElementModel]
     platform.registerWrapperPredicate(p) {
@@ -83,6 +85,9 @@ object VocabulariesRegister extends PlatformSecrets {
     }
     platform.registerWrapper(DialectInstanceLibraryModel) {
       case s: document.DialectInstanceLibrary => new DialectInstanceLibrary(s)
+    }
+    platform.registerWrapper(DialectInstanceProcessingDataModel) {
+      case s: document.DialectInstanceProcessingData => DialectInstanceProcessingData(s)
     }
   }
 }

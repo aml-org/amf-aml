@@ -8,7 +8,8 @@ import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 @JSExportAll
 class DialectInstanceLibrary(private[amf] val _internal: InternalDialectInstanceLibrary)
     extends BaseUnit
-    with DeclaresModel {
+    with DeclaresModel
+    with DialectInstanceUnit {
 
   @JSExportTopLevel("DialectInstanceLibrary")
   def this() = this(InternalDialectInstanceLibrary())

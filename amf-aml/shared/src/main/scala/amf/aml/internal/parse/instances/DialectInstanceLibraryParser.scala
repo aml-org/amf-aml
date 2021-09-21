@@ -2,7 +2,7 @@ package amf.aml.internal.parse.instances
 
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
-import amf.aml.client.scala.model.document.DialectInstanceLibrary
+import amf.aml.client.scala.model.document.{DialectInstanceLibrary, DialectInstanceProcessingData}
 
 class DialectInstanceLibraryParser(root: Root)(implicit override val ctx: DialectInstanceContext)
     extends DialectInstanceParser(root) {
@@ -11,7 +11,7 @@ class DialectInstanceLibraryParser(root: Root)(implicit override val ctx: Dialec
     val dialectInstance: DialectInstanceLibrary = DialectInstanceLibrary(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
-      .withDefinedBy(ctx.dialect.id)
+      .withProcessingData(DialectInstanceProcessingData().withTransformed(false).withDefinedBy(ctx.dialect.id))
 
     parseDeclarations("library")
 

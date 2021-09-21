@@ -1,6 +1,18 @@
 {
   "@graph": [
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#DialectInstanceProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes",
       "@type": [
         "schema.orgRoot",
@@ -92,16 +104,13 @@
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
       ],
-      "http://a.ml/vocabularies/meta#definedBy": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/dialect.yaml"
-        }
-      ],
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/encodes"
       },
-      "http://a.ml/vocabularies/document#version": "3.1.0",
-      "http://a.ml/vocabularies/document#root": true
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml/BaseUnitProcessingData"
+      }
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/encoded-named/instance.yaml#/nested/newNested",

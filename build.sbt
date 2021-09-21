@@ -7,7 +7,8 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-version in ThisBuild := "6.0.0-SUPER-SECRET-SNAPSHOT"
+ThisBuild / version := "6.0.0-SUPER-SECRET-SNAPSHOT"
+ThisBuild / scalaVersion := "2.12.11"
 
 publish := {}
 
@@ -43,7 +44,7 @@ lazy val amfCoreLibJS  = "com.github.amlorg" %% "amf-core_sjs0.6" % amfCoreVersi
 
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
   organization := "com.github.amlorg",
-  resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal),
+  resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral),
 //  resolvers += "jitpack" at "https://jitpack.io",
   credentials ++= Common.credentials(),
   libraryDependencies ++= Seq(
@@ -51,7 +52,7 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
     "org.mule.common"  %%% "scala-common-test" % "0.0.6" % Test,
     "org.slf4j" % "slf4j-nop" % "1.7.30" % Test
   ),
-  logBuffered in Test := false
+  Test / logBuffered := false
 )
 
 /** **********************************************
@@ -75,11 +76,11 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
   .dependsOn(validation)
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-aml-javadoc.jar"
+    Compile /  packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-aml-javadoc.jar"
   )
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js",
+    Compile /  fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations"
   )
   .disablePlugins(SonarPlugin)
@@ -98,11 +99,11 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
   .in(file("./amf-validation"))
   .settings(commonSettings)
   .jvmSettings(
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
+    Compile /  packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
   .jsSettings(
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
+    Compile /  fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
   )
   .disablePlugins(SonarPlugin)
 
@@ -133,12 +134,12 @@ lazy val rdf = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.apache.commons"         % "commons-lang3"           % "3.9",
     libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.21", // CVE-2021-35515 upto CVE-2021-35517
     libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.11.0",
-    artifactPath in (Compile, packageDoc) := baseDirectory.value / "target" / "artifact" / "amf-rdf-javadoc.jar",
+    Compile /  packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-rdf-javadoc.jar",
   )
   .jsSettings(
     jsDependencies += ProvidedJS / "shacl.js",
     scalaJSModuleKind := ModuleKind.CommonJSModule,
-    artifactPath in (Compile, fullOptJS) := baseDirectory.value / "target" / "artifact" / "amf-rdf-module.js",
+    Compile /  fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-rdf-module.js",
     scalacOptions += "-P:scalajs:suppressExportDeprecations"
   )
   .disablePlugins(SonarPlugin)
@@ -150,3 +151,8 @@ lazy val rdfJS =
   rdf.js
     .in(file("./amf-rdf/js"))
     .sourceDependency(amfCoreJSRef, amfCoreLibJS)
+
+ThisBuild / libraryDependencies ++= Seq(
+  compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.1" cross CrossVersion.constant("2.12.11")),
+  "com.github.ghik" % "silencer-lib" % "1.7.1" % Provided cross CrossVersion.constant("2.12.11")
+)

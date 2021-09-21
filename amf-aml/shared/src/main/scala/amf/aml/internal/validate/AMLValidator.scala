@@ -57,7 +57,7 @@ class AMLValidator() extends ShaclReportAdaptation {
       dialectInstance: DialectInstanceUnit,
       knownDialects: Seq[Dialect],
       constraints: Map[ProfileName, ValidationProfile])(implicit executionContext: ExecutionContext) = {
-    dialectInstance.graphDependencies
+    dialectInstance.processingData.graphDependencies
       .flatMap(_.option())
       .flatMap(dep => knownDialects.find(p => p.location().contains(dep)))
       .flatMap(dialect => dialect.profileName)
