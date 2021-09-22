@@ -216,4 +216,10 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
   test("Union range should conform") {
     validate("dialect.yaml", "instance.yaml", Some("conforms.json"), path = s"$basePath/union-range")
   }
+
+  test("Invalid self encoded dialect") {
+    validate("self-encoded-dialect.yaml",
+             "self-encoded-dialect-instance.yaml",
+             Some("self-encoded-dialect-instance.report.json"))
+  }
 }
