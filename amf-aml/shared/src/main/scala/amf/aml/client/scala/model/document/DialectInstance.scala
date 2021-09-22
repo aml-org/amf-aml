@@ -14,6 +14,8 @@ import amf.core.internal.metamodel.document.DocumentModel.Encodes
 import amf.core.internal.metamodel.document.ModuleModel.Declares
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.aml.internal.metamodel.document.DialectInstanceModel
+import amf.core.internal.annotations.SourceSpec
+import amf.core.internal.remote.Spec
 
 case class DialectInstance(fields: Fields, annotations: Annotations)
     extends DialectInstanceUnit
@@ -41,6 +43,12 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   }
 
   private[amf] def isSelfEncoded: Boolean = encodes.id == id
+
+  override def sourceSpec: Option[Spec] = this match {
+    case instance: DialectInstance if Option(instance.encodes).isDefined && instance.isSelfEncoded =>
+      instance.annotations.find(classOf[SourceSpec]).map(a => a.spec)
+    case _ => super.sourceSpec
+  }
 }
 
 object DialectInstance {

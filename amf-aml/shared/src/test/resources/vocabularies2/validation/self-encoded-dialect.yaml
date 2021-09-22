@@ -1,0 +1,19 @@
+#%Dialect 1.0
+
+dialect: Container Configuration
+version: 0.1
+
+documents:
+  root:
+    encodes: ConfigurationNode
+  options:
+    selfEncoded: true
+
+nodeMappings:
+
+  ConfigurationNode:
+    mapping:
+      namespace:
+        range: string
+        mandatory: true
+        pattern: "^[a-zA-Z0-9]{1}[\\w\\-]{0,220}$"
