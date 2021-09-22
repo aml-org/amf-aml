@@ -77,6 +77,11 @@
         "http://a.ml/vocabularies/document#Fragment",
         "http://a.ml/vocabularies/document#Unit"
       ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect8.yaml"
+        }
+      ],
       "http://a.ml/vocabularies/meta#fragment": "AFragment",
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/fragment8.yaml#/encodes"

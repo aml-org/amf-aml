@@ -6,6 +6,11 @@
       "http://a.ml/vocabularies/document#DocumentExtension",
       "http://a.ml/vocabularies/document#Unit"
     ],
+    "http://a.ml/vocabularies/meta#definedBy": [
+      {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect21.yaml"
+      }
+    ],
     "http://a.ml/vocabularies/document#extends": [
       {
         "@id": "example21.yaml"
@@ -133,6 +138,11 @@
           "http://a.ml/vocabularies/document#Fragment",
           "http://a.ml/vocabularies/document#Module",
           "http://a.ml/vocabularies/document#Unit"
+        ],
+        "http://a.ml/vocabularies/meta#definedBy": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect21.yaml"
+          }
         ],
         "http://a.ml/vocabularies/document#encodes": [
           {

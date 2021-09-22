@@ -68,6 +68,11 @@
         "http://a.ml/vocabularies/document#Fragment",
         "http://a.ml/vocabularies/document#Unit"
       ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/dialect.yaml"
+        }
+      ],
       "http://a.ml/vocabularies/meta#fragment": "Minor",
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/colliding-fragments/minor.yaml#/encodes"

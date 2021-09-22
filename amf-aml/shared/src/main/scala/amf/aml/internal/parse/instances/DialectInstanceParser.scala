@@ -30,6 +30,7 @@ import amf.aml.internal.validate.DialectValidations.{
   DialectError,
   InvalidUnionType
 }
+import com.github.ghik.silencer.silent
 import org.mulesoft.common.time.SimpleDateTime
 import org.mulesoft.lexer.SourceLocation
 import org.yaml.model._
@@ -48,10 +49,12 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
   val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
   def parseDocument(): DialectInstance = {
+    @silent("deprecated") // Silent can only be used in assignment expressions
     val dialectInstance: DialectInstance = DialectInstance(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
       .withProcessingData(DialectInstanceProcessingData().withTransformed(false).withDefinedBy(ctx.dialect.id))
+      .withDefinedBy(ctx.dialect.id)
     parseDeclarations("root")
 
     val references =
@@ -70,9 +73,12 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
     if (references.baseUnitReferences().nonEmpty)
       dialectInstance.withReferences(references.baseUnitReferences())
-    if (ctx.nestedDialects.nonEmpty)
+    if (ctx.nestedDialects.nonEmpty) {
       dialectInstance.processingData.withGraphDependencies(ctx.nestedDialects.map(nd =>
         nd.location().getOrElse(nd.id)))
+      @silent("deprecated") // Silent can only be used in assignment expressions
+      val a = dialectInstance.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
+    }
 
     // resolve unresolved references
     ctx.futureDeclarations.resolve()

@@ -7,14 +7,18 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.vocabulary.{Namespace, NamespaceAliases}
 import amf.core.internal.plugins.namespace.NamespaceAliasesPlugin
 import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
+import com.github.ghik.silencer.silent
 
 case class AMLDialectNamespaceAliasesPlugin private (dialect: Dialect, aliases: NamespaceAliases)
     extends NamespaceAliasesPlugin {
 
   override def applies(element: BaseUnit): Boolean = element match {
-    case instance: DialectInstanceUnit => instance.processingData.definedBy().option().contains(dialect.id)
-    case currentDialect: Dialect       => currentDialect.id == dialect.id
-    case _                             => false
+    case instance: DialectInstanceUnit =>
+      @silent("deprecated") // Silent can only be used in assignment expressions
+      val a = instance.processingData.definedBy().option().orElse(instance.definedBy().option()).contains(dialect.id)
+      a
+    case currentDialect: Dialect => currentDialect.id == dialect.id
+    case _                       => false
   }
 
   override def aliases(_unit: BaseUnit): NamespaceAliases = aliases

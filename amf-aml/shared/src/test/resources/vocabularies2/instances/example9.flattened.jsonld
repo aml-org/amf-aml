@@ -128,6 +128,11 @@
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
       ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect9.yaml"
+        }
+      ],
       "http://a.ml/vocabularies/document#encodes": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9.yaml#/encodes"
       },
@@ -147,6 +152,11 @@
         "http://a.ml/vocabularies/meta#DialectInstanceLibrary",
         "http://a.ml/vocabularies/document#Module",
         "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect9.yaml"
+        }
       ],
       "http://a.ml/vocabularies/document#declares": [
         {
