@@ -135,8 +135,6 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
         parser.lang(RDFLanguages.TURTLE)
       case `text/plain` =>
         parser.lang(RDFLanguages.NTRIPLES)
-      case `application/xml` =>
-        parser.lang(RDFLanguages.RDFXML)
       case _ =>
         throw new Exception(s"Unsupported RDF media type $mediaType")
     }
