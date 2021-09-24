@@ -79,6 +79,11 @@
         "doc:Module",
         "doc:Unit"
       ],
+      "meta:definedBy": [
+        {
+          "@id": "./dialect.yaml"
+        }
+      ],
       "doc:encodes": {
         "@id": "#/encodes"
       },

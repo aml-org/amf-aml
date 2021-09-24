@@ -7,15 +7,18 @@ import amf.aml.internal.metamodel.document.DialectInstanceModel
 import amf.aml.client.scala.model.document.{DialectInstanceFragment, DialectInstanceProcessingData}
 import amf.aml.client.scala.model.domain.{DialectDomainElement, DocumentsModel}
 import amf.aml.internal.validate.DialectValidations.DialectError
+import com.github.ghik.silencer.silent
 
 class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: DialectInstanceContext)
     extends DialectInstanceParser(root) {
 
   def parse(name: String): DialectInstanceFragment = {
+    @silent("deprecated") // Silent can only be used in assignment expressions
     val dialectInstanceFragment: DialectInstanceFragment = DialectInstanceFragment(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
       .withProcessingData(DialectInstanceProcessingData().withTransformed(false).withDefinedBy(ctx.dialect.id))
+      .withDefinedBy(ctx.dialect.id)
       .withFragment(name)
 
     DialectInstanceReferencesParser(dialectInstanceFragment, map, root.references).parse(root.location)
