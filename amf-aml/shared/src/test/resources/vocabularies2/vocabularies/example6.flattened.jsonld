@@ -309,7 +309,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml#/source-map/aliases-array/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "test->file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml::example3.yaml"
+      "http://a.ml/vocabularies/document-source-maps#value": "test->file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml::example3.yaml"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml#/source-map/lexical/element_2",

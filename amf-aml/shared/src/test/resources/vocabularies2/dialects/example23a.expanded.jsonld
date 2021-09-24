@@ -308,7 +308,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "bis->file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23b.yaml::example23b.yaml"
+                "@value": "bis->file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23b.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example23b.yaml::example23b.yaml"
               }
             ]
           }

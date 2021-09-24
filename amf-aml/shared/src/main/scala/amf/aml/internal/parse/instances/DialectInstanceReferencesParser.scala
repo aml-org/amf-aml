@@ -1,15 +1,11 @@
 package amf.aml.internal.parse.instances
 
-import amf.core.internal.annotations.{Aliases, LexicalInformation}
+import amf.core.internal.annotations.{Aliases, LexicalInformation, ReferencedInfo}
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.model.domain.{AmfObject, Annotation}
 import amf.core.internal.parser.domain.Annotations
 import amf.aml.internal.annotations.AliasesLocation
-import amf.aml.client.scala.model.document.{
-  DialectInstance,
-  DialectInstanceFragment,
-  DialectInstanceLibrary
-}
+import amf.aml.client.scala.model.document.{DialectInstance, DialectInstanceFragment, DialectInstanceLibrary}
 import amf.aml.client.scala.model.domain.External
 import amf.aml.internal.validate.DialectValidations.DialectError
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
@@ -60,7 +56,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
               target(url).foreach {
                 case module: DeclaresModel =>
                   parsedLibraries += url
-                  collectAlias(dialectInstance, alias -> (module.id, url))
+                  collectAlias(dialectInstance, alias -> ReferencedInfo(module.id, module.id, url))
                   result += (alias, module)
                 case other =>
                   ctx.eh.violation(DialectError, id, s"Expected vocabulary module but found: '$other'", e.location) // todo Uses should only reference modules...
@@ -107,8 +103,7 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
     )
   }
 
-  private def collectAlias(aliasCollectorUnit: BaseUnit,
-                           alias: (Aliases.Alias, (Aliases.FullUrl, Aliases.RelativeUrl))): BaseUnit = {
+  private def collectAlias(aliasCollectorUnit: BaseUnit, alias: (Aliases.Alias, ReferencedInfo)): BaseUnit = {
     aliasCollectorUnit.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         aliasCollectorUnit.annotations.reject(_.isInstanceOf[Aliases])

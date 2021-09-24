@@ -375,7 +375,7 @@
             ],
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
-                "@value": "learning->http://mulesoft.com/vocabularies/amf-learning#::vocabulary.yaml"
+                "@value": "learning->http://mulesoft.com/vocabularies/amf-learning#::http://mulesoft.com/vocabularies/amf-learning#::vocabulary.yaml"
               }
             ]
           }

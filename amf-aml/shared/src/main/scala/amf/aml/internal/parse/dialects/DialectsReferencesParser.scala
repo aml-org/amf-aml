@@ -1,6 +1,6 @@
 package amf.aml.internal.parse.dialects
 
-import amf.core.internal.annotations.Aliases
+import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.internal.annotations.Aliases._
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
 import amf.core.client.scala.model.domain.AmfObject
@@ -51,10 +51,10 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
     val url: String   = targetUrl(e)
     targetBaseUnit(url).foreach {
       case vocabulary: Vocabulary =>
-        collectAlias(dialect, alias -> (vocabulary.base.value(), url))
+        collectAlias(dialect, alias -> ReferencedInfo(vocabulary.base.value(), vocabulary.base.value(), url))
         declarations += (alias, vocabulary)
       case module: DeclaresModel =>
-        collectAlias(dialect, alias -> (module.id, url))
+        collectAlias(dialect, alias -> ReferencedInfo(module.id, module.id, url))
         declarations += (alias, module)
       case other =>
         ctx.recursiveDeclarations.get(url) match {
@@ -75,7 +75,7 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
     case _             => e.value
   }
 
-  private def collectAlias(aliasCollectorUnit: BaseUnit, alias: (Alias, (FullUrl, RelativeUrl))): BaseUnit = {
+  private def collectAlias(aliasCollectorUnit: BaseUnit, alias: (Alias, ReferencedInfo)): BaseUnit = {
     aliasCollectorUnit.annotations.find(classOf[Aliases]) match {
       case Some(aliases) =>
         aliasCollectorUnit.annotations.reject(_.isInstanceOf[Aliases])

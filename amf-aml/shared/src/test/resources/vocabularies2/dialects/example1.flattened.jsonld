@@ -451,7 +451,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1.yaml#/source-map/aliases-array/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "vocab2->http://a.ml/vocabularies/vocab2#::vocab2.yaml"
+      "http://a.ml/vocabularies/document-source-maps#value": "vocab2->http://a.ml/vocabularies/vocab2#::http://a.ml/vocabularies/vocab2#::vocab2.yaml"
     },
     {
       "@id": "http://a.ml/vocabularies/vocab2#A/source-map",

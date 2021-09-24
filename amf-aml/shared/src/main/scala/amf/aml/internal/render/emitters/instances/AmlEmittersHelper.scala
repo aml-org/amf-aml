@@ -3,7 +3,7 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.core.client.common.position.Position
 import amf.core.internal.annotations.Aliases.{Alias, FullUrl, ImportLocation, RefId}
-import amf.core.internal.annotations.{Aliases, LexicalInformation}
+import amf.core.internal.annotations.{Aliases, LexicalInformation, ReferencedInfo}
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
@@ -89,7 +89,7 @@ trait DialectEmitterHelper {
       .find(classOf[Aliases])
       .map { aliasesAnnotation =>
         aliasesAnnotation.aliases.map {
-          case (alias, (fullUrl, _)) =>
+          case (alias, ReferencedInfo(_, fullUrl, _)) =>
             fullUrl -> alias
         }.toMap
       }
