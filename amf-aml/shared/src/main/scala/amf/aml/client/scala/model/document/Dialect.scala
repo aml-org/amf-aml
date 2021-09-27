@@ -1,16 +1,16 @@
 package amf.aml.client.scala.model.document
 
+import amf.aml.client.scala.model.document.kind.DialectInstanceDocumentKind
+import amf.aml.client.scala.model.domain.{AnnotationMapping, DocumentsModel, SemanticExtension}
+import amf.aml.internal.metamodel.document.DialectModel
+import amf.aml.internal.metamodel.document.DialectModel._
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.StrField
-import amf.core.client.scala.model.document.{BaseUnit, BaseUnitProcessingData, DeclaresModel, EncodesModel}
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.metamodel.document.DocumentModel.Encodes
 import amf.core.internal.metamodel.document.ModuleModel.{Declares, References}
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.aml.internal.metamodel.document.DialectModel
-import amf.aml.internal.metamodel.document.DialectModel._
-import amf.aml.client.scala.model.document.kind.DialectInstanceDocumentKind
-import amf.aml.client.scala.model.domain.{AnnotationMapping, DocumentsModel, SemanticExtension}
 import org.mulesoft.common.core._
 
 case class Dialect(fields: Fields, annotations: Annotations)
