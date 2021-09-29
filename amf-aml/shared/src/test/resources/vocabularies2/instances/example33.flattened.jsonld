@@ -10,7 +10,8 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect33.yaml"
         }
       ],
-      "http://a.ml/vocabularies/document#transformed": false
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "NonExplicit 1"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes",
@@ -31,9 +32,9 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+      "http://a.ml/vocabularies/document-source-maps#from-union-node-mapping": [
         {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/source-vendor/element_0"
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/from-union-node-mapping/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -43,17 +44,12 @@
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/lexical/element_0"
         }
-      ],
-      "http://a.ml/vocabularies/document-source-maps#from-union-node-mapping": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/from-union-node-mapping/element_0"
-        }
       ]
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/source-vendor/element_0",
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/from-union-node-mapping/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes",
-      "http://a.ml/vocabularies/document-source-maps#value": "NonExplicit 1"
+      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect33.yaml#/declarations/RootNode"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/lexical/element_1",
@@ -64,11 +60,6 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/data#propertyX",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(2,18)]"
-    },
-    {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes/source-map/from-union-node-mapping/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml#/encodes",
-      "http://a.ml/vocabularies/document-source-maps#value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect33.yaml#/declarations/RootNode"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example33.yaml",

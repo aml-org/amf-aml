@@ -10,7 +10,8 @@
           "@id": "./dialect.yaml"
         }
       ],
-      "doc:transformed": true
+      "doc:transformed": true,
+      "doc:sourceSpec": "Pets 1.0"
     },
     {
       "@id": "#/encodes",

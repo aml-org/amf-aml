@@ -1,9 +1,9 @@
 package amf.aml.client.scala.model.document
 
+import amf.aml.internal.metamodel.document.DialectInstanceModel
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.client.scala.traversal.{
   DomainElementSelectorAdapter,
   DomainElementTransformationAdapter,
@@ -12,10 +12,9 @@ import amf.core.client.scala.traversal.{
 }
 import amf.core.internal.metamodel.document.DocumentModel.Encodes
 import amf.core.internal.metamodel.document.ModuleModel.Declares
-import amf.core.internal.unsafe.PlatformSecrets
-import amf.aml.internal.metamodel.document.DialectInstanceModel
-import amf.core.internal.annotations.SourceSpec
+import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.remote.Spec
+import amf.core.internal.unsafe.PlatformSecrets
 
 case class DialectInstance(fields: Fields, annotations: Annotations)
     extends DialectInstanceUnit
@@ -44,11 +43,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
 
   private[amf] def isSelfEncoded: Boolean = encodes.id == id
 
-  override def sourceSpec: Option[Spec] = this match {
-    case instance: DialectInstance if Option(instance.encodes).isDefined && instance.isSelfEncoded =>
-      instance.annotations.find(classOf[SourceSpec]).map(a => a.spec)
-    case _ => super.sourceSpec
-  }
+  override def sourceSpec: Option[Spec] = processingData.sourceSpecProvider
 }
 
 object DialectInstance {

@@ -1,10 +1,10 @@
 package amf.aml.internal.metamodel.document
 
 import amf.aml.client.scala.model.document.DialectInstanceProcessingData
-import amf.core.client.scala.vocabulary.Namespace.Document
+import amf.core.client.scala.vocabulary.Namespace.{ApiContract, Document}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.Type.{Array, Iri}
+import amf.core.internal.metamodel.Type.{Array, Iri, Str}
 import amf.core.internal.metamodel.document.BaseUnitProcessingDataModel
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 
@@ -24,7 +24,7 @@ object DialectInstanceProcessingDataModel extends BaseUnitProcessingDataModel {
 
   override def modelInstance: DialectInstanceProcessingData = DialectInstanceProcessingData()
 
-  override def fields: List[Field] = List(DefinedBy, GraphDependencies, Transformed)
+  override def fields: List[Field] = List(DefinedBy, GraphDependencies) ++ BaseUnitProcessingDataModel.fields
 
   override val `type`: List[ValueType] = List(Document + "DialectInstanceProcessingData")
 

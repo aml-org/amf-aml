@@ -160,9 +160,9 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
+            "http://a.ml/vocabularies/document-source-maps#custom-id": [
               {
-                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#a/source-map/source-vendor/element_0",
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#a/source-map/custom-id/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
                     "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#a"
@@ -170,7 +170,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "TestInstance 1.14"
+                    "@value": "true"
                   }
                 ]
               }
@@ -202,21 +202,6 @@
                   }
                 ]
               }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#custom-id": [
-              {
-                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#a/source-map/custom-id/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#a"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "true"
-                  }
-                ]
-              }
             ]
           }
         ]
@@ -241,6 +226,11 @@
         "http://a.ml/vocabularies/document#transformed": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "TestInstance 1.14"
           }
         ]
       }

@@ -274,6 +274,11 @@
           {
             "@value": false
           }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "AML 1.0"
+          }
         ]
       }
     ],

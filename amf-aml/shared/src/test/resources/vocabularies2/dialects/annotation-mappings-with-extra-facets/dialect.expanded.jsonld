@@ -389,6 +389,11 @@
           {
             "@value": false
           }
+        ],
+        "doc:sourceSpec": [
+          {
+            "@value": "AML 1.0"
+          }
         ]
       }
     ],
@@ -397,21 +402,6 @@
         "@id": "#/source-map",
         "@type": [
           "sourcemaps:SourceMap"
-        ],
-        "sourcemaps:source-vendor": [
-          {
-            "@id": "#/source-map/source-vendor/element_0",
-            "sourcemaps:element": [
-              {
-                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-with-extra-facets/dialect.yaml"
-              }
-            ],
-            "sourcemaps:value": [
-              {
-                "@value": "AML 1.0"
-              }
-            ]
-          }
         ],
         "sourcemaps:lexical": [
           {

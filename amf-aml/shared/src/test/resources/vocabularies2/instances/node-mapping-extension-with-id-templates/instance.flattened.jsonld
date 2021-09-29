@@ -10,7 +10,8 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-mapping-extension-with-id-templates/dialect.yaml"
         }
       ],
-      "http://a.ml/vocabularies/document#transformed": false
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "Test 1.0"
     },
     {
       "@id": "http://myNode.org#my-example-node",
@@ -32,11 +33,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "http://myNode.org#my-example-node/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "http://myNode.org#my-example-node/source-map/lexical/element_1"
@@ -45,11 +41,6 @@
           "@id": "http://myNode.org#my-example-node/source-map/lexical/element_0"
         }
       ]
-    },
-    {
-      "@id": "http://myNode.org#my-example-node/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://myNode.org#my-example-node",
-      "http://a.ml/vocabularies/document-source-maps#value": "Test 1.0"
     },
     {
       "@id": "http://myNode.org#my-example-node/source-map/lexical/element_1",
