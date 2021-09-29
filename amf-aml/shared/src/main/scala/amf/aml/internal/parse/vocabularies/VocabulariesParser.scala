@@ -1,21 +1,19 @@
 package amf.aml.internal.parse.vocabularies
 
+import amf.aml.client.scala.model.document.Vocabulary
+import amf.aml.client.scala.model.domain._
+import amf.aml.internal.metamodel.document.VocabularyModel
+import amf.aml.internal.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}
+import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.parser.{Root, YMapOps}
-import amf.core.internal.parser.domain.{Annotations, BaseSpecParser, DefaultArrayNode, ValueNode}
-import amf.aml.internal.metamodel.document.VocabularyModel
-import amf.aml.internal.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}
-import amf.aml.client.scala.model.document.Vocabulary
-import amf.aml.client.scala.model.domain._
-import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
-import org.yaml.model._
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.annotations.SourceSpec
-import amf.core.internal.remote.Spec
+import amf.core.internal.parser.domain.{Annotations, BaseSpecParser, DefaultArrayNode, ValueNode}
+import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.remote.Spec.AML
+import org.yaml.model._
 
 class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContext)
     extends BaseSpecParser
@@ -85,7 +83,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
         }
     }
 
-    vocabulary.annotations += SourceSpec(AML)
+    vocabulary.processingData.withSourceSpec(AML)
     vocabulary
   }
 

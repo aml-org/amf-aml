@@ -11,6 +11,7 @@
 <file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1.yaml#/encodes> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/document#DomainElement> .
 <file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1.yaml#/encodes> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/meta#DialectDomainElement> .
 <file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1.yaml#/encodes> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://test.com/tmp#Test> .
+<file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1.yaml/BaseUnitProcessingData> <http://a.ml/vocabularies/document#sourceSpec> "TestInstance 1.1" .
 <file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1.yaml/BaseUnitProcessingData> <http://a.ml/vocabularies/document#transformed> "false"^^<http://www.w3.org/2001/XMLSchema#boolean> .
 <file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1.yaml/BaseUnitProcessingData> <http://a.ml/vocabularies/meta#definedBy> <file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect1.yaml> .
 <file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1.yaml/BaseUnitProcessingData> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://a.ml/vocabularies/document#DialectInstanceProcessingData> .

@@ -207,6 +207,11 @@
           {
             "@value": false
           }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "AML 1.0"
+          }
         ]
       }
     ],
@@ -553,6 +558,11 @@
             "http://a.ml/vocabularies/document#transformed": [
               {
                 "@value": false
+              }
+            ],
+            "http://a.ml/vocabularies/document#sourceSpec": [
+              {
+                "@value": "AML 1.0"
               }
             ]
           }
