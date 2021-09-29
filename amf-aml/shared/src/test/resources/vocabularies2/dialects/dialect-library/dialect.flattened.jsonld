@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "null/BaseUnitProcessingData",
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
@@ -118,7 +118,7 @@
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "null/BaseUnitProcessingData"
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/dialect.yaml#/BaseUnitProcessingData"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -239,6 +239,13 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/library.yaml#/declarations/AnotherNode/source-map"
         }
       ]
+    },
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/library.yaml#/source-map",

@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "null/BaseUnitProcessingData",
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example6.yaml#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
@@ -47,7 +47,7 @@
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example6.yaml",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "null/BaseUnitProcessingData"
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example6.yaml#/BaseUnitProcessingData"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -78,7 +78,7 @@
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml",
       "http://a.ml/vocabularies/document#root": false,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "null/BaseUnitProcessingData"
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml#/BaseUnitProcessingData"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
@@ -203,6 +203,13 @@
           "@id": "http://a.ml/vocabularies/test2#B/source-map"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml#/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#BaseUnitProcessingData"
+      ],
+      "http://a.ml/vocabularies/document#transformed": false
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml#/source-map",

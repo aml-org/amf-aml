@@ -266,7 +266,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/BaseUnitProcessingData",
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#BaseUnitProcessingData"
         ],
