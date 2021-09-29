@@ -221,7 +221,7 @@ object AMLConfiguration extends PlatformSecrets {
 
   /** Predefined environment to deal with AML documents based on AMFGraphConfiguration {@link amf.core.client.scala.AMFGraphConfiguration.predefined predefined()} method */
   def predefined(): AMLConfiguration = {
-    val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined()
+    val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined().emptyEntities()
     VocabulariesRegister.register() // TODO ARM remove when APIMF-3000 is done
     val predefinedPlugins = new AMLDialectParsingPlugin() ::
       new AMLVocabularyParsingPlugin() ::
