@@ -656,7 +656,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "null/BaseUnitProcessingData",
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/validation_dialect.yaml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#BaseUnitProcessingData"
         ],

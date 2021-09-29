@@ -72,7 +72,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "null/BaseUnitProcessingData",
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#BaseUnitProcessingData"
         ],

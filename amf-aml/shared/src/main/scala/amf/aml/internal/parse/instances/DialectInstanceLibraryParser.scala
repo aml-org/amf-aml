@@ -13,7 +13,11 @@ class DialectInstanceLibraryParser(root: Root)(implicit override val ctx: Dialec
     val dialectInstance: DialectInstanceLibrary = DialectInstanceLibrary(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
-      .withProcessingData(DialectInstanceProcessingData().withTransformed(false).withDefinedBy(ctx.dialect.id))
+      .withProcessingData(
+          DialectInstanceProcessingData()
+            .withTransformed(false)
+            .withDefinedBy(ctx.dialect.id)
+            .adopted(root.location + "#"))
       .withDefinedBy(ctx.dialect.id)
 
     parseDeclarations("library")

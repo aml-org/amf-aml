@@ -281,7 +281,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "null/BaseUnitProcessingData",
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#BaseUnitProcessingData"
         ],
@@ -488,7 +488,7 @@
         ],
         "http://a.ml/vocabularies/document#processingData": [
           {
-            "@id": "null/BaseUnitProcessingData",
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/github.vocabulary.yaml#/BaseUnitProcessingData",
             "@type": [
               "http://a.ml/vocabularies/document#BaseUnitProcessingData"
             ],

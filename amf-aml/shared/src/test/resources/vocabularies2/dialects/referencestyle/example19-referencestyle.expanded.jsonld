@@ -366,7 +366,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "null/BaseUnitProcessingData",
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/referencestyle/example19-referencestyle.yaml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#BaseUnitProcessingData"
         ],

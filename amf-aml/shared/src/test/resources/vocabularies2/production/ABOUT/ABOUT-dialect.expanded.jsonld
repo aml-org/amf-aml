@@ -517,7 +517,7 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "null/BaseUnitProcessingData",
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-dialect.yaml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#BaseUnitProcessingData"
         ],
@@ -2235,7 +2235,7 @@
         ],
         "http://a.ml/vocabularies/document#processingData": [
           {
-            "@id": "null/BaseUnitProcessingData",
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/ABOUT/ABOUT-vocabulary.yaml#/BaseUnitProcessingData",
             "@type": [
               "http://a.ml/vocabularies/document#BaseUnitProcessingData"
             ],

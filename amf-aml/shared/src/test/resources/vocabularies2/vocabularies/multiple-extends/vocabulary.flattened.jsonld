@@ -1,7 +1,7 @@
 {
   "@graph": [
     {
-      "@id": "null/BaseUnitProcessingData",
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/multiple-extends/vocabulary.yaml#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
@@ -39,7 +39,7 @@
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/multiple-extends/vocabulary.yaml",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "null/BaseUnitProcessingData"
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/multiple-extends/vocabulary.yaml#/BaseUnitProcessingData"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {
