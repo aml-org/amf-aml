@@ -41,7 +41,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   type NodeMappable = NodeMappable.AnyNodeMappable
   val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 //  val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(id()).withProcessingData(BaseUnitProcessingData())
-  val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(id())
+  val dialect: Dialect = {
+    val computedId = id()
+    val dialect    = Dialect(Annotations(map)).withLocation(root.location).withId(computedId)
+    dialect.processingData.adopted(computedId + "#")
+    dialect
+  }
 
   // Need to do this before parsing so every ID set during parsing is relative to this ID
   private def id(): String = {
@@ -916,6 +921,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       .withId(dialect.id)
       .withLocation(dialect.location().getOrElse(dialect.id))
       .withReferences(dialect.references)
+    fragment.processingData.adopted(dialect.id + "#")
 
     dialect.usage.option().foreach(usage => fragment.withUsage(usage))
 

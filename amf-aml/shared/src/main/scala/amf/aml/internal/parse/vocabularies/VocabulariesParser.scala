@@ -21,8 +21,13 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     extends BaseSpecParser
     with DeclarationKeyCollector {
 
-  val map: YMap              = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
-  val vocabulary: Vocabulary = Vocabulary(Annotations(map)).withLocation(root.location).withId(root.location)
+  val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
+  val vocabulary: Vocabulary = {
+    val location = root.location
+    val result   = Vocabulary(Annotations(map)).withLocation(location).withId(location)
+    result.processingData.adopted(location + "#")
+    result
+  }
 
   def parseDocument(): BaseUnit = {
     map.key("vocabulary") match {
