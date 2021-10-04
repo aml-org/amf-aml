@@ -38,6 +38,7 @@ import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 import org.mulesoft.common.collections.FilterType
 
@@ -119,6 +120,11 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   private[amf] override def withValidationProfile(profile: ValidationProfile): AMLConfiguration =
     super._withValidationProfile(profile)
+
+  // Keep AMF internal, done to avoid recomputing validations every time a config is requested
+  private[amf] override def withValidationProfile(profile: ValidationProfile,
+                                                  effective: EffectiveValidations): AMLConfiguration =
+    super._withValidationProfile(profile, effective)
 
   /**
     * Add a [[TransformationPipeline]]
