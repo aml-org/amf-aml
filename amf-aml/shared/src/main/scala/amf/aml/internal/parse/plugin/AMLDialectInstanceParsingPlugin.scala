@@ -1,29 +1,20 @@
 package amf.aml.internal.parse.plugin
 
+import amf.aml.client.scala.model.document.{Dialect, DialectInstance, kind}
+import amf.aml.internal.AMLDialectInstancePlugin
+import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
+import amf.aml.internal.parse.headers.DialectHeader
+import amf.aml.internal.parse.instances._
+import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
+import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument}
 import amf.core.internal.parser._
-import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
-import amf.aml.client.scala.model.document.{
-  Dialect,
-  DialectInstance,
-  DialectInstanceFragment,
-  DialectInstanceLibrary,
-  kind
-}
-import amf.aml.internal.AMLDialectInstancePlugin
-import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
-import amf.aml.internal.parse.instances._
-import amf.aml.internal.parse.headers.DialectHeader
-import amf.core.client.scala.model.Annotable
-import amf.core.internal.annotations.SourceSpec
-import amf.core.internal.metamodel.document.{FragmentModel, ModuleModel}
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{AmlDialectSpec, Mimes, Spec}
 import org.yaml.model.YMap
-import amf.core.internal.remote.Mimes._
 
 /**
   * Parsing plugin for dialect instance like units derived from a resolved dialect
@@ -53,15 +44,7 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
       case _ =>
         DialectInstance()
     }
-    maybeUnit.foreach {
-      case instance: DialectInstance if Option(instance.encodes).isDefined && instance.isSelfEncoded =>
-        instance.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
-      case instance: EncodesModel if Option(instance.encodes).isDefined =>
-        instance.encodes.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
-      case instance: DeclaresModel =>
-        instance.annotations += SourceSpec(AmlDialectSpec(dialect.nameAndVersion()))
-      case _ => // ignore
-    }
+    maybeUnit.foreach(x => x.processingData.withSourceSpec(AmlDialectSpec(dialect.nameAndVersion())))
     maybeUnit.get
   }
 

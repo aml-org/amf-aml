@@ -95,21 +95,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example18.yaml#/hey_ho/source-map/source-vendor/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example18.yaml#/hey_ho"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "TestInstance 1.18"
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example18.yaml#/hey_ho/source-map/lexical/element_4",
@@ -200,6 +185,11 @@
         "http://a.ml/vocabularies/document#transformed": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "TestInstance 1.18"
           }
         ]
       }

@@ -46,11 +46,12 @@
       ]
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/BaseUnitProcessingData",
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/BaseUnitProcessingData",
       "@type": [
         "http://a.ml/vocabularies/document#BaseUnitProcessingData"
       ],
-      "http://a.ml/vocabularies/document#transformed": false
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "AML 1.0"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/externals/schema-org#/source-map",
@@ -212,7 +213,7 @@
       "http://a.ml/vocabularies/document#location": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml",
       "http://a.ml/vocabularies/document#root": true,
       "http://a.ml/vocabularies/document#processingData": {
-        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml/BaseUnitProcessingData"
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/system2/dialectex1.yaml#/BaseUnitProcessingData"
       },
       "http://a.ml/vocabularies/document-source-maps#sources": [
         {

@@ -10,7 +10,8 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect24.yaml"
         }
       ],
-      "http://a.ml/vocabularies/document#transformed": false
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "Test 1.24"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/hey%20ho",
@@ -55,11 +56,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/hey%20ho/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/hey%20ho/source-map/lexical/element_2"
@@ -92,11 +88,6 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/rb/source-map/json-pointer-ref/element_0"
         }
       ]
-    },
-    {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/hey%20ho/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/hey%20ho",
-      "http://a.ml/vocabularies/document-source-maps#value": "Test 1.24"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/hey%20ho/source-map/lexical/element_2",

@@ -34,8 +34,11 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary)(implicit val nodeM
     })
   }
 
-  protected def toDialect(library: DialectLibrary): Dialect =
-    Dialect(library.fields, library.annotations).withId(library.id)
+  protected def toDialect(library: DialectLibrary): Dialect = {
+    val dialect = Dialect(library.fields, library.annotations).withId(library.id)
+    dialect.processingData.adopted(library.id + "#")
+    dialect
+  }
 
   def dialectEmitters(ordering: SpecOrdering): Seq[EntryEmitter] =
     dialectPropertiesEmitter(ordering)

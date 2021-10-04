@@ -225,14 +225,12 @@ trait AMLVocabularyResultConverter {
   }
 }
 
-trait DialectInstanceProcessingDataConverter {
+trait DialectInstanceProcessingDataConverter extends PlatformSecrets {
   implicit object DialectInstanceProcessingDataMatcher
-      extends BidirectionalMatcher[DialectInstanceProcessingData,
-                                   platform.model.document.DialectInstanceProcessingData] {
-    override def asClient(from: DialectInstanceProcessingData): platform.model.document.DialectInstanceProcessingData =
-      new platform.model.document.DialectInstanceProcessingData(from)
-
-    override def asInternal(
-        from: platform.model.document.DialectInstanceProcessingData): DialectInstanceProcessingData = from._internal
+      extends BidirectionalMatcher[DialectInstanceProcessingData, document.DialectInstanceProcessingData] {
+    override def asClient(from: DialectInstanceProcessingData): document.DialectInstanceProcessingData =
+      platform.wrap(from)
+    override def asInternal(from: document.DialectInstanceProcessingData): DialectInstanceProcessingData =
+      from._internal
   }
 }

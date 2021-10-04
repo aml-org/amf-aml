@@ -10,7 +10,8 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect28.yaml"
         }
       ],
-      "http://a.ml/vocabularies/document#transformed": false
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "Test 1.28"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes",
@@ -69,11 +70,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/source-map/lexical/element_2"
@@ -119,11 +115,6 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/other/source-map/lexical/element_1"
         }
       ]
-    },
-    {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes",
-      "http://a.ml/vocabularies/document-source-maps#value": "Test 1.28"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/source-map/lexical/element_2",

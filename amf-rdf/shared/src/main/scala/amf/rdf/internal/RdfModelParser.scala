@@ -32,6 +32,7 @@ class RdfModelParser(config: ParseConfiguration, facade: EntitiesFacade) extends
           new ObjectParser(location, new RecursionControl(), facade, nodeFinder, new SourcesRetriever(nodeFinder))
         parser.parse(rootNode, findBaseUnit = true) match {
           case Some(unit: BaseUnit) =>
+            unit.processingData.adopted(unit.id + "#")
             unit.set(BaseUnitModel.Location, location.split("#").head)
             unit
           case _ =>

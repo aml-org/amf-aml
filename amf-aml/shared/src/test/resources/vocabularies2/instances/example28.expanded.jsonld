@@ -168,21 +168,6 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-              {
-                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/source-map/source-vendor/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "Test 1.28"
-                  }
-                ]
-              }
-            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example28.yaml#/encodes/source-map/lexical/element_2",
@@ -247,6 +232,11 @@
         "http://a.ml/vocabularies/document#transformed": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "Test 1.28"
           }
         ]
       }

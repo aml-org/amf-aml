@@ -366,13 +366,18 @@
     ],
     "http://a.ml/vocabularies/document#processingData": [
       {
-        "@id": "null/BaseUnitProcessingData",
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml#/BaseUnitProcessingData",
         "@type": [
           "http://a.ml/vocabularies/document#BaseUnitProcessingData"
         ],
         "http://a.ml/vocabularies/document#transformed": [
           {
             "@value": false
+          }
+        ],
+        "http://a.ml/vocabularies/document#sourceSpec": [
+          {
+            "@value": "AML 1.0"
           }
         ]
       }
@@ -382,21 +387,6 @@
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml#/source-map",
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
-        ],
-        "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-          {
-            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml#/source-map/source-vendor/element_0",
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/keyproperty/example19-keyproperty.yaml"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "AML 1.0"
-              }
-            ]
-          }
         ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
