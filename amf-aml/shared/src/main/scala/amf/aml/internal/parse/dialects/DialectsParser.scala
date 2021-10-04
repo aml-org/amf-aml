@@ -17,7 +17,7 @@ import amf.aml.internal.validate.DialectValidations.{
   UnavoidableAmbiguity,
   VariablesDefinedInBase
 }
-import amf.core.client.scala.model.document.{BaseUnit, BaseUnitProcessingData}
+import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.AMFParser
 import amf.core.client.scala.parse.document.SyamlParsedDocument
@@ -136,7 +136,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
     ctx.futureDeclarations.resolve()
 
-    dialect.annotations += SourceSpec(AML)
+    dialect.processingData.withSourceSpec(AML)
     dialect
   }
 
@@ -879,7 +879,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     val externals = dialect.externals
     if (externals.nonEmpty) library.withExternals(externals)
 
-    library.annotations += SourceSpec(AML)
+    library.processingData.withSourceSpec(AML)
     library
   }
 
@@ -912,7 +912,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       case _                            => // ignore
     }
 
-    fragment.encodes.annotations += SourceSpec(AML)
+    fragment.processingData.withSourceSpec(AML)
     fragment
   }
 

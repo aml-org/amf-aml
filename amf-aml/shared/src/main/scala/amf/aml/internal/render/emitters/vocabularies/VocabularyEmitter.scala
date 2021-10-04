@@ -217,7 +217,7 @@ case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
   val aliasMapping: Map[String, String] = buildAliasMapping(vocabulary)
 
   def emitVocabulary(): YDocument = {
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, vocabulary.annotations)
+    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, vocabulary.sourceSpec)
 
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ vocabularyEmitters(ordering)
 

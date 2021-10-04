@@ -10,7 +10,8 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key/dialect.yaml"
         }
       ],
-      "http://a.ml/vocabularies/document#transformed": false
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "Resource 1.0"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key/instance.yaml#/encodes/xsd-kjg-lma_amf",
@@ -33,11 +34,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#source-vendor": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key/instance.yaml#/encodes/xsd-kjg-lma_amf/source-map/source-vendor/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key/instance.yaml#/encodes/xsd-kjg-lma_amf/source-map/lexical/element_3"
@@ -52,11 +48,6 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key/instance.yaml#/encodes/xsd-kjg-lma_amf/source-map/lexical/element_2"
         }
       ]
-    },
-    {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key/instance.yaml#/encodes/xsd-kjg-lma_amf/source-map/source-vendor/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key/instance.yaml#/encodes/xsd-kjg-lma_amf",
-      "http://a.ml/vocabularies/document-source-maps#value": "Resource 1.0"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/node-with-primary-key/instance.yaml#/encodes/xsd-kjg-lma_amf/source-map/lexical/element_3",
