@@ -998,6 +998,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     }
   }
 
+  // TODO: This should receive annotations instead of an entry. Unrelated concepts in the same method
   protected def setLiteralValue(entry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
     parseLiteralValue(entry.value, property, node) match {
       case Some(b: Boolean)          => node.setProperty(property, b, entry)
