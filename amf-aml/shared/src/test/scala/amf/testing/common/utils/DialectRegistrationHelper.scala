@@ -14,8 +14,7 @@ import scala.concurrent.{ExecutionContext, Future}
 trait DialectRegistrationHelper {
   protected def withDialect[T](uri: String)(fn: (Dialect, AMLConfiguration) => Future[T])(
       implicit ec: ExecutionContext): Future[T] = {
-    val eh            = DefaultErrorHandler()
-    val configuration = AMLConfiguration.forEH(eh)
+    val configuration = AMLConfiguration.predefined()
     val context       = new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build()
     for {
       baseUnit <- new AMFCompiler(context).build()
