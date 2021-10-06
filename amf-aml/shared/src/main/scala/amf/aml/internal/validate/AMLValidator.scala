@@ -4,6 +4,7 @@ import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.transform.pipelines.DialectInstanceTransformationPipeline
 import amf.core.client.common.validation.ProfileName
+import amf.core.client.scala.config.SkippedValidationPluginEvent
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationPipelineRunner
@@ -49,8 +50,14 @@ class AMLValidator() extends ShaclReportAdaptation {
         }
 
       case _ =>
-        // TODO ARM: add logging that stage was skipped
+        notifyValidationSkipped(options)
         Future.successful(ValidationResult(baseUnit, AMFValidationReport.empty(baseUnit.id, profile)))
+    }
+  }
+
+  private def notifyValidationSkipped(options: ValidationOptions) = {
+    options.config.listeners.foreach { listener =>
+      listener.notifyEvent(SkippedValidationPluginEvent("AMLValidator", "BaseUnit isn't a DialectInstance"))
     }
   }
 
