@@ -629,14 +629,14 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: 
                               propertyConstraint: PropertyConstraint,
                               parentElement: DomainElement): Unit = {
     extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
-      case ExtractedPropertyValue(_: AmfScalar, Some(value)) =>
-        if (valueDoesntComplyWithPattern(propertyConstraint, value))
+      case ExtractedPropertyValue(scalar: AmfScalar, _) =>
+        if (valueDoesntComplyWithPattern(propertyConstraint, scalar))
           reportFailure(validationSpecification, propertyConstraint, parentElement.id)
       case _ => // ignore
     }
   }
 
-  private def valueDoesntComplyWithPattern(propertyConstraint: PropertyConstraint, value: Any) = {
+  private def valueDoesntComplyWithPattern(propertyConstraint: PropertyConstraint, value: AmfScalar) = {
     Option(value).isDefined && propertyConstraint.pattern.get.r.findFirstIn(value.toString).isEmpty
   }
 
