@@ -174,7 +174,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
-  // TODO: WHY???
+  // TODO: This should receive annotations instead of an entry. Unrelated concepts in the same method (how annotations are formed and how to store the value and where)
   private[amf] def setProperty(property: PropertyMapping, entry: YMapEntry): DialectDomainElement = {
     set(property.toField, AmfScalar(entry.value, Annotations(entry.value)), Annotations(entry))
     this
