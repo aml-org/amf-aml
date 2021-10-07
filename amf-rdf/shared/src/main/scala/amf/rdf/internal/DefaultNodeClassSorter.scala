@@ -11,7 +11,8 @@ class DefaultNodeClassSorter() {
       (Namespace.Document + "Module").iri(),
       (Namespace.Document + "Unit").iri(),
       (Namespace.Shacl + "Shape").iri(),
-      (Namespace.Shapes + "Shape").iri()
+      (Namespace.Shapes + "Shape").iri(),
+      (Namespace.ApiContract + "Message").iri()
   )
 
   def sortedClassesOf(node: Node): Seq[String] = {
