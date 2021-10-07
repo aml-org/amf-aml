@@ -34,7 +34,7 @@ class AMLDialectRenderingPlugin extends SYAMLBasedRenderPlugin {
   }
 
   private def emitDoc(unit: BaseUnit, renderConfiguration: RenderConfiguration) = {
-    // TODO ARM: Fragment????
+    // TODO: Fragment????
     val dialects = renderConfiguration.renderPlugins.collect {
       case plugin: AMLDialectInstanceRenderingPlugin => plugin.dialect
     }

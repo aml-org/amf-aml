@@ -242,10 +242,6 @@ object AMLConfiguration extends PlatformSecrets {
     ).withPlugins(predefinedPlugins)
       .withTransformationPipeline(DefaultAMLTransformationPipeline())
   }
-  //TODO ARM remove
-  private[amf] def forEH(eh: AMFErrorHandler) = {
-    predefined().withErrorHandlerProvider(() => eh)
-  }
 
   def empty(): AMLConfiguration = {
     new AMLConfiguration(

@@ -17,7 +17,6 @@ import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.plugins.AMFPlugin
 
-// TODO ARM check this object
 private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfiguration) {
 
   val dialect: Dialect = {
@@ -31,7 +30,7 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
   def register(): AMLConfiguration = {
     val existingDialects = configuration.configurationState().getDialects()
     val finder           = DefaultNodeMappableFinder(existingDialects)
-    val profile          = new AMFDialectValidations(dialect)(finder).profile() // TODO ARM if i use resolved dialect this throws null pointer
+    val profile          = new AMFDialectValidations(dialect)(finder).profile()
     val newConfig = configuration
       .withPlugins(plugins)
       .withValidationProfile(profile)
@@ -54,7 +53,7 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
   private lazy val domainModels = {
     dialect.declares
       .collect({
-        case n: NodeMapping => n.id -> buildMetamodel(n) // TODO ARM wrong, for compatibilidad
+        case n: NodeMapping => n.id -> buildMetamodel(n)
       })
       .toMap
   }

@@ -12,7 +12,6 @@ object RdfSyntaxPlugin extends AMFSyntaxParsePlugin with RdfPlatformSecrets {
 
   override val id = "Rdf"
 
-  // TODO ARM to render syntax plugin
   def unparse[W: Output](mediaType: String, doc: ParsedDocument, writer: W): Option[W] =
     (doc, framework) match {
       case (input: RdfModelDocument, r) => r.rdfModelToSyntaxWriter(mediaType, input, writer)

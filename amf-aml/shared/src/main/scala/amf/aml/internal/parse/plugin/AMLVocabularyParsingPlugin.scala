@@ -2,6 +2,7 @@ package amf.aml.internal.parse.plugin
 
 import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
 import amf.aml.internal.parse.headers.{DialectHeader, ExtensionHeader}
+import amf.aml.internal.parse.plugin.error.CannotParseDocumentException
 import amf.aml.internal.parse.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -22,7 +23,8 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
     header match {
       case Some(ExtensionHeader.VocabularyHeader) =>
         new VocabulariesParser(document)(new VocabularyContext(ctx)).parseDocument()
-      case _ => throw new Exception("Dunno") // TODO: ARM - what to do with this
+      case Some(header) => throw CannotParseDocumentException(s"Header $header is not a valid AML Vocabulary header")
+      case _            => throw CannotParseDocumentException("Missing header for AML Vocabulary")
     }
   }
 

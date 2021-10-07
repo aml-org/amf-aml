@@ -21,8 +21,7 @@ trait DialectValidation extends AsyncFunSuite with PlatformSecrets {
                          jsonldReport: Boolean = true,
                          multiPlatform: Boolean = true): Future[Assertion] = {
 
-    val eh            = DefaultErrorHandler()
-    val configuration = AMLConfiguration.forEH(eh)
+    val configuration = AMLConfiguration.predefined()
     val client        = configuration.baseUnitClient()
     for {
       report    <- client.parseDialect("file://" + path + dialectPath).map(AMFValidationReport.unknownProfile(_))
