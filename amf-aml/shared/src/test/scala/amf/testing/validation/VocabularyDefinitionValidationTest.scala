@@ -43,14 +43,10 @@ class VocabularyDefinitionValidationTest
     validate("vocabulary.yaml", Some("validation.jsonld"), "missing-property-term")
   }
 
-  private def compilerContext(url: String, amfConfig: AMLConfiguration) =
-    new CompilerContextBuilder(url, platform, amfConfig.compilerConfiguration).build()
-
   protected def validate(vocabulary: String,
                          goldenReport: Option[String] = None,
                          path: String): Future[scalatest.Assertion] = {
-    val eh            = DefaultErrorHandler()
-    val configuration = AMLConfiguration.forEH(eh)
+    val configuration = AMLConfiguration.predefined()
     val report = for {
       report <- configuration
         .baseUnitClient()

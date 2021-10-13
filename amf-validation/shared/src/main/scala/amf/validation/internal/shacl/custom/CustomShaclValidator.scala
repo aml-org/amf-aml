@@ -82,17 +82,13 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: 
     specification.targetInstance.contains(element.id)
 
   private def findFieldTarget(element: DomainElement, property: String): Option[(Annotations, Seq[AmfElement])] = {
-    element.meta.fields.find(_.value.iri() == property) match {
-      case Some(field) =>
-        Option(element.fields.getValue(field)) match {
-          case Some(value) =>
-            value.value match {
-              case elems: AmfArray   => Some((value.annotations, elems.values))
-              case scalar: AmfScalar => Some((value.annotations, Seq(scalar)))
-              case obj: AmfObject    => Some((value.annotations, Seq(obj)))
-              case _                 => Some((value.annotations, Nil))
-            }
-          case _ => None
+    extractElement(property, element) match {
+      case Some(value) =>
+        value match {
+          case elems: AmfArray   => Some((value.annotations, elems.values))
+          case scalar: AmfScalar => Some((value.annotations, Seq(scalar)))
+          case obj: AmfObject    => Some((value.annotations, Seq(obj)))
+          case _                 => Some((value.annotations, Nil))
         }
       case _ => None
     }
@@ -128,12 +124,8 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: 
     }
   }
 
-  private def extractElement(predicate: String, element: DomainElement) = {
-    element.meta.fields
-      .find(f => f.value.iri() == predicate)
-      .flatMap(f => Option(element.fields.getValue(f)))
-      .map(_.value)
-  }
+  private def extractElement(fieldUri: String, element: DomainElement): Option[AmfElement] =
+    element.fields.getValueAsOption(fieldUri).map(_.value)
 
   private def validate(validationSpecification: ValidationSpecification, element: DomainElement): Unit = {
     validationSpecification.closed match {
@@ -629,14 +621,14 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: 
                               propertyConstraint: PropertyConstraint,
                               parentElement: DomainElement): Unit = {
     extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
-      case ExtractedPropertyValue(_: AmfScalar, Some(value)) =>
-        if (valueDoesntComplyWithPattern(propertyConstraint, value))
+      case ExtractedPropertyValue(scalar: AmfScalar, _) =>
+        if (valueDoesntComplyWithPattern(propertyConstraint, scalar))
           reportFailure(validationSpecification, propertyConstraint, parentElement.id)
       case _ => // ignore
     }
   }
 
-  private def valueDoesntComplyWithPattern(propertyConstraint: PropertyConstraint, value: Any) = {
+  private def valueDoesntComplyWithPattern(propertyConstraint: PropertyConstraint, value: AmfScalar) = {
     Option(value).isDefined && propertyConstraint.pattern.get.r.findFirstIn(value.toString).isEmpty
   }
 

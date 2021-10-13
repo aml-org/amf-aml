@@ -230,49 +230,59 @@ trait DialectInstancesParsingTest extends DialectTests {
                      renderOptions = Some(config.renderOptions))
   }
 
-  // TODO ARM forInstance metohd required
-//  multiGoldenTest("parse 15 test", "example15.%s") { config =>
-//    for {
-//      _ <- AMLPlugin.registry.registerDialect(
-//          "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect15b.yaml")
-//      assertion <- cycleWithDialect("dialect15a.yaml",
-//                                    "example15.yaml",
-//                                    config.golden,
-//                                    //                                    mediaType = Some(Mimes.`application/ld+json`,
-//                                    renderOptions = Some(config.renderOptions))
-//    } yield {
-//      assertion
-//    }
-//
-//  }
+  multiGoldenTest("parse 15 test", "example15.%s") { config =>
+    val amlConfig = AMLConfiguration.predefined()
+    for {
+      nextAmlConfig <- amlConfig.withDialect(
+          "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect15b.yaml")
+      assertion <- cycleWithDialect(
+          "dialect15a.yaml",
+          "example15.yaml",
+          config.golden,
+          renderOptions = Some(config.renderOptions),
+          mediaType = Some(Mimes.`application/ld+json`),
+          baseConfig = nextAmlConfig
+      )
+    } yield {
+      assertion
+    }
+  }
 
-  // TODO forInstance needed
-//  multiGoldenTest("parse 16 test", "example16a.%s") { config =>
-//    for {
-//      _ <- AMLPlugin.registry.registerDialect(s"file://$basePath/dialect16b.yaml")
-//      assertion <- cycleWithDialect("dialect16a.yaml",
-//                                    "example16a.yaml",
-//                                    config.golden,
-//                                    //                                    mediaType = Some(Mimes.`application/ld+json`,
-//                                    renderOptions = Some(config.renderOptions))
-//    } yield {
-//      assertion
-//    }
-//  }
+  multiGoldenTest("parse 16 test", "example16a.%s") { config =>
+    val amlConfig = AMLConfiguration.predefined()
+    for {
+      nextAmlConfig <- amlConfig.withDialect(
+          "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect16b.yaml")
+      assertion <- cycleWithDialect(
+          "dialect16a.yaml",
+          "example16a.yaml",
+          config.golden,
+          renderOptions = Some(config.renderOptions),
+          mediaType = Some(Mimes.`application/ld+json`),
+          baseConfig = nextAmlConfig
+      )
+    } yield {
+      assertion
+    }
+  }
 
-  // TODO forInstance needed
-  //  multiGoldenTest("parse 16 $include test", "example16c.%s") { config =>
-//    for {
-//      _ <- AMLPlugin.registry.registerDialect(s"file://$basePath/dialect16b.yaml")
-//      assertion <- cycleWithDialect("dialect16a.yaml",
-//                                    "example16c.yaml",
-//                                    config.golden,
-//                                    //                                    mediaType = Some(Mimes.`application/ld+json`,
-//                                    renderOptions = Some(config.renderOptions))
-//    } yield {
-//      assertion
-//    }
-//  }
+  multiGoldenTest("parse 16 $include test", "example16c.%s") { config =>
+    val amlConfig = AMLConfiguration.predefined()
+    for {
+      nextAmlConfig <- amlConfig.withDialect(
+          "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect16b.yaml")
+      assertion <- cycleWithDialect(
+          "dialect16a.yaml",
+          "example16c.yaml",
+          config.golden,
+          renderOptions = Some(config.renderOptions),
+          mediaType = Some(Mimes.`application/ld+json`),
+          baseConfig = nextAmlConfig
+      )
+    } yield {
+      assertion
+    }
+  }
 
   multiGoldenTest("parse 17 test", "example17.output.%s") { config =>
     cycleWithDialect("dialect17.input.json",
