@@ -1,6 +1,6 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyMapping}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.DataType
@@ -11,7 +11,7 @@ import org.yaml.model.{YMapEntry, YNode, YScalar, YType}
 object LiteralValueSetter {
   def setLiteralValue(parsed: Option[_],
                       entry: YMapEntry,
-                      property: PropertyMapping,
+                      property: PropertyLikeMapping[_],
                       node: DialectDomainElement): Unit = {
     parsed match {
       case Some(b: Boolean)          => node.setProperty(property, b, entry)
@@ -28,7 +28,7 @@ object LiteralValueSetter {
 
 object LiteralValueParser {
 
-  def parseLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement)(
+  def parseLiteralValue(value: YNode, property: PropertyLikeMapping[_], node: DialectDomainElement)(
       implicit ctx: DialectInstanceContext): Option[_] = {
 
     value.tagType match {

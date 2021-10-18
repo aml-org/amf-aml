@@ -1,6 +1,6 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyMapping}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.parse.instances.DialectInstanceParser.{computeParsingScheme, pathSegment}
 import amf.aml.internal.parse.instances.parser.ObjectCollectionPropertyParser.NodeParser
@@ -12,7 +12,7 @@ object DialectExtensionParser {
 
   def parse(id: String,
             propertyEntry: YMapEntry,
-            property: PropertyMapping,
+            property: PropertyLikeMapping[_],
             node: DialectDomainElement,
             root: Root,
             nodeParser: NodeParser)(implicit ctx: DialectInstanceContext): Unit = {
@@ -55,14 +55,14 @@ object DialectExtensionParser {
   }
 
   protected def resolveLinkProperty(propertyEntry: YMapEntry,
-                                    mapping: PropertyMapping,
+                                    mapping: PropertyLikeMapping[_],
                                     id: String,
                                     node: DialectDomainElement,
                                     isRef: Boolean = false)(implicit ctx: DialectInstanceContext): Unit =
     LinkIncludePropertyParser.parse(propertyEntry, mapping, id, node, isRef)
 
   protected def resolveJSONPointerProperty(map: YMap,
-                                           mapping: PropertyMapping,
+                                           mapping: PropertyLikeMapping[_],
                                            id: String,
                                            node: DialectDomainElement,
                                            root: Root)(implicit ctx: DialectInstanceContext): Unit =

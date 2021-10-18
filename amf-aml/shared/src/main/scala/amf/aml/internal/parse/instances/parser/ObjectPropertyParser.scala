@@ -1,6 +1,6 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyMapping}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.parse.instances.DialectInstanceParser.pathSegment
 import amf.aml.internal.parse.instances.parser.ObjectCollectionPropertyParser.{NodeParser, ObjectUnionParser}
 import amf.aml.internal.parse.instances.{DialectInstanceContext, NodeMappableHelper}
@@ -11,7 +11,7 @@ object ObjectPropertyParser extends NodeMappableHelper {
 
   def parse[T <: DomainElement](id: String,
                                 propertyEntry: YMapEntry,
-                                property: PropertyMapping,
+                                property: PropertyLikeMapping[_],
                                 node: DialectDomainElement,
                                 additionalProperties: Map[String, Any] = Map(),
                                 unionParser: ObjectUnionParser[T],

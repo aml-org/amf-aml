@@ -1,66 +1,25 @@
 package amf.aml.internal.parse.instances
 
-import amf.core.client.scala.model.DataType
-import amf.core.internal.annotations.SourceAST
-import amf.core.internal.metamodel.{Field, Type}
-import amf.core.internal.metamodel.Type.{Array, Str}
-import amf.core.client.scala.model.document.EncodesModel
-import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, Annotation, DomainElement}
-import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.parser.domain.{Annotations, SearchScope, _}
-import amf.core.internal.utils._
-import amf.core.client.scala.vocabulary.{Namespace, ValueType}
-import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
-import amf.aml.internal.annotations.{
-  CustomBase,
-  CustomId,
-  DiscriminatorField,
-  FromUnionNodeMapping,
-  JsonPointerRef,
-  RefInclude
-}
-import amf.aml.internal.metamodel.document.DialectInstanceModel
-import amf.aml.internal.metamodel.domain.{DialectDomainElementModel, NodeWithDiscriminatorModel}
 import amf.aml.client.scala.model.document._
 import amf.aml.client.scala.model.domain._
+import amf.aml.internal.annotations.{FromUnionNodeMapping, JsonPointerRef, RefInclude}
+import amf.aml.internal.metamodel.document.DialectInstanceModel
+import amf.aml.internal.metamodel.domain.DialectDomainElementModel
 import amf.aml.internal.parse.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
-import amf.aml.internal.parse.instances.ClosedInstanceNode.{checkClosedNode, checkNode, checkRootNode}
-import amf.aml.internal.parse.instances.DialectInstanceParser.{
-  computeParsingScheme,
-  emptyElement,
-  encodedElementDefaultId,
-  findDeclarationsMap,
-  pathSegment,
-  typesFrom
-}
+import amf.aml.internal.parse.instances.ClosedInstanceNode.checkNode
+import amf.aml.internal.parse.instances.DialectInstanceParser._
 import amf.aml.internal.parse.instances.finder.{IncludeFirstUnionElementFinder, JSONPointerUnionFinder}
-import amf.aml.internal.parse.instances.parser.ObjectUnionParser.findCompatibleMapping
-import amf.aml.internal.parse.instances.parser.{
-  DialectExtensionParser,
-  ExternalLinkGenerator,
-  ExternalLinkPropertyParser,
-  JSONPointerPropertyParser,
-  KeyValuePropertyParser,
-  LinkIncludePropertyParser,
-  LiteralCollectionParser,
-  LiteralValueParser,
-  LiteralValueSetter,
-  ObjectCollectionPropertyParser,
-  ObjectMapPropertyParser,
-  ObjectPropertyParser,
-  ObjectUnionParser
-}
-import amf.aml.internal.validate.DialectValidations.{
-  DialectAmbiguousRangeSpecification,
-  DialectError,
-  InvalidUnionType
-}
+import amf.aml.internal.parse.instances.parser._
+import amf.aml.internal.validate.DialectValidations.DialectError
+import amf.core.client.scala.model.document.EncodesModel
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
+import amf.core.client.scala.parse.document.SyamlParsedDocument
+import amf.core.internal.annotations.SourceAST
+import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
+import amf.core.internal.utils._
 import com.github.ghik.silencer.silent
-import org.mulesoft.common.time.SimpleDateTime
-import org.mulesoft.lexer.SourceLocation
 import org.yaml.model._
-
-import scala.collection.mutable
 
 // TODO: needs further breakup of parts. This components of this class are untestable the current way.
 // TODO: find out why all these methods are protected.
@@ -343,7 +302,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
   protected def parseProperty(id: String,
                               propertyEntry: YMapEntry,
-                              property: PropertyMapping,
+                              property: PropertyLikeMapping[_],
                               node: DialectDomainElement): Unit = {
     property.classification() match {
       case ExtensionPointProperty    => parseDialectExtension(id, propertyEntry, property, node)
@@ -351,9 +310,10 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       case LiteralPropertyCollection => parseLiteralCollectionProperty(id, propertyEntry, property, node)
       case ObjectProperty            => parseObjectProperty(id, propertyEntry, property, node)
       case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
-      case ObjectMapProperty         => parseObjectMapProperty(id, propertyEntry, property, node)
-      case ObjectPairProperty        => parseObjectPairProperty(id, propertyEntry, property, node)
-      case ExternalLinkProperty      => parseExternalLinkProperty(id, propertyEntry, property, node)
+      case ObjectMapProperty if property.isInstanceOf[PropertyMapping] =>
+        parseObjectMapProperty(id, propertyEntry, property.asInstanceOf[PropertyMapping], node)
+      case ObjectPairProperty   => parseObjectPairProperty(id, propertyEntry, property, node)
+      case ExternalLinkProperty => parseExternalLinkProperty(id, propertyEntry, property, node)
       case _ =>
         ctx.eh.violation(DialectError, id, s"Unknown type of node property ${property.id}", propertyEntry.location)
     }
@@ -361,14 +321,14 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
   private def parseExternalLinkProperty(id: String,
                                         propertyEntry: YMapEntry,
-                                        property: PropertyMapping,
+                                        property: PropertyLikeMapping[_],
                                         node: DialectDomainElement): Unit = {
     ExternalLinkPropertyParser.parse(id, propertyEntry, property, node, root, parseProperty)
   }
 
   protected def parseDialectExtension(id: String,
                                       propertyEntry: YMapEntry,
-                                      property: PropertyMapping,
+                                      property: PropertyLikeMapping[_],
                                       node: DialectDomainElement): Unit = {
     DialectExtensionParser.parse(id, propertyEntry, property, node, root, parseNestedNode)
   }
@@ -377,7 +337,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       defaultId: String,
       path: Seq[String],
       ast: YNode,
-      unionMapping: NodeWithDiscriminator[_ <: NodeWithDiscriminatorModel],
+      unionMapping: NodeWithDiscriminator[_],
       additionalProperties: Map[String, Any] = Map()): DialectDomainElement = {
 
     ObjectUnionParser.parse(defaultId, path, ast, unionMapping, additionalProperties, root, map, parseProperty)
@@ -385,7 +345,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
   protected def parseObjectProperty(id: String,
                                     propertyEntry: YMapEntry,
-                                    property: PropertyMapping,
+                                    property: PropertyLikeMapping[_],
                                     node: DialectDomainElement,
                                     additionalProperties: Map[String, Any] = Map()): Unit = {
     ObjectPropertyParser.parse(id,
@@ -413,13 +373,13 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
   protected def parseObjectPairProperty(id: String,
                                         propertyEntry: YMapEntry,
-                                        property: PropertyMapping,
+                                        property: PropertyLikeMapping[_],
                                         node: DialectDomainElement): Unit =
     KeyValuePropertyParser.parse(id, propertyEntry, property, node)
 
   protected def parseObjectCollectionProperty(id: String,
                                               propertyEntry: YMapEntry,
-                                              property: PropertyMapping,
+                                              property: PropertyLikeMapping[_],
                                               node: DialectDomainElement,
                                               additionalProperties: Map[String, Any] = Map()): Unit = {
 
@@ -432,27 +392,29 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                                          parseNestedNode)
   }
 
-  protected def parseLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement): Option[_] = {
+  protected def parseLiteralValue(value: YNode,
+                                  property: PropertyLikeMapping[_],
+                                  node: DialectDomainElement): Option[_] = {
 
     LiteralValueParser.parseLiteralValue(value, property, node)
   }
 
   // TODO: This should receive annotations instead of an entry. Unrelated concepts in the same method
-  protected def setLiteralValue(entry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
+  protected def setLiteralValue(entry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement): Unit = {
     val parsed = parseLiteralValue(entry.value, property, node)
     LiteralValueSetter.setLiteralValue(parsed, entry, property, node)
   }
 
   protected def parseLiteralProperty(id: String,
                                      propertyEntry: YMapEntry,
-                                     property: PropertyMapping,
+                                     property: PropertyLikeMapping[_],
                                      node: DialectDomainElement): Unit = {
     setLiteralValue(propertyEntry, property, node)
   }
 
   protected def parseLiteralCollectionProperty(id: String,
                                                propertyEntry: YMapEntry,
-                                               property: PropertyMapping,
+                                               property: PropertyLikeMapping[_],
                                                node: DialectDomainElement): Unit = {
     LiteralCollectionParser.parse(propertyEntry, property, node)
   }

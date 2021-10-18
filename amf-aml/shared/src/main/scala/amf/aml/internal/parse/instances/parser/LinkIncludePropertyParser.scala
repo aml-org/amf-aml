@@ -1,6 +1,6 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyMapping}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.annotations.RefInclude
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.validate.DialectValidations.DialectError
@@ -9,7 +9,7 @@ import org.yaml.model.{YMapEntry, YScalar}
 
 object LinkIncludePropertyParser {
   def parse(propertyEntry: YMapEntry,
-            mapping: PropertyMapping,
+            mapping: PropertyLikeMapping[_],
             id: String,
             node: DialectDomainElement,
             isRef: Boolean = false)(implicit ctx: DialectInstanceContext): Unit = {

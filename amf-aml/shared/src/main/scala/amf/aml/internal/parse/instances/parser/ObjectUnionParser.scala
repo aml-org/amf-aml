@@ -24,7 +24,7 @@ object ObjectUnionParser {
       defaultId: String,
       path: Seq[String],
       ast: YNode,
-      unionMapping: NodeWithDiscriminator[_ <: NodeWithDiscriminatorModel],
+      unionMapping: NodeWithDiscriminator[_],
       additionalProperties: Map[String, Any] = Map(),
       root: Root,
       rootMap: YMap,

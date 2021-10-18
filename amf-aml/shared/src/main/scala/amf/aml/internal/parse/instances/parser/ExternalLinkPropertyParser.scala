@@ -1,6 +1,6 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyMapping}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.parse.instances.parser.ExternalLinkGenerator.PropertyParser
 import amf.aml.internal.validate.DialectValidations.DialectError
@@ -11,7 +11,7 @@ object ExternalLinkPropertyParser {
 
   def parse(id: String,
             propertyEntry: YMapEntry,
-            property: PropertyMapping,
+            property: PropertyLikeMapping[_],
             node: DialectDomainElement,
             root: Root,
             propertyParser: PropertyParser)(implicit ctx: DialectInstanceContext): Unit = {

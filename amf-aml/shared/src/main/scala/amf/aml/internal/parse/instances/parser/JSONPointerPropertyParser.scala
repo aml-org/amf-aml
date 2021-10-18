@@ -1,6 +1,6 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyMapping}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.internal.parser.{Root, YMapOps}
@@ -9,7 +9,7 @@ import org.yaml.model.YMap
 
 object JSONPointerPropertyParser {
 
-  def parse(map: YMap, mapping: PropertyMapping, id: String, node: DialectDomainElement, root: Root)(
+  def parse(map: YMap, mapping: PropertyLikeMapping[_], id: String, node: DialectDomainElement, root: Root)(
       implicit ctx: DialectInstanceContext): Unit = {
     val entry   = map.key("$ref").get
     val pointer = entry.value.as[String]

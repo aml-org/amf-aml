@@ -1,12 +1,12 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyMapping}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import org.yaml.model.{YMapEntry, YSequence, YType}
 
 object LiteralCollectionParser {
 
-  def parse(propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement)(
+  def parse(propertyEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(
       implicit ctx: DialectInstanceContext): Unit = {
     val finalValues = propertyEntry.value.tagType match {
       case YType.Seq =>

@@ -1,6 +1,6 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyMapping, UnknownMapKeyProperty}
+import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.parse.instances.DialectInstanceParser.typesFrom
 import amf.aml.internal.validate.DialectValidations.DialectError
@@ -14,10 +14,9 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YSequence}
 
 object KeyValuePropertyParser {
 
-  def parse(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement)(
+  def parse(id: String, propertyEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(
       implicit ctx: DialectInstanceContext): Unit = {
-    val propertyKeyMapping   = property.mapTermKeyProperty().option()
-    val propertyValueMapping = property.mapTermValueProperty().option()
+    val (propertyKeyMapping, propertyValueMapping) = computeMapKeyAndValueFrom(property)
     if (propertyKeyMapping.isDefined && propertyValueMapping.isDefined) {
       val nested = ctx.dialect.declares.find(_.id == property.objectRange().head.value()) match {
         case Some(nodeMapping: NodeMapping) =>
@@ -84,6 +83,12 @@ object KeyValuePropertyParser {
                        propertyEntry.location)
     }
   }
+
+  private def computeMapKeyAndValueFrom(property: PropertyLikeMapping[_]): (Option[String], Option[String]) =
+    property match {
+      case mapping: PropertyMapping => (mapping.mapTermKeyProperty().option(), mapping.mapTermValueProperty().option())
+      case _                        => (None, None)
+    }
 
   private def extractAllowMultipleForProp(propertyValueMapping: Option[String], nodeMapping: NodeMapping) = {
     nodeMapping
