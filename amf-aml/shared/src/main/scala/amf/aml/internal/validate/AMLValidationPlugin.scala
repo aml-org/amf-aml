@@ -1,7 +1,6 @@
 package amf.aml.internal.validate
 
-import amf.aml.client.scala.model.document.{DialectInstance, DialectInstanceUnit}
-import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
+import amf.aml.client.scala.model.document.DialectInstanceUnit
 import amf.core.client.common.{HighPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.plugins.validation.{AMFValidatePlugin, ValidationInfo, ValidationOptions, ValidationResult}
@@ -24,5 +23,4 @@ class AMLValidationPlugin() extends AMFValidatePlugin {
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
     new AMLValidator().validate(unit, options)
   }
-
 }

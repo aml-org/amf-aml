@@ -35,7 +35,7 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
       .withPlugins(plugins)
       .withValidationProfile(profile)
       .withEntities(domainModels)
-      .withExtensions(dialect.extensions())
+      .withExtensions(dialect)
     newConfig
   }
 

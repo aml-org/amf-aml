@@ -58,7 +58,7 @@ class AMLValidator() extends ShaclReportAdaptation {
   }
 
   private def collectDialects(amfConfig: => AMFGraphConfiguration) = {
-    amfConfig.registry.plugins.parsePlugins.collect {
+    amfConfig.registry.getPluginsRegistry.parsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
     }
   }

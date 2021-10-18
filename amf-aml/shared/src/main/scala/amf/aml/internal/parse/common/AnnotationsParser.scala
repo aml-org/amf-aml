@@ -1,14 +1,13 @@
 package amf.aml.internal.parse.common
 
-import amf.aml.client.scala.model.document.Dialect
 import amf.aml.internal.parse.DynamicExtensionParser
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.parse.vocabularies.VocabularyDeclarations
-import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.aml.internal.validate.DialectValidations.MissingVocabulary
-import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.plugins.document.graph.parser.FlattenedUnitGraphParser.ctx
@@ -19,32 +18,29 @@ import scala.util.{Failure, Success}
 
 object AnnotationsParser {
 
-  def parseAnnotations(ast: YMap, node: DomainElement, declarations: VocabularyDeclarations)(
+  def parseAnnotations(ast: YMap, node: AmfObject, declarations: VocabularyDeclarations)(
       implicit ctx: ParserContext): Any = {
 
-    val parsedExtensions: Seq[DomainExtension] = parsedAnnotationProperties(ast) flatMap { ai =>
-      val facade: Option[SemanticExtensionsFacade] = ctx match {
-        case diCtx: DialectInstanceContext => Some(diCtx.extensionsFacade)
-        case _                             => None
-      }
-      val dialect: Option[Dialect] = facade.flatMap(_.findExtensionDialect(ai.key))
-      dialect match {
-        case Some(d) => parseSemanticExtension(facade.get, d, ai)
-        case _       => parseRegularAnnotation(node, declarations, ctx, ai)
-      }
+    computeAnnotationInfo(ast) flatMap { ai =>
+      computeSemanticExtensionParser(ctx)
+        .flatMap { parser =>
+          val id    = node.id + s"${ai.prefix.map(_ + "/").getOrElse("/")}${ai.suffix}"
+          val types = node.meta.`type`.map(_.iri())
+          parser.parse(ai.key, types, ai.entry, ctx, id)
+        }
+        .orElse(parseRegularAnnotation(node, declarations, ctx, ai))
+        .map(extension => node.add(CustomDomainProperties, extension))
     }
-
-    if (parsedExtensions.nonEmpty) node.withCustomDomainProperties(parsedExtensions)
   }
 
-  private def parseSemanticExtension(facade: SemanticExtensionsFacade,
-                                     dialect: Dialect,
-                                     ai: AnnotationInfo): Option[DomainExtension] =
-    facade.findAnnotationMappingByExtension(ai.key, dialect) collect {
-      case am => facade.parseSemanticExtension(am, ai.entry)
+  private def computeSemanticExtensionParser(ctx: ParserContext) = {
+    ctx match {
+      case diCtx: DialectInstanceContext => Some(diCtx.extensionsFacade)
+      case _                             => None
     }
+  }
 
-  private def parseRegularAnnotation(node: DomainElement,
+  private def parseRegularAnnotation(node: AmfObject,
                                      declarations: VocabularyDeclarations,
                                      ctx: ParserContext,
                                      ai: AnnotationInfo): Option[DomainExtension] = {
@@ -84,7 +80,7 @@ object AnnotationsParser {
     }
   }
 
-  private def parsedAnnotationProperties(ast: YMap): Seq[AnnotationInfo] = ast.entries.flatMap { entry: YMapEntry =>
+  def computeAnnotationInfo(ast: YMap): Seq[AnnotationInfo] = ast.entries.flatMap { entry: YMapEntry =>
     val key: String                       = entry.key.as[String]
     val maybeBS: Option[BaseAndSeparator] = getKeyName(key)
     maybeBS.map { bs =>
@@ -111,10 +107,6 @@ object AnnotationsParser {
 
   private case class BaseAndSeparator(base: String, separator: String)
   private case class PrefixAndSuffix(prefix: Option[String], suffix: String)
-  private case class AnnotationInfo(originalKey: String,
-                                    key: String,
-                                    prefix: Option[String],
-                                    suffix: String,
-                                    entry: YMapEntry)
+  case class AnnotationInfo(originalKey: String, key: String, prefix: Option[String], suffix: String, entry: YMapEntry)
 
 }

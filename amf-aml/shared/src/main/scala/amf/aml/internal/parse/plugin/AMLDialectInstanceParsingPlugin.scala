@@ -13,6 +13,8 @@ import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument}
 import amf.core.internal.parser._
 import amf.core.internal.remote.Mimes._
+import amf.core.internal.parser._
+import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{AmlDialectSpec, Mimes, Spec}
 import org.yaml.model.YMap
 

@@ -15,9 +15,9 @@ import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps}
 import org.yaml.model._
 
-case class InstanceNodeParser(root: Root) extends NodeMappableHelper {
+case class InstanceNodeParser(root: Root)(implicit ctx: DialectInstanceContext) extends NodeMappableHelper {
 
-  private def map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
+  private val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
   def parse(
       path: String,
@@ -59,6 +59,11 @@ case class InstanceNodeParser(root: Root) extends NodeMappableHelper {
     // if we are parsing a patch document we mark the node as abstract
 
     if (ctx.isPatch) result.withAbstract(true)
+    assignDefinedByAndTypes(mappable, result)
+    result
+  }
+
+  private def assignDefinedByAndTypes(mappable: NodeMappable, result: DialectDomainElement) = {
     mappable match {
       case mapping: NodeMapping =>
         result
@@ -66,7 +71,6 @@ case class InstanceNodeParser(root: Root) extends NodeMappableHelper {
           .withInstanceTypes(typesFrom(mapping))
       case _ => // ignore
     }
-    result
   }
 
   private def checkNodeForAdditionalKeys(id: String,
@@ -122,6 +126,7 @@ case class InstanceNodeParser(root: Root) extends NodeMappableHelper {
     val finalId =
       generateNodeId(node, astMap, Seq(defaultId), defaultId, mapping, additionalProperties, rootNode, root)
     node.withId(finalId)
+    assignDefinedByAndTypes(mapping, node)
     parseAnnotations(astMap, node, ctx.declarations)
     mapping.propertiesMapping().foreach { propertyMapping =>
       val propertyName = propertyMapping.name().value()
