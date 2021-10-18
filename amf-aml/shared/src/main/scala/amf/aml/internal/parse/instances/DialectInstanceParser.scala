@@ -36,6 +36,7 @@ import amf.aml.internal.parse.instances.DialectInstanceParser.{
 import amf.aml.internal.parse.instances.finder.{IncludeFirstUnionElementFinder, JSONPointerUnionFinder}
 import amf.aml.internal.parse.instances.parser.ObjectUnionParser.findCompatibleMapping
 import amf.aml.internal.parse.instances.parser.{
+  DialectExtensionParser,
   ExternalLinkGenerator,
   ExternalLinkPropertyParser,
   JSONPointerPropertyParser,
@@ -367,41 +368,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                                       propertyEntry: YMapEntry,
                                       property: PropertyMapping,
                                       node: DialectDomainElement): Unit = {
-    val nestedObjectId = pathSegment(id, List(propertyEntry.key.as[YScalar].text))
-    propertyEntry.value.tagType match {
-      case YType.Str | YType.Include =>
-        resolveLinkProperty(propertyEntry, property, nestedObjectId, node)
-      case YType.Map =>
-        val map = propertyEntry.value.as[YMap]
-        map.key("$dialect") match {
-          case Some(nested) if nested.value.tagType == YType.Str =>
-            val dialectNode = nested.value.as[YScalar].text
-            // TODO: resolve dialect node URI to absolute normalised URI
-            ctx.nodeMappableFinder.findNode(dialectNode) match {
-              case Some((dialect, nodeMapping)) =>
-                ctx.nestedDialects ++= Seq(dialect)
-                ctx.withCurrentDialect(dialect) {
-                  val dialectDomainElement = parseNestedNode(id, nestedObjectId, propertyEntry.value, nodeMapping)
-                  node.withObjectField(property, dialectDomainElement, Right(propertyEntry))
-                }
-              case None =>
-                ctx.eh.violation(DialectError,
-                                 id,
-                                 s"Cannot find dialect for nested anyNode mapping $dialectNode",
-                                 nested.value.location)
-            }
-          case None =>
-            computeParsingScheme(map) match {
-              case "$include" =>
-                val includeEntry = map.key("$include").get
-                resolveLinkProperty(includeEntry, property, nestedObjectId, node, isRef = true)
-              case "$ref" =>
-                resolveJSONPointerProperty(map, property, nestedObjectId, node)
-              case _ =>
-                ctx.eh.violation(DialectError, id, "$dialect key without string value or link", map.location)
-            }
-        }
-    }
+    DialectExtensionParser.parse(id, propertyEntry, property, node, root, parseNestedNode)
   }
 
   protected def findHashProperties(propertyMapping: PropertyMapping, propertyEntry: YMapEntry): Option[(String, Any)] = {
@@ -596,17 +563,4 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                                         id: String): DialectDomainElement = {
     JSONPointerUnionFinder.find(map, allPossibleMappings, id, map)
   }
-
-  protected def resolveLinkProperty(propertyEntry: YMapEntry,
-                                    mapping: PropertyMapping,
-                                    id: String,
-                                    node: DialectDomainElement,
-                                    isRef: Boolean = false): Unit =
-    LinkIncludePropertyParser.parse(propertyEntry, mapping, id, node, isRef)
-
-  protected def resolveJSONPointerProperty(map: YMap,
-                                           mapping: PropertyMapping,
-                                           id: String,
-                                           node: DialectDomainElement): Unit =
-    JSONPointerPropertyParser.parse(map, mapping, id, node, root)
 }
