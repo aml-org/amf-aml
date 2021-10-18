@@ -25,7 +25,7 @@ import amf.aml.client.scala.model.document._
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.aml.internal.parse.instances.ClosedInstanceNode.{checkClosedNode, checkRootNode}
-import amf.aml.internal.parse.instances.parser.LiteralValueParser
+import amf.aml.internal.parse.instances.parser.{LiteralValueParser, LiteralValueSetter}
 import amf.aml.internal.validate.DialectValidations.{
   DialectAmbiguousRangeSpecification,
   DialectError,
@@ -914,16 +914,8 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
   // TODO: This should receive annotations instead of an entry. Unrelated concepts in the same method
   protected def setLiteralValue(entry: YMapEntry, property: PropertyMapping, node: DialectDomainElement): Unit = {
-    parseLiteralValue(entry.value, property, node) match {
-      case Some(b: Boolean)          => node.setProperty(property, b, entry)
-      case Some(i: Int)              => node.setProperty(property, i, entry)
-      case Some(f: Float)            => node.setProperty(property, f, entry)
-      case Some(d: Double)           => node.setProperty(property, d, entry)
-      case Some(s: String)           => node.setProperty(property, s, entry)
-      case Some(("link", l: String)) => node.setProperty(property, l, entry)
-      case Some(d: SimpleDateTime)   => node.setProperty(property, d, entry)
-      case _                         => node.setProperty(property, entry)
-    }
+    val parsed = parseLiteralValue(entry.value, property, node)
+    LiteralValueSetter.setLiteralValue(parsed, entry, property, node)
   }
 
   protected def parseLiteralProperty(id: String,

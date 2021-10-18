@@ -6,7 +6,25 @@ import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.vocabulary.Namespace
 import org.mulesoft.common.time.SimpleDateTime
-import org.yaml.model.{YNode, YScalar, YType}
+import org.yaml.model.{YMapEntry, YNode, YScalar, YType}
+
+object LiteralValueSetter {
+  def setLiteralValue(parsed: Option[_],
+                      entry: YMapEntry,
+                      property: PropertyMapping,
+                      node: DialectDomainElement): Unit = {
+    parsed match {
+      case Some(b: Boolean)          => node.setProperty(property, b, entry)
+      case Some(i: Int)              => node.setProperty(property, i, entry)
+      case Some(f: Float)            => node.setProperty(property, f, entry)
+      case Some(d: Double)           => node.setProperty(property, d, entry)
+      case Some(s: String)           => node.setProperty(property, s, entry)
+      case Some(("link", l: String)) => node.setProperty(property, l, entry)
+      case Some(d: SimpleDateTime)   => node.setProperty(property, d, entry)
+      case _                         => node.setProperty(property, entry)
+    }
+  }
+}
 
 object LiteralValueParser {
 
