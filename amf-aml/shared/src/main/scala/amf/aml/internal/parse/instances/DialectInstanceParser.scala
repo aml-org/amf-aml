@@ -304,33 +304,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                               propertyEntry: YMapEntry,
                               property: PropertyLikeMapping[_],
                               node: DialectDomainElement): Unit = {
-    property.classification() match {
-      case ExtensionPointProperty    => parseDialectExtension(id, propertyEntry, property, node)
-      case LiteralProperty           => parseLiteralProperty(id, propertyEntry, property, node)
-      case LiteralPropertyCollection => parseLiteralCollectionProperty(id, propertyEntry, property, node)
-      case ObjectProperty            => parseObjectProperty(id, propertyEntry, property, node)
-      case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
-      case ObjectMapProperty if property.isInstanceOf[PropertyMapping] =>
-        parseObjectMapProperty(id, propertyEntry, property.asInstanceOf[PropertyMapping], node)
-      case ObjectPairProperty   => parseObjectPairProperty(id, propertyEntry, property, node)
-      case ExternalLinkProperty => parseExternalLinkProperty(id, propertyEntry, property, node)
-      case _ =>
-        ctx.eh.violation(DialectError, id, s"Unknown type of node property ${property.id}", propertyEntry.location)
-    }
-  }
-
-  private def parseExternalLinkProperty(id: String,
-                                        propertyEntry: YMapEntry,
-                                        property: PropertyLikeMapping[_],
-                                        node: DialectDomainElement): Unit = {
-    ExternalLinkPropertyParser.parse(id, propertyEntry, property, node, root, parseProperty)
-  }
-
-  protected def parseDialectExtension(id: String,
-                                      propertyEntry: YMapEntry,
-                                      property: PropertyLikeMapping[_],
-                                      node: DialectDomainElement): Unit = {
-    DialectExtensionParser.parse(id, propertyEntry, property, node, root, parseNestedNode)
+    new ElementPropertyParser(root, map, parseNestedNode).parse(id, propertyEntry, property, node)
   }
 
   protected def parseObjectUnion[T <: DomainElement](
@@ -341,82 +315,6 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       additionalProperties: Map[String, Any] = Map()): DialectDomainElement = {
 
     ObjectUnionParser.parse(defaultId, path, ast, unionMapping, additionalProperties, root, map, parseProperty)
-  }
-
-  protected def parseObjectProperty(id: String,
-                                    propertyEntry: YMapEntry,
-                                    property: PropertyLikeMapping[_],
-                                    node: DialectDomainElement,
-                                    additionalProperties: Map[String, Any] = Map()): Unit = {
-    ObjectPropertyParser.parse(id,
-                               propertyEntry,
-                               property,
-                               node,
-                               additionalProperties,
-                               parseObjectUnion,
-                               parseNestedNode)
-  }
-
-  protected def parseObjectMapProperty(id: String,
-                                       propertyEntry: YMapEntry,
-                                       property: PropertyMapping,
-                                       node: DialectDomainElement,
-                                       additionalProperties: Map[String, Any] = Map()): Unit = {
-    ObjectMapPropertyParser.parse(id,
-                                  propertyEntry,
-                                  property,
-                                  node,
-                                  additionalProperties,
-                                  parseObjectUnion,
-                                  parseNestedNode)
-  }
-
-  protected def parseObjectPairProperty(id: String,
-                                        propertyEntry: YMapEntry,
-                                        property: PropertyLikeMapping[_],
-                                        node: DialectDomainElement): Unit =
-    KeyValuePropertyParser.parse(id, propertyEntry, property, node)
-
-  protected def parseObjectCollectionProperty(id: String,
-                                              propertyEntry: YMapEntry,
-                                              property: PropertyLikeMapping[_],
-                                              node: DialectDomainElement,
-                                              additionalProperties: Map[String, Any] = Map()): Unit = {
-
-    ObjectCollectionPropertyParser.parse(id,
-                                         propertyEntry,
-                                         property,
-                                         node,
-                                         additionalProperties,
-                                         parseObjectUnion,
-                                         parseNestedNode)
-  }
-
-  protected def parseLiteralValue(value: YNode,
-                                  property: PropertyLikeMapping[_],
-                                  node: DialectDomainElement): Option[_] = {
-
-    LiteralValueParser.parseLiteralValue(value, property, node)
-  }
-
-  // TODO: This should receive annotations instead of an entry. Unrelated concepts in the same method
-  protected def setLiteralValue(entry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement): Unit = {
-    val parsed = parseLiteralValue(entry.value, property, node)
-    LiteralValueSetter.setLiteralValue(parsed, entry, property, node)
-  }
-
-  protected def parseLiteralProperty(id: String,
-                                     propertyEntry: YMapEntry,
-                                     property: PropertyLikeMapping[_],
-                                     node: DialectDomainElement): Unit = {
-    setLiteralValue(propertyEntry, property, node)
-  }
-
-  protected def parseLiteralCollectionProperty(id: String,
-                                               propertyEntry: YMapEntry,
-                                               property: PropertyLikeMapping[_],
-                                               node: DialectDomainElement): Unit = {
-    LiteralCollectionParser.parse(propertyEntry, property, node)
   }
 
   protected def parseNestedNode(path: String,
@@ -456,15 +354,5 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         linkedNode.unresolved(text, Nil, Some(loc))
         linkedNode
     }
-  }
-
-  protected def resolveLinkUnion(ast: YNode, allPossibleMappings: Seq[NodeMapping], id: String): DialectDomainElement = {
-    IncludeFirstUnionElementFinder.find(ast, allPossibleMappings, id, map)
-  }
-
-  protected def resolveJSONPointerUnion(map: YMap,
-                                        allPossibleMappings: Seq[NodeMapping],
-                                        id: String): DialectDomainElement = {
-    JSONPointerUnionFinder.find(map, allPossibleMappings, id, map)
   }
 }
