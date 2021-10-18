@@ -29,6 +29,7 @@ import amf.aml.internal.parse.instances.DialectInstanceParser.{encodedElementDef
 import amf.aml.internal.parse.instances.finder.{IncludeFirstUnionElementFinder, JSONPointerUnionFinder}
 import amf.aml.internal.parse.instances.parser.{
   ExternalLinkGenerator,
+  JSONPointerPropertyParser,
   LiteralCollectionParser,
   LiteralValueParser,
   LiteralValueSetter
@@ -971,43 +972,6 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
   protected def resolveJSONPointerProperty(map: YMap,
                                            mapping: PropertyMapping,
                                            id: String,
-                                           node: DialectDomainElement): Unit = {
-    val entry   = map.key("$ref").get
-    val pointer = entry.value.as[String]
-    val fullPointer = if (pointer.startsWith("#")) {
-      root.location + pointer
-    } else {
-      pointer
-    }
-
-    ctx.findJsonPointer(fullPointer) map { node =>
-      node
-        .link(pointer, Annotations(map))
-        .asInstanceOf[DialectDomainElement]
-        .withId(id)
-    } match {
-      case Some(s) =>
-        ctx.nodeMappableFinder.findNode(s.definedBy.id) match {
-          case Some((dialect, _)) =>
-            ctx.nestedDialects ++= Seq(dialect)
-            val linkedExternal = s
-              .link(pointer, Annotations(map))
-              .asInstanceOf[DialectDomainElement]
-              .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
-            node.withObjectField(mapping, linkedExternal, Right(entry))
-          case None =>
-            ctx.eh.violation(DialectError,
-                             id,
-                             s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
-                             map.location)
-        }
-      case None =>
-        ctx.eh.violation(
-            DialectError,
-            id,
-            s"anyNode reference must be to a known node or an external fragment, unknown JSON Pointer: '$pointer'",
-            map.location
-        )
-    }
-  }
+                                           node: DialectDomainElement): Unit =
+    JSONPointerPropertyParser.parse(map, mapping, id, node, root)
 }
