@@ -25,7 +25,7 @@ import amf.aml.client.scala.model.document._
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.aml.internal.parse.instances.ClosedInstanceNode.{checkClosedNode, checkRootNode}
-import amf.aml.internal.parse.instances.parser.{LiteralValueParser, LiteralValueSetter}
+import amf.aml.internal.parse.instances.parser.{LiteralCollectionParser, LiteralValueParser, LiteralValueSetter}
 import amf.aml.internal.validate.DialectValidations.{
   DialectAmbiguousRangeSpecification,
   DialectError,
@@ -929,30 +929,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                                                propertyEntry: YMapEntry,
                                                property: PropertyMapping,
                                                node: DialectDomainElement): Unit = {
-    val finalValues = propertyEntry.value.tagType match {
-      case YType.Seq =>
-        val values = propertyEntry.value
-          .as[YSequence]
-          .nodes
-          .flatMap { elemValue =>
-            parseLiteralValue(elemValue, property, node)
-          }
-
-        values.headOption match {
-          case Some(("link", _: String)) => values.collect { case (_, link) => link }.asInstanceOf[Seq[String]]
-          case _                         => values
-        }
-
-      case _ =>
-        parseLiteralValue(propertyEntry.value, property, node) match {
-          case Some(("link", v)) => Seq(v)
-          case Some(v)           => Seq(v)
-          case _                 => Nil
-        }
-
-    }
-    node.setProperty(property, finalValues, propertyEntry)
-
+    LiteralCollectionParser.parse(propertyEntry, property, node)
   }
 
   protected def parseNestedNode(path: String,
