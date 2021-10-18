@@ -25,7 +25,12 @@ import amf.aml.client.scala.model.document._
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.aml.internal.parse.instances.ClosedInstanceNode.{checkClosedNode, checkRootNode}
-import amf.aml.internal.parse.instances.DialectInstanceParser.{encodedElementDefaultId, findDeclarationsMap, typesFrom}
+import amf.aml.internal.parse.instances.DialectInstanceParser.{
+  emptyElement,
+  encodedElementDefaultId,
+  findDeclarationsMap,
+  typesFrom
+}
 import amf.aml.internal.parse.instances.finder.{IncludeFirstUnionElementFinder, JSONPointerUnionFinder}
 import amf.aml.internal.parse.instances.parser.{
   ExternalLinkGenerator,
@@ -52,7 +57,7 @@ import scala.collection.mutable
 // TODO: find out why all these methods are protected.
 // TODO:
 
-object DialectInstanceParser {
+object DialectInstanceParser extends NodeMappableHelper {
   def typesFrom(mapping: NodeMapping): Seq[String] = {
     Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).flatten
   }
@@ -82,6 +87,23 @@ object DialectInstanceParser {
           case _ => None
         }
     }
+  }
+
+  def emptyElement(defaultId: String, ast: YNode, mappable: NodeMappable, givenAnnotations: Option[Annotations])(
+      implicit ctx: DialectInstanceContext): DialectDomainElement = {
+    val mappings = mappable match {
+      case m: NodeMapping => Seq(m.nodetypeMapping.value(), mappable.id)
+      case _              => Seq(mappable.id)
+    }
+    lazy val ann = mappable match {
+      case u: UnionNodeMapping => Annotations(ast) += FromUnionNodeMapping(u)
+      case _                   => Annotations(ast)
+    }
+    val element = DialectDomainElement(givenAnnotations.getOrElse(ann))
+      .withId(defaultId)
+      .withInstanceTypes(mappings)
+    ctx.eh.warning(DialectError, defaultId, s"Empty map: ${mappings.head}", ast.location)
+    element
   }
 }
 
@@ -273,8 +295,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
 
       case YType.Str     => resolveLink(ast, mappable, defaultId, givenAnnotations)
       case YType.Include => resolveLink(ast, mappable, defaultId, givenAnnotations)
-      case YType.Null =>
-        emptyElement(defaultId, ast, mappable, givenAnnotations)
+      case YType.Null    => emptyElement(defaultId, ast, mappable, givenAnnotations)
       case _ =>
         ctx.eh.violation(DialectError, defaultId, "Cannot parse AST node for node in dialect instance", ast.location)
         DialectDomainElement().withId(defaultId)
@@ -290,25 +311,6 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       case _ => // ignore
     }
     result
-  }
-
-  private def emptyElement(defaultId: String,
-                           ast: YNode,
-                           mappable: NodeMappable,
-                           givenAnnotations: Option[Annotations]): DialectDomainElement = {
-    val mappings = mappable match {
-      case m: NodeMapping => Seq(m.nodetypeMapping.value(), mappable.id)
-      case _              => Seq(mappable.id)
-    }
-    lazy val ann = mappable match {
-      case u: UnionNodeMapping => Annotations(ast) += FromUnionNodeMapping(u)
-      case _                   => Annotations(ast)
-    }
-    val element = DialectDomainElement(givenAnnotations.getOrElse(ann))
-      .withId(defaultId)
-      .withInstanceTypes(mappings)
-    ctx.eh.warning(DialectError, defaultId, s"Empty map: ${mappings.head}", ast.location)
-    element
   }
 
   protected def parseProperty(id: String,
