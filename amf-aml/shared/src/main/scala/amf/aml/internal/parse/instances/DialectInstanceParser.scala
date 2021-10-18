@@ -30,6 +30,7 @@ import amf.aml.internal.parse.instances.DialectInstanceParser.{
   emptyElement,
   encodedElementDefaultId,
   findDeclarationsMap,
+  pathSegment,
   typesFrom
 }
 import amf.aml.internal.parse.instances.finder.{IncludeFirstUnionElementFinder, JSONPointerUnionFinder}
@@ -43,6 +44,7 @@ import amf.aml.internal.parse.instances.parser.{
   LiteralCollectionParser,
   LiteralValueParser,
   LiteralValueSetter,
+  ObjectCollectionPropertyParser,
   ObjectUnionParser
 }
 import amf.aml.internal.validate.DialectValidations.{
@@ -117,6 +119,18 @@ object DialectInstanceParser extends NodeMappableHelper {
       "$ref"
     else
       "inline"
+
+  def pathSegment(parent: String, nexts: List[String]): String = {
+    var path = parent
+    nexts.foreach { n =>
+      path = if (path.endsWith("/")) {
+        path + n.urlComponentEncoded
+      } else {
+        path + "/" + n.urlComponentEncoded
+      }
+    }
+    path
+  }
 }
 
 class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectInstanceContext)
@@ -500,60 +514,13 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                                               node: DialectDomainElement,
                                               additionalProperties: Map[String, Any] = Map()): Unit = {
 
-    // just to store Ids, and detect potentially duplicated elements in the collection
-    val idsMap: mutable.Map[String, Boolean] = mutable.Map()
-    val entries = propertyEntry.value.tagType match {
-      case YType.Seq => propertyEntry.value.as[YSequence].nodes
-      case _         => Seq(propertyEntry.value)
-    }
-
-    val elems = entries.zipWithIndex.flatMap {
-      case (elementNode, nextElem) =>
-        val path           = List(propertyEntry.key.as[YScalar].text, nextElem.toString)
-        val nestedObjectId = pathSegment(id, path)
-        property.nodesInRange match {
-          case range: Seq[String] if range.size > 1 =>
-            val parsed = parseObjectUnion(nestedObjectId, path, elementNode, property, additionalProperties)
-            checkDuplicated(parsed, elementNode, idsMap)
-            Some(parsed)
-          case range: Seq[String] if range.size == 1 =>
-            ctx.dialect.declares.find(_.id == range.head) match {
-              case Some(nodeMapping: NodeMappable) =>
-                val dialectDomainElement =
-                  parseNestedNode(id, nestedObjectId, elementNode, nodeMapping, additionalProperties)
-                checkDuplicated(dialectDomainElement, elementNode, idsMap)
-                Some(dialectDomainElement)
-              case _ => None
-            }
-          case _ => None
-        }
-    }
-    node.withObjectCollectionProperty(property, elems, Right(propertyEntry))
-  }
-
-  def checkDuplicated(dialectDomainElement: DialectDomainElement,
-                      elementNode: YNode,
-                      idsMap: mutable.Map[String, Boolean]): Unit = {
-    idsMap.get(dialectDomainElement.id) match {
-      case None => idsMap.update(dialectDomainElement.id, true)
-      case _ =>
-        ctx.eh.violation(DialectError,
-                         dialectDomainElement.id,
-                         s"Duplicated element in collection ${dialectDomainElement.id}",
-                         elementNode.location)
-    }
-  }
-
-  protected def pathSegment(parent: String, nexts: List[String]): String = {
-    var path = parent
-    nexts.foreach { n =>
-      path = if (path.endsWith("/")) {
-        path + n.urlComponentEncoded
-      } else {
-        path + "/" + n.urlComponentEncoded
-      }
-    }
-    path
+    ObjectCollectionPropertyParser.parse(id,
+                                         propertyEntry,
+                                         property,
+                                         node,
+                                         additionalProperties,
+                                         parseObjectUnion,
+                                         parseNestedNode)
   }
 
   protected def parseLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement): Option[_] = {
