@@ -2,6 +2,7 @@ package amf.aml.internal.parse.instances
 
 import amf.aml.internal.annotations.CustomId
 import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping}
+import amf.aml.internal.parse.instances.parser.ExternalLinkGenerator.overrideBase
 import amf.aml.internal.validate.DialectValidations.DialectError
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
 import amf.core.internal.parser.{Root, YMapOps}
@@ -69,36 +70,23 @@ object InstanceNodeIdHandling {
     }
     template
   }
-}
 
-trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstanceParser =>
-
-  protected def scalarYType(entry: YMapEntry): Boolean = {
-    entry.value.tagType match {
-      case YType.Bool      => true
-      case YType.Float     => true
-      case YType.Str       => true
-      case YType.Int       => true
-      case YType.Timestamp => true
-      case _               => false
-    }
-  }
-
-  protected def generateNodeId(node: DialectDomainElement,
-                               nodeMap: YMap,
-                               path: Seq[String],
-                               defaultId: String,
-                               mapping: NodeMapping,
-                               additionalProperties: Map[String, Any] = Map(),
-                               rootNode: Boolean): String = {
+  def generateNodeId(node: DialectDomainElement,
+                     nodeMap: YMap,
+                     path: Seq[String],
+                     defaultId: String,
+                     mapping: NodeMapping,
+                     additionalProperties: Map[String, Any] = Map(),
+                     rootNode: Boolean,
+                     root: Root)(implicit ctx: DialectInstanceContext): String = {
     val generatedId =
       if (rootNode && isSelfEncoded)
         defaultId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
       else {
         if (nodeMap.key("$id").isDefined) {
-          explicitNodeId(Some(node), nodeMap, path, defaultId, mapping)
+          explicitNodeId(Some(node), nodeMap, ctx)
         } else if (mapping.idTemplate.nonEmpty) {
-          idTemplate(node, nodeMap, path, mapping)
+          idTemplate(node, nodeMap, path, mapping, root)
         } else if (mapping.primaryKey().nonEmpty) {
           primaryKeyNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties)
         } else {
@@ -108,33 +96,13 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
     overrideBase(generatedId, nodeMap).urlEncoded
   }
 
-  private def isSelfEncoded = {
-    Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false)
-  }
-
-  protected def idTemplate(node: DialectDomainElement,
-                           nodeMap: YMap,
-                           path: Seq[String],
-                           mapping: NodeMapping): String = {
-//    val template = replaceTemplateVariables(node.id, nodeMap, mapping.idTemplate.value())
-//    prependRootIfIsRelative(template, path)
-    InstanceNodeIdHandling.idTemplate(node, nodeMap, path, mapping, root)
-  }
-
-  protected def explicitNodeId(node: Option[DialectDomainElement],
-                               nodeMap: YMap,
-                               path: Seq[String],
-                               defaultId: String,
-                               mapping: NodeMapping): String = {
-    InstanceNodeIdHandling.explicitNodeId(node, nodeMap, ctx)
-  }
-
-  private def primaryKeyNodeId(node: DialectDomainElement,
-                               nodeMap: YMap,
-                               path: Seq[String],
-                               defaultId: String,
-                               mapping: NodeMapping,
-                               additionalProperties: Map[String, Any] = Map()): String = {
+  private def primaryKeyNodeId(
+      node: DialectDomainElement,
+      nodeMap: YMap,
+      path: Seq[String],
+      defaultId: String,
+      mapping: NodeMapping,
+      additionalProperties: Map[String, Any] = Map())(implicit ctx: DialectInstanceContext): String = {
     var allFound           = true
     var keyId: Seq[String] = Seq()
     mapping.primaryKey().foreach { key =>
@@ -158,4 +126,49 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
     if (allFound) { path.mkString("/") + "/" + keyId.mkString("_") } else { defaultId }
   }
 
+  private def isSelfEncoded(implicit ctx: DialectInstanceContext) = {
+    Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false)
+  }
+
+  protected def scalarYType(entry: YMapEntry): Boolean = {
+    entry.value.tagType match {
+      case YType.Bool      => true
+      case YType.Float     => true
+      case YType.Str       => true
+      case YType.Int       => true
+      case YType.Timestamp => true
+      case _               => false
+    }
+  }
+}
+
+trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstanceParser =>
+
+  protected def generateNodeId(node: DialectDomainElement,
+                               nodeMap: YMap,
+                               path: Seq[String],
+                               defaultId: String,
+                               mapping: NodeMapping,
+                               additionalProperties: Map[String, Any] = Map(),
+                               rootNode: Boolean): String = {
+    InstanceNodeIdHandling.generateNodeId(node,
+                                          nodeMap,
+                                          path,
+                                          defaultId,
+                                          mapping,
+                                          additionalProperties,
+                                          rootNode,
+                                          root)
+  }
+
+  protected def idTemplate(node: DialectDomainElement,
+                           nodeMap: YMap,
+                           path: Seq[String],
+                           mapping: NodeMapping): String = {
+    InstanceNodeIdHandling.idTemplate(node, nodeMap, path, mapping, root)
+  }
+
+  protected def explicitNodeId(node: Option[DialectDomainElement], nodeMap: YMap): String = {
+    InstanceNodeIdHandling.explicitNodeId(node, nodeMap, ctx)
+  }
 }

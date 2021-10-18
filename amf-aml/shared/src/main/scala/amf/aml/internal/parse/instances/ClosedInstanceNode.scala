@@ -5,6 +5,17 @@ import org.yaml.model.{YNode, YPart, YScalar}
 
 object ClosedInstanceNode {
 
+  def checkNode(id: String,
+                nodetype: String,
+                entries: Map[YNode, YNode],
+                mapping: NodeMapping,
+                ast: YPart,
+                rootNode: Boolean,
+                additionalKey: Option[String])(implicit ctx: DialectInstanceContext): Unit = {
+    if (rootNode) checkRootNode(id, nodetype, entries, mapping, ast, additionalKey)
+    else checkClosedNode(id, nodetype, entries, mapping, ast, additionalKey)
+  }
+
   def checkRootNode(id: String,
                     nodetype: String,
                     entries: Map[YNode, YNode],
