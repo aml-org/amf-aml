@@ -36,6 +36,7 @@ import amf.aml.internal.parse.instances.parser.{
   ExternalLinkGenerator,
   ExternalLinkPropertyParser,
   JSONPointerPropertyParser,
+  KeyValuePropertyParser,
   LinkIncludePropertyParser,
   LiteralCollectionParser,
   LiteralValueParser,
@@ -655,82 +656,8 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
   protected def parseObjectPairProperty(id: String,
                                         propertyEntry: YMapEntry,
                                         property: PropertyMapping,
-                                        node: DialectDomainElement): Unit = {
-    val propertyKeyMapping   = property.mapTermKeyProperty().option()
-    val propertyValueMapping = property.mapTermValueProperty().option()
-    if (propertyKeyMapping.isDefined && propertyValueMapping.isDefined) {
-      val nested = ctx.dialect.declares.find(_.id == property.objectRange().head.value()) match {
-        case Some(nodeMapping: NodeMapping) =>
-          propertyEntry.value.as[YMap].entries flatMap { pair: YMapEntry =>
-            val nestedId = id + "/" + propertyEntry.key.as[YScalar].text.urlComponentEncoded + "/" + pair.key
-              .as[YScalar]
-              .text
-              .urlComponentEncoded
-            val effectiveTypes      = typesFrom(nodeMapping)
-            val valueAllowsMultiple = extractAllowMultipleForProp(propertyValueMapping, nodeMapping).getOrElse(false)
-            val nestedNode = DialectDomainElement(Annotations(pair))
-              .withId(nestedId)
-              .withDefinedBy(nodeMapping)
-              .withInstanceTypes(effectiveTypes)
-            try {
-              nestedNode.set(Field(Str, ValueType(propertyKeyMapping.get)),
-                             AmfScalar(pair.key.as[YScalar].text),
-                             Annotations(pair.key))
-
-              if (valueAllowsMultiple) {
-                pair.value.value match {
-                  case seq: YSequence =>
-                    nestedNode.set(
-                        Field(Array(Str), ValueType(propertyValueMapping.get)),
-                        AmfArray(seq.nodes.flatMap(_.asScalar).map(AmfScalar(_)), Annotations(seq)),
-                        Annotations(pair.value)
-                    )
-                  case scalar: YScalar =>
-                    nestedNode.set(Field(Array(Str), ValueType(propertyValueMapping.get)),
-                                   AmfArray(Seq(AmfScalar(scalar.text))),
-                                   Annotations(pair.value))
-                  case _ => // ignore
-                }
-              } else {
-                nestedNode.set(Field(Str, ValueType(propertyValueMapping.get)),
-                               AmfScalar(pair.value.as[YScalar].text),
-                               Annotations(pair.value))
-              }
-            } catch {
-              case e: UnknownMapKeyProperty =>
-                ctx.eh.violation(DialectError,
-                                 e.id,
-                                 s"Cannot find mapping for key map property ${e.id}",
-                                 pair.location)
-            }
-            Some(nestedNode)
-          }
-        case _ =>
-          ctx.eh.violation(
-              DialectError,
-              id,
-              s"Cannot find mapping for property range of mapValue property: ${property.objectRange().head.value()}",
-              propertyEntry.location
-          )
-          Nil
-      }
-
-      node.withObjectCollectionProperty(property, nested, Left(propertyEntry.key))
-
-    } else {
-      ctx.eh.violation(DialectError,
-                       id,
-                       s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
-                       propertyEntry.location)
-    }
-  }
-
-  private def extractAllowMultipleForProp(propertyValueMapping: Option[String], nodeMapping: NodeMapping) = {
-    nodeMapping
-      .propertiesMapping()
-      .find(_.nodePropertyMapping().option().contains(propertyValueMapping.get))
-      .flatMap(_.allowMultiple().option())
-  }
+                                        node: DialectDomainElement): Unit =
+    KeyValuePropertyParser.parse(id, propertyEntry, property, node)
 
   protected def parseObjectCollectionProperty(id: String,
                                               propertyEntry: YMapEntry,
