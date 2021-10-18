@@ -4,12 +4,72 @@ import amf.aml.internal.annotations.CustomId
 import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping}
 import amf.aml.internal.validate.DialectValidations.DialectError
 import org.yaml.model.{YMap, YMapEntry, YNode, YScalar, YType}
-import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.utils.AmfStrings
 
 import scala.collection.mutable
 
 case class Ctx(map: YMap, nodeMapping: NodeMapping, id: String)
+
+object InstanceNodeIdHandling {
+  def explicitNodeId(node: Option[DialectDomainElement], nodeMap: YMap, ctx: DialectInstanceContext): String = {
+    // explicit $id
+    val entry = nodeMap.key("$id").get
+    val rawId = entry.value.as[YScalar].text
+    val externalId = if (rawId.contains("://")) {
+      rawId
+    } else {
+      (ctx.dialect.location().getOrElse(ctx.dialect.id).split("#").head + s"#$rawId").replace("##", "#")
+    }
+    node.foreach((n) => n.annotations += CustomId())
+    externalId
+  }
+
+  def idTemplate(node: DialectDomainElement, nodeMap: YMap, path: Seq[String], mapping: NodeMapping, root: Root)(
+      implicit ctx: DialectInstanceContext): String = {
+    val template = replaceTemplateVariables(node.id, nodeMap, mapping.idTemplate.value())
+    prependRootIfIsRelative(template, path, root)
+  }
+
+  private def prependRootIfIsRelative(template: String, path: Seq[String], root: Root): String = {
+    val templateRoot = root.location
+    if (template.contains("://"))
+      template
+    else if (template.startsWith("/"))
+      templateRoot + "#" + template
+    else if (template.startsWith("#"))
+      templateRoot + template
+    else {
+      val pathLocation = (path ++ template.split("/")).mkString("/")
+      if (pathLocation.startsWith(templateRoot) || pathLocation.contains("#")) {
+        pathLocation
+      } else {
+        templateRoot + "#" + pathLocation
+      }
+    }
+  }
+
+  private def replaceTemplateVariables(nodeId: String, nodeMap: YMap, originalTemplate: String)(
+      implicit ctx: DialectInstanceContext): String = {
+    var template = originalTemplate
+    // template resolution
+    val regex = "(\\{[^}]+\\})".r
+    regex.findAllIn(template).foreach { varMatch =>
+      val variable = varMatch.replace("{", "").replace("}", "")
+      nodeMap.key(variable) match {
+        case Some(entry) =>
+          val value = entry.value.tagType match {
+            case YType.Str => entry.value.as[String]
+            case _         => entry.value.value.toString
+          }
+          template = template.replace(varMatch, value)
+        case None =>
+          ctx.eh.violation(DialectError, nodeId, s"Missing ID template variable '$variable' in node", nodeMap.location)
+      }
+    }
+    template
+  }
+}
 
 trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstanceParser =>
 
@@ -56,26 +116,9 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
                            nodeMap: YMap,
                            path: Seq[String],
                            mapping: NodeMapping): String = {
-    val template = replaceTemplateVariables(node.id, nodeMap, mapping.idTemplate.value())
-    prependRootIfIsRelative(template, path)
-  }
-
-  protected def prependRootIfIsRelative(template: String, path: Seq[String]): String = {
-    val templateRoot = root.location
-    if (template.contains("://"))
-      template
-    else if (template.startsWith("/"))
-      templateRoot + "#" + template
-    else if (template.startsWith("#"))
-      templateRoot + template
-    else {
-      val pathLocation = (path ++ template.split("/")).mkString("/")
-      if (pathLocation.startsWith(templateRoot) || pathLocation.contains("#")) {
-        pathLocation
-      } else {
-        templateRoot + "#" + pathLocation
-      }
-    }
+//    val template = replaceTemplateVariables(node.id, nodeMap, mapping.idTemplate.value())
+//    prependRootIfIsRelative(template, path)
+    InstanceNodeIdHandling.idTemplate(node, nodeMap, path, mapping, root)
   }
 
   protected def explicitNodeId(node: Option[DialectDomainElement],
@@ -83,36 +126,7 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
                                path: Seq[String],
                                defaultId: String,
                                mapping: NodeMapping): String = {
-    // explicit $id
-    val entry = nodeMap.key("$id").get
-    val rawId = entry.value.as[YScalar].text
-    val externalId = if (rawId.contains("://")) {
-      rawId
-    } else {
-      (ctx.dialect.location().getOrElse(ctx.dialect.id).split("#").head + s"#$rawId").replace("##", "#")
-    }
-    node.foreach((n) => n.annotations += CustomId())
-    externalId
-  }
-
-  protected def replaceTemplateVariables(nodeId: String, nodeMap: YMap, originalTemplate: String): String = {
-    var template = originalTemplate
-    // template resolution
-    val regex = "(\\{[^}]+\\})".r
-    regex.findAllIn(template).foreach { varMatch =>
-      val variable = varMatch.replace("{", "").replace("}", "")
-      nodeMap.key(variable) match {
-        case Some(entry) =>
-          val value = entry.value.tagType match {
-            case YType.Str => entry.value.as[String]
-            case _         => entry.value.value.toString
-          }
-          template = template.replace(varMatch, value)
-        case None =>
-          ctx.eh.violation(DialectError, nodeId, s"Missing ID template variable '$variable' in node", nodeMap.location)
-      }
-    }
-    template
+    InstanceNodeIdHandling.explicitNodeId(node, nodeMap, ctx)
   }
 
   private def primaryKeyNodeId(node: DialectDomainElement,
@@ -133,7 +147,10 @@ trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstan
             case Some(v) => keyId = keyId ++ Seq(v.toString)
             case _ =>
               ctx.eh
-                .violation(DialectError, node.id, s"Cannot find unique mandatory property '$propertyName'", nodeMap.location)
+                .violation(DialectError,
+                           node.id,
+                           s"Cannot find unique mandatory property '$propertyName'",
+                           nodeMap.location)
               allFound = false
           }
       }
