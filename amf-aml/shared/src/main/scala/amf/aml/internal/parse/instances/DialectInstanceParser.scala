@@ -47,6 +47,7 @@ import amf.aml.internal.parse.instances.parser.{
   LiteralValueSetter,
   ObjectCollectionPropertyParser,
   ObjectMapPropertyParser,
+  ObjectPropertyParser,
   ObjectUnionParser
 }
 import amf.aml.internal.validate.DialectValidations.{
@@ -387,23 +388,13 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
                                     property: PropertyMapping,
                                     node: DialectDomainElement,
                                     additionalProperties: Map[String, Any] = Map()): Unit = {
-    val path           = propertyEntry.key.as[YScalar].text
-    val nestedObjectId = pathSegment(id, List(path))
-    property.nodesInRange match {
-      case range: Seq[String] if range.size > 1 =>
-        val parsedRange =
-          parseObjectUnion(nestedObjectId, Seq(path), propertyEntry.value, property, additionalProperties)
-        node.withObjectField(property, parsedRange, Right(propertyEntry))
-      case range: Seq[String] if range.size == 1 =>
-        ctx.dialect.declares.find(_.id == range.head) match {
-          case Some(nodeMapping: NodeMappable) =>
-            val dialectDomainElement =
-              parseNestedNode(id, nestedObjectId, propertyEntry.value, nodeMapping, additionalProperties)
-            node.withObjectField(property, dialectDomainElement, Right(propertyEntry))
-          case _ => // ignore
-        }
-      case _ => // TODO: throw exception, illegal range
-    }
+    ObjectPropertyParser.parse(id,
+                               propertyEntry,
+                               property,
+                               node,
+                               additionalProperties,
+                               parseObjectUnion,
+                               parseNestedNode)
   }
 
   protected def parseObjectMapProperty(id: String,
