@@ -6,6 +6,7 @@ import amf.core.internal.parser.domain.Annotations
 import amf.aml.internal.metamodel.document.DialectInstanceModel
 import amf.aml.client.scala.model.document.{DialectInstanceFragment, DialectInstanceProcessingData}
 import amf.aml.client.scala.model.domain.{DialectDomainElement, DocumentsModel}
+import amf.aml.internal.parse.instances.DialectInstanceParser.encodedElementDefaultId
 import amf.aml.internal.validate.DialectValidations.DialectError
 import com.github.ghik.silencer.silent
 

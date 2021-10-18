@@ -25,6 +25,8 @@ import amf.aml.client.scala.model.document._
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.aml.internal.parse.instances.ClosedInstanceNode.{checkClosedNode, checkRootNode}
+import amf.aml.internal.parse.instances.DialectInstanceParser.{encodedElementDefaultId, findDeclarationsMap, typesFrom}
+import amf.aml.internal.parse.instances.finder.{IncludeFirstUnionElementFinder, JSONPointerUnionFinder}
 import amf.aml.internal.parse.instances.parser.{LiteralCollectionParser, LiteralValueParser, LiteralValueSetter}
 import amf.aml.internal.validate.DialectValidations.{
   DialectAmbiguousRangeSpecification,
@@ -41,6 +43,40 @@ import scala.collection.mutable
 // TODO: needs further breakup of parts. This components of this class are untestable the current way.
 // TODO: find out why all these methods are protected.
 // TODO:
+
+object DialectInstanceParser {
+  def typesFrom(mapping: NodeMapping): Seq[String] = {
+    Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).flatten
+  }
+
+  def encodedElementDefaultId(dialectInstance: EncodesModel)(implicit ctx: DialectInstanceContext): String =
+    if (Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false))
+      dialectInstance.location().getOrElse(dialectInstance.id)
+    else
+      dialectInstance.id + "#/encodes"
+
+  @scala.annotation.tailrec
+  def findDeclarationsMap(paths: List[String], map: YMap)(implicit ctx: DialectInstanceContext): Option[YMap] = {
+    paths match {
+      case Nil => Some(map)
+      case head :: tail =>
+        map.key(head) match {
+          case Some(m) if m.value.tagType == YType.Map =>
+            if (tail.nonEmpty) findDeclarationsMap(tail, m.value.as[YMap])
+            else m.value.toOption[YMap]
+          case Some(o) =>
+            ctx.eh
+              .violation(DialectError,
+                         "",
+                         s"Invalid node type for declarations path ${o.value.tagType.toString()}",
+                         o.location)
+            None
+          case _ => None
+        }
+    }
+  }
+}
+
 class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectInstanceContext)
     extends AnnotationsParser
     with DeclarationKeyCollector
@@ -87,27 +123,6 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
     dialectInstance
   }
 
-  @scala.annotation.tailrec
-  private def findDeclarationsMap(paths: List[String], map: YMap): Option[YMap] = {
-    paths match {
-      case Nil => Some(map)
-      case head :: tail =>
-        map.key(head) match {
-          case Some(m) if m.value.tagType == YType.Map =>
-            if (tail.nonEmpty) findDeclarationsMap(tail, m.value.as[YMap])
-            else m.value.toOption[YMap]
-          case Some(o) =>
-            ctx.eh
-              .violation(DialectError,
-                         "",
-                         s"Invalid node type for declarations path ${o.value.tagType.toString()}",
-                         o.location)
-            None
-          case _ => None
-        }
-    }
-  }
-
   protected def parseDeclarations(documentType: String): Unit = {
     val declarationsNodeMappings = if (documentType == "root") {
       ctx.rootDeclarationsNodeMappings
@@ -146,12 +161,6 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       }
     }
   }
-
-  protected def encodedElementDefaultId(dialectInstance: EncodesModel): String =
-    if (Option(ctx.dialect.documents()).flatMap(_.selfEncoded().option()).getOrElse(false))
-      dialectInstance.location().getOrElse(dialectInstance.id)
-    else
-      dialectInstance.id + "#/encodes"
 
   protected def parseEncoded(dialectInstance: EncodesModel): DialectDomainElement = {
     val result = for {
@@ -273,10 +282,6 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
       case _ => // ignore
     }
     result
-  }
-
-  private def typesFrom(mapping: NodeMapping): Seq[String] = {
-    Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).flatten
   }
 
   private def emptyElement(defaultId: String,
@@ -980,59 +985,13 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
   }
 
   protected def resolveLinkUnion(ast: YNode, allPossibleMappings: Seq[NodeMapping], id: String): DialectDomainElement = {
-    val refTuple = ctx.link(ast) match {
-      case Left(key) =>
-        (key,
-         allPossibleMappings
-           .map(mapping => ctx.declarations.findDialectDomainElement(key, mapping, SearchScope.Fragments))
-           .collectFirst { case Some(x) => x })
-      case _ =>
-        val text = ast.as[YScalar].text
-        (text,
-         allPossibleMappings
-           .map(mapping => ctx.declarations.findDialectDomainElement(text, mapping, SearchScope.Named))
-           .collectFirst { case Some(x) => x })
-    }
-    refTuple match {
-      case (text: String, Some(s)) =>
-        val linkedNode = s
-          .link(text, Annotations(ast.value))
-          .asInstanceOf[DialectDomainElement]
-          .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
-        linkedNode
-      case (text: String, _) =>
-        val linkedNode = DialectDomainElement(map).withId(id)
-        linkedNode.unresolved(text, Nil, Some(map.location))
-        linkedNode
-    }
+    IncludeFirstUnionElementFinder.find(ast, allPossibleMappings, id, map)
   }
 
   protected def resolveJSONPointerUnion(map: YMap,
                                         allPossibleMappings: Seq[NodeMapping],
                                         id: String): DialectDomainElement = {
-    val entry   = map.key("$ref").get
-    val pointer = entry.value.as[String]
-    val fullPointer = if (pointer.startsWith("#")) {
-      root.location + pointer
-    } else {
-      pointer
-    }
-    ctx.findJsonPointer(fullPointer) map { node =>
-      if (allPossibleMappings.exists(_.id == node.definedBy.id)) {
-        node
-          .link(pointer, Annotations(map))
-          .asInstanceOf[DialectDomainElement]
-          .withId(id)
-      } else {
-        val linkedNode = DialectDomainElement(map).withId(id)
-        linkedNode.unresolved(fullPointer, Nil, Some(map.location))
-        linkedNode
-      }
-    } getOrElse {
-      val linkedNode = DialectDomainElement(map).withId(id)
-      linkedNode.unresolved(fullPointer, Nil, Some(map.location))
-      linkedNode
-    }
+    JSONPointerUnionFinder.find(map, allPossibleMappings, id, map)
   }
 
   protected def resolveLinkProperty(propertyEntry: YMapEntry,
