@@ -1,6 +1,6 @@
 package amf.aml.internal.validate
 
-import amf.aml.client.scala.model.document.{DialectInstance, DialectInstanceUnit}
+import amf.aml.client.scala.model.document.DialectInstanceUnit
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.core.client.common.{HighPriority, PluginPriority}
 import amf.core.client.scala.model.document.BaseUnit
@@ -28,7 +28,7 @@ class AMLValidationPlugin() extends AMFValidatePlugin {
   }
 
   private def knownDialects(options: ValidationOptions) =
-    options.config.amfConfig.registry.plugins.parsePlugins.collect {
+    options.config.amfConfig.registry.getPluginsRegistry.parsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
     }
 }

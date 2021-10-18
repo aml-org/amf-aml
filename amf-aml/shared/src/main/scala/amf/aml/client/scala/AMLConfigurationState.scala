@@ -36,7 +36,7 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     * Get all instances of SemanticExtensions present in the registered dialects
     * @return a Seq of [[SemanticExtension]]
     */
-  def getExtensions(): immutable.Seq[SemanticExtension] = getDialects().flatMap(_.extensions())
+  def getExtensions(): Seq[SemanticExtension] = SemanticExtensionHelper.getExtensions(configuration)
 
   /**
     * Find all instances of semantic extensions in the registered dialects filtering by the param
@@ -52,8 +52,8 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     * @param uri of the propertyTerm of the semantic extension to search
     * @return a Seq of [[SemanticExtension]]
     */
-  def findSemanticByPropertyTerm(dialect: Dialect, uri: String): Seq[SemanticExtension] =
-    SemanticExtensionHelper.byPropertyTerm(dialect).find(uri)
+  def findSemanticByPropertyTerm(uri: String): Seq[SemanticExtension] =
+    SemanticExtensionHelper.byPropertyTerm(configuration).flatMap(_.find(uri))
 
   /**
     * Find all instances of semantic extensions in the registered dialects filtering by the param
@@ -69,8 +69,8 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     * @param uri of the target field of the semantic extension to search
     * @return a Seq of [[SemanticExtension]]
     */
-  def findSemanticByTarget(dialect: Dialect, uri: String): Seq[SemanticExtension] =
-    SemanticExtensionHelper.byTargetFinder(dialect).find(uri)
+  def findSemanticByTarget(uri: String): Seq[SemanticExtension] =
+    SemanticExtensionHelper.byTargetFinder(configuration).flatMap(_.find(uri))
 
   /**
     * Find all instances of semantic extensions in the registered dialects filtering by the param
@@ -78,7 +78,7 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     * @return a Option of a tuple of [[Dialect]] and [[SemanticExtension]]
     */
   def findSemanticByName(name: String): Option[(Dialect, SemanticExtension)] =
-    getDialects().flatMap(d => findSemanticByName(d, name).map((d, _))).headOption
+    getDialects().flatMap(d => findSemanticByName(name).map((d, _))).headOption
 
   /**
     * Find all instances of semantic extensions in the provided dialect filtering by the param
@@ -86,15 +86,15 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     * @param name of the semantic extension to search
     * @return a Option of [[SemanticExtension]]
     */
-  def findSemanticByName(dialect: Dialect, name: String): Option[SemanticExtension] =
-    SemanticExtensionHelper.byNameFinder(dialect).find(name).headOption
+  def findSemanticByName(name: String): Option[SemanticExtension] =
+    SemanticExtensionHelper.byNameFinder(configuration).find(name).headOption
 
   def findDialectFor(dialectInstance: DialectInstance): Option[Dialect] = {
     getDialects().find(dialect => dialectInstance.definedBy().value() == dialect.id)
   }
 
   private def getDialectsByCondition(filter: (AMLDialectInstanceParsingPlugin) => Boolean): immutable.Seq[Dialect] =
-    configuration.registry.plugins.parsePlugins.collect {
+    configuration.registry.getPluginsRegistry.parsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin if filter(plugin) => plugin.dialect
     }
 

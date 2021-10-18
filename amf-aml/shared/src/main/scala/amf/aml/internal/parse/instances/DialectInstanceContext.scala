@@ -1,13 +1,13 @@
 package amf.aml.internal.parse.instances
 
-import amf.core.client.scala.parse.document.{ParserContext, SyamlBasedParserErrorHandler}
-import amf.core.internal.parser.YMapOps
-import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
 import amf.aml.client.scala.model.domain.{DialectDomainElement, DocumentMapping, NodeMappable, PublicNodeMapping}
 import amf.aml.internal.parse.common.{DeclarationContext, SyntaxErrorReporter}
-import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
+import amf.aml.internal.render.emitters.instances.NodeMappableFinder
+import amf.aml.internal.semantic.SemanticExtensionsFacade
+import amf.core.client.scala.parse.document.{ParserContext, SyamlBasedParserErrorHandler}
+import amf.core.internal.parser.YMapOps
 import org.yaml.model._
 
 import scala.language.existentials
@@ -28,6 +28,8 @@ class DialectInstanceContext(var dialect: Dialect,
   var nestedDialects: Seq[Dialect]                               = Nil
   val libraryDeclarationsNodeMappings: Map[String, NodeMappable] = parseDeclaredNodeMappings("library")
   val rootDeclarationsNodeMappings: Map[String, NodeMappable]    = parseDeclaredNodeMappings("root")
+
+  val extensionsFacade: SemanticExtensionsFacade = SemanticExtensionsFacade(wrapped.config)
 
   def computeRootProps: Set[String] = {
     val declarationProps: Set[String] = Option(dialect.documents()).flatMap(_.declarationsPath().option()) match {
