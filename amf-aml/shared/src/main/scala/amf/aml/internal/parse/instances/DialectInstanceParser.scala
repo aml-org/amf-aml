@@ -96,9 +96,9 @@ object DialectInstanceParser extends NodeMappableHelper {
   }
 }
 
-class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectInstanceContext)
+class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceContext)
     extends DeclarationKeyCollector
-    with JsonPointerResolver
+    with NodeMappableHelper
     with InstanceNodeIdHandling {
 
   val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
@@ -237,7 +237,7 @@ class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectIn
         val nodeMap = ast.as[YMap]
         computeParsingScheme(nodeMap) match {
           case "$ref" =>
-            val ref = resolveJSONPointer(nodeMap, mappable, defaultId)
+            val ref = JsonPointerResolver.resolveJSONPointer(nodeMap, mappable, defaultId, root)
             ref.annotations += JsonPointerRef()
             mappable match {
               case m: NodeMapping => ref.withDefinedBy(m)

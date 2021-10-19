@@ -3,10 +3,12 @@ package amf.aml.internal.parse.instances
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.aml.client.scala.model.document.DialectInstancePatch
 import amf.aml.internal.validate.DialectValidations.DialectError
+import amf.core.internal.unsafe.PlatformSecrets
 import org.yaml.model.YType
 
 class DialectInstancePatchParser(root: Root)(implicit override val ctx: DialectInstanceContext)
-    extends DialectInstanceParser(root) {
+    extends DialectInstanceParser(root)
+    with PlatformSecrets {
 
   def parse(): DialectInstancePatch = {
     val dialectInstance = parseDocument()
