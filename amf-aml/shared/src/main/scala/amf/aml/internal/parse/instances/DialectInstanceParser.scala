@@ -2,21 +2,17 @@ package amf.aml.internal.parse.instances
 
 import amf.aml.client.scala.model.document._
 import amf.aml.client.scala.model.domain._
-import amf.aml.internal.annotations.{FromUnionNodeMapping, JsonPointerRef, RefInclude}
+import amf.aml.internal.annotations.FromUnionNodeMapping
 import amf.aml.internal.metamodel.document.DialectInstanceModel
 import amf.aml.internal.metamodel.domain.DialectDomainElementModel
-import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
-import amf.aml.internal.parse.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
-import amf.aml.internal.parse.instances.ClosedInstanceNode.checkNode
+import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.aml.internal.parse.instances.DialectInstanceParser._
-import amf.aml.internal.parse.instances.finder.{IncludeFirstUnionElementFinder, JSONPointerUnionFinder}
 import amf.aml.internal.parse.instances.parser._
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.document.EncodesModel
-import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.parse.document.SyamlParsedDocument
-import amf.core.internal.annotations.SourceAST
-import amf.core.internal.parser.domain.{Annotations, SearchScope}
+import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
 import amf.core.internal.utils._
 import com.github.ghik.silencer.silent
@@ -161,11 +157,11 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
             entry.value.as[YMap].entries.foreach { declarationEntry =>
               val declarationName = declarationEntry.key.as[YScalar].text
               val id              = pathSegment(declarationsId, List(declarationName))
-              val node = parseNode(declarationsId,
-                                   id,
-                                   declarationEntry.value,
-                                   nodeMapping,
-                                   givenAnnotations = Some(Annotations(declarationEntry)))
+              val node = InstanceNodeParser(root).parse(declarationsId,
+                                                        id,
+                                                        declarationEntry.value,
+                                                        nodeMapping,
+                                                        givenAnnotations = Some(Annotations(declarationEntry)))
 
               // lookup by ref name
               node.set(DialectDomainElementModel.DeclarationName,
@@ -192,13 +188,13 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
             if (documents.keyProperty().value()) {
               Some(ctx.dialect.name().value())
             } else None
-          parseNode(path,
-                    encodedElementDefaultId(dialectInstance),
-                    map,
-                    nodeMapping,
-                    rootNode = true,
-                    givenAnnotations = None,
-                    additionalKey = additionalKey)
+          InstanceNodeParser(root).parse(path,
+                                         encodedElementDefaultId(dialectInstance),
+                                         map,
+                                         nodeMapping,
+                                         rootNode = true,
+                                         givenAnnotations = None,
+                                         additionalKey = additionalKey)
         case _ =>
           emptyElementWithViolation(s"Could not find node mapping for: ${mapping.encoded().value()}")
       }
@@ -212,147 +208,5 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
     val empty = DialectDomainElement(map).withId(root.location)
     ctx.eh.violation(DialectError, empty.id, msg, map.location)
     empty
-  }
-
-  private def checkNodeForAdditionalKeys(id: String,
-                                         nodetype: String,
-                                         entries: Map[YNode, YNode],
-                                         mapping: NodeMapping,
-                                         ast: YPart,
-                                         rootNode: Boolean,
-                                         additionalKey: Option[String]): Unit = {
-    checkNode(id, nodetype, entries, mapping, ast, rootNode, additionalKey)
-  }
-
-  protected def parseNode(path: String,
-                          defaultId: String,
-                          ast: YNode,
-                          mappable: NodeMappable,
-                          additionalProperties: Map[String, Any] = Map(),
-                          rootNode: Boolean = false,
-                          givenAnnotations: Option[Annotations],
-                          additionalKey: Option[String] = None): DialectDomainElement = {
-    val result: DialectDomainElement = ast.tagType match {
-      case YType.Map =>
-        val nodeMap = ast.as[YMap]
-        computeParsingScheme(nodeMap) match {
-          case "$ref" =>
-            val ref = JsonPointerResolver.resolveJSONPointer(nodeMap, mappable, defaultId, root)
-            ref.annotations += JsonPointerRef()
-            mappable match {
-              case m: NodeMapping => ref.withDefinedBy(m)
-              case _              => // ignore
-            }
-            ref
-          case "$include" =>
-            val link = resolveLink(ast, mappable, defaultId, givenAnnotations)
-            link.annotations += RefInclude()
-            link
-          case _ =>
-            mappable match {
-              case mapping: NodeMapping =>
-                val node: DialectDomainElement =
-                  DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast))).withDefinedBy(mapping)
-                val finalId =
-                  generateNodeId(node, nodeMap, Seq(defaultId), defaultId, mapping, additionalProperties, rootNode)
-                node.withId(finalId)
-                parseAnnotations(nodeMap, node, ctx.declarations)
-                mapping.propertiesMapping().foreach { propertyMapping =>
-                  val propertyName = propertyMapping.name().value()
-                  nodeMap.key(propertyName) match {
-                    case Some(entry) =>
-                      val nestedId =
-                        if (Option(ctx.dialect.documents())
-                              .flatMap(_.selfEncoded().option())
-                              .getOrElse(false) && rootNode)
-                          defaultId + "#/"
-                        else defaultId
-                      parseProperty(nestedId, entry, propertyMapping, node)
-                    case None => // ignore
-                  }
-                }
-                checkNodeForAdditionalKeys(finalId, mapping.id, nodeMap.map, mapping, nodeMap, rootNode, additionalKey)
-                node
-
-              case unionMapping: UnionNodeMapping =>
-                parseObjectUnion(defaultId, Seq(path), ast, unionMapping, additionalProperties)
-            }
-
-        }
-
-      case YType.Str     => resolveLink(ast, mappable, defaultId, givenAnnotations)
-      case YType.Include => resolveLink(ast, mappable, defaultId, givenAnnotations)
-      case YType.Null    => emptyElement(defaultId, ast, mappable, givenAnnotations)
-      case _ =>
-        ctx.eh.violation(DialectError, defaultId, "Cannot parse AST node for node in dialect instance", ast.location)
-        DialectDomainElement().withId(defaultId)
-    }
-    // if we are parsing a patch document we mark the node as abstract
-
-    if (ctx.isPatch) result.withAbstract(true)
-    mappable match {
-      case mapping: NodeMapping =>
-        result
-          .withDefinedBy(mapping)
-          .withInstanceTypes(typesFrom(mapping))
-      case _ => // ignore
-    }
-    result
-  }
-
-  protected def parseProperty(id: String,
-                              propertyEntry: YMapEntry,
-                              property: PropertyLikeMapping[_],
-                              node: DialectDomainElement): Unit = {
-    new ElementPropertyParser(root, map, parseNestedNode).parse(id, propertyEntry, property, node)
-  }
-
-  protected def parseObjectUnion[T <: DomainElement](
-      defaultId: String,
-      path: Seq[String],
-      ast: YNode,
-      unionMapping: NodeWithDiscriminator[_],
-      additionalProperties: Map[String, Any] = Map()): DialectDomainElement = {
-
-    ObjectUnionParser.parse(defaultId, path, ast, unionMapping, additionalProperties, root, map, parseProperty)
-  }
-
-  protected def parseNestedNode(path: String,
-                                id: String,
-                                entry: YNode,
-                                mapping: NodeMappable,
-                                additionalProperties: Map[String, Any] = Map()): DialectDomainElement =
-    parseNode(path, id, entry, mapping, additionalProperties, givenAnnotations = None)
-
-  protected def resolveLink(ast: YNode,
-                            mapping: NodeMappable,
-                            id: String,
-                            givenAnnotations: Option[Annotations]): DialectDomainElement = {
-    val refTuple = ctx.link(ast) match {
-      case Left(key) =>
-        (key, ctx.declarations.findDialectDomainElement(key, mapping, SearchScope.Fragments))
-      case _ =>
-        val text = ast.as[YScalar].text
-        (text, ctx.declarations.findDialectDomainElement(text, mapping, SearchScope.Named))
-    }
-    refTuple match {
-      case (text: String, Some(s)) =>
-        val linkedNode = s
-          .link(text, givenAnnotations.getOrElse(Annotations(ast)))
-          .asInstanceOf[DialectDomainElement]
-          .withInstanceTypes(Seq(mapping.id))
-          .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
-        linkedNode
-      case (text: String, _) =>
-        val loc = givenAnnotations.flatMap(_.find(classOf[SourceAST])).map(_.ast) match {
-          case Some(n) => n.location
-          case _       => ast.location
-        }
-        val linkedNode = DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast)))
-          .withId(id)
-          .withInstanceTypes(Seq(mapping.id))
-        linkedNode.unresolved(text, Nil, Some(loc))
-        linkedNode
-    }
   }
 }
