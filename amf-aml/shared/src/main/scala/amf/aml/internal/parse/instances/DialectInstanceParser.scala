@@ -5,6 +5,7 @@ import amf.aml.client.scala.model.domain._
 import amf.aml.internal.annotations.{FromUnionNodeMapping, JsonPointerRef, RefInclude}
 import amf.aml.internal.metamodel.document.DialectInstanceModel
 import amf.aml.internal.metamodel.domain.DialectDomainElementModel
+import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
 import amf.aml.internal.parse.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.aml.internal.parse.instances.ClosedInstanceNode.checkNode
 import amf.aml.internal.parse.instances.DialectInstanceParser._
@@ -96,8 +97,7 @@ object DialectInstanceParser extends NodeMappableHelper {
 }
 
 class DialectInstanceParser(val root: Root)(implicit override val ctx: DialectInstanceContext)
-    extends AnnotationsParser
-    with DeclarationKeyCollector
+    extends DeclarationKeyCollector
     with JsonPointerResolver
     with InstanceNodeIdHandling {
 
