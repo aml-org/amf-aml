@@ -209,7 +209,8 @@ object ObjectUnionParser {
     }
   }
 
-  private def discriminatorAnnotation(discriminatorName: Option[String], nodeMap: YMap): Option[Annotation] = {
+  private def discriminatorAnnotation(discriminatorName: Option[String], nodeMap: YMap)(
+      implicit ctx: DialectInstanceContext): Option[Annotation] = {
     discriminatorName.flatMap { propertyName =>
       nodeMap.entries.find(_.key.as[YScalar].text == propertyName).map { entry =>
         DiscriminatorField(propertyName, entry.value.as[YScalar].text)

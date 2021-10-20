@@ -74,7 +74,8 @@ object ObjectMapPropertyParser extends NodeMappableHelper {
     }
   }
 
-  protected def findHashProperties(propertyMapping: PropertyMapping, propertyEntry: YMapEntry): Option[(String, Any)] = {
+  protected def findHashProperties(propertyMapping: PropertyMapping, propertyEntry: YMapEntry)(
+      implicit ctx: DialectInstanceContext): Option[(String, Any)] = {
     propertyMapping.mapTermKeyProperty().option() match {
       case Some(propId) => Some((propId, propertyEntry.key.as[YScalar].text))
       case None         => None
