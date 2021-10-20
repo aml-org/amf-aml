@@ -41,7 +41,6 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
 
   /**
     * Find all instances of semantic extensions in the provided dialect filtering by the param
-    * @param dialect where the semantic extension will be searched
     * @param uri of the propertyTerm of the semantic extension to search
     * @return a Seq of [[SemanticExtension]]
     */
@@ -50,7 +49,6 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
 
   /**
     * Find all instances of semantic extensions in the provided dialect filtering by the param
-    * @param dialect where the semantic extension will be searched
     * @param uri of the target field of the semantic extension to search
     * @return a Seq of [[SemanticExtension]]
     */
@@ -59,7 +57,6 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
 
   /**
     * Find all instances of semantic extensions in the provided dialect filtering by the param
-    * @param dialect where the semantic extension will be searched
     * @param name of the semantic extension to search
     * @return a Option of [[SemanticExtension]]
     */
