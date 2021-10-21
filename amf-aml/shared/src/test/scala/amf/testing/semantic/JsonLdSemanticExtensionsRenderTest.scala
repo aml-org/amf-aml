@@ -21,6 +21,12 @@ class JsonLdSemanticExtensionsRenderTest extends FunSuiteCycleTests with AsyncBe
     }
   }
 
+  test("Render flattened semantic extensions with scalar range to JSON-LD") {
+    getConfig("dialect-scalar-extensions.yaml").flatMap { config =>
+      cycle("instance-scalar.yaml", golden = "instance-scalar.jsonld", syntax = Some(JsonLd), amlConfig = config)
+    }
+  }
+
   /** Method for transforming parsed unit. Override if necessary. */
   override def transform(unit: BaseUnit, config: CycleConfig, amlConfig: AMLConfiguration): BaseUnit = {
     amlConfig.baseUnitClient().transform(unit).baseUnit

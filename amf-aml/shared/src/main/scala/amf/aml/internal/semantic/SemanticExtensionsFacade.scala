@@ -101,9 +101,10 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
       implicit ctx: DialectInstanceContext) = {
     // TODO: improve, shouldn't have to create fake root node
     val fakeRoot        = Root(SyamlParsedDocument(YDocument(YMap.empty)), "", "", Seq.empty, UnspecifiedReference, "{}")
-    val nodeParser      = InstanceNodeParser(fakeRoot)
     val instanceElement = DialectDomainElement().withId("someId")
-    SimpleObjectPropertyParser.parse(extensionId, ast, mapping, instanceElement, Map.empty, nodeParser.parse)
+    val nodeParser      = InstanceNodeParser(fakeRoot)
+    val propertyParser  = new ElementPropertyParser(fakeRoot, YMap.empty, nodeParser.parse)
+    propertyParser.parse(extensionId, ast, mapping, instanceElement)
     instanceElement
   }
 
