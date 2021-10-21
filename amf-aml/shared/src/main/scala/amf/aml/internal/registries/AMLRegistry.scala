@@ -67,6 +67,11 @@ private[amf] class AMLRegistry(plugins: PluginsRegistry,
   override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLRegistry =
     copy(entitiesRegistry = entitiesRegistry.withAnnotations(annotations))
 
+  def withExtensions(dialect: Dialect): AMLRegistry = {
+    copy(extensions = this.extensions ++ dialect.extensionIndex)
+      .copy(entitiesRegistry = this.entitiesRegistry.withExtensions(dialect.extensionModels))
+  }
+
   def withExtensions(extensions: Map[String, Dialect]): AMLRegistry =
     copy(extensions = this.extensions ++ extensions)
 

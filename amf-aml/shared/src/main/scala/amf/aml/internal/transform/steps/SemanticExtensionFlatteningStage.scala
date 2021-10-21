@@ -35,6 +35,11 @@ object SemanticExtensionFlatteningStage extends TransformationStep {
         elem.set(fieldEntry.field, fieldEntry.element)
       }
     }
+    val notSemanticExtensions = element.customDomainProperties.filterNot(isSemanticExtension)
+    if (notSemanticExtensions.isEmpty) {
+      element.fields.removeField(CustomDomainProperties)
+      element
+    } else element.withCustomDomainProperties(notSemanticExtensions)
   }
 
   private def compactableFields(extension: DomainExtension) = {

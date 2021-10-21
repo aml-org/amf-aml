@@ -66,7 +66,7 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
     val key   = ast.key.as[String]
     val value = ast.value
 
-    val instanceElement: DialectDomainElement = parseAnnotation(mapping, ast)
+    val instanceElement: DialectDomainElement = parseAnnotation(mapping, ast, extensionId)
 
     val property                   = createCustomDomainProperty(instanceElement, key, value)
     val extension: DomainExtension = createDomainExtension(key, value, extensionId, property)
@@ -97,12 +97,13 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
     CustomDomainProperty(Annotations(value)).withId(instanceElement.id).withName(key, Annotations())
   }
 
-  private def parseAnnotation(mapping: AnnotationMapping, ast: YMapEntry)(implicit ctx: DialectInstanceContext) = {
+  private def parseAnnotation(mapping: AnnotationMapping, ast: YMapEntry, extensionId: String)(
+      implicit ctx: DialectInstanceContext) = {
     // TODO: improve, shouldn't have to create fake root node
     val fakeRoot        = Root(SyamlParsedDocument(YDocument(YMap.empty)), "", "", Seq.empty, UnspecifiedReference, "{}")
     val nodeParser      = InstanceNodeParser(fakeRoot)
     val instanceElement = DialectDomainElement().withId("someId")
-    SimpleObjectPropertyParser.parse("default", ast, mapping, instanceElement, Map.empty, nodeParser.parse)
+    SimpleObjectPropertyParser.parse(extensionId, ast, mapping, instanceElement, Map.empty, nodeParser.parse)
     instanceElement
   }
 
