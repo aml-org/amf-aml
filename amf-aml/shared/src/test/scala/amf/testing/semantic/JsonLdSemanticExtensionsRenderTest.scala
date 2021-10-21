@@ -6,16 +6,19 @@ import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.JsonLd
 import amf.testing.common.cycling.FunSuiteCycleTests
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.mulesoft.common.test.AsyncBeforeAndAfterEach
+import org.scalatest.{AsyncFunSuite, BeforeAndAfterEachTestData, Matchers}
 
-class JsonLdSemanticExtensionsRenderTest extends FunSuiteCycleTests {
+import scala.concurrent.Future
+
+class JsonLdSemanticExtensionsRenderTest extends FunSuiteCycleTests with AsyncBeforeAndAfterEach {
+
   override def basePath: String = "amf-aml/shared/src/test/resources/vocabularies2/semantic/"
 
   test("Render flattened semantic extensions to JSON-LD") {
-    cycle("instance.yaml",
-          golden = "instance.jsonld",
-          syntax = Some(JsonLd),
-          amlConfig = getConfig("dialect-extensions.yaml"))
+    getConfig("dialect-extensions.yaml").flatMap { config =>
+      cycle("instance.yaml", golden = "instance.jsonld", syntax = Some(JsonLd), amlConfig = config)
+    }
   }
 
   /** Method for transforming parsed unit. Override if necessary. */
@@ -23,13 +26,11 @@ class JsonLdSemanticExtensionsRenderTest extends FunSuiteCycleTests {
     amlConfig.baseUnitClient().transform(unit).baseUnit
   }
 
-  private def getConfig(dialect: String): AMLConfiguration = {
-    val config = AMLConfiguration
+  private def getConfig(dialect: String): Future[AMLConfiguration] = {
+    AMLConfiguration
       .predefined()
       .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
       .withDialect(s"file://$basePath" + dialect)
-
-    await { config }
   }
 }
