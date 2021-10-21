@@ -3,6 +3,7 @@ package amf.aml.client.scala.model.domain
 import amf.core.client.scala.model.{AnyField, BoolField, DoubleField, IntField, StrField}
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.aml.internal.metamodel.domain.PropertyLikeMappingModel
+import amf.core.internal.metamodel.Field
 
 trait PropertyLikeMapping[M <: PropertyLikeMappingModel]
     extends DomainElement
@@ -44,6 +45,10 @@ trait PropertyLikeMapping[M <: PropertyLikeMappingModel]
   def withSorted(sorted: Boolean): this.type                 = set(meta.Sorted, sorted)
   def withUnique(unique: Boolean): this.type                 = set(meta.Unique, unique)
   def withExternallyLinkable(linkable: Boolean): this.type   = set(meta.ExternallyLinkable, linkable)
+
+  def classification(): PropertyClassification = PropertyLikeMappingClassifier.classification(this)
+
+  def toField(): Field = PropertyLikeMappingToFieldConverter.convert(this)
 
   def meta: M
 }

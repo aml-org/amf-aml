@@ -1,0 +1,45 @@
+#%Dialect 1.0
+dialect: Github Repository
+version: 1.0
+
+external:
+  aml: http://a.ml/vocab#
+
+documents:
+  root:
+    encodes: Repository
+
+annotationMappings:
+  PreferenceMapping:
+    domain: aml.Organization
+    propertyTerm: aml.preference
+    range:  Preference
+
+nodeMappings:
+  Organization:
+    classTerm: aml.Organization
+    mapping:
+      name:
+        range: string
+        mandatory: true
+
+  Repository:
+    classTerm: aml.Repository
+    mapping:
+      name:
+        range: string
+        mandatory: true
+      org:
+        propertyTerm: aml.org
+        range: Organization
+        mandatory: true
+
+  Preference:
+    mapping:
+      preferred:
+        propertyTerm: aml.preferred
+        range: boolean
+        mandatory: true
+
+extensions:
+  preference: PreferenceMapping

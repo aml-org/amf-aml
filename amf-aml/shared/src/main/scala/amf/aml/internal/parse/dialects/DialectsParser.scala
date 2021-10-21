@@ -6,6 +6,7 @@ import amf.aml.internal.metamodel.document.DialectModel
 import amf.aml.internal.metamodel.document.DialectModel.Externals
 import amf.aml.internal.metamodel.domain.UnionNodeMappingModel.ObjectRange
 import amf.aml.internal.metamodel.domain.{MergePolicies, NodeMappingModel, PropertyMappingModel, UnionNodeMappingModel}
+import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
 import amf.aml.internal.parse.common.{AnnotationsParser, DeclarationKey, DeclarationKeyCollector}
 import amf.aml.internal.parse.dialects.DialectAstOps._
 import amf.aml.internal.parse.dialects.property.like.{AnnotationMappingParser, PropertyLikeMappingParser}
@@ -35,8 +36,7 @@ import scala.collection.{immutable, mutable}
 
 class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     extends BaseSpecParser
-    with DeclarationKeyCollector
-    with AnnotationsParser {
+    with DeclarationKeyCollector {
 
   type NodeMappable = NodeMappable.AnyNodeMappable
   val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]

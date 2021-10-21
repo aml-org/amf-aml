@@ -111,14 +111,14 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
                                   node: YNode): DialectDomainElement =
     withObjectField(property, value, Left(node))
 
-  private[amf] def withObjectField(property: PropertyMapping,
+  private[amf] def withObjectField(property: PropertyLikeMapping[_],
                                    value: DialectDomainElement,
                                    node: Either[YNode, YMapEntry]): DialectDomainElement = {
     val (annotations, _) = getAnnotationsOf(node)
     if (value.isUnresolved) {
       value.toFutureRef {
         case resolvedDialectDomainElement: DialectDomainElement =>
-          val f = property.toField
+          val f = property.toField()
           set(
               f,
               resolveUnreferencedLink(value.refName,
@@ -132,22 +132,22 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
           throw new Exception(s"Cannot resolve reference with not dialect domain element value ${resolved.id}")
       }
     } else {
-      val f = property.toField
+      val f = property.toField()
       set(f, value, annotations)
     }
 
     this
   }
 
-  private[amf] def withObjectCollectionProperty(property: PropertyMapping,
+  private[amf] def withObjectCollectionProperty(property: PropertyLikeMapping[_],
                                                 value: Seq[DialectDomainElement],
                                                 node: YNode): DialectDomainElement =
     withObjectCollectionProperty(property, value, Left(node))
 
-  private[amf] def withObjectCollectionProperty(property: PropertyMapping,
+  private[amf] def withObjectCollectionProperty(property: PropertyLikeMapping[_],
                                                 value: Seq[DialectDomainElement],
                                                 node: Either[YNode, YMapEntry]): DialectDomainElement = {
-    val f                               = property.toField
+    val f                               = property.toField()
     val (annotations, annotationsValue) = getAnnotationsOf(node)
     value match {
       case Nil if !fields.exists(f) => set(f, AmfArray(Nil, annotationsValue), annotations)
@@ -169,19 +169,21 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
-  private[amf] def setProperty(property: PropertyMapping, value: Any, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(value, Annotations(entry.value)), Annotations(entry))
+  private[amf] def setProperty(property: PropertyLikeMapping[_], value: Any, entry: YMapEntry): DialectDomainElement = {
+    set(property.toField(), AmfScalar(value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
   // TODO: This should receive annotations instead of an entry. Unrelated concepts in the same method (how annotations are formed and how to store the value and where)
-  private[amf] def setProperty(property: PropertyMapping, entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfScalar(entry.value, Annotations(entry.value)), Annotations(entry))
+  private[amf] def setProperty(property: PropertyLikeMapping[_], entry: YMapEntry): DialectDomainElement = {
+    set(property.toField(), AmfScalar(entry.value, Annotations(entry.value)), Annotations(entry))
     this
   }
 
-  private[amf] def setProperty(property: PropertyMapping, value: Seq[Any], entry: YMapEntry): DialectDomainElement = {
-    set(property.toField, AmfArray(value.map(AmfScalar(_)), Annotations(entry.value)), Annotations(entry))
+  private[amf] def setProperty(property: PropertyLikeMapping[_],
+                               value: Seq[Any],
+                               entry: YMapEntry): DialectDomainElement = {
+    set(property.toField(), AmfArray(value.map(AmfScalar(_)), Annotations(entry.value)), Annotations(entry))
     this
   }
 

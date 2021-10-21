@@ -1,0 +1,8 @@
+#%Github Repository 1.0
+name: MyRepo
+(maintainer):
+  users:
+    - username: tomsfernandez
+      contributor: true
+    - username: looseale
+      contributor: false

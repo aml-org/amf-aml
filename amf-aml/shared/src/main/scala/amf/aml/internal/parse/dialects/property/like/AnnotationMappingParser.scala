@@ -5,12 +5,12 @@ import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import amf.aml.internal.metamodel.domain.AnnotationMappingModel
 import amf.aml.client.scala.model.domain.AnnotationMapping
 import amf.aml.internal.parse.common.AnnotationsParser
+import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
 import amf.aml.internal.parse.dialects.DialectContext
 import amf.aml.internal.validate.DialectValidations.DialectError
 import org.yaml.model.{YMap, YMapEntry, YType}
 
-case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit val ctx: DialectContext)
-    extends AnnotationsParser {
+case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit val ctx: DialectContext) {
   def parse(): Option[AnnotationMapping] = {
     val name = entry.key.toString
     entry.value.tagType match {
