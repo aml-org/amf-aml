@@ -5,7 +5,13 @@ import amf.aml.client.scala.model.domain.{AnnotationMapping, DialectDomainElemen
 import amf.aml.internal.parse.DynamicExtensionParser
 import amf.aml.internal.parse.common.AnnotationsParser.AnnotationInfo
 import amf.aml.internal.parse.instances.DialectInstanceContext
-import amf.aml.internal.parse.instances.parser.{ElementPropertyParser, InstanceNodeParser}
+import amf.aml.internal.parse.instances.parser.{
+  ElementPropertyParser,
+  InstanceNodeParser,
+  ObjectPropertyParser,
+  ObjectUnionParser,
+  SimpleObjectPropertyParser
+}
 import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.semantic.SemanticExtensionHelper.{findAnnotationMapping, findSemanticExtension}
@@ -46,6 +52,8 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
     findSemanticExtension(dialect, extensionName).map { extension =>
       findAnnotationMapping(dialect, extension)
     }
+
+  def findExtensionDialect(name: String): Option[Dialect] = findExtensionDialect.runCached(name)
 
   def parseSemanticExtension(dialect: Dialect,
                              mapping: AnnotationMapping,
@@ -93,13 +101,10 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
     // TODO: improve, shouldn't have to create fake root node
     val fakeRoot        = Root(SyamlParsedDocument(YDocument(YMap.empty)), "", "", Seq.empty, UnspecifiedReference, "{}")
     val nodeParser      = InstanceNodeParser(fakeRoot)
-    val propertyParser  = new ElementPropertyParser(fakeRoot, YMap.empty, nodeParser.parse)
     val instanceElement = DialectDomainElement().withId("someId")
-    propertyParser.parse("someId", ast, mapping, instanceElement)
+    SimpleObjectPropertyParser.parse("default", ast, mapping, instanceElement, Map.empty, nodeParser.parse)
     instanceElement
   }
-
-  def findExtensionDialect(name: String): Option[Dialect] = findExtensionDialect.runCached(name)
 
   private val findExtensionDialect = CachedFunction.fromMonadic { name =>
     registry.findExtension(name)

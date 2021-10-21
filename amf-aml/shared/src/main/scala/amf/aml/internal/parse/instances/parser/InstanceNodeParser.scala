@@ -148,7 +148,7 @@ case class InstanceNodeParser(root: Root)(implicit ctx: DialectInstanceContext) 
 
   private def parseProperty(id: String,
                             propertyEntry: YMapEntry,
-                            property: PropertyLikeMapping[_],
+                            property: PropertyMapping,
                             node: DialectDomainElement)(implicit ctx: DialectInstanceContext): Unit = {
     new ElementPropertyParser(root, map, parse).parse(id, propertyEntry, property, node)
   }

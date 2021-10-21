@@ -11,7 +11,7 @@ import org.yaml.model.{YMapEntry, YNode, YScalar, YType}
 object LiteralValueSetter {
   def setLiteralValue(parsed: Option[_],
                       entry: YMapEntry,
-                      property: PropertyLikeMapping[_],
+                      property: PropertyMapping,
                       node: DialectDomainElement): Unit = {
     parsed match {
       case Some(b: Boolean)          => node.setProperty(property, b, entry)
@@ -28,7 +28,7 @@ object LiteralValueSetter {
 
 object LiteralValueParser {
 
-  def parseLiteralValue(value: YNode, property: PropertyLikeMapping[_], node: DialectDomainElement)(
+  def parseLiteralValue(value: YNode, property: PropertyMapping, node: DialectDomainElement)(
       implicit ctx: DialectInstanceContext): Option[_] = {
 
     value.tagType match {

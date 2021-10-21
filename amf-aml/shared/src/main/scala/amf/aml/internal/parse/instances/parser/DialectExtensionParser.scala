@@ -12,7 +12,7 @@ object DialectExtensionParser {
 
   def parse(id: String,
             propertyEntry: YMapEntry,
-            property: PropertyLikeMapping[_],
+            property: PropertyMapping,
             node: DialectDomainElement,
             root: Root,
             nodeParser: NodeParser)(implicit ctx: DialectInstanceContext): Unit = {

@@ -25,7 +25,7 @@ object ObjectCollectionPropertyParser extends NodeMappableHelper {
 
   def parse[T <: DomainElement](id: String,
                                 propertyEntry: YMapEntry,
-                                property: PropertyLikeMapping[_],
+                                property: PropertyMapping,
                                 node: DialectDomainElement,
                                 additionalProperties: Map[String, Any] = Map(),
                                 unionParser: ObjectUnionParser[T],
