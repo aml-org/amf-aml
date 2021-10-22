@@ -170,8 +170,9 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLConfiguration =
     super._withAnnotations(annotations)
 
-  private[amf] def withExtensions(dialect: Dialect): AMLConfiguration =
-    copy(registry = registry.withExtensions(dialect.extensions().map(e => e.extensionName().value() -> dialect).toMap))
+  private[amf] def withExtensions(dialect: Dialect): AMLConfiguration = {
+    copy(registry = registry.withExtensions(dialect))
+  }
 
   /**
     * Set [[BaseExecutionEnvironment]]

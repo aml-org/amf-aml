@@ -1,0 +1,27 @@
+#%Dialect 1.0
+dialect: Github Repository
+version: 1.0
+
+external:
+  aml: http://a.ml/vocab#
+
+documents:
+  root:
+    encodes: Repository
+
+annotationMappings:
+  MaintainerAnnotationMapping:
+    domain: aml.Repository
+    propertyTerm: aml.maintainer
+    range:  string
+
+nodeMappings:
+  Repository:
+    classTerm: aml.Repository
+    mapping:
+      name:
+        range: string
+        mandatory: true
+
+extensions:
+  maintainer: MaintainerAnnotationMapping

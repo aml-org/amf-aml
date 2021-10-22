@@ -11,7 +11,7 @@ object ExternalLinkPropertyParser {
 
   def parse(id: String,
             propertyEntry: YMapEntry,
-            property: PropertyMapping,
+            property: PropertyLikeMapping[_],
             node: DialectDomainElement,
             root: Root,
             propertyParser: PropertyParser)(implicit ctx: DialectInstanceContext): Unit = {

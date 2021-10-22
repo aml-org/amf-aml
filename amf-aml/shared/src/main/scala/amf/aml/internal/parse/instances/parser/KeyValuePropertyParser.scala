@@ -14,7 +14,7 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YSequence}
 
 object KeyValuePropertyParser {
 
-  def parse(id: String, propertyEntry: YMapEntry, property: PropertyMapping, node: DialectDomainElement)(
+  def parse(id: String, propertyEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(
       implicit ctx: DialectInstanceContext): Unit = {
     val (propertyKeyMapping, propertyValueMapping) = computeMapKeyAndValueFrom(property)
     if (propertyKeyMapping.isDefined && propertyValueMapping.isDefined) {

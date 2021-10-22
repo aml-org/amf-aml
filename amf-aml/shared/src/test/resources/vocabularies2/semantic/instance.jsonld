@@ -1,0 +1,98 @@
+{
+  "@graph": [
+    {
+      "@id": "/BaseUnitProcessingData",
+      "@type": [
+        "doc:DialectInstanceProcessingData"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "./dialect-extensions.yaml"
+        }
+      ],
+      "doc:transformed": true,
+      "doc:sourceSpec": "Github Repository 1.0"
+    },
+    {
+      "@id": "#/encodes",
+      "@type": [
+        "aml:Repository",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/dialect-extensions.yaml#/declarations/Repository",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:name": "MyRepo",
+      "aml:maintainer": {
+        "@id": "#/encodes/maintainer/(maintainer)"
+      }
+    },
+    {
+      "@id": "#/encodes/maintainer/(maintainer)",
+      "@type": [
+        "aml:MaintainerGroup",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/dialect-extensions.yaml#/declarations/MaintainerGroup",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:users": [
+        {
+          "@id": "#/encodes/maintainer/(maintainer)/users/0"
+        },
+        {
+          "@id": "#/encodes/maintainer/(maintainer)/users/1"
+        }
+      ]
+    },
+    {
+      "@id": "#/encodes/maintainer/(maintainer)/users/0",
+      "@type": [
+        "aml:Maintainer",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/dialect-extensions.yaml#/declarations/Maintainer",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "aml:username": "tomsfernandez",
+      "aml:contributor": true
+    },
+    {
+      "@id": "#/encodes/maintainer/(maintainer)/users/1",
+      "@type": [
+        "aml:Maintainer",
+        "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/dialect-extensions.yaml#/declarations/Maintainer",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "aml:username": "looseale",
+      "aml:contributor": false
+    },
+    {
+      "@id": "",
+      "@type": [
+        "meta:DialectInstance",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "./dialect-extensions.yaml"
+        }
+      ],
+      "doc:encodes": {
+        "@id": "#/encodes"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/instance.yaml",
+    "aml": "http://a.ml/vocab#",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}

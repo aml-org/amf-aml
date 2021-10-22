@@ -40,6 +40,14 @@ class SemanticTransformationStageTest extends AsyncFunSuite with Matchers {
     }
   }
 
+  test("Applied scalar extensions") {
+    assertModel("dialect-scalar-extensions.yaml", "instance-scalar.yaml") { instance =>
+      val encodes            = instance.encodes
+      val maintainerInstance = encodes.graph.scalarByProperty("http://a.ml/vocab#maintainer").head
+      maintainerInstance shouldEqual "Some value"
+    }
+  }
+
   def assertModel(dialect: String, instance: String)(assertion: DialectInstance => Assertion): Future[Assertion] = {
     val config = AMLConfiguration
       .predefined()
