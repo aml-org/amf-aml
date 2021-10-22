@@ -31,6 +31,16 @@ class JsonLdSemanticExtensionsParserTest extends AsyncFunSuite with Matchers {
     }
   }
 
+  test("Parse JSON-LD with scalar semantic extensions in it") {
+    getConfig("dialect-scalar-extensions.yaml").flatMap { config =>
+      config.baseUnitClient().parse(s"${basePath}instance-scalar.jsonld").map { result =>
+        val extendedElement = result.baseUnit.asInstanceOf[DialectInstance].encodes
+        val maintainerNode  = extendedElement.graph.scalarByProperty("http://a.ml/vocab#maintainer").head
+        maintainerNode shouldEqual "Some value"
+      }
+    }
+  }
+
   private def getConfig(dialect: String): Future[AMLConfiguration] = {
     AMLConfiguration
       .predefined()
