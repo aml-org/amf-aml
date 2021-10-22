@@ -9,13 +9,20 @@ import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.render.plugin.AMLDialectInstanceRenderingPlugin
 import amf.aml.internal.transform.pipelines.DialectTransformationPipeline
+import amf.aml.internal.utils.DialectRegister.SEMANTIC_EXTENSIONS_PROFILE
 import amf.aml.internal.validate.AMFDialectValidations
+import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
 import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.plugins.AMFPlugin
+import amf.core.internal.validation.core.{SeverityMapping, ValidationProfile}
+
+object DialectRegister {
+  val SEMANTIC_EXTENSIONS_PROFILE = ProfileName("SEMANTIC_EXTENSIONS_PROFILE")
+}
 
 private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfiguration) {
 
@@ -36,7 +43,19 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
       .withValidationProfile(profile)
       .withEntities(domainModels)
       .withExtensions(dialect)
-    newConfig
+    updateSemanticExtensionsProfile(newConfig, profile)
+  }
+
+  private def updateSemanticExtensionsProfile(config: AMLConfiguration,
+                                              dialectProfile: ValidationProfile): AMLConfiguration = {
+    val validationsToPropagate = dialectProfile.validations.diff(AMFDialectValidations.staticValidations)
+
+    val profile = config.getRegistry.getConstraintsRules.getOrElse(
+        SEMANTIC_EXTENSIONS_PROFILE,
+        ValidationProfile(SEMANTIC_EXTENSIONS_PROFILE, None, Seq.empty, SeverityMapping()))
+    val nextProfile = profile.copy(severities = profile.severities.concat(dialectProfile.severities),
+                                   validations = profile.validations ++ validationsToPropagate)
+    config.withValidationProfile(nextProfile)
   }
 
   private lazy val plugins: List[AMFPlugin[_]] = {

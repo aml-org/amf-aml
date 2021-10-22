@@ -1,0 +1,21 @@
+#%Dialect 1.0
+dialect: Repository scalar extensions
+version: 1.0
+
+external:
+  aml: http://a.ml/vocab#
+
+documents:
+  root:
+    declares: {}
+
+annotationMappings:
+  RankingAnnotationMapping:
+    domain: aml.Repository
+    propertyTerm: aml.ranking
+    range: integer
+    maximum: 5
+    minimum: 1
+
+extensions:
+  ranking: RankingAnnotationMapping
