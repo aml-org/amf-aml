@@ -21,6 +21,6 @@ class AMLValidationPlugin() extends AMFValidatePlugin {
 
   override def validate(unit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
-    new AMLValidator().validate(unit, options)
+    AMLValidator.validate(unit, options)
   }
 }
