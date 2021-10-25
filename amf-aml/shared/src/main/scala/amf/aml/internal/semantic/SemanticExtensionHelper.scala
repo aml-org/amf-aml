@@ -17,17 +17,18 @@ object SemanticExtensionHelper {
   def findAnnotationMapping(dialect: Dialect, extension: SemanticExtension): AnnotationMapping =
     dialect.annotationMappings().filter(am => am.id == extension.extensionMappingDefinition().value()).head
 
-  def byPropertyTerm(config: AMLConfiguration): Seq[SemanticExtensionFinder] =
-    getExtensionsRegistry(config)
-      .map(e => SemanticExtensionFinder(byNameFinder(config).find(e._1), new PropertyTermFieldExtractor(e._2)))
-      .toSeq
+  def byPropertyTerm(config: AMLConfiguration): SemanticExtensionFinder = {
+    val extension = getExtensionsRegistry(config)
+    SemanticExtensionFinder(extension, PropertyTermFieldExtractor(extension.values.toSeq))
+  }
 
-  def byTargetFinder(config: AMLConfiguration): Seq[SemanticExtensionFinder] =
-    getExtensionsRegistry(config)
-      .map(e => SemanticExtensionFinder(byNameFinder(config).find(e._1), new TargetFieldExtractor(e._2)))
-      .toSeq
+  def byTargetFinder(config: AMLConfiguration): SemanticExtensionFinder = {
+    val extension = getExtensionsRegistry(config)
+    SemanticExtensionFinder(extension, TargetFieldExtractor(extension.values.toSeq))
+  }
 
-  def byNameFinder(config: AMLConfiguration): SemanticExtensionFinder =
-    SemanticExtensionFinder(getExtensions(config), NameFieldExtractor)
-
+  def byNameFinder(config: AMLConfiguration): SemanticExtensionFinder = {
+    val extension = getExtensionsRegistry(config)
+    SemanticExtensionFinder(extension, NameFieldExtractor)
+  }
 }
