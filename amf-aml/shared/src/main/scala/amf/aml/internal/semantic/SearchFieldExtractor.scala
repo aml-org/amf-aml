@@ -11,10 +11,21 @@ object NameFieldExtractor extends SearchFieldExtractor {
   override def extractSearchField(extension: SemanticExtension): Option[String] = extension.extensionName().option()
 }
 
+object TargetFieldExtractor {
+  def apply(dialect: Dialect) = new TargetFieldExtractor(annotationMappingIndex(dialect))
+
+  def apply(dialects: Seq[Dialect]): TargetFieldExtractor = {
+    val mappingIndex = dialects.flatMap(_.annotationMappings()).map(x => x.id -> x).toMap
+    new TargetFieldExtractor(mappingIndex)
+  }
+
+  private def annotationMappingIndex(dialect: Dialect): Map[String, AnnotationMapping] = {
+    dialect.annotationMappings().map(mapping => mapping.id -> mapping).toMap
+  }
+}
+
 case class TargetFieldExtractor(private val annotationMappings: Map[String, AnnotationMapping])
     extends SearchFieldExtractor {
-
-  def this(dialect: Dialect) = this(dialect.annotationMappings().map(mapping => mapping.id -> mapping).toMap)
 
   override def extractSearchField(extension: SemanticExtension): Option[String] =
     extension
@@ -24,10 +35,21 @@ case class TargetFieldExtractor(private val annotationMappings: Map[String, Anno
       .flatMap(mapping => mapping.domain().option())
 }
 
+object PropertyTermFieldExtractor {
+  def apply(dialect: Dialect) = new PropertyTermFieldExtractor(annotationMappingIndex(dialect))
+
+  def apply(dialects: Seq[Dialect]) = {
+    val mappingIndex = dialects.flatMap(_.annotationMappings()).map(x => x.id -> x).toMap
+    new PropertyTermFieldExtractor(mappingIndex)
+  }
+
+  private def annotationMappingIndex(dialect: Dialect): Map[String, AnnotationMapping] = {
+    dialect.annotationMappings().map(mapping => mapping.id -> mapping).toMap
+  }
+}
+
 case class PropertyTermFieldExtractor(private val annotationMappings: Map[String, AnnotationMapping])
     extends SearchFieldExtractor {
-
-  def this(dialect: Dialect) = this(dialect.annotationMappings().map(mapping => mapping.id -> mapping).toMap)
 
   override def extractSearchField(extension: SemanticExtension): Option[String] =
     extension

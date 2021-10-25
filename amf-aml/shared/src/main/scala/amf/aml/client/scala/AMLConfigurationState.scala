@@ -44,24 +44,24 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     * @param uri of the propertyTerm of the semantic extension to search
     * @return a Seq of [[SemanticExtension]]
     */
-  def findSemanticByPropertyTerm(uri: String): Seq[SemanticExtension] =
-    SemanticExtensionHelper.byPropertyTerm(configuration).flatMap(_.find(uri))
+  def findSemanticByPropertyTerm(uri: String): Option[(SemanticExtension, Dialect)] =
+    SemanticExtensionHelper.byPropertyTerm(configuration).find(uri)
 
   /**
     * Find all instances of semantic extensions in the provided dialect filtering by the param
     * @param uri of the target field of the semantic extension to search
     * @return a Seq of [[SemanticExtension]]
     */
-  def findSemanticByTarget(uri: String): Seq[SemanticExtension] =
-    SemanticExtensionHelper.byTargetFinder(configuration).flatMap(_.find(uri))
+  def findSemanticByTarget(uri: String): Option[(SemanticExtension, Dialect)] =
+    SemanticExtensionHelper.byTargetFinder(configuration).find(uri)
 
   /**
     * Find all instances of semantic extensions in the provided dialect filtering by the param
     * @param name of the semantic extension to search
     * @return a Option of [[SemanticExtension]]
     */
-  def findSemanticByName(name: String): Option[SemanticExtension] =
-    SemanticExtensionHelper.byNameFinder(configuration).find(name).headOption
+  def findSemanticByName(name: String): Option[(SemanticExtension, Dialect)] =
+    SemanticExtensionHelper.byNameFinder(configuration).find(name)
 
   def findDialectFor(dialectInstance: DialectInstance): Option[Dialect] = {
     @silent("deprecated") // Silent can only be used in assignment expressions
@@ -75,7 +75,7 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     a
   }
 
-  private def getDialectsByCondition(filter: (AMLDialectInstanceParsingPlugin) => Boolean): immutable.Seq[Dialect] =
+  private def getDialectsByCondition(filter: AMLDialectInstanceParsingPlugin => Boolean): immutable.Seq[Dialect] =
     configuration.registry.getPluginsRegistry.parsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin if filter(plugin) => plugin.dialect
     }
