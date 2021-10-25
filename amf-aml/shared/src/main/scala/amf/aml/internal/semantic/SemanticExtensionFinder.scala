@@ -3,7 +3,7 @@ package amf.aml.internal.semantic
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.SemanticExtension
 import org.mulesoft.common.core.CachedFunction
-import org.mulesoft.common.functional.MonadInstances.optionMonad
+import org.mulesoft.common.functional.MonadInstances.seqMonad
 
 object SemanticExtensionFinder {
   def apply(extensions: Map[String, Dialect], extractor: SearchFieldExtractor): SemanticExtensionFinder = {
@@ -13,7 +13,7 @@ object SemanticExtensionFinder {
 
 class SemanticExtensionFinder(val extensions: Map[String, Dialect], val extractor: SearchFieldExtractor) {
 
-  private val cache: CachedFunction[String, (SemanticExtension, Dialect), Option] = CachedFunction.fromMonadic {
+  private val cache: CachedFunction[String, (SemanticExtension, Dialect), Seq] = CachedFunction.fromMonadic {
     uriOrString =>
       extensions
         .map {
@@ -21,8 +21,9 @@ class SemanticExtensionFinder(val extensions: Map[String, Dialect], val extracto
             (dialect.extensions().find(p => p.extensionName().value() == extensionName), dialect)
         }
         .collect { case (Some(extension), dialect) => (extension, dialect) }
-        .find { case (extension, _) => extractor.extractSearchField(extension).contains(uriOrString) }
+        .filter { case (extension, _) => extractor.extractSearchField(extension).contains(uriOrString) }
+        .toSeq
   }
 
-  def find(uri: String): Option[(SemanticExtension, Dialect)] = cache.runCached(uri)
+  def find(uri: String): Seq[(SemanticExtension, Dialect)] = cache.runCached(uri)
 }

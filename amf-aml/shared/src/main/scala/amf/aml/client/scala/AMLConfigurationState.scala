@@ -45,14 +45,14 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     * @return a Seq of [[SemanticExtension]]
     */
   def findSemanticByPropertyTerm(uri: String): Option[(SemanticExtension, Dialect)] =
-    SemanticExtensionHelper.byPropertyTerm(configuration).find(uri)
+    SemanticExtensionHelper.byPropertyTerm(configuration).find(uri).headOption
 
   /**
     * Find all instances of semantic extensions in the provided dialect filtering by the param
     * @param uri of the target field of the semantic extension to search
     * @return a Seq of [[SemanticExtension]]
     */
-  def findSemanticByTarget(uri: String): Option[(SemanticExtension, Dialect)] =
+  def findSemanticByTarget(uri: String): Seq[(SemanticExtension, Dialect)] =
     SemanticExtensionHelper.byTargetFinder(configuration).find(uri)
 
   /**
@@ -61,7 +61,7 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     * @return a Option of [[SemanticExtension]]
     */
   def findSemanticByName(name: String): Option[(SemanticExtension, Dialect)] =
-    SemanticExtensionHelper.byNameFinder(configuration).find(name)
+    SemanticExtensionHelper.byNameFinder(configuration).find(name).headOption
 
   def findDialectFor(dialectInstance: DialectInstance): Option[Dialect] = {
     @silent("deprecated") // Silent can only be used in assignment expressions
