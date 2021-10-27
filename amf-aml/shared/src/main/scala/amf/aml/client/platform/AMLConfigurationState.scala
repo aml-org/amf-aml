@@ -40,31 +40,4 @@ class AMLConfigurationState private[amf] (private val _internal: InternalAMLConf
     * @return a list of [[SemanticExtension]]
     */
   def getExtensions(): ClientList[SemanticExtension] = _internal.getExtensions().asClient
-
-  /**
-    * Find all instances of semantic extensions in the provided dialect filtering by the param
-    * @param dialect where the semantic extension will be searched
-    * @param uri of the propertyTerm of the semantic extension to search
-    * @return a list of [[SemanticExtension]]
-    */
-  def findSemanticByPropertyTerm(dialect: Dialect, uri: String): ClientList[SemanticExtension] =
-    _internal.findSemanticByPropertyTerm(dialect, uri).asClient
-
-  /**
-    * Find all instances of semantic extensions in the provided dialect filtering by the param
-    * @param dialect where the semantic extension will be searched
-    * @param uri of the target field of the semantic extension to search
-    * @return a list of [[SemanticExtension]]
-    */
-  def findSemanticByTarget(dialect: Dialect, uri: String): ClientList[SemanticExtension] =
-    _internal.findSemanticByTarget(dialect, uri).asClient
-
-  /**
-    * Find all instances of semantic extensions in the provided dialect filtering by the param
-    * @param dialect where the semantic extension will be searched
-    * @param name of the semantic extension to search
-    * @return an optional [[SemanticExtension]]
-    */
-  def findSemanticByName(dialect: Dialect, name: String): ClientOption[SemanticExtension] =
-    _internal.findSemanticByName(dialect, name).asClient
 }

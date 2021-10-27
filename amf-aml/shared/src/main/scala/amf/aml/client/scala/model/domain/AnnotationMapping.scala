@@ -1,10 +1,12 @@
 package amf.aml.client.scala.model.domain
 
-import amf.core.client.scala.model.StrField
-import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.model.{DataType, StrField}
+import amf.core.client.scala.model.domain.{AmfObject, DomainElement, Linkable}
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.aml.internal.metamodel.domain.AnnotationMappingModel
+import amf.aml.internal.metamodel.domain.{AnnotationMappingModel, DialectDomainElementModel}
 import amf.aml.internal.metamodel.domain.AnnotationMappingModel._
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.{Field, Type}
 import org.yaml.model.YMap
 
 class AnnotationMapping(override val fields: Fields, override val annotations: Annotations)
@@ -16,6 +18,10 @@ class AnnotationMapping(override val fields: Fields, override val annotations: A
 
   def domain(): StrField                               = fields.field(Domain)
   def withDomain(domainIri: String): AnnotationMapping = set(Domain, domainIri)
+
+  def appliesTo(element: AmfObject): Boolean = appliesTo(element.meta.`type`.map(_.iri()))
+
+  def appliesTo(types: Seq[String]): Boolean = domain().option().exists(domain => types.contains(domain))
 
   override def meta: AnnotationMappingModel.type = AnnotationMappingModel
 

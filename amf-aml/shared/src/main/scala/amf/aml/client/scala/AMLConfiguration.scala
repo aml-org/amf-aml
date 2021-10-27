@@ -10,6 +10,7 @@ import amf.aml.internal.parse.plugin.{
   AMLDialectParsingPlugin,
   AMLVocabularyParsingPlugin
 }
+import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.render.plugin.{
   AMLDialectInstanceRenderingPlugin,
@@ -31,9 +32,12 @@ import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner}
+import amf.core.internal.annotations.serializable.CoreSerializableAnnotations
+import amf.core.internal.entities.CoreEntities
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.core.internal.plugins.AMFPlugin
+import amf.core.internal.plugins.document.graph.entities.DataNodeEntities
 import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
@@ -49,25 +53,25 @@ import scala.concurrent.{ExecutionContext, Future}
   *
   * @param resolvers [[AMFResolvers]]
   * @param errorHandlerProvider [[ErrorHandlerProvider]]
-  * @param registry [[AMFRegistry]]
+  * @param registry [[AMLRegistry]]
   * @param listeners a Set of [[AMFEventListener]]
   * @param options [[AMFOptions]]
   */
 class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
                                      override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
-                                     override private[amf] val registry: AMFRegistry,
+                                     override private[amf] val registry: AMLRegistry,
                                      override private[amf] val listeners: Set[AMFEventListener],
                                      override private[amf] val options: AMFOptions)
     extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
-  override protected def copy(resolvers: AMFResolvers = resolvers,
-                              errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
-                              registry: AMFRegistry = registry,
-                              listeners: Set[AMFEventListener] = listeners,
-                              options: AMFOptions = options): AMLConfiguration =
-    new AMLConfiguration(resolvers, errorHandlerProvider, registry, listeners, options)
+  override protected[amf] def copy(resolvers: AMFResolvers = resolvers,
+                                   errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
+                                   registry: AMFRegistry = registry,
+                                   listeners: Set[AMFEventListener] = listeners,
+                                   options: AMFOptions = options): AMLConfiguration =
+    new AMLConfiguration(resolvers, errorHandlerProvider, registry.asInstanceOf[AMLRegistry], listeners, options)
 
   /** Contains common AMF graph operations associated to documents */
   override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
@@ -163,11 +167,12 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   private[amf] override def withEntities(entities: Map[String, ModelDefaultBuilder]): AMLConfiguration =
     super._withEntities(entities)
 
-  private[amf] def withExtensions(extensions: Seq[SemanticExtension]): AMLConfiguration =
-    copy(registry = registry.withExtensions(extensions))
-
   private[amf] override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLConfiguration =
     super._withAnnotations(annotations)
+
+  private[amf] def withExtensions(dialect: Dialect): AMLConfiguration = {
+    copy(registry = registry.withExtensions(dialect))
+  }
 
   /**
     * Set [[BaseExecutionEnvironment]]
@@ -240,7 +245,7 @@ object AMLConfiguration extends PlatformSecrets {
     new AMLConfiguration(
         predefinedGraphConfiguration.resolvers,
         predefinedGraphConfiguration.errorHandlerProvider,
-        predefinedGraphConfiguration.registry
+        AMLRegistry(predefinedGraphConfiguration.getRegistry)
           .withEntities(AMLEntities.entities)
           .withAnnotations(AMLSerializableAnnotations.annotations),
         predefinedGraphConfiguration.listeners,
@@ -253,7 +258,7 @@ object AMLConfiguration extends PlatformSecrets {
     new AMLConfiguration(
         AMFResolvers.predefined(),
         DefaultErrorHandlerProvider,
-        AMFRegistry.empty,
+        AMLRegistry.empty,
         Set.empty,
         AMFOptions.default()
     )

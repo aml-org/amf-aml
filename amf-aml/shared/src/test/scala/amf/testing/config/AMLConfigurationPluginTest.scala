@@ -56,9 +56,9 @@ class AMLConfigurationPluginTest extends AsyncFunSuite with Matchers {
   private def assertDialectAndPluginAmount(expectedAmount: Int, config: AMLConfiguration) = {
     val dialects = config.configurationState().getDialects()
     dialects.size shouldBe 1
-    config.registry.plugins.parsePlugins
+    config.registry.getPluginsRegistry.parsePlugins
       .filter(_.isInstanceOf[AMLDialectInstanceParsingPlugin]) should have length 1
-    config.registry.plugins.renderPlugins
+    config.registry.getPluginsRegistry.renderPlugins
       .filter(_.isInstanceOf[AMLDialectInstanceRenderingPlugin]) should have length 1
   }
 

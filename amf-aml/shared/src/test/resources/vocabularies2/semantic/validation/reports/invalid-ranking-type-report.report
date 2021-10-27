@@ -1,0 +1,14 @@
+ModelId: file://amf-aml/shared/src/test/resources/vocabularies2/semantic/validation/instances/invalid-ranking-type-instance.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/aml#inconsistent-property-range-value
+  Message: Cannot find expected range for property http://a.ml/vocab#ranking (RankingAnnotationMapping). Found 'http://www.w3.org/2001/XMLSchema#boolean', expected 'http://www.w3.org/2001/XMLSchema#integer'
+  Severity: Violation
+  Target: someId
+  Property: http://a.ml/vocab#ranking
+  Range: [(3,11)-(3,15)]
+  Location: file://amf-aml/shared/src/test/resources/vocabularies2/semantic/validation/instances/invalid-ranking-type-instance.yaml

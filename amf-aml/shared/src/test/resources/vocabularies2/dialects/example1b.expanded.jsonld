@@ -592,7 +592,7 @@
                   "@value": "(schema-org.za)"
                 }
               ],
-              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeB/property/zaschema-org/za/scalar_1",
+              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeB/property/zaschema-org/AnnotationInfo((schema-org.za),schema-org.za,Some(schema-org),za,(schema-org.za): 101).suffix/scalar_1",
               "@type": [
                 "http://a.ml/vocabularies/data#Scalar",
                 "http://a.ml/vocabularies/data#Node",
@@ -615,16 +615,16 @@
               ],
               "http://a.ml/vocabularies/document-source-maps#sources": [
                 {
-                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeB/property/zaschema-org/za/scalar_1/source-map",
+                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeB/property/zaschema-org/AnnotationInfo((schema-org.za),schema-org.za,Some(schema-org),za,(schema-org.za): 101).suffix/scalar_1/source-map",
                   "@type": [
                     "http://a.ml/vocabularies/document-source-maps#SourceMap"
                   ],
                   "http://a.ml/vocabularies/document-source-maps#lexical": [
                     {
-                      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeB/property/zaschema-org/za/scalar_1/source-map/lexical/element_0",
+                      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeB/property/zaschema-org/AnnotationInfo((schema-org.za),schema-org.za,Some(schema-org),za,(schema-org.za): 101).suffix/scalar_1/source-map/lexical/element_0",
                       "http://a.ml/vocabularies/document-source-maps#element": [
                         {
-                          "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeB/property/zaschema-org/za/scalar_1"
+                          "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeB/property/zaschema-org/AnnotationInfo((schema-org.za),schema-org.za,Some(schema-org),za,(schema-org.za): 101).suffix/scalar_1"
                         }
                       ],
                       "http://a.ml/vocabularies/document-source-maps#value": [
@@ -699,7 +699,7 @@
               "@value": "(schema-org.nodeB)"
             }
           ],
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeBschema-org/nodeB/scalar_1",
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeBschema-org/AnnotationInfo((schema-org.nodeB),schema-org.nodeB,Some(schema-org),nodeB,(schema-org.nodeB): true).suffix/scalar_1",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -722,16 +722,16 @@
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeBschema-org/nodeB/scalar_1/source-map",
+              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeBschema-org/AnnotationInfo((schema-org.nodeB),schema-org.nodeB,Some(schema-org),nodeB,(schema-org.nodeB): true).suffix/scalar_1/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeBschema-org/nodeB/scalar_1/source-map/lexical/element_0",
+                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeBschema-org/AnnotationInfo((schema-org.nodeB),schema-org.nodeB,Some(schema-org),nodeB,(schema-org.nodeB): true).suffix/scalar_1/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeBschema-org/nodeB/scalar_1"
+                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeBschema-org/AnnotationInfo((schema-org.nodeB),schema-org.nodeB,Some(schema-org),nodeB,(schema-org.nodeB): true).suffix/scalar_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
@@ -841,10 +841,10 @@
             "http://a.ml/vocabularies/vocab2#a": {
               "http://a.ml/vocabularies/core#extensionName": [
                 {
-                  "@value": "(vocab2.a)"
+                  "@value": "vocab2.a"
                 }
               ],
-              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeA/property/a/vocab2/a/scalar_1",
+              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeA/property/a/vocab2/AnnotationInfo((vocab2.a),vocab2.a,Some(vocab2),a,(vocab2.a): true).suffix/scalar_1",
               "@type": [
                 "http://a.ml/vocabularies/data#Scalar",
                 "http://a.ml/vocabularies/data#Node",
@@ -867,16 +867,16 @@
               ],
               "http://a.ml/vocabularies/document-source-maps#sources": [
                 {
-                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeA/property/a/vocab2/a/scalar_1/source-map",
+                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeA/property/a/vocab2/AnnotationInfo((vocab2.a),vocab2.a,Some(vocab2),a,(vocab2.a): true).suffix/scalar_1/source-map",
                   "@type": [
                     "http://a.ml/vocabularies/document-source-maps#SourceMap"
                   ],
                   "http://a.ml/vocabularies/document-source-maps#lexical": [
                     {
-                      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeA/property/a/vocab2/a/scalar_1/source-map/lexical/element_0",
+                      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeA/property/a/vocab2/AnnotationInfo((vocab2.a),vocab2.a,Some(vocab2),a,(vocab2.a): true).suffix/scalar_1/source-map/lexical/element_0",
                       "http://a.ml/vocabularies/document-source-maps#element": [
                         {
-                          "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeA/property/a/vocab2/a/scalar_1"
+                          "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/example1b.yaml#/declarations/nodeA/property/a/vocab2/AnnotationInfo((vocab2.a),vocab2.a,Some(vocab2),a,(vocab2.a): true).suffix/scalar_1"
                         }
                       ],
                       "http://a.ml/vocabularies/document-source-maps#value": [
