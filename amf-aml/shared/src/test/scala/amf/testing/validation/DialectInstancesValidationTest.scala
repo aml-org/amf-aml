@@ -222,4 +222,8 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
              "self-encoded-dialect-instance.yaml",
              Some("self-encoded-dialect-instance.report.json"))
   }
+
+  test("JSON $dialect ref to registered dialect") {
+    validate("dialect-ref.yaml", "dialect-ref-correct.json")
+  }
 }

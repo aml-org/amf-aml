@@ -1,0 +1,18 @@
+#%Dialect 1.0
+
+dialect: Test
+version: 1.0
+
+nodeMappings:
+  Person:
+    mapping:
+      name:
+        range: string
+        mandatory: true
+      age:
+        range: integer
+        mandatory: true
+
+documents:
+  root:
+    encodes: Person
