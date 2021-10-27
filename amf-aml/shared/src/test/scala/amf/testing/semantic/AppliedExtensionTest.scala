@@ -4,6 +4,8 @@ import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.aml.client.scala.model.document.DialectInstance
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.parser.domain.Value
 import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -15,7 +17,11 @@ class AppliedExtensionTest extends AsyncFunSuite with Matchers {
 
   test("Applied extensions") {
     assertModel("dialect-extensions.yaml", "instance.yaml") { instance =>
-      val extension          = instance.encodes.customDomainProperties.head
+      val extension = instance.encodes.customDomainProperties.head
+
+      extension.name.value() shouldBe "maintainer"
+      assertAnnotations(extension.fields.getValueAsOption("http://a.ml/vocab#maintainer").get)
+
       val maintainerInstance = extension.graph.getObjectByProperty("http://a.ml/vocab#maintainer").head
       val users              = maintainerInstance.graph.getObjectByProperty("http://a.ml/vocabularies/data#users")
       users.foreach { user =>
@@ -42,10 +48,18 @@ class AppliedExtensionTest extends AsyncFunSuite with Matchers {
 
   test("Applied scalar extensions") {
     assertModel("dialect-scalar-extensions.yaml", "instance-scalar.yaml") { instance =>
-      val extension          = instance.encodes.customDomainProperties.head
+      val extension = instance.encodes.customDomainProperties.head
+      extension.name.value() shouldBe "maintainer"
+      assertAnnotations(extension.fields.getValueAsOption("http://a.ml/vocab#maintainer").get)
+
       val maintainerInstance = extension.graph.scalarByProperty("http://a.ml/vocab#maintainer").head
       maintainerInstance shouldEqual "Some value"
     }
+  }
+
+  private def assertAnnotations(value: Value): Unit = {
+    value.annotations.nonEmpty shouldBe true
+    value.annotations.find(classOf[LexicalInformation]) shouldNot be(empty)
   }
 
   def assertModel(dialect: String, instance: String)(assertion: DialectInstance => Assertion): Future[Assertion] = {

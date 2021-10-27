@@ -2,23 +2,13 @@ package amf.aml.internal.semantic
 
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.{AnnotationMapping, DialectDomainElement}
-import amf.aml.internal.parse.DynamicExtensionParser
-import amf.aml.internal.parse.common.AnnotationsParser.AnnotationInfo
 import amf.aml.internal.parse.instances.DialectInstanceContext
-import amf.aml.internal.parse.instances.parser.{
-  ElementPropertyParser,
-  InstanceNodeParser,
-  ObjectPropertyParser,
-  ObjectUnionParser,
-  SimpleObjectPropertyParser
-}
+import amf.aml.internal.parse.instances.parser.{ElementPropertyParser, InstanceNodeParser}
 import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.semantic.SemanticExtensionHelper.{findAnnotationMapping, findSemanticExtension}
-import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.parse.document.{ParserContext, SyamlParsedDocument, UnspecifiedReference}
-import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{ParseConfiguration, Root}
 import org.mulesoft.common.core.CachedFunction
@@ -36,7 +26,7 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
       findSemanticExtension(dialect, extensionName)
         .map(findAnnotationMapping(dialect, _)) match {
         case Some(mapping) if mapping.appliesTo(parentTypes) =>
-          Some(parseSemanticExtension(dialect, mapping, ast, ctx, extensionId))
+          Some(parseSemanticExtension(dialect, mapping, ast, ctx, extensionId, extensionName))
         case _ => None // TODO: throw warning?
       }
     }
@@ -59,17 +49,17 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
                              mapping: AnnotationMapping,
                              ast: YMapEntry,
                              ctx: ParserContext,
-                             extensionId: String): DomainExtension = {
+                             extensionId: String,
+                             extensionName: String): DomainExtension = {
 
     implicit val instanceCtx: DialectInstanceContext = instanceContext(dialect, ctx)
 
-    val key   = ast.key.as[String]
     val value = ast.value
 
     val instanceElement: DialectDomainElement = parseAnnotation(mapping, ast, extensionId)
 
-    val property                   = createCustomDomainProperty(instanceElement, key, value)
-    val extension: DomainExtension = createDomainExtension(key, value, extensionId, property)
+    val property                   = createCustomDomainProperty(instanceElement, extensionName, value)
+    val extension: DomainExtension = createDomainExtension(extensionName, value, extensionId, property)
     mergeAnnotationIntoExtension(instanceElement, extension)
   }
 
@@ -80,7 +70,7 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
   private def mergeAnnotationIntoExtension(instanceElement: DialectDomainElement, extension: DomainExtension) = {
     val fields = instanceElement.fields.fields()
     fields.foldLeft(extension) { (acc, curr) =>
-      acc.set(curr.field, curr.element)
+      acc.set(curr.field, curr.element, curr.value.annotations)
     }
   }
 
