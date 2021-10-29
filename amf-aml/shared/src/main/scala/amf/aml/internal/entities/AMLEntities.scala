@@ -4,7 +4,11 @@ import amf.core.internal.entities.Entities
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.aml.internal.metamodel.document._
 import amf.aml.internal.metamodel.domain._
-import amf.core.internal.metamodel.document.BaseUnitProcessingDataModel
+import amf.core.internal.metamodel.document.{
+  BaseUnitProcessingDataModel,
+  BaseUnitSourceInformationModel,
+  LocationInformationModel
+}
 
 private[amf] object AMLEntities extends Entities {
 
@@ -31,7 +35,9 @@ private[amf] object AMLEntities extends Entities {
       DialectInstanceProcessingDataModel,
       SemanticExtensionModel,
       AnnotationMappingModel,
-      BaseUnitProcessingDataModel
+      BaseUnitProcessingDataModel,
+      BaseUnitSourceInformationModel,
+      LocationInformationModel
   )
 
 }
