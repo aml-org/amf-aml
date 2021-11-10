@@ -1,0 +1,14 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+documents:
+  root:
+    encodes: SomeNodeMapping
+
+nodeMappings:
+  SomeNodeMapping:
+    mapping:
+      linkProperty:
+        range: any
+#        range: link  <- use this to generate jsonld instance, then validate with range any
