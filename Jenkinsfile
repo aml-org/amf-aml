@@ -40,7 +40,6 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'remod-breaking'
         }
       }
       steps {
