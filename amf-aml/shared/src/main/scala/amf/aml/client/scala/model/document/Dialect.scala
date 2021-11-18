@@ -9,7 +9,7 @@ import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.internal.metamodel.{Obj, Type}
+import amf.core.internal.metamodel.Type
 import amf.core.internal.metamodel.document.DocumentModel.Encodes
 import amf.core.internal.metamodel.document.ModuleModel.{Declares, References}
 import amf.core.internal.parser.domain.{Annotations, Fields}
@@ -95,11 +95,18 @@ case class Dialect(fields: Fields, annotations: Annotations)
   private[amf] def usesHeaderMatching: Boolean = !usesKeyPropertyMatching
   private[amf] def extensionIndex: Map[String, Dialect] =
     extensions().map(e => e.extensionName().value() -> this).toMap
-  private[amf] def extensionModels: Map[String, Type] =
-    extensions().map { semantic =>
-      val annotation = SemanticExtensionHelper.findAnnotationMapping(this, semantic)
-      annotation.nodePropertyMapping().value() -> annotation.toField().`type`
-    }.toMap
+  private[amf] def extensionModels: Map[String, Map[String, Type]] = {
+    extensions()
+      .map { semantic =>
+        val annotation = SemanticExtensionHelper.findAnnotationMapping(this, semantic)
+        annotation.domain().value() -> (annotation.nodePropertyMapping().value() -> annotation.toField().`type`)
+      }
+      .groupBy(x => x._1)
+      .mapValues(values =>
+        values.map { x =>
+          x._2
+        }.toMap)
+  }
 }
 
 object Dialect {
