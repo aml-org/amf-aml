@@ -1,0 +1,8 @@
+#%Github Repository 1.0
+name: MyRepo
+org:
+  name: Github
+  (preference):
+    preferred: true
+(preference):
+  preferred: true

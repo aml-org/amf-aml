@@ -12,6 +12,7 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
 
   val basePath                                   = "file://amf-aml/shared/src/test/resources/vocabularies2/validation"
   val productionPath                             = "file://amf-aml/shared/src/test/resources/vocabularies2/production"
+  val instancesPath                              = "file://amf-aml/shared/src/test/resources/vocabularies2/instances"
   private val reportComparator: ReportComparator = UniquePlatformReportComparator
 
   def validate(dialect: String,
@@ -221,5 +222,13 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
     validate("self-encoded-dialect.yaml",
              "self-encoded-dialect-instance.yaml",
              Some("self-encoded-dialect-instance.report.json"))
+  }
+
+  test("JSON $dialect ref to registered dialect") {
+    validate("dialect-ref.yaml", "dialect-ref-correct.json")
+  }
+
+  test("jsonld instance with link range parsed with dialect that defines any range") {
+    validate("dialect.yaml", "instance.golden.flattened.jsonld", path = s"$instancesPath/link-range")
   }
 }

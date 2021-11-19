@@ -1,7 +1,7 @@
 package amf.aml.internal.transform.pipelines
 
 import amf.core.internal.transform.stages.{CleanReferencesStage, DeclarationsRemovalStage}
-import amf.aml.internal.transform.steps.DialectInstanceReferencesResolutionStage
+import amf.aml.internal.transform.steps.{DialectInstanceReferencesResolutionStage, SemanticExtensionFlatteningStage}
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
 
 class DialectInstanceTransformationPipeline private (override val name: String) extends TransformationPipeline() {
@@ -10,7 +10,8 @@ class DialectInstanceTransformationPipeline private (override val name: String) 
     Seq(
         new DialectInstanceReferencesResolutionStage(),
         new CleanReferencesStage(),
-        new DeclarationsRemovalStage()
+        new DeclarationsRemovalStage(),
+        SemanticExtensionFlatteningStage
     )
 
 }

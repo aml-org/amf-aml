@@ -5,7 +5,7 @@ import amf.core.internal.annotations.{LexicalInformation, SourceLocation}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.AmfStrings
 import amf.aml.internal.metamodel.domain.PropertyMappingModel
-import amf.aml.client.scala.model.domain.PropertyMapping
+import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.validate.DialectValidations._
 import org.yaml.model.{YNode, YPart}
 import amf.core.client.common.position.Range
@@ -66,7 +66,7 @@ trait SyntaxErrorReporter { this: ParserContext =>
   }
 
   def inconsistentPropertyRangeValueViolation(node: String,
-                                              property: PropertyMapping,
+                                              property: PropertyLikeMapping[_],
                                               expected: String,
                                               found: String,
                                               valueNode: YNode): Unit = {

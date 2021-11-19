@@ -25,7 +25,6 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
-          branch 'release/*'
         }
       }
       steps {
@@ -36,24 +35,23 @@ pipeline {
         }
       }
     }
-//    stage('Publish') {
-//      when {
-//        anyOf {
-//          branch 'master'
-//          branch 'develop'
-//          branch 'release/*'
-//        }
-//      }
-//      steps {
-//        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-//          sh '''
-//              echo "about to publish in sbt"
-//              sbt publish
-//              echo "sbt publishing successful"
-//          '''
-//        }
-//      }
-//    }
+    stage('Publish') {
+      when {
+        anyOf {
+          branch 'master'
+          branch 'develop'
+        }
+      }
+      steps {
+        wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
+          sh '''
+              echo "about to publish in sbt"
+              sbt publish
+              echo "sbt publishing successful"
+          '''
+        }
+      }
+    }
     stage('Tag version') {
       when {
         anyOf {

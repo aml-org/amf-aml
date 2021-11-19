@@ -3,23 +3,24 @@ package amf.aml.internal.validate
 import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.transform.pipelines.DialectInstanceTransformationPipeline
-import amf.core.client.scala.config.SkippedValidationPluginEvent
+import amf.aml.internal.utils.DialectRegister
 import amf.core.client.common.validation.{AmfProfile, ProfileName, UnknownProfile}
 import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.config.SkippedValidationPluginEvent
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.transform.TransformationPipelineRunner
-import amf.core.client.scala.validation.{AMFValidationReport, EffectiveValidationsCompute, VendorToProfile}
+import amf.core.client.scala.validation.{AMFValidationReport, EffectiveValidationsCompute}
 import amf.core.internal.plugins.validation.{ValidationOptions, ValidationResult}
 import amf.core.internal.remote.AmlDialectSpec
 import amf.core.internal.validation.core.ValidationProfile
-import amf.core.internal.validation.{EffectiveValidations, ShaclReportAdaptation, ValidationConfiguration}
+import amf.core.internal.validation.{EffectiveValidations, ShaclReportAdaptation}
 import amf.validation.internal.shacl.custom.CustomShaclValidator
 import com.github.ghik.silencer.silent
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AMLValidator() extends ShaclReportAdaptation {
+object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstraints {
 
   def validate(baseUnit: BaseUnit, options: ValidationOptions)(
       implicit executionContext: ExecutionContext): Future[ValidationResult] = {
@@ -32,9 +33,7 @@ class AMLValidator() extends ShaclReportAdaptation {
     val instanceProfile =
       baseUnit.sourceSpec.collect { case AmlDialectSpec(id) => ProfileName(id) }.getOrElse(AmfProfile)
 
-    lazy val validations: EffectiveValidations = EffectiveValidationsCompute
-      .build(instanceProfile, configuration.constraints)
-      .getOrElse(EffectiveValidations())
+    val validations: EffectiveValidations = buildValidations(instanceProfile, configuration.constraints)
 
     baseUnit match {
       case dialectInstance: DialectInstanceUnit =>
@@ -43,9 +42,9 @@ class AMLValidator() extends ShaclReportAdaptation {
         val validationsFromDeps =
           computeValidationProfilesOfDependencies(dialectInstance, knownDialects, configuration.constraints)
         val validator        = new CustomShaclValidator(Map.empty, instanceProfile.messageStyle)
-        val finalValidations = addValidations(validations, validationsFromDeps).effective.values.toSeq
+        val finalValidations = addValidations(validations, validationsFromDeps)
         for {
-          shaclReport <- validator.validate(resolvedModel, finalValidations)
+          shaclReport <- validator.validate(resolvedModel, finalValidations.effective.values.toSeq)
         } yield {
           val report = adaptToAmfReport(baseUnit, instanceProfile, shaclReport, validations)
           ValidationResult(resolvedModel, report)
@@ -57,8 +56,16 @@ class AMLValidator() extends ShaclReportAdaptation {
     }
   }
 
+  private def buildValidations(profile: ProfileName,
+                               constraints: Map[ProfileName, ValidationProfile]): EffectiveValidations = {
+    val instanceValidations = EffectiveValidationsCompute
+      .build(profile, constraints)
+      .getOrElse(EffectiveValidations())
+    withSemanticExtensionsConstraints(instanceValidations, constraints)
+  }
+
   private def collectDialects(amfConfig: => AMFGraphConfiguration) = {
-    amfConfig.registry.plugins.parsePlugins.collect {
+    amfConfig.registry.getPluginsRegistry.parsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
     }
   }

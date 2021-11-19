@@ -10,19 +10,17 @@ import amf.core.internal.unsafe.PlatformSecrets
 /*
  * TODO: should be a class which is passed as parameter to the dialect instance parser. Most of all because of the resolvedPath(String) and basePath(String) methods.
  */
-trait JsonPointerResolver extends NodeMappableHelper with PlatformSecrets with BaseSpecParser {
+object JsonPointerResolver extends NodeMappableHelper with PlatformSecrets {
 
-  val root: Root
-  implicit val ctx: DialectInstanceContext
-
-  protected def resolveJSONPointer(map: YMap, mapping: NodeMappable, id: String): DialectDomainElement = {
+  def resolveJSONPointer(map: YMap, mapping: NodeMappable, id: String, root: Root)(
+      implicit ctx: DialectInstanceContext): DialectDomainElement = {
     val mappingIds = allNodeMappingIds(mapping)
     val entry      = map.key("$ref").get
     val pointer    = entry.value.as[String]
     val fullPointer = if (pointer.startsWith("#")) {
       root.location + pointer
     } else {
-      resolvedPath(pointer)
+      resolvedPath(pointer, root)
     }
 
     ctx.findJsonPointer(fullPointer) map { node =>
@@ -44,7 +42,7 @@ trait JsonPointerResolver extends NodeMappableHelper with PlatformSecrets with B
     }
   }
 
-  protected def resolvedPath(str: String): String = {
+  private def resolvedPath(str: String, root: Root): String = {
     val base = root.location
     val fullPath =
       if (str.startsWith("/")) str
@@ -59,7 +57,7 @@ trait JsonPointerResolver extends NodeMappableHelper with PlatformSecrets with B
     }
   }
 
-  protected def basePath(path: String): String = {
+  private def basePath(path: String): String = {
     val withoutHash = if (path.contains("#")) path.split("#").head else path
     withoutHash.splitAt(withoutHash.lastIndexOf("/"))._1 + "/"
   }

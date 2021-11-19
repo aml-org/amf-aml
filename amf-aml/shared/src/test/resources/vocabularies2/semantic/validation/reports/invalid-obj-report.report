@@ -1,0 +1,14 @@
+ModelId: file://amf-aml/shared/src/test/resources/vocabularies2/semantic/validation/instances/invalid-obj-instance.yaml
+Profile: Github Repository 1.0
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/data#file://amf-aml/shared/src/test/resources/vocabularies2/semantic/validation/object-extensions.yaml#/declarations/Maintainer_username_required_validation
+  Message: Property 'username' is mandatory
+  Severity: Violation
+  Target: file://amf-aml/shared/src/test/resources/vocabularies2/semantic/validation/instances/invalid-obj-instance.yaml#/encodes/maintainer/(maintainer)/users/1
+  Property: http://a.ml/vocab#username
+  Range: [(7,6)-(8,0)]
+  Location: file://amf-aml/shared/src/test/resources/vocabularies2/semantic/validation/instances/invalid-obj-instance.yaml

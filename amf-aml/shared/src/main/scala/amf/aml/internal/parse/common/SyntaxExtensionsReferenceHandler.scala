@@ -1,6 +1,5 @@
 package amf.aml.internal.parse.common
 
-import amf.aml.client.scala.model.document.Dialect
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.validate.DialectValidations.InvalidModuleType
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -17,19 +16,19 @@ class SyntaxExtensionsReferenceHandler(errorHandler: AMFErrorHandler) extends Re
 
   override def collect(parsedDoc: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
     val dialects = ctx.config.sortedParsePlugins.collect {
-      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
+      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect.nameAndVersion()
     }
     collect(parsedDoc, dialects)
   }
 
-  private def collect(parsedDoc: ParsedDocument, dialects: Seq[Dialect]) = {
+  private def collect(parsedDoc: ParsedDocument, knownDialects: Seq[String]) = {
     parsedDoc match {
       case parsed: SyamlParsedDocument =>
         parsed.comment.filter(referencesDialect).foreach { comment =>
           collector += (dialectDefinitionUrl(comment), SchemaReference, parsed.document.node.location)
         }
         libraries(parsed.document)
-        links(parsed.document)
+        links(parsed.document, knownDialects)
 
       case _ => // ignore
     }
@@ -80,7 +79,7 @@ class SyntaxExtensionsReferenceHandler(errorHandler: AMFErrorHandler) extends Re
     collector += (entry.value, LibraryReference, entry.value.location)
   }
 
-  private def links(part: YPart): Unit = {
+  private def links(part: YPart, knownDialects: Seq[String]): Unit = {
     part match {
       case entry: YMapEntry =>
         entry.key.as[YScalar].text match {
@@ -95,14 +94,17 @@ class SyntaxExtensionsReferenceHandler(errorHandler: AMFErrorHandler) extends Re
           case "$ref" => // $ref link
             entry.value.asScalar.map(_.text).foreach(ramlIncludeText)
 
-          case "$dialect" => // reference to nested dialect
-            entry.value.asScalar.map(_.text).foreach(ramlIncludeText)
+          case "$dialect" => // $dialect link
+            // If it is not a known dialect we assume that it is a URI
+            entry.value.asScalar.map(_.text).foreach { dialectRef =>
+              if (!knownDialects.contains(dialectRef)) ramlIncludeText(dialectRef)
+            }
 
           case _ => // no link, recur
-            part.children.foreach(links)
+            part.children.foreach(child => links(child, knownDialects))
         }
       case node: YNode if node.tagType == YType.Include => ramlInclude(node)
-      case _                                            => part.children.foreach(links)
+      case _                                            => part.children.foreach(child => links(child, knownDialects))
     }
   }
 
