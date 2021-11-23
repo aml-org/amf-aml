@@ -32,6 +32,7 @@ import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner}
+import amf.core.client.scala.vocabulary.NamespaceAliases
 import amf.core.internal.annotations.serializable.CoreSerializableAnnotations
 import amf.core.internal.entities.CoreEntities
 import amf.core.internal.metamodel.ModelDefaultBuilder
@@ -172,6 +173,10 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   private[amf] def withExtensions(dialect: Dialect): AMLConfiguration = {
     copy(registry = registry.withExtensions(dialect))
+  }
+
+  private[amf] def withAliases(aliases: NamespaceAliases): AMLConfiguration = {
+    copy(registry = registry.withAliases(aliases))
   }
 
   /**
