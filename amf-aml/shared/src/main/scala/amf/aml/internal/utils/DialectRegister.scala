@@ -4,7 +4,7 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.{NodeMapping, ObjectMapProperty}
 import amf.aml.internal.metamodel.domain.DialectDomainElementModel
-import amf.aml.internal.namespace.AMLDialectNamespaceAliasesPlugin
+import amf.aml.internal.namespace.DialectNamespaceAliases
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.render.plugin.AMLDialectInstanceRenderingPlugin
@@ -43,6 +43,7 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
       .withValidationProfile(profile)
       .withEntities(domainModels)
       .withExtensions(dialect)
+      .withAliases(DialectNamespaceAliases(dialect))
     updateSemanticExtensionsProfile(newConfig, profile)
   }
 
@@ -59,8 +60,7 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
   }
 
   private lazy val plugins: List[AMFPlugin[_]] = {
-    List(new AMLDialectInstanceParsingPlugin(dialect), new AMLDialectInstanceRenderingPlugin(dialect)) ++ AMLDialectNamespaceAliasesPlugin
-      .forDialect(dialect)
+    List(new AMLDialectInstanceParsingPlugin(dialect), new AMLDialectInstanceRenderingPlugin(dialect))
   }
 
   private[amf] def resolveDialect(cloned: Dialect) = {
