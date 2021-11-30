@@ -213,22 +213,10 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     */
   def forInstance(url: String): Future[AMLConfiguration] = {
     val collector = new DialectReferencesCollector
-    val runner    = TransformationPipelineRunner(UnhandledErrorHandler, this)
     collector.collectFrom(url, this).map { dialects =>
-      dialects
-        .map { d =>
-          runner.run(d, DialectTransformationPipeline())
-          d
-        }
-        .foldLeft(this) { (config, dialect) =>
-          val finder                                       = DefaultNodeMappableFinder(config).addDialect(dialect)
-          val parsing: AMLDialectInstanceParsingPlugin     = new AMLDialectInstanceParsingPlugin(dialect)
-          val rendering: AMLDialectInstanceRenderingPlugin = new AMLDialectInstanceRenderingPlugin(dialect)
-          val profile                                      = new AMFDialectValidations(dialect)(finder).profile()
-          config
-            .withPlugins(List(parsing, rendering))
-            .withValidationProfile(profile)
-        }
+      dialects.foldLeft(this) { (config, dialect) =>
+        config.withDialect(dialect)
+      }
     }
   }
 }
@@ -272,7 +260,9 @@ object AMLConfiguration extends PlatformSecrets {
 
 private class DialectReferencesCollector(implicit val ec: ExecutionContext) {
   def collectFrom(url: String, amfConfig: AMFGraphConfiguration): Future[Seq[Dialect]] = {
-    val ctx      = new CompilerContextBuilder(url, platform, amfConfig.compilerConfiguration).build()
+    val ctx =
+      new CompilerContextBuilder(url, amfConfig.registry.sortedParsePlugins, platform, amfConfig.compilerConfiguration)
+        .build()
     val compiler = new AMFCompiler(ctx)
     for {
       content                <- compiler.fetchContent()

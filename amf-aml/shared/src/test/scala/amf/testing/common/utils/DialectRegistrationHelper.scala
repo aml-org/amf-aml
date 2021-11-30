@@ -15,9 +15,8 @@ trait DialectRegistrationHelper {
   protected def withDialect[T](uri: String)(fn: (Dialect, AMLConfiguration) => Future[T])(
       implicit ec: ExecutionContext): Future[T] = {
     val configuration = AMLConfiguration.predefined()
-    val context       = new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build()
     for {
-      baseUnit <- new AMFCompiler(context).build()
+      baseUnit <- configuration.baseUnitClient().parse(uri).map(_.baseUnit)
       dialect  <- Future.successful { baseUnit.asInstanceOf[Dialect] }
       resolved <- Future.successful(
           TransformationPipelineRunner(DefaultErrorHandler(), configuration)

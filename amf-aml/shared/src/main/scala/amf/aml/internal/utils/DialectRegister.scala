@@ -13,12 +13,14 @@ import amf.aml.internal.utils.DialectRegister.SEMANTIC_EXTENSIONS_PROFILE
 import amf.aml.internal.validate.AMFDialectValidations
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.errorhandling.DefaultErrorHandler
+import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.transform.TransformationPipelineRunner
 import amf.core.client.scala.vocabulary.ValueType
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.validation.core.{SeverityMapping, ValidationProfile}
+import org.mulesoft.common.collections.FilterType
 
 object DialectRegister {
   val SEMANTIC_EXTENSIONS_PROFILE = ProfileName("SEMANTIC_EXTENSIONS_PROFILE")
@@ -39,7 +41,7 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
     val finder           = DefaultNodeMappableFinder(existingDialects)
     val profile          = new AMFDialectValidations(dialect)(finder).profile()
     val newConfig = configuration
-      .withPlugins(plugins)
+      .withPlugins(updatedPlugins())
       .withValidationProfile(profile)
       .withEntities(domainModels)
       .withExtensions(dialect)
@@ -59,8 +61,20 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
     config.withValidationProfile(nextProfile)
   }
 
-  private lazy val plugins: List[AMFPlugin[_]] = {
-    List(new AMLDialectInstanceParsingPlugin(dialect), new AMLDialectInstanceRenderingPlugin(dialect))
+  def updatedPlugins(): List[AMFPlugin[_]] = {
+    configuration.registry.getAllPlugins().map {
+      case p: AMLDialectInstanceParsingPlugin => p.withReferencePlugin(instanceParsePlugin)
+      case other                              => other
+    } ++ newPlugins
+  }
+
+  private lazy val instanceParsePlugin = {
+    val instanceParsePlugins = configuration.registry.sortedParsePlugins.filterType[AMLDialectInstanceParsingPlugin]
+    AMLDialectInstanceParsingPlugin(dialect, instanceParsePlugins)
+  }
+
+  private lazy val newPlugins: List[AMFPlugin[_]] = {
+    List(instanceParsePlugin, new AMLDialectInstanceRenderingPlugin(dialect))
   }
 
   private[amf] def resolveDialect(cloned: Dialect) = {

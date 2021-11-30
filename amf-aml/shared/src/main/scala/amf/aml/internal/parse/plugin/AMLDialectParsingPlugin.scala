@@ -67,10 +67,7 @@ class AMLDialectParsingPlugin extends AMFParsePlugin {
     */
   override def mediaTypes: Seq[String] = Seq(`application/yaml`)
 
-  /**
-    * media types which specifies vendors that may be referenced.
-    */
-  override def validSpecsToReference: Seq[Spec] = Seq(Spec.AML)
+  override def referencePlugins: Seq[AMFParsePlugin] = List(this, new AMLVocabularyParsingPlugin())
 
   override def withIdAdoption: Boolean = false
 }

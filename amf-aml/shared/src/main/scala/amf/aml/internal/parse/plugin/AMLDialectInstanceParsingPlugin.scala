@@ -22,7 +22,7 @@ import org.yaml.model.YMap
   * Parsing plugin for dialect instance like units derived from a resolved dialect
   * @param dialect resolved dialect
   */
-class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
+case class AMLDialectInstanceParsingPlugin(dialect: Dialect, additionalRefPlugins: Seq[AMFParsePlugin])
     extends AMFParsePlugin
     with AMLDialectInstancePlugin[Root] {
 
@@ -107,10 +107,11 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
 
   override def spec: Spec = AmlDialectSpec(dialect.nameAndVersion())
 
-  /**
-    * media types which specifies vendors that may be referenced.
-    */
-  override def validSpecsToReference: Seq[Spec] = Nil
+  override def referencePlugins: Seq[AMFParsePlugin] =
+    List(this, new AMLDialectParsingPlugin()) ++ additionalRefPlugins
+
+  def withReferencePlugin(plugin: AMFParsePlugin): AMLDialectInstanceParsingPlugin =
+    this.copy(additionalRefPlugins = additionalRefPlugins :+ plugin)
 
   override def withIdAdoption: Boolean = false
 }

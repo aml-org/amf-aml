@@ -37,12 +37,8 @@ trait DialectTests
   }
 
   protected def parseInstance(dialect: String, source: String, directory: String = basePath): Future[BaseUnit] = {
-
     withDialect(s"file://$directory/$dialect") { (_, configuration) =>
-      val context =
-        new CompilerContextBuilder(s"file://$directory/$source", platform, configuration.compilerConfiguration)
-          .build()
-      new AMFCompiler(context).build()
+      configuration.baseUnitClient().parse(s"file://$directory/$source").map(_.baseUnit)
     }
   }
 
@@ -66,7 +62,7 @@ trait DialectTests
                   directory: String = basePath): Future[Assertion] = {
 
     for {
-      b <- parse(s"file://$directory/$source", platform, amlConfig)
+      b <- parse(s"file://$directory/$source", amlConfig)
       t <- Future.successful { transform(b, amlConfig) }
       s <- Future.successful { new AMFSerializer(t, amlConfig.renderConfiguration, mediaType).renderToString }
       d <- writeTemporaryFile(s"$directory/$golden")(s)

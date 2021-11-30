@@ -31,6 +31,8 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
   override def referenceHandler(eh: AMFErrorHandler): ReferenceHandler =
     new SyntaxExtensionsReferenceHandler(eh)
 
+  override def referencePlugins: Seq[AMFParsePlugin] = List(this)
+
   override def allowRecursiveReferences: Boolean = true
 
   override val id: String = "vocabulary-parsing-plugin"
@@ -48,11 +50,6 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
     * media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Seq(`application/yaml`)
-
-  /**
-    * media types which specifies vendors that may be referenced.
-    */
-  override def validSpecsToReference: scala.Seq[Spec] = Seq(Spec.AML)
 
   override def withIdAdoption: Boolean = false
 }

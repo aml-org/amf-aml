@@ -47,7 +47,7 @@ trait DomainElementCycleTests
                          amlConfig: AMLConfiguration,
                          directory: String = basePath): Future[Assertion] = {
     for {
-      b <- parse(s"file://$directory/$source", platform, amlConfig)
+      b <- parse(s"file://$directory/$source", amlConfig)
       t <- Future.successful { transform(b) }
       s <- Future.successful {
         renderDomainElement(extractor(t), amlConfig)

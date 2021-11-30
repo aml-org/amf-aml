@@ -29,15 +29,10 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 
   /** Method to parse unit. Override if necessary. */
   def build(config: CycleConfig, amlConfig: AMLConfiguration): Future[BaseUnit] = {
-
-    val environment =
+    val adjustedConfig =
       amlConfig.withParsingOptions(amlConfig.options.parsingOptions.withBaseUnitUrl("file://" + config.goldenPath))
 
-    val context =
-      new CompilerContextBuilder(s"file://${config.sourcePath}", platform, environment.compilerConfiguration)
-        .build()
-
-    new AMFCompiler(context).build()
+    adjustedConfig.baseUnitClient().parse(s"file://${config.sourcePath}").map(_.baseUnit)
   }
 
   /** Method to render parsed unit. Override if necessary. */

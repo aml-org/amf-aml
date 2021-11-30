@@ -829,7 +829,7 @@ trait DialectInstancesParsingTest extends DialectTests {
   test("Clone instance from dialect") {
     withDialect(s"file://$basePath/dialect31.yaml") { (_, config) =>
       for {
-        bu <- parse(s"file://$basePath/dialect31.yaml", platform, Some(Aml.mediaType), config)
+        bu <- parse(s"file://$basePath/dialect31.yaml", config)
       } yield {
         val clone = bu.cloneUnit()
         clone.fields.foreach(f => assert(bu.fields.exists(f._1)))
