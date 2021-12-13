@@ -6,6 +6,7 @@ import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.client.scala.validation.EffectiveValidationsCompute
+import amf.core.client.scala.vocabulary.{Namespace, NamespaceAliases}
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.plugins.parse.DomainParsingFallback
@@ -28,8 +29,14 @@ private[amf] class AMLRegistry(plugins: PluginsRegistry,
                                transformationPipelines: Map[String, TransformationPipeline],
                                constraintsRules: Map[ProfileName, ValidationProfile],
                                effectiveValidations: Map[ProfileName, EffectiveValidations],
-                               extensions: Map[String, Dialect])
-    extends AMFRegistry(plugins, entitiesRegistry, transformationPipelines, constraintsRules, effectiveValidations) {
+                               extensions: Map[String, Dialect],
+                               namespaceAliases: NamespaceAliases)
+    extends AMFRegistry(plugins,
+                        entitiesRegistry,
+                        transformationPipelines,
+                        constraintsRules,
+                        effectiveValidations,
+                        namespaceAliases) {
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMLRegistry = copy(plugins = plugins.withPlugin(amfPlugin))
 
@@ -67,6 +74,9 @@ private[amf] class AMLRegistry(plugins: PluginsRegistry,
   override def withAnnotations(annotations: Map[String, AnnotationGraphLoader]): AMLRegistry =
     copy(entitiesRegistry = entitiesRegistry.withAnnotations(annotations))
 
+  override def withAliases(aliases: NamespaceAliases): AMLRegistry =
+    copy(namespaceAliases = namespaceAliases.merge(aliases))
+
   def withExtensions(dialect: Dialect): AMLRegistry = {
     copy(extensions = this.extensions ++ dialect.extensionIndex)
       .copy(entitiesRegistry = this.entitiesRegistry.withExtensions(dialect.extensionModels))
@@ -84,13 +94,15 @@ private[amf] class AMLRegistry(plugins: PluginsRegistry,
                    transformationPipelines: Map[String, TransformationPipeline] = transformationPipelines,
                    constraintsRules: Map[ProfileName, ValidationProfile] = constraintsRules,
                    effectiveValidations: Map[ProfileName, EffectiveValidations] = effectiveValidations,
-                   extensions: Map[String, Dialect] = extensions): AMLRegistry =
+                   extensions: Map[String, Dialect] = extensions,
+                   namespaceAliases: NamespaceAliases = namespaceAliases): AMLRegistry =
     new AMLRegistry(plugins,
                     entitiesRegistry,
                     transformationPipelines,
                     constraintsRules,
                     effectiveValidations,
-                    extensions)
+                    extensions,
+                    namespaceAliases)
 
 }
 
@@ -98,7 +110,13 @@ object AMLRegistry {
 
   /** Creates an empty AML Registry */
   val empty =
-    new AMLRegistry(PluginsRegistry.empty, EntitiesRegistry.empty, Map.empty, Map.empty, Map.empty, Map.empty)
+    new AMLRegistry(PluginsRegistry.empty,
+                    EntitiesRegistry.empty,
+                    Map.empty,
+                    Map.empty,
+                    Map.empty,
+                    Map.empty,
+                    NamespaceAliases())
 
   def apply(registry: AMFRegistry): AMLRegistry =
     new AMLRegistry(
@@ -107,6 +125,7 @@ object AMLRegistry {
         registry.getTransformationPipelines,
         registry.getConstraintsRules,
         registry.getEffectiveValidations,
-        Map.empty
+        Map.empty,
+        registry.getNamespaceAliases
     )
 }

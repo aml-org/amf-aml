@@ -192,7 +192,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   private[amf] def literalProperty(f: Field): Option[Any]                        = literalProperties(f).headOption
   private[amf] def literalProperties(f: Field): Seq[Any]                         = graph.scalarByField(f)
 
-  private[amf] override def componentId: String = ""
+  private[amf] override def componentId: String = "element"
 
   private def setObjInCollection(f: Field, node: Either[YNode, YMapEntry], newObj: DialectDomainElement) = {
     val (annotations, _)                = getAnnotationsOf(node)
