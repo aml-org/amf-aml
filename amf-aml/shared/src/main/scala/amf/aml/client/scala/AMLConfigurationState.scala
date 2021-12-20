@@ -76,7 +76,7 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
   }
 
   private def getDialectsByCondition(filter: AMLDialectInstanceParsingPlugin => Boolean): immutable.Seq[Dialect] =
-    configuration.registry.getPluginsRegistry.parsePlugins.collect {
+    configuration.registry.getPluginsRegistry.rootParsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin if filter(plugin) => plugin.dialect
     }
 

@@ -30,6 +30,7 @@ import amf.core.client.scala.errorhandling.{
 }
 import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
+import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.client.scala.vocabulary.NamespaceAliases
@@ -119,6 +120,9 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMLConfiguration =
     super._withPlugin(amfPlugin)
+
+  override def withReferenceParsePlugin(amfPlugin: AMFParsePlugin): AMLConfiguration =
+    super._withReferenceParsePlugin(amfPlugin)
 
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMLConfiguration =
     super._withPlugins(plugins)

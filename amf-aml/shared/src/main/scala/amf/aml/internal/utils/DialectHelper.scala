@@ -9,7 +9,7 @@ import scala.collection.immutable
 object DialectHelper {
 
   def findDialect(nameAndVersion: String, registry: AMFRegistry): immutable.Seq[Dialect] =
-    registry.getPluginsRegistry.parsePlugins.collect {
+    registry.getPluginsRegistry.rootParsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin if plugin.dialect.nameAndVersion() == nameAndVersion =>
         plugin.dialect
     }
