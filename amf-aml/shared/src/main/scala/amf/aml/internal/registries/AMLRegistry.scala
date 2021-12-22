@@ -4,6 +4,7 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.core.client.common.validation.ProfileName
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
+import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.transform.TransformationPipeline
 import amf.core.client.scala.validation.EffectiveValidationsCompute
 import amf.core.client.scala.vocabulary.{Namespace, NamespaceAliases}
@@ -40,7 +41,8 @@ private[amf] class AMLRegistry(plugins: PluginsRegistry,
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMLRegistry = copy(plugins = plugins.withPlugin(amfPlugin))
 
-  override def removePlugin(id: String): AMLRegistry = copy(plugins = plugins.removePlugin(id))
+  override def withReferenceParsePlugin(plugin: AMFParsePlugin): AMLRegistry =
+    copy(plugins = plugins.withReferenceParsePlugin(plugin))
 
   override def withPlugins(amfPlugins: List[AMFPlugin[_]]): AMLRegistry =
     copy(plugins = plugins.withPlugins(amfPlugins))

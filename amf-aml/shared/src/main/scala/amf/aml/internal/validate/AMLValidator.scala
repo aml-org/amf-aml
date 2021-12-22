@@ -65,7 +65,7 @@ object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstrai
   }
 
   private def collectDialects(amfConfig: => AMFGraphConfiguration) = {
-    amfConfig.registry.getPluginsRegistry.parsePlugins.collect {
+    amfConfig.registry.getPluginsRegistry.rootParsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
     }
   }

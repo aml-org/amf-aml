@@ -29,7 +29,7 @@ trait NodeMappableFinder {
 object DefaultNodeMappableFinder {
   def apply(dialects: Seq[Dialect]) = new DefaultNodeMappableFinder(dialects)
   def apply(ctx: ParserContext) = {
-    val knownDialects = ctx.config.sortedParsePlugins.collect {
+    val knownDialects = ctx.config.sortedRootParsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
     }
     new DefaultNodeMappableFinder(knownDialects)
