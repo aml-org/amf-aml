@@ -9,7 +9,7 @@ import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel._
 
-object SemanticExtensionFlatteningStage extends TransformationStep {
+class SemanticExtensionFlatteningStage() extends TransformationStep {
 
   private lazy val filterFields = DomainExtensionModel.fields
 
