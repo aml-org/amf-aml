@@ -410,55 +410,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                 array: AmfArray,
                                 propertyMapping: PropertyMapping,
                                 annotations: Option[Annotations] = None): Seq[EntryEmitter] = {
-    val keyProperty   = propertyMapping.mapTermKeyProperty().value()
-    val valueProperty = propertyMapping.mapTermValueProperty().value()
-
-    Seq(new EntryEmitter() {
-      override def emit(b: EntryBuilder): Unit = {
-        b.entry(
-            key,
-            _.obj {
-              b =>
-                val sortedElements = array.values.sortBy { elem =>
-                  elem.annotations
-                    .find(classOf[LexicalInformation])
-                    .map(_.range.start)
-                    .getOrElse(ZERO)
-                }
-                sortedElements.foreach {
-                  case element: DialectDomainElement =>
-                    val keyField =
-                      element.meta.fields.find(_.value.iri() == keyProperty)
-                    val valueField =
-                      element.meta.fields.find(_.value.iri() == valueProperty)
-                    if (keyField.isDefined && valueField.isDefined) {
-                      val keyLiteral =
-                        element.fields.getValueAsOption(keyField.get).map(_.value)
-                      val valueLiteral = element.fields
-                        .getValueAsOption(valueField.get)
-                        .map(_.value)
-                      (keyLiteral, valueLiteral) match {
-                        case (Some(keyScalar: AmfScalar), Some(valueScalar: AmfScalar)) =>
-                          MapEntryEmitter(keyScalar.value.toString, valueScalar.value.toString).emit(b)
-                        case _ =>
-                          throw new Exception("Cannot generate object pair without scalar values for key and value")
-                      }
-                    } else {
-                      throw new Exception("Cannot generate object pair with undefined key or value")
-                    }
-                  case _ => // ignore
-                }
-            }
-        )
-      }
-
-      override def position(): Position =
-        annotations
-          .flatMap(_.find(classOf[LexicalInformation]))
-          .orElse(array.annotations.find(classOf[LexicalInformation]))
-          .map(_.range.start)
-          .getOrElse(ZERO)
-    })
+    Seq(ObjectPairEmitter(key, array, propertyMapping, annotations))
   }
 
   protected def findPropertyMapping(node: DialectDomainElement, field: Field): Option[PropertyMapping] = {
