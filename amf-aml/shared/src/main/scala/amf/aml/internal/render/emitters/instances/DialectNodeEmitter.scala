@@ -129,16 +129,26 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
   def emitters: Seq[EntryEmitter] = {
     var emitters: Seq[EntryEmitter] = topLevelEmitters
-    if (emitDialect) {
-      emitters ++= Seq(MapEntryEmitter("$dialect", nodeMappable.id))
-    }
+    if (emitDialect) emitters ++= Seq(MapEntryEmitter("$dialect", nodeMappable.id))
+    emitters ++= emitDiscriminator()
+    emitters ++= emitId()
+    emitters ++= emitCustomBase()
+    emitters ++= fieldAndExtensionEmitters
+    emitters
+  }
 
-    if (discriminator.isDefined) {
-      val (discriminatorName, discriminatorValue) = discriminator.get
-      emitters ++= Seq(MapEntryEmitter(discriminatorName, discriminatorValue))
-    }
-    if (node.annotations.find(classOf[CustomId]).isDefined || renderOptions.isEmitNodeIds) {
-      val baseId = node.annotations.find(classOf[CustomId]) match {
+  private def emitCustomBase(): Seq[EntryEmitter] = {
+    customBaseOf(node)
+      .filter(_.value != "true")
+      .map(base => Seq(MapEntryEmitter("$base", base.value)))
+      .getOrElse(Nil)
+  }
+
+  private def customBaseOf(node: DialectDomainElement) = node.annotations.find(classOf[CustomBase])
+
+  private def emitId(): Seq[EntryEmitter] = {
+    if (hasCustomId(node) || renderOptions.isEmitNodeIds) {
+      val baseId = customIdOf(node) match {
         case Some(customId) if customId.value != "true" => customId.value
         case _                                          => node.id
       }
@@ -147,19 +157,16 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       } else {
         baseId
       }
-      emitters ++= Seq(MapEntryEmitter("$id", customId))
-    }
+      Seq(MapEntryEmitter("$id", customId))
+    } else Nil
+  }
 
-    if (node.annotations.find(classOf[CustomBase]).isDefined) {
-      node.annotations.find(classOf[CustomBase]) match {
-        case Some(customBase) if customBase.value != "true" =>
-          emitters ++= Seq(MapEntryEmitter("$base", customBase.value))
-        case _ => // Nothing
-      }
-    }
+  private def customIdOf(node: DialectDomainElement) = node.annotations.find(classOf[CustomId])
 
-    emitters ++= fieldAndExtensionEmitters
-    emitters
+  private def hasCustomId(node: DialectDomainElement) = customIdOf(node).isDefined
+
+  private def emitDiscriminator(): Seq[EntryEmitter] = {
+    discriminator.map { case (name, value) => Seq(MapEntryEmitter(name, value)) }.getOrElse(Seq.empty)
   }
 
   private def fieldAndExtensionEmitters: Seq[EntryEmitter] = {
