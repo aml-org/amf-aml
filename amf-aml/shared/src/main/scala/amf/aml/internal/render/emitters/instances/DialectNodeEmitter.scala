@@ -172,35 +172,7 @@ case class DialectNodeEmitter(node: DialectDomainElement,
   private def fieldAndExtensionEmitters: Seq[EntryEmitter] = {
     var emitters: Seq[EntryEmitter] = Nil
     uniqueFields(node.meta).foreach {
-      case DomainElementModel.CustomDomainProperties =>
-        node.fields.get(DomainElementModel.CustomDomainProperties) match {
-          case AmfArray(customDomainProperties, _) =>
-            customDomainProperties.foreach {
-              case domainExtension: DomainExtension =>
-                val extensionName = domainExtension.name.value()
-                domainExtension.`extension` match {
-                  case s: ScalarNode =>
-                    val extensionValue = s.value.value()
-                    val tagType = s.dataType.value() match {
-                      case DataType.Integer  => YType.Int
-                      case DataType.Float    => YType.Float
-                      case DataType.Boolean  => YType.Bool
-                      case DataType.Nil      => YType.Null
-                      case DataType.DateTime => YType.Timestamp
-                      case _                 => YType.Str
-                    }
-                    val position = domainExtension.annotations
-                      .find(classOf[LexicalInformation])
-                      .map(_.range.start)
-                      .getOrElse(Position.ZERO)
-                    emitters ++= Seq(
-                        MapEntryEmitter(extensionName, extensionValue, tag = tagType, position = position))
-                  case _ => // Ignore
-                }
-
-            }
-          case _ => // Ignore
-        }
+      case DomainElementModel.CustomDomainProperties => emitters ++= CustomDomainPropertiesEmitter(node)
 
       case field =>
         findPropertyMapping(node, field) foreach { propertyMapping =>
