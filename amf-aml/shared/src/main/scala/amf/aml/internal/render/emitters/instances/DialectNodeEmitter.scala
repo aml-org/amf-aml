@@ -289,53 +289,16 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                  target: AmfElement,
                                  propertyMapping: PropertyMapping,
                                  annotations: Option[Annotations] = None): Seq[EntryEmitter] = {
-    Seq(new EntryEmitter {
-      override def emit(b: EntryBuilder): Unit = {
-        b.entry(
-            key,
-            (e) => {
-              target match {
-                case array: AmfArray =>
-                  e.list(l => {
-                    array.values.asInstanceOf[Seq[DialectDomainElement]].foreach {
-                      elem =>
-                        if (elem.fields.nonEmpty) { // map reference
-                          nodeMappingForObjectProperty(propertyMapping, elem) match {
-                            case Some(rangeMapping) =>
-                              DialectNodeEmitter(
-                                  elem,
-                                  rangeMapping,
-                                  references,
-                                  dialect,
-                                  ordering,
-                                  discriminator = None,
-                                  keyPropertyId = keyPropertyId,
-                                  renderOptions = renderOptions
-                              ).emit(l)
-                            case _ => // ignore, error
-                          }
-                        } else { // just link
-                          emitCustomId(elem, l)
-                          emitCustomBase(elem, l)
-                        }
-                    }
-                  })
-                case element: DialectDomainElement =>
-                  emitCustomId(element, e)
-                  emitCustomBase(element, e)
-              }
-            }
-        )
-      }
-
-      override def position(): Position = {
-        annotations
-          .flatMap(_.find(classOf[LexicalInformation]))
-          .orElse(target.annotations.find(classOf[LexicalInformation]))
-          .map(_.range.start)
-          .getOrElse(ZERO)
-      }
-    })
+    Seq(
+        ExternalLinkEmitter(key,
+                            dialect,
+                            target,
+                            propertyMapping,
+                            annotations,
+                            keyPropertyId,
+                            references,
+                            ordering,
+                            renderOptions))
   }
 
   def emitCustomId(elem: DialectDomainElement, b: PartBuilder): Unit = {
