@@ -1,26 +1,21 @@
 package amf.aml.internal.render.emitters.instances
+import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
+import amf.aml.client.scala.model.domain._
+import amf.aml.internal.annotations.{CustomBase, CustomId}
+import amf.aml.internal.metamodel.domain.{DialectDomainElementModel, NodeMappableModel}
+import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.common.position.Position
+import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.config.RenderOptions
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.internal.annotations.Aliases.{Alias, ImportLocation, RefId}
-import amf.core.internal.annotations.{LexicalInformation, SourceNode}
-import amf.core.internal.render.BaseEmitters._
-import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.domain.DomainElementModel
-import amf.core.client.scala.model.domain.extensions.DomainExtension
-import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, ScalarNode}
-import amf.core.client.common.position.Position.ZERO
-import amf.core.client.scala.model.DataType
-import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
-import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
+import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
-import amf.aml.internal.annotations.{CustomBase, CustomId, JsonPointerRef, RefInclude}
-import amf.aml.internal.metamodel.domain.{DialectDomainElementModel, NodeMappableModel}
-import amf.aml.client.scala.model.document.{Dialect, DialectInstanceFragment, DialectInstanceUnit}
-import amf.aml.client.scala.model.domain._
-import org.mulesoft.common.time.SimpleDateTime
-import org.yaml.model.YDocument.{EntryBuilder, PartBuilder}
-import org.yaml.model.{YNode, YType}
+import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import org.yaml.model.YDocument.PartBuilder
 
 import scala.language.existentials
 
@@ -33,7 +28,8 @@ class RootDialectNodeEmitter(node: DialectDomainElement,
                              discriminator: Option[(String, String)] = None,
                              emitDialect: Boolean = false,
                              topLevelEmitters: Seq[EntryEmitter] = Nil,
-                             renderOptions: RenderOptions)(implicit nodeMappableFinder: NodeMappableFinder)
+                             renderOptions: RenderOptions,
+                             registry: AMLRegistry)(implicit nodeMappableFinder: NodeMappableFinder)
     extends DialectNodeEmitter(node,
                                nodeMappable,
                                instance.references,
@@ -43,7 +39,8 @@ class RootDialectNodeEmitter(node: DialectDomainElement,
                                discriminator,
                                emitDialect,
                                topLevelEmitters,
-                               renderOptions) {
+                               renderOptions,
+                               registry) {
 
   lazy val referencesAliasIndex: Map[RefId, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(instance)
 
@@ -94,7 +91,8 @@ class RootDialectNodeEmitter(node: DialectDomainElement,
                             .getOrElse("/")
                             .split("/"),
                           referencesAliasIndex,
-                          renderOptions = renderOptions
+                          renderOptions = renderOptions,
+                          registry = registry
                       ))
               }
             } else acc
@@ -114,7 +112,8 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                               discriminator: Option[(String, String)] = None,
                               emitDialect: Boolean = false,
                               topLevelEmitters: Seq[EntryEmitter] = Nil,
-                              renderOptions: RenderOptions)(implicit val nodeMappableFinder: NodeMappableFinder)
+                              renderOptions: RenderOptions,
+                              registry: AMLRegistry)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends PartEmitter
     with AmlEmittersHelper {
 
@@ -147,11 +146,13 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                                          discriminator,
                                          emitDialect,
                                          topLevelEmitters,
-                                         renderOptions)
+                                         renderOptions,
+                                         registry)
     uniqueFields(node.meta).flatMap { field =>
       field match {
-        case DomainElementModel.CustomDomainProperties => CustomDomainPropertiesEmitter(node)
-        case field                                     => fieldEmitter.emitField(field)
+        case DomainElementModel.CustomDomainProperties =>
+          CustomDomainPropertiesEmitter(node, registry, ordering, renderOptions)
+        case field => fieldEmitter.emitField(field)
       }
     }.toSeq
   }

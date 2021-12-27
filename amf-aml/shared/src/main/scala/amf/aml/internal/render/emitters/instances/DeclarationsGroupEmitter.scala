@@ -6,16 +6,12 @@ import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.internal.render.SpecOrdering
 import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
-import amf.aml.client.scala.model.domain.{
-  DialectDomainElement,
-  NodeMappable,
-  PublicNodeMapping,
-  UnionNodeMapping
-}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMappable, PublicNodeMapping, UnionNodeMapping}
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 import amf.core.internal.utils.AmfStrings
 import amf.aml.internal.metamodel.domain.NodeMappableModel
+import amf.aml.internal.registries.AMLRegistry
 
 case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                     publicNodeMapping: PublicNodeMapping,
@@ -26,7 +22,8 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                     declarationsPath: Seq[String],
                                     aliases: Map[String, (String, String)],
                                     keyPropertyId: Option[String] = None,
-                                    renderOptions: RenderOptions)(implicit val nodeMappableFinder: NodeMappableFinder)
+                                    renderOptions: RenderOptions,
+                                    registry: AMLRegistry)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AmlEmittersHelper {
 
@@ -68,7 +65,8 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                        dialect,
                                        ordering,
                                        discriminator = discriminatorProperty,
-                                       renderOptions = renderOptions).emit(b)
+                                       renderOptions = renderOptions,
+                                       registry = registry).emit(b)
                   }
               )
             }
@@ -87,7 +85,8 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                                      declarationsPath.tail,
                                      aliases,
                                      keyPropertyId,
-                                     renderOptions).emit(b)
+                                     renderOptions,
+                                     registry).emit(b)
           }
       )
     }

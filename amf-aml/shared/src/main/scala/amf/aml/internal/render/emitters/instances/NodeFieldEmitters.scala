@@ -2,24 +2,19 @@ package amf.aml.internal.render.emitters.instances
 
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain._
-import amf.aml.internal.annotations.{CustomBase, CustomId}
-import amf.aml.internal.metamodel.domain.{DialectDomainElementModel, NodeMappableModel}
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import amf.aml.internal.metamodel.domain.{NodeMappableModel, NodeWithDiscriminatorModel, PropertyLikeMappingModel}
+import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar}
-import amf.core.internal.annotations.LexicalInformation
+import amf.core.client.scala.model.domain.{AmfArray, AmfElement, AmfScalar, DomainElement}
 import amf.core.internal.metamodel.Field
-import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
 import amf.core.internal.render.BaseEmitters.{ArrayEmitter, EntryPartEmitter, ValueEmitter}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import org.mulesoft.common.time.SimpleDateTime
-import org.yaml.model.YDocument.PartBuilder
 
-case class NodeFieldEmitters(node: DialectDomainElement,
+case class NodeFieldEmitters(node: DomainElement,
                              nodeMappable: NodeMappable[_ <: NodeMappableModel],
                              references: Seq[BaseUnit],
                              dialect: Dialect,
@@ -28,7 +23,9 @@ case class NodeFieldEmitters(node: DialectDomainElement,
                              discriminator: Option[(String, String)] = None,
                              emitDialect: Boolean = false,
                              topLevelEmitters: Seq[EntryEmitter] = Nil,
-                             renderOptions: RenderOptions)(implicit val nodeMappableFinder: NodeMappableFinder)
+                             renderOptions: RenderOptions,
+                             registry: AMLRegistry,
+                             keyOverride: Option[String] = None)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends AmlEmittersHelper {
 
   def emitField(field: Field): Seq[EntryEmitter] = {
@@ -37,7 +34,7 @@ case class NodeFieldEmitters(node: DialectDomainElement,
             .nodePropertyMapping()
             .value() != keyPropertyId.get) {
 
-        val key                    = propertyMapping.name().value()
+        val key                    = keyOverride.getOrElse(propertyMapping.name().value())
         val propertyClassification = propertyMapping.classification()
 
         val nextEmitter: Seq[EntryEmitter] =
@@ -54,7 +51,7 @@ case class NodeFieldEmitters(node: DialectDomainElement,
                 if entry.value
                   .isInstanceOf[DialectDomainElement] && propertyClassification == ExtensionPointProperty =>
               val element = entry.value.asInstanceOf[DialectDomainElement]
-              emitExternalObject(key, element, propertyMapping)
+              emitExternalObject(key, element)
 
             case Some(entry)
                 if entry.value
@@ -93,9 +90,11 @@ case class NodeFieldEmitters(node: DialectDomainElement,
               val array = entry.value.asInstanceOf[AmfArray]
               emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
 
-            case Some(entry) if isArray(entry) && propertyClassification == ObjectPairProperty =>
+            case Some(entry)
+                if isArray(entry) && propertyClassification == ObjectPairProperty && propertyMapping
+                  .isInstanceOf[PropertyMapping] =>
               val array = entry.value.asInstanceOf[AmfArray]
-              emitObjectPairs(key, array, propertyMapping, Some(entry.annotations))
+              emitObjectPairs(key, array, propertyMapping.asInstanceOf[PropertyMapping], Some(entry.annotations))
             case None => Nil // ignore
           }
         nextEmitter
@@ -114,7 +113,7 @@ case class NodeFieldEmitters(node: DialectDomainElement,
 
   protected def emitExternalLink(key: String,
                                  target: AmfElement,
-                                 propertyMapping: PropertyMapping,
+                                 propertyMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel],
                                  annotations: Option[Annotations] = None): Seq[EntryEmitter] = {
     Seq(
         ExternalLinkEmitter(key,
@@ -125,21 +124,8 @@ case class NodeFieldEmitters(node: DialectDomainElement,
                             keyPropertyId,
                             references,
                             ordering,
-                            renderOptions))
-  }
-
-  private def nodeMappingForObjectProperty(propertyMapping: PropertyMapping,
-                                           dialectDomainElement: DialectDomainElement): Option[NodeMappable] = {
-    // this can be multiple mappings if we have a union in the range or a range pointing to a union mapping
-    val nodeMappings: Seq[NodeMapping] =
-      propertyMapping.objectRange().flatMap { rangeNodeMapping =>
-        findAllNodeMappings(rangeNodeMapping.value())
-      }
-    nodeMappings.find(
-        nodeMapping =>
-          dialectDomainElement.meta.`type`
-            .map(_.iri())
-            .exists(i => i == nodeMapping.nodetypeMapping.value() || i == nodeMapping.id))
+                            renderOptions,
+                            registry))
   }
 
   private def emitScalar(key: String,
@@ -162,7 +148,7 @@ case class NodeFieldEmitters(node: DialectDomainElement,
 
   protected def emitObjectEntry(key: String,
                                 target: AmfElement,
-                                propertyMapping: PropertyMapping,
+                                propertyMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel],
                                 annotations: Option[Annotations] = None): Seq[EntryEmitter] = {
 
     Seq(
@@ -173,12 +159,11 @@ case class NodeFieldEmitters(node: DialectDomainElement,
                                   dialect,
                                   ordering,
                                   renderOptions,
-                                  annotations))
+                                  annotations,
+                                  registry))
   }
 
-  protected def emitExternalObject(key: String,
-                                   element: DialectDomainElement,
-                                   propertyMapping: PropertyMapping): Seq[EntryEmitter] = {
+  protected def emitExternalObject(key: String, element: DialectDomainElement): Seq[EntryEmitter] = {
     val (externalDialect, nextNodeMapping) = findNodeMappingById(element.definedBy.id)
     Seq(
         EntryPartEmitter(key,
@@ -188,7 +173,8 @@ case class NodeFieldEmitters(node: DialectDomainElement,
                                             externalDialect,
                                             ordering,
                                             emitDialect = true,
-                                            renderOptions = renderOptions)))
+                                            renderOptions = renderOptions,
+                                            registry = registry)))
   }
 
   private def emitObjectPairs(key: String,
@@ -198,9 +184,10 @@ case class NodeFieldEmitters(node: DialectDomainElement,
     Seq(ObjectPairEmitter(key, array, propertyMapping, annotations))
   }
 
-  private def findPropertyMapping(field: Field): Option[PropertyMapping] = {
+  private def findPropertyMapping(field: Field): Option[PropertyLikeMapping[_ <: PropertyLikeMappingModel]] = {
     val iri = field.value.iri()
     nodeMappable match {
+      case mapping: AnnotationMapping => Some(mapping)
       case nodeMapping: NodeMapping =>
         nodeMapping
           .propertiesMapping()

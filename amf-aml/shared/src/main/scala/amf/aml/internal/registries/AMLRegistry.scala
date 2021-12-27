@@ -130,4 +130,10 @@ object AMLRegistry {
         Map.empty,
         registry.getNamespaceAliases
     )
+
+  def apply(registry: AMFRegistry, dialects: Seq[Dialect]): AMLRegistry = {
+    dialects.foldLeft(AMLRegistry(registry)) { (acc, curr) =>
+      acc.withExtensions(curr)
+    }
+  }
 }

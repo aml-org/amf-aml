@@ -1,7 +1,9 @@
 package amf.aml.internal.render.emitters.instances
 
 import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyMapping}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyLikeMapping, PropertyMapping}
+import amf.aml.internal.metamodel.domain.{NodeWithDiscriminatorModel, PropertyLikeMappingModel}
+import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.config.RenderOptions
@@ -14,15 +16,16 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
-private case class DialectObjectEntryEmitter(
+private case class DialectObjectEntryEmitter[M <: PropertyLikeMappingModel](
     key: String,
     target: AmfElement,
-    propertyMapping: PropertyMapping,
+    propertyMapping: PropertyLikeMapping[M],
     references: Seq[BaseUnit],
     dialect: Dialect,
     ordering: SpecOrdering,
     renderOptions: RenderOptions,
-    annotations: Option[Annotations] = None)(implicit val nodeMappableFinder: NodeMappableFinder)
+    annotations: Option[Annotations] = None,
+    registry: AMLRegistry)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AmlEmittersHelper {
   // this can be multiple mappings if we have a union in the range or a range pointing to a union mapping
@@ -32,7 +35,10 @@ private case class DialectObjectEntryEmitter(
     }
 
   // val key property id, so we can pass it to the nested emitter and it is not emitted
-  val keyPropertyId: Option[String] = propertyMapping.mapTermKeyProperty().option()
+  val keyPropertyId: Option[String] = propertyMapping match {
+    case mapping: PropertyMapping => mapping.mapTermKeyProperty().option()
+    case _                        => None
+  }
 
   // lets first extract the target values to emit, always as an array
   val elements: Seq[DialectDomainElement] = target match {
@@ -65,7 +71,8 @@ private case class DialectObjectEntryEmitter(
                   ordering,
                   discriminator = discriminator.compute(dialectDomainElement),
                   keyPropertyId = keyPropertyId,
-                  renderOptions = renderOptions
+                  renderOptions = renderOptions,
+                  registry = registry
               )
               acc + (nodeEmitter -> dialectDomainElement)
             case _ =>
@@ -76,7 +83,7 @@ private case class DialectObjectEntryEmitter(
 
     if (keyPropertyId.isDefined) {
       // emit map of nested objects by property
-      emitMap(b, mappedElements)
+      emitMap(b, mappedElements, keyPropertyId.get)
     } else if (isArray) {
       // arrays of objects
       emitArray(b, mappedElements)
@@ -86,7 +93,9 @@ private case class DialectObjectEntryEmitter(
     }
   }
 
-  def emitMap(b: EntryBuilder, mapElements: Map[DialectNodeEmitter, DialectDomainElement]): Unit = {
+  private def emitMap(b: EntryBuilder,
+                      mapElements: Map[DialectNodeEmitter, DialectDomainElement],
+                      keyPropertyIdValue: String): Unit = {
     b.entry(
         key,
         _.obj { b =>
@@ -94,8 +103,7 @@ private case class DialectObjectEntryEmitter(
             val dialectDomainElement = mapElements(emitter)
             val mapKeyField =
               dialectDomainElement.meta.fields
-                .find(_.value
-                  .iri() == propertyMapping.mapTermKeyProperty().value())
+                .find(_.value.iri() == keyPropertyIdValue)
                 .get
             val mapKeyValue =
               dialectDomainElement.fields.getValue(mapKeyField).toString

@@ -1,8 +1,10 @@
 package amf.aml.internal.render.emitters.instances
 
 import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyMapping}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.annotations.{CustomBase, CustomId}
+import amf.aml.internal.metamodel.domain.PropertyLikeMappingModel
+import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.config.RenderOptions
@@ -15,15 +17,17 @@ import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.PartBuilder
 
-case class ExternalLinkEmitter(key: String,
-                               dialect: Dialect,
-                               target: AmfElement,
-                               propertyMapping: PropertyMapping,
-                               annotations: Option[Annotations] = None,
-                               keyPropertyId: Option[String] = None,
-                               references: Seq[BaseUnit],
-                               ordering: SpecOrdering,
-                               renderOptions: RenderOptions)(implicit val nodeMappableFinder: NodeMappableFinder)
+case class ExternalLinkEmitter[M <: PropertyLikeMappingModel](
+    key: String,
+    dialect: Dialect,
+    target: AmfElement,
+    propertyMapping: PropertyLikeMapping[M],
+    annotations: Option[Annotations] = None,
+    keyPropertyId: Option[String] = None,
+    references: Seq[BaseUnit],
+    ordering: SpecOrdering,
+    renderOptions: RenderOptions,
+    registry: AMLRegistry)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AmlEmittersHelper {
   override def emit(b: YDocument.EntryBuilder): Unit = {
@@ -46,7 +50,8 @@ case class ExternalLinkEmitter(key: String,
                               ordering,
                               discriminator = None,
                               keyPropertyId = keyPropertyId,
-                              renderOptions = renderOptions
+                              renderOptions = renderOptions,
+                              registry = registry
                           ).emit(l)
                         case _ => // ignore, error
                       }
@@ -64,7 +69,7 @@ case class ExternalLinkEmitter(key: String,
     )
   }
 
-  protected def nodeMappingForObjectProperty(propertyMapping: PropertyMapping,
+  protected def nodeMappingForObjectProperty(propertyMapping: PropertyLikeMapping[_],
                                              dialectDomainElement: DialectDomainElement): Option[NodeMappable] = {
     // this can be multiple mappings if we have a union in the range or a range pointing to a union mapping
     val nodeMappings: Seq[NodeMapping] =

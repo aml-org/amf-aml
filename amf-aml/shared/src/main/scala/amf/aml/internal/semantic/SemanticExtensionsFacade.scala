@@ -5,8 +5,14 @@ import amf.aml.client.scala.model.domain.{AnnotationMapping, DialectDomainElemen
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.parse.instances.parser.{ElementPropertyParser, InstanceNodeParser}
 import amf.aml.internal.registries.AMLRegistry
-import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
+import amf.aml.internal.render.emitters.instances.{
+  DefaultNodeMappableFinder,
+  DialectNodeEmitter,
+  NodeFieldEmitters,
+  NodeMappableFinder
+}
 import amf.aml.internal.semantic.SemanticExtensionHelper.{findAnnotationMapping, findSemanticExtension}
+import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.parse.document.{
   EmptyFutureDeclarations,
@@ -16,8 +22,10 @@ import amf.core.client.scala.parse.document.{
 }
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{ParseConfiguration, Root}
+import amf.core.internal.render.SpecOrdering
 import org.mulesoft.common.core.CachedFunction
 import org.mulesoft.common.functional.MonadInstances._
+import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YMap, YMapEntry, YNode}
 
 class SemanticExtensionsFacade private (val registry: AMLRegistry) {
@@ -27,13 +35,44 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
             ast: YMapEntry,
             ctx: ParserContext,
             extensionId: String): Option[DomainExtension] = {
-    findExtensionDialect(extensionName).flatMap { dialect =>
-      findSemanticExtension(dialect, extensionName)
-        .map(findAnnotationMapping(dialect, _)) match {
-        case Some(mapping) if mapping.appliesTo(parentTypes) =>
-          Some(parseSemanticExtension(dialect, mapping, ast, ctx, extensionId, extensionName))
-        case _ => None // TODO: throw warning?
+    findExtensionMapping(extensionName, parentTypes).map {
+      case (mapping, dialect) => parseSemanticExtension(dialect, mapping, ast, ctx, extensionId, extensionName)
+    }
+  }
+
+  def render(key: String,
+             extension: DomainExtension,
+             parentTypes: Seq[String],
+             ordering: SpecOrdering,
+             renderOptions: RenderOptions,
+             nodeMappableFinder: NodeMappableFinder) = {
+    val maybeName = Option(extension.definedBy).flatMap(_.name.option())
+    maybeName
+      .flatMap(name => findExtensionMapping(name, parentTypes))
+      .map {
+        case (mapping, dialect) =>
+          NodeFieldEmitters(extension,
+                            mapping,
+                            dialect.references,
+                            dialect,
+                            ordering,
+                            None,
+                            None,
+                            false,
+                            Nil,
+                            renderOptions,
+                            registry,
+                            Some(key))(nodeMappableFinder).emitField(mapping.toField())
       }
+      .getOrElse(Nil)
+  }
+
+  private def findExtensionMapping(name: String, parentTypes: Seq[String]): Option[(AnnotationMapping, Dialect)] = {
+    findExtensionDialect(name).flatMap { dialect =>
+      findSemanticExtension(dialect, name)
+        .map(findAnnotationMapping(dialect, _))
+        .filter(_.appliesTo(parentTypes))
+        .map(mapping => (mapping, dialect))
     }
   }
 

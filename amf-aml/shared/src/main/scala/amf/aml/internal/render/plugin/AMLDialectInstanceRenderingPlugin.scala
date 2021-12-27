@@ -2,6 +2,7 @@ package amf.aml.internal.render.plugin
 
 import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
 import amf.aml.internal.AMLDialectInstancePlugin
+import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.render.emitters.instances.{DefaultNodeMappableFinder, DialectInstancesEmitter}
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.config.RenderOptions
@@ -43,7 +44,9 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
     val finder = DefaultNodeMappableFinder(dialects)
     unit match {
       case instance: DialectInstanceUnit =>
-        Some(DialectInstancesEmitter(instance, dialect, config.renderOptions)(finder).emitInstance())
+        Some(
+            DialectInstancesEmitter(instance, dialect, config.renderOptions, AMLRegistry(config.registry, dialects))(
+                finder).emitInstance())
       case _ => None
     }
   }
