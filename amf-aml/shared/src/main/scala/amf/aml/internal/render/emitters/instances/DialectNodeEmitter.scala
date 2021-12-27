@@ -175,78 +175,82 @@ case class DialectNodeEmitter(node: DialectDomainElement,
       case DomainElementModel.CustomDomainProperties => emitters ++= CustomDomainPropertiesEmitter(node)
 
       case field =>
-        findPropertyMapping(node, field) foreach { propertyMapping =>
-          if (keyPropertyId.isEmpty || propertyMapping
-                .nodePropertyMapping()
-                .value() != keyPropertyId.get) {
-
-            val key                    = propertyMapping.name().value()
-            val propertyClassification = propertyMapping.classification()
-
-            val nextEmitter: Seq[EntryEmitter] =
-              node.fields.getValueAsOption(field) match {
-                case Some(entry) if isScalar(entry) =>
-                  val scalar = entry.value.asInstanceOf[AmfScalar]
-                  emitScalar(key, field, scalar, Some(entry.annotations))
-
-                case Some(entry) if isArray(entry) && propertyClassification == LiteralPropertyCollection =>
-                  val array = entry.value.asInstanceOf[AmfArray]
-                  emitScalarArray(key, field, array, Some(entry.annotations))
-
-                case Some(entry)
-                    if entry.value
-                      .isInstanceOf[DialectDomainElement] && propertyClassification == ExtensionPointProperty =>
-                  val element = entry.value.asInstanceOf[DialectDomainElement]
-                  emitExternalObject(key, element, propertyMapping)
-
-                case Some(entry)
-                    if entry.value
-                      .isInstanceOf[DialectDomainElement] && propertyClassification == ExternalLinkProperty =>
-                  val element = entry.value.asInstanceOf[DialectDomainElement]
-                  emitExternalLink(key, element, propertyMapping)
-
-                case Some(entry)
-                    if entry.value
-                      .isInstanceOf[DialectDomainElement] && propertyClassification == ObjectProperty && !propertyMapping.isUnion =>
-                  val element = entry.value.asInstanceOf[DialectDomainElement]
-                  val result  = emitObjectEntry(key, element, propertyMapping, Some(entry.annotations))
-                  result
-
-                case Some(entry) if isArray(entry) && propertyClassification == ExternalLinkProperty =>
-                  val array = entry.value.asInstanceOf[AmfArray]
-                  emitExternalLink(key, array, propertyMapping, Some(entry.annotations))
-
-                case Some(entry)
-                    if isArray(entry) && propertyClassification == ObjectPropertyCollection && !propertyMapping.isUnion =>
-                  val array = entry.value.asInstanceOf[AmfArray]
-                  emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
-
-                case Some(entry) if isArray(entry) && propertyClassification == ObjectMapProperty =>
-                  val array = entry.value.asInstanceOf[AmfArray]
-                  emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
-
-                case Some(entry)
-                    if entry.value
-                      .isInstanceOf[DialectDomainElement] && propertyClassification == ObjectProperty && propertyMapping.isUnion =>
-                  val element = entry.value.asInstanceOf[DialectDomainElement]
-                  emitObjectEntry(key, element, propertyMapping)
-
-                case Some(entry)
-                    if isArray(entry) && propertyClassification == ObjectPropertyCollection && propertyMapping.isUnion =>
-                  val array = entry.value.asInstanceOf[AmfArray]
-                  emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
-
-                case Some(entry) if isArray(entry) && propertyClassification == ObjectPairProperty =>
-                  val array = entry.value.asInstanceOf[AmfArray]
-                  emitObjectPairs(key, array, propertyMapping, Some(entry.annotations))
-                case None => Nil // ignore
-              }
-            emitters ++= nextEmitter
-          }
-        }
+        emitters ++= emitField(field)
     }
     emitters
   }
+
+  private def emitField(field: Field): Seq[EntryEmitter] = {
+    findPropertyMapping(node, field) map { propertyMapping =>
+      if (keyPropertyId.isEmpty || propertyMapping
+            .nodePropertyMapping()
+            .value() != keyPropertyId.get) {
+
+        val key                    = propertyMapping.name().value()
+        val propertyClassification = propertyMapping.classification()
+
+        val nextEmitter: Seq[EntryEmitter] =
+          node.fields.getValueAsOption(field) match {
+            case Some(entry) if isScalar(entry) =>
+              val scalar = entry.value.asInstanceOf[AmfScalar]
+              emitScalar(key, field, scalar, Some(entry.annotations))
+
+            case Some(entry) if isArray(entry) && propertyClassification == LiteralPropertyCollection =>
+              val array = entry.value.asInstanceOf[AmfArray]
+              emitScalarArray(key, field, array, Some(entry.annotations))
+
+            case Some(entry)
+                if entry.value
+                  .isInstanceOf[DialectDomainElement] && propertyClassification == ExtensionPointProperty =>
+              val element = entry.value.asInstanceOf[DialectDomainElement]
+              emitExternalObject(key, element, propertyMapping)
+
+            case Some(entry)
+                if entry.value
+                  .isInstanceOf[DialectDomainElement] && propertyClassification == ExternalLinkProperty =>
+              val element = entry.value.asInstanceOf[DialectDomainElement]
+              emitExternalLink(key, element, propertyMapping)
+
+            case Some(entry)
+                if entry.value
+                  .isInstanceOf[DialectDomainElement] && propertyClassification == ObjectProperty && !propertyMapping.isUnion =>
+              val element = entry.value.asInstanceOf[DialectDomainElement]
+              val result  = emitObjectEntry(key, element, propertyMapping, Some(entry.annotations))
+              result
+
+            case Some(entry) if isArray(entry) && propertyClassification == ExternalLinkProperty =>
+              val array = entry.value.asInstanceOf[AmfArray]
+              emitExternalLink(key, array, propertyMapping, Some(entry.annotations))
+
+            case Some(entry)
+                if isArray(entry) && propertyClassification == ObjectPropertyCollection && !propertyMapping.isUnion =>
+              val array = entry.value.asInstanceOf[AmfArray]
+              emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
+
+            case Some(entry) if isArray(entry) && propertyClassification == ObjectMapProperty =>
+              val array = entry.value.asInstanceOf[AmfArray]
+              emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
+
+            case Some(entry)
+                if entry.value
+                  .isInstanceOf[DialectDomainElement] && propertyClassification == ObjectProperty && propertyMapping.isUnion =>
+              val element = entry.value.asInstanceOf[DialectDomainElement]
+              emitObjectEntry(key, element, propertyMapping)
+
+            case Some(entry)
+                if isArray(entry) && propertyClassification == ObjectPropertyCollection && propertyMapping.isUnion =>
+              val array = entry.value.asInstanceOf[AmfArray]
+              emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
+
+            case Some(entry) if isArray(entry) && propertyClassification == ObjectPairProperty =>
+              val array = entry.value.asInstanceOf[AmfArray]
+              emitObjectPairs(key, array, propertyMapping, Some(entry.annotations))
+            case None => Nil // ignore
+          }
+        nextEmitter
+      } else Nil
+    }
+  }.getOrElse(Nil)
 
   private def isArray(entry: Value) = {
     entry.value
