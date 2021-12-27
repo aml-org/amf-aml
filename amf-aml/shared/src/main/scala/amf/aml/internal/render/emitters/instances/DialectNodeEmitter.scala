@@ -213,13 +213,11 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 
             val nextEmitter: Seq[EntryEmitter] =
               node.fields.getValueAsOption(field) match {
-                case Some(entry) if entry.value.isInstanceOf[AmfScalar] =>
+                case Some(entry) if isScalar(entry) =>
                   val scalar = entry.value.asInstanceOf[AmfScalar]
                   emitScalar(key, field, scalar, Some(entry.annotations))
 
-                case Some(entry)
-                    if entry.value
-                      .isInstanceOf[AmfArray] && propertyClassification == LiteralPropertyCollection =>
+                case Some(entry) if isArray(entry) && propertyClassification == LiteralPropertyCollection =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitScalarArray(key, field, array, Some(entry.annotations))
 
@@ -242,21 +240,16 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                   val result  = emitObjectEntry(key, element, propertyMapping, Some(entry.annotations))
                   result
 
-                case Some(entry)
-                    if entry.value
-                      .isInstanceOf[AmfArray] && propertyClassification == ExternalLinkProperty =>
+                case Some(entry) if isArray(entry) && propertyClassification == ExternalLinkProperty =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitExternalLink(key, array, propertyMapping, Some(entry.annotations))
 
                 case Some(entry)
-                    if entry.value
-                      .isInstanceOf[AmfArray] && propertyClassification == ObjectPropertyCollection && !propertyMapping.isUnion =>
+                    if isArray(entry) && propertyClassification == ObjectPropertyCollection && !propertyMapping.isUnion =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
 
-                case Some(entry)
-                    if entry.value
-                      .isInstanceOf[AmfArray] && propertyClassification == ObjectMapProperty =>
+                case Some(entry) if isArray(entry) && propertyClassification == ObjectMapProperty =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
 
@@ -267,14 +260,11 @@ case class DialectNodeEmitter(node: DialectDomainElement,
                   emitObjectEntry(key, element, propertyMapping)
 
                 case Some(entry)
-                    if entry.value
-                      .isInstanceOf[AmfArray] && propertyClassification == ObjectPropertyCollection && propertyMapping.isUnion =>
+                    if isArray(entry) && propertyClassification == ObjectPropertyCollection && propertyMapping.isUnion =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitObjectEntry(key, array, propertyMapping, Some(entry.annotations))
 
-                case Some(entry)
-                    if entry.value
-                      .isInstanceOf[AmfArray] && propertyClassification == ObjectPairProperty =>
+                case Some(entry) if isArray(entry) && propertyClassification == ObjectPairProperty =>
                   val array = entry.value.asInstanceOf[AmfArray]
                   emitObjectPairs(key, array, propertyMapping, Some(entry.annotations))
                 case None => Nil // ignore
@@ -284,6 +274,15 @@ case class DialectNodeEmitter(node: DialectDomainElement,
         }
     }
     emitters
+  }
+
+  private def isArray(entry: Value) = {
+    entry.value
+      .isInstanceOf[AmfArray]
+  }
+
+  private def isScalar(entry: Value) = {
+    entry.value.isInstanceOf[AmfScalar]
   }
 
   protected def emitExternalLink(key: String,
@@ -519,163 +518,6 @@ case class DialectNodeEmitter(node: DialectDomainElement,
 //        nodeMappingsInRange = nodeMappingsInRange.filter { nodeMapping => nodeMetaTypes.contains(nodeMapping.id) }
         nodeMappingsInRange.flatMap(_.propertiesMapping()).find(_.nodePropertyMapping().value() == iri)
     }
-  }
-
-}
-
-case class DialectDomainElementLinkEmitter(node: DialectDomainElement, references: Seq[BaseUnit]) extends PartEmitter {
-  override def emit(b: PartBuilder): Unit = {
-    if (node.annotations.contains(classOf[RefInclude])) {
-      b.obj { m =>
-        m.entry("$include", node.includeName)
-      }
-    } else if (node.annotations.contains(classOf[JsonPointerRef])) {
-      b.obj { m =>
-        m.entry("$ref", node.linkLabel.option().getOrElse(node.linkTarget.get.id))
-      }
-    } else if (isFragmentRef(node, references)) {
-      b += YNode.include(node.includeName)
-    } else {
-      // case of library and declaration references
-      TextScalarEmitter(node.linkLabel.value(), node.annotations).emit(b)
-    }
-  }
-
-  def isFragmentRef(elem: DialectDomainElement, references: Seq[BaseUnit]): Boolean = {
-    elem.annotations.find(classOf[SourceNode]) match {
-      case Some(SourceNode(node)) => node.tagType == YType.Include
-      case None if references.nonEmpty =>
-        elem.linkTarget match {
-          case Some(domainElement) =>
-            references.exists {
-              case ref: DialectInstanceFragment =>
-                ref.encodes.id == domainElement.id
-              case _ => false
-            }
-          case _ =>
-            throw new Exception(s"Cannot check fragment for an element without target for element ${elem.id}")
-        }
-      case _ => false
-    }
-  }
-
-  override def position(): Position =
-    node.annotations
-      .find(classOf[LexicalInformation])
-      .map(_.range.start)
-      .getOrElse(ZERO)
-}
-
-private case class DialectObjectEntryEmitter(
-    key: String,
-    target: AmfElement,
-    propertyMapping: PropertyMapping,
-    references: Seq[BaseUnit],
-    dialect: Dialect,
-    ordering: SpecOrdering,
-    renderOptions: RenderOptions,
-    annotations: Option[Annotations] = None)(implicit val nodeMappableFinder: NodeMappableFinder)
-    extends EntryEmitter
-    with AmlEmittersHelper {
-  // this can be multiple mappings if we have a union in the range or a range pointing to a union mapping
-  val nodeMappings: Seq[NodeMapping] =
-    propertyMapping.objectRange().flatMap { rangeNodeMapping =>
-      findAllNodeMappings(rangeNodeMapping.value())
-    }
-
-  // val key property id, so we can pass it to the nested emitter and it is not emitted
-  val keyPropertyId: Option[String] = propertyMapping.mapTermKeyProperty().option()
-
-  // lets first extract the target values to emit, always as an array
-  val elements: Seq[DialectDomainElement] = target match {
-    case array: AmfArray =>
-      array.values.asInstanceOf[Seq[DialectDomainElement]]
-    case element: DialectDomainElement => Seq(element)
-  }
-
-  val isArray: Boolean = target.isInstanceOf[AmfArray]
-  val discriminator: DiscriminatorHelper =
-    DiscriminatorHelper(propertyMapping, this)
-
-  override def emit(b: EntryBuilder): Unit = {
-    // collect the emitters for each element, based on the available mappings
-    val mappedElements: Map[DialectNodeEmitter, DialectDomainElement] =
-      elements.foldLeft(Map[DialectNodeEmitter, DialectDomainElement]()) {
-        case (acc, dialectDomainElement: DialectDomainElement) =>
-          // Let's see if this element has a discriminator to add
-          nodeMappings.find(
-              nodeMapping =>
-                dialectDomainElement.meta.`type`
-                  .map(_.iri())
-                  .contains(nodeMapping.nodetypeMapping.value())) match {
-            case Some(nextNodeMapping) =>
-              val nodeEmitter = DialectNodeEmitter(
-                  dialectDomainElement,
-                  nextNodeMapping,
-                  references,
-                  dialect,
-                  ordering,
-                  discriminator = discriminator.compute(dialectDomainElement),
-                  keyPropertyId = keyPropertyId,
-                  renderOptions = renderOptions
-              )
-              acc + (nodeEmitter -> dialectDomainElement)
-            case _ =>
-              acc // TODO: raise violation
-          }
-        case (acc, _) => acc
-      }
-
-    if (keyPropertyId.isDefined) {
-      // emit map of nested objects by property
-      emitMap(b, mappedElements)
-    } else if (isArray) {
-      // arrays of objects
-      emitArray(b, mappedElements)
-    } else {
-      // single object
-      emitSingleElement(b, mappedElements)
-    }
-  }
-
-  def emitMap(b: EntryBuilder, mapElements: Map[DialectNodeEmitter, DialectDomainElement]): Unit = {
-    b.entry(
-        key,
-        _.obj { b =>
-          ordering.sorted(mapElements.keys.toSeq).foreach { emitter =>
-            val dialectDomainElement = mapElements(emitter)
-            val mapKeyField =
-              dialectDomainElement.meta.fields
-                .find(_.value
-                  .iri() == propertyMapping.mapTermKeyProperty().value())
-                .get
-            val mapKeyValue =
-              dialectDomainElement.fields.getValue(mapKeyField).toString
-            EntryPartEmitter(mapKeyValue, emitter).emit(b)
-          }
-        }
-    )
-  }
-
-  def emitArray(b: EntryBuilder, mappedElements: Map[DialectNodeEmitter, DialectDomainElement]): Unit = {
-    b.entry(key, _.list { b =>
-      ordering.sorted(mappedElements.keys.toSeq).foreach(_.emit(b))
-    })
-  }
-
-  def emitSingleElement(b: EntryBuilder, mappedElements: Map[DialectNodeEmitter, DialectDomainElement]): Unit = {
-    mappedElements.keys.headOption.foreach { emitter =>
-      EntryPartEmitter(key, emitter).emit(b)
-    }
-  }
-
-  override def position(): Position = {
-
-    annotations
-      .flatMap(_.find(classOf[LexicalInformation]))
-      .orElse(target.annotations.find(classOf[LexicalInformation]))
-      .map(_.range.start)
-      .getOrElse(ZERO)
   }
 
 }
