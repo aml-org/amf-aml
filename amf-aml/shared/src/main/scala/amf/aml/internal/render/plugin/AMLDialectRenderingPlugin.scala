@@ -61,7 +61,7 @@ class AMLDialectRenderingPlugin extends SYAMLBasedRenderPlugin {
   override def mediaTypes: Seq[String] = Seq(`application/yaml`)
 
   override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderOptions: RenderOptions,
+                                            renderConfig: RenderConfiguration,
                                             errorHandler: AMFErrorHandler): Option[YDocument] =
     throw new UnsupportedOperationException("Unreachable code")
 }

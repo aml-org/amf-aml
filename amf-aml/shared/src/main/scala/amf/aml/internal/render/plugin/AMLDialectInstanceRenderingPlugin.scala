@@ -65,7 +65,7 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
     Seq(`application/yaml`, `application/json`)
 
   override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderOptions: RenderOptions,
+                                            renderConfig: RenderConfiguration,
                                             errorHandler: AMFErrorHandler): Option[YDocument] =
     throw new UnsupportedOperationException("Unreachable code")
 }
