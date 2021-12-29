@@ -3,7 +3,7 @@ package amf.aml.internal.parse.plugin
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance, kind}
 import amf.aml.internal.AMLDialectInstancePlugin
 import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
-import amf.aml.internal.parse.headers.DialectHeader
+import amf.aml.internal.parse.hints.DialectHeader
 import amf.aml.internal.parse.instances._
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.core.client.common.{NormalPriority, PluginPriority}

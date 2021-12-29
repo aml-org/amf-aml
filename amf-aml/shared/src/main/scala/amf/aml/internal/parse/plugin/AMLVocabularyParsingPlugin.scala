@@ -1,7 +1,7 @@
 package amf.aml.internal.parse.plugin
 
 import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
-import amf.aml.internal.parse.headers.{DialectHeader, ExtensionHeader}
+import amf.aml.internal.parse.hints.{DialectHeader, ExtensionHeader}
 import amf.aml.internal.parse.plugin.error.CannotParseDocumentException
 import amf.aml.internal.parse.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.core.client.common.{NormalPriority, PluginPriority}

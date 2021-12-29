@@ -2,7 +2,7 @@ package amf.aml.internal.parse.plugin
 
 import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
 import amf.aml.internal.parse.dialects.{DialectContext, DialectsParser}
-import amf.aml.internal.parse.headers.{DialectHeader, ExtensionHeader}
+import amf.aml.internal.parse.hints.{DialectHeader, ExtensionHeader}
 import amf.aml.internal.parse.plugin.error.CannotParseDocumentException
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler

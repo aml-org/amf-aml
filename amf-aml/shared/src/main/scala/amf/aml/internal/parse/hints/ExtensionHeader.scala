@@ -1,4 +1,4 @@
-package amf.aml.internal.parse.headers
+package amf.aml.internal.parse.hints
 
 object ExtensionHeader {
 

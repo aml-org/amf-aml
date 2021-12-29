@@ -1,13 +1,16 @@
-package amf.aml.internal.parse.headers
+package amf.aml.internal.parse.hints
 
 import amf.core.internal.parser.Root
 import org.mulesoft.common.core._
 
-object DialectHeader extends RamlHeaderExtractor with JsonHeaderExtractor with KeyPropertyHeaderExtractor {
+object DialectHeader {
 
   /** Fetch header or dialect directive. */
-  def apply(document: Root): Option[String] = {
-    comment(document).orElse(dialect(document).map(metaText => s"%$metaText")).map(_.stripSpaces)
+  def apply(root: Root): Option[String] = {
+    YamlDirectiveComment
+      .from(root)
+      .orElse($DialectPropertyValue.from(root).map(metaText => s"%$metaText"))
+      .map(_.stripSpaces)
   }
 
   /**
