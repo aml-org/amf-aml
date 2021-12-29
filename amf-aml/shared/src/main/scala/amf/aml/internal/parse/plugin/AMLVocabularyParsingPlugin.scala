@@ -1,7 +1,8 @@
 package amf.aml.internal.parse.plugin
 
+import amf.aml.client.scala.model.document.kind
 import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
-import amf.aml.internal.parse.hints.{DialectHeader, ExtensionHeader}
+import amf.aml.internal.parse.hints.VocabularyGuess
 import amf.aml.internal.parse.plugin.error.CannotParseDocumentException
 import amf.aml.internal.parse.vocabularies.{VocabulariesParser, VocabularyContext}
 import amf.core.client.common.{NormalPriority, PluginPriority}
@@ -17,14 +18,12 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
 
   override def spec: Spec = Spec.AML
 
-  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-    val header = DialectHeader(document)
+  override def parse(root: Root, ctx: ParserContext): BaseUnit = {
 
-    header match {
-      case Some(ExtensionHeader.VocabularyHeader) =>
-        new VocabulariesParser(document)(new VocabularyContext(ctx)).parseDocument()
-      case Some(header) => throw CannotParseDocumentException(s"Header $header is not a valid AML Vocabulary header")
-      case _            => throw CannotParseDocumentException("Missing header for AML Vocabulary")
+    VocabularyGuess.from(root) match {
+      case Some(kind.Vocabulary) =>
+        new VocabulariesParser(root)(new VocabularyContext(ctx)).parseDocument()
+      case _ => throw CannotParseDocumentException("Cannot parse document as an AML Vocabulary")
     }
   }
 
@@ -35,12 +34,7 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
 
   override val id: String = "vocabulary-parsing-plugin"
 
-  override def applies(root: Root): Boolean = {
-    DialectHeader(root) match {
-      case Some(ExtensionHeader.VocabularyHeader) => true
-      case _                                      => false
-    }
-  }
+  override def applies(root: Root): Boolean = VocabularyGuess.from(root).isDefined
 
   override def priority: PluginPriority = NormalPriority
 
