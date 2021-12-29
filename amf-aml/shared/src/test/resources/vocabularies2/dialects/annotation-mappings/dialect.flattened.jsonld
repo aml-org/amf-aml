@@ -717,7 +717,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/MaintainerAnnotationMapping/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/MaintainerAnnotationMapping",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(17,0)-(21,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(16,2)-(21,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/MaintainerAnnotationMapping/source-map/lexical/element_0",
@@ -742,7 +742,7 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/ContributorAnnotationMapping/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/ContributorAnnotationMapping",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(22,0)-(26,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(21,2)-(26,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/ContributorAnnotationMapping/source-map/lexical/element_0",

@@ -146,10 +146,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
-            AnnotationMappingParser(entry, parent).parse() match {
-              case Some(annotationMapping) => ctx.declarations += annotationMapping
-              case None                    => // Ignore
-            }
+            ctx.declarations += AnnotationMappingParser(entry, parent).parse()
           }
         case YType.Null =>
         case t =>

@@ -11,28 +11,28 @@ import amf.aml.internal.validate.DialectValidations.DialectError
 import org.yaml.model.{YMap, YMapEntry, YType}
 
 case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit val ctx: DialectContext) {
-  def parse(): Option[AnnotationMapping] = {
+  def parse(): AnnotationMapping = {
     val name = entry.key.toString
+    val annotationMapping = AnnotationMapping(Annotations(entry))
+      .set(AnnotationMappingModel.Name, name, Annotations(entry.key))
+      .withId(s"$parent/$name")
     entry.value.tagType match {
       case YType.Map =>
         val map = entry.value.as[YMap]
-        val annotationMapping = AnnotationMapping(map)
-          .set(AnnotationMappingModel.Name, name, Annotations(entry.key))
-          .withId(s"$parent/$name")
         ctx.closedNode("annotationMapping", annotationMapping.id, map)
 
         PropertyLikeMappingParser(map, annotationMapping).parse()
 
         parseDomain(map, annotationMapping)
         parseAnnotations(map, annotationMapping, ctx.declarations)
-        Some(annotationMapping)
+        annotationMapping
       case t =>
         ctx.eh
           .violation(DialectError,
                      parent,
                      s"Invalid type $t (expected ${YType.Map}) for annotation mapping node $name",
                      entry.value.location)
-        None
+        annotationMapping
     }
   }
 

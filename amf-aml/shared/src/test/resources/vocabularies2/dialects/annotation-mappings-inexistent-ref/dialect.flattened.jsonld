@@ -44,6 +44,11 @@
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml",
+      "http://a.ml/vocabularies/document#declares": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/declarations/InvalidAnnotationMapping"
+        }
+      ],
       "@type": [
         "http://a.ml/vocabularies/meta#Dialect",
         "http://a.ml/vocabularies/document#Document",
@@ -70,6 +75,19 @@
       ]
     },
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/declarations/InvalidAnnotationMapping",
+      "@type": [
+        "http://a.ml/vocabularies/meta#NodeAnnotationMapping",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/core#name": "InvalidAnnotationMapping",
+      "http://a.ml/vocabularies/document-source-maps#sources": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/declarations/InvalidAnnotationMapping/source-map"
+        }
+      ]
+    },
+    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -86,6 +104,20 @@
         },
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/declarations/InvalidAnnotationMapping/source-map",
+      "@type": [
+        "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/declarations/InvalidAnnotationMapping/source-map/lexical/element_1"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/declarations/InvalidAnnotationMapping/source-map/lexical/element_0"
         }
       ]
     },
@@ -108,6 +140,16 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(13,19)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/declarations/InvalidAnnotationMapping/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/declarations/InvalidAnnotationMapping",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(8,0)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings-inexistent-ref/dialect.yaml#/declarations/InvalidAnnotationMapping/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/core#name",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(6,26)]"
     }
   ]
 }

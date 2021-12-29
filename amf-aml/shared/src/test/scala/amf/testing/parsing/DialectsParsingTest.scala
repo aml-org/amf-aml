@@ -338,4 +338,14 @@ trait DialectsParsingTest extends DialectTests {
         directory = s"$basePath/json/with-vocabulary"
     )
   }
+
+  multiGoldenTest("Empty annotation mapping with name has lexical", "dialect.%s") { config =>
+    cycle(
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+      directory = s"$basePath/empty-annotation-mapping"
+    )
+  }
 }
