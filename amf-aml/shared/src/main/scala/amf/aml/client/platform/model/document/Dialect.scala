@@ -17,15 +17,27 @@ case class Dialect(private[amf] val _internal: InternalDialect) extends BaseUnit
   def name: StrField                              = _internal.name()
   def version: StrField                           = _internal.version()
   def nameAndVersion: String                      = _internal.nameAndVersion()
-  def header: String                              = _internal.header
-  def isLibraryHeader(header: String): Boolean    = _internal.isLibraryHeader(header)
-  def isFragmentHeader(header: String): Boolean   = _internal.isFragmentHeader(header)
-  def libraryHeader: ClientOption[String]         = _internal.libraryHeader.asClient
-  def fragmentHeaders: ClientList[String]         = _internal.fragmentHeaders.asClient
-  def allHeaders: ClientList[String]              = _internal.allHeaders.asClient
   def externals: ClientList[External]             = _internal.externals.asClient
   def documents(): DocumentsModel                 = DocumentsModel(_internal.documents())
   def extensions(): ClientList[SemanticExtension] = _internal.extensions().asClient
+
+  @deprecated("Useless functionality", "AML 6.0.3")
+  def header: String = _internal.header
+
+  @deprecated("Useless functionality", "AML 6.0.3")
+  def isLibraryHeader(header: String): Boolean = _internal.isLibraryHeader(header)
+
+  @deprecated("Useless functionality", "AML 6.0.3")
+  def isFragmentHeader(header: String): Boolean = _internal.isFragmentHeader(header)
+
+  @deprecated("Useless functionality", "AML 6.0.3")
+  def libraryHeader: ClientOption[String] = _internal.libraryHeader.asClient
+
+  @deprecated("Useless functionality", "AML 6.0.3")
+  def fragmentHeaders: ClientList[String] = _internal.fragmentHeaders.asClient
+
+  @deprecated("Useless functionality", "AML 6.0.3")
+  def allHeaders: ClientList[String] = _internal.allHeaders.asClient
 
   def withName(name: String): Dialect = {
     _internal.withName(name)
