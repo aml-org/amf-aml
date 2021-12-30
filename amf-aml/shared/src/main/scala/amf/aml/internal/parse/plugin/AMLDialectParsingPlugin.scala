@@ -1,8 +1,9 @@
 package amf.aml.internal.parse.plugin
 
+import amf.aml.client.scala.model.document.kind
 import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
 import amf.aml.internal.parse.dialects.{DialectContext, DialectsParser}
-import amf.aml.internal.parse.headers.{DialectHeader, ExtensionHeader}
+import amf.aml.internal.parse.hints.DialectGuess
 import amf.aml.internal.parse.plugin.error.CannotParseDocumentException
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
@@ -17,23 +18,16 @@ class AMLDialectParsingPlugin extends AMFParsePlugin {
 
   override def spec: Spec = Spec.AML
 
-  val knownHeaders =
-    IndexedSeq(ExtensionHeader.DialectHeader,
-               ExtensionHeader.DialectFragmentHeader,
-               ExtensionHeader.DialectLibraryHeader)
+  override def parse(root: Root, ctx: ParserContext): BaseUnit = {
 
-  override def parse(document: Root, ctx: ParserContext): BaseUnit = {
-    val header = DialectHeader(document)
-
-    header match {
-      case Some(ExtensionHeader.DialectLibraryHeader) =>
-        new DialectsParser(document)(cleanDialectContext(ctx, document)).parseLibrary()
-      case Some(ExtensionHeader.DialectFragmentHeader) =>
-        new DialectsParser(document)(new DialectContext(ctx)).parseFragment()
-      case Some(ExtensionHeader.DialectHeader) =>
-        parseDialect(document, cleanDialectContext(ctx, document))
-      case Some(header) => throw CannotParseDocumentException(s"Header $header is not a valid AML Dialect header")
-      case _            => throw CannotParseDocumentException("Missing header for AML Dialect")
+    DialectGuess.from(root) match {
+      case Some(kind.DialectLibrary) =>
+        new DialectsParser(root)(cleanDialectContext(ctx, root)).parseLibrary()
+      case Some(kind.DialectFragment) =>
+        new DialectsParser(root)(new DialectContext(ctx)).parseFragment()
+      case Some(kind.Dialect) =>
+        parseDialect(root, cleanDialectContext(ctx, root))
+      case _ => throw CannotParseDocumentException("Cannot parse document as an AML Dialect")
     }
   }
 
@@ -53,12 +47,7 @@ class AMLDialectParsingPlugin extends AMFParsePlugin {
 
   override val id: String = "dialect-parsing-plugin"
 
-  override def applies(root: Root): Boolean = {
-    DialectHeader(root) match {
-      case Some(header) => knownHeaders.contains(header)
-      case _            => false
-    }
-  }
+  override def applies(root: Root): Boolean = DialectGuess.from(root).isDefined
 
   override def priority: PluginPriority = NormalPriority
 

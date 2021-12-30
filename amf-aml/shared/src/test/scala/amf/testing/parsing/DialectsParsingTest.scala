@@ -1,6 +1,7 @@
 package amf.testing.parsing
 
 import amf.aml.client.scala.AMLConfiguration
+import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{Amf, AmfJsonHint, Aml, Mimes, VocabularyYamlHint}
 import amf.testing.common.utils.DialectTests
 
@@ -303,6 +304,38 @@ trait DialectsParsingTest extends DialectTests {
         Some(Mimes.`application/ld+json`),
         AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
         directory = s"$basePath/annotation-mappings-with-extra-facets"
+    )
+  }
+
+  // JSON
+
+  test("Parse simple JSON dialect") {
+    cycle(
+        "dialect.json",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
+        directory = s"$basePath/json/simple"
+    )
+  }
+
+  test("Parse JSON dialect with library") {
+    cycle(
+        "dialect.json",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
+        directory = s"$basePath/json/with-library"
+    )
+  }
+
+  test("Parse JSON dialect with vocabulary") {
+    cycle(
+        "dialect.json",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
+        directory = s"$basePath/json/with-vocabulary"
     )
   }
 }
