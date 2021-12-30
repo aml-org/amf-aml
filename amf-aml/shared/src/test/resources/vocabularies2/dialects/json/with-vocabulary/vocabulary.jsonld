@@ -1,0 +1,74 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "AML 1.0"
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "http://myvocabulary.org#MyClass"
+        },
+        {
+          "@id": "http://myvocabulary.org#myProperty"
+        }
+      ],
+      "@type": [
+        "meta:Vocabulary",
+        "owl:Ontology",
+        "doc:Unit"
+      ],
+      "core:name": "My Vocabulary",
+      "meta:base": "http://myvocabulary.org#",
+      "doc:location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/json/with-vocabulary/vocabulary.json",
+      "doc:usage": "Example vocabulary",
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "http://myvocabulary.org#MyClass",
+      "@type": [
+        "owl:Class",
+        "doc:DomainElement"
+      ],
+      "core:name": "MyClass",
+      "core:displayName": "My Class",
+      "core:description": "Some class",
+      "meta:properties": [
+        {
+          "@id": "http://myvocabulary.org#\"myProperty\""
+        }
+      ]
+    },
+    {
+      "@id": "http://myvocabulary.org#myProperty",
+      "@type": [
+        "owl:DatatypeProperty",
+        "meta:Property",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "My Property",
+      "core:description": "Some property",
+      "rdfs:range": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/json/with-vocabulary/vocabulary.json",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}

@@ -12,7 +12,7 @@ object DialectGuess extends Guess[kind.DialectDocumentKind] {
 
   override def from(root: Root): Option[kind.DialectDocumentKind] = hint(root).flatMap(matchHint)
 
-  override def hint(root: Root): Option[String] = YamlDirectiveComment.from(root).orElse($DialectPropertyValue.from(root))
+  override def hint(root: Root): Option[String] = YamlDirectiveComment.from(root).orElse($TypePropertyValue.from(root))
 
   private def matchHint(hint: String): Option[kind.DialectDocumentKind] = {
     hint match {

@@ -1,0 +1,12 @@
+{
+  "$type": "Library / Dialect 1.0",
+  "nodeMappings": {
+    "AnotherNode": {
+      "mapping": {
+        "anotherProperty": {
+          "range": "string"
+        }
+      }
+    }
+  }
+}

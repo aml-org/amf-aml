@@ -11,7 +11,7 @@ object VocabularyGuess extends Guess[kind.Vocabulary.type] {
   override def from(root: Root): Option[kind.Vocabulary.type] = hint(root).flatMap(matchHint)
 
   override def hint(root: Root): Option[String] =
-    YamlDirectiveComment.from(root).orElse($DialectPropertyValue.from(root))
+    YamlDirectiveComment.from(root).orElse($TypePropertyValue.from(root))
 
   private def matchHint(hint: String): Option[kind.Vocabulary.type] = {
     hint match {

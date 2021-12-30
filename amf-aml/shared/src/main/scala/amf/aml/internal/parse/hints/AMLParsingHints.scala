@@ -13,6 +13,10 @@ object $DialectPropertyValue extends PropertyValue {
   override val key: String = "$dialect"
 }
 
+object $TypePropertyValue extends PropertyValue {
+  override val key: String = "$type"
+}
+
 trait PropertyValue {
   val key: String
   def from(root: Root): Option[String] = {

@@ -1,0 +1,22 @@
+{
+  "$type": "Vocabulary 1.0",
+  "vocabulary": "My Vocabulary",
+  "usage": "Example vocabulary",
+  "base": "http://myvocabulary.org#",
+  "classTerms": {
+    "MyClass": {
+      "displayName": "My Class",
+      "description": "Some class",
+      "properties": [
+        "myProperty"
+      ]
+    }
+  },
+  "propertyTerms": {
+    "myProperty": {
+      "displayName": "My Property",
+      "description": "Some property",
+      "range": "string"
+    }
+  }
+}

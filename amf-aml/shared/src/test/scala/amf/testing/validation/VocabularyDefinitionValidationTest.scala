@@ -43,6 +43,10 @@ class VocabularyDefinitionValidationTest
     validate("vocabulary.yaml", Some("validation.jsonld"), "missing-property-term")
   }
 
+  test("Validate vocabulary in JSON") {
+    validate("vocabulary.json", None, "../../dialects/json/with-vocabulary")
+  }
+
   protected def validate(vocabulary: String,
                          goldenReport: Option[String] = None,
                          path: String): Future[scalatest.Assertion] = {

@@ -1,0 +1,209 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "AML 1.0"
+    },
+    {
+      "@id": "/externals/myExternal",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "myExternal",
+      "meta:base": "http://myexternal.org#"
+    },
+    {
+      "@id": "/documents",
+      "@type": [
+        "meta:DocumentsModel",
+        "doc:DomainElement"
+      ],
+      "meta:rootDocument": {
+        "@id": "#/documents/root"
+      }
+    },
+    {
+      "@id": "#/documents/root",
+      "@type": [
+        "meta:DocumentMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "Test 1",
+      "meta:encodedNode": [
+        {
+          "@id": "#/declarations/RootNode"
+        }
+      ]
+    },
+    {
+      "@id": "",
+      "doc:references": [
+        {
+          "@id": "./vocabulary.json"
+        }
+      ],
+      "doc:declares": [
+        {
+          "@id": "#/declarations/RootNode"
+        }
+      ],
+      "@type": [
+        "meta:Dialect",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "core:name": "Test",
+      "core:version": "1",
+      "meta:externals": [
+        {
+          "@id": "/externals/myExternal"
+        }
+      ],
+      "meta:documents": {
+        "@id": "/documents"
+      },
+      "doc:location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/json/with-vocabulary/dialect.json",
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "./vocabulary.json",
+      "@type": [
+        "meta:Vocabulary",
+        "owl:Ontology",
+        "doc:Unit"
+      ],
+      "core:name": "My Vocabulary",
+      "doc:declares": [
+        {
+          "@id": "http://myvocabulary.org#MyClass"
+        },
+        {
+          "@id": "http://myvocabulary.org#myProperty"
+        }
+      ],
+      "meta:base": "http://myvocabulary.org#",
+      "doc:location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/json/with-vocabulary/vocabulary.json",
+      "doc:usage": "Example vocabulary",
+      "doc:root": false,
+      "doc:processingData": {
+        "@id": "./vocabulary.json#/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declarations/RootNode",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "shacl:targetClass": [
+        {
+          "@id": "http://myvocabulary.org#MyClass"
+        }
+      ],
+      "core:name": "RootNode",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/RootNode/property/anotherProperty"
+        },
+        {
+          "@id": "#/declarations/RootNode/property/myProperty"
+        }
+      ]
+    },
+    {
+      "@id": "http://myvocabulary.org#MyClass",
+      "@type": [
+        "owl:Class",
+        "doc:DomainElement"
+      ],
+      "core:name": "MyClass",
+      "core:displayName": "My Class",
+      "core:description": "Some class",
+      "meta:properties": [
+        {
+          "@id": "http://myvocabulary.org#\"myProperty\""
+        }
+      ]
+    },
+    {
+      "@id": "http://myvocabulary.org#myProperty",
+      "@type": [
+        "owl:DatatypeProperty",
+        "meta:Property",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "My Property",
+      "core:description": "Some property",
+      "rdfs:range": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "./vocabulary.json#/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "AML 1.0"
+    },
+    {
+      "@id": "#/declarations/RootNode/property/anotherProperty",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://myexternal.org#anotherProperty"
+        }
+      ],
+      "core:name": "anotherProperty",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/RootNode/property/myProperty",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://myvocabulary.org#myProperty"
+        }
+      ],
+      "core:name": "myProperty",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/json/with-vocabulary/dialect.json",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "owl": "http://www.w3.org/2002/07/owl#"
+  }
+}

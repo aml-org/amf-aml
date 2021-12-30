@@ -1,6 +1,7 @@
 package amf.testing.parsing
 
 import amf.aml.client.scala.AMLConfiguration
+import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.{Amf, AmfJsonHint, Aml, Mimes, VocabularyYamlHint}
 import amf.testing.common.utils.DialectTests
 
@@ -82,5 +83,15 @@ class VocabularyParsingTest extends DialectTests {
           Some(Mimes.`application/ld+json`),
           config.config,
           directory = s"${basePath}multiple-extends/")
+  }
+
+  test("Parse vocabulary in JSON") {
+    cycle(
+        "vocabulary.json",
+        "vocabulary.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
+        directory = s"${basePath}../dialects/json/with-vocabulary/"
+    )
   }
 }
