@@ -1,0 +1,15 @@
+#%Dialect 1.0
+dialect: SemEx
+version: "1.0"
+documents:
+  root:
+    encodes: {}
+
+annotationMappings:
+  myNodeMapping:
+    propertyTerm: term
+    range: string
+
+extensions:
+  myExtension: myNodeMapping
+  otherExtension:

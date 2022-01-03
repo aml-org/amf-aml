@@ -24,8 +24,8 @@ nodeMappings:
         range: string
       email:
         range: string
-uses:
-  github: github.vocabulary.yaml
 extensions:
   maintainer: MaintainerAnnotationMapping
   contributor: ContributorAnnotationMapping
+uses:
+  github: github.vocabulary.yaml
