@@ -1,0 +1,269 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "meta:Dialect",
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "core:name": [
+      {
+        "@value": "Annotation mappings"
+      }
+    ],
+    "core:version": [
+      {
+        "@value": "1.0"
+      }
+    ],
+    "meta:documents": [
+      {
+        "@id": "/documents",
+        "@type": [
+          "meta:DocumentsModel",
+          "doc:DomainElement"
+        ],
+        "meta:rootDocument": [
+          {
+            "@id": "#/documents/root",
+            "@type": [
+              "meta:DocumentMapping",
+              "doc:DomainElement"
+            ],
+            "core:name": [
+              {
+                "@value": "Annotation mappings 1.0"
+              }
+            ],
+            "meta:encodedNode": [
+              {
+                "@id": "http://amferror.com/#errorNodeMappable/null"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/documents/root/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/documents/root/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-annotation-mapping/dialect.yaml#/documents/root"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(5,7)-(7,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/documents/root/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "meta:encodedNode"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(6,4)-(7,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "/documents#/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "/documents#/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-annotation-mapping/dialect.yaml/documents"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(5,0)-(7,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "/documents#/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "meta:rootDocument"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(5,2)-(7,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:location": [
+      {
+        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-annotation-mapping/dialect.yaml"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#/BaseUnitProcessingData",
+        "@type": [
+          "doc:BaseUnitProcessingData"
+        ],
+        "doc:transformed": [
+          {
+            "@value": false
+          }
+        ],
+        "doc:sourceSpec": [
+          {
+            "@value": "AML 1.0"
+          }
+        ]
+      }
+    ],
+    "sourcemaps:sources": [
+      {
+        "@id": "#/source-map",
+        "@type": [
+          "sourcemaps:SourceMap"
+        ],
+        "sourcemaps:lexical": [
+          {
+            "@id": "#/source-map/lexical/element_3",
+            "sourcemaps:element": [
+              {
+                "@value": "core:version"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(3,0)-(4,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_1",
+            "sourcemaps:element": [
+              {
+                "@value": "core:name"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(2,0)-(3,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_0",
+            "sourcemaps:element": [
+              {
+                "@value": "meta:documents"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(4,0)-(7,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_2",
+            "sourcemaps:element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-annotation-mapping/dialect.yaml"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(2,0)-(9,0)]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declarations/aMapping",
+        "@type": [
+          "meta:NodeAnnotationMapping",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "aMapping"
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "#/declarations/aMapping/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "#/declarations/aMapping/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-annotation-mapping/dialect.yaml#/declarations/aMapping"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(8,2)-(9,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/aMapping/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(8,2)-(8,10)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-annotation-mapping/dialect.yaml",
+      "doc": "http://a.ml/vocabularies/document#",
+      "core": "http://a.ml/vocabularies/core#",
+      "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
+      "meta": "http://a.ml/vocabularies/meta#"
+    }
+  }
+]

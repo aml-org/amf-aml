@@ -71,14 +71,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     map.key("extensions").foreach { extensionsEntry =>
       extensionsEntry.value.tagType match {
         case YType.Map =>
-          Some {
-            val entries = extensionsEntry.value.as[YMap].entries
-            val semanticExtensions =
-              entries.flatMap(e => SemanticExtensionParser(e, s"${dialect.id}/semantic-extensions").parse())
-            if (semanticExtensions.nonEmpty) {
-              dialect.setArrayWithoutId(DialectModel.Extensions, semanticExtensions, Annotations(extensionsEntry))
-            }
-          }
+          val entries = extensionsEntry.value.as[YMap].entries
+          val semanticExtensions =
+            entries.map(e => SemanticExtensionParser(e, s"${dialect.id}/semantic-extensions").parse())
+          dialect.setArrayWithoutId(DialectModel.Extensions,
+                                    semanticExtensions,
+                                    Annotations(extensionsEntry) ++= Annotations.virtual())
         case t =>
           ctx.eh.violation(DialectError,
                            dialect.id,
@@ -146,10 +144,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
       e.value.tagType match {
         case YType.Map =>
           e.value.as[YMap].entries.foreach { entry =>
-            AnnotationMappingParser(entry, parent).parse() match {
-              case Some(annotationMapping) => ctx.declarations += annotationMapping
-              case None                    => // Ignore
-            }
+            ctx.declarations += AnnotationMappingParser(entry, parent).parse()
           }
         case YType.Null =>
         case t =>

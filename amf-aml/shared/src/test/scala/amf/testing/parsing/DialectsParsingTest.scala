@@ -338,4 +338,25 @@ trait DialectsParsingTest extends DialectTests {
         directory = s"$basePath/json/with-vocabulary"
     )
   }
+
+  multiGoldenTest("Empty annotation mapping with name has lexical", "dialect.%s") { config =>
+    cycle(
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+      directory = s"$basePath/empty-annotation-mapping"
+    )
+  }
+
+  multiGoldenTest("Empty semantic extension with name has lexical and SemEx array is Virtual", "dialect.%s") {
+    config =>
+      cycle(
+          "dialect.yaml",
+          config.golden,
+          Some(Mimes.`application/ld+json`),
+          AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+          directory = s"$basePath/empty-semantic-extensions"
+      )
+  }
 }
