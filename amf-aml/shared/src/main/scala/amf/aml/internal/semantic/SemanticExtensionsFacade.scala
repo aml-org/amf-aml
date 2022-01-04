@@ -8,7 +8,12 @@ import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.semantic.SemanticExtensionHelper.{findAnnotationMapping, findSemanticExtension}
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
-import amf.core.client.scala.parse.document.{ParserContext, SyamlParsedDocument, UnspecifiedReference}
+import amf.core.client.scala.parse.document.{
+  EmptyFutureDeclarations,
+  ParserContext,
+  SyamlParsedDocument,
+  UnspecifiedReference
+}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{ParseConfiguration, Root}
 import org.mulesoft.common.core.CachedFunction
@@ -64,7 +69,8 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
   }
 
   private def instanceContext(dialect: Dialect, ctx: ParserContext) = {
-    new DialectInstanceContext(dialect, DefaultNodeMappableFinder(Seq(dialect)), ctx)
+    val nextCtx = ctx.copy(futureDeclarations = EmptyFutureDeclarations())
+    new DialectInstanceContext(dialect, DefaultNodeMappableFinder(Seq(dialect)), nextCtx)
   }
 
   private def mergeAnnotationIntoExtension(instanceElement: DialectDomainElement, extension: DomainExtension) = {
@@ -95,6 +101,7 @@ class SemanticExtensionsFacade private (val registry: AMLRegistry) {
     val nodeParser      = InstanceNodeParser(fakeRoot)
     val propertyParser  = new ElementPropertyParser(fakeRoot, YMap.empty, nodeParser.parse)
     propertyParser.parse(extensionId, ast, mapping, instanceElement)
+    ctx.futureDeclarations.resolve()
     instanceElement
   }
 

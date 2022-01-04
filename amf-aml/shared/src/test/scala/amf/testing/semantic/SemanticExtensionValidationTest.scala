@@ -55,12 +55,21 @@ class SemanticExtensionValidationTest extends DialectInstanceValidation {
     }
   }
 
+  test("Unresolved links should be validated") {
+    getConfig(Seq("object-extensions.yaml")).flatMap { config =>
+      validate("dialect.yaml",
+               "instances/invalid-obj-link.yaml",
+               Some("reports/invalid-obj-link.report"),
+               config = config)
+    }
+  }
+
   private def getConfig(dialects: Seq[String]): Future[AMLConfiguration] = {
     val config = AMLConfiguration
       .predefined()
       .withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris)
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
-    val loadedConfig = dialects.foldLeft(Future { config }) { (acc, curr) =>
+    val loadedConfig = dialects.foldLeft(Future.successful(config)) { (acc, curr) =>
       acc.flatMap(config => config.withDialect(basePath + curr))
     }
     loadedConfig.map(_.withErrorHandlerProvider(DefaultErrorHandlerProvider))
