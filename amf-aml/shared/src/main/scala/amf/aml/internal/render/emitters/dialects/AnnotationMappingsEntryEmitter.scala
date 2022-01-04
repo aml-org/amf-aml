@@ -1,7 +1,7 @@
 package amf.aml.internal.render.emitters.dialects
 
 import amf.core.client.common.position.Position
-import amf.core.internal.render.BaseEmitters.{pos, traverse}
+import amf.core.internal.render.BaseEmitters.{ArrayEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
@@ -47,7 +47,12 @@ case class AnnotationMappingEmitter(dialect: Dialect,
         element.name.value(),
         _.obj { b =>
           val emitters = ArrayBuffer.empty[EntryEmitter]
-          emitters.appendAll(emitAlias("domain", element.domain(), Domain, YType.Str))
+          emitters ++= element.fields
+            .entry(Domain)
+            .map { entry =>
+              emitAliasSet("domain", entry, ordering, YType.Seq)
+            }
+            .toSeq
           emitters.appendAll(PropertyLikeMappingEmitter(dialect, element, ordering, aliases).emitters)
           traverse(ordering.sorted(emitters), b)
         }

@@ -1,0 +1,9 @@
+#%Vocabulary 1.0
+vocabulary: GitHub
+base: http://github.org/vocabulary#
+
+propertyTerms:
+  contributor:
+    displayName: Contributor
+    description: Contributor for a github repository
+    range: string

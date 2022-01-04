@@ -14,6 +14,13 @@ class ParsedDialectRenderTest extends FunSuiteCycleTests with PlatformSecrets {
     cycle("dialect.yaml", "dialect.cycled.yaml", s"${basePath}annotation-mappings/", UnhandledErrorHandler)
   }
 
+  test("Cycle dialect with annotation mappings with multiple domains") {
+    cycle("dialect.yaml",
+          "dialect.cycled.yaml",
+          s"${basePath}annotation-mapping-with-multiple-domains/",
+          UnhandledErrorHandler)
+  }
+
   if (platform.name == "jvm") {
     // Due to issues with how numbers are emitted.
     test("Cycle dialect with annotation mappings with type discriminators") {

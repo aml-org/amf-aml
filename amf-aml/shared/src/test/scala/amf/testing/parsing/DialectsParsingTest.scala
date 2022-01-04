@@ -341,11 +341,11 @@ trait DialectsParsingTest extends DialectTests {
 
   multiGoldenTest("Empty annotation mapping with name has lexical", "dialect.%s") { config =>
     cycle(
-      "dialect.yaml",
-      config.golden,
-      Some(Mimes.`application/ld+json`),
-      AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
-      directory = s"$basePath/empty-annotation-mapping"
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/empty-annotation-mapping"
     )
   }
 
@@ -358,5 +358,15 @@ trait DialectsParsingTest extends DialectTests {
           AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
           directory = s"$basePath/empty-semantic-extensions"
       )
+  }
+
+  multiGoldenTest("Annotation mapping with multiple domains", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/annotation-mapping-with-multiple-domains"
+    )
   }
 }
