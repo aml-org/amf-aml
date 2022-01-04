@@ -1,0 +1,14 @@
+ModelId: file://amf-aml/shared/src/test/resources/vocabularies2/semantic/validation/instances/invalid-obj-link.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/core#unresolved-reference
+  Message: Unresolved reference 'something'
+  Severity: Violation
+  Target: file://amf-aml/shared/src/test/resources/vocabularies2/semantic/validation/instances/invalid-obj-link.yaml#/encodes/maintainer/(maintainer)/users/0
+  Property: 
+  Range: [(4,9)-(4,18)]
+  Location: file://amf-aml/shared/src/test/resources/vocabularies2/semantic/validation/instances/invalid-obj-link.yaml
