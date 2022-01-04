@@ -108,9 +108,11 @@ case class Dialect(fields: Fields, annotations: Annotations)
     extensions().map(e => e.extensionName().value() -> this).toMap
   private[amf] def extensionModels: Map[String, Map[String, Type]] = {
     extensions()
-      .map { semantic =>
+      .flatMap { semantic =>
         val annotation = SemanticExtensionHelper.findAnnotationMapping(this, semantic)
-        annotation.domain().value() -> (annotation.nodePropertyMapping().value() -> annotation.toField().`type`)
+        annotation.domain().map { domain =>
+          domain.value() -> (annotation.nodePropertyMapping().value() -> annotation.toField().`type`)
+        }
       }
       .groupBy(x => x._1)
       .mapValues(values =>

@@ -1,0 +1,1109 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "meta:Dialect",
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "core:name": [
+      {
+        "@value": "Annotation mappings"
+      }
+    ],
+    "core:version": [
+      {
+        "@value": "1.0"
+      }
+    ],
+    "meta:extensions": [
+      {
+        "@id": "/semantic-extensions/maintainer",
+        "@type": [
+          "meta:ExtensionMapping",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "maintainer"
+          }
+        ],
+        "meta:extensionMappingDefinition": [
+          {
+            "@id": "#/declarations/MaintainerAnnotationMapping"
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "/semantic-extensions/maintainer#/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "/semantic-extensions/maintainer#/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(39,2)-(39,12)]"
+                  }
+                ]
+              },
+              {
+                "@id": "/semantic-extensions/maintainer#/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "meta:extensionMappingDefinition"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(39,2)-(40,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "/semantic-extensions/maintainer#/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml/semantic-extensions/maintainer"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(39,2)-(40,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "/semantic-extensions/contributor",
+        "@type": [
+          "meta:ExtensionMapping",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "contributor"
+          }
+        ],
+        "meta:extensionMappingDefinition": [
+          {
+            "@id": "#/declarations/ContributorAnnotationMapping"
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "/semantic-extensions/contributor#/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "/semantic-extensions/contributor#/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(40,2)-(40,13)]"
+                  }
+                ]
+              },
+              {
+                "@id": "/semantic-extensions/contributor#/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "meta:extensionMappingDefinition"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(40,2)-(41,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "/semantic-extensions/contributor#/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml/semantic-extensions/contributor"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(40,2)-(41,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "meta:externals": [
+      {
+        "@id": "/externals/aml",
+        "@type": [
+          "owl:Ontology",
+          "meta:ExternalVocabulary",
+          "doc:DomainElement"
+        ],
+        "core:displayName": [
+          {
+            "@value": "aml"
+          }
+        ],
+        "meta:base": [
+          {
+            "@value": "http://a.ml/vocab#"
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "/externals/aml#/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "/externals/aml#/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:displayName"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(9,2)-(9,5)]"
+                  }
+                ]
+              },
+              {
+                "@id": "/externals/aml#/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "meta:base"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(9,7)-(9,25)]"
+                  }
+                ]
+              },
+              {
+                "@id": "/externals/aml#/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml/externals/aml"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(9,2)-(11,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "meta:documents": [
+      {
+        "@id": "/documents",
+        "@type": [
+          "meta:DocumentsModel",
+          "doc:DomainElement"
+        ],
+        "meta:rootDocument": [
+          {
+            "@id": "#/documents/root",
+            "@type": [
+              "meta:DocumentMapping",
+              "doc:DomainElement"
+            ],
+            "core:name": [
+              {
+                "@value": "Annotation mappings 1.0"
+              }
+            ],
+            "meta:encodedNode": [
+              {
+                "@id": "#/declarations/PersonNodeMapping"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/documents/root/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/documents/root/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml#/documents/root"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(12,7)-(15,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/documents/root/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "meta:encodedNode"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(13,4)-(15,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "/documents#/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "/documents#/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml/documents"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(12,0)-(15,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "/documents#/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "meta:rootDocument"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(12,2)-(15,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:location": [
+      {
+        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#/BaseUnitProcessingData",
+        "@type": [
+          "doc:BaseUnitProcessingData"
+        ],
+        "doc:transformed": [
+          {
+            "@value": false
+          }
+        ],
+        "doc:sourceSpec": [
+          {
+            "@value": "AML 1.0"
+          }
+        ]
+      }
+    ],
+    "sourcemaps:sources": [
+      {
+        "@id": "#/source-map",
+        "@type": [
+          "sourcemaps:SourceMap"
+        ],
+        "sourcemaps:aliases-array": [
+          {
+            "@id": "#/source-map/aliases-array/element_0",
+            "sourcemaps:element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "github->http://github.org/vocabulary#::http://github.org/vocabulary#::github.vocabulary.yaml"
+              }
+            ]
+          }
+        ],
+        "sourcemaps:lexical": [
+          {
+            "@id": "#/source-map/lexical/element_5",
+            "sourcemaps:element": [
+              {
+                "@value": "meta:externals"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(8,0)-(11,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_3",
+            "sourcemaps:element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(2,0)-(41,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_1",
+            "sourcemaps:element": [
+              {
+                "@value": "meta:extensions"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(38,0)-(41,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_0",
+            "sourcemaps:element": [
+              {
+                "@value": "meta:documents"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(11,0)-(15,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_2",
+            "sourcemaps:element": [
+              {
+                "@value": "core:name"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(2,0)-(3,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_4",
+            "sourcemaps:element": [
+              {
+                "@value": "core:version"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(3,0)-(5,0)]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:references": [
+      {
+        "@id": "./github.vocabulary.yaml",
+        "@type": [
+          "meta:Vocabulary",
+          "owl:Ontology",
+          "doc:Unit"
+        ],
+        "core:name": [
+          {
+            "@value": "GitHub"
+          }
+        ],
+        "doc:declares": [
+          {
+            "@id": "http://github.org/vocabulary#contributor",
+            "@type": [
+              "owl:DatatypeProperty",
+              "meta:Property",
+              "doc:DomainElement"
+            ],
+            "core:displayName": [
+              {
+                "@value": "Contributor"
+              }
+            ],
+            "core:description": [
+              {
+                "@value": "Contributor for a github repository"
+              }
+            ],
+            "rdfs:range": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "http://github.org/vocabulary#contributor/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "http://github.org/vocabulary#contributor"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(6,2)-(9,17)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "meta:base": [
+          {
+            "@value": "http://github.org/vocabulary#"
+          }
+        ],
+        "doc:location": [
+          {
+            "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/github.vocabulary.yaml"
+          }
+        ],
+        "doc:root": [
+          {
+            "@value": false
+          }
+        ],
+        "doc:processingData": [
+          {
+            "@id": "./github.vocabulary.yaml#/BaseUnitProcessingData",
+            "@type": [
+              "doc:BaseUnitProcessingData"
+            ],
+            "doc:transformed": [
+              {
+                "@value": false
+              }
+            ],
+            "doc:sourceSpec": [
+              {
+                "@value": "AML 1.0"
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "./github.vocabulary.yaml#/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "./github.vocabulary.yaml#/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(2,0)-(3,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "./github.vocabulary.yaml#/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "meta:base"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(3,0)-(5,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "./github.vocabulary.yaml#/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/github.vocabulary.yaml"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(2,0)-(9,17)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declarations/PersonNodeMapping",
+        "@type": [
+          "meta:NodeMapping",
+          "shacl:Shape",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "PersonNodeMapping"
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declarations/PersonNodeMapping/property/surname",
+            "@type": [
+              "meta:NodePropertyMapping",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#surname"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "surname"
+              }
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/PersonNodeMapping/property/surname/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/PersonNodeMapping/property/surname/source-map/lexical/element_2",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "core:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(33,6)-(33,13)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/PersonNodeMapping/property/surname/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:datatype"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(34,8)-(35,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/PersonNodeMapping/property/surname/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml#/declarations/PersonNodeMapping/property/surname"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(33,14)-(35,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "#/declarations/PersonNodeMapping/property/name",
+            "@type": [
+              "meta:NodePropertyMapping",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#name"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "name"
+              }
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/PersonNodeMapping/property/name/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/PersonNodeMapping/property/name/source-map/lexical/element_2",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "core:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(31,6)-(31,10)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/PersonNodeMapping/property/name/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:datatype"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(32,8)-(33,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/PersonNodeMapping/property/name/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml#/declarations/PersonNodeMapping/property/name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(31,11)-(33,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "#/declarations/PersonNodeMapping/property/email",
+            "@type": [
+              "meta:NodePropertyMapping",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#email"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "email"
+              }
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/PersonNodeMapping/property/email/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/PersonNodeMapping/property/email/source-map/lexical/element_2",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "core:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(35,6)-(35,11)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/PersonNodeMapping/property/email/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:datatype"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(36,8)-(38,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/PersonNodeMapping/property/email/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml#/declarations/PersonNodeMapping/property/email"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(35,12)-(38,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "#/declarations/PersonNodeMapping/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "#/declarations/PersonNodeMapping/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(29,2)-(29,19)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/PersonNodeMapping/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "shacl:property"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(30,4)-(38,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/PersonNodeMapping/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml#/declarations/PersonNodeMapping"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(29,2)-(38,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "#/declarations/MaintainerAnnotationMapping",
+        "@type": [
+          "meta:NodeAnnotationMapping",
+          "doc:DomainElement"
+        ],
+        "shacl:path": [
+          {
+            "@id": "http://a.ml/vocab#maintainer"
+          }
+        ],
+        "core:name": [
+          {
+            "@value": "MaintainerAnnotationMapping"
+          }
+        ],
+        "shacl:node": [
+          {
+            "@id": "#/declarations/MaintainerAnnotationMapping/list",
+            "@type": "rdfs:Seq",
+            "rdfs:_1": [
+              {
+                "@id": "#/declarations/PersonNodeMapping"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/amf/aml#domain": [
+          {
+            "@id": "http://a.ml/vocab#API"
+          },
+          {
+            "@id": "http://a.ml/vocab#WebAPI"
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "#/declarations/MaintainerAnnotationMapping/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "#/declarations/MaintainerAnnotationMapping/source-map/lexical/element_4",
+                "sourcemaps:element": [
+                  {
+                    "@value": "shacl:node"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(21,4)-(23,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/MaintainerAnnotationMapping/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml#/declarations/MaintainerAnnotationMapping"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(16,2)-(23,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/MaintainerAnnotationMapping/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/amf/aml#domain"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(17,4)-(20,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/MaintainerAnnotationMapping/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(16,2)-(16,29)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/MaintainerAnnotationMapping/source-map/lexical/element_3",
+                "sourcemaps:element": [
+                  {
+                    "@value": "shacl:path"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(20,4)-(21,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "@id": "#/declarations/ContributorAnnotationMapping",
+        "@type": [
+          "meta:NodeAnnotationMapping",
+          "doc:DomainElement"
+        ],
+        "shacl:path": [
+          {
+            "@id": "http://github.org/vocabulary#contributor"
+          }
+        ],
+        "core:name": [
+          {
+            "@value": "ContributorAnnotationMapping"
+          }
+        ],
+        "shacl:node": [
+          {
+            "@id": "#/declarations/ContributorAnnotationMapping/list",
+            "@type": "rdfs:Seq",
+            "rdfs:_1": [
+              {
+                "@id": "#/declarations/PersonNodeMapping"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/amf/aml#domain": [
+          {
+            "@id": "http://a.ml/vocab#API"
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "#/declarations/ContributorAnnotationMapping/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "#/declarations/ContributorAnnotationMapping/source-map/lexical/element_4",
+                "sourcemaps:element": [
+                  {
+                    "@value": "shacl:node"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(26,4)-(28,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/ContributorAnnotationMapping/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml#/declarations/ContributorAnnotationMapping"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(23,2)-(28,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/ContributorAnnotationMapping/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/amf/aml#domain"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(24,4)-(25,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/ContributorAnnotationMapping/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(23,2)-(23,30)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/ContributorAnnotationMapping/source-map/lexical/element_3",
+                "sourcemaps:element": [
+                  {
+                    "@value": "shacl:path"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(25,4)-(26,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "core": "http://a.ml/vocabularies/core#",
+      "owl": "http://www.w3.org/2002/07/owl#",
+      "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
+      "meta": "http://a.ml/vocabularies/meta#"
+    }
+  }
+]

@@ -1,6 +1,6 @@
 package amf.aml.internal.metamodel.domain
 
-import amf.core.internal.metamodel.Field
+import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.metamodel.Type.Iri
 import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
@@ -11,7 +11,7 @@ object AnnotationMappingModel extends DomainElementModel with PropertyLikeMappin
   override val Name: Field = NodeMappingModel.Name
 
   val Domain: Field = Field(
-      Iri,
+      Type.Array(Iri),
       Namespace.AmfAml + "domain",
       ModelDoc(
           ModelVocabularies.AmlDoc,
