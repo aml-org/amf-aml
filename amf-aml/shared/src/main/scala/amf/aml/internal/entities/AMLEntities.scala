@@ -37,7 +37,8 @@ private[amf] object AMLEntities extends Entities {
       AnnotationMappingModel,
       BaseUnitProcessingDataModel,
       BaseUnitSourceInformationModel,
-      LocationInformationModel
+      LocationInformationModel,
+      ConditionalNodeMappingModel
   )
 
 }
