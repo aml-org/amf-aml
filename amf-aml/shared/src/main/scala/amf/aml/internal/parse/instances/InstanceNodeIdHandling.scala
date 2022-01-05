@@ -74,23 +74,24 @@ object InstanceNodeIdHandling {
   def generateNodeId(node: DialectDomainElement,
                      nodeMap: YMap,
                      path: Seq[String],
-                     defaultId: String,
+                     encodedDefaultId: String,
                      mapping: NodeMapping,
                      additionalProperties: Map[String, Any] = Map(),
                      rootNode: Boolean,
                      root: Root)(implicit ctx: DialectInstanceContext): String = {
+    val defaultDecodedId = encodedDefaultId.urlDecoded
     val generatedId =
       if (rootNode && isSelfEncoded)
-        defaultId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
+        defaultDecodedId // if this is self-encoded just reuse the dialectId computed and don't try to generate a different identifier
       else {
         if (nodeMap.key("$id").isDefined) {
           explicitNodeId(Some(node), nodeMap, ctx)
         } else if (mapping.idTemplate.nonEmpty) {
           idTemplate(node, nodeMap, path, mapping, root)
         } else if (mapping.primaryKey().nonEmpty) {
-          primaryKeyNodeId(node, nodeMap, path, defaultId, mapping, additionalProperties)
+          primaryKeyNodeId(node, nodeMap, path, defaultDecodedId, mapping, additionalProperties)
         } else {
-          defaultId
+          defaultDecodedId
         }
       }
     overrideBase(generatedId, nodeMap).urlEncoded
