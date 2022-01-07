@@ -6,6 +6,7 @@ import org.yaml.model.YMap
 import amf.core.internal.parser.domain.BaseSpecParser
 import amf.core.internal.parser.{Root, YMapOps}
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.internal.utils.UriUtils
 
 /*
  * TODO: should be a class which is passed as parameter to the dialect instance parser. Most of all because of the resolvedPath(String) and basePath(String) methods.
@@ -51,9 +52,9 @@ object JsonPointerResolver extends NodeMappableHelper with PlatformSecrets {
       else basePath(base) + str
     if (fullPath.contains("#")) {
       val parts = fullPath.split("#")
-      platform.resolvePath(parts.head) + "#" + parts.last
+      UriUtils.resolvePath(parts.head) + "#" + parts.last
     } else {
-      platform.resolvePath(fullPath)
+      UriUtils.resolvePath(fullPath)
     }
   }
 
