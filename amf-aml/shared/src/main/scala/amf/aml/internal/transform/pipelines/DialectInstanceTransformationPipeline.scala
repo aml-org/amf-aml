@@ -11,7 +11,7 @@ class DialectInstanceTransformationPipeline private (override val name: String) 
         new DialectInstanceReferencesResolutionStage(),
         new CleanReferencesStage(),
         new DeclarationsRemovalStage(),
-        SemanticExtensionFlatteningStage,
+        new SemanticExtensionFlatteningStage,
         SourceInformationStage
     )
 

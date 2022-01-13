@@ -9,11 +9,14 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.SpecOrdering.Lexical
 import amf.aml.client.scala.model.document._
 import amf.aml.client.scala.model.domain._
+import amf.aml.internal.registries.AMLRegistry
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.PartBuilder
 
-case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Dialect, renderOptions: RenderOptions)(
-    implicit val nodeMappableFinder: NodeMappableFinder)
+case class DialectInstancesEmitter(instance: DialectInstanceUnit,
+                                   dialect: Dialect,
+                                   renderOptions: RenderOptions,
+                                   registry: AMLRegistry)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends AmlEmittersHelper {
 
   val ordering: SpecOrdering                           = Lexical
@@ -67,7 +70,8 @@ case class DialectInstancesEmitter(instance: DialectInstanceUnit, dialect: Diale
         None,
         topLevelEmitters = externalEmitters(instance, ordering) ++ entry,
         discriminator = discriminator.flatMap(_.compute(element)),
-        renderOptions = renderOptions
+        renderOptions = renderOptions,
+        registry = registry
     ).emit(b)
   }
 

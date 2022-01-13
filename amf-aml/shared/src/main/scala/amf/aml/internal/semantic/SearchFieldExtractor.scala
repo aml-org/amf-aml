@@ -4,11 +4,11 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.{AnnotationMapping, SemanticExtension}
 
 trait SearchFieldExtractor {
-  def extractSearchField(extension: SemanticExtension): Option[String]
+  def extractSearchField(extension: SemanticExtension): Seq[String]
 }
 
 object NameFieldExtractor extends SearchFieldExtractor {
-  override def extractSearchField(extension: SemanticExtension): Option[String] = extension.extensionName().option()
+  override def extractSearchField(extension: SemanticExtension): Seq[String] = extension.extensionName().option().toSeq
 }
 
 object TargetFieldExtractor {
@@ -27,12 +27,13 @@ object TargetFieldExtractor {
 case class TargetFieldExtractor(private val annotationMappings: Map[String, AnnotationMapping])
     extends SearchFieldExtractor {
 
-  override def extractSearchField(extension: SemanticExtension): Option[String] =
+  override def extractSearchField(extension: SemanticExtension): Seq[String] =
     extension
       .extensionMappingDefinition()
       .option()
+      .toSeq
       .flatMap(mappingId => annotationMappings.get(mappingId))
-      .flatMap(mapping => mapping.domain().option())
+      .flatMap(mapping => mapping.domain().flatMap(_.option()))
 }
 
 object PropertyTermFieldExtractor {
@@ -51,10 +52,11 @@ object PropertyTermFieldExtractor {
 case class PropertyTermFieldExtractor(private val annotationMappings: Map[String, AnnotationMapping])
     extends SearchFieldExtractor {
 
-  override def extractSearchField(extension: SemanticExtension): Option[String] =
+  override def extractSearchField(extension: SemanticExtension): Seq[String] =
     extension
       .extensionMappingDefinition()
       .option()
       .flatMap(mappingId => annotationMappings.get(mappingId))
       .flatMap(mapping => mapping.nodePropertyMapping().option())
+      .toSeq
 }

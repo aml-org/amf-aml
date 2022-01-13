@@ -7,7 +7,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-ThisBuild / version := "6.0.2"
+ThisBuild / version := "6.0.3"
 ThisBuild / scalaVersion := "2.12.11"
 
 publish := {}
@@ -35,7 +35,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "5.0.2"
+val amfCoreVersion = "5.0.3"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
@@ -129,10 +129,10 @@ lazy val rdf = crossProject(JSPlatform, JVMPlatform)
     libraryDependencies += "org.apache.jena" % "jena-arq" % "3.17.0",
     libraryDependencies += "org.apache.thrift"          % "libthrift"               % "0.14.1", // CVE-2020-13949
     excludeDependencies += "org.apache.tomcat.embed"    % "tomcat-embed-core",
+    excludeDependencies += "com.fasterxml.jackson.core" % "jackson-databind", // transitive from jena-arq
     libraryDependencies += "commons-io"                 % "commons-io"              % "2.6",
     libraryDependencies += "org.apache.commons"         % "commons-lang3"           % "3.9",
     libraryDependencies += "org.apache.commons"         % "commons-compress"        % "1.21", // CVE-2021-35515 upto CVE-2021-35517
-    libraryDependencies += "com.fasterxml.jackson.core" % "jackson-databind"        % "2.11.0",
     Compile /  packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-rdf-javadoc.jar",
   )
   .jsSettings(

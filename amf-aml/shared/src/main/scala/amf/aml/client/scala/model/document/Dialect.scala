@@ -35,6 +35,7 @@ case class Dialect(fields: Fields, annotations: Annotations)
 
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
 
+  @deprecated("Useless functionality", "AML 6.0.3")
   def header: String = s"%${nameAndVersion()}".stripSpaces
 
   override protected[amf] def profileName: Option[ProfileName] = Some(ProfileName(nameAndVersion()))
@@ -46,30 +47,39 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def withDocuments(documentsMapping: DocumentsModel): Dialect    = set(Documents, documentsMapping)
   def withExtensions(extensions: Seq[SemanticExtension]): Dialect = setArrayWithoutId(Extensions, extensions)
 
+  @deprecated("Useless functionality", "AML 6.0.3")
   def libraryHeader: Option[String] =
     Option(documents()).map(d => Option(d.library())).map(_ => s"%Library/${header.stripPrefix("%")}")
 
+  @deprecated("Useless functionality", "AML 6.0.3")
   def patchHeader: String = s"%Patch/${header.stripPrefix("%")}"
 
+  @deprecated("Useless functionality", "AML 6.0.3")
   def isLibraryHeader(h: String): Boolean = libraryHeader.contains(h.stripSpaces)
 
+  @deprecated("Useless functionality", "AML 6.0.3")
   def isPatchHeader(h: String): Boolean = patchHeader == h.stripSpaces
 
+  @deprecated("Useless functionality", "AML 6.0.3")
   def isInstanceHeader(h: String): Boolean = header == h.stripSpaces
 
+  @deprecated("Useless functionality", "AML 6.0.3")
   def fragmentHeaders: Seq[String] =
     Option(documents())
       .map(_.fragments().map(f => s"%${f.documentName().value().stripSpaces}/${header.stripPrefix("%")}"))
       .getOrElse(Seq.empty)
 
+  @deprecated("Useless functionality", "AML 6.0.3")
   def isFragmentHeader(h: String): Boolean = fragmentHeaders.contains(h.stripSpaces)
 
   def hasValidHeader: Boolean = !name().isNullOrEmpty && !version().isNullOrEmpty
 
+  @deprecated("Useless functionality", "AML 6.0.3")
   def allHeaders: Seq[String] = Seq(header) ++ libraryHeader ++ fragmentHeaders ++ Seq(patchHeader)
 
   def meta: DialectModel.type = DialectModel
 
+  @deprecated("Use amf.aml.internal.parse.hints.DialectInstanceGuess.from instead", "AML 6.0.3")
   def documentKindFor(header: String): Option[DialectInstanceDocumentKind] = {
     header match {
       case h if isLibraryHeader(h)  => Some(kind.DialectInstanceLibrary)
@@ -80,6 +90,7 @@ case class Dialect(fields: Fields, annotations: Annotations)
     }
   }
 
+  @deprecated("Useless functionality", "AML 6.0.3")
   def acceptsHeader(header: String): Boolean = documentKindFor(header).isDefined
 
   private[amf] def usesKeyPropertyMatching: Boolean = {
@@ -97,9 +108,11 @@ case class Dialect(fields: Fields, annotations: Annotations)
     extensions().map(e => e.extensionName().value() -> this).toMap
   private[amf] def extensionModels: Map[String, Map[String, Type]] = {
     extensions()
-      .map { semantic =>
+      .flatMap { semantic =>
         val annotation = SemanticExtensionHelper.findAnnotationMapping(this, semantic)
-        annotation.domain().value() -> (annotation.nodePropertyMapping().value() -> annotation.toField().`type`)
+        annotation.domain().map { domain =>
+          domain.value() -> (annotation.nodePropertyMapping().value() -> annotation.toField().`type`)
+        }
       }
       .groupBy(x => x._1)
       .mapValues(values =>

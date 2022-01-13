@@ -1,0 +1,8 @@
+#%Dialect 1.0
+dialect: Annotation mappings
+version: "1.0"
+documents:
+  root:
+    encodes: {}
+annotationMappings:
+  aMapping:

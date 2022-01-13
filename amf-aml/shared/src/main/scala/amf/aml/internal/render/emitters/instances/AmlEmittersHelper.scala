@@ -17,6 +17,7 @@ import amf.aml.client.scala.model.domain.{NodeMappable, NodeMapping, UnionNodeMa
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.internal.utils.Regexes.Path
 import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
+import org.mulesoft.common.collections.FilterType
 import org.mulesoft.common.core.CachedFunction
 import org.mulesoft.common.functional.MonadInstances.identityMonad
 
@@ -27,18 +28,35 @@ trait NodeMappableFinder {
 }
 
 object DefaultNodeMappableFinder {
+  def apply(dialect: Dialect)       = new DefaultNodeMappableFinder(computeReferencesTree(dialect))
   def apply(dialects: Seq[Dialect]) = new DefaultNodeMappableFinder(dialects)
   def apply(ctx: ParserContext) = {
-    val knownDialects = ctx.config.sortedParsePlugins.collect {
+    val knownDialects = ctx.config.sortedRootParsePlugins.collect {
       case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
     }
     new DefaultNodeMappableFinder(knownDialects)
   }
+
   def apply(config: AMLConfiguration) = {
     val knownDialects = config.configurationState().getDialects()
     new DefaultNodeMappableFinder(knownDialects)
   }
+
   def empty() = new DefaultNodeMappableFinder(Seq.empty)
+
+  private def computeReferencesTree(from: Dialect): List[Dialect] = {
+    val collector = mutable.Map[String, Dialect]()
+    computeReferencesTree(from, collector)
+    collector.values.toList
+  }
+
+  private def computeReferencesTree(from: Dialect, acc: mutable.Map[String, Dialect]): Unit = {
+    acc.put(from.id, from)
+    from.references
+      .filterType[Dialect]
+      .filter(dialect => !acc.contains(dialect.id))
+      .foreach(dialect => computeReferencesTree(dialect, acc))
+  }
 }
 
 case class DefaultNodeMappableFinder(dialects: Seq[Dialect]) extends NodeMappableFinder {

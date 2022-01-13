@@ -16,12 +16,12 @@ class AnnotationMapping(override val fields: Fields, override val annotations: A
   override def name: StrField                    = super[NodeMappable].name
   override def withName(name: String): this.type = set(meta.Name, name)
 
-  def domain(): StrField                               = fields.field(Domain)
-  def withDomain(domainIri: String): AnnotationMapping = set(Domain, domainIri)
+  def domain(): Seq[StrField]                               = fields.field(Domain)
+  def withDomain(domainIri: Seq[String]): AnnotationMapping = set(Domain, domainIri)
 
   def appliesTo(element: AmfObject): Boolean = appliesTo(element.meta.`type`.map(_.iri()))
 
-  def appliesTo(types: Seq[String]): Boolean = domain().option().exists(domain => types.contains(domain))
+  def appliesTo(types: Seq[String]): Boolean = domain().flatMap(_.option()).exists(domain => types.contains(domain))
 
   override def meta: AnnotationMappingModel.type = AnnotationMappingModel
 

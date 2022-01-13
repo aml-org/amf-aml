@@ -3,8 +3,10 @@ package amf.aml.internal.parse.dialects
 import org.yaml.model.{IllegalTypeHandler, YMap, YNode, YScalar, YType}
 
 trait DialectSyntax { this: DialectContext =>
-  val dialect: Map[String, Boolean] = Map(
-      "$dialect"           -> false,
+  type Required = Boolean
+
+  val dialect: Map[String, Required] = Map(
+      "$type"              -> false,
       "dialect"            -> true,
       "version"            -> true,
       "usage"              -> false,
@@ -16,14 +18,15 @@ trait DialectSyntax { this: DialectContext =>
       "extensions"         -> false
   )
 
-  val library: Map[String, Boolean] = Map(
+  val library: Map[String, Required] = Map(
+      "$type"        -> false,
       "usage"        -> false,
       "external"     -> false,
       "uses"         -> false,
       "nodeMappings" -> false
   )
 
-  val nodeMapping: Map[String, Boolean] = Map(
+  val nodeMapping: Map[String, Required] = Map(
       "classTerm"  -> false,
       "mapping"    -> false,
       "idProperty" -> false,
@@ -32,7 +35,7 @@ trait DialectSyntax { this: DialectContext =>
       "extends"    -> false
   )
 
-  val propertyLikeMapping = Map(
+  val propertyLikeMapping: Map[String, Required] = Map(
       "range"                 -> true,
       "propertyTerm"          -> false,
       "isLink"                -> false,
@@ -48,17 +51,17 @@ trait DialectSyntax { this: DialectContext =>
       "unique"                -> false
   )
 
-  val annotationMapping: Map[String, Boolean] = propertyLikeMapping ++ Map(
+  val annotationMapping: Map[String, Required] = propertyLikeMapping ++ Map(
       "domain" -> false
   )
 
-  val fragment: Map[String, Boolean] = Map(
+  val fragment: Map[String, Required] = Map(
       "usage"    -> false,
       "external" -> false,
       "uses"     -> false
   ) ++ nodeMapping
 
-  val propertyMapping: Map[String, Boolean] = propertyLikeMapping ++ Map(
+  val propertyMapping: Map[String, Required] = propertyLikeMapping ++ Map(
       "mapKey"       -> false,
       "mapValue"     -> false,
       "mapTermKey"   -> false,
@@ -66,14 +69,14 @@ trait DialectSyntax { this: DialectContext =>
       "patch"        -> false
   )
 
-  val documentsMapping: Map[String, Boolean] = Map(
+  val documentsMapping: Map[String, Required] = Map(
       "root"      -> false,
       "fragments" -> false,
       "library"   -> false,
       "options"   -> false
   )
 
-  val documentsMappingOptions: Map[String, Boolean] = Map(
+  val documentsMappingOptions: Map[String, Required] = Map(
       "selfEncoded"      -> false,
       "declarationsPath" -> false,
       "keyProperty"      -> false,

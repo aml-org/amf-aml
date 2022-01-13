@@ -9,7 +9,9 @@ import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.DomainElementEmitter
 import amf.aml.internal.annotations.DiscriminatorField
+import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.render.emitters.instances.{DefaultNodeMappableFinder, DialectNodeEmitter}
+import amf.core.internal.registries.AMFRegistry
 import org.yaml.model.YNode
 
 object AmlDomainElementEmitter extends DomainElementEmitter[Dialect] {
@@ -21,16 +23,19 @@ object AmlDomainElementEmitter extends DomainElementEmitter[Dialect] {
                     emissionStructure: Dialect,
                     eh: AMFErrorHandler,
                     references: Seq[BaseUnit] = Nil): YNode = {
+
     val partEmitter = element match {
-      case element: DialectDomainElement => Some(dialectDomainElementEmitter(emissionStructure, references, element))
-      case _                             => None
+      case element: DialectDomainElement =>
+        Some(dialectDomainElementEmitter(emissionStructure, references, element, AMLRegistry.empty))
+      case _ => None
     }
     nodeOrError(partEmitter, element.id, eh)
   }
 
   private def dialectDomainElementEmitter(dialect: Dialect,
                                           references: Seq[BaseUnit],
-                                          element: DialectDomainElement) = {
+                                          element: DialectDomainElement,
+                                          registry: AMLRegistry) = {
     val renderOptions = RenderOptions()
     val nodeMappable  = element.definedBy
     val discriminator = element.annotations.find(classOf[DiscriminatorField]).map(a => a.key -> a.value)
@@ -42,6 +47,7 @@ object AmlDomainElementEmitter extends DomainElementEmitter[Dialect] {
                        dialect,
                        SpecOrdering.Lexical,
                        discriminator = discriminator,
-                       renderOptions = renderOptions)(finder)
+                       renderOptions = renderOptions,
+                       registry = registry)(finder)
   }
 }

@@ -1,0 +1,33 @@
+#%Dialect 1.0
+dialect: Annotation mappings
+version: "1.0"
+external:
+  aml: http://a.ml/vocab#
+documents:
+  root:
+    encodes: PersonNodeMapping
+annotationMappings:
+  MaintainerAnnotationMapping:
+    domain:
+      - aml.API
+      - aml.WebAPI
+    propertyTerm: aml.maintainer
+    range: PersonNodeMapping
+  ContributorAnnotationMapping:
+    domain: aml.API
+    propertyTerm: github.contributor
+    range: PersonNodeMapping
+nodeMappings:
+  PersonNodeMapping:
+    mapping:
+      name:
+        range: string
+      surname:
+        range: string
+      email:
+        range: string
+extensions:
+  maintainer: MaintainerAnnotationMapping
+  contributor: ContributorAnnotationMapping
+uses:
+  github: github.vocabulary.yaml

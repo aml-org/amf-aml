@@ -45,12 +45,13 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
   }
 
   protected def emitExtensionValidations(extension: SemanticExtension): List[ValidationSpecification] = {
-    lookupAnnotation(extension)
-      .map { mapping =>
-        val classTarget = mapping.domain().option()
-        emitPropertyValidations(mapping, mapping, Option(extension.extensionName()), classTarget)
+    lookupAnnotation(extension).toList
+      .flatMap { mapping =>
+        val targets = mapping.domain().flatMap(_.option())
+        targets.flatMap { classTarget =>
+          emitPropertyValidations(mapping, mapping, Option(extension.extensionName()), Some(classTarget))
+        }
       }
-      .getOrElse(List.empty)
   }
 
   protected def lookupAnnotation(extension: SemanticExtension): Option[AnnotationMapping] = {

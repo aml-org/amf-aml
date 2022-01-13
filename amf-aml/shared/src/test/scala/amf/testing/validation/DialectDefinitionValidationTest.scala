@@ -117,4 +117,16 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
         Some("/null-range/report.json")
     )
   }
+
+  test("JSON simple should be valid") {
+    validate("../../../dialects/json/simple/dialect.json", None)
+  }
+
+  test("JSON with-library should be valid") {
+    validate("../../../dialects/json/with-library/dialect.json", None)
+  }
+
+  test("JSON with-vocabulary should be valid") {
+    validate("../../../dialects/json/with-vocabulary/dialect.json", None)
+  }
 }
