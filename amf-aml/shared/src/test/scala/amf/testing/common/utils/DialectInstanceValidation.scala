@@ -3,7 +3,7 @@ package amf.testing.common.utils
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.validation.AMFValidationReport
 import amf.core.internal.unsafe.PlatformSecrets
-import org.scalatest.AsyncFunSuite
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.Future
 

@@ -3,9 +3,9 @@ package amf.rdf
 import amf.core.internal.convert.NativeOps
 import amf.rdf.client.platform.RdfModel
 import amf.rdf.internal.unsafe.RdfPlatformSecrets
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-trait PlatformRdfModelTests extends FunSuite with RdfPlatformSecrets with NativeOps {
+trait PlatformRdfModelTests extends AnyFunSuite with RdfPlatformSecrets with NativeOps {
 
   test("Basic triple manipulation") {
     val model   = RdfModel.empty()

@@ -1,19 +1,21 @@
 package amf.testing.semantic
 
-import amf.aml.client.scala.model.domain.DialectDomainElement
-import amf.aml.client.scala.model.document.DialectInstance
 import amf.aml.client.scala.AMLConfiguration
+import amf.aml.client.scala.model.document.DialectInstance
+import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Value
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class AppliedExtensionTest extends AsyncFunSuite with Matchers {
 
-  val basePath                           = "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/"
-  override implicit val executionContext = ExecutionContext.Implicits.global
+  val basePath                                             = "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/"
+  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Applied extensions") {
     assertModel("dialect-extensions.yaml", "instance.yaml") { instance =>

@@ -1,8 +1,6 @@
 package amf.testing.render
 
-import amf.core.client.scala.errorhandling.DefaultErrorHandler
-import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import amf.core.internal.remote.VocabularyYamlHint
+import amf.core.client.scala.errorhandling.{DefaultErrorHandler, UnhandledErrorHandler}
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.testing.common.cycling.FunSuiteCycleTests
 

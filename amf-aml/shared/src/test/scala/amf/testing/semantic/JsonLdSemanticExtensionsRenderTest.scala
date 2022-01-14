@@ -7,7 +7,6 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.remote.Syntax.JsonLd
 import amf.testing.common.cycling.FunSuiteCycleTests
 import org.mulesoft.common.test.AsyncBeforeAndAfterEach
-import org.scalatest.{AsyncFunSuite, BeforeAndAfterEachTestData, Matchers}
 
 import scala.concurrent.Future
 

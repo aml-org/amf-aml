@@ -1,9 +1,8 @@
 package amf.testing.unclassified
 
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.internal.remote.VocabularyYamlHint
 import amf.testing.common.utils.DialectTests
-import org.scalatest.Matchers
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 

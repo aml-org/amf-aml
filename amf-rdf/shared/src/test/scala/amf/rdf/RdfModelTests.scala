@@ -1,9 +1,9 @@
 package amf.rdf
 
 import amf.rdf.internal.unsafe.RdfPlatformSecrets
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
-class RdfModelTests extends FunSuite with RdfPlatformSecrets {
+class RdfModelTests extends AnyFunSuite with RdfPlatformSecrets {
 
   test("Manipulation of triples should invalidate cache") {
     val model   = framework.emptyRdfModel()

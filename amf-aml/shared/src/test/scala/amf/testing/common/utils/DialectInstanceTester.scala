@@ -2,7 +2,6 @@ package amf.testing.common.utils
 
 import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{Hint, Spec}
 import amf.testing.common.cycling.FunSuiteCycleTests
 import org.scalatest.Assertion
 
