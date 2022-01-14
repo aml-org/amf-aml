@@ -4,7 +4,8 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
 import amf.testing.common.jsonld
 import org.scalactic.Fail
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.Future
 

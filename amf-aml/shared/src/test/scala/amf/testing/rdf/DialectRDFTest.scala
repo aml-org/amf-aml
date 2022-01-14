@@ -2,8 +2,7 @@ package amf.testing.rdf
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.Syntax.Syntax
-import amf.core.internal.remote.{Amf, Aml, Syntax, VocabularyYamlHint}
+import amf.core.internal.remote.Syntax
 import amf.core.internal.unsafe.PlatformSecrets
 import amf.testing.common.cycling.FunSuiteRdfCycleTests
 import amf.testing.common.utils.AMLParsingHelper

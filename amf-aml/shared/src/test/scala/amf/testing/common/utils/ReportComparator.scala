@@ -1,10 +1,11 @@
 package amf.testing.common.utils
 
-import amf.core.io.FileAssertionTest
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.client.scala.validation.AMFValidationReport
+import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.io.FileAssertionTest
 import amf.validation.internal.emitters.ValidationReportJSONLDEmitter
-import org.scalatest.{Assertion, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

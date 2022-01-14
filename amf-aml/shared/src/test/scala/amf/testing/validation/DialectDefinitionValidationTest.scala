@@ -1,7 +1,8 @@
 package amf.testing.validation
 
 import amf.testing.common.utils.DialectValidation
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 

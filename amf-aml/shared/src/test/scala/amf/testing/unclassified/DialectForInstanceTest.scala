@@ -1,7 +1,9 @@
 package amf.testing.unclassified
 
 import amf.aml.client.scala.AMLConfiguration
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

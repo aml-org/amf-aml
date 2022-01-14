@@ -2,7 +2,8 @@ package amf.testing.unclassified
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.domain.DialectDomainElement
-import org.scalatest.{AsyncFunSuite, Matchers}
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.ExecutionContext
 
