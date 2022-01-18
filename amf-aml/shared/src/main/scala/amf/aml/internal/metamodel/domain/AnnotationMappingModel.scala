@@ -2,7 +2,13 @@ package amf.aml.internal.metamodel.domain
 
 import amf.core.internal.metamodel.{Field, Type}
 import amf.core.internal.metamodel.Type.Iri
-import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.{
+  DomainElementModel,
+  ExternalModelVocabularies,
+  ModelDoc,
+  ModelVocabularies,
+  ShapeModel
+}
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.aml.client.scala.model.domain.AnnotationMapping
 

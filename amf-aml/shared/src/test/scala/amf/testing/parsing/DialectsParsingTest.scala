@@ -377,4 +377,21 @@ trait DialectsParsingTest extends DialectTests {
         directory = s"$basePath/annotation-mapping-with-multiple-domains"
     )
   }
+
+  multiGoldenTest("Default facet for property mappings", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/default-facet"
+    )
+  }
+
+  multiSourceTest("Generate default facet for property mappings", "dialect.%s") { config =>
+    cycle(config.source,
+          "dialect.cycled.yaml",
+          mediaType = Some(Mimes.`application/yaml`),
+          directory = s"$basePath/default-facet")
+  }
 }

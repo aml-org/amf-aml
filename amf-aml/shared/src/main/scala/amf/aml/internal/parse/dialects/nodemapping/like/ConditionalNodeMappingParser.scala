@@ -78,5 +78,5 @@ object ConditionalNodeMappingParser {
 
   val identifierKey: String = "if"
 
-  def apply(implicit ctx: DialectContext) = new ConditionalNodeMappingParser
+  def apply()(implicit ctx: DialectContext) = new ConditionalNodeMappingParser
 }
