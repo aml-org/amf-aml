@@ -2,7 +2,13 @@ package amf.aml.internal.metamodel.domain
 
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Any, Bool, Double, Int, Iri, SortedArray, Str}
-import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.{
+  DataNodeModel,
+  DomainElementModel,
+  ExternalModelVocabularies,
+  ModelDoc,
+  ModelVocabularies
+}
 import amf.core.client.scala.vocabulary.Namespace
 
 /**
@@ -78,5 +84,4 @@ trait PropertyLikeMappingModel extends DomainElementModel with HasObjectRangeMod
       Namespace.Meta + "externallyLinkable",
       ModelDoc(ModelVocabularies.Meta, "linkable", "Marks this object property as supporting external links")
   )
-
 }

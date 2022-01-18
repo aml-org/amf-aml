@@ -10,6 +10,8 @@ import amf.aml.internal.validate.DialectValidations
 import amf.aml.internal.validate.DialectValidations.{DialectError, VariablesDefinedInBase}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.datanode.DataNodeParser
+import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.YNodeLikeOps
 import amf.core.internal.parser.domain.SearchScope.All
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope, ValueNode}
@@ -18,7 +20,16 @@ import org.yaml.model._
 
 import scala.collection.immutable
 
-class NodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikeParserInterface {
+trait DefaultFacetParsing {
+  protected def parseDefault(map: YMap, element: DomainElement)(implicit ctx: DialectContext): Unit = {
+    map.key("default", entry => {
+      val dataNode = DataNodeParser(entry.value).parse()
+      element.set(ShapeModel.Default, dataNode, Annotations(entry))
+    })
+  }
+}
+
+class NodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikeParserInterface with DefaultFacetParsing {
 
   override def parse(map: YMap, adopt: DomainElement => Any, isFragment: Boolean): NodeMapping = {
 
@@ -139,6 +150,7 @@ class NodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikePar
           }
         }
     )
+
     nodeMapping.idTemplate.option().foreach(validateTemplate(_, map, nodeMapping.propertiesMapping()))
 
     parseAnnotations(map, nodeMapping, ctx.declarations)
@@ -165,7 +177,7 @@ class NodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikePar
         parseMapValue(map, propertyMapping)
         parsePatch(map, propertyMapping)
         parseAnnotations(map, propertyMapping, ctx.declarations)
-
+        parseDefault(map, propertyMapping)
         propertyMapping
       case _ =>
         val p = PropertyMapping(Annotations(entry)).set(PropertyMappingModel.Name, name, Annotations(entry.key))
@@ -286,5 +298,5 @@ class NodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikePar
 }
 
 object NodeMappingParser {
-  def apply(implicit ctx: DialectContext): NodeMappingParser = new NodeMappingParser
+  def apply()(implicit ctx: DialectContext): NodeMappingParser = new NodeMappingParser
 }
