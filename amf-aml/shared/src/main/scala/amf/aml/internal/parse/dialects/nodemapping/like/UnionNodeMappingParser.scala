@@ -65,5 +65,5 @@ object UnionNodeMappingParser {
 
   val identifierKey: String = "union"
 
-  def apply(implicit ctx: DialectContext) = new UnionNodeMappingParser
+  def apply()(implicit ctx: DialectContext) = new UnionNodeMappingParser
 }

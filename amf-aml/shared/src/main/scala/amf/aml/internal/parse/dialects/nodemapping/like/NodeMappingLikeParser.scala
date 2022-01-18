@@ -15,10 +15,10 @@ object NodeMappingLikeParser {
 
     entry.value.as[YMap] match {
       case uMap if applies(uMap, UnionNodeMappingParser.identifierKey) =>
-        UnionNodeMappingParser.apply.parse(uMap, adopt, isFragment)
+        UnionNodeMappingParser().parse(uMap, adopt, isFragment)
       case cMap if applies(cMap, ConditionalNodeMappingParser.identifierKey) =>
-        ConditionalNodeMappingParser.apply.parse(cMap, adopt, isFragment)
-      case nMap => NodeMappingParser.apply.parse(nMap, adopt, isFragment)
+        ConditionalNodeMappingParser().parse(cMap, adopt, isFragment)
+      case nMap => NodeMappingParser().parse(nMap, adopt, isFragment)
     }
 
   }
