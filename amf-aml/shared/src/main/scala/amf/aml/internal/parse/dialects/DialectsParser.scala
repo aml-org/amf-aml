@@ -17,7 +17,9 @@ import amf.core.client.scala.parse.AMFParser
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations._
+import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.document.FragmentModel
+import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.domain.SearchScope.All
 import amf.core.internal.parser.domain._
 import amf.core.internal.parser.{Root, YNodeLikeOps}

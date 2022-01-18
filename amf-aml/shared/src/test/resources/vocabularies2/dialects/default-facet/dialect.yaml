@@ -1,0 +1,12 @@
+#%Dialect 1.0
+dialect: Test
+version: "1.0"
+nodeMappings:
+  Person:
+    mapping:
+      name:
+        range: string
+        default: Adam Bareiro
+documents:
+  root:
+    encodes: Person
