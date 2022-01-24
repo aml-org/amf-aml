@@ -5,18 +5,17 @@ import amf.aml.client.platform.model.domain._
 import amf.aml.client.scala.model.{document, domain}
 import amf.aml.internal.metamodel.document._
 import amf.aml.internal.metamodel.domain._
-import amf.core.internal.convert.CoreRegister
+import amf.core.internal.convert.UniqueInitializer
 import amf.core.internal.metamodel.Obj
 import amf.core.internal.remote.Platform
 import amf.core.internal.unsafe.PlatformSecrets
 
-object VocabulariesRegister extends PlatformSecrets {
+object VocabulariesRegister extends UniqueInitializer with PlatformSecrets {
 
   // TODO ARM remove when APIMF-3000 is done
   def register(): Unit = register(platform)
 
-  def register(platform: Platform): Unit = {
-    CoreRegister.register(platform)
+  def register(platform: Platform): Unit = if (shouldInitialize) {
 
     val p: (Obj) => Boolean = (x: Obj) => x.isInstanceOf[DialectDomainElementModel]
     platform.registerWrapperPredicate(p) {
