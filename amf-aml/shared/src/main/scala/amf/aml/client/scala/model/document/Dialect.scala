@@ -103,6 +103,8 @@ case class Dialect(fields: Fields, annotations: Annotations)
     usesKeyProperty.contains(true)
   }
 
+  private[amf] def hasExtensions(): Boolean = this.extensions().nonEmpty
+
   private[amf] def usesHeaderMatching: Boolean = !usesKeyPropertyMatching
   private[amf] def extensionIndex: Map[String, Dialect] =
     extensions().map(e => e.extensionName().value() -> this).toMap
