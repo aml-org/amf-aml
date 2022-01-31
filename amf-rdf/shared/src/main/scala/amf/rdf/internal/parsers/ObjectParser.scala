@@ -2,10 +2,10 @@ package amf.rdf.internal.parsers
 
 import amf.core.client.scala.model.document.SourceMap
 import amf.core.client.scala.model.domain.{DataNode, _}
-import amf.core.client.scala.vocabulary.Namespace
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.core.internal.metamodel.Type.{Any, Array, Iri, Scalar, SortedArray, Str}
 import amf.core.internal.metamodel.domain.{DataNodeModel, ExternalSourceElementModel, LinkableElementModel, ShapeModel}
-import amf.core.internal.metamodel.{Field, Obj, Type}
+import amf.core.internal.metamodel.{Field, ModelDefaultBuilder, Obj, Type}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.CoreValidations.UnableToParseRdfDocument
 import amf.rdf.client.scala.{Literal, Node, PropertyObject, Uri}
@@ -24,6 +24,18 @@ class ObjectParser(val rootId: String,
 
   private def isSelfEncoded(node: Node) = node.subject == rootId
 
+  private lazy val extensions = ctx.config.registryContext.getRegistry.getEntitiesRegistry.extensionTypes
+  private lazy val extensionFields = extensions.map {
+    case (iriDomain, extensions) =>
+      iriDomain -> extensions.map {
+        case (iri, fieldType) => Field(fieldType, ValueType(iri))
+      }
+  }
+
+  private def extensionsFor(model: ModelDefaultBuilder): Seq[Field] = {
+    model.`type`.flatMap(valueType => extensionFields.get(valueType.iri())).flatten
+  }
+
   def parse(node: Node, findBaseUnit: Boolean = false, visitedSelfEncoded: Boolean = false): Option[AmfElement] = {
     if (recursionControl.hasVisited(node) && !isSelfEncoded(node)) ctx.nodes.get(node.subject)
     else {
@@ -38,7 +50,7 @@ class ObjectParser(val rootId: String,
 
         checkLinkables(instance)
         // workaround for lazy values in shape
-        val modelFields = extractModelFields(model)
+        val modelFields = extractModelFields(model) ++ extensionsFor(model)
 
         modelFields.foreach(f => {
           val k          = f.value.iri()

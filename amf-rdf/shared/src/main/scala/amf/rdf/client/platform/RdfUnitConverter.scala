@@ -20,6 +20,10 @@ object RdfUnitConverter extends RdfPlatformSecrets {
   }
 
   def toNativeRdfModel(unit: BaseUnit, renderOptions: RenderOptions = new RenderOptions()): RdfModel = {
-    framework.unitToRdfModel(unit, renderOptions)
+    toNativeRdfModel(unit, AMFGraphConfiguration.predefined(), renderOptions)
+  }
+
+  def toNativeRdfModel(unit: BaseUnit, config: AMFGraphConfiguration, renderOptions: RenderOptions): RdfModel = {
+    framework.unitToRdfModel(unit, config, renderOptions)
   }
 }
