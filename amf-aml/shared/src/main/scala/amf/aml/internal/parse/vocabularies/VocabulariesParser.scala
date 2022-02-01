@@ -159,18 +159,11 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
         classTermMap.key(
             "extends",
             entry => {
-              val refs: Seq[String] = entry.value.tagType match {
-                case YType.Str => Seq(ValueNode(entry.value).string().toString)
-                case YType.Seq =>
-                  // ArrayNode(entry.value).strings().scalars.map(_.toString)
-                  DefaultArrayNode(node = entry.value).nodes._1.map(_.value.toString)
-                case YType.Null => Seq.empty
-              }
-
-              val superClasses: Seq[String] = refs
-                .map { term: String =>
+              val refs = singleOrMultipleItemsAsString(entry)
+              val superClasses = refs
+                .map { term =>
                   ctx.resolveClassTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
-                    case Some(v) => Some(v)
+                    case Some(v) => Some(AmfScalar(v, Annotations.synthesized()))
                     case None =>
                       ctx.missingClassTermWarning(term, classTerm.id, entry.value)
                       None
@@ -179,12 +172,22 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
                 .filter(_.nonEmpty)
                 .map(_.get)
 
-              classTerm.set(ClassTermModel.SubClassOf, superClasses)
+              classTerm.set(ClassTermModel.SubClassOf,
+                            AmfArray(superClasses, Annotations(entry.value)),
+                            Annotations(entry))
             }
         )
     }
 
     ctx.register(classTermAlias, classTerm)
+  }
+
+  private def singleOrMultipleItemsAsString(entry: YMapEntry) = {
+    entry.value.tagType match {
+      case YType.Str  => Seq(ValueNode(entry.value).string().toString)
+      case YType.Seq  => DefaultArrayNode(node = entry.value).nodes._1.map(_.value.toString)
+      case YType.Null => Seq.empty
+    }
   }
 
   def parsePropertyTerms(map: YMap): Unit = {

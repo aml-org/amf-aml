@@ -343,7 +343,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#PersonalValueType/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#PersonalValueType/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonalValueType"
@@ -352,6 +352,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(129,2)-(132,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#PersonalValueType/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(130,4)-(132,0)]"
                       }
                     ]
                   }
@@ -383,7 +396,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#GlobalParty/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#GlobalParty/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#GlobalParty"
@@ -392,6 +405,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(105,2)-(108,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#GlobalParty/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(106,4)-(108,0)]"
                       }
                     ]
                   }
@@ -423,7 +449,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#Country/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#Country/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Country"
@@ -432,6 +458,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(111,2)-(114,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Country/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(112,4)-(114,0)]"
                       }
                     ]
                   }
@@ -463,7 +502,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#Hobby/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#Hobby/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Hobby"
@@ -472,6 +511,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(171,2)-(174,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Hobby/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(172,4)-(174,0)]"
                       }
                     ]
                   }
@@ -503,7 +555,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#Ethnicity/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#Ethnicity/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Ethnicity"
@@ -512,6 +564,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(156,2)-(159,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Ethnicity/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(157,4)-(159,0)]"
                       }
                     ]
                   }
@@ -761,6 +826,32 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Individual/source-map/lexical/element_2",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/meta#properties"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(30,4)-(105,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Individual/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(29,4)-(30,0)]"
+                      }
+                    ]
+                  },
+                  {
                     "@id": "http://crm.com/vocabularies/core#Individual/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
@@ -770,19 +861,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(28,2)-(105,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "http://crm.com/vocabularies/core#Individual/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/meta#properties"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(30,4)-(105,0)]"
                       }
                     ]
                   }
@@ -814,7 +892,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#Religion/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#Religion/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Religion"
@@ -823,6 +901,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(165,2)-(168,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Religion/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(166,4)-(168,0)]"
                       }
                     ]
                   }
@@ -854,7 +945,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#IncomeRange/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#IncomeRange/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#IncomeRange"
@@ -863,6 +954,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(123,2)-(126,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#IncomeRange/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(124,4)-(126,0)]"
                       }
                     ]
                   }
@@ -894,7 +998,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#PersonLifeStage/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#PersonLifeStage/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonLifeStage"
@@ -903,6 +1007,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(153,2)-(156,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#PersonLifeStage/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(154,4)-(156,0)]"
                       }
                     ]
                   }
@@ -997,7 +1114,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#LifeAttitudeType/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#LifeAttitudeType/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#LifeAttitudeType"
@@ -1006,6 +1123,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(135,2)-(138,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#LifeAttitudeType/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(136,4)-(138,0)]"
                       }
                     ]
                   }
@@ -1037,7 +1167,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#LifeStyleType/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#LifeStyleType/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#LifeStyleType"
@@ -1046,6 +1176,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(132,2)-(135,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#LifeStyleType/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(133,4)-(135,0)]"
                       }
                     ]
                   }
@@ -1077,7 +1220,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#MilitaryStatus/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#MilitaryStatus/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MilitaryStatus"
@@ -1086,6 +1229,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(168,2)-(171,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#MilitaryStatus/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(169,4)-(171,0)]"
                       }
                     ]
                   }
@@ -1117,7 +1273,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#Language/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#Language/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Language"
@@ -1126,6 +1282,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(117,2)-(120,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Language/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(118,4)-(120,0)]"
                       }
                     ]
                   }
@@ -1157,7 +1326,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#Currency/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#Currency/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Currency"
@@ -1166,6 +1335,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(120,2)-(123,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Currency/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(121,4)-(123,0)]"
                       }
                     ]
                   }
@@ -1197,7 +1379,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#DietaryHabitType/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#DietaryHabitType/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DietaryHabitType"
@@ -1206,6 +1388,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(138,2)-(141,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#DietaryHabitType/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(139,4)-(141,0)]"
                       }
                     ]
                   }
@@ -1237,7 +1432,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#DisabilityType/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#DisabilityType/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DisabilityType"
@@ -1246,6 +1441,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(141,2)-(144,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#DisabilityType/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(142,4)-(144,0)]"
                       }
                     ]
                   }
@@ -1277,7 +1485,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#PartyNoMergeReason/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#PartyNoMergeReason/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PartyNoMergeReason"
@@ -1286,6 +1494,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(108,2)-(111,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#PartyNoMergeReason/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(109,4)-(111,0)]"
                       }
                     ]
                   }
@@ -1317,7 +1538,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#DoNotProcessReason/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#DoNotProcessReason/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#DoNotProcessReason"
@@ -1326,6 +1547,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(114,2)-(117,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#DoNotProcessReason/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(115,4)-(117,0)]"
                       }
                     ]
                   }
@@ -1357,7 +1591,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#HeightUOM/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#HeightUOM/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#HeightUOM"
@@ -1366,6 +1600,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(144,2)-(147,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#HeightUOM/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(145,4)-(147,0)]"
                       }
                     ]
                   }
@@ -1397,7 +1644,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#Organization/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#Organization/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Organization"
@@ -1406,6 +1653,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(25,2)-(28,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Organization/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(26,4)-(28,0)]"
                       }
                     ]
                   }
@@ -1437,7 +1697,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#WeightUOM/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#WeightUOM/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#WeightUOM"
@@ -1446,6 +1706,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(147,2)-(150,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#WeightUOM/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(148,4)-(150,0)]"
                       }
                     ]
                   }
@@ -1477,7 +1750,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#Gender/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#Gender/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Gender"
@@ -1486,6 +1759,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(162,2)-(165,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Gender/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(163,4)-(165,0)]"
                       }
                     ]
                   }
@@ -1517,7 +1803,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#Household/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#Household/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#Household"
@@ -1526,6 +1812,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(159,2)-(162,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Household/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(160,4)-(162,0)]"
                       }
                     ]
                   }
@@ -1557,7 +1856,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#PersonalityType/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#PersonalityType/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#PersonalityType"
@@ -1566,6 +1865,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(126,2)-(129,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#PersonalityType/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(127,4)-(129,0)]"
                       }
                     ]
                   }
@@ -1597,7 +1909,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://crm.com/vocabularies/core#MaritalStatus/source-map/lexical/element_0",
+                    "@id": "http://crm.com/vocabularies/core#MaritalStatus/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://crm.com/vocabularies/core#MaritalStatus"
@@ -1606,6 +1918,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(150,2)-(153,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#MaritalStatus/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(151,4)-(153,0)]"
                       }
                     ]
                   }
@@ -1654,6 +1979,32 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
+                    "@id": "http://crm.com/vocabularies/core#Party/source-map/lexical/element_2",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://a.ml/vocabularies/meta#properties"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(18,4)-(25,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://crm.com/vocabularies/core#Party/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#subClassOf"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(17,4)-(18,0)]"
+                      }
+                    ]
+                  },
+                  {
                     "@id": "http://crm.com/vocabularies/core#Party/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
@@ -1663,19 +2014,6 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(16,2)-(25,0)]"
-                      }
-                    ]
-                  },
-                  {
-                    "@id": "http://crm.com/vocabularies/core#Party/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://a.ml/vocabularies/meta#properties"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(18,4)-(25,0)]"
                       }
                     ]
                   }
