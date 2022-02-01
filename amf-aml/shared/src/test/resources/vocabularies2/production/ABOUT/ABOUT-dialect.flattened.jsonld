@@ -2633,6 +2633,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#ContinuousIntegration/source-map/lexical/element_1"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#ContinuousIntegration/source-map/lexical/element_0"
         }
       ]
@@ -2644,10 +2647,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_1"
+          "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_2"
         },
         {
           "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_1"
         }
       ]
     },
@@ -2672,10 +2678,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
-          "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_1"
+          "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_2"
         },
         {
           "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_1"
         }
       ]
     },
@@ -2685,6 +2694,9 @@
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#ProjectManagement/source-map/lexical/element_1"
+        },
         {
           "@id": "http://mulesoft.com/vocabularies/about#ProjectManagement/source-map/lexical/element_0"
         }
@@ -4038,19 +4050,29 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(190,2)-(202,0)]"
     },
     {
-      "@id": "http://mulesoft.com/vocabularies/about#ContinuousIntegration/source-map/lexical/element_0",
+      "@id": "http://mulesoft.com/vocabularies/about#ContinuousIntegration/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#ContinuousIntegration",
       "http://a.ml/vocabularies/document-source-maps#value": "[(50,2)-(55,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#ContinuousIntegration/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(53,4)-(55,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#properties",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(64,4)-(68,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(63,4)-(64,0)]"
     },
     {
       "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#License",
       "http://a.ml/vocabularies/document-source-maps#value": "[(60,2)-(68,0)]"
-    },
-    {
-      "@id": "http://mulesoft.com/vocabularies/about#License/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#properties",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(64,4)-(68,0)]"
     },
     {
       "@id": "http://mulesoft.com/vocabularies/about#DiscussionChannel/source-map/lexical/element_1",
@@ -4063,19 +4085,29 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(37,4)-(42,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#properties",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(72,4)-(75,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(71,4)-(72,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#Contributor",
       "http://a.ml/vocabularies/document-source-maps#value": "[(68,2)-(75,0)]"
     },
     {
-      "@id": "http://mulesoft.com/vocabularies/about#Contributor/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#properties",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(72,4)-(75,0)]"
+      "@id": "http://mulesoft.com/vocabularies/about#ProjectManagement/source-map/lexical/element_1",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#ProjectManagement",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(55,2)-(60,0)]"
     },
     {
       "@id": "http://mulesoft.com/vocabularies/about#ProjectManagement/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#ProjectManagement",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(55,2)-(60,0)]"
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(58,4)-(60,0)]"
     },
     {
       "@id": "http://mulesoft.com/vocabularies/about#Service/source-map/lexical/element_0",
