@@ -479,7 +479,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://mulesoft.com/vocabularies/amf-learning#name/source-map/lexical/element_0",
+                    "@id": "http://mulesoft.com/vocabularies/amf-learning#name/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://mulesoft.com/vocabularies/amf-learning#name"
@@ -488,6 +488,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(25,2)-(28,17)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://mulesoft.com/vocabularies/amf-learning#name/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(28,4)-(28,17)]"
                       }
                     ]
                   }
