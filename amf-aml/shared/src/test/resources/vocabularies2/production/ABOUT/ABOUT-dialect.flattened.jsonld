@@ -2734,6 +2734,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#serviceType/source-map/lexical/element_1"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#serviceType/source-map/lexical/element_0"
         }
       ]
@@ -2745,7 +2748,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#serviceSystemUrl/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#serviceSystemUrl/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#serviceSystemUrl/source-map/lexical/element_1"
         }
       ]
     },
@@ -2756,7 +2765,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#contributor/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#contributor/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#contributor/source-map/lexical/element_1"
         }
       ]
     },
@@ -2767,7 +2782,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#licenseType/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#licenseType/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#licenseType/source-map/lexical/element_1"
         }
       ]
     },
@@ -2789,6 +2810,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#hasPart/source-map/lexical/element_1"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#hasPart/source-map/lexical/element_0"
         }
       ]
@@ -2800,7 +2824,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#licenseName/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#licenseName/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#licenseName/source-map/lexical/element_1"
         }
       ]
     },
@@ -2811,7 +2841,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#role/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#role/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#role/source-map/lexical/element_1"
         }
       ]
     },
@@ -2822,7 +2858,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#continuousIntegration/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#continuousIntegration/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#continuousIntegration/source-map/lexical/element_1"
         }
       ]
     },
@@ -2833,7 +2875,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#serviceName/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#serviceName/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#serviceName/source-map/lexical/element_1"
         }
       ]
     },
@@ -2844,7 +2892,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#discussionChannelName/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#discussionChannelName/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#discussionChannelName/source-map/lexical/element_1"
         }
       ]
     },
@@ -2854,6 +2908,9 @@
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#discussionChannelType/source-map/lexical/element_1"
+        },
         {
           "@id": "http://mulesoft.com/vocabularies/about#discussionChannelType/source-map/lexical/element_0"
         }
@@ -2866,7 +2923,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#projectManagementTool/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#projectManagementTool/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#projectManagementTool/source-map/lexical/element_1"
         }
       ]
     },
@@ -2876,6 +2939,9 @@
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#sameAs/source-map/lexical/element_1"
+        },
         {
           "@id": "http://mulesoft.com/vocabularies/about#sameAs/source-map/lexical/element_0"
         }
@@ -2888,7 +2954,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#keyword/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#keyword/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#keyword/source-map/lexical/element_1"
         }
       ]
     },
@@ -2899,7 +2971,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#license/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#license/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#license/source-map/lexical/element_1"
         }
       ]
     },
@@ -2910,7 +2988,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#serviceUrl/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#serviceUrl/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#serviceUrl/source-map/lexical/element_1"
         }
       ]
     },
@@ -2921,7 +3005,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#homepage/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#homepage/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#homepage/source-map/lexical/element_1"
         }
       ]
     },
@@ -2931,6 +3021,9 @@
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#partOf/source-map/lexical/element_1"
+        },
         {
           "@id": "http://mulesoft.com/vocabularies/about#partOf/source-map/lexical/element_0"
         }
@@ -2943,6 +3036,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#developmentStatus/source-map/lexical/element_1"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#developmentStatus/source-map/lexical/element_0"
         }
       ]
@@ -2953,6 +3049,9 @@
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#forkedFrom/source-map/lexical/element_1"
+        },
         {
           "@id": "http://mulesoft.com/vocabularies/about#forkedFrom/source-map/lexical/element_0"
         }
@@ -2965,7 +3064,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#discussionChannel/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#discussionChannel/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#discussionChannel/source-map/lexical/element_1"
         }
       ]
     },
@@ -2976,7 +3081,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://mulesoft.com/vocabularies/about#discussionChannelUrl/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://mulesoft.com/vocabularies/about#discussionChannelUrl/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://mulesoft.com/vocabularies/about#discussionChannelUrl/source-map/lexical/element_1"
         }
       ]
     },
@@ -4125,22 +4236,57 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(21,4)-(34,0)]"
     },
     {
-      "@id": "http://mulesoft.com/vocabularies/about#serviceType/source-map/lexical/element_0",
+      "@id": "http://mulesoft.com/vocabularies/about#serviceType/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#serviceType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(102,2)-(107,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#serviceType/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(105,4)-(107,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#serviceSystemUrl/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(116,4)-(117,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#serviceSystemUrl/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(117,4)-(119,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#serviceSystemUrl/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#serviceSystemUrl",
       "http://a.ml/vocabularies/document-source-maps#value": "[(113,2)-(119,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#contributor/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(207,4)-(208,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#contributor/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(208,4)-(208,30)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#contributor/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#contributor",
       "http://a.ml/vocabularies/document-source-maps#value": "[(204,2)-(208,30)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#licenseType/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(128,4)-(129,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#licenseType/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(129,4)-(133,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#licenseType/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#licenseType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(125,2)-(133,0)]"
     },
@@ -4150,92 +4296,242 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(176,2)-(180,0)]"
     },
     {
-      "@id": "http://mulesoft.com/vocabularies/about#hasPart/source-map/lexical/element_0",
+      "@id": "http://mulesoft.com/vocabularies/about#hasPart/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#hasPart",
       "http://a.ml/vocabularies/document-source-maps#value": "[(161,2)-(166,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#hasPart/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(164,4)-(166,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#licenseName/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(122,4)-(123,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#licenseName/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(123,4)-(125,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#licenseName/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#licenseName",
       "http://a.ml/vocabularies/document-source-maps#value": "[(119,2)-(125,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#role/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(153,4)-(154,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#role/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(154,4)-(156,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#role/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#role",
       "http://a.ml/vocabularies/document-source-maps#value": "[(150,2)-(156,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#continuousIntegration/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(189,4)-(190,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#continuousIntegration/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(190,4)-(192,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#continuousIntegration/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#continuousIntegration",
       "http://a.ml/vocabularies/document-source-maps#value": "[(186,2)-(192,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#serviceName/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(99,4)-(100,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#serviceName/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(100,4)-(102,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#serviceName/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#serviceName",
       "http://a.ml/vocabularies/document-source-maps#value": "[(96,2)-(102,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#discussionChannelName/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(82,4)-(83,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#discussionChannelName/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(83,4)-(85,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#discussionChannelName/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#discussionChannelName",
       "http://a.ml/vocabularies/document-source-maps#value": "[(79,2)-(85,0)]"
     },
     {
-      "@id": "http://mulesoft.com/vocabularies/about#discussionChannelType/source-map/lexical/element_0",
+      "@id": "http://mulesoft.com/vocabularies/about#discussionChannelType/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#discussionChannelType",
       "http://a.ml/vocabularies/document-source-maps#value": "[(85,2)-(90,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#discussionChannelType/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(88,4)-(90,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#projectManagementTool/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(195,4)-(196,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#projectManagementTool/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(196,4)-(198,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#projectManagementTool/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#projectManagementTool",
       "http://a.ml/vocabularies/document-source-maps#value": "[(192,2)-(198,0)]"
     },
     {
-      "@id": "http://mulesoft.com/vocabularies/about#sameAs/source-map/lexical/element_0",
+      "@id": "http://mulesoft.com/vocabularies/about#sameAs/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#sameAs",
       "http://a.ml/vocabularies/document-source-maps#value": "[(166,2)-(171,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#sameAs/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(169,4)-(171,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#keyword/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(142,4)-(144,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#keyword/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(141,4)-(142,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#keyword/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#keyword",
       "http://a.ml/vocabularies/document-source-maps#value": "[(138,2)-(144,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#license/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(201,4)-(202,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#license/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(202,4)-(204,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#license/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#license",
       "http://a.ml/vocabularies/document-source-maps#value": "[(198,2)-(204,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#serviceUrl/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(110,4)-(111,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#serviceUrl/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(111,4)-(113,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#serviceUrl/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#serviceUrl",
       "http://a.ml/vocabularies/document-source-maps#value": "[(107,2)-(113,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#homepage/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(148,4)-(150,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#homepage/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(147,4)-(148,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#homepage/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#homepage",
       "http://a.ml/vocabularies/document-source-maps#value": "[(144,2)-(150,0)]"
     },
     {
-      "@id": "http://mulesoft.com/vocabularies/about#partOf/source-map/lexical/element_0",
+      "@id": "http://mulesoft.com/vocabularies/about#partOf/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#partOf",
       "http://a.ml/vocabularies/document-source-maps#value": "[(156,2)-(161,0)]"
     },
     {
-      "@id": "http://mulesoft.com/vocabularies/about#developmentStatus/source-map/lexical/element_0",
+      "@id": "http://mulesoft.com/vocabularies/about#partOf/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(159,4)-(161,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#developmentStatus/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#developmentStatus",
       "http://a.ml/vocabularies/document-source-maps#value": "[(133,2)-(138,0)]"
     },
     {
-      "@id": "http://mulesoft.com/vocabularies/about#forkedFrom/source-map/lexical/element_0",
+      "@id": "http://mulesoft.com/vocabularies/about#developmentStatus/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(136,4)-(138,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#forkedFrom/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#forkedFrom",
       "http://a.ml/vocabularies/document-source-maps#value": "[(171,2)-(176,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#forkedFrom/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(174,4)-(176,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#discussionChannel/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(183,4)-(184,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#discussionChannel/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(184,4)-(186,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#discussionChannel/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#discussionChannel",
       "http://a.ml/vocabularies/document-source-maps#value": "[(180,2)-(186,0)]"
     },
     {
+      "@id": "http://mulesoft.com/vocabularies/about#discussionChannelUrl/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(93,4)-(94,0)]"
+    },
+    {
       "@id": "http://mulesoft.com/vocabularies/about#discussionChannelUrl/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(94,4)-(96,0)]"
+    },
+    {
+      "@id": "http://mulesoft.com/vocabularies/about#discussionChannelUrl/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://mulesoft.com/vocabularies/about#discussionChannelUrl",
       "http://a.ml/vocabularies/document-source-maps#value": "[(90,2)-(96,0)]"
     },

@@ -87,7 +87,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     vocabulary
   }
 
-  def parseClassTerms(map: YMap): Unit = {
+  private def parseClassTerms(map: YMap): Unit = {
     map.key(
         "classTerms",
         entry => {
@@ -100,124 +100,16 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     )
   }
 
-  private def singleOrMultipleItemsAsString(entry: YMapEntry) = {
-    entry.value.tagType match {
-      case YType.Str  => Seq(ValueNode(entry.value).string().toString)
-      case YType.Seq  => DefaultArrayNode(node = entry.value).nodes._1.map(_.value.toString)
-      case YType.Null => Seq.empty
-    }
-  }
-
-  def parsePropertyTerms(map: YMap): Unit = {
+  private def parsePropertyTerms(map: YMap): Unit = {
     map.key(
         "propertyTerms",
         entry => {
           addDeclarationKey(DeclarationKey(entry))
           val classDeclarations = entry.value.as[YMap]
           classDeclarations.entries.foreach { propertyTermDeclaration =>
-            parsePropertyTerm(propertyTermDeclaration)
+            PropertyTermParser.parse(propertyTermDeclaration, vocabulary)
           }
         }
     )
-  }
-
-  def parsePropertyTerm(propertyTermDeclaration: YMapEntry): Unit = {
-    val propertyTerm: PropertyTerm = propertyTermDeclaration.value.tagType match {
-      case YType.Null => DatatypePropertyTerm(Annotations(propertyTermDeclaration))
-      case _ =>
-        propertyTermDeclaration.value.as[YMap].key("range") match {
-          case None => DatatypePropertyTerm(Annotations(propertyTermDeclaration))
-          case Some(value) =>
-            value.value.as[YScalar].text match {
-              case "string" | "integer" | "float" | "double" | "long" | "boolean" | "uri" | "any" | "time" | "date" |
-                  "dateTime" =>
-                DatatypePropertyTerm(Annotations(propertyTermDeclaration))
-              case _ => ObjectPropertyTerm(Annotations(propertyTermDeclaration))
-            }
-        }
-    }
-
-    val propertyTermAlias = propertyTermDeclaration.key.as[YScalar].text
-    propertyTerm.withName(propertyTermAlias)
-
-    ctx.resolvePropertyTermAlias(vocabulary.base.value(),
-                                 propertyTermAlias,
-                                 propertyTermDeclaration.key,
-                                 strictLocal = false) match {
-      case None     => ctx.missingPropertyTermWarning(propertyTermAlias, vocabulary.id, propertyTermDeclaration.key)
-      case Some(id) => propertyTerm.id = id
-    }
-
-    propertyTermDeclaration.value.tagType match {
-      case YType.Null => // ignore
-      case _ =>
-        val propertyTermMap = propertyTermDeclaration.value.as[YMap]
-        ctx.closedNode("propertyTerm", propertyTerm.id, propertyTermMap)
-
-        propertyTermMap.key("displayName", entry => {
-          val value = ValueNode(entry.value)
-          propertyTerm.set(ClassTermModel.DisplayName, value.string())
-        })
-
-        propertyTermMap.key("description", entry => {
-          val value = ValueNode(entry.value)
-          propertyTerm.set(ClassTermModel.Description, value.string())
-        })
-
-        propertyTermMap.key(
-            "range",
-            entry => {
-              val text = entry.value.as[YScalar].text
-              val rangeId = text match {
-                case "guid" =>
-                  Some((Namespace.Shapes + "guid").iri())
-                case "any" | "uri" | "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" |
-                    "dateTime" =>
-                  Some(DataType(text))
-                case classAlias =>
-                  ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
-                    case Some(classTermId) => Some(classTermId)
-                    case None =>
-                      ctx.missingClassTermWarning(classAlias, propertyTerm.id, entry.value)
-                      None
-                  }
-              }
-
-              rangeId match {
-                case Some(id: String) => propertyTerm.withRange(id)
-                case None             => // ignore
-              }
-            }
-        )
-
-        propertyTermMap.key(
-            "extends",
-            entry => {
-              val refs: Seq[String] = entry.value.tagType match {
-                case YType.Str => Seq(ValueNode(entry.value).string().toString)
-                case YType.Seq =>
-                  DefaultArrayNode(entry.value).nodes._1.map(_.as[YScalar].text)
-                // ArrayNode(entry.value).strings().scalars.map(_.toString)
-                case YType.Null => Seq.empty
-              }
-
-              val superClasses: Seq[String] = refs
-                .map { term: String =>
-                  ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true) match {
-                    case Some(v) => Some(v)
-                    case None =>
-                      ctx.missingPropertyTermWarning(term, propertyTerm.id, entry.value)
-                      None
-                  }
-                }
-                .filter(_.nonEmpty)
-                .map(_.get)
-
-              propertyTerm.set(ObjectPropertyTermModel.SubPropertyOf, superClasses)
-            }
-        )
-    }
-
-    ctx.register(propertyTermAlias, propertyTerm)
   }
 }
