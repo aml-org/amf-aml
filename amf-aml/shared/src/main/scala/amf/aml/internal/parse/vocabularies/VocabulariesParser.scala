@@ -28,26 +28,9 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
   }
 
   def parseDocument(): BaseUnit = {
-    map.key("vocabulary") match {
-      case Some(entry) => {
-        val value = ValueNode(entry.value)
-        vocabulary.set(VocabularyModel.Name, value.string(), Annotations(entry))
-      }
-      case None => ctx.missingVocabularyTermWarning(vocabulary.id, map)
-    }
-
-    map.key("base") match {
-      case Some(entry) => {
-        val value = ValueNode(entry.value)
-        vocabulary.set(VocabularyModel.Base, value.string(), Annotations(entry))
-      }
-      case None => ctx.missingBaseTermViolation(vocabulary.id, map)
-    }
-
-    map.key("usage", entry => {
-      val value = ValueNode(entry.value)
-      vocabulary.set(VocabularyModel.Usage, value.string(), Annotations(entry))
-    })
+    parseName(vocabulary)
+    parseBase(vocabulary)
+    parseUsage(vocabulary)
 
     // closed node validation
     ctx.closedNode("vocabulary", vocabulary.id, map)
@@ -85,6 +68,33 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
 
     vocabulary.processingData.withSourceSpec(AML)
     vocabulary
+  }
+
+  private def parseUsage(vocabulary: Vocabulary) = {
+    map.key("usage", entry => {
+      val value = ValueNode(entry.value)
+      vocabulary.set(VocabularyModel.Usage, value.string(), Annotations(entry))
+    })
+  }
+
+  private def parseBase(vocabulary: Vocabulary) = {
+    map.key("base") match {
+      case Some(entry) => {
+        val value = ValueNode(entry.value)
+        vocabulary.set(VocabularyModel.Base, value.string(), Annotations(entry))
+      }
+      case None => ctx.missingBaseTermViolation(vocabulary.id, map)
+    }
+  }
+
+  private def parseName(vocabulary: Vocabulary) = {
+    map.key("vocabulary") match {
+      case Some(entry) => {
+        val value = ValueNode(entry.value)
+        vocabulary.set(VocabularyModel.Name, value.string(), Annotations(entry))
+      }
+      case None => ctx.missingVocabularyTermWarning(vocabulary.id, map)
+    }
   }
 
   private def parseClassTerms(map: YMap): Unit = {
