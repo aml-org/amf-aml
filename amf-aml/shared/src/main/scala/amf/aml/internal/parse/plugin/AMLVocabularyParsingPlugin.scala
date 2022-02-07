@@ -41,7 +41,7 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
   /**
     * media types which specifies vendors that are parsed by this plugin.
     */
-  override def mediaTypes: Seq[String] = Seq(`application/yaml`)
+  override def mediaTypes: Seq[String] = Seq(`application/yaml`, `application/json`)
 
   /**
     * media types which specifies vendors that may be referenced.
