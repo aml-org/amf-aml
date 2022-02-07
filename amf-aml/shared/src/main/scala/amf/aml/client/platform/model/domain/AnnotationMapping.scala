@@ -59,6 +59,10 @@ case class AnnotationMapping(override private[amf] val _internal: InternalAnnota
     _internal.withAllowMultiple(allow)
     this
   }
+  def withDomain(domains: ClientList[String]): AnnotationMapping = {
+    _internal.withDomain(domains.asInternal)
+    this
+  }
   def withEnum(values: ClientList[Any]): AnnotationMapping = {
     _internal.withEnum(values.asInternal)
     this
