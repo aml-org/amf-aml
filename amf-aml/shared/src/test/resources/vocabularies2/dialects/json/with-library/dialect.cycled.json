@@ -2,9 +2,6 @@
   "$type": "Dialect 1.0",
   "dialect": "Test",
   "version": "1.0",
-  "uses": {
-    "lib": "library.json"
-  },
   "nodeMappings": {
     "AnotherNode": "lib.AnotherNode",
     "RootNode": {
@@ -19,5 +16,8 @@
     "root": {
       "encodes": "RootNode"
     }
+  },
+  "uses": {
+    "lib": "library.json"
   }
 }

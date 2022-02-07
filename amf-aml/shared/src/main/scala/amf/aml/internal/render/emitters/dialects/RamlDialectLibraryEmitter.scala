@@ -14,7 +14,8 @@ import org.yaml.model.YDocument.EntryBuilder
 import amf.aml.internal.render.emitters.dialects.FieldEntryImplicit.FieldEntryWithPosition
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 
-case class RamlDialectLibraryEmitter(library: DialectLibrary)(implicit val nodeMappableFinder: NodeMappableFinder)
+case class RamlDialectLibraryEmitter(library: DialectLibrary, document: DocumentCreator)(
+    implicit val nodeMappableFinder: NodeMappableFinder)
     extends DialectDocumentsEmitters {
 
   val ordering: SpecOrdering    = Lexical
@@ -25,13 +26,7 @@ case class RamlDialectLibraryEmitter(library: DialectLibrary)(implicit val nodeM
 
   def emitDialectLibrary(): YDocument = {
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)
-
-    YDocument(b => {
-      b.comment("%Library / Dialect 1.0")
-      b.obj { b =>
-        traverse(ordering.sorted(content), b)
-      }
-    })
+    document(ordering.sorted(content))
   }
 
   protected def toDialect(library: DialectLibrary): Dialect = {

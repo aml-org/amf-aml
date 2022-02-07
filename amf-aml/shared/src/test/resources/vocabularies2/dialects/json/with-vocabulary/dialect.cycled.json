@@ -1,0 +1,31 @@
+{
+  "$type": "Dialect 1.0",
+  "dialect": "Test",
+  "version": "1",
+  "external": {
+    "myExternal": "http://myexternal.org#"
+  },
+  "documents": {
+    "root": {
+      "encodes": "RootNode"
+    }
+  },
+  "nodeMappings": {
+    "RootNode": {
+      "classTerm": "myVocab.MyClass",
+      "mapping": {
+        "myProperty": {
+          "propertyTerm": "myVocab.myProperty",
+          "range": "string"
+        },
+        "anotherProperty": {
+          "propertyTerm": "myExternal.anotherProperty",
+          "range": "string"
+        }
+      }
+    }
+  },
+  "uses": {
+    "myVocab": "vocabulary.json"
+  }
+}
