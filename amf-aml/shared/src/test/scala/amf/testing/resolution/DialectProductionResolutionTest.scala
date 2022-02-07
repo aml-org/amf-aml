@@ -1,9 +1,9 @@
 package amf.testing.resolution
 
 import amf.aml.client.scala.AMLConfiguration
-import amf.core.client.scala.model.document.BaseUnit
-import amf.core.internal.remote.{Aml, Syntax, VocabularyYamlHint}
 import amf.aml.internal.transform.pipelines.DefaultAMLTransformationPipeline
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.internal.remote.Syntax
 import amf.testing.common.cycling.FunSuiteCycleTests
 import amf.testing.common.utils.DialectInstanceTester
 

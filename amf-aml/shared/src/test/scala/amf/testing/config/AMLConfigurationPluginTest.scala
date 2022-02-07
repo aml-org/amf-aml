@@ -5,7 +5,9 @@ import amf.aml.client.scala.model.domain.NodeMapping
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.render.plugin.AMLDialectInstanceRenderingPlugin
 import amf.core.internal.resource.AMFResolvers.platform.fs
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

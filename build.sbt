@@ -7,7 +7,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-ThisBuild / version := "6.0.3"
+ThisBuild / version := "6.0.4"
 ThisBuild / scalaVersion := "2.12.11"
 
 publish := {}
@@ -35,7 +35,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "5.0.3"
+val amfCoreVersion = "5.0.4"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
@@ -47,9 +47,8 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
   resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral),
   credentials ++= Common.credentials(),
   libraryDependencies ++= Seq(
-    "org.scalatest"    %%% "scalatest"         % "3.0.5" % Test,
-    "org.mule.common"  %%% "scala-common-test" % "0.0.6" % Test,
-    "org.slf4j" % "slf4j-nop" % "1.7.30" % Test
+    "org.mule.common"  %%% "scala-common-test" % "0.0.10" % Test,
+    "org.slf4j" % "slf4j-nop" % "1.7.32" % Test
   ),
   Test / logBuffered := false
 )

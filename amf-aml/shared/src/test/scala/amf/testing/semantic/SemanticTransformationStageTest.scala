@@ -4,7 +4,9 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.DialectInstance
 import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import org.scalatest.{Assertion, AsyncFunSuite, Matchers}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.matchers.should.Matchers
 
 import scala.concurrent.{ExecutionContext, Future}
 

@@ -1,8 +1,6 @@
 package amf.testing.common.utils
 
 import amf.aml.client.scala.AMLConfiguration
-import amf.aml.client.scala.model.document.DialectInstanceUnit
-import amf.aml.internal.render.plugin.AMLDialectInstanceRenderingPlugin
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.parse.document.SyamlParsedDocument
@@ -10,7 +8,8 @@ import amf.core.internal.plugins.syntax.SyamlSyntaxRenderPlugin
 import amf.core.internal.remote.Hint
 import amf.core.internal.remote.Mimes._
 import amf.core.io.FileAssertionTest
-import org.scalatest.{Assertion, AsyncFunSuite}
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 import org.yaml.model.{YDocument, YNode}
 
 import java.io.StringWriter

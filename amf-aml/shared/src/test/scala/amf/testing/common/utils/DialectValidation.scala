@@ -1,13 +1,10 @@
 package amf.testing.common.utils
 
 import amf.aml.client.scala.AMLConfiguration
-import amf.core.client.scala.errorhandling.DefaultErrorHandler
-import amf.core.internal.validation.ValidationConfiguration
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
-import amf.aml.client.scala.model.document.Dialect
-import org.scalatest.{Assertion, AsyncFunSuite}
+import amf.core.internal.unsafe.PlatformSecrets
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.Future
 
