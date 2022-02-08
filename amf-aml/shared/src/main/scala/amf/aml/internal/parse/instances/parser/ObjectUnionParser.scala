@@ -1,6 +1,12 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, NodeWithDiscriminator, UnionNodeMapping}
+import amf.aml.client.scala.model.domain.{
+  DialectDomainElement,
+  NodeMapping,
+  NodeWithDiscriminator,
+  PropertyMapping,
+  UnionNodeMapping
+}
 import amf.aml.internal.annotations.{DiscriminatorField, FromUnionNodeMapping, JsonPointerRef, RefInclude}
 import amf.aml.internal.metamodel.domain.NodeWithDiscriminatorModel
 import amf.aml.internal.parse.instances.ClosedInstanceNode.checkNode
@@ -182,16 +188,14 @@ object ObjectUnionParser {
   def findCompatibleMapping(
       id: String,
       unionMappings: Seq[NodeMapping],
-      discriminatorMapping: Map[String, NodeMapping],
+      discriminatorsMapping: Map[String, NodeMapping],
       discriminator: Option[String],
       nodeMap: YMap,
       additionalProperties: Seq[String])(implicit ctx: DialectInstanceContext): Seq[NodeMapping] = {
     discriminator match {
       // Using explicit discriminator
       case Some(propertyName) =>
-        val explicitMapping = nodeMap.entries.find(_.key.as[YScalar].text == propertyName).flatMap { entry =>
-          discriminatorMapping.get(entry.value.as[YScalar].text)
-        }
+        val explicitMapping = findExplicitMapping(nodeMap, propertyName, discriminatorsMapping)
         explicitMapping match {
           case Some(nodeMapping) => Seq(nodeMapping)
           case None =>
@@ -203,14 +207,11 @@ object ObjectUnionParser {
         }
       // Inferring based on properties
       case None =>
-        val properties: Set[String] = nodeMap.entries.map(_.key.as[YScalar].text).toSet.filter(isRegularKey)
+        val properties: Set[String] = keys(nodeMap).filter(isRegularKey)
         unionMappings.filter { mapping =>
           val baseProperties =
             mapping.propertiesMapping().filter(pm => !additionalProperties.contains(pm.nodePropertyMapping().value()))
-          val mappingRequiredSet: Set[String] = baseProperties
-            .filter(_.minCount().value() > 0)
-            .map(_.name().value())
-            .toSet
+          val mappingRequiredSet: Set[String] = requiredProperties(baseProperties)
           val mappingSet: Set[String] = baseProperties
             .map(_.name().value())
             .toSet
@@ -222,6 +223,23 @@ object ObjectUnionParser {
         }
     }
   }
+
+  private def findExplicitMapping(nodeMap: YMap,
+                                  propertyName: String,
+                                  discriminatorsMapping: Map[String, NodeMapping]) = {
+    nodeMap.entries.find(_.key.as[YScalar].text == propertyName).flatMap { entry =>
+      discriminatorsMapping.get(entry.value.as[YScalar].text)
+    }
+  }
+
+  private def requiredProperties(baseProperties: Seq[PropertyMapping]) = {
+    baseProperties
+      .filter(_.minCount().value() > 0)
+      .map(_.name().value())
+      .toSet
+  }
+
+  private def keys(nodeMap: YMap) = nodeMap.entries.map(_.key.as[YScalar].text).toSet
 
   private def isRegularKey = (x: String) => !x.startsWith("$")
 
