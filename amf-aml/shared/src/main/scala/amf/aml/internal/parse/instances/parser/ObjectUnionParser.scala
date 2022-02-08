@@ -1,7 +1,13 @@
 package amf.aml.internal.parse.instances.parser
 
 import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, NodeWithDiscriminator, UnionNodeMapping}
-import amf.aml.internal.annotations.{DiscriminatorField, FromUnionNodeMapping, JsonPointerRef, RefInclude}
+import amf.aml.internal.annotations.{
+  DiscriminatorField,
+  FromUnionNodeMapping,
+  FromUnionRangeMapping,
+  JsonPointerRef,
+  RefInclude
+}
 import amf.aml.internal.metamodel.domain.NodeWithDiscriminatorModel
 import amf.aml.internal.parse.instances.ClosedInstanceNode.checkNode
 import amf.aml.internal.parse.instances.InstanceNodeIdHandling.generateNodeId
@@ -103,7 +109,7 @@ object ObjectUnionParser {
                   s"Ambiguous node in union range, found 0 compatible mappings from ${allPossibleMappings.size} mappings: [${allPossibleMappings.map(_.id).mkString(",")}]",
                   ast.location
               )
-              DialectDomainElement(annotations)
+              DialectDomainElement(annotations += FromUnionRangeMapping(allPossibleMappings.map(_.id)))
                 .withId(defaultId)
             } else if (mappings.size == 1) {
               val node: DialectDomainElement = DialectDomainElement(annotations).withDefinedBy(mappings.head)
@@ -163,7 +169,8 @@ object ObjectUnionParser {
 
       case _ =>
         ctx.eh.violation(InvalidUnionType, defaultId, "Cannot parse AST for union node mapping", ast.location)
-        DialectDomainElement().withId(defaultId)
+        DialectDomainElement(Annotations(ast) += FromUnionRangeMapping(allPossibleMappings.map(_.id)))
+          .withId(defaultId)
     }
   }
 
