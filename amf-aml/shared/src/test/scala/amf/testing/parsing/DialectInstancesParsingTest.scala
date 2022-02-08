@@ -1,7 +1,9 @@
 package amf.testing.parsing
 
 import amf.aml.client.scala.AMLConfiguration
+import amf.aml.internal.annotations.FromUnionRangeMapping
 import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.metamodel.Field
 import amf.core.internal.remote._
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm}
 import amf.core.internal.remote.Syntax.Yaml
@@ -1033,6 +1035,58 @@ trait DialectInstancesParsingTest extends DialectTests {
         renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint),
         directory = s"$basePath/encoded-named/"
     )
+  }
+
+  test("Undefined mapping from UnionRange will contain FromUnionRangeMapping annotation") {
+    val amlConfig  = AMLConfiguration.predefined()
+    val dialectUri = "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/range-mapping.yaml"
+
+    def declaration(s: String): String = s"$dialectUri#/declarations/$s"
+
+    for {
+      nextAmlConfig <- amlConfig.withDialect(dialectUri)
+      instance <- nextAmlConfig
+        .baseUnitClient()
+        .parseDialectInstance(
+            "file://amf-aml/shared/src/test/resources/vocabularies2/instances/undefined-union-range-mapping.yaml")
+      assertion <- {
+        val encoded = instance.dialectInstance.encodes
+        val unionPropertyFieldEntry =
+          encoded.fields.fields().find(_.field.value.iri() == "http://test.com/v2#unionRangeProp")
+        val annotation = unionPropertyFieldEntry.get.value.value.annotations.find(classOf[FromUnionRangeMapping])
+        assert(annotation.isDefined)
+        val possibleRanges = annotation.get.possibleRanges
+        assert(possibleRanges.contains(declaration("A")))
+        assert(possibleRanges.contains(declaration("B")))
+        assert(possibleRanges.contains(declaration("C")))
+      }
+    } yield {
+      assertion
+    }
+  }
+
+  test("Defined mapping from UnionRange should not contain FromUnionRangeMapping annotation") {
+    val amlConfig  = AMLConfiguration.predefined()
+    val dialectUri = "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/range-mapping.yaml"
+
+    def declaration(s: String): String = s"$dialectUri#/declarations/$s"
+
+    for {
+      nextAmlConfig <- amlConfig.withDialect(dialectUri)
+      instance <- nextAmlConfig
+        .baseUnitClient()
+        .parseDialectInstance(
+            "file://amf-aml/shared/src/test/resources/vocabularies2/instances/defined-union-range-mapping.yaml")
+      assertion <- {
+        val encoded = instance.dialectInstance.encodes
+        val unionPropertyFieldEntry =
+          encoded.fields.fields().find(_.field.value.iri() == "http://test.com/v2#unionRangeProp")
+        val annotation = unionPropertyFieldEntry.get.value.value.annotations.find(classOf[FromUnionRangeMapping])
+        assert(annotation.isEmpty)
+      }
+    } yield {
+      assertion
+    }
   }
 
   //noinspection SameParameterValue
