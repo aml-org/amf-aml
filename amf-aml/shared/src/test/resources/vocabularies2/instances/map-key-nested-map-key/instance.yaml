@@ -1,0 +1,18 @@
+#%Test 1.0
+secondLevel:
+  second-level-name-A:
+    thirdLevel:
+      third-level-name-A-A:
+        - value A
+        - value B
+      third-level-name-A-B:
+        - value A
+        - value B
+  second-level-name-B:
+    thirdLevel:
+      third-level-name-B-A:
+        - value A
+        - value B
+      third-level-name-B-B:
+        - value A
+        - value B

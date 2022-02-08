@@ -1,0 +1,29 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+nodeMappings:
+  TopLevelNode:
+    mapping:
+      secondLevel:
+        range: SecondLevelNode
+        mapKey: name
+  SecondLevelNode:
+    mapping:
+      name:
+        range: string
+      thirdLevel:
+        range: ThirdLevelNode
+        mapKey: name
+        mapValue: values
+  ThirdLevelNode:
+    mapping:
+      name:
+        range: string
+      values:
+        range: string
+        allowMultiple: true
+documents:
+  root:
+    encodes: TopLevelNode
+

@@ -1,0 +1,141 @@
+{
+  "@graph": [
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml/BaseUnitProcessingData",
+      "@type": [
+        "http://a.ml/vocabularies/document#DialectInstanceProcessingData"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#transformed": false,
+      "http://a.ml/vocabularies/document#sourceSpec": "Test 1.0"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/dialect.yaml#/declarations/TopLevelNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#secondLevel": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-A"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-B"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-A",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/dialect.yaml#/declarations/SecondLevelNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "second-level-name-A",
+      "http://a.ml/vocabularies/data#thirdLevel": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-A/thirdLevel/third-level-name-A-A"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-A/thirdLevel/third-level-name-A-B"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-B",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/dialect.yaml#/declarations/SecondLevelNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "second-level-name-B",
+      "http://a.ml/vocabularies/data#thirdLevel": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-B/thirdLevel/third-level-name-B-A"
+        },
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-B/thirdLevel/third-level-name-B-B"
+        }
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-A/thirdLevel/third-level-name-A-A",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/dialect.yaml#/declarations/ThirdLevelNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "third-level-name-A-A",
+      "http://a.ml/vocabularies/data#values": [
+        "value A",
+        "value B"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-A/thirdLevel/third-level-name-A-B",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/dialect.yaml#/declarations/ThirdLevelNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "third-level-name-A-B",
+      "http://a.ml/vocabularies/data#values": [
+        "value A",
+        "value B"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-B/thirdLevel/third-level-name-B-A",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/dialect.yaml#/declarations/ThirdLevelNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "third-level-name-B-A",
+      "http://a.ml/vocabularies/data#values": [
+        "value A",
+        "value B"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes/secondLevel/second-level-name-B/thirdLevel/third-level-name-B-B",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/dialect.yaml#/declarations/ThirdLevelNode",
+        "http://a.ml/vocabularies/meta#DialectDomainElement",
+        "http://a.ml/vocabularies/document#DomainElement"
+      ],
+      "http://a.ml/vocabularies/data#name": "third-level-name-B-B",
+      "http://a.ml/vocabularies/data#values": [
+        "value A",
+        "value B"
+      ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml",
+      "@type": [
+        "http://a.ml/vocabularies/meta#DialectInstance",
+        "http://a.ml/vocabularies/document#Document",
+        "http://a.ml/vocabularies/document#Fragment",
+        "http://a.ml/vocabularies/document#Module",
+        "http://a.ml/vocabularies/document#Unit"
+      ],
+      "http://a.ml/vocabularies/meta#definedBy": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/dialect.yaml"
+        }
+      ],
+      "http://a.ml/vocabularies/document#encodes": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml#/encodes"
+      },
+      "http://a.ml/vocabularies/document#root": true,
+      "http://a.ml/vocabularies/document#processingData": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/map-key-nested-map-key/instance.yaml/BaseUnitProcessingData"
+      }
+    }
+  ]
+}

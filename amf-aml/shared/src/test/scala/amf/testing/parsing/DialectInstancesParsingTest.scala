@@ -1035,6 +1035,17 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  test("Nodes with double nested map keys") {
+    cycleWithDialect(
+      "dialect.yaml",
+      "instance.yaml",
+      "instance.flattened.jsonld",
+      mediaType = Some(Mimes.`application/ld+json`),
+      renderOptions = Some(RenderOptions().withFlattenedJsonLd.withPrettyPrint),
+      directory = s"$basePath/map-key-nested-map-key/"
+    )
+  }
+
   //noinspection SameParameterValue
   protected def withInlineDialect(source: String,
                                   golden: String,
