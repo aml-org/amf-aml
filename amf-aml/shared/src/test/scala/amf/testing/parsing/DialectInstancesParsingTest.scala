@@ -1035,6 +1035,17 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  test("JSON Instance with Union at root level should omit the $dialect entry") {
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.json",
+        "instance.golden.jsonld",
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/json-root-union/"
+    )
+  }
+
   //noinspection SameParameterValue
   protected def withInlineDialect(source: String,
                                   golden: String,
