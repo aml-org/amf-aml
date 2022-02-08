@@ -1,28 +1,17 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, NodeWithDiscriminator, UnionNodeMapping}
-import amf.aml.internal.annotations.{
-  DiscriminatorField,
-  FromUnionNodeMapping,
-  FromUnionRangeMapping,
-  JsonPointerRef,
-  RefInclude
-}
-import amf.aml.internal.metamodel.domain.NodeWithDiscriminatorModel
+import amf.aml.client.scala.model.domain._
+import amf.aml.internal.annotations._
 import amf.aml.internal.parse.instances.ClosedInstanceNode.checkNode
 import amf.aml.internal.parse.instances.InstanceNodeIdHandling.generateNodeId
 import amf.aml.internal.parse.instances.finder.{IncludeFirstUnionElementFinder, JSONPointerUnionFinder}
 import amf.aml.internal.parse.instances.parser.ExternalLinkGenerator.PropertyParser
 import amf.aml.internal.parse.instances.{DialectInstanceContext, DialectInstanceParser}
-import amf.aml.internal.validate.DialectValidations.{
-  DialectAmbiguousRangeSpecification,
-  DialectError,
-  InvalidUnionType
-}
+import amf.aml.internal.validate.DialectValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
 import amf.core.client.scala.model.domain.{Annotation, DomainElement}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
-import org.yaml.model.{YMap, YNode, YPart, YScalar, YType}
+import org.yaml.model._
 
 object ObjectUnionParser {
 
@@ -74,10 +63,10 @@ object ObjectUnionParser {
                                                  additionalProperties.keys.toSeq)
             if (mappings.isEmpty) {
               ctx.eh.violation(
-                  DialectAmbiguousRangeSpecification,
-                  defaultId,
-                  s"Ambiguous node in union range, found 0 compatible mappings from ${allPossibleMappings.size} mappings: [${allPossibleMappings.map(_.id).mkString(",")}]",
-                  ast.location
+                DialectAmbiguousRangeSpecification,
+                defaultId,
+                s"Ambiguous node in union range, found 0 compatible mappings from ${allPossibleMappings.size} mappings: [${allPossibleMappings.map(_.id).mkString(",")}]",
+                ast.location
               )
               DialectDomainElement(annotations += FromUnionRangeMapping(allPossibleMappings.map(_.id)))
                 .withId(defaultId)
@@ -123,11 +112,11 @@ object ObjectUnionParser {
               node
             } else {
               ctx.eh.violation(
-                  DialectAmbiguousRangeSpecification,
-                  defaultId,
-                  None, // Some(property.nodePropertyMapping().value()),
-                  s"Ambiguous node, please provide a type disambiguator. Nodes ${mappings.map(_.id).mkString(",")} have been found compatible, only one is allowed",
-                  rootMap.location
+                DialectAmbiguousRangeSpecification,
+                defaultId,
+                None, // Some(property.nodePropertyMapping().value()),
+                s"Ambiguous node, please provide a type disambiguator. Nodes ${mappings.map(_.id).mkString(",")} have been found compatible, only one is allowed",
+                rootMap.location
               )
               DialectDomainElement(annotations)
                 .withId(defaultId)
@@ -157,10 +146,10 @@ object ObjectUnionParser {
               case Some(nodeMapping: NodeMapping) => Some(discriminatorValue -> nodeMapping)
               case _ =>
                 ctx.eh.violation(
-                    DialectError,
-                    defaultId,
-                    s"Cannot find mapping for property $nodeMappingId in discriminator value '$discriminatorValue' in union",
-                    ast.location)
+                  DialectError,
+                  defaultId,
+                  s"Cannot find mapping for property $nodeMappingId in discriminator value '$discriminatorValue' in union",
+                  ast.location)
                 None
             }
         }
@@ -189,16 +178,14 @@ object ObjectUnionParser {
   def findCompatibleMapping(
       id: String,
       unionMappings: Seq[NodeMapping],
-      discriminatorMapping: Map[String, NodeMapping],
+      discriminatorsMapping: Map[String, NodeMapping],
       discriminator: Option[String],
       nodeMap: YMap,
       additionalProperties: Seq[String])(implicit ctx: DialectInstanceContext): Seq[NodeMapping] = {
     discriminator match {
       // Using explicit discriminator
       case Some(propertyName) =>
-        val explicitMapping = nodeMap.entries.find(_.key.as[YScalar].text == propertyName).flatMap { entry =>
-          discriminatorMapping.get(entry.value.as[YScalar].text)
-        }
+        val explicitMapping = findExplicitMapping(nodeMap, propertyName, discriminatorsMapping)
         explicitMapping match {
           case Some(nodeMapping) => Seq(nodeMapping)
           case None =>
@@ -210,14 +197,11 @@ object ObjectUnionParser {
         }
       // Inferring based on properties
       case None =>
-        val properties: Set[String] = nodeMap.entries.map(_.key.as[YScalar].text).toSet.filter(isRegularKey)
+        val properties: Set[String] = keys(nodeMap).filter(isRegularKey)
         unionMappings.filter { mapping =>
           val baseProperties =
             mapping.propertiesMapping().filter(pm => !additionalProperties.contains(pm.nodePropertyMapping().value()))
-          val mappingRequiredSet: Set[String] = baseProperties
-            .filter(_.minCount().value() > 0)
-            .map(_.name().value())
-            .toSet
+          val mappingRequiredSet: Set[String] = requiredProperties(baseProperties)
           val mappingSet: Set[String] = baseProperties
             .map(_.name().value())
             .toSet
@@ -229,6 +213,23 @@ object ObjectUnionParser {
         }
     }
   }
+
+  private def findExplicitMapping(nodeMap: YMap,
+                                  propertyName: String,
+                                  discriminatorsMapping: Map[String, NodeMapping]) = {
+    nodeMap.entries.find(_.key.as[YScalar].text == propertyName).flatMap { entry =>
+      discriminatorsMapping.get(entry.value.as[YScalar].text)
+    }
+  }
+
+  private def requiredProperties(baseProperties: Seq[PropertyMapping]) = {
+    baseProperties
+      .filter(_.minCount().value() > 0)
+      .map(_.name().value())
+      .toSet
+  }
+
+  private def keys(nodeMap: YMap) = nodeMap.entries.map(_.key.as[YScalar].text).toSet
 
   private def isRegularKey = (x: String) => !x.startsWith("$")
 
