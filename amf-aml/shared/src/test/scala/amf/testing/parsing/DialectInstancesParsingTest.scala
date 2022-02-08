@@ -3,10 +3,8 @@ package amf.testing.parsing
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.internal.annotations.FromUnionRangeMapping
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.metamodel.Field
-import amf.core.internal.remote._
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm}
-import amf.core.internal.remote.Syntax.Yaml
+import amf.core.internal.remote._
 import amf.testing.common.utils.DialectTests
 import org.scalatest.Assertion
 
@@ -1087,6 +1085,17 @@ trait DialectInstancesParsingTest extends DialectTests {
     } yield {
       assertion
     }
+  }
+
+  test("JSON Instance with Union at root level should omit the $dialect entry") {
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.json",
+        "instance.golden.jsonld",
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/json-root-union/"
+    )
   }
 
   //noinspection SameParameterValue

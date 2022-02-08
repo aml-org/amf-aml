@@ -210,7 +210,7 @@ object ObjectUnionParser {
         }
       // Inferring based on properties
       case None =>
-        val properties: Set[String] = nodeMap.entries.map(_.key.as[YScalar].text).toSet
+        val properties: Set[String] = nodeMap.entries.map(_.key.as[YScalar].text).toSet.filter(isRegularKey)
         unionMappings.filter { mapping =>
           val baseProperties =
             mapping.propertiesMapping().filter(pm => !additionalProperties.contains(pm.nodePropertyMapping().value()))
@@ -229,6 +229,8 @@ object ObjectUnionParser {
         }
     }
   }
+
+  private def isRegularKey = (x: String) => !x.startsWith("$")
 
   private def discriminatorAnnotation(discriminatorName: Option[String], nodeMap: YMap)(
       implicit ctx: DialectInstanceContext): Option[Annotation] = {
