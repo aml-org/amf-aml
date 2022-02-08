@@ -31,40 +31,10 @@ object ObjectUnionParser {
       propertyParser: PropertyParser)(implicit ctx: DialectInstanceContext): DialectDomainElement = {
 
     // potential node range based in the objectRange
-    val unionMembers: Seq[NodeMapping] = unionMapping.objectRange().flatMap { memberId =>
-      ctx.dialect.declares.find(_.id == memberId.value()) match {
-        case Some(nodeMapping: NodeMapping) => Some(nodeMapping)
-        case _ =>
-          ctx.eh
-            .violation(DialectError,
-                       defaultId,
-                       s"Cannot find mapping for property ${unionMapping.id} in union",
-                       ast.location)
-          None
-      }
-    }
+    val unionMembers: Seq[NodeMapping] = findUnionMembers(defaultId, unionMapping, ast)
 
     // potential node range based in discriminators map
-    val discriminatorsMapping: Map[String, NodeMapping] = {
-      Option(unionMapping.typeDiscriminator()) match {
-        case Some(discriminatorValueMapping) =>
-          discriminatorValueMapping.flatMap {
-            case (discriminatorValue, nodeMappingId) =>
-              ctx.dialect.declares.find(_.id == nodeMappingId) match {
-                case Some(nodeMapping: NodeMapping) => Some(discriminatorValue -> nodeMapping)
-                case _ =>
-                  ctx.eh.violation(
-                      DialectError,
-                      defaultId,
-                      s"Cannot find mapping for property $nodeMappingId in discriminator value '$discriminatorValue' in union",
-                      ast.location)
-                  None
-              }
-          }
-        case None =>
-          Map.empty
-      }
-    }
+    val discriminatorsMapping: Map[String, NodeMapping] = findDiscriminatorMappings(unionMapping, defaultId, ast)
 
     // all possible mappings combining objectRange and type discriminator
     // TODO: we should choose either of these, not both
@@ -167,6 +137,48 @@ object ObjectUnionParser {
     }
   }
 
+  private def findDiscriminatorMappings[T <: DomainElement](
+      unionMapping: NodeWithDiscriminator[_],
+      defaultId: String,
+      ast: YPart)(implicit ctx: DialectInstanceContext): Map[String, NodeMapping] = {
+
+    Option(unionMapping.typeDiscriminator()) match {
+      case Some(discriminatorValueMapping) =>
+        discriminatorValueMapping.flatMap {
+          case (discriminatorValue, nodeMappingId) =>
+            ctx.dialect.declares.find(_.id == nodeMappingId) match {
+              case Some(nodeMapping: NodeMapping) => Some(discriminatorValue -> nodeMapping)
+              case _ =>
+                ctx.eh.violation(
+                    DialectError,
+                    defaultId,
+                    s"Cannot find mapping for property $nodeMappingId in discriminator value '$discriminatorValue' in union",
+                    ast.location)
+                None
+            }
+        }
+      case None =>
+        Map.empty
+    }
+  }
+
+  private def findUnionMembers[T <: DomainElement](defaultId: String,
+                                                   unionMapping: NodeWithDiscriminator[_],
+                                                   ast: YPart)(implicit ctx: DialectInstanceContext) = {
+    unionMapping.objectRange().flatMap { memberId =>
+      ctx.dialect.declares.find(_.id == memberId.value()) match {
+        case Some(nodeMapping: NodeMapping) => Some(nodeMapping)
+        case _ =>
+          ctx.eh
+            .violation(DialectError,
+                       defaultId,
+                       s"Cannot find mapping for property ${unionMapping.id} in union",
+                       ast.location)
+          None
+      }
+    }
+  }
+
   def findCompatibleMapping(
       id: String,
       unionMappings: Seq[NodeMapping],
@@ -204,7 +216,9 @@ object ObjectUnionParser {
             .toSet
 
           // There are not additional properties in the set and all required properties are in the set
-          properties.diff(mappingSet).isEmpty && mappingRequiredSet.diff(properties).isEmpty
+          val canParseAllProperties    = properties.diff(mappingSet).isEmpty
+          val hasAllRequiredProperties = mappingRequiredSet.diff(properties).isEmpty
+          canParseAllProperties && hasAllRequiredProperties
         }
     }
   }
