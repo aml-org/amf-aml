@@ -121,6 +121,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://a.ml/vocabularies/test2#C/source-map/lexical/element_1"
+        },
+        {
           "@id": "http://a.ml/vocabularies/test2#C/source-map/lexical/element_0"
         }
       ]
@@ -143,6 +146,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://a.ml/vocabularies/test2#B/source-map/lexical/element_1"
+        },
+        {
           "@id": "http://a.ml/vocabularies/test2#B/source-map/lexical/element_0"
         }
       ]
@@ -163,9 +169,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(18,0)]"
     },
     {
-      "@id": "http://a.ml/vocabularies/test2#C/source-map/lexical/element_0",
+      "@id": "http://a.ml/vocabularies/test2#C/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/test2#C",
       "http://a.ml/vocabularies/document-source-maps#value": "[(5,2)-(11,0)]"
+    },
+    {
+      "@id": "http://a.ml/vocabularies/test2#C/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(8,4)-(11,0)]"
     },
     {
       "@id": "http://a.ml/vocabularies/test2#A/source-map/lexical/element_0",
@@ -173,9 +184,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(11,2)-(14,0)]"
     },
     {
-      "@id": "http://a.ml/vocabularies/test2#B/source-map/lexical/element_0",
+      "@id": "http://a.ml/vocabularies/test2#B/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/test2#B",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(18,0)]"
+    },
+    {
+      "@id": "http://a.ml/vocabularies/test2#B/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(17,4)-(18,0)]"
     }
   ]
 }

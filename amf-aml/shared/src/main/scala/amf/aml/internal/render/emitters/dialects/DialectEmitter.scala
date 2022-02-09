@@ -14,7 +14,12 @@ import amf.aml.client.scala.model.document.Dialect
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 
-case class DialectEmitter(dialect: Dialect)(implicit val nodeMappableFinder: NodeMappableFinder)
+trait DocumentCreator {
+  def apply(content: Seq[EntryEmitter]): YDocument
+}
+
+case class DialectEmitter(dialect: Dialect, document: DocumentCreator)(
+    implicit val nodeMappableFinder: NodeMappableFinder)
     extends DialectDocumentsEmitters {
 
   val ordering: SpecOrdering = Lexical
@@ -23,13 +28,7 @@ case class DialectEmitter(dialect: Dialect)(implicit val nodeMappableFinder: Nod
 
   def emitDialect(): YDocument = {
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)
-
-    YDocument(b => {
-      b.comment("%Dialect 1.0")
-      b.obj { b =>
-        traverse(ordering.sorted(content), b)
-      }
-    })
+    document(ordering.sorted(content))
   }
 
   def dialectEmitters(ordering: SpecOrdering): Seq[EntryEmitter] =

@@ -2,7 +2,13 @@ package amf.aml.internal.metamodel.domain
 
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Any, Bool, Double, Int, Iri, SortedArray, Str}
-import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.domain.{
+  DomainElementModel,
+  ExternalModelVocabularies,
+  ModelDoc,
+  ModelVocabularies,
+  ShapeModel
+}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.aml.client.scala.model.domain.PropertyMapping
@@ -44,7 +50,7 @@ object PropertyMappingModel
     NodePropertyMapping :: Name :: LiteralRange :: ObjectRange ::
       MapKeyProperty :: MapValueProperty :: MapTermKeyProperty :: MapTermValueProperty ::
       MinCount :: Pattern :: Minimum :: Maximum :: AllowMultiple :: Sorted :: Enum :: TypeDiscriminator ::
-      Unique :: ExternallyLinkable :: TypeDiscriminatorName :: MergePolicy :: DomainElementModel.fields
+      Unique :: ExternallyLinkable :: TypeDiscriminatorName :: MergePolicy :: ShapeModel.Default :: DomainElementModel.fields
 
   override def modelInstance: AmfObject = PropertyMapping()
 

@@ -113,6 +113,10 @@ trait DialectsParsingTest extends DialectTests {
     cycle("example23b.yaml", config.golden, Some(Mimes.`application/ld+json`), amlConfig = config.config)
   }
 
+  multiGoldenTest("parse 24 test", "example24.%s") { config =>
+    cycle("example24.yaml", config.golden, Some(Mimes.`application/ld+json`), amlConfig = config.config)
+  }
+
   multiGoldenTest("parse mappings_lib test", "mappings_lib.%s") { config =>
     cycle("mappings_lib.yaml", config.golden, Some(Mimes.`application/ld+json`), amlConfig = config.config)
   }
@@ -211,6 +215,10 @@ trait DialectsParsingTest extends DialectTests {
 
   multiSourceTest("generate 23b test", "example23b.%s") { config =>
     cycle(config.source, "example23b.yaml", mediaType = Some(Mimes.`application/yaml`))
+  }
+
+  multiSourceTest("generate 24 test", "example24.%s") { config =>
+    cycle(config.source, "example24.yaml", Some(Mimes.`application/yaml`))
   }
 
   multiGoldenTest("no documents on dialect (raml -> json)", "no-documents.%s") { config =>
@@ -368,5 +376,22 @@ trait DialectsParsingTest extends DialectTests {
         AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
         directory = s"$basePath/annotation-mapping-with-multiple-domains"
     )
+  }
+
+  multiGoldenTest("Default facet for property mappings", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/default-facet"
+    )
+  }
+
+  multiSourceTest("Generate default facet for property mappings", "dialect.%s") { config =>
+    cycle(config.source,
+          "dialect.cycled.yaml",
+          mediaType = Some(Mimes.`application/yaml`),
+          directory = s"$basePath/default-facet")
   }
 }

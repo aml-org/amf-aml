@@ -1,0 +1,23 @@
+{
+  "$type": "Dialect 1.0",
+  "dialect": "Test",
+  "version": "1.0",
+  "nodeMappings": {
+    "AnotherNode": "lib.AnotherNode",
+    "RootNode": {
+      "mapping": {
+        "myProperty": {
+          "range": "AnotherNode"
+        }
+      }
+    }
+  },
+  "documents": {
+    "root": {
+      "encodes": "RootNode"
+    }
+  },
+  "uses": {
+    "lib": "library.json"
+  }
+}

@@ -659,6 +659,9 @@
       ],
       "sourcemaps:lexical": [
         {
+          "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_1"
+        },
+        {
           "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0"
         }
       ]
@@ -795,9 +798,14 @@
       "sourcemaps:value": "[(25,4)-(26,0)]"
     },
     {
-      "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0",
+      "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_1",
       "sourcemaps:element": "http://github.org/vocabulary#contributor",
       "sourcemaps:value": "[(6,2)-(9,17)]"
+    },
+    {
+      "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0",
+      "sourcemaps:element": "rdfs:range",
+      "sourcemaps:value": "[(9,4)-(9,17)]"
     },
     {
       "@id": "#/declarations/PersonNodeMapping/property/surname/source-map/lexical/element_2",

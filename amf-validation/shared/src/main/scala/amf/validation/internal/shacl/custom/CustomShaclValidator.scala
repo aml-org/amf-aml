@@ -19,6 +19,7 @@ import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.YScalar
 
 import java.net.URISyntaxException
+import scala.collection.mutable
 import scala.concurrent.{ExecutionContext, Future}
 
 object CustomShaclValidator {
@@ -244,7 +245,7 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: 
     }
     propertyConstraint.in.toList match {
       case Nil => // ignore
-      case l   => validateIn(validationSpecification, propertyConstraint, element)
+      case _   => validateIn(validationSpecification, propertyConstraint, element)
     }
     propertyConstraint.maxExclusive match {
       case Some(_) => validateMaxExclusive(validationSpecification, propertyConstraint, element)
