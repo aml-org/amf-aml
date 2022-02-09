@@ -61,6 +61,9 @@ object VocabulariesRegister extends UniqueInitializer with PlatformSecrets {
     platform.registerWrapper(SemanticExtensionModel) {
       case s: domain.SemanticExtension => SemanticExtension(s)
     }
+    platform.registerWrapper(ConditionalNodeMappingModel) {
+      case s: domain.ConditionalNodeMapping => ConditionalNodeMapping(s)
+    }
     platform.registerWrapper(VocabularyModel) {
       case s: document.Vocabulary => new Vocabulary(s)
     }
