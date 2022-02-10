@@ -8,8 +8,11 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.internal.parser.domain.{Annotations, ValueNode}
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
-object ClassTermParser extends SingleOrMultipleItems with IriReferenceParsing {
-  def parse(entry: YMapEntry, vocabulary: Vocabulary)(implicit ctx: VocabularyContext): ClassTerm = {
+case class ClassTermParser()(implicit val ctx: VocabularyContext)
+    extends SingleOrMultipleItems
+    with IriReferenceParsing {
+
+  def parse(entry: YMapEntry, vocabulary: Vocabulary): ClassTerm = {
     val classTerm      = ClassTerm(Annotations(entry))
     val classTermAlias = entry.key.as[YScalar].text
     classTerm.withName(classTermAlias)

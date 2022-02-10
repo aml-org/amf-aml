@@ -10,9 +10,11 @@ import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.parser.domain.{Annotations, DefaultArrayNode, ValueNode}
 import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
-object PropertyTermParser extends SingleOrMultipleItems with IriReferenceParsing {
+case class PropertyTermParser()(implicit val ctx: VocabularyContext)
+    extends SingleOrMultipleItems
+    with IriReferenceParsing {
 
-  def parse(entry: YMapEntry, vocabulary: Vocabulary)(implicit ctx: VocabularyContext): PropertyTerm = {
+  def parse(entry: YMapEntry, vocabulary: Vocabulary): PropertyTerm = {
     val propertyTerm      = createPropertyTerm(entry)
     val propertyTermAlias = entry.key.as[YScalar].text
     propertyTerm.withName(propertyTermAlias)

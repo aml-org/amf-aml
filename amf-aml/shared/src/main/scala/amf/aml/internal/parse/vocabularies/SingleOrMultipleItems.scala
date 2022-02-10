@@ -1,9 +1,12 @@
 package amf.aml.internal.parse.vocabularies
 
+import amf.core.client.scala.parse.document.SyamlBasedParserErrorHandler
 import amf.core.internal.parser.domain.{DefaultArrayNode, ValueNode}
 import org.yaml.model.{YMapEntry, YSequence, YType}
 
 trait SingleOrMultipleItems {
+
+  implicit val ctx: SyamlBasedParserErrorHandler
 
   protected def singleOrMultipleItemsAsString(entry: YMapEntry) = {
     entry.value.tagType match {

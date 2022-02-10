@@ -104,7 +104,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
           addDeclarationKey(DeclarationKey(entry))
           val classDeclarations = entry.value.as[YMap]
           classDeclarations.entries.foreach { classTermDeclaration =>
-            ClassTermParser.parse(classTermDeclaration, vocabulary)
+            ClassTermParser().parse(classTermDeclaration, vocabulary)
           }
         }
     )
@@ -117,7 +117,7 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
           addDeclarationKey(DeclarationKey(entry))
           val classDeclarations = entry.value.as[YMap]
           classDeclarations.entries.foreach { propertyTermDeclaration =>
-            PropertyTermParser.parse(propertyTermDeclaration, vocabulary)
+            PropertyTermParser().parse(propertyTermDeclaration, vocabulary)
           }
         }
     )

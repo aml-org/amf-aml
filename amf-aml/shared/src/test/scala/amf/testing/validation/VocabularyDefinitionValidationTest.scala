@@ -45,6 +45,14 @@ class VocabularyDefinitionValidationTest
     validate("vocabulary.json", None, "../../dialects/json/with-vocabulary")
   }
 
+  test("Property term parsing with null entries uses errorHandler") {
+    validate("property-term-with-null-entries.yaml", Some("property-term-with-null-entries.jsonld"), "parser-errors")
+  }
+
+  test("Class term parsing with null entries uses errorHandler") {
+    validate("class-term-with-null-entries.yaml", Some("class-term-with-null-entries.jsonld"), "parser-errors")
+  }
+
   protected def validate(vocabulary: String,
                          goldenReport: Option[String] = None,
                          path: String): Future[scalatest.Assertion] = {
