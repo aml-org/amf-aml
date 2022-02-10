@@ -130,4 +130,10 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   test("JSON with-vocabulary should be valid") {
     validate("../../../dialects/json/with-vocabulary/dialect.json", None)
   }
+
+  test("Empty extends property on node mapping reports error") {
+    validate("../../../dialects/empty-extends-on-node-mapping.yaml",
+             Some("../../dialects/empty-extends-on-node-mapping.validation.jsonld"),
+             true)
+  }
 }

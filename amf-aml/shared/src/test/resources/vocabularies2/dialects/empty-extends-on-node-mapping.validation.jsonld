@@ -1,0 +1,136 @@
+{
+  "@type": "http://www.w3.org/ns/shacl#ValidationReport",
+  "http://www.w3.org/ns/shacl#conforms": false,
+  "http://www.w3.org/ns/shacl#result": [
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-extends-on-node-mapping.yaml"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Property: 'dialect' mandatory in a dialect node",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#mandatory-property-shape"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 3,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 11,
+          "http://a.ml/vocabularies/amf/parser#column": 12
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-extends-on-node-mapping.yaml"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Property: 'version' mandatory in a dialect node",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#mandatory-property-shape"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 3,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 11,
+          "http://a.ml/vocabularies/amf/parser#column": 12
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-extends-on-node-mapping.yaml#/declarations/otherMapping"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Property: 'propertyTerm' not supported in a nodeMapping node",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#closed-shape"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 8,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 9,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/empty-extends-on-node-mapping.yaml#/declarations/myNodeMapping"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Property: 'propertyTerm' not supported in a nodeMapping node",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#closed-shape"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 10,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 11,
+          "http://a.ml/vocabularies/amf/parser#column": 12
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": ""
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "!!seq or !!str expected in 'extends', found [!!null]",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/core#syaml-error"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 11,
+          "http://a.ml/vocabularies/amf/parser#column": 12
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 11,
+          "http://a.ml/vocabularies/amf/parser#column": 12
+        }
+      }
+    }
+  ]
+}
