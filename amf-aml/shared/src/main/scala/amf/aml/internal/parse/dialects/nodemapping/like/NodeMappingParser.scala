@@ -16,6 +16,7 @@ import amf.core.internal.parser.YNodeLikeOps
 import amf.core.internal.parser.domain.SearchScope.All
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope, ValueNode}
 import amf.core.internal.utils.AmfStrings
+import amf.core.internal.validation.CoreValidations.SyamlError
 import org.yaml.model._
 
 import scala.collection.immutable
@@ -107,6 +108,12 @@ class NodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikePar
           val references: Seq[YNode] = entry.value.tagType match {
             case YType.Seq => entry.value.as[YSequence].nodes
             case YType.Str => Seq(entry.value)
+            case tagType =>
+              ctx.eh.violation(SyamlError,
+                               "",
+                               s"${YType.Seq} or ${YType.Str} expected in 'extends', found [$tagType]",
+                               entry.value.location)
+              Seq.empty
           }
           val parsed = references.map { node: YNode =>
             val reference = node.toOption[YScalar]
