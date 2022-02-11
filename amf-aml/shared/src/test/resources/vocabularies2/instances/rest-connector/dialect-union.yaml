@@ -1,0 +1,48 @@
+#%Dialect 1.0
+dialect: Rest Connector Descriptor
+version: 1.0
+external:
+  aml: http://a.ml#
+nodeMappings:
+  ConnectorDescriptor:
+    mapping:
+      triggers:
+        propertyTerm: aml.triggers
+        range: AllTrigger
+        mapTermKey: aml.name
+
+  AllTrigger:
+    classTerm: aml.AllTrigger
+    union:
+      - Trigger
+      - NativeTrigger
+
+  NativeTrigger:
+    classTerm: aml.NativeTrigger
+    mapping:
+      name:
+        propertyTerm: aml.name
+        range: string
+        mandatory: true
+      fqn:
+        propertyTerm: aml.fqn
+        range: string
+        mandatory: true
+
+  Trigger:
+    classTerm: aml.Trigger
+    mapping:
+      name:
+        propertyTerm: aml.name
+        range: string
+        mandatory: true
+      base:
+        propertyTerm: aml.baseTrigger
+        range: string
+      path:
+        propertyTerm: aml.path
+        range: string
+
+documents:
+  root:
+    encodes: ConnectorDescriptor

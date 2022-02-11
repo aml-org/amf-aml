@@ -7,6 +7,7 @@ import amf.aml.internal.parse.instances.parser.ObjectCollectionPropertyParser.{N
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.client.scala.vocabulary.ValueType
+import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.Str
 import amf.core.internal.parser.domain.Annotations
@@ -29,8 +30,9 @@ object ObjectMapPropertyParser extends NodeMappableHelper {
         case Some((k, v)) => additionalProperties + (k -> v)
         case _            => additionalProperties
       }
+      val isUnion = (range: Seq[String]) => range.size > 1
       val parsedNode = property.nodesInRange match {
-        case range: Seq[String] if range.size > 1 =>
+        case range: Seq[String] if isUnion(range) =>
           // we also add the potential mapValue property
           val keyValueAdditionalProperties = property.mapTermValueProperty().option() match {
             case Some(mapValueProperty) => keyAdditionalProperties + (mapValueProperty -> "")
@@ -65,6 +67,8 @@ object ObjectMapPropertyParser extends NodeMappableHelper {
           node.set(Field(Str, ValueType(propId)),
                    AmfScalar(propertyEntry.key.as[YScalar].text),
                    Annotations(propertyEntry.key))
+          node.annotations.reject(_.isInstanceOf[LexicalInformation]) ++= Annotations(propertyEntry)
+          node
         } catch {
           case e: UnknownMapKeyProperty =>
             ctx.eh.violation(DialectError, e.id, s"Cannot find mapping for key map property ${e.id}")
