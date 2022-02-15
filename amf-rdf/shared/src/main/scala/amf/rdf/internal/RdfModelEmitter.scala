@@ -32,7 +32,7 @@ class RdfModelEmitter(rdfModel: RdfModel, fieldProvision: ApplicableMetaFieldRen
 
   case class Emitter(options: RenderOptions) {
 
-    private val traversal      = ModelTraversalRegistry()
+    private val traversal      = new ModelTraversalRegistry()
     var rootId: Option[String] = None
 
     def root(unit: BaseUnit): Unit = {
