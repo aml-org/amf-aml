@@ -3,35 +3,36 @@ package amf.aml.internal.parse.plugin
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance, kind}
 import amf.aml.internal.AMLDialectInstancePlugin
 import amf.aml.internal.parse.common.SyntaxExtensionsReferenceHandler
-import amf.aml.internal.parse.hints.DialectInstanceGuess
+import amf.aml.internal.parse.hints.{DialectInstanceGuess, Guess}
 import amf.aml.internal.parse.instances._
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.core.client.common.{NormalPriority, PluginPriority}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.parse.AMFParsePlugin
-import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler, SyamlParsedDocument}
-import amf.core.internal.parser._
-import amf.core.internal.remote.Mimes._
+import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler}
 import amf.core.internal.parser._
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{AmlDialectSpec, Mimes, Spec}
 import org.mulesoft.common.core.Strings
-import org.yaml.model.YMap
 
 /**
   * Parsing plugin for dialect instance like units derived from a resolved dialect
   * @param dialect resolved dialect
   */
-class AMLDialectInstanceParsingPlugin(val dialect: Dialect) extends AMFParsePlugin with AMLDialectInstancePlugin[Root] {
+class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
+    extends AMFParsePlugin
+    with AMLDialectInstancePlugin[Root] {
 
   override val id: String = s"${dialect.nameAndVersion()}/dialect-instances-parsing-plugin"
 
   override def priority: PluginPriority = NormalPriority
 
+  protected def guess: Guess[kind.DialectInstanceDocumentKind] = DialectInstanceGuess(dialect)
+
   override def parse(root: Root, ctx: ParserContext): BaseUnit = {
     val finder = DefaultNodeMappableFinder(ctx)
-    val maybeUnit = DialectInstanceGuess(dialect).from(root) map {
+    val maybeUnit = guess.from(root) map {
       case kind.DialectInstanceFragment =>
         /**
           * Extract a name form the hint. Examples:
@@ -39,7 +40,7 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect) extends AMFParsePlug
           * #%My Fragment / My Test Dialect 1.0   -> My Fragment
           */
         val name = {
-          val hint          = DialectInstanceGuess(dialect).hint(root).get // Should always be defined
+          val hint          = guess.hint(root).get // Should always be defined
           val normalizedStr = hint.stripPrefix("%").stripSpaces
           normalizedStr.substring(0, normalizedStr.indexOf("/"))
         }
