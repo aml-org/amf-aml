@@ -64,7 +64,7 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
 
   override def allowRecursiveReferences: Boolean = true
 
-  override def applies(root: Root): Boolean = DialectInstanceGuess(dialect).from(root).isDefined
+  override def applies(root: Root): Boolean = guess.from(root).isDefined
 
   /**
     * media types which specifies vendors that are parsed by this plugin.
