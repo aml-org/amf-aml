@@ -1,0 +1,14 @@
+ModelId: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/id-directive-invalid/dialect.yaml
+Profile: 
+Conforms: false
+Number of results: 1
+
+Level: Violation
+
+- Constraint: http://a.ml/vocabularies/amf/aml#dialect-error
+  Message: Invalid type !!map for $id directive. Expected !!str
+  Severity: Violation
+  Target: http://a.ml/amf/default_document/test/1.0
+  Property: 
+  Range: [(2,4)-(4,0)]
+  Location: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/id-directive-invalid/dialect.yaml

@@ -347,6 +347,36 @@ trait DialectsParsingTest extends DialectTests {
     )
   }
 
+  test("Parse dialect with $id directive") {
+    cycle(
+      "dialect.yaml",
+      "dialect.jsonld",
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+      directory = s"$basePath/id-directive"
+    )
+  }
+
+  test("Parse dialect library with $id directive") {
+    cycle(
+      "dialect.yaml",
+      "dialect.jsonld",
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+      directory = s"$basePath/id-directive-library"
+    )
+  }
+
+  test("Parse dialect fragment with $id directive") {
+    cycle(
+      "dialect.yaml",
+      "dialect.jsonld",
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+      directory = s"$basePath/id-directive-fragment"
+    )
+  }
+
   multiGoldenTest("Empty annotation mapping with name has lexical", "dialect.%s") { config =>
     cycle(
         "dialect.yaml",
