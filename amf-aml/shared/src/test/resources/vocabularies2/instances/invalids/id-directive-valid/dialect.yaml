@@ -1,0 +1,18 @@
+#%Dialect 1.0
+$id: https://dialects.aml/test-1-0
+dialect: Test
+version: "1.0"
+uses:
+  lib: library.yaml
+nodeMappings:
+  AnotherNodeFragment: !include fragment.yaml
+  AnotherNodeLibrary: lib.AnotherNode
+  RootNode:
+    mapping:
+      fragmentAnother:
+        range: AnotherNodeFragment
+      libraryAnother:
+        range: AnotherNodeLibrary
+documents:
+  root:
+    encodes: RootNode

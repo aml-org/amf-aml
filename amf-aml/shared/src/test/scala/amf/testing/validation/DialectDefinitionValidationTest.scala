@@ -68,8 +68,7 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Test nested eventual ambiguity in property") {
-    validate("/nested-eventual-ambiguity-property/dialect.yaml",
-             Some("nested-eventual-ambiguity-property/report.json"))
+    validate("/nested-eventual-ambiguity-property/dialect.yaml", Some("nested-eventual-ambiguity-property/report.json"))
   }
 
   test("Test node mapping with reserved names") {
@@ -133,7 +132,14 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
 
   test("Empty extends property on node mapping reports error") {
     validate("../../../dialects/empty-extends-on-node-mapping.yaml",
-             Some("../../dialects/empty-extends-on-node-mapping.validation.jsonld"),
-             true)
+             Some("../../dialects/empty-extends-on-node-mapping.validation.jsonld"))
+  }
+
+  test("Valid ID directive on dialect") {
+    validate("/id-directive-valid/dialect.yaml", Some("/id-directive-valid/report.txt"), jsonldReport = false)
+  }
+
+  test("Invalid ID directive on dialect") {
+    validate("/id-directive-invalid/dialect.yaml", Some("/id-directive-invalid/report.txt"), jsonldReport = false)
   }
 }

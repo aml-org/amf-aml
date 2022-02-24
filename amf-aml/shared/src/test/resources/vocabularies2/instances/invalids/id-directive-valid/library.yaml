@@ -1,0 +1,7 @@
+#%Library/Dialect1.0
+$id: https://libraries.aml/test-1-0
+nodeMappings:
+  AnotherNode:
+    mapping:
+      anotherProperty:
+        range: string

@@ -1,0 +1,189 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "AML 1.0"
+    },
+    {
+      "@id": "/documents",
+      "@type": [
+        "meta:DocumentsModel",
+        "doc:DomainElement"
+      ],
+      "meta:rootDocument": {
+        "@id": "#/documents/root"
+      }
+    },
+    {
+      "@id": "#/documents/root",
+      "@type": [
+        "meta:DocumentMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "Test 1.0",
+      "meta:encodedNode": [
+        {
+          "@id": "#/declarations/RootNode"
+        }
+      ]
+    },
+    {
+      "@id": "",
+      "doc:references": [
+        {
+          "@id": "https://libraries.aml/test-1-0"
+        }
+      ],
+      "doc:declares": [
+        {
+          "@id": "#/declarations/AnotherNode"
+        },
+        {
+          "@id": "#/declarations/RootNode"
+        }
+      ],
+      "@type": [
+        "meta:Dialect",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "core:name": "Test",
+      "core:version": "1.0",
+      "meta:documents": {
+        "@id": "/documents"
+      },
+      "doc:location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/id-directive-library/dialect.yaml",
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "https://libraries.aml/test-1-0",
+      "@type": [
+        "meta:DialectLibrary",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "doc:location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/id-directive-library/library.yaml",
+      "doc:declares": [
+        {
+          "@id": "https://libraries.aml/test-1-0#/declarations/AnotherNode"
+        }
+      ],
+      "doc:references": [],
+      "doc:root": false,
+      "doc:processingData": {
+        "@id": "null/BaseUnitProcessingData"
+      }
+    },
+    {
+      "@id": "#/declarations/AnotherNode",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "AnotherNode",
+      "doc:link-target": [
+        {
+          "@id": "https://libraries.aml/test-1-0#/declarations/AnotherNode"
+        }
+      ],
+      "doc:link-label": "lib.AnotherNode"
+    },
+    {
+      "@id": "#/declarations/RootNode",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "RootNode",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/RootNode/property/myProperty"
+        }
+      ]
+    },
+    {
+      "@id": "https://libraries.aml/test-1-0#/declarations/AnotherNode",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "AnotherNode",
+      "shacl:property": [
+        {
+          "@id": "https://libraries.aml/test-1-0#/declarations/AnotherNode/property/anotherProperty"
+        }
+      ]
+    },
+    {
+      "@id": "null/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "AML 1.0"
+    },
+    {
+      "@id": "#/declarations/RootNode/property/myProperty",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#myProperty"
+        }
+      ],
+      "core:name": "myProperty",
+      "shacl:node": {
+        "@id": "#/declarations/RootNode/property/myProperty/list"
+      }
+    },
+    {
+      "@id": "https://libraries.aml/test-1-0#/declarations/AnotherNode/property/anotherProperty",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#anotherProperty"
+        }
+      ],
+      "core:name": "anotherProperty",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/RootNode/property/myProperty/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@id": "#/declarations/AnotherNode"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "https://dialects.aml/test-1-0",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "meta": "http://a.ml/vocabularies/meta#"
+  }
+}

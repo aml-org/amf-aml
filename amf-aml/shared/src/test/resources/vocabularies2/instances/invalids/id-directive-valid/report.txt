@@ -1,0 +1,4 @@
+ModelId: file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/id-directive-valid/dialect.yaml
+Profile: 
+Conforms: true
+Number of results: 0

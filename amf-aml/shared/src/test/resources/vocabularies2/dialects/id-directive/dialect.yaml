@@ -1,0 +1,12 @@
+#%Dialect 1.0
+$id: https://dialects.aml/test-1-0
+dialect: Test
+version: "1.0"
+nodeMappings:
+  RootNode:
+    mapping:
+      myProperty:
+        range: string
+documents:
+  root:
+    encodes: RootNode

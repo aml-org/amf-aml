@@ -17,9 +17,7 @@ import amf.core.client.scala.parse.AMFParser
 import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations._
-import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.document.FragmentModel
-import amf.core.internal.metamodel.domain.ShapeModel
 import amf.core.internal.parser.domain.SearchScope.All
 import amf.core.internal.parser.domain._
 import amf.core.internal.parser.{Root, YNodeLikeOps}
@@ -35,7 +33,6 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   type NodeMappable = NodeMappable.AnyNodeMappable
   val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
-//  val dialect: Dialect = Dialect(Annotations(map)).withLocation(root.location).withId(id()).withProcessingData(BaseUnitProcessingData())
   val dialect: Dialect = {
     val computedId = id()
     val dialect    = Dialect(Annotations(map)).withLocation(root.location).withId(computedId)
@@ -45,21 +42,39 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   // Need to do this before parsing so every ID set during parsing is relative to this ID
   private def id(): String = {
-    root.location match {
-      case AMFParser.DEFAULT_DOCUMENT_URL =>
-        val nameAndVersionId = for {
-          dialectEntry <- map.key("dialect")
-          versionEntry <- map.key("version")
-        } yield {
-          val dialect = dialectEntry.value.toString.toLowerCase.noSpaces
-          val version = versionEntry.value.toString.toLowerCase.noSpaces
-          s"${AMFParser.DEFAULT_DOCUMENT_URL}/$dialect/$version"
+    map.key("$id") match {
+      case Some(entry) =>
+        entry.value.tagType match {
+          case YType.Str => entry.value.toString
+          case t =>
+            val defaultId = defaultDialectId()
+            ctx.eh
+              .violation(DialectError,
+                         defaultId,
+                         s"Invalid type $t for $$id directive. Expected ${YType.Str}",
+                         entry.value.location)
+            defaultId
         }
-
-        nameAndVersionId
-          .getOrElse(AMFParser.DEFAULT_DOCUMENT_URL) // Name and version will always be defined otherwise dialect is invalid
-      case other => other
+      case None =>
+        root.location match {
+          case AMFParser.DEFAULT_DOCUMENT_URL => defaultDialectId()
+          case location                       => location
+        }
     }
+  }
+
+  private def defaultDialectId(): String = {
+    val nameAndVersionId = for {
+      dialectEntry <- map.key("dialect")
+      versionEntry <- map.key("version")
+    } yield {
+      val dialect = dialectEntry.value.toString.toLowerCase.noSpaces
+      val version = versionEntry.value.toString.toLowerCase.noSpaces
+      s"${AMFParser.DEFAULT_DOCUMENT_URL}/$dialect/$version"
+    }
+
+    nameAndVersionId
+      .getOrElse(AMFParser.DEFAULT_DOCUMENT_URL) // Name and version will always be defined otherwise dialect is invalid
   }
 
   def parseSemanticExtensions(map: YMap): Unit = {
@@ -99,7 +114,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                   Annotations(entry))
     }
 
-    parseDeclarations(root, map)
+    parseDeclarations(dialect.id, map)
 
     val declarables = ctx.declarations.declarables()
     declarables.foreach {
@@ -148,8 +163,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
-  protected def parseDeclarations(root: Root, map: YMap): Unit = {
-    val parent = root.location + "#/declarations"
+  protected def parseDeclarations(baseIri: String, map: YMap): Unit = {
+    val parent = baseIri + "#/declarations"
     parseNodeMappingDeclarations(map, parent)
     parseAnnotationMappingDeclarations(map, parent)
   }
@@ -524,7 +539,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
 
-    parseDeclarations(root, map)
+    parseDeclarations(dialect.id, map)
 
     val declarables = ctx.declarations.declarables()
     declarables.foreach {
@@ -583,7 +598,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     if (ctx.declarations.externals.nonEmpty)
       dialect.withExternals(ctx.declarations.externals.values.toSeq)
 
-    parseDeclarations(root, map)
+    parseDeclarations(dialect.id, map)
 
     if (references.baseUnitReferences().nonEmpty) dialect.withReferences(references.baseUnitReferences())
 
