@@ -1,15 +1,23 @@
 package amf.testing.rdf
 
+import amf.aml.client.scala.AMLConfiguration
+import amf.core.client.scala.config.RenderOptions
+import amf.rdf.client.scala.{RdfFramework, RdfUnitConverter}
+import amf.rdf.internal.RdfFrameworkBuilder
 import amf.core.internal.remote.Syntax.Syntax
 import amf.core.internal.remote._
 import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.io.FileAssertionTest
 import amf.testing.common.cycling.FunSuiteRdfCycleTests
 import amf.testing.common.utils.DialectRegistrationHelper
 
-class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets with DialectRegistrationHelper {
+import scala.concurrent.Future
 
-  val basePath       = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
-  val productionPath = "amf-aml/shared/src/test/resources/vocabularies2/production/"
+class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with FileAssertionTest with DialectRegistrationHelper {
+
+  val basePath                          = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
+  val productionPath                    = "amf-aml/shared/src/test/resources/vocabularies2/production/"
+  protected val framework: RdfFramework = RdfFrameworkBuilder.build()
 
   test("RDF 1 test") {
     cycleRdfWithDialect("dialect1.yaml", "example1.yaml", "example1.ttl", None)
@@ -74,6 +82,34 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets
                             "ex2.yaml",
                             syntax = Some(Syntax.Yaml),
                             "amf-aml/shared/src/test/resources/vocabularies2/production/system2/")
+  }
+
+  test("Dialect instance with array of any") {
+    val basePath     = "amf-aml/shared/src/test/resources/vocabularies2/instances/array-of-any"
+    val dialectPath  = s"file://$basePath/dialect.yaml"
+    val instancePath = s"$basePath/instance.json"
+
+    withDialect(dialectPath) { (_, config) =>
+      for {
+        instanceText <- fs.asyncFile(instancePath).read()
+        actualText <- Future.successful {
+          // Cycle: JSON-LD -> RDF model -> Base Unit -> JSON-LD
+          val rdfDocument = framework.syntaxToRdfModel(Mimes.`application/ld+json`, instanceText)
+          val baseUnit = {
+            val id = s"file://$instancePath"
+            RdfUnitConverter.fromNativeRdfModel(id, rdfDocument.model, config)
+          }
+          config
+            .withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint)
+            .baseUnitClient()
+            .render(baseUnit, Mimes.`application/ld+json`)
+        }
+        actualFile <- writeTemporaryFile(instancePath)(actualText)
+        assertion  <- assertDifferences(actualFile, instancePath.replace(".json", ".golden.json"))
+      } yield {
+        assertion
+      }
+    }
   }
 
   private def cycleRdfWithDialect(dialect: String,

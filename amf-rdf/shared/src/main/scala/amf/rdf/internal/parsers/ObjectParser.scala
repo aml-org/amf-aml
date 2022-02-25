@@ -174,6 +174,8 @@ class ObjectParser(val rootId: String,
                 case _       => None
             })
           case Str | Iri => items.map(StringIriUriRegexParser.parse)
+          case Any =>
+            items.flatMap(v => AnyTypeConverter.tryConvert(v)(ctx.eh))
         }
         instance.setArrayWithoutId(f, values, annots(sources, key))
       case _: Scalar => parseScalar(instance, f, property, annots(sources, key))
