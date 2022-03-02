@@ -1,0 +1,5 @@
+#%Rest Connector Descriptor 1.0
+triggers:
+  triggersName:
+    base: baseString
+    path: pathString

@@ -108,17 +108,17 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#json-pointer-ref": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/json-pointer-ref/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/lexical/element_1"
         },
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/lexical/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#json-pointer-ref": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/json-pointer-ref/element_0"
         }
       ]
     },
@@ -145,22 +145,22 @@
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/hey",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(7,6)-(9,0)]"
-    },
-    {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/json-pointer-ref/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(7,2)-(9,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(10,0)-(11,0)]"
+      "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(11,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/tmp#a1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(9,2)-(9,6)]"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets/source-map/json-pointer-ref/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml#/encodes/a/lets",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example6b.yaml",
