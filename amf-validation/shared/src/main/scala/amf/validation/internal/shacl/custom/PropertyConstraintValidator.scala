@@ -1,7 +1,7 @@
 package amf.validation.internal.shacl.custom
 
 import amf.core.client.scala.model.domain.{AmfElement, AmfObject, AmfScalar}
-import amf.core.internal.annotations.SourceAST
+import amf.core.internal.annotations.{SourceAST, SourceYPart}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.validation.core.{PropertyConstraint, ValidationSpecification}
 import org.yaml.model.YScalar
@@ -32,13 +32,13 @@ object PropertyConstraintValidator {
   }
 
   def amfScalarToScala(scalar: AmfScalar): Any = {
-    scalar.annotations.find(classOf[SourceAST]) match {
-      case Some(ast: SourceAST) =>
+    scalar.annotations.find(classOf[SourceAST[_]]) match {
+      case Some(ast: SourceYPart) =>
         ast.ast match {
           case yscalar: YScalar => yscalar.value
           case _                => scalar.value
         }
-
+      case Some(_) => scalar.value
       case None =>
         scalar.value
     }

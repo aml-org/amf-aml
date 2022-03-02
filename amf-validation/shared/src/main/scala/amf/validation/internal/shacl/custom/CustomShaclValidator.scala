@@ -5,6 +5,7 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.annotations.{SourceAST, SourceYPart}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils._
@@ -858,12 +859,23 @@ class CustomShaclValidator(
     }
   }
 
-  private def reportFailure(
-      validationSpecification: ValidationSpecification,
-      propertyConstraint: PropertyConstraint,
-      id: String,
-      reportBuilder: ReportBuilder
-  ): Unit = {
+  private def amfScalarToScala(scalar: AmfScalar): Any = {
+    scalar.annotations.find(classOf[SourceAST[_]]) match {
+      case Some(ast: SourceYPart) =>
+        ast.ast match {
+          case yscalar: YScalar => yscalar.value
+          case _                => scalar.value
+        }
+      case Some(_) => scalar.value
+      case None =>
+        scalar.value
+    }
+  }
+
+  private def reportFailure(validationSpecification: ValidationSpecification,
+                            propertyConstraint: PropertyConstraint,
+                            id: String,
+                            reportBuilder: ReportBuilder): Unit = {
     reportBuilder.reportFailure(validationSpecification, propertyConstraint, id)
   }
 
