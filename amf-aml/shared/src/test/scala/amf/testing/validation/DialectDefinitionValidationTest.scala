@@ -142,4 +142,8 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   test("Invalid ID directive on dialect") {
     validate("/id-directive-invalid/dialect.yaml", Some("/id-directive-invalid/report.txt"), jsonldReport = false)
   }
+
+  test("Dialect with property mapping with default key") {
+    validate("../../../dialects/default-facet/dialect.yaml", None)
+  }
 }

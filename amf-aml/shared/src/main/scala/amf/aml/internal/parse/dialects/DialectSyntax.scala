@@ -71,7 +71,8 @@ trait DialectSyntax { this: DialectContext =>
       "mapValue"     -> false,
       "mapTermKey"   -> false,
       "mapTermValue" -> false,
-      "patch"        -> false
+      "patch"        -> false,
+      "default"      -> false
   )
 
   val documentsMapping: Map[String, Required] = Map(
