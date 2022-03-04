@@ -1,0 +1,6 @@
+{
+  "$dialect": "amf-json-schema-generated-dialect 1.0",
+  "a1": {
+    "b1": "something"
+  }
+}
