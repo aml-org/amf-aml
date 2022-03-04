@@ -1002,7 +1002,8 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
-  test("Cyclic references") {
+  // TODO W-10795527
+  ignore("Cyclic references") {
     cycleWithDialect(
         "dialect.yaml",
         "instance.flattened.jsonld",
@@ -1095,6 +1096,28 @@ trait DialectInstancesParsingTest extends DialectTests {
         mediaType = Some(Mimes.`application/ld+json`),
         renderOptions = Some(RenderOptions().withPrettyPrint.withCompactUris),
         directory = s"$basePath/json-root-union/"
+    )
+  }
+
+  test("Instance cycle with mapping ref without term obj") {
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.json",
+        "instance.golden.json",
+        mediaType = Some(Mimes.`application/json`),
+        renderOptions = Some(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/without-term-obj/"
+    )
+  }
+
+  test("Instance cycle with mapping ref without term seq") {
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.json",
+        "instance.golden.json",
+        mediaType = Some(Mimes.`application/json`),
+        renderOptions = Some(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/without-term-seq/"
     )
   }
 
