@@ -2,7 +2,7 @@ package amf.aml.internal.render.emitters.instances
 
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyLikeMapping, PropertyMapping}
-import amf.aml.internal.metamodel.domain.{NodeWithDiscriminatorModel, PropertyLikeMappingModel}
+import amf.aml.internal.metamodel.domain.PropertyLikeMappingModel
 import amf.aml.internal.registries.AMLRegistry
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
@@ -28,11 +28,11 @@ private case class DialectObjectEntryEmitter[M <: PropertyLikeMappingModel](
     registry: AMLRegistry)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AmlEmittersHelper {
+
   // this can be multiple mappings if we have a union in the range or a range pointing to a union mapping
-  val nodeMappings: Seq[NodeMapping] =
-    propertyMapping.objectRange().flatMap { rangeNodeMapping =>
-      findAllNodeMappings(rangeNodeMapping.value())
-    }
+  val nodeMappings: Seq[NodeMapping] = propertyMapping.objectRange().flatMap { rangeNodeMapping =>
+    findAllNodeMappings(rangeNodeMapping.value())
+  }
 
   // val key property id, so we can pass it to the nested emitter and it is not emitted
   val keyPropertyId: Option[String] = propertyMapping match {
@@ -61,7 +61,7 @@ private case class DialectObjectEntryEmitter[M <: PropertyLikeMappingModel](
               nodeMapping =>
                 dialectDomainElement.meta.`type`
                   .map(_.iri())
-                  .contains(nodeMapping.nodetypeMapping.value())) match {
+                  .exists(i => i == nodeMapping.nodetypeMapping.value() || i == nodeMapping.id)) match {
             case Some(nextNodeMapping) =>
               val nodeEmitter = DialectNodeEmitter(
                   dialectDomainElement,

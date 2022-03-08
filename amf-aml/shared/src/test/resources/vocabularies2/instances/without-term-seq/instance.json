@@ -1,0 +1,9 @@
+{
+  "$dialect": "amf-json-schema-generated-dialect 1.0",
+  "inboundHeaders": [
+    {
+      "key": "x-requests-id",
+      "value": "test"
+    }
+  ]
+}
