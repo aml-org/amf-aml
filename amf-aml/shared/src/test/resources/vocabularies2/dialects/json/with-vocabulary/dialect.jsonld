@@ -133,7 +133,7 @@
       "core:description": "Some class",
       "meta:properties": [
         {
-          "@id": "http://myvocabulary.org#\"myProperty\""
+          "@id": "http://myvocabulary.org#myProperty"
         }
       ]
     },

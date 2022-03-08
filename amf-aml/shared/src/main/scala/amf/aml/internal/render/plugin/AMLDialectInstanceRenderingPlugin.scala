@@ -26,7 +26,10 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
 
   override def priority: PluginPriority = NormalPriority
 
-  override def emit[T](unit: BaseUnit, builder: ASTBuilder[T], config: RenderConfiguration): Boolean = {
+  override def emit[T](unit: BaseUnit,
+                       builder: ASTBuilder[T],
+                       config: RenderConfiguration,
+                       mediaType: String): Boolean = {
     builder match {
       case sb: SYAMLASTBuilder =>
         unparse(unit, config) exists { doc =>

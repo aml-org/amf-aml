@@ -1,0 +1,14 @@
+#%Dialect 1.0
+dialect: Test
+version: 1.0
+
+nodeMappings:
+  RootNode:
+    mapping:
+      rootProperty:
+        range: any
+        allowMultiple: true
+
+documents:
+  root:
+    encodes: RootNode

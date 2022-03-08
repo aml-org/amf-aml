@@ -1,0 +1,5 @@
+#%NodeMapping/Dialect1.0
+$id: https://fragments.aml/test-1-0
+mapping:
+  anotherProperty:
+    range: string

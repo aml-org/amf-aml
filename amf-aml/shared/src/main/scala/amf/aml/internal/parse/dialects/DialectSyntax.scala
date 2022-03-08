@@ -6,6 +6,7 @@ trait DialectSyntax { this: DialectContext =>
   type Required = Boolean
 
   val dialect: Map[String, Required] = Map(
+      "$id"                -> false,
       "$type"              -> false,
       "dialect"            -> true,
       "version"            -> true,
@@ -19,6 +20,7 @@ trait DialectSyntax { this: DialectContext =>
   )
 
   val library: Map[String, Required] = Map(
+      "$id"          -> false,
       "$type"        -> false,
       "usage"        -> false,
       "external"     -> false,
@@ -27,12 +29,14 @@ trait DialectSyntax { this: DialectContext =>
   )
 
   val nodeMapping: Map[String, Required] = Map(
-      "classTerm"  -> false,
-      "mapping"    -> false,
-      "idProperty" -> false,
-      "idTemplate" -> false,
-      "patch"      -> false,
-      "extends"    -> false
+      "classTerm"   -> false,
+      "mapping"     -> false,
+      "idProperty"  -> false,
+      "idTemplate"  -> false,
+      "patch"       -> false,
+      "extends"     -> false,
+      "union"       -> false,
+      "conditional" -> false
   )
 
   val propertyLikeMapping: Map[String, Required] = Map(
@@ -56,6 +60,7 @@ trait DialectSyntax { this: DialectContext =>
   )
 
   val fragment: Map[String, Required] = Map(
+      "$id"      -> false,
       "usage"    -> false,
       "external" -> false,
       "uses"     -> false

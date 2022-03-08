@@ -1,0 +1,61 @@
+{
+  "@graph": [
+    {
+      "@id": "/BaseUnitProcessingData",
+      "@type": [
+        "doc:DialectInstanceProcessingData"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "./dialect.yaml"
+        }
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "Test 1.0"
+    },
+    {
+      "@id": "#/encodes",
+      "@type": [
+        "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-of-any/dialect.yaml#/declarations/RootNode",
+        "meta:DialectDomainElement",
+        "doc:DomainElement"
+      ],
+      "data:rootProperty": [
+        {
+          "@value": "1",
+          "@type": "xsd:integer"
+        },
+        "A"
+      ]
+    },
+    {
+      "@id": "",
+      "@type": [
+        "meta:DialectInstance",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "meta:definedBy": [
+        {
+          "@id": "./dialect.yaml"
+        }
+      ],
+      "doc:encodes": {
+        "@id": "#/encodes"
+      },
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "/BaseUnitProcessingData"
+      }
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/array-of-any/instance.json",
+    "data": "http://a.ml/vocabularies/data#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  }
+}

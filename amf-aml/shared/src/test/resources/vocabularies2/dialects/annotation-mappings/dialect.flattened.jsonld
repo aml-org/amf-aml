@@ -656,6 +656,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_1"
+        },
+        {
           "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0"
         }
       ]
@@ -792,9 +795,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(23,4)-(24,0)]"
     },
     {
-      "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0",
+      "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://github.org/vocabulary#contributor",
       "http://a.ml/vocabularies/document-source-maps#value": "[(6,2)-(9,17)]"
+    },
+    {
+      "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(9,4)-(9,17)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/declarations/PersonNodeMapping/property/surname/source-map/lexical/element_2",

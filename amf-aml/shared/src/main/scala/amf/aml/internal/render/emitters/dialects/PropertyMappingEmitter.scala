@@ -5,13 +5,17 @@ import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.LexicalInformation
-import amf.core.internal.render.BaseEmitters.{ArrayEmitter, MapEntryEmitter, ScalarEmitter}
+import amf.core.internal.render.BaseEmitters.{ArrayEmitter, EntryPartEmitter, MapEntryEmitter, ScalarEmitter}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.aml.internal.metamodel.domain.{PropertyLikeMappingModel, PropertyMappingModel}
 import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping}
+import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping, WithDefaultFacet}
+import amf.core.client.scala.errorhandling.IgnoringErrorHandler
+import amf.core.internal.datanode.DataNodeEmitter
+import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 
@@ -172,7 +176,8 @@ case class PropertyMappingEmitter(
     extends EntryEmitter
     with DiscriminatorEmitter
     with AliasesConsumer
-    with PosExtractor {
+    with PosExtractor
+    with DefaultFacetEmission {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
         propertyMapping.name().value(),
@@ -220,11 +225,15 @@ case class PropertyMappingEmitter(
               emitters ++= Seq(MapEntryEmitter("mapValue", value, YType.Str, pos))
             })
 
+          emitters ++= emitDefault(propertyMapping)
+
           ordering.sorted(emitters).foreach(_.emit(b))
         }
     )
   }
 
-  override def position(): Position =
-    propertyMapping.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+  private def position(annotations: Annotations): Position =
+    annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
+
+  override def position(): Position = position(propertyMapping.annotations)
 }

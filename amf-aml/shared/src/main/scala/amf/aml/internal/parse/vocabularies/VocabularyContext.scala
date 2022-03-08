@@ -65,7 +65,10 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
       val local = s"$base$propertyTermAlias"
       declarations.getPropertyTermId(propertyTermAlias) match {
         case Some(_) => // ignore
-        case None    => if (strictLocal) { pendingLocal ++= Seq((local, propertyTermAlias, where, true)) }
+        case None =>
+          if (strictLocal) {
+            pendingLocal ++= Seq((local, propertyTermAlias, where, true))
+          }
       }
       Some(local)
     }

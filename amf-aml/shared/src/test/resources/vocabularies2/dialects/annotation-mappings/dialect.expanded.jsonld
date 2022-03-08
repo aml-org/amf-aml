@@ -496,7 +496,7 @@
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
-                    "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0",
+                    "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_1",
                     "http://a.ml/vocabularies/document-source-maps#element": [
                       {
                         "@value": "http://github.org/vocabulary#contributor"
@@ -505,6 +505,19 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(6,2)-(9,17)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://www.w3.org/2000/01/rdf-schema#range"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,4)-(9,17)]"
                       }
                     ]
                   }

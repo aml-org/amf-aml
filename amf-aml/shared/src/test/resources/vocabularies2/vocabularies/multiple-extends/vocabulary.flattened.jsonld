@@ -215,6 +215,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://a.ml/vocabularies/test#ChildClass/source-map/lexical/element_1"
+        },
+        {
           "@id": "http://a.ml/vocabularies/test#ChildClass/source-map/lexical/element_0"
         }
       ]
@@ -225,6 +228,9 @@
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "http://a.ml/vocabularies/test#ParentPropA/source-map/lexical/element_1"
+        },
         {
           "@id": "http://a.ml/vocabularies/test#ParentPropA/source-map/lexical/element_0"
         }
@@ -237,6 +243,9 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://a.ml/vocabularies/test#ParentPropB/source-map/lexical/element_1"
+        },
+        {
           "@id": "http://a.ml/vocabularies/test#ParentPropB/source-map/lexical/element_0"
         }
       ]
@@ -248,7 +257,13 @@
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
+          "@id": "http://a.ml/vocabularies/test#ChildProp/source-map/lexical/element_2"
+        },
+        {
           "@id": "http://a.ml/vocabularies/test#ChildProp/source-map/lexical/element_0"
+        },
+        {
+          "@id": "http://a.ml/vocabularies/test#ChildProp/source-map/lexical/element_1"
         }
       ]
     },
@@ -278,22 +293,47 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(10,2)-(14,0)]"
     },
     {
-      "@id": "http://a.ml/vocabularies/test#ChildClass/source-map/lexical/element_0",
+      "@id": "http://a.ml/vocabularies/test#ChildClass/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/test#ChildClass",
       "http://a.ml/vocabularies/document-source-maps#value": "[(14,2)-(21,0)]"
     },
     {
-      "@id": "http://a.ml/vocabularies/test#ParentPropA/source-map/lexical/element_0",
+      "@id": "http://a.ml/vocabularies/test#ChildClass/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subClassOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(17,4)-(21,0)]"
+    },
+    {
+      "@id": "http://a.ml/vocabularies/test#ParentPropA/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/test#ParentPropA",
       "http://a.ml/vocabularies/document-source-maps#value": "[(22,2)-(27,0)]"
     },
     {
-      "@id": "http://a.ml/vocabularies/test#ParentPropB/source-map/lexical/element_0",
+      "@id": "http://a.ml/vocabularies/test#ParentPropA/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(25,4)-(27,0)]"
+    },
+    {
+      "@id": "http://a.ml/vocabularies/test#ParentPropB/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/test#ParentPropB",
       "http://a.ml/vocabularies/document-source-maps#value": "[(27,2)-(32,0)]"
     },
     {
+      "@id": "http://a.ml/vocabularies/test#ParentPropB/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(30,4)-(32,0)]"
+    },
+    {
+      "@id": "http://a.ml/vocabularies/test#ChildProp/source-map/lexical/element_2",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#range",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(35,4)-(36,0)]"
+    },
+    {
       "@id": "http://a.ml/vocabularies/test#ChildProp/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(36,4)-(39,0)]"
+    },
+    {
+      "@id": "http://a.ml/vocabularies/test#ChildProp/source-map/lexical/element_1",
       "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/test#ChildProp",
       "http://a.ml/vocabularies/document-source-maps#value": "[(32,2)-(39,0)]"
     }

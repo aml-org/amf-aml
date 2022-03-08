@@ -231,4 +231,12 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
   test("jsonld instance with link range parsed with dialect that defines any range") {
     validate("dialect.yaml", "instance.golden.flattened.jsonld", path = s"$instancesPath/link-range")
   }
+
+  test("JSON Instance with Union at root level should omit the $dialect entry") {
+    validate(
+        "dialect.yaml",
+        "instance.json",
+        path = s"$instancesPath/json-root-union/"
+    )
+  }
 }

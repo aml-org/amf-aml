@@ -14,6 +14,7 @@ import amf.aml.internal.metamodel.document.VocabularyModel
 import amf.aml.internal.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}
 import amf.aml.client.scala.model.document.Vocabulary
 import amf.aml.client.scala.model.domain.{ClassTerm, PropertyTerm, VocabularyReference}
+import amf.aml.internal.render.emitters.dialects.DocumentCreator
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YType}
 
@@ -212,21 +213,14 @@ private case class ImportEmitter(vocabularyReference: VocabularyReference,
     vocabularyReference.annotations.find(classOf[LexicalInformation]).map(_.range.start).getOrElse(ZERO)
 }
 
-case class VocabularyEmitter(vocabulary: Vocabulary) extends AliasMapper {
+case class VocabularyEmitter(vocabulary: Vocabulary, document: DocumentCreator) extends AliasMapper {
 
   val aliasMapping: Map[String, String] = buildAliasMapping(vocabulary)
 
   def emitVocabulary(): YDocument = {
-    val ordering: SpecOrdering = SpecOrdering.ordering(Raml10, vocabulary.sourceSpec)
-
+    val ordering: SpecOrdering     = SpecOrdering.ordering(Raml10, vocabulary.sourceSpec)
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ vocabularyEmitters(ordering)
-
-    YDocument(b => {
-      b.comment("%Vocabulary 1.0")
-      b.obj { b =>
-        traverse(ordering.sorted(content), b)
-      }
-    })
+    document(ordering.sorted(content))
   }
 
   def rootLevelEmitters(ordering: SpecOrdering): Seq[EntryEmitter] =

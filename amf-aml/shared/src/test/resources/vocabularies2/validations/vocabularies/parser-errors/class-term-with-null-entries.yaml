@@ -1,0 +1,6 @@
+#%Vocabulary 1.0
+vocabulary: Test Vocab
+base: ftp://some-url
+classTerms:
+  t:
+    description:

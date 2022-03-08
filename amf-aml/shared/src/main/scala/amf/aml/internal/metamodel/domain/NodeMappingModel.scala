@@ -4,10 +4,11 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Iri, Str}
 import amf.core.internal.metamodel.domain.{
   DomainElementModel,
+  ExternalModelVocabularies,
   LinkableElementModel,
   ModelDoc,
   ModelVocabularies,
-  ExternalModelVocabularies
+  ShapeModel
 }
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
