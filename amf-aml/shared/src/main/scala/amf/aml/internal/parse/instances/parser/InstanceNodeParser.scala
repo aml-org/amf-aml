@@ -142,7 +142,8 @@ case class InstanceNodeParser(root: Root)(implicit ctx: DialectInstanceContext) 
         case None => // ignore
       }
     }
-    checkNodeForAdditionalKeys(finalId, mapping.id, astMap.map, mapping, astMap, rootNode, additionalKey)
+    val shouldErrorOnExtraProperties = mapping.closed.option().getOrElse(true) // default behaviour is to error out
+    if (shouldErrorOnExtraProperties) checkNodeForAdditionalKeys(finalId, mapping.id, astMap.map, mapping, astMap, rootNode, additionalKey)
     node
   }
 

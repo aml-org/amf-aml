@@ -35,7 +35,7 @@ case class NodeMappingEmitter(
     } else {
       nodeMappable match {
         case nodeMapping: NodeMapping           => emitSingleNode(b, nodeMapping)
-        case unionNodeMapping: UnionNodeMapping => emitUnioNode(b, unionNodeMapping)
+        case unionNodeMapping: UnionNodeMapping => emitUnionNode(b, unionNodeMapping)
         case _                                  => // ignore
       }
     }
@@ -75,6 +75,10 @@ case class NodeMappingEmitter(
               })
             }
           }
+
+          nodeMapping.closed.option().foreach { additionalProps =>
+            b.entry("additionalProperties", !additionalProps)
+          }
           nodeMapping.idTemplate.option().foreach { idTemplate =>
             b.entry("idTemplate", idTemplate)
           }
@@ -85,7 +89,7 @@ case class NodeMappingEmitter(
     )
   }
 
-  protected def emitUnioNode(b: EntryBuilder, unionNodeMapping: UnionNodeMapping): Unit = {
+  protected def emitUnionNode(b: EntryBuilder, unionNodeMapping: UnionNodeMapping): Unit = {
     b.entry(
         unionNodeMapping.name.value(),
         _.obj { b =>

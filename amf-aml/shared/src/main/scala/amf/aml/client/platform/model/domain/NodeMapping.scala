@@ -3,7 +3,9 @@ package amf.aml.client.platform.model.domain
 import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.core.client.platform.model.domain.{DomainElement, Linkable}
 import amf.aml.client.scala.model.domain.{NodeMapping => InternalNodeMapping}
+import amf.aml.internal.metamodel.domain.NodeMappingModel.Closed
 import amf.core.client.platform.model.StrField
+import amf.core.client.scala.model.BoolField
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -18,6 +20,7 @@ case class NodeMapping(override private[amf] val _internal: InternalNodeMapping)
   def propertiesMapping(): ClientList[PropertyMapping] = _internal.propertiesMapping().asClient
   def idTemplate: StrField                             = _internal.idTemplate
   def mergePolicy: StrField                            = _internal.mergePolicy
+  def closed: BoolField                                = _internal.closed
 
   def withName(name: String): NodeMapping = {
     _internal.withName(name)

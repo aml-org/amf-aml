@@ -3,6 +3,7 @@ package amf.aml.internal.metamodel.domain
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Iri, Str}
 import amf.core.internal.metamodel.domain.{
+  ClosedModel,
   DomainElementModel,
   ExternalModelVocabularies,
   LinkableElementModel,
@@ -18,7 +19,8 @@ object NodeMappingModel
     extends DomainElementModel
     with LinkableElementModel
     with MergeableMappingModel
-    with NodeMappableModel {
+    with NodeMappableModel
+    with ClosedModel {
 
   val NodeTypeMapping: Field = Field(
       Iri,
@@ -42,7 +44,7 @@ object NodeMappingModel
   val ResolvedExtends: Field = Field(Array(Iri), Namespace.Meta + "resolvedExtends")
 
   override def fields: List[Field] =
-    NodeTypeMapping :: Name :: PropertiesMapping :: IdTemplate :: MergePolicy :: ResolvedExtends :: LinkableElementModel.fields ++ DomainElementModel.fields
+    NodeTypeMapping :: Name :: PropertiesMapping :: IdTemplate :: MergePolicy :: ResolvedExtends :: Closed :: LinkableElementModel.fields ++ DomainElementModel.fields
 
   override def modelInstance: AmfObject = NodeMapping()
 
