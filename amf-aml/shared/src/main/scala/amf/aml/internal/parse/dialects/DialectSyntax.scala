@@ -40,6 +40,12 @@ trait DialectSyntax { this: DialectContext =>
       "additionalProperties" -> false
   )
 
+  val conditionalMapping: Map[String, Required] = Map(
+      "if"   -> true,
+      "then" -> true,
+      "else" -> true,
+  )
+
   val propertyLikeMapping: Map[String, Required] = Map(
       "range"                 -> true,
       "propertyTerm"          -> false,
@@ -96,6 +102,7 @@ trait DialectSyntax { this: DialectContext =>
       case "library"                 => library
       case "fragment"                => fragment
       case "nodeMapping"             => nodeMapping
+      case "conditionalMapping"      => conditionalMapping
       case "annotationMapping"       => annotationMapping
       case "propertyMapping"         => propertyMapping
       case "documentsMapping"        => documentsMapping

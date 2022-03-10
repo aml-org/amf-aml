@@ -448,4 +448,21 @@ trait DialectsParsingTest extends DialectTests {
           Some(Mimes.`application/yaml`),
           directory = s"$basePath/additional-properties")
   }
+
+//  multiSourceTest("Conditional facet in dialect", "dialect.%s") { config =>
+//    cycle(config.source,
+//      "dialect.cycled.yaml",
+//      mediaType = Some(Mimes.`application/yaml`),
+//      directory = s"$basePath/conditional")
+//  }
+
+  test("Conditional facet in dialect") {
+    cycle(
+        "dialect.yaml",
+        "dialect.cycled.yaml",
+        Some(Mimes.`application/yaml`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/conditional"
+    )
+  }
 }

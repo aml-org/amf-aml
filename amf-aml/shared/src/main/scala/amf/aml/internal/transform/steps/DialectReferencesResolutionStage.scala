@@ -7,6 +7,7 @@ import amf.aml.internal.metamodel.domain.NodeMappingModel
 import amf.aml.client.scala.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.aml.client.scala.model.domain.{
   AnnotationMapping,
+  ConditionalNodeMapping,
   External,
   HasObjectRange,
   NodeMappable,
@@ -146,7 +147,8 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
         } yield {
           range
         }
-      case union: UnionNodeMapping       => collectRange(union)
+      case union: UnionNodeMapping => collectRange(union)
+//      case conditional: ConditionalNodeMapping => collectRange()
       case annotation: AnnotationMapping => collectRange(annotation)
     }
 

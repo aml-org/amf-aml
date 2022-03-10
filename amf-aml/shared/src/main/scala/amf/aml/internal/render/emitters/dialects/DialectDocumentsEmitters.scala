@@ -11,7 +11,13 @@ import amf.core.internal.render.SpecOrdering
 import amf.aml.internal.render.emitters.common.ExternalEmitter
 import amf.aml.internal.render.emitters.instances.AmlEmittersHelper
 import amf.aml.client.scala.model.document.{Dialect, Vocabulary}
-import amf.aml.client.scala.model.domain.{AnnotationMapping, NodeMappable, NodeMapping, UnionNodeMapping}
+import amf.aml.client.scala.model.domain.{
+  AnnotationMapping,
+  ConditionalNodeMapping,
+  NodeMappable,
+  NodeMapping,
+  UnionNodeMapping
+}
 import org.yaml.model.YDocument.EntryBuilder
 
 trait DialectDocumentsEmitters extends AmlEmittersHelper {
@@ -64,8 +70,9 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
                                              aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
     type NodeMappable = NodeMappable.AnyNodeMappable
     val nodeMappingDeclarations: Seq[NodeMappable] = dialect.declares.collect {
-      case nm: NodeMapping      => nm
-      case um: UnionNodeMapping => um
+      case nm: NodeMapping            => nm
+      case um: UnionNodeMapping       => um
+      case cm: ConditionalNodeMapping => cm
     }
     if (nodeMappingDeclarations.nonEmpty)
       Seq(NodeMappingsEntryEmitter(dialect, nodeMappingDeclarations, aliases, ordering))
