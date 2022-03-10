@@ -12,9 +12,9 @@ documents:
 nodeMappings:
   RootMapping:
     conditional:
-      if: ConditionMapping
-      then: ThenMapping
-      else: ElseMapping
+        if: NotExists
+        then: NotExists_1
+        else: NotExists_2
   ConditionMapping:
     mapping:
       someField:

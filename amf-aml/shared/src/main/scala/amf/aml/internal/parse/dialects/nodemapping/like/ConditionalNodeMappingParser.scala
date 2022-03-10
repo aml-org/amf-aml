@@ -18,7 +18,6 @@ class ConditionalNodeMappingParser(implicit ctx: DialectContext) extends NodeMap
     val conditionalNodeMapping = ConditionalNodeMapping(map)
 
     adopt(conditionalNodeMapping)
-
     map.key(
         identifierKey,
         entry =>
@@ -28,6 +27,7 @@ class ConditionalNodeMappingParser(implicit ctx: DialectContext) extends NodeMap
               parseConditionalField(innerMap, If, "if", conditionalNodeMapping)
               parseConditionalField(innerMap, Then, "then", conditionalNodeMapping)
               parseConditionalField(innerMap, Else, "else", conditionalNodeMapping)
+              if (!isFragment) ctx.closedNode("conditionalMappingInner", conditionalNodeMapping.id, innerMap)
             case _ =>
               ctx.eh.violation(DialectError,
                                conditionalNodeMapping.id,
@@ -35,9 +35,7 @@ class ConditionalNodeMappingParser(implicit ctx: DialectContext) extends NodeMap
                                entry.value.location)
         }
     )
-
     if (!isFragment) ctx.closedNode("conditionalMapping", conditionalNodeMapping.id, map)
-
     conditionalNodeMapping
   }
 
