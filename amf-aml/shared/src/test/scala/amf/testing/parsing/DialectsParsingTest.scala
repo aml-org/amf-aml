@@ -349,31 +349,31 @@ trait DialectsParsingTest extends DialectTests {
 
   test("Parse dialect with $id directive") {
     cycle(
-      "dialect.yaml",
-      "dialect.jsonld",
-      Some(Mimes.`application/ld+json`),
-      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-      directory = s"$basePath/id-directive"
+        "dialect.yaml",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/id-directive"
     )
   }
 
   test("Parse dialect library with $id directive") {
     cycle(
-      "dialect.yaml",
-      "dialect.jsonld",
-      Some(Mimes.`application/ld+json`),
-      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-      directory = s"$basePath/id-directive-library"
+        "dialect.yaml",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/id-directive-library"
     )
   }
 
   test("Parse dialect fragment with $id directive") {
     cycle(
-      "dialect.yaml",
-      "dialect.jsonld",
-      Some(Mimes.`application/ld+json`),
-      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-      directory = s"$basePath/id-directive-fragment"
+        "dialect.yaml",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/id-directive-fragment"
     )
   }
 
@@ -423,5 +423,22 @@ trait DialectsParsingTest extends DialectTests {
           "dialect.cycled.yaml",
           mediaType = Some(Mimes.`application/yaml`),
           directory = s"$basePath/default-facet")
+  }
+
+//  multiSourceTest("Conditional facet in dialect", "dialect.%s") { config =>
+//    cycle(config.source,
+//      "dialect.cycled.yaml",
+//      mediaType = Some(Mimes.`application/yaml`),
+//      directory = s"$basePath/conditional")
+//  }
+
+  test("Conditional facet in dialect") {
+    cycle(
+        "dialect.yaml",
+        "dialect.cycled.yaml",
+        Some(Mimes.`application/yaml`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/conditional"
+    )
   }
 }

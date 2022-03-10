@@ -2,10 +2,9 @@ package amf.aml.internal.parse.dialects
 
 import amf.core.internal.annotations.{ErrorDeclaration => DeclaredErrorDeclaration}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
-import amf.core.internal.parser.domain.SearchScope
+import amf.core.internal.parser.domain.{Annotations, Declarations, Fields, FutureDeclarations, SearchScope}
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
-import amf.core.internal.parser.domain.{Annotations, Fields, FutureDeclarations, SearchScope}
 import amf.aml.internal.metamodel.domain.{AnnotationMappingModel, NodeMappingModel}
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.vocabularies.VocabularyDeclarations
@@ -49,10 +48,15 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable[_]] = Map()
     this
   }
 
-  def findNodeMapping(key: String, scope: SearchScope.Scope): Option[NodeMappable] =
-    findForType(key, _.asInstanceOf[DialectDeclarations].nodeMappings, scope) collect {
+  def findNodeMapping(key: String, scope: SearchScope.Scope): Option[NodeMappable] = {
+    def xxxx(decl: Declarations) = {
+      val result = decl.asInstanceOf[DialectDeclarations].nodeMappings
+      result
+    }
+    findForType(key, xxxx, scope) collect {
       case nm: NodeMappable => nm
     }
+  }
 
   def findAnnotationMapping(key: String, scope: SearchScope.Scope): Option[AnnotationMapping] =
     findForType(key, _.asInstanceOf[DialectDeclarations].annotationMappings, scope) collect {

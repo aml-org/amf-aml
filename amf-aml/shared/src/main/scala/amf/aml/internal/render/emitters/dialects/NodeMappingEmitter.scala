@@ -1,16 +1,16 @@
 package amf.aml.internal.render.emitters.dialects
 
-import amf.core.internal.annotations.LexicalInformation
-import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ScalarEmitter, traverse}
-import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Linkable}
+import amf.aml.client.scala.model.document.{Dialect, DialectFragment}
+import amf.aml.client.scala.model.domain._
+import amf.aml.internal.metamodel.domain.{ConditionalNodeMappingModel, NodeMappableModel, UnionNodeMappingModel}
+import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Linkable}
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ScalarEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
-import amf.aml.internal.render.emitters.instances.NodeMappableFinder
-import amf.aml.internal.metamodel.domain.{NodeMappableModel, UnionNodeMappingModel}
-import amf.aml.client.scala.model.document.{Dialect, DialectFragment}
-import amf.aml.client.scala.model.domain.{NodeMappable, NodeMapping, PropertyMapping, UnionNodeMapping}
+import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 
@@ -34,9 +34,10 @@ case class NodeMappingEmitter(
       }
     } else {
       nodeMappable match {
-        case nodeMapping: NodeMapping           => emitSingleNode(b, nodeMapping)
-        case unionNodeMapping: UnionNodeMapping => emitUnioNode(b, unionNodeMapping)
-        case _                                  => // ignore
+        case nodeMapping: NodeMapping                       => emitSingleNode(b, nodeMapping)
+        case unionNodeMapping: UnionNodeMapping             => emitUnionNode(b, unionNodeMapping)
+        case conditionalNodeMapping: ConditionalNodeMapping => emitConditionalNode(b, conditionalNodeMapping)
+        case _                                              => // ignore
       }
     }
   }
@@ -85,7 +86,7 @@ case class NodeMappingEmitter(
     )
   }
 
-  protected def emitUnioNode(b: EntryBuilder, unionNodeMapping: UnionNodeMapping): Unit = {
+  protected def emitUnionNode(b: EntryBuilder, unionNodeMapping: UnionNodeMapping): Unit = {
     b.entry(
         unionNodeMapping.name.value(),
         _.obj { b =>
@@ -114,6 +115,26 @@ case class NodeMappingEmitter(
 
             ordering.sorted(emitters).foreach(_.emit(b))
           }
+        }
+    )
+  }
+
+  protected def emitConditionalNode(b: EntryBuilder, conditionalNodeMapping: ConditionalNodeMapping): Unit = {
+    b.entry(
+        conditionalNodeMapping.name.value(),
+        _.obj { b =>
+          b.entry(
+              "conditional",
+              _.obj {
+                b =>
+                  if (conditionalNodeMapping.ifMapping.nonEmpty)
+                    b.entry("if", aliasFor(conditionalNodeMapping.ifMapping.value()).getOrElse(""))
+                  if (conditionalNodeMapping.thenMapping.nonEmpty)
+                    b.entry("then", aliasFor(conditionalNodeMapping.thenMapping.value()).getOrElse(""))
+                  if (conditionalNodeMapping.elseMapping.nonEmpty)
+                    b.entry("else", aliasFor(conditionalNodeMapping.elseMapping.value()).getOrElse(""))
+              }
+          )
         }
     )
   }
