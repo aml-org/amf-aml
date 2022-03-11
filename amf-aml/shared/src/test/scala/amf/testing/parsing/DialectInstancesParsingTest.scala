@@ -1121,6 +1121,64 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("if/then/else parsing error should go with else branch", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/if-then-else-parsing-error/"
+    )
+  }
+
+  multiGoldenTest("if/then/else valid if should go with then branch", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/if-then-else-valid-if/"
+    )
+  }
+
+  multiGoldenTest("if/then/else invalid if should go with else branch", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/if-then-else-invalid-if/"
+    )
+  }
+
+  multiSourceTest("if/then/else parsing error should go with else branch from JSON-LD to YAML", "instance.%s") {
+    config =>
+      cycleWithDialect("dialect.yaml",
+                       config.source,
+                       "instance.multi-source.yaml",
+                       Some(Mimes.`application/yaml`),
+                       directory = s"$basePath/if-then-else-parsing-error/")
+  }
+
+  multiSourceTest("if/then/else valid if should go with then branch from JSON-LD to YAML", "instance.%s") { config =>
+    cycleWithDialect("dialect.yaml",
+                     config.source,
+                     "instance.multi-source.yaml",
+                     Some(Mimes.`application/yaml`),
+                     directory = s"$basePath/if-then-else-valid-if/")
+  }
+
+  multiSourceTest("if/then/else invalid if should go with else branch from JSON-LD to YAML", "instance.%s") { config =>
+    cycleWithDialect("dialect.yaml",
+                     config.source,
+                     "instance.multi-source.yaml",
+                     Some(Mimes.`application/yaml`),
+                     directory = s"$basePath/if-then-else-invalid-if/")
+  }
+
   //noinspection SameParameterValue
   protected def withInlineDialect(source: String,
                                   golden: String,

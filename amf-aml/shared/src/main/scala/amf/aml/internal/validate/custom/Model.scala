@@ -220,8 +220,8 @@ object ParsedValidationSpecification extends DialectWrapper {
             nested: Option[String] = None): (ValidationSpecification, Seq[ValidationSpecification]) = {
     val name: String =
       nameForNestedValidation.getOrElse(mandatory("name in validation specification", extractString(node, "name")))
-    val targetClasses: Seq[String] =
-      targetClassForNestedValidation.getOrElse(extractStrings(node, "targetClass").map(expand(_, prefixes)))
+    val targetClasses: Set[String] =
+      targetClassForNestedValidation.getOrElse(extractStrings(node, "targetClass").map(expand(_, prefixes))).toSet
     val finalMessage: String =
       message.getOrElse(extractString(node, "message").getOrElse(s"Unsatisfied constraint ${name}"))
     val finalNested: Option[String] = Some(nested.getOrElse(name))

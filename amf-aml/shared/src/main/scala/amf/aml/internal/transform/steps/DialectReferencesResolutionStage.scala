@@ -147,9 +147,9 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
         } yield {
           range
         }
-      case union: UnionNodeMapping => collectRange(union)
-//      case conditional: ConditionalNodeMapping => collectRange()
-      case annotation: AnnotationMapping => collectRange(annotation)
+      case union: UnionNodeMapping             => collectRange(union)
+      case conditional: ConditionalNodeMapping => List()
+      case annotation: AnnotationMapping       => collectRange(annotation)
     }
 
     val extendsReferenceOption = nodeMappable.extend.headOption match {

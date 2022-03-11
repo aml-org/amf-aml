@@ -100,7 +100,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
           message = message,
           ramlMessage = Some(message),
           oasMessage = Some(message),
-          targetClass = Seq(finalTargetClass),
+          targetClass = Set(finalTargetClass),
           propertyConstraints = Seq(PropertyConstraint(
               ramlPropertyId = prop.nodePropertyMapping().value(),
               name = validationId(node, finalPropName.value(), "minimum") + "/prop",
@@ -117,7 +117,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
           message = message,
           ramlMessage = Some(message),
           oasMessage = Some(message),
-          targetClass = Seq(finalTargetClass),
+          targetClass = Set(finalTargetClass),
           propertyConstraints = Seq(PropertyConstraint(
               ramlPropertyId = prop.nodePropertyMapping().value(),
               name = validationId(node, finalPropName.value(), "maximum") + "/prop",
@@ -134,7 +134,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
           message = message,
           ramlMessage = Some(message),
           oasMessage = Some(message),
-          targetClass = Seq(finalTargetClass),
+          targetClass = Set(finalTargetClass),
           propertyConstraints = Seq(
               PropertyConstraint(
                   ramlPropertyId = prop.nodePropertyMapping().value(),
@@ -153,7 +153,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
           message = message,
           ramlMessage = Some(message),
           oasMessage = Some(message),
-          targetClass = Seq(finalTargetClass),
+          targetClass = Set(finalTargetClass),
           propertyConstraints = Seq(
               PropertyConstraint(
                   ramlPropertyId = prop.nodePropertyMapping().value(),
@@ -172,7 +172,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
             message = message,
             ramlMessage = Some(message),
             oasMessage = Some(message),
-            targetClass = Seq(finalTargetClass),
+            targetClass = Set(finalTargetClass),
             propertyConstraints = Seq(
                 PropertyConstraint(
                     ramlPropertyId = prop.nodePropertyMapping().value(),
@@ -192,7 +192,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
           message = message,
           ramlMessage = Some(message),
           oasMessage = Some(message),
-          targetClass = Seq(finalTargetClass),
+          targetClass = Set(finalTargetClass),
           propertyConstraints = Seq(
               PropertyConstraint(
                   ramlPropertyId = prop.nodePropertyMapping().value(),
@@ -219,7 +219,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
               message = message,
               ramlMessage = Some(message),
               oasMessage = Some(message),
-              targetClass = Seq(finalTargetClass),
+              targetClass = Set(finalTargetClass),
               propertyConstraints = Seq(
                   PropertyConstraint(
                       ramlPropertyId = prop.nodePropertyMapping().value(),
@@ -236,7 +236,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
               message = message,
               ramlMessage = Some(message),
               oasMessage = Some(message),
-              targetClass = Seq(finalTargetClass),
+              targetClass = Set(finalTargetClass),
               propertyConstraints = Seq(
                   PropertyConstraint(
                       ramlPropertyId = prop.nodePropertyMapping().value(),
@@ -253,7 +253,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
               message = message,
               ramlMessage = Some(message),
               oasMessage = Some(message),
-              targetClass = Seq(finalTargetClass),
+              targetClass = Set(finalTargetClass),
               propertyConstraints = Seq(
                   PropertyConstraint(
                       ramlPropertyId = prop.nodePropertyMapping().value(),
@@ -269,7 +269,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
               message = message,
               ramlMessage = Some(message),
               oasMessage = Some(message),
-              targetClass = Seq(finalTargetClass),
+              targetClass = Set(finalTargetClass),
               propertyConstraints = Seq(
                   PropertyConstraint(
                       ramlPropertyId = prop.nodePropertyMapping().value(),
@@ -303,7 +303,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
           message = message,
           ramlMessage = Some(message),
           oasMessage = Some(message),
-          targetClass = Seq(finalTargetClass),
+          targetClass = Set(finalTargetClass),
           propertyConstraints = Seq(
               PropertyConstraint(
                   ramlPropertyId = prop.nodePropertyMapping().value(),

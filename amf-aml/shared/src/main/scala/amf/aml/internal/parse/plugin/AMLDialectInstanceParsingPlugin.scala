@@ -14,13 +14,14 @@ import amf.core.client.scala.parse.document.{ParserContext, ReferenceHandler}
 import amf.core.internal.parser._
 import amf.core.internal.remote.Mimes._
 import amf.core.internal.remote.{AmlDialectSpec, Mimes, Spec}
+import amf.core.internal.validation.core.ValidationProfile
 import org.mulesoft.common.core.Strings
 
 /**
   * Parsing plugin for dialect instance like units derived from a resolved dialect
   * @param dialect resolved dialect
   */
-class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
+class AMLDialectInstanceParsingPlugin(val dialect: Dialect, val constraints: Option[ValidationProfile] = None)
     extends AMFParsePlugin
     with AMLDialectInstancePlugin[Root] {
 
@@ -44,14 +45,18 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect)
           val normalizedStr = hint.stripPrefix("%").stripSpaces
           normalizedStr.substring(0, normalizedStr.indexOf("/"))
         }
-        new DialectInstanceFragmentParser(root)(new DialectInstanceContext(dialect, finder, ctx)).parse(name)
+        new DialectInstanceFragmentParser(root)(
+            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints)).parse(name)
       case kind.DialectInstanceLibrary =>
-        new DialectInstanceLibraryParser(root)(new DialectInstanceContext(dialect, finder, ctx)).parse()
+        new DialectInstanceLibraryParser(root)(
+            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints)).parse()
       case kind.DialectInstancePatch =>
-        new DialectInstancePatchParser(root)(new DialectInstanceContext(dialect, finder, ctx).forPatch())
+        new DialectInstancePatchParser(root)(
+            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints).forPatch())
           .parse()
       case kind.DialectInstance =>
-        new DialectInstanceParser(root)(new DialectInstanceContext(dialect, finder, ctx)).parseDocument()
+        new DialectInstanceParser(root)(new DialectInstanceContext(dialect, finder, ctx, constraints = constraints))
+          .parseDocument()
       case _ =>
         DialectInstance()
     }
