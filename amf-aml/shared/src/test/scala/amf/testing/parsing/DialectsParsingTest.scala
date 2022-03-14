@@ -349,31 +349,31 @@ trait DialectsParsingTest extends DialectTests {
 
   test("Parse dialect with $id directive") {
     cycle(
-      "dialect.yaml",
-      "dialect.jsonld",
-      Some(Mimes.`application/ld+json`),
-      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-      directory = s"$basePath/id-directive"
+        "dialect.yaml",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/id-directive"
     )
   }
 
   test("Parse dialect library with $id directive") {
     cycle(
-      "dialect.yaml",
-      "dialect.jsonld",
-      Some(Mimes.`application/ld+json`),
-      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-      directory = s"$basePath/id-directive-library"
+        "dialect.yaml",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/id-directive-library"
     )
   }
 
   test("Parse dialect fragment with $id directive") {
     cycle(
-      "dialect.yaml",
-      "dialect.jsonld",
-      Some(Mimes.`application/ld+json`),
-      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-      directory = s"$basePath/id-directive-fragment"
+        "dialect.yaml",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/id-directive-fragment"
     )
   }
 
@@ -423,5 +423,29 @@ trait DialectsParsingTest extends DialectTests {
           "dialect.cycled.yaml",
           mediaType = Some(Mimes.`application/yaml`),
           directory = s"$basePath/default-facet")
+  }
+
+  multiGoldenTest("Additional properties facet parsing", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/additional-properties"
+    )
+  }
+
+  multiSourceTest("Render additional properties facet from JSON-LD", "dialect.%s") { config =>
+    cycle(config.source,
+          "dialect.cycled.jsonld.yaml",
+          mediaType = Some(Mimes.`application/yaml`),
+          directory = s"$basePath/additional-properties")
+  }
+
+  test("Render additional properties facet from YAML") {
+    cycle("dialect.yaml",
+          "dialect.cycled.yaml",
+          Some(Mimes.`application/yaml`),
+          directory = s"$basePath/additional-properties")
   }
 }

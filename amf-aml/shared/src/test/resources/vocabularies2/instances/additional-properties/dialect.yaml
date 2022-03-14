@@ -1,0 +1,23 @@
+#%Dialect 1.0
+dialect: Mapping Additional properties
+version: 1.0
+
+documents:
+  root:
+    encodes: Person
+
+nodeMappings:
+  Person:
+    mapping:
+      name:
+        range: PersonName
+      club:
+        range: string
+
+  PersonName:
+    mapping:
+      name:
+        range: string
+      surname:
+        range: string
+    additionalProperties: true

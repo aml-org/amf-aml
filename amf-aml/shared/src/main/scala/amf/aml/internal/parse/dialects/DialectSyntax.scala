@@ -29,14 +29,15 @@ trait DialectSyntax { this: DialectContext =>
   )
 
   val nodeMapping: Map[String, Required] = Map(
-      "classTerm"   -> false,
-      "mapping"     -> false,
-      "idProperty"  -> false,
-      "idTemplate"  -> false,
-      "patch"       -> false,
-      "extends"     -> false,
-      "union"       -> false,
-      "conditional" -> false
+      "classTerm"            -> false,
+      "mapping"              -> false,
+      "idProperty"           -> false,
+      "idTemplate"           -> false,
+      "patch"                -> false,
+      "extends"              -> false,
+      "union"                -> false,
+      "conditional"          -> false,
+      "additionalProperties" -> false
   )
 
   val propertyLikeMapping: Map[String, Required] = Map(

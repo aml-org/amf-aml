@@ -239,4 +239,8 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
         path = s"$instancesPath/json-root-union/"
     )
   }
+
+  test("One node should validate check for additional props and another shouldn't") {
+    validate("dialect.yaml", "instance.yaml", Some("report.json"), path = s"$instancesPath/additional-properties/")
+  }
 }

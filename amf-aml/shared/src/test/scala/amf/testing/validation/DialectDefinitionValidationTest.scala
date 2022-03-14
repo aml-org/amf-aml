@@ -68,7 +68,8 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Test nested eventual ambiguity in property") {
-    validate("/nested-eventual-ambiguity-property/dialect.yaml", Some("nested-eventual-ambiguity-property/report.json"))
+    validate("/nested-eventual-ambiguity-property/dialect.yaml",
+             Some("nested-eventual-ambiguity-property/report.json"))
   }
 
   test("Test node mapping with reserved names") {
@@ -145,5 +146,9 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
 
   test("Dialect with property mapping with default key") {
     validate("../../../dialects/default-facet/dialect.yaml", None)
+  }
+
+  test("Dialect with NodeMapping with additional properties") {
+    validate("../../../dialects/additional-properties/dialect.yaml", None)
   }
 }
