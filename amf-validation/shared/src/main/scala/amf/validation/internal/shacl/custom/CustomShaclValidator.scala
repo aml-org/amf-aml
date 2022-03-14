@@ -422,7 +422,7 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions, messageStyle: 
                          parentElement: DomainElement,
                          reportBuilder: ReportBuilder): Unit = {
     extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
-      case ExtractedPropertyValue(_: AmfScalar, Some(value: String)) =>
+      case ExtractedPropertyValue(_: AmfScalar, Some(value: Any)) =>
         if (!propertyConstraint.in.contains(value)) {
           reportFailure(validationSpecification, propertyConstraint, parentElement.id, reportBuilder)
         }

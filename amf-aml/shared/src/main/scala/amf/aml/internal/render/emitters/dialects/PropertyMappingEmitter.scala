@@ -5,7 +5,15 @@ import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.LexicalInformation
-import amf.core.internal.render.BaseEmitters.{ArrayEmitter, EntryPartEmitter, MapEntryEmitter, ScalarEmitter}
+import amf.core.internal.render.BaseEmitters.{
+  ArrayEmitter,
+  EntryPartEmitter,
+  MapEntryEmitter,
+  ScalarEmitter,
+  ValueEmitter,
+  pos,
+  traverse
+}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
@@ -15,7 +23,8 @@ import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping, 
 import amf.core.client.scala.errorhandling.IgnoringErrorHandler
 import amf.core.internal.datanode.DataNodeEmitter
 import amf.core.internal.metamodel.domain.ShapeModel
-import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.parser.domain.{Annotations, FieldEntry}
+import org.mulesoft.common.collections.FilterType
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 
@@ -151,7 +160,7 @@ case class PropertyLikeMappingEmitter[T <: PropertyLikeMappingModel](
     }
 
     propertyLikeMapping.fields.entry(PropertyMappingModel.Enum) foreach { entry =>
-      result ++= Seq(ArrayEmitter("enum", entry, ordering))
+      result ++= Seq(EnumEmitter(entry, ordering))
     }
 
     propertyLikeMapping.fields.entry(PropertyMappingModel.ExternallyLinkable) foreach { entry =>
@@ -166,6 +175,30 @@ case class PropertyLikeMappingEmitter[T <: PropertyLikeMappingModel](
     result ++= emitDiscriminator(propertyLikeMapping)
     result
   }
+}
+
+case class EnumEmitter(entry: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
+  override def emit(b: EntryBuilder): Unit = {
+    b.entry("enum", _.list { b =>
+      val scalars = emitters(entry.arrayValues)
+      traverse(ordering.sorted(scalars), b)
+    })
+  }
+
+  private def emitters(values: Seq[Any]): Seq[ScalarEmitter] =
+    values
+      .filterType[AmfScalar]
+      .map { scalar =>
+        val tagType = scalar.value match {
+          case _: Double  => YType.Float
+          case _: Integer => YType.Int
+          case _: Boolean => YType.Bool
+          case _          => YType.Str
+        }
+        ScalarEmitter(scalar, tagType)
+      }
+
+  override def position(): Position = pos(entry.value.annotations)
 }
 
 case class PropertyMappingEmitter(

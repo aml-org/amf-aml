@@ -457,4 +457,21 @@ trait DialectsParsingTest extends DialectTests {
           Some(Mimes.`application/yaml`),
           directory = s"$basePath/additional-properties")
   }
+
+  multiGoldenTest("Parse enum values with different types of values", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/enum-scalars"
+    )
+  }
+
+  multiSourceTest("Parse enum values with different types of values from JSON-LD to YAML", "dialect.%s") { config =>
+    cycle(config.source,
+          "dialect.cycled.yaml",
+          mediaType = Some(Mimes.`application/yaml`),
+          directory = s"$basePath/enum-scalars")
+  }
 }

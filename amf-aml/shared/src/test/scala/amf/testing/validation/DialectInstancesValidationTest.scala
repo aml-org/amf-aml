@@ -243,4 +243,16 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
   test("One node should validate check for additional props and another shouldn't") {
     validate("dialect.yaml", "instance.yaml", Some("report.json"), path = s"$instancesPath/additional-properties/")
   }
+
+  test("Enum with integer values") {
+    validate("dialect.yaml", "instance.yaml", Some("report.json"), path = s"$basePath/enum-integer")
+  }
+
+  test("Enum with double values") {
+    validate("dialect.yaml", "instance.yaml", Some("report.json"), path = s"$basePath/enum-double")
+  }
+
+  test("Enum with boolean values") {
+    validate("dialect.yaml", "instance.yaml", Some("report.json"), path = s"$basePath/enum-boolean")
+  }
 }

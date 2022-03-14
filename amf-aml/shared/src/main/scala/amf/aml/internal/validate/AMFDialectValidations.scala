@@ -198,9 +198,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                   ramlPropertyId = prop.nodePropertyMapping().value(),
                   name = validationId(node, finalPropName.value(), "enum") + "/prop",
                   message = Some(message),
-                  in = values.map { v =>
-                    s"$v"
-                  }
+                  in = values.toSet
               ))
       )
     }
