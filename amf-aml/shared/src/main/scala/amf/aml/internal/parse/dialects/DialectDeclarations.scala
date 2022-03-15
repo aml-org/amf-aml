@@ -49,11 +49,7 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable[_]] = Map()
   }
 
   def findNodeMapping(key: String, scope: SearchScope.Scope): Option[NodeMappable] = {
-    def xxxx(decl: Declarations) = {
-      val result = decl.asInstanceOf[DialectDeclarations].nodeMappings
-      result
-    }
-    findForType(key, xxxx, scope) collect {
+    findForType(key, _.asInstanceOf[DialectDeclarations].nodeMappings, scope) collect {
       case nm: NodeMappable => nm
     }
   }

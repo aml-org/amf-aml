@@ -8,7 +8,7 @@ import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SyamlBasedParserErrorHandler}
-import amf.core.internal.parser.{XXXParseConfig, YMapOps}
+import amf.core.internal.parser.{ParseConfigOverride, YMapOps}
 import amf.core.internal.validation.core.ValidationProfile
 import org.yaml.model._
 
@@ -130,7 +130,7 @@ class DialectInstanceContext(var dialect: Dialect,
   def copy(errorHandler: AMFErrorHandler): DialectInstanceContext = {
     new DialectInstanceContext(dialect,
                                nodeMappableFinder,
-                               wrapped.copy(config = XXXParseConfig(errorHandler, wrapped.config)),
+                               wrapped.copy(config = ParseConfigOverride(errorHandler, wrapped.config)),
                                ds,
                                constraints)
   }
