@@ -3,14 +3,15 @@ package amf.aml.internal.parse.dialects
 import amf.aml.client.scala.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.metamodel.document.DialectModel
-import amf.aml.internal.metamodel.document.DialectModel.Externals
+import amf.aml.internal.metamodel.document.DialectModel.{Externals, fields}
 import amf.aml.internal.metamodel.domain.UnionNodeMappingModel.ObjectRange
-import amf.aml.internal.metamodel.domain.{NodeMappingModel, PropertyMappingModel}
+import amf.aml.internal.metamodel.domain.{ConditionalNodeMappingModel, NodeMappingModel, PropertyMappingModel}
 import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.aml.internal.parse.dialects.DialectAstOps._
 import amf.aml.internal.parse.dialects.nodemapping.like.NodeMappingLikeParser
 import amf.aml.internal.parse.dialects.property.like.AnnotationMappingParser
 import amf.aml.internal.validate.DialectValidations.{DialectError, EventualAmbiguity, UnavoidableAmbiguity}
+import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.client.scala.parse.AMFParser
@@ -118,14 +119,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
     val declarables = ctx.declarations.declarables()
     declarables.foreach {
-      case unionNodeMapping: UnionNodeMapping =>
-        checkNodeMappableReferences(unionNodeMapping)
-
+      case unionNodeMapping: UnionNodeMapping             => checkNodeMappableReferences(unionNodeMapping)
+      case conditionalNodeMapping: ConditionalNodeMapping => checkNodeMappableReferences(conditionalNodeMapping)
       case nodeMapping: Member =>
         nodeMapping.propertiesMapping().foreach { propertyMapping =>
           checkNodeMappableReferences(propertyMapping)
         }
-
       case annotationMapping: AnnotationMapping => checkNodeMappableReferences(annotationMapping)
     }
     addDeclarationsToModel(dialect)
@@ -332,6 +331,41 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
+  // Replaces inner conditional fields references from names to ids
+  protected def checkNodeMappableReferences[T <: DomainElement](mappable: ConditionalNodeMapping): Unit = {
+
+    def findIdOrError(value: StrField): Option[String] = {
+      val name = value.toString
+      // Is necessary this check? It always should be a reference
+      if (name == (Namespace.Meta + "anyNode").iri()) Some(name)
+      else {
+        ctx.declarations.findNodeMapping(name, All) match {
+          case Some(mapping) => Some(mapping.id)
+          case None =>
+            ctx.findInRecursiveUnits(name) match {
+              case Some(recursiveId) => Some(recursiveId)
+              case None =>
+                ctx.missingPropertyRangeViolation(
+                    name,
+                    mappable.id,
+                    value.annotations()
+                )
+                None
+            }
+        }
+      }
+    }
+
+    if (mappable.ifMapping.nonEmpty)
+      findIdOrError(mappable.fields.field(ConditionalNodeMappingModel.If)).foreach(mappable.withIfMapping)
+
+    if (mappable.thenMapping.nonEmpty)
+      findIdOrError(mappable.fields.field(ConditionalNodeMappingModel.Then)).foreach(mappable.withThenMapping)
+
+    if (mappable.elseMapping.nonEmpty)
+      findIdOrError(mappable.fields.field(ConditionalNodeMappingModel.Else)).foreach(mappable.withElseMapping)
+  }
+
   private def memberIdFromName[T <: DomainElement](name: String, union: NodeWithDiscriminator[_]): Option[String] = {
     if (name == (Namespace.Meta + "anyNode").iri()) Some(name)
     else {
@@ -466,9 +500,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               }
 
               parseNodeMapping(entry, adopt) match {
-                case Some(nodeMapping: NodeMapping)      => ctx.declarations += nodeMapping
-                case Some(nodeMapping: UnionNodeMapping) => ctx.declarations += nodeMapping
-                case _                                   => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry.location)
+                case Some(nodeMapping: NodeMapping)                   => ctx.declarations += nodeMapping
+                case Some(unionMapping: UnionNodeMapping)             => ctx.declarations += unionMapping
+                case Some(conditionalMapping: ConditionalNodeMapping) => ctx.declarations += conditionalMapping
+                case _                                                => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry.location)
               }
 
             }

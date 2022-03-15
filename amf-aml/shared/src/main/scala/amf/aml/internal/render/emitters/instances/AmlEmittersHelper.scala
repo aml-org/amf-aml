@@ -13,7 +13,7 @@ import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.aml.internal.render.emitters.common.{ExternalEmitter, IdCounter}
 import amf.aml.client.scala.model.document.{Dialect, DialectLibrary, ExternalContext}
-import amf.aml.client.scala.model.domain.{NodeMappable, NodeMapping, UnionNodeMapping}
+import amf.aml.client.scala.model.domain.{ConditionalNodeMapping, NodeMappable, NodeMapping, UnionNodeMapping}
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.internal.utils.Regexes.Path
 import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
@@ -192,6 +192,11 @@ trait AmlEmittersHelper extends DialectEmitterHelper {
         val mappables = unionMapping.objectRange() map { rangeId =>
           findNodeMappingById(rangeId.value())._2
         }
+        mappables.collect { case nodeMapping: NodeMapping => nodeMapping }
+      case (_, conditionalMapping: ConditionalNodeMapping) =>
+        val mappables = Seq(conditionalMapping.ifMapping.value(),
+                            conditionalMapping.thenMapping.value(),
+                            conditionalMapping.thenMapping.value()).map(id => findNodeMappingById(id)._2)
         mappables.collect { case nodeMapping: NodeMapping => nodeMapping }
       case _ => Nil
     }

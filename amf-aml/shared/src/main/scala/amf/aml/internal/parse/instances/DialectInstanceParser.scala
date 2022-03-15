@@ -185,9 +185,8 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
         case Some(nodeMapping) =>
           val path = dialectInstance.id + "#"
           val additionalKey =
-            if (documents.keyProperty().value()) {
-              Some(ctx.dialect.name().value())
-            } else None
+            if (documents.keyProperty().value()) Some(ctx.dialect.name().value())
+            else None
           InstanceNodeParser(root).parse(path,
                                          encodedElementDefaultId(dialectInstance),
                                          map,

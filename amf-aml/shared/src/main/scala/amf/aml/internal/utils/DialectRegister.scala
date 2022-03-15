@@ -39,7 +39,7 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
     val finder           = DefaultNodeMappableFinder(existingDialects)
     val profile          = new AMFDialectValidations(dialect)(finder).profile()
     val newConfig = configuration
-      .withPlugins(plugins)
+      .withPlugins(plugins(profile))
       .withValidationProfile(profile)
       .withEntities(domainModels)
       .withExtensions(dialect)
@@ -59,8 +59,9 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
     config.withValidationProfile(nextProfile)
   }
 
-  private lazy val plugins: List[AMFPlugin[_]] = {
-    List(new AMLDialectInstanceParsingPlugin(dialect), new AMLDialectInstanceRenderingPlugin(dialect))
+  private def plugins(constraints: ValidationProfile): List[AMFPlugin[_]] = {
+    List(new AMLDialectInstanceParsingPlugin(dialect, Some(constraints)),
+         new AMLDialectInstanceRenderingPlugin(dialect))
   }
 
   private[amf] def resolveDialect(cloned: Dialect) = {

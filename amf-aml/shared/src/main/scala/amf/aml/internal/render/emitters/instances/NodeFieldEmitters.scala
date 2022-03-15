@@ -184,18 +184,25 @@ case class NodeFieldEmitters(node: DomainElement,
         nodeMapping
           .propertiesMapping()
           .find(_.nodePropertyMapping().value() == iri)
-      case unionMapping: UnionNodeMapping =>
-        val rangeIds: Seq[String] = unionMapping.objectRange().map(_.value())
-        val nodeMappingsInRange = rangeIds.map { id: String =>
-          findNodeMappingById(id) match {
-            case (_, nodeMapping: NodeMapping) => Some(nodeMapping)
-            case _                             => None
-          }
-        } collect { case Some(nodeMapping: NodeMapping) => nodeMapping }
-        // we need to do this because the same property (with different ranges) might be defined in multiple node mappings
-        //        val nodeMetaTypes = node.meta.typeIri.map(_ -> true).toMap
-        //        nodeMappingsInRange = nodeMappingsInRange.filter { nodeMapping => nodeMetaTypes.contains(nodeMapping.id) }
-        nodeMappingsInRange.flatMap(_.propertiesMapping()).find(_.nodePropertyMapping().value() == iri)
+      case unionMapping: UnionNodeMapping => checkRangeIds(unionMapping.objectRange().map(_.value()), iri)
+      case conditionalMapping: ConditionalNodeMapping =>
+        checkRangeIds(Seq(conditionalMapping.ifMapping.value(),
+                          conditionalMapping.thenMapping.value(),
+                          conditionalMapping.elseMapping.value()),
+                      iri)
+
     }
+  }
+  private def checkRangeIds(rangeIds: Seq[String], iri: String): Option[PropertyMapping] = {
+    val nodeMappingsInRange = rangeIds.map { id: String =>
+      findNodeMappingById(id) match {
+        case (_, nodeMapping: NodeMapping) => Some(nodeMapping)
+        case _                             => None
+      }
+    } collect { case Some(nodeMapping: NodeMapping) => nodeMapping }
+    // we need to do this because the same property (with different ranges) might be defined in multiple node mappings
+    //        val nodeMetaTypes = node.meta.typeIri.map(_ -> true).toMap
+    //        nodeMappingsInRange = nodeMappingsInRange.filter { nodeMapping => nodeMetaTypes.contains(nodeMapping.id) }
+    nodeMappingsInRange.flatMap(_.propertiesMapping()).find(_.nodePropertyMapping().value() == iri)
   }
 }

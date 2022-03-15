@@ -425,6 +425,15 @@ trait DialectsParsingTest extends DialectTests {
           directory = s"$basePath/default-facet")
   }
 
+  multiGoldenTest("Conditional facet in dialect", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/conditional"
+    )
+  }
   multiGoldenTest("Additional properties facet parsing", "dialect.%s") { config =>
     cycle(
         "dialect.yaml",

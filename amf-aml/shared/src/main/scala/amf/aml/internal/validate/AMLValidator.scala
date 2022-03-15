@@ -43,13 +43,9 @@ object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstrai
           computeValidationProfilesOfDependencies(dialectInstance, knownDialects, configuration.constraints)
         val validator        = new CustomShaclValidator(Map.empty, instanceProfile.messageStyle)
         val finalValidations = addValidations(validations, validationsFromDeps)
-        for {
-          shaclReport <- validator.validate(resolvedModel, finalValidations.effective.values.toSeq)
-        } yield {
-          val report = adaptToAmfReport(baseUnit, instanceProfile, shaclReport, validations)
-          ValidationResult(resolvedModel, report)
-        }
-
+        val shaclLikeReport  = validator.validate(resolvedModel, finalValidations.effective.values.toSeq)
+        val report           = adaptToAmfReport(baseUnit, instanceProfile, shaclLikeReport, validations)
+        Future.successful(ValidationResult(resolvedModel, report))
       case _ =>
         notifyValidationSkipped(options)
         Future.successful(ValidationResult(baseUnit, AMFValidationReport.empty(baseUnit.id, UnknownProfile)))

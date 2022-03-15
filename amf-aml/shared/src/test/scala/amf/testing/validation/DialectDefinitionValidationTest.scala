@@ -148,6 +148,15 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
     validate("../../../dialects/default-facet/dialect.yaml", None)
   }
 
+  test("Dialect with if/then/else facets") {
+    validate("../../../dialects/conditional/dialect.yaml", None)
+  }
+
+  test("Dialect with if/then/else facet that point to nowhere") {
+    validate("../../../dialects/conditional/dialect-with-invalid-references.yaml",
+             Some("../../dialects/conditional/dialect-with-invalid-references.report.json"))
+  }
+
   test("Dialect with NodeMapping with additional properties") {
     validate("../../../dialects/additional-properties/dialect.yaml", None)
   }
