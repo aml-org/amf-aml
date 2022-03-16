@@ -1,6 +1,5 @@
 package amf.aml.internal.transform.pipelines
 
-import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.aml.internal.transform.steps.{DialectNodeExtensionStage, DialectReferencesResolutionStage}
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
 import amf.core.internal.transform.stages.SourceInformationStage
