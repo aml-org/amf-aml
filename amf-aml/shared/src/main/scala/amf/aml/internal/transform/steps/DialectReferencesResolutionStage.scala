@@ -162,14 +162,11 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
 
   private def linkExtendedNodes(alreadyResolved: mutable.Map[String, NodeMappable]): Unit = {
     alreadyResolved.values.foreach { nodeMappable =>
-      nodeMappable.extend.headOption match {
-        case Some(extended: NodeMappable)
-            if extended.linkTarget.isDefined && alreadyResolved.contains(extended.linkTarget.get.id) =>
-          val found = alreadyResolved(extended.linkTarget.get.id)
-          nodeMappable.setArrayWithoutId(NodeMappingModel.Extends, Seq(found))
-        case _ =>
-        // ignore
+      val extensions = nodeMappable.extend.map {
+        case extended: NodeMappable if extended.isLink && alreadyResolved.contains(extended.linkTarget.get.id) =>
+          alreadyResolved(extended.linkTarget.get.id)
       }
+      nodeMappable.setArrayWithoutId(NodeMappingModel.Extends, extensions)
     }
   }
 
