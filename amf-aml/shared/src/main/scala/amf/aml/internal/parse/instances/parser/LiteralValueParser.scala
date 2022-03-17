@@ -1,10 +1,15 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping, PropertyMapping}
-import amf.aml.internal.parse.instances.DialectInstanceContext
-import amf.aml.internal.validate.DialectValidations.DialectError
+import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping}
+import amf.aml.internal.validate.DialectValidations.{DialectError, InconsistentPropertyRangeValueSpecification}
+import amf.core.client.common.position.Range
+import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.parser.domain.Annotations
+import amf.core.internal.plugins.syntax.{SYamlBasedErrorHandler, SyamlAMFErrorHandler}
+import amf.core.internal.utils.AmfStrings
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.{YMapEntry, YNode, YScalar, YType}
 
@@ -28,8 +33,13 @@ object LiteralValueSetter {
 
 object LiteralValueParser {
 
-  def parseLiteralValue(value: YNode, property: PropertyLikeMapping[_], node: DialectDomainElement)(
-      implicit ctx: DialectInstanceContext): Option[_] = {
+  def parseLiteralValue(value: YNode, property: PropertyLikeMapping[_], element: DialectDomainElement)(
+      implicit eh: AMFErrorHandler): Option[_] = {
+    parseLiteralValue(value, property, element.id, Annotations(value))(new SyamlAMFErrorHandler(eh))
+  }
+
+  def parseLiteralValue(value: YNode, property: PropertyLikeMapping[_], nodeId: String, annotations: Annotations)(
+      implicit eh: SyamlAMFErrorHandler): Option[_] = {
 
     value.tagType match {
       case YType.Bool
@@ -38,11 +48,11 @@ object LiteralValueParser {
             .value() == DataType.Any =>
         Some(value.as[Boolean])
       case YType.Bool =>
-        ctx.inconsistentPropertyRangeValueViolation(node.id,
-                                                    property,
-                                                    property.literalRange().value(),
-                                                    DataType.Boolean,
-                                                    value)
+        inconsistentPropertyRangeValueViolation(nodeId,
+                                                property,
+                                                property.literalRange().value(),
+                                                DataType.Boolean,
+                                                annotations)(eh)
         None
       case YType.Int
           if property.literalRange().value() == DataType.Integer || property
@@ -54,11 +64,11 @@ object LiteralValueParser {
             property.literalRange().value() == DataType.Double =>
         Some(value.as[Double])
       case YType.Int =>
-        ctx.inconsistentPropertyRangeValueViolation(node.id,
-                                                    property,
-                                                    property.literalRange().value(),
-                                                    DataType.Integer,
-                                                    value)
+        inconsistentPropertyRangeValueViolation(nodeId,
+                                                property,
+                                                property.literalRange().value(),
+                                                DataType.Integer,
+                                                annotations)(eh)
         None
       case YType.Str
           if property.literalRange().value() == DataType.String || property.literalRange().value() == DataType.Any =>
@@ -75,11 +85,11 @@ object LiteralValueParser {
       case YType.Str if property.literalRange().value() == (Namespace.Shapes + "guid").iri() =>
         Some(value.as[YScalar].text)
       case YType.Str =>
-        ctx.inconsistentPropertyRangeValueViolation(node.id,
-                                                    property,
-                                                    property.literalRange().value(),
-                                                    DataType.String,
-                                                    value)
+        inconsistentPropertyRangeValueViolation(nodeId,
+                                                property,
+                                                property.literalRange().value(),
+                                                DataType.String,
+                                                annotations)(eh)
         None
       case YType.Float
           if property.literalRange().value() == DataType.Float ||
@@ -88,11 +98,11 @@ object LiteralValueParser {
             property.literalRange().value() == DataType.Any =>
         Some(value.as[Double])
       case YType.Float =>
-        ctx.inconsistentPropertyRangeValueViolation(node.id,
-                                                    property,
-                                                    property.literalRange().value(),
-                                                    DataType.Float,
-                                                    value)
+        inconsistentPropertyRangeValueViolation(nodeId,
+                                                property,
+                                                property.literalRange().value(),
+                                                DataType.Float,
+                                                annotations)(eh)
         None
 
       case YType.Timestamp
@@ -106,18 +116,34 @@ object LiteralValueParser {
         Some(value.as[YScalar].text)
 
       case YType.Timestamp =>
-        ctx.inconsistentPropertyRangeValueViolation(node.id,
-                                                    property,
-                                                    property.literalRange().value(),
-                                                    DataType.DateTime,
-                                                    value)
+        inconsistentPropertyRangeValueViolation(nodeId,
+                                                property,
+                                                property.literalRange().value(),
+                                                DataType.DateTime,
+                                                annotations)(eh)
         Some(value.as[String])
 
       case YType.Null =>
         None
       case _ =>
-        ctx.eh.violation(DialectError, node.id, s"Unsupported scalar type ${value.tagType}", value.location)
+        eh.violation(DialectError, nodeId, s"Unsupported scalar type ${value.tagType}", annotations)
         Some(value.as[String])
     }
+  }
+
+  private def inconsistentPropertyRangeValueViolation(node: String,
+                                                      property: PropertyLikeMapping[_],
+                                                      expected: String,
+                                                      found: String,
+                                                      annotations: Annotations)(eh: SyamlAMFErrorHandler): Unit = {
+    eh.violation(
+        InconsistentPropertyRangeValueSpecification,
+        node,
+        Some(property.nodePropertyMapping().value()),
+        s"Cannot find expected range for property ${property.nodePropertyMapping().value()} (${property.name().value()}). Found '$found', expected '$expected'",
+        Some(LexicalInformation(annotations.lexical())),
+        annotations.location()
+    )
+
   }
 }

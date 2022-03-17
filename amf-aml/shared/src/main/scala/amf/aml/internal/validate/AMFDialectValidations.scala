@@ -1,8 +1,9 @@
 package amf.aml.internal.validate
 
 import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
 import amf.aml.client.scala.model.domain._
-import amf.aml.internal.render.emitters.instances.{AmlEmittersHelper, NodeMappableFinder}
+import amf.aml.internal.render.emitters.instances.{AmlEmittersHelper, DialectIndex, NodeMappableFinder}
 import amf.aml.internal.validate.AMFDialectValidations.staticValidations
 import amf.core.client.common.validation.{ProfileName, SeverityLevels}
 import amf.core.client.scala.model.{DataType, StrField}
@@ -19,8 +20,9 @@ import amf.core.internal.validation.core.{
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinder: NodeMappableFinder)
-    extends AmlEmittersHelper {
+class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinder: NodeMappableFinder) {
+
+  private val index = DialectIndex(dialect, nodeMappableFinder)
 
   def profile(): ValidationProfile = {
     val parsedValidations = validations()
@@ -33,6 +35,10 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
         validations = parsedValidations ++ staticValidations,
         severities = severityMapping
     )
+  }
+
+  def propertyValidations(mapping: NodeMapping): Seq[ValidationSpecification] = {
+    mapping.propertiesMapping().flatMap(emitPropertyValidations(mapping, _))
   }
 
   protected def validations(): Seq[ValidationSpecification] = {
@@ -75,7 +81,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
     val validations: ListBuffer[ValidationSpecification] = ListBuffer.empty
     val range                                            = nodeMapping.objectRange().map(_.value())
     range.foreach { rangeId =>
-      findNodeMappingById(rangeId) match {
+      index.findNodeMappingById(rangeId) match {
         case (_, nodeMapping: NodeMapping) =>
           validations ++= emitEntityValidations(nodeMapping, recursion += nodeMapping.id)
         case _ =>
@@ -85,7 +91,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
     validations.toList
   }
 
-  protected def emitPropertyValidations(node: NodeMappable,
+  protected def emitPropertyValidations(node: AnyNodeMappable,
                                         prop: PropertyLikeMapping[_],
                                         propertyName: Option[StrField] = None,
                                         targetClass: Option[String] = None): List[ValidationSpecification] = {
@@ -287,7 +293,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
       val effectiveRange: Set[String] = prop
         .objectRange()
         .flatMap({ rangeId =>
-          findNodeMappingById(rangeId.value()) match {
+          index.findNodeMappingById(rangeId.value()) match {
             case (_, nodeMapping: NodeMapping)       => Seq(nodeMapping.id)
             case (_, unionMapping: UnionNodeMapping) => unionMapping.objectRange().map(_.value())
             case _                                   => Seq.empty
@@ -315,7 +321,7 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
     validations.toList
   }
 
-  private def validationId(dialectNode: NodeMappable, propName: String, constraint: String): String =
+  private def validationId(dialectNode: AnyNodeMappable, propName: String, constraint: String): String =
     Option(dialectNode.id) match {
       case Some(id) => s"${id}_${propName.urlComponentEncoded}_${constraint}_validation"
       case None     => throw new Exception("Cannot generate validation for dialect node without ID")

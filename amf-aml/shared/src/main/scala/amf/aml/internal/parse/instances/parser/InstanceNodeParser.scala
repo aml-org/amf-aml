@@ -4,7 +4,7 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
 import amf.aml.internal.parse.instances.ClosedInstanceNode.checkNode
-import amf.aml.internal.parse.instances.DialectInstanceParser.{computeParsingScheme, emptyElement, typesFrom}
+import amf.aml.internal.parse.instances.DialectInstanceParser.{computeParsingScheme, emptyElement, encodedElementDefaultId, typesFrom}
 import amf.aml.internal.parse.instances.InstanceNodeIdHandling.generateNodeId
 import amf.aml.internal.parse.instances.parser.IncludeNodeParser.resolveLink
 import amf.aml.internal.parse.instances.{DialectInstanceContext, NodeMappableHelper}
@@ -16,6 +16,7 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.client.scala.validation.AMFValidationResult
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps}
+import amf.core.internal.utils.AmfStrings
 import amf.validation.internal.shacl.custom.CustomShaclValidator
 import org.yaml.model._
 
@@ -178,12 +179,10 @@ case class InstanceNodeParser(root: Root)(implicit ctx: DialectInstanceContext) 
                                    givenAnnotations: Option[Annotations],
                                    additionalKey: Option[String],
                                    mapping: NodeMapping)(implicit ctx: DialectInstanceContext) = {
-    val node: DialectDomainElement =
-      DialectDomainElement(givenAnnotations.getOrElse(Annotations(ast))).withDefinedBy(mapping)
-    val finalId =
-      generateNodeId(node, astMap, Seq(defaultId), defaultId, mapping, additionalProperties, rootNode, root)
+    val annotations = givenAnnotations.getOrElse(Annotations(ast))
+    val node: DialectDomainElement = DialectDomainElement(defaultId.urlDecoded, mapping, annotations)
+    val finalId = generateNodeId(node, astMap, Seq(defaultId), defaultId, mapping, additionalProperties, rootNode, root)
     node.withId(finalId)
-    assignDefinedByAndTypes(mapping, node)
     parseAnnotations(astMap, node, ctx.declarations)
     mapping.propertiesMapping().foreach { propertyMapping =>
       val propertyName = propertyMapping.name().value()
