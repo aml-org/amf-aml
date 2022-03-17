@@ -13,7 +13,7 @@
       "http://www.w3.org/ns/shacl#resultPath": {
         "@id": "http://a.ml/vocabularies/data#a"
       },
-      "http://www.w3.org/ns/shacl#resultMessage": "Property 'a' minimum inclusive value is 3.0",
+      "http://www.w3.org/ns/shacl#resultMessage": "Property 'a' minimum inclusive value is 3.01",
       "http://www.w3.org/ns/shacl#sourceShape": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/enum-dialect-validation/dialect.yaml#/declarations/MultipleEnums_a_minimum_validation"
       },
@@ -27,7 +27,7 @@
         "http://a.ml/vocabularies/amf/parser#end": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
           "http://a.ml/vocabularies/amf/parser#line": 16,
-          "http://a.ml/vocabularies/amf/parser#column": 13
+          "http://a.ml/vocabularies/amf/parser#column": 15
         }
       }
     },
@@ -42,7 +42,7 @@
       "http://www.w3.org/ns/shacl#resultPath": {
         "@id": "http://a.ml/vocabularies/data#a"
       },
-      "http://www.w3.org/ns/shacl#resultMessage": "Property 'a' maximum inclusive value is 8.0",
+      "http://www.w3.org/ns/shacl#resultMessage": "Property 'a' maximum inclusive value is 8.01",
       "http://www.w3.org/ns/shacl#sourceShape": {
         "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/enum-dialect-validation/dialect.yaml#/declarations/MultipleEnums_a_maximum_validation"
       },
@@ -56,7 +56,7 @@
         "http://a.ml/vocabularies/amf/parser#end": {
           "@type": "http://a.ml/vocabularies/amf/parser#Location",
           "http://a.ml/vocabularies/amf/parser#line": 18,
-          "http://a.ml/vocabularies/amf/parser#column": 14
+          "http://a.ml/vocabularies/amf/parser#column": 16
         }
       }
     }

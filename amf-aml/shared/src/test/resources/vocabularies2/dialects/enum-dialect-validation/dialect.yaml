@@ -9,11 +9,11 @@ nodeMappings:
   MultipleEnums:
     mapping:
       a:
-        range: integer
-        minimum: 3
-        maximum: 8
+        range: number
+        minimum: 3.01
+        maximum: 8.01
         enum:
-          - 2
-          - 7
-          - 10
+          - 2.0
+          - 7.0
+          - 10.0
 
