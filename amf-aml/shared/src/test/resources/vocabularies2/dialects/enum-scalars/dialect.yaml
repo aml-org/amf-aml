@@ -1,0 +1,17 @@
+#%Dialect 1.0
+dialect: SemEx
+version: "1.0"
+documents:
+  root:
+    encodes: MultipleEnums
+
+nodeMappings:
+  MultipleEnums:
+    mapping:
+      a:
+        range: any
+        enum:
+          - "a"
+          - true
+          - 5
+          - 18.623

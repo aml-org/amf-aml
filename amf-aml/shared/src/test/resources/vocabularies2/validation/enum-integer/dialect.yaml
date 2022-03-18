@@ -1,0 +1,18 @@
+#%Dialect 1.0
+dialect: IntegerEnums
+version: "1.0"
+documents:
+  root:
+    encodes: MultipleEnums
+
+nodeMappings:
+  MultipleEnums:
+    mapping:
+      validEnum:
+        range: integer
+        enum:
+          - 5
+      invalidEnum:
+        range: integer
+        enum:
+          - 5

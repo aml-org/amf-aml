@@ -1,0 +1,402 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "meta:Dialect",
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "core:name": [
+      {
+        "@value": "SemEx"
+      }
+    ],
+    "core:version": [
+      {
+        "@value": "1.0"
+      }
+    ],
+    "meta:documents": [
+      {
+        "@id": "/documents",
+        "@type": [
+          "meta:DocumentsModel",
+          "doc:DomainElement"
+        ],
+        "meta:rootDocument": [
+          {
+            "@id": "#/documents/root",
+            "@type": [
+              "meta:DocumentMapping",
+              "doc:DomainElement"
+            ],
+            "core:name": [
+              {
+                "@value": "SemEx 1.0"
+              }
+            ],
+            "meta:encodedNode": [
+              {
+                "@id": "#/declarations/MultipleEnums"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/documents/root/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/documents/root/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/enum-scalars/dialect.yaml#/documents/root"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(5,7)-(8,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/documents/root/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "meta:encodedNode"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(6,4)-(8,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "/documents#/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "/documents#/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/enum-scalars/dialect.yaml/documents"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(5,0)-(8,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "/documents#/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "meta:rootDocument"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(5,2)-(8,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:location": [
+      {
+        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/enum-scalars/dialect.yaml"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#/BaseUnitProcessingData",
+        "@type": [
+          "doc:BaseUnitProcessingData"
+        ],
+        "doc:transformed": [
+          {
+            "@value": false
+          }
+        ],
+        "doc:sourceSpec": [
+          {
+            "@value": "AML 1.0"
+          }
+        ]
+      }
+    ],
+    "sourcemaps:sources": [
+      {
+        "@id": "#/source-map",
+        "@type": [
+          "sourcemaps:SourceMap"
+        ],
+        "sourcemaps:lexical": [
+          {
+            "@id": "#/source-map/lexical/element_3",
+            "sourcemaps:element": [
+              {
+                "@value": "core:version"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(3,0)-(4,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_1",
+            "sourcemaps:element": [
+              {
+                "@value": "core:name"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(2,0)-(3,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_0",
+            "sourcemaps:element": [
+              {
+                "@value": "meta:documents"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(4,0)-(8,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_2",
+            "sourcemaps:element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/enum-scalars/dialect.yaml"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(2,0)-(18,0)]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declarations/MultipleEnums",
+        "@type": [
+          "meta:NodeMapping",
+          "shacl:Shape",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "MultipleEnums"
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declarations/MultipleEnums/property/a",
+            "@type": [
+              "meta:NodePropertyMapping",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#a"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "a"
+              }
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#anyType"
+              }
+            ],
+            "shacl:in": [
+              {
+                "@id": "#/declarations/MultipleEnums/property/a/list",
+                "@type": "rdfs:Seq",
+                "rdfs:_1": [
+                  {
+                    "@value": "a",
+                    "@type": "xsd:string"
+                  }
+                ],
+                "rdfs:_2": [
+                  {
+                    "@value": "true",
+                    "@type": "xsd:boolean"
+                  }
+                ],
+                "rdfs:_3": [
+                  {
+                    "@value": "5",
+                    "@type": "xsd:integer"
+                  }
+                ],
+                "rdfs:_4": [
+                  {
+                    "@value": "18.623",
+                    "@type": "xsd:double"
+                  }
+                ]
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/MultipleEnums/property/a/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/MultipleEnums/property/a/source-map/lexical/element_3",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:datatype"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(12,8)-(13,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/MultipleEnums/property/a/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "core:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(11,6)-(11,7)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/MultipleEnums/property/a/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:in"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(13,8)-(18,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/MultipleEnums/property/a/source-map/lexical/element_2",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/enum-scalars/dialect.yaml#/declarations/MultipleEnums/property/a"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(11,8)-(18,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "#/declarations/MultipleEnums/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "#/declarations/MultipleEnums/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(9,2)-(9,15)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/MultipleEnums/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "shacl:property"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(10,4)-(18,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/MultipleEnums/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/enum-scalars/dialect.yaml#/declarations/MultipleEnums"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(9,2)-(18,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/enum-scalars/dialect.yaml",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "core": "http://a.ml/vocabularies/core#",
+      "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
+      "meta": "http://a.ml/vocabularies/meta#",
+      "xsd": "http://www.w3.org/2001/XMLSchema#"
+    }
+  }
+]

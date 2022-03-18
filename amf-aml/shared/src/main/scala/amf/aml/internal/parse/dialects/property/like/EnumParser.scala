@@ -7,7 +7,7 @@ import amf.aml.internal.metamodel.domain.PropertyLikeMappingModel
 import amf.aml.client.scala.model.domain.PropertyLikeMapping
 import amf.aml.internal.parse.dialects.DialectContext
 import amf.aml.internal.validate.DialectValidations.DialectError
-import org.yaml.model.{YMap, YScalar, YSequence}
+import org.yaml.model.{YMap, YScalar, YSequence, YType}
 
 case class EnumParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(
     implicit ctx: DialectContext) {
@@ -17,8 +17,11 @@ case class EnumParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: P
         entry => {
           val seq = entry.value.as[YSequence]
           val values = seq.nodes.flatMap { node =>
-            node.value match {
-              case scalar: YScalar => Some(ScalarNode(node).string())
+            node.tagType match {
+              case YType.Int   => Some(ScalarNode(node).integer())
+              case YType.Float => Some(ScalarNode(node).double())
+              case YType.Str   => Some(ScalarNode(node).string())
+              case YType.Bool  => Some(ScalarNode(node).boolean())
               case _ =>
                 ctx.eh.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
                 None

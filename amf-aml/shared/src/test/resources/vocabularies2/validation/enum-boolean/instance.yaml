@@ -1,0 +1,3 @@
+#%BooleanEnums 1.0
+validEnum: true
+invalidEnum: false

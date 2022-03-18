@@ -17,6 +17,7 @@ import amf.aml.client.scala.model.domain.{ConditionalNodeMapping, NodeMappable, 
 import org.yaml.model.YDocument.EntryBuilder
 import amf.core.internal.utils.Regexes.Path
 import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
+import amf.aml.internal.render.emitters.instances.DialectIndex.NodeMappingId
 import org.mulesoft.common.collections.FilterType
 import org.mulesoft.common.core.CachedFunction
 import org.mulesoft.common.functional.MonadInstances.identityMonad
@@ -171,62 +172,11 @@ trait AmlEmittersHelper extends DialectEmitterHelper {
   }
 
   type NodeMappingId = String
-  val nodeMappingCache: mutable.HashMap[NodeMappingId, (Dialect, NodeMappable)] = mutable.HashMap.empty
+  private val index = DialectIndex(dialect, nodeMappableFinder)
 
-  def findNodeMappingById(nodeMappingId: NodeMappingId): (Dialect, NodeMappable) = {
-    nodeMappingCache
-      .get(nodeMappingId)
-      .orElse(maybeFindNodeMappingById(nodeMappingId)) match {
-      case Some(result) =>
-        nodeMappingCache(nodeMappingId) = result
-        result
-      case None =>
-        throw new Exception(s"Cannot find node mapping $nodeMappingId")
-    }
-  }
-
-  protected def findAllNodeMappings(mappableId: String): Seq[NodeMapping] = {
-    findNodeMappingById(mappableId) match {
-      case (_, nodeMapping: NodeMapping) => Seq(nodeMapping)
-      case (_, unionMapping: UnionNodeMapping) =>
-        val mappables = unionMapping.objectRange() map { rangeId =>
-          findNodeMappingById(rangeId.value())._2
-        }
-        mappables.collect { case nodeMapping: NodeMapping => nodeMapping }
-      case (_, conditionalMapping: ConditionalNodeMapping) =>
-        val mappables = Seq(conditionalMapping.ifMapping.value(),
-                            conditionalMapping.thenMapping.value(),
-                            conditionalMapping.thenMapping.value()).map(id => findNodeMappingById(id)._2)
-        mappables.collect { case nodeMapping: NodeMapping => nodeMapping }
-      case _ => Nil
-    }
-  }
-
-  def maybeFindNodeMappingById(nodeMappingId: NodeMappingId): Option[(Dialect, NodeMappable)] = {
-    val inDialectMapping = dialect.declares
-      .find { element =>
-        element.id == nodeMappingId
-      }
-      .map { nodeMapping =>
-        (dialect, nodeMapping)
-      }
-      .asInstanceOf[Option[(Dialect, NodeMappable)]]
-      .orElse {
-        dialect.references
-          .collect {
-            case lib: DialectLibrary =>
-              lib.declares.find(_.id == nodeMappingId)
-          }
-          .collectFirst {
-            case Some(mapping: NodeMappable) =>
-              (dialect, mapping)
-          }
-      }
-    inDialectMapping orElse {
-      findNodeInRegistry(nodeMappingId)
-    }
-  }
-
-  def findNodeInRegistry(nodeMappingId: String): Option[(Dialect, NodeMappable)] =
-    nodeMappableFinder.findNode(nodeMappingId)
+  def findAllNodeMappings(mappableId: String): Seq[NodeMapping] = index.findAllNodeMappings(mappableId)
+  def findNodeMappingById(nodeMappingId: NodeMappingId): (Dialect, AnyNodeMappable) =
+    index.findNodeMappingById(nodeMappingId)
+  def maybeFindNodeMappingById(nodeMappingId: NodeMappingId): Option[(Dialect, AnyNodeMappable)] =
+    index.maybeFindNodeMappingById(nodeMappingId)
 }

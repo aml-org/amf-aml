@@ -18,6 +18,14 @@ trait DialectWrapper {
     }
   }
 
+  def extractLiterals(node: DialectDomainElement, property: String): Seq[Any] = {
+    node.definedBy
+      .propertiesMapping()
+      .find(_.name().value() == property)
+      .map(p => node.literalProperties(p.toField()).map(_.toString))
+      .getOrElse(Nil)
+  }
+
   def extractString(node: DialectDomainElement, property: String): Option[String] = {
     node.definedBy
       .propertiesMapping()
@@ -171,7 +179,7 @@ object ParsedPropertyConstraint extends DialectWrapper {
       minExclusive = extractString(node, "minExclusive"),
       maxInclusive = extractString(node, "maxInclusive"),
       minInclusive = extractString(node, "minInclusive"),
-      in = extractStrings(node, "in"),
+      in = extractLiterals(node, "in").toSet,
       node = nestedNode.headOption.map(_.id),
       equalToProperty = extractString(node, "equalsToProperty").map(s => expand(s, prefixes)),
       disjointWithProperty = extractString(node, "disjointWithProperty").map(s => expand(s, prefixes)),
