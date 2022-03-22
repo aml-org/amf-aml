@@ -1,16 +1,15 @@
 package amf.aml.client.scala.model.domain
 
-import amf.core.client.scala.model.{BoolField, StrField}
-import amf.core.client.scala.model.domain.{DataNode, DomainElement, Linkable}
-import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.core.internal.utils._
 import amf.aml.internal.metamodel.domain.NodeMappingModel
 import amf.aml.internal.metamodel.domain.NodeMappingModel._
-import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.model.{BoolField, StrField}
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils._
 import org.yaml.model.YMap
 
 class NodeMapping(override val fields: Fields, override val annotations: Annotations)
-    extends DomainElement
+    extends AnyMapping(fields)
     with Linkable
     with MergeableMapping
     with NodeMappable[NodeMappingModel.type] {

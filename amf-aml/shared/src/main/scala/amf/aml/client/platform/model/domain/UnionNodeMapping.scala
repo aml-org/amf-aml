@@ -1,15 +1,15 @@
 package amf.aml.client.platform.model.domain
 
-import amf.core.client.platform.model.StrField
+import amf.aml.client.scala.model.domain.{UnionNodeMapping => InternalUnionNodeMapping}
 import amf.aml.internal.convert.VocabulariesClientConverter._
-import amf.core.client.platform.model.domain.{DomainElement, Linkable}
+import amf.core.client.platform.model.StrField
+import amf.core.client.platform.model.domain.Linkable
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
-import amf.aml.client.scala.model.domain.{UnionNodeMapping => InternalUnionNodeMapping}
 
 @JSExportAll
 case class UnionNodeMapping(override private[amf] val _internal: InternalUnionNodeMapping)
-    extends DomainElement
+    extends AnyMapping(_internal)
     with Linkable {
 
   @JSExportTopLevel("UnionNodeMapping")
