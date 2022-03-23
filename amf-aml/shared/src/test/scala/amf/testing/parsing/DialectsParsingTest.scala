@@ -434,6 +434,18 @@ trait DialectsParsingTest extends DialectTests {
         directory = s"$basePath/conditional"
     )
   }
+
+//  multiSourceTest("Render conditional facet from JSON-LD", "dialect.%s") { config =>
+//    cycle(config.source,
+//          "dialect.cycled.jsonld.yaml",
+//          mediaType = Some(Mimes.`application/yaml`),
+//          directory = s"$basePath/conditional")
+//  }
+
+  test("Render conditional facet from YAML") {
+    cycle("dialect.yaml", "dialect.cycled.yaml", Some(Mimes.`application/yaml`), directory = s"$basePath/conditional")
+  }
+
   multiGoldenTest("Additional properties facet parsing", "dialect.%s") { config =>
     cycle(
         "dialect.yaml",
@@ -473,5 +485,68 @@ trait DialectsParsingTest extends DialectTests {
           "dialect.cycled.yaml",
           mediaType = Some(Mimes.`application/yaml`),
           directory = s"$basePath/enum-scalars")
+  }
+
+  multiGoldenTest("AllOf facet parsing", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/allOf"
+    )
+  }
+
+//  multiSourceTest("AllOf facet from JSON-LD", "dialect.%s") { config =>
+//    cycle(config.source,
+//          "dialect.cycled.jsonld.yaml",
+//          mediaType = Some(Mimes.`application/yaml`),
+//          directory = s"$basePath/allOf")
+//  }
+
+  test("Render allOf facet from YAML") {
+    cycle("dialect.yaml", "dialect.cycled.yaml", Some(Mimes.`application/yaml`), directory = s"$basePath/allOf")
+  }
+
+  multiGoldenTest("OneOf facet parsing", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/oneOf"
+    )
+  }
+
+//  multiSourceTest("OneOf facet from JSON-LD", "dialect.%s") { config =>
+//    cycle(config.source,
+//          "dialect.cycled.jsonld.yaml",
+//          mediaType = Some(Mimes.`application/yaml`),
+//          directory = s"$basePath/oneOf")
+//  }
+
+  test("Render oneOf facet from YAML") {
+    cycle("dialect.yaml", "dialect.cycled.yaml", Some(Mimes.`application/yaml`), directory = s"$basePath/oneOf")
+  }
+
+  multiGoldenTest("Components facet parsing", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/components"
+    )
+  }
+
+//  multiSourceTest("Components facet from JSON-LD", "dialect.%s") { config =>
+//    cycle(config.source,
+//          "dialect.cycled.jsonld.yaml",
+//          mediaType = Some(Mimes.`application/yaml`),
+//          directory = s"$basePath/components")
+//  }
+
+  test("Render components facet from YAML") {
+    cycle("dialect.yaml", "dialect.cycled.yaml", Some(Mimes.`application/yaml`), directory = s"$basePath/components")
   }
 }

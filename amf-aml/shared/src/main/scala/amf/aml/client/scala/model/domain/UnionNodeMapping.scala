@@ -1,13 +1,12 @@
 package amf.aml.client.scala.model.domain
-import amf.core.client.scala.model.domain.{DataNode, DomainElement, Linkable}
+import amf.aml.internal.metamodel.domain.UnionNodeMappingModel
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
 import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils._
-import amf.aml.internal.metamodel.domain.UnionNodeMappingModel
-import amf.core.internal.metamodel.domain.ShapeModel
 import org.yaml.model.YMap
 
 case class UnionNodeMapping(fields: Fields, annotations: Annotations)
-    extends DomainElement
+    extends AnyMapping(fields)
     with Linkable
     with MergeableMapping
     with NodeWithDiscriminator[UnionNodeMappingModel.type]
