@@ -5,8 +5,6 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Array, Iri}
 import amf.core.internal.metamodel.domain._
 
-import scala.::
-
 trait AnyMappingModel
     extends DomainElementModel
     with LinkableElementModel
@@ -34,7 +32,7 @@ trait AnyMappingModel
   )
 
   override val `type`
-    : List[ValueType] = Namespace.Meta + "AndMapping" :: Namespace.Shacl + "Shape" :: DomainElementModel.`type`
+    : List[ValueType] = Namespace.Meta + "AnyMapping" :: Namespace.Shacl + "Shape" :: DomainElementModel.`type`
 
 }
 

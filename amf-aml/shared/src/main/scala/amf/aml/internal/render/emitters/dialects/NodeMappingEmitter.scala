@@ -2,7 +2,7 @@ package amf.aml.internal.render.emitters.dialects
 
 import amf.aml.client.scala.model.document.{Dialect, DialectFragment}
 import amf.aml.client.scala.model.domain._
-import amf.aml.internal.metamodel.domain.{ConditionalNodeMappingModel, NodeMappableModel, UnionNodeMappingModel}
+import amf.aml.internal.metamodel.domain.{NodeMappableModel, UnionNodeMappingModel}
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
@@ -46,6 +46,7 @@ case class NodeMappingEmitter(
     b.entry(
         nodeMapping.name.value(),
         _.obj { b =>
+          emitAnyNode(b, nodeMapping)
           aliasFor(nodeMapping.nodetypeMapping.value()) match {
             case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
             case None                 => nodeMapping.nodetypeMapping
@@ -94,6 +95,7 @@ case class NodeMappingEmitter(
     b.entry(
         unionNodeMapping.name.value(),
         _.obj { b =>
+          emitAnyNode(b, unionNodeMapping)
           var emitters: Seq[EntryEmitter] = Seq()
           val nodes                       = unionNodeMapping.objectRange()
           if (nodes.nonEmpty) {
@@ -127,6 +129,7 @@ case class NodeMappingEmitter(
     b.entry(
         conditionalNodeMapping.name.value(),
         _.obj { b =>
+          emitAnyNode(b, conditionalNodeMapping)
           b.entry(
               "conditional",
               _.obj {
@@ -141,6 +144,30 @@ case class NodeMappingEmitter(
           )
         }
     )
+  }
+
+  def emitAnyNode(b: EntryBuilder, anyMapping: AnyMapping): Unit = {
+    if (anyMapping.and.nonEmpty) {
+      val members = anyMapping.and.flatMap(member => aliasFor(member.value()))
+      b.entry(
+          "allOf",
+          _.list(b => members.foreach(member => ScalarEmitter(AmfScalar(member)).emit(b)))
+      )
+    }
+    if (anyMapping.or.nonEmpty) {
+      val members = anyMapping.or.flatMap(member => aliasFor(member.value()))
+      b.entry(
+          "oneOf",
+          _.list(b => members.foreach(member => ScalarEmitter(AmfScalar(member)).emit(b)))
+      )
+    }
+    if (anyMapping.components.nonEmpty) {
+      val members = anyMapping.components.flatMap(component => aliasFor(component.value()))
+      b.entry(
+          "components",
+          _.list(b => members.foreach(component => ScalarEmitter(AmfScalar(component)).emit(b)))
+      )
+    }
   }
 
   def isFragment(elem: DomainElement, dialect: Dialect): Boolean = {

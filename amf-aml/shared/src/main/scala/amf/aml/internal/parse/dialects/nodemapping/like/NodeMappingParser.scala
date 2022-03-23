@@ -1,4 +1,5 @@
 package amf.aml.internal.parse.dialects.nodemapping.like
+
 import amf.aml.client.scala.model.domain.{NodeMapping, PropertyMapping}
 import amf.aml.internal.metamodel.domain.{MergePolicies, NodeMappingModel, PropertyMappingModel}
 import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
@@ -30,13 +31,17 @@ trait DefaultFacetParsing {
   }
 }
 
-class NodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikeParserInterface with DefaultFacetParsing {
+class NodeMappingParser(implicit ctx: DialectContext)
+    extends NodeMappingLikeParserInterface
+    with DefaultFacetParsing
+    with AnyMappingParser {
 
   override def parse(map: YMap, adopt: DomainElement => Any, isFragment: Boolean): NodeMapping = {
 
     val nodeMapping = NodeMapping(map)
-
     adopt(nodeMapping)
+
+    super.parse(map, nodeMapping)
 
     if (!isFragment) ctx.closedNode("nodeMapping", nodeMapping.id, map)
 

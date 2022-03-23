@@ -1,0 +1,32 @@
+#%Dialect 1.0
+dialect: Mapping AllOf
+version: "1.0"
+documents:
+  root:
+    encodes: Root
+nodeMappings:
+  Root:
+    components:
+      - Member1
+      - Member2
+    mapping:
+      m11:
+        range: string
+      m12:
+        range: string
+      m21:
+        range: string
+      m22:
+        range: string
+  Member1:
+    mapping:
+      m11:
+        range: string
+      m12:
+        range: string
+  Member2:
+    mapping:
+      m21:
+        range: string
+      m22:
+        range: string

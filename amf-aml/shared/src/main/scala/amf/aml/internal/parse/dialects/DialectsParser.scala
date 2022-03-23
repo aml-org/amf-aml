@@ -119,12 +119,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
     val declarables = ctx.declarations.declarables()
     declarables.foreach {
-      case unionNodeMapping: UnionNodeMapping             => checkNodeMappableReferences(unionNodeMapping)
-      case conditionalNodeMapping: ConditionalNodeMapping => checkNodeMappableReferences(conditionalNodeMapping)
-      case nodeMapping: Member =>
-        nodeMapping.propertiesMapping().foreach { propertyMapping =>
-          checkNodeMappableReferences(propertyMapping)
-        }
+      case anyMapping: AnyMapping               => checkAnyNodeMappableReferences(anyMapping)
       case annotationMapping: AnnotationMapping => checkNodeMappableReferences(annotationMapping)
     }
     addDeclarationsToModel(dialect)
@@ -273,6 +268,50 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
+  private def findIdOrError(value: StrField, mappable: AnyMapping): Option[String] = {
+    val name = value.toString
+    // Is necessary this check? It always should be a reference
+    if (name == (Namespace.Meta + "anyNode").iri()) Some(name)
+    else {
+      ctx.declarations.findNodeMapping(name, All) match {
+        case Some(mapping) => Some(mapping.id)
+        case None =>
+          ctx.findInRecursiveUnits(name) match {
+            case Some(recursiveId) => Some(recursiveId)
+            case None =>
+              ctx.missingPropertyRangeViolation(
+                  name,
+                  mappable.id,
+                  value.annotations()
+              )
+              None
+          }
+      }
+    }
+  }
+
+  protected def checkAnyNodeMappableReferences(mappable: AnyMapping): Unit = {
+
+    val allMembers = mappable.and.flatMap(member => findIdOrError(member, mappable))
+    if (allMembers.nonEmpty) mappable.withAnd(allMembers)
+
+    val oneMembers = mappable.or.flatMap(member => findIdOrError(member, mappable))
+    if (oneMembers.nonEmpty) mappable.withOr(oneMembers)
+
+    val components = mappable.components.flatMap(member => findIdOrError(member, mappable))
+    if (components.nonEmpty) mappable.withComponents(components)
+
+    mappable match {
+      case unionNodeMapping: UnionNodeMapping             => checkNodeMappableReferences(unionNodeMapping)
+      case conditionalNodeMapping: ConditionalNodeMapping => checkNodeMappableReferences(conditionalNodeMapping)
+      case nodeMapping: Member =>
+        nodeMapping.propertiesMapping().foreach { propertyMapping =>
+          checkNodeMappableReferences(propertyMapping)
+        }
+    }
+
+  }
+
   /**
     * This method:
     *  1. replaces union & discriminator members references to other node mappings from their name to their id
@@ -333,37 +372,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   // Replaces inner conditional fields references from names to ids
   protected def checkNodeMappableReferences[T <: DomainElement](mappable: ConditionalNodeMapping): Unit = {
-
-    def findIdOrError(value: StrField): Option[String] = {
-      val name = value.toString
-      // Is necessary this check? It always should be a reference
-      if (name == (Namespace.Meta + "anyNode").iri()) Some(name)
-      else {
-        ctx.declarations.findNodeMapping(name, All) match {
-          case Some(mapping) => Some(mapping.id)
-          case None =>
-            ctx.findInRecursiveUnits(name) match {
-              case Some(recursiveId) => Some(recursiveId)
-              case None =>
-                ctx.missingPropertyRangeViolation(
-                    name,
-                    mappable.id,
-                    value.annotations()
-                )
-                None
-            }
-        }
-      }
-    }
-
     if (mappable.ifMapping.nonEmpty)
-      findIdOrError(mappable.fields.field(ConditionalNodeMappingModel.If)).foreach(mappable.withIfMapping)
-
+      findIdOrError(mappable.ifMapping, mappable).foreach(mappable.withIfMapping)
     if (mappable.thenMapping.nonEmpty)
-      findIdOrError(mappable.fields.field(ConditionalNodeMappingModel.Then)).foreach(mappable.withThenMapping)
-
+      findIdOrError(mappable.thenMapping, mappable).foreach(mappable.withThenMapping)
     if (mappable.elseMapping.nonEmpty)
-      findIdOrError(mappable.fields.field(ConditionalNodeMappingModel.Else)).foreach(mappable.withElseMapping)
+      findIdOrError(mappable.elseMapping, mappable).foreach(mappable.withElseMapping)
   }
 
   private def memberIdFromName[T <: DomainElement](name: String, union: NodeWithDiscriminator[_]): Option[String] = {

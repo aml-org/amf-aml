@@ -28,7 +28,13 @@ trait DialectSyntax { this: DialectContext =>
       "nodeMappings" -> false
   )
 
-  val nodeMapping: Map[String, Required] = Map(
+  val anyMapping: Map[String, Required] = Map(
+      "anyOf"      -> false,
+      "oneOf"      -> false,
+      "components" -> false
+  )
+
+  val nodeMapping: Map[String, Required] = anyMapping ++ Map(
       "classTerm"            -> false,
       "mapping"              -> false,
       "idProperty"           -> false,
@@ -40,14 +46,14 @@ trait DialectSyntax { this: DialectContext =>
       "additionalProperties" -> false
   )
 
-  val conditionalMapping: Map[String, Required] = Map(
+  val conditionalMapping: Map[String, Required] = anyMapping ++ Map(
       "conditional" -> true
   )
 
   val conditionalMappingInner: Map[String, Required] = Map(
-    "if"   -> true,
-    "then" -> true,
-    "else" -> true,
+      "if"   -> true,
+      "then" -> true,
+      "else" -> true,
   )
 
   val propertyLikeMapping: Map[String, Required] = Map(

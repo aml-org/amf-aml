@@ -5,19 +5,23 @@ import amf.aml.internal.metamodel.domain.ConditionalNodeMappingModel.{Else, If, 
 import amf.aml.internal.parse.dialects.DialectContext
 import amf.aml.internal.parse.dialects.nodemapping.like.ConditionalNodeMappingParser.identifierKey
 import amf.aml.internal.validate.DialectValidations.DialectError
-import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
+import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.YMapOps
 import amf.core.internal.parser.domain.{Annotations, ValueNode}
-import org.yaml.model.{YMap, YScalar, YType}
+import org.yaml.model.{YMap, YType}
 
-class ConditionalNodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikeParserInterface {
+class ConditionalNodeMappingParser(implicit ctx: DialectContext)
+    extends NodeMappingLikeParserInterface
+    with AnyMappingParser {
 
   override def parse(map: YMap, adopt: DomainElement => Any, isFragment: Boolean): ConditionalNodeMapping = {
 
     val conditionalNodeMapping = ConditionalNodeMapping(map)
-
     adopt(conditionalNodeMapping)
+
+    super.parse(map, conditionalNodeMapping)
+
     map.key(
         identifierKey,
         entry =>
