@@ -24,7 +24,7 @@ object CustomDomainPropertiesEmitter {
         customDomainProperties.flatMap {
           case extension: DomainExtension if Option(extension.extension).isEmpty =>
             val name = extensionSyntax(extension.name.value())
-            SemanticExtensionsFacade(registry).render(name, extension, node.meta.typeIri, ordering, renderOptions)
+            SemanticExtensionsFacade(name, registry).render(extension, node.meta.typeIri, ordering, renderOptions)
           case domainExtension: DomainExtension => emitScalarExtension(domainExtension)
         }
       case _ => Nil
