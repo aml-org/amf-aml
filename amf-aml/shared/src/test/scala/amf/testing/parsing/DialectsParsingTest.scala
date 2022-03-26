@@ -549,4 +549,29 @@ trait DialectsParsingTest extends DialectTests {
   test("Render components facet from YAML") {
     cycle("dialect.yaml", "dialect.cycled.yaml", Some(Mimes.`application/yaml`), directory = s"$basePath/components")
   }
+
+  multiGoldenTest("allOf complex facet parsing", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/allOf-complex"
+    )
+  }
+
+  //  multiSourceTest("allOf complex facet from JSON-LD", "dialect.%s") { config =>
+  //    cycle(config.source,
+  //          "dialect.cycled.jsonld.yaml",
+  //          mediaType = Some(Mimes.`application/yaml`),
+  //          directory = s"$basePath/allOf-complex")
+  //  }
+
+  test("Render allOf complex facet from YAML") {
+    cycle("dialect.yaml",
+          "dialect.cycled.yaml",
+          Some(Mimes.`application/yaml`),
+          directory = s"$basePath/allOf-complex")
+  }
+
 }

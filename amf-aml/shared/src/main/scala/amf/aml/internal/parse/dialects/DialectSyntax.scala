@@ -29,7 +29,7 @@ trait DialectSyntax { this: DialectContext =>
   )
 
   val anyMapping: Map[String, Required] = Map(
-      "anyOf"      -> false,
+      "allOf"      -> false,
       "oneOf"      -> false,
       "components" -> false
   )

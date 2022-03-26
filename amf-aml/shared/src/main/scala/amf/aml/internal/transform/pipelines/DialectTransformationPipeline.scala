@@ -1,13 +1,20 @@
 package amf.aml.internal.transform.pipelines
 
-import amf.aml.internal.transform.steps.{DialectNodeExtensionStage, DialectReferencesResolutionStage}
+import amf.aml.internal.transform.steps.{
+  DialectCombiningMappingStage,
+  DialectNodeExtensionStage,
+  DialectReferencesResolutionStage
+}
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationStep}
 import amf.core.internal.transform.stages.SourceInformationStage
 
 class DialectTransformationPipeline private (override val name: String) extends TransformationPipeline() {
 
   override def steps: Seq[TransformationStep] =
-    Seq(new DialectReferencesResolutionStage(), new DialectNodeExtensionStage(), SourceInformationStage)
+    Seq(new DialectCombiningMappingStage(),
+        new DialectReferencesResolutionStage(),
+        new DialectNodeExtensionStage(),
+        SourceInformationStage)
 
 }
 
