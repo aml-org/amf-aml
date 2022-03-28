@@ -41,6 +41,7 @@ pipeline {
         anyOf {
           branch 'master'
           branch 'develop'
+          branch 'release/*'
         }
       }
       steps {
