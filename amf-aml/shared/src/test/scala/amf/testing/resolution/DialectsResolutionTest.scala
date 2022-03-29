@@ -11,6 +11,24 @@ class DialectsResolutionTest extends DialectResolutionCycleTests {
 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/dialects/"
 
+  private def multiCycleTest(label: String, directory: String): Unit = {
+
+    multiGoldenTest(s"$label resolution to JSON-LD", "dialect.resolved.%s") { config =>
+      cycle(
+          "dialect.yaml",
+          config.golden,
+          syntax = Some(Syntax.JsonLd),
+          directory = directory,
+          AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
+      )
+    }
+
+    test(s"$label resolution to YAML") {
+      cycle("dialect.yaml", "dialect.resolved.yaml", directory, UnhandledErrorHandler)
+    }
+
+  }
+
   test("resolve include test") {
     cycle("example9.yaml", "example9.resolved.yaml", basePath, UnhandledErrorHandler)
   }
@@ -39,17 +57,9 @@ class DialectsResolutionTest extends DialectResolutionCycleTests {
     )
   }
 
-  multiGoldenTest("Resolve dialect with allOf (test combinatorial resolution)", "dialect.resolved.%s") { config =>
-    cycle(
-        "dialect.yaml",
-        config.golden,
-        syntax = Some(Syntax.JsonLd),
-        directory = s"$basePath/allOf-complex/",
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
-    )
-  }
+  multiCycleTest("AllOf (test combining resolution)", s"$basePath/allOf-complex/")
 
-  test("Resolve dialect with allOf (test combinatorial resolution) yaml") {
-    cycle("dialect.yaml", "dialect.resolved.yaml", s"$basePath/allOf-complex/", UnhandledErrorHandler)
-  }
+  multiCycleTest("AllOf nested (test combining resolution)", s"$basePath/allOf-nested/")
+
+  multiCycleTest("AllOf nested with allOf (test combining resolution)", s"$basePath/allOf-nested-allOf/")
 }

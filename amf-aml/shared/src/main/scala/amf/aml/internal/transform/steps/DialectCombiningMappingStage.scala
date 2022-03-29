@@ -16,14 +16,16 @@ import amf.core.internal.annotations.VirtualElement
 import amf.core.internal.parser.domain.Annotations
 
 import scala.annotation.tailrec
+import scala.collection.mutable
 
 // This stage generates all the combining mappings of an allOf field.
 // This is needed to have an indexed list of the mappings to link from a parsed DialectDomainElement
 class DialectCombiningMappingStage extends TransformationStep() {
 
-  var dialect: Option[Dialect]    = None
-  var index: Option[DialectIndex] = None
-  val counter: IdCounter          = new IdCounter
+  var dialect: Option[Dialect]                 = None
+  var index: Option[DialectIndex]              = None
+  var visitedCombinations: mutable.Set[String] = mutable.Set()
+  val counter: IdCounter                       = new IdCounter
 
   override def transform(model: BaseUnit,
                          errorHandler: AMFErrorHandler,
@@ -34,7 +36,7 @@ class DialectCombiningMappingStage extends TransformationStep() {
         this.index = Some(DialectIndex(dialect, new DefaultNodeMappableFinder(Seq(dialect))))
         this.dialect = Some(dialect)
         dialect.declares.foreach {
-          case anyMapping: AnyMapping if anyMapping.and.nonEmpty =>
+          case anyMapping: AnyMapping if anyMapping.and.nonEmpty && !alreadyProcessed(anyMapping) =>
             processCombinationGroup(findAllMappings(anyMapping.and))
           case _ => // ignore
         }
@@ -54,14 +56,16 @@ class DialectCombiningMappingStage extends TransformationStep() {
     // If the element is an and it should be processed in a different way
     // The and should be evaluated as an all, so we will return his ID and not the one of the components
     case combination: AnyMapping if combination.and.nonEmpty =>
-      processCombinationGroup(collectComponents(combination))
+      if (!alreadyProcessed(combination)) processCombinationGroup(collectComponents(combination))
       List(combination.id)
     case otherMapping: AnyMapping =>
       collectComponents(otherMapping) match {
         // The cut condition is that the leaf is a NodeMapping
-        case uniqueComponent :: Nil if uniqueComponent.isInstanceOf[NodeMapping] => List(uniqueComponent.id)
+        case uniqueComponent :: Nil if uniqueComponent.isInstanceOf[NodeMapping] =>
+          List(uniqueComponent.id)
         // I can flatmap here, the only cases where is not an or of all the element is the and
-        case otherComponents => otherComponents.flatMap(processCombinationElement).toList
+        case otherComponents =>
+          otherComponents.flatMap(processCombinationElement).toList
       }
   }
 
@@ -70,7 +74,7 @@ class DialectCombiningMappingStage extends TransformationStep() {
     cartesianProduct(combinationsRaw)
 
   // This method generates a mapping based on the combination components
-  // It also register de mapping as a declaration in the Dialect
+  // It also register the mapping as a declaration in the Dialect
   private def generateCombinationMapping(components: Seq[String]): Unit = {
     val mapping = NodeMapping(Annotations(VirtualElement()))
     mapping.withName(newMappingName)
@@ -88,11 +92,16 @@ class DialectCombiningMappingStage extends TransformationStep() {
   // TODO currently the extension schemas will be resolved in SemJSONSchema transformation, but in a future should be resolved here
   private def collectComponents(mapping: AnyMapping): Seq[AnyNodeMappable] = mapping match {
     // The and is an special case, it will be processed in the next cycle
-    case and: AnyMapping if and.and.nonEmpty => Seq(and.asInstanceOf[AnyNodeMappable])
-    case or: AnyMapping if or.or.nonEmpty    => findAllMappings(or.or)
-    case union: UnionNodeMapping             => findAllMappings(union.objectRange())
-    case conditional: ConditionalNodeMapping => findAllMappings(Seq(conditional.thenMapping, conditional.elseMapping))
-    case other: AnyNodeMappable              => Seq(other)
+    case and: AnyMapping if and.and.nonEmpty =>
+      Seq(and.asInstanceOf[AnyNodeMappable])
+    case or: AnyMapping if or.or.nonEmpty =>
+      findAllMappings(or.or)
+    case union: UnionNodeMapping =>
+      findAllMappings(union.objectRange())
+    case conditional: ConditionalNodeMapping =>
+      findAllMappings(Seq(conditional.thenMapping, conditional.elseMapping))
+    case other: AnyNodeMappable =>
+      Seq(other)
   }
 
   private def findAllMappings(mappingIds: Seq[StrField]): Seq[AnyNodeMappable] = mappingIds.map(findMapping)
@@ -101,7 +110,14 @@ class DialectCombiningMappingStage extends TransformationStep() {
 
   private def findMapping(mapping: String): AnyNodeMappable = index.get.findNodeMappingById(mapping)._2
 
-  private def newMappingName: String = counter.genId("combining_mapping")
+  private def newMappingName: String = counter.genId(s"CombiningMapping")
+
+  private def alreadyProcessed(anyMapping: AnyMapping) =
+    if (visitedCombinations.contains(anyMapping.id)) true
+    else {
+      visitedCombinations += anyMapping.id
+      false
+    }
 
   // TODO extract this to scala-common
   private def cartesianProduct[T](lst: List[List[T]]): List[List[T]] = {
@@ -128,7 +144,7 @@ class DialectCombiningMappingStage extends TransformationStep() {
         x match {
           case Nil => Nil
           case _ =>
-            lst.par.foldRight(List(x))((l, a) => l.flatMap(pel(_, a))).map(_.dropRight(x.size))
+            lst.foldRight(List(x))((l, a) => l.flatMap(pel(_, a))).map(_.dropRight(x.size))
         }
     }
   }

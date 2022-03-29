@@ -22,9 +22,9 @@ nodeMappings:
       then: ConditionMatch
       else: ConditionNoMatch
   AndMember3:
-    oneOf:
-      - OrMember1
-      - OrMember2
+    allOf:
+      - InnerAndMember1
+      - InnerAndMember2
   Condition:
     mapping:
       c1:
@@ -41,36 +41,58 @@ nodeMappings:
       c1:
         range: string
         propertyTerm: schema-org.no-something
-  OrMember1:
+  InnerAndMember1:
+    conditional:
+      if: InnerCondition
+      then: InnerConditionMatch
+      else: InnerConditionNoMatch
+  InnerAndMember2:
+    oneOf:
+      - InnerOrMember1
+      - InnerOrMember2
+  InnerCondition:
+    mapping:
+      c2:
+        range: string
+        enum:
+          - other-something
+  InnerConditionMatch:
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.other-something
+  InnerConditionNoMatch:
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.no-other-something
+  InnerOrMember1:
     mapping:
       om11:
         range: string
       om12:
         range: number
-  OrMember2:
+  InnerOrMember2:
     mapping:
       om21:
         range: boolean
-  CombiningMapping_2:
+  CombiningMapping_3:
     components:
-      - AndMember1
-      - ConditionMatch
-      - OrMember2
+      - InnerConditionNoMatch
+      - InnerOrMember1
     mapping:
-      am11:
+      c2:
         range: string
-      am12:
+        propertyTerm: schema-org.no-other-something
+      om11:
         range: string
-      c1:
-        range: string
-        propertyTerm: schema-org.something
-      om21:
-        range: boolean
-  CombiningMapping_4:
+      om12:
+        range: number
+  CombiningMapping_6:
     components:
       - AndMember1
       - ConditionNoMatch
-      - OrMember2
+      - AndMember3
     mapping:
       am11:
         range: string
@@ -79,38 +101,47 @@ nodeMappings:
       c1:
         range: string
         propertyTerm: schema-org.no-something
+  CombiningMapping_2:
+    components:
+      - InnerConditionMatch
+      - InnerOrMember2
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.other-something
+      om21:
+        range: boolean
+  CombiningMapping_5:
+    components:
+      - AndMember1
+      - ConditionMatch
+      - AndMember3
+    mapping:
+      am11:
+        range: string
+      am12:
+        range: string
+      c1:
+        range: string
+        propertyTerm: schema-org.something
+  CombiningMapping_4:
+    components:
+      - InnerConditionNoMatch
+      - InnerOrMember2
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.no-other-something
       om21:
         range: boolean
   CombiningMapping_1:
     components:
-      - AndMember1
-      - ConditionMatch
-      - OrMember1
+      - InnerConditionMatch
+      - InnerOrMember1
     mapping:
-      am11:
+      c2:
         range: string
-      am12:
-        range: string
-      c1:
-        range: string
-        propertyTerm: schema-org.something
-      om11:
-        range: string
-      om12:
-        range: number
-  CombiningMapping_3:
-    components:
-      - AndMember1
-      - ConditionNoMatch
-      - OrMember1
-    mapping:
-      am11:
-        range: string
-      am12:
-        range: string
-      c1:
-        range: string
-        propertyTerm: schema-org.no-something
+        propertyTerm: schema-org.other-something
       om11:
         range: string
       om12:
