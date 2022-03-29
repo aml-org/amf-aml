@@ -5,10 +5,8 @@ import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.parser.domain.Fields
 
-/* TODO This should inherit from NodeMappable and be a class (a simple allof or oneOf should be of this class).
- * but the meta field of NodeMappable make impossible to have hierarchy of classes currently.
- * Thats why this is abstract.
- */
+// TODO This should inherit from NodeMappable and be a class (a simple allof or oneOf should be of this class).
+// But the meta field of NodeMappable make impossible to have hierarchy of classes currently. Thats why this is abstract.
 abstract class AnyMapping(fields: Fields) extends DomainElement {
 
   def and: Seq[StrField]        = fields.field(And)

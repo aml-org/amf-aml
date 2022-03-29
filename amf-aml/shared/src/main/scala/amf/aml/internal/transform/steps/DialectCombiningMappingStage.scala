@@ -122,14 +122,6 @@ class DialectCombiningMappingStage extends TransformationStep() {
   // TODO extract this to scala-common
   private def cartesianProduct[T](lst: List[List[T]]): List[List[T]] = {
 
-    /**
-      * Prepend single element to all lists of list
-      *
-      * @param e single element
-      * @param ll list of list
-      * @param a accumulator for tail recursive implementation
-      * @return list of lists with prepended element e
-      */
     @tailrec
     def pel(e: T, ll: List[List[T]], a: List[List[T]] = Nil): List[List[T]] =
       ll match {
