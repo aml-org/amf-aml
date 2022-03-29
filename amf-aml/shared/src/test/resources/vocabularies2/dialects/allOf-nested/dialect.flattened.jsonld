@@ -1,0 +1,1660 @@
+{
+  "@graph": [
+    {
+      "@id": "#/BaseUnitProcessingData",
+      "@type": [
+        "doc:BaseUnitProcessingData"
+      ],
+      "doc:transformed": false,
+      "doc:sourceSpec": "AML 1.0"
+    },
+    {
+      "@id": "/externals/schema-org",
+      "@type": [
+        "owl:Ontology",
+        "meta:ExternalVocabulary",
+        "doc:DomainElement"
+      ],
+      "core:displayName": "schema-org",
+      "meta:base": "https://schema.org/",
+      "sourcemaps:sources": [
+        {
+          "@id": "/externals/schema-org#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/documents",
+      "@type": [
+        "meta:DocumentsModel",
+        "doc:DomainElement"
+      ],
+      "meta:rootDocument": {
+        "@id": "#/documents/root"
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "/documents#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/externals/schema-org#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/externals/schema-org#/source-map/lexical/element_2"
+        },
+        {
+          "@id": "/externals/schema-org#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "/externals/schema-org#/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/documents/root",
+      "@type": [
+        "meta:DocumentMapping",
+        "doc:DomainElement"
+      ],
+      "core:name": "Mapping AllOf 1.0",
+      "meta:encodedNode": [
+        {
+          "@id": "#/declarations/Root"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/documents/root/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "/documents#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "/documents#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "/documents#/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/externals/schema-org#/source-map/lexical/element_2",
+      "sourcemaps:element": "core:displayName",
+      "sourcemaps:value": "[(6,2)-(6,12)]"
+    },
+    {
+      "@id": "/externals/schema-org#/source-map/lexical/element_0",
+      "sourcemaps:element": "meta:base",
+      "sourcemaps:value": "[(6,14)-(6,33)]"
+    },
+    {
+      "@id": "/externals/schema-org#/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml/externals/schema-org",
+      "sourcemaps:value": "[(6,2)-(8,0)]"
+    },
+    {
+      "@id": "#/documents/root/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/documents/root/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/documents/root/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "/documents#/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml/documents",
+      "sourcemaps:value": "[(9,0)-(12,0)]"
+    },
+    {
+      "@id": "/documents#/source-map/lexical/element_0",
+      "sourcemaps:element": "meta:rootDocument",
+      "sourcemaps:value": "[(9,2)-(12,0)]"
+    },
+    {
+      "@id": "#/documents/root/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/documents/root",
+      "sourcemaps:value": "[(9,7)-(12,0)]"
+    },
+    {
+      "@id": "#/documents/root/source-map/lexical/element_0",
+      "sourcemaps:element": "meta:encodedNode",
+      "sourcemaps:value": "[(10,4)-(12,0)]"
+    },
+    {
+      "@id": "",
+      "doc:declares": [
+        {
+          "@id": "#/declarations/InnerCondition"
+        },
+        {
+          "@id": "#/declarations/AndMember3"
+        },
+        {
+          "@id": "#/declarations/InnerConditionNoMatch"
+        },
+        {
+          "@id": "#/declarations/Root"
+        },
+        {
+          "@id": "#/declarations/Condition"
+        },
+        {
+          "@id": "#/declarations/ConditionNoMatch"
+        },
+        {
+          "@id": "#/declarations/OrMember2"
+        },
+        {
+          "@id": "#/declarations/InnerConditionMatch"
+        },
+        {
+          "@id": "#/declarations/AndMember1"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember1"
+        },
+        {
+          "@id": "#/declarations/OrMember1"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember2"
+        },
+        {
+          "@id": "#/declarations/AndMember2"
+        },
+        {
+          "@id": "#/declarations/ConditionMatch"
+        }
+      ],
+      "@type": [
+        "meta:Dialect",
+        "doc:Document",
+        "doc:Fragment",
+        "doc:Module",
+        "doc:Unit"
+      ],
+      "core:name": "Mapping AllOf",
+      "core:version": "1.0",
+      "meta:externals": [
+        {
+          "@id": "/externals/schema-org"
+        }
+      ],
+      "meta:documents": {
+        "@id": "/documents"
+      },
+      "doc:location": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml",
+      "doc:root": true,
+      "doc:processingData": {
+        "@id": "#/BaseUnitProcessingData"
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "#/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerCondition",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "InnerCondition",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/InnerCondition/property/c2"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerCondition/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/AndMember3",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "AndMember3",
+      "http://a.ml/vocabularies/amf/aml#or": [
+        {
+          "@id": "#/declarations/OrMember1"
+        },
+        {
+          "@id": "#/declarations/OrMember2"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/AndMember3/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "InnerConditionNoMatch",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/InnerConditionNoMatch/property/c2"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerConditionNoMatch/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Root",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "Root",
+      "http://a.ml/vocabularies/amf/aml#and": [
+        {
+          "@id": "#/declarations/AndMember1"
+        },
+        {
+          "@id": "#/declarations/AndMember2"
+        },
+        {
+          "@id": "#/declarations/AndMember3"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/Root/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Condition",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "Condition",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/Condition/property/c1"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/Condition/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "ConditionNoMatch",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/ConditionNoMatch/property/c1"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/ConditionNoMatch/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/OrMember2",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "OrMember2",
+      "http://a.ml/vocabularies/amf/aml#or": [
+        {
+          "@id": "#/declarations/InnerOrMember1"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember2"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/OrMember2/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "InnerConditionMatch",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/InnerConditionMatch/property/c2"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerConditionMatch/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/AndMember1",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "AndMember1",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/AndMember1/property/am12"
+        },
+        {
+          "@id": "#/declarations/AndMember1/property/am11"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/AndMember1/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "InnerOrMember1",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/InnerOrMember1/property/om12"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember1/property/om11"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerOrMember1/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/OrMember1",
+      "@type": [
+        "meta:ConditionalNodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "OrMember1",
+      "http://a.ml/vocabularies/amf/aml#if": [
+        {
+          "@id": "#/declarations/InnerCondition"
+        }
+      ],
+      "http://a.ml/vocabularies/amf/aml#then": [
+        {
+          "@id": "#/declarations/InnerConditionMatch"
+        }
+      ],
+      "http://a.ml/vocabularies/amf/aml#else": [
+        {
+          "@id": "#/declarations/InnerConditionNoMatch"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/OrMember1/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerOrMember2",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "InnerOrMember2",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/InnerOrMember2/property/om21"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerOrMember2/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/AndMember2",
+      "@type": [
+        "meta:ConditionalNodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "AndMember2",
+      "http://a.ml/vocabularies/amf/aml#if": [
+        {
+          "@id": "#/declarations/Condition"
+        }
+      ],
+      "http://a.ml/vocabularies/amf/aml#then": [
+        {
+          "@id": "#/declarations/ConditionMatch"
+        }
+      ],
+      "http://a.ml/vocabularies/amf/aml#else": [
+        {
+          "@id": "#/declarations/ConditionNoMatch"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/AndMember2/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/ConditionMatch",
+      "@type": [
+        "meta:NodeMapping",
+        "shacl:Shape",
+        "doc:DomainElement"
+      ],
+      "core:name": "ConditionMatch",
+      "shacl:property": [
+        {
+          "@id": "#/declarations/ConditionMatch/property/c1"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/ConditionMatch/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/source-map/lexical/element_4"
+        },
+        {
+          "@id": "#/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/source-map/lexical/element_3"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerCondition/property/c2",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#c2"
+        }
+      ],
+      "core:name": "c2",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:in": {
+        "@id": "#/declarations/InnerCondition/property/c2/list"
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerCondition/property/c2/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerCondition/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerCondition/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/InnerCondition/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerCondition/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/AndMember3/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/AndMember3/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/AndMember3/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch/property/c2",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "https://schema.org/no-other-something"
+        }
+      ],
+      "core:name": "c2",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerConditionNoMatch/property/c2/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerConditionNoMatch/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/InnerConditionNoMatch/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerConditionNoMatch/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Root/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/Root/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/Root/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Condition/property/c1",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#c1"
+        }
+      ],
+      "core:name": "c1",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "shacl:in": {
+        "@id": "#/declarations/Condition/property/c1/list"
+      },
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/Condition/property/c1/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Condition/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/Condition/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/Condition/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/Condition/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch/property/c1",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "https://schema.org/no-something"
+        }
+      ],
+      "core:name": "c1",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/ConditionNoMatch/property/c1/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/ConditionNoMatch/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/ConditionNoMatch/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/ConditionNoMatch/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/OrMember2/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/OrMember2/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/OrMember2/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch/property/c2",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "https://schema.org/other-something"
+        }
+      ],
+      "core:name": "c2",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerConditionMatch/property/c2/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerConditionMatch/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/InnerConditionMatch/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerConditionMatch/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/AndMember1/property/am12",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#am12"
+        }
+      ],
+      "core:name": "am12",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/AndMember1/property/am12/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/AndMember1/property/am11",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#am11"
+        }
+      ],
+      "core:name": "am11",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/AndMember1/property/am11/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/AndMember1/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/AndMember1/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/AndMember1/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/AndMember1/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/property/om12",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#om12"
+        }
+      ],
+      "core:name": "om12",
+      "shacl:datatype": [
+        {
+          "@id": "http://a.ml/vocabularies/shapes#number"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerOrMember1/property/om12/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/property/om11",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#om11"
+        }
+      ],
+      "core:name": "om11",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerOrMember1/property/om11/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerOrMember1/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember1/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember1/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/OrMember1/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/OrMember1/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/OrMember1/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerOrMember2/property/om21",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "http://a.ml/vocabularies/data#om21"
+        }
+      ],
+      "core:name": "om21",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#boolean"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/InnerOrMember2/property/om21/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerOrMember2/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerOrMember2/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember2/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember2/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/AndMember2/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/AndMember2/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/AndMember2/source-map/lexical/element_0"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/ConditionMatch/property/c1",
+      "@type": [
+        "meta:NodePropertyMapping",
+        "doc:DomainElement"
+      ],
+      "shacl:path": [
+        {
+          "@id": "https://schema.org/something"
+        }
+      ],
+      "core:name": "c1",
+      "shacl:datatype": [
+        {
+          "@id": "http://www.w3.org/2001/XMLSchema#string"
+        }
+      ],
+      "sourcemaps:sources": [
+        {
+          "@id": "#/declarations/ConditionMatch/property/c1/source-map"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/ConditionMatch/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/ConditionMatch/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/ConditionMatch/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/ConditionMatch/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/source-map/lexical/element_4",
+      "sourcemaps:element": "meta:externals",
+      "sourcemaps:value": "[(5,0)-(8,0)]"
+    },
+    {
+      "@id": "#/source-map/lexical/element_2",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml",
+      "sourcemaps:value": "[(2,0)-(81,22)]"
+    },
+    {
+      "@id": "#/source-map/lexical/element_0",
+      "sourcemaps:element": "meta:documents",
+      "sourcemaps:value": "[(8,0)-(12,0)]"
+    },
+    {
+      "@id": "#/source-map/lexical/element_1",
+      "sourcemaps:element": "core:version",
+      "sourcemaps:value": "[(3,0)-(5,0)]"
+    },
+    {
+      "@id": "#/source-map/lexical/element_3",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(2,0)-(3,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerCondition/property/c2/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@value": "other-something",
+        "@type": "xsd:string"
+      }
+    },
+    {
+      "@id": "#/declarations/InnerCondition/property/c2/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerCondition/property/c2/source-map/lexical/element_3"
+        },
+        {
+          "@id": "#/declarations/InnerCondition/property/c2/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/InnerCondition/property/c2/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerCondition/property/c2/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerCondition/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(57,2)-(57,16)]"
+    },
+    {
+      "@id": "#/declarations/InnerCondition/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(58,4)-(62,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerCondition/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerCondition",
+      "sourcemaps:value": "[(57,2)-(62,0)]"
+    },
+    {
+      "@id": "#/declarations/AndMember3/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/AndMember3",
+      "sourcemaps:value": "[(29,2)-(33,0)]"
+    },
+    {
+      "@id": "#/declarations/AndMember3/source-map/lexical/element_0",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(29,2)-(29,12)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch/property/c2/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerConditionNoMatch/property/c2/source-map/lexical/element_3"
+        },
+        {
+          "@id": "#/declarations/InnerConditionNoMatch/property/c2/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/InnerConditionNoMatch/property/c2/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerConditionNoMatch/property/c2/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(67,2)-(67,23)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(68,4)-(72,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerConditionNoMatch",
+      "sourcemaps:value": "[(67,2)-(72,0)]"
+    },
+    {
+      "@id": "#/declarations/Root/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/Root",
+      "sourcemaps:value": "[(13,2)-(18,0)]"
+    },
+    {
+      "@id": "#/declarations/Root/source-map/lexical/element_0",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(13,2)-(13,6)]"
+    },
+    {
+      "@id": "#/declarations/Condition/property/c1/list",
+      "@type": "rdfs:Seq",
+      "rdfs:_1": {
+        "@value": "something",
+        "@type": "xsd:string"
+      }
+    },
+    {
+      "@id": "#/declarations/Condition/property/c1/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/Condition/property/c1/source-map/lexical/element_3"
+        },
+        {
+          "@id": "#/declarations/Condition/property/c1/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/Condition/property/c1/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/Condition/property/c1/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/Condition/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(33,2)-(33,11)]"
+    },
+    {
+      "@id": "#/declarations/Condition/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(34,4)-(38,0)]"
+    },
+    {
+      "@id": "#/declarations/Condition/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/Condition",
+      "sourcemaps:value": "[(33,2)-(38,0)]"
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch/property/c1/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/ConditionNoMatch/property/c1/source-map/lexical/element_3"
+        },
+        {
+          "@id": "#/declarations/ConditionNoMatch/property/c1/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/ConditionNoMatch/property/c1/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/ConditionNoMatch/property/c1/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(43,2)-(43,18)]"
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(44,4)-(48,0)]"
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/ConditionNoMatch",
+      "sourcemaps:value": "[(43,2)-(48,0)]"
+    },
+    {
+      "@id": "#/declarations/OrMember2/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/OrMember2",
+      "sourcemaps:value": "[(53,2)-(57,0)]"
+    },
+    {
+      "@id": "#/declarations/OrMember2/source-map/lexical/element_0",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(53,2)-(53,11)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch/property/c2/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerConditionMatch/property/c2/source-map/lexical/element_3"
+        },
+        {
+          "@id": "#/declarations/InnerConditionMatch/property/c2/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/InnerConditionMatch/property/c2/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerConditionMatch/property/c2/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(62,2)-(62,21)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(63,4)-(67,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerConditionMatch",
+      "sourcemaps:value": "[(62,2)-(67,0)]"
+    },
+    {
+      "@id": "#/declarations/AndMember1/property/am12/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/AndMember1/property/am12/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/AndMember1/property/am12/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/AndMember1/property/am12/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/AndMember1/property/am11/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/AndMember1/property/am11/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/AndMember1/property/am11/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/AndMember1/property/am11/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/AndMember1/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(18,2)-(18,12)]"
+    },
+    {
+      "@id": "#/declarations/AndMember1/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(19,4)-(24,0)]"
+    },
+    {
+      "@id": "#/declarations/AndMember1/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/AndMember1",
+      "sourcemaps:value": "[(18,2)-(24,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/property/om12/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerOrMember1/property/om12/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember1/property/om12/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember1/property/om12/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/property/om11/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerOrMember1/property/om11/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember1/property/om11/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember1/property/om11/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(72,2)-(72,16)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(73,4)-(78,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerOrMember1",
+      "sourcemaps:value": "[(72,2)-(78,0)]"
+    },
+    {
+      "@id": "#/declarations/OrMember1/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/OrMember1",
+      "sourcemaps:value": "[(48,2)-(53,0)]"
+    },
+    {
+      "@id": "#/declarations/OrMember1/source-map/lexical/element_0",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(48,2)-(48,11)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember2/property/om21/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/InnerOrMember2/property/om21/source-map/lexical/element_2"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember2/property/om21/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/InnerOrMember2/property/om21/source-map/lexical/element_1"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/InnerOrMember2/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(78,2)-(78,16)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember2/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(79,4)-(81,22)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember2/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerOrMember2",
+      "sourcemaps:value": "[(78,2)-(81,22)]"
+    },
+    {
+      "@id": "#/declarations/AndMember2/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/AndMember2",
+      "sourcemaps:value": "[(24,2)-(29,0)]"
+    },
+    {
+      "@id": "#/declarations/AndMember2/source-map/lexical/element_0",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(24,2)-(24,12)]"
+    },
+    {
+      "@id": "#/declarations/ConditionMatch/property/c1/source-map",
+      "@type": [
+        "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:lexical": [
+        {
+          "@id": "#/declarations/ConditionMatch/property/c1/source-map/lexical/element_3"
+        },
+        {
+          "@id": "#/declarations/ConditionMatch/property/c1/source-map/lexical/element_1"
+        },
+        {
+          "@id": "#/declarations/ConditionMatch/property/c1/source-map/lexical/element_0"
+        },
+        {
+          "@id": "#/declarations/ConditionMatch/property/c1/source-map/lexical/element_2"
+        }
+      ]
+    },
+    {
+      "@id": "#/declarations/ConditionMatch/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(38,2)-(38,16)]"
+    },
+    {
+      "@id": "#/declarations/ConditionMatch/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:property",
+      "sourcemaps:value": "[(39,4)-(43,0)]"
+    },
+    {
+      "@id": "#/declarations/ConditionMatch/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/ConditionMatch",
+      "sourcemaps:value": "[(38,2)-(43,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerCondition/property/c2/source-map/lexical/element_3",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(60,8)-(61,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerCondition/property/c2/source-map/lexical/element_1",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(59,6)-(59,8)]"
+    },
+    {
+      "@id": "#/declarations/InnerCondition/property/c2/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:in",
+      "sourcemaps:value": "[(61,8)-(62,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerCondition/property/c2/source-map/lexical/element_2",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerCondition/property/c2",
+      "sourcemaps:value": "[(59,9)-(62,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch/property/c2/source-map/lexical/element_3",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(69,6)-(69,8)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch/property/c2/source-map/lexical/element_1",
+      "sourcemaps:element": "shacl:path",
+      "sourcemaps:value": "[(71,8)-(72,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch/property/c2/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(70,8)-(71,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionNoMatch/property/c2/source-map/lexical/element_2",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerConditionNoMatch/property/c2",
+      "sourcemaps:value": "[(69,9)-(72,0)]"
+    },
+    {
+      "@id": "#/declarations/Condition/property/c1/source-map/lexical/element_3",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(36,8)-(37,0)]"
+    },
+    {
+      "@id": "#/declarations/Condition/property/c1/source-map/lexical/element_1",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(35,6)-(35,8)]"
+    },
+    {
+      "@id": "#/declarations/Condition/property/c1/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:in",
+      "sourcemaps:value": "[(37,8)-(38,0)]"
+    },
+    {
+      "@id": "#/declarations/Condition/property/c1/source-map/lexical/element_2",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/Condition/property/c1",
+      "sourcemaps:value": "[(35,9)-(38,0)]"
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch/property/c1/source-map/lexical/element_3",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(45,6)-(45,8)]"
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch/property/c1/source-map/lexical/element_1",
+      "sourcemaps:element": "shacl:path",
+      "sourcemaps:value": "[(47,8)-(48,0)]"
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch/property/c1/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(46,8)-(47,0)]"
+    },
+    {
+      "@id": "#/declarations/ConditionNoMatch/property/c1/source-map/lexical/element_2",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/ConditionNoMatch/property/c1",
+      "sourcemaps:value": "[(45,9)-(48,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch/property/c2/source-map/lexical/element_3",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(64,6)-(64,8)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch/property/c2/source-map/lexical/element_1",
+      "sourcemaps:element": "shacl:path",
+      "sourcemaps:value": "[(66,8)-(67,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch/property/c2/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(65,8)-(66,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerConditionMatch/property/c2/source-map/lexical/element_2",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerConditionMatch/property/c2",
+      "sourcemaps:value": "[(64,9)-(67,0)]"
+    },
+    {
+      "@id": "#/declarations/AndMember1/property/am12/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(22,6)-(22,10)]"
+    },
+    {
+      "@id": "#/declarations/AndMember1/property/am12/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(23,8)-(24,0)]"
+    },
+    {
+      "@id": "#/declarations/AndMember1/property/am12/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/AndMember1/property/am12",
+      "sourcemaps:value": "[(22,11)-(24,0)]"
+    },
+    {
+      "@id": "#/declarations/AndMember1/property/am11/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(20,6)-(20,10)]"
+    },
+    {
+      "@id": "#/declarations/AndMember1/property/am11/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(21,8)-(22,0)]"
+    },
+    {
+      "@id": "#/declarations/AndMember1/property/am11/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/AndMember1/property/am11",
+      "sourcemaps:value": "[(20,11)-(22,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/property/om12/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(76,6)-(76,10)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/property/om12/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(77,8)-(78,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/property/om12/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerOrMember1/property/om12",
+      "sourcemaps:value": "[(76,11)-(78,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/property/om11/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(74,6)-(74,10)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/property/om11/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(75,8)-(76,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember1/property/om11/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerOrMember1/property/om11",
+      "sourcemaps:value": "[(74,11)-(76,0)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember2/property/om21/source-map/lexical/element_2",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(80,6)-(80,10)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember2/property/om21/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(81,8)-(81,22)]"
+    },
+    {
+      "@id": "#/declarations/InnerOrMember2/property/om21/source-map/lexical/element_1",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/InnerOrMember2/property/om21",
+      "sourcemaps:value": "[(80,11)-(81,22)]"
+    },
+    {
+      "@id": "#/declarations/ConditionMatch/property/c1/source-map/lexical/element_3",
+      "sourcemaps:element": "core:name",
+      "sourcemaps:value": "[(40,6)-(40,8)]"
+    },
+    {
+      "@id": "#/declarations/ConditionMatch/property/c1/source-map/lexical/element_1",
+      "sourcemaps:element": "shacl:path",
+      "sourcemaps:value": "[(42,8)-(43,0)]"
+    },
+    {
+      "@id": "#/declarations/ConditionMatch/property/c1/source-map/lexical/element_0",
+      "sourcemaps:element": "shacl:datatype",
+      "sourcemaps:value": "[(41,8)-(42,0)]"
+    },
+    {
+      "@id": "#/declarations/ConditionMatch/property/c1/source-map/lexical/element_2",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml#/declarations/ConditionMatch/property/c1",
+      "sourcemaps:value": "[(40,9)-(43,0)]"
+    }
+  ],
+  "@context": {
+    "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested/dialect.yaml",
+    "shacl": "http://www.w3.org/ns/shacl#",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "doc": "http://a.ml/vocabularies/document#",
+    "core": "http://a.ml/vocabularies/core#",
+    "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
+    "meta": "http://a.ml/vocabularies/meta#",
+    "owl": "http://www.w3.org/2002/07/owl#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#"
+  }
+}
