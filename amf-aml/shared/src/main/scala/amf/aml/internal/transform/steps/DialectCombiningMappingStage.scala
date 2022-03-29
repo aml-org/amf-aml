@@ -36,8 +36,8 @@ class DialectCombiningMappingStage extends TransformationStep() {
         this.index = Some(DialectIndex(dialect, new DefaultNodeMappableFinder(Seq(dialect))))
         this.dialect = Some(dialect)
         dialect.declares.foreach {
-          case anyMapping: AnyMapping if anyMapping.and.nonEmpty && !alreadyProcessed(anyMapping) =>
-            processCombinationGroup(findAllMappings(anyMapping.and))
+          case anyMapping: AnyMapping if isCombinationGroup(anyMapping) && !alreadyProcessed(anyMapping) =>
+            processCombinationGroup(getCombinationGroup(anyMapping))
           case _ => // ignore
         }
       case _ => // ignore
@@ -55,8 +55,8 @@ class DialectCombiningMappingStage extends TransformationStep() {
   private def processCombinationElement(element: AnyNodeMappable): List[String] = element match {
     // If the element is an and it should be processed in a different way
     // The and should be evaluated as an all, so we will return his ID and not the one of the components
-    case combination: AnyMapping if combination.and.nonEmpty =>
-      if (!alreadyProcessed(combination)) processCombinationGroup(collectComponents(combination))
+    case combination: AnyMapping if isCombinationGroup(combination) =>
+      if (!alreadyProcessed(combination)) processCombinationGroup(getCombinationGroup(combination))
       List(combination.id)
     case otherMapping: AnyMapping =>
       collectComponents(otherMapping) match {
@@ -77,8 +77,8 @@ class DialectCombiningMappingStage extends TransformationStep() {
   // It also register the mapping as a declaration in the Dialect
   private def generateCombinationMapping(components: Seq[String]): Unit = {
     val mapping = NodeMapping(Annotations(VirtualElement()))
-    mapping.withName(newMappingName)
-    dialect.get.withDeclaredElement(mapping)
+    setMappingName(mapping)
+    registerMappingDeclaration(mapping)
     mapping.setArrayWithoutId(AnyMappingModel.Components, components.map(c => AmfScalar(c)))
     val componentMappings =
       components.map(findMapping).map(component => component.link(component.name.toString).asInstanceOf[NodeMapping])
@@ -89,19 +89,44 @@ class DialectCombiningMappingStage extends TransformationStep() {
   }
 
   // This method collect the schema defined at the same level
-  // TODO currently the extension schemas will be resolved in SemJSONSchema transformation, but in a future should be resolved here
   private def collectComponents(mapping: AnyMapping): Seq[AnyNodeMappable] = mapping match {
     // The and is an special case, it will be processed in the next cycle
-    case and: AnyMapping if and.and.nonEmpty =>
-      Seq(and.asInstanceOf[AnyNodeMappable])
-    case or: AnyMapping if or.or.nonEmpty =>
-      findAllMappings(or.or)
-    case union: UnionNodeMapping =>
-      findAllMappings(union.objectRange())
-    case conditional: ConditionalNodeMapping =>
-      findAllMappings(Seq(conditional.thenMapping, conditional.elseMapping))
-    case other: AnyNodeMappable =>
-      Seq(other)
+    case combination: AnyMapping if isCombinationGroup(combination) => Seq(combination.asInstanceOf[AnyNodeMappable])
+    case other: AnyNodeMappable                                     => getComponents(other)
+  }
+
+  private def getComponents(mapping: AnyMapping): Seq[AnyNodeMappable] = mapping match {
+    case and: AnyMapping if and.and.nonEmpty => findAllMappings(and.and)
+    case or: AnyMapping if or.or.nonEmpty    => findAllMappings(or.or)
+    case union: UnionNodeMapping             => findAllMappings(union.objectRange())
+    case conditional: ConditionalNodeMapping => findAllMappings(Seq(conditional.thenMapping, conditional.elseMapping))
+    case other: AnyNodeMappable              => Seq(other)
+  }
+
+  // Evaluates if the mapping is a combination group (an allOf or an oneOf/conditional with extended mapping)
+  private def isCombinationGroup(anyMapping: AnyMapping) = anyMapping match {
+    case any: AnyMapping if any.and.nonEmpty => true
+    // TODO When conditional is extracted to AnyMapping add an or in the second if condition
+    case node: NodeMapping if node.propertiesMapping().nonEmpty && node.or.nonEmpty => true
+    case _                                                                          => false
+  }
+
+  // This method returns the components + the extended schema
+  // It assumes that you already evaluated that it is an combination group
+  private def getCombinationGroup(anyMapping: AnyMapping): Seq[AnyNodeMappable] =
+    getComponents(anyMapping) ++ getExtendedMapping(anyMapping)
+
+  // If there is an extended mapping I need to extract it to a new declaration
+  private def getExtendedMapping(anyMapping: AnyMapping): Option[NodeMapping] = anyMapping match {
+    case nodeMapping: NodeMapping if nodeMapping.propertiesMapping().nonEmpty =>
+      val extension = nodeMapping.copyElement(Annotations(VirtualElement())).asInstanceOf[NodeMapping]
+      extension.fields.removeField(AnyMappingModel.And)
+      extension.fields.removeField(AnyMappingModel.Or)
+      // TODO When conditional is extracted remove fields here
+      setMappingName(extension)
+      registerMappingDeclaration(extension)
+      Some(extension)
+    case _ => None
   }
 
   private def findAllMappings(mappingIds: Seq[StrField]): Seq[AnyNodeMappable] = mappingIds.map(findMapping)
@@ -110,7 +135,11 @@ class DialectCombiningMappingStage extends TransformationStep() {
 
   private def findMapping(mapping: String): AnyNodeMappable = index.get.findNodeMappingById(mapping)._2
 
+  private def setMappingName(mapping: NodeMapping) = mapping.withName(newMappingName)
+
   private def newMappingName: String = counter.genId(s"CombiningMapping")
+
+  private def registerMappingDeclaration(mapping: NodeMapping): Unit = dialect.get.withDeclaredElement(mapping)
 
   private def alreadyProcessed(anyMapping: AnyMapping) =
     if (visitedCombinations.contains(anyMapping.id)) true

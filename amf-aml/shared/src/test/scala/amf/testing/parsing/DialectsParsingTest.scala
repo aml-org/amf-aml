@@ -490,4 +490,10 @@ trait DialectsParsingTest extends DialectTests {
   // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("AllOf nested with allOf", s"$basePath/allOf-nested-allOf")
 
+  // TODO cycle from JSON-LD to YAML is affected by W-10890167
+  multiCycleTest("Extended mapping 1", s"$basePath/extended-mapping-1")
+
+  // TODO cycle from JSON-LD to YAML is affected by W-10890167
+  multiCycleTest("Extended mapping 2", s"$basePath/extended-mapping-2")
+
 }

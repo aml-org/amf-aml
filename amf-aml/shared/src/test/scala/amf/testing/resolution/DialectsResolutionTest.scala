@@ -62,4 +62,8 @@ class DialectsResolutionTest extends DialectResolutionCycleTests {
   multiCycleTest("AllOf nested (test combining resolution)", s"$basePath/allOf-nested/")
 
   multiCycleTest("AllOf nested with allOf (test combining resolution)", s"$basePath/allOf-nested-allOf/")
+
+  multiCycleTest("Extended mapping 1", s"$basePath/extended-mapping-1/")
+
+  multiCycleTest("Extended mapping 2", s"$basePath/extended-mapping-2/")
 }
