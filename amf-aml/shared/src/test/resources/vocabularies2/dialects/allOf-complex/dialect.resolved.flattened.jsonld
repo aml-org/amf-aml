@@ -237,7 +237,7 @@
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-complex/dialect.yaml#/declarations/AndMember2",
 "@type": [
-"http://a.ml/vocabularies/meta#ConditionalNodeMapping",
+"http://a.ml/vocabularies/meta#NodeMapping",
 "http://www.w3.org/ns/shacl#Shape",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -256,8 +256,7 @@
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-complex/dialect.yaml#/declarations/ConditionNoMatch"
 }
-],
-"http://a.ml/vocabularies/document#extends": []
+]
 },
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-complex/dialect.yaml/CombiningMapping_4",

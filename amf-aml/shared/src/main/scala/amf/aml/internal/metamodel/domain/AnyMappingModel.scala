@@ -31,6 +31,30 @@ trait AnyMappingModel
                "Array of component mappings in case of component combination generated mapping")
   )
 
+  val If: Field = Field(
+      Iri,
+      Namespace.AmfAml + "if",
+      ModelDoc(ExternalModelVocabularies.Shacl,
+               "if",
+               "Conditional constraint if over the type of the mapped graph property")
+  )
+
+  val Then: Field = Field(
+      Iri,
+      Namespace.AmfAml + "then",
+      ModelDoc(ExternalModelVocabularies.Shacl,
+               "then",
+               "Conditional constraint then over the type of the mapped graph property")
+  )
+
+  val Else: Field = Field(
+      Iri,
+      Namespace.AmfAml + "else",
+      ModelDoc(ExternalModelVocabularies.Shacl,
+               "else",
+               "Conditional constraint else over the type of the mapped graph property")
+  )
+
   override val `type`
     : List[ValueType] = Namespace.Meta + "AnyMapping" :: Namespace.Shacl + "Shape" :: DomainElementModel.`type`
 
@@ -47,5 +71,5 @@ object AnyMappingModel extends AnyMappingModel {
 
   override def modelInstance = throw new Exception("AnyMapping is an abstract class")
 
-  override val fields: List[Field] = List(And, Or, Components)
+  override val fields: List[Field] = List(And, Or, Components, If, Then, Else)
 }

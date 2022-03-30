@@ -34,10 +34,9 @@ case class NodeMappingEmitter(
       }
     } else {
       nodeMappable match {
-        case nodeMapping: NodeMapping                       => emitSingleNode(b, nodeMapping)
-        case unionNodeMapping: UnionNodeMapping             => emitUnionNode(b, unionNodeMapping)
-        case conditionalNodeMapping: ConditionalNodeMapping => emitConditionalNode(b, conditionalNodeMapping)
-        case _                                              => // ignore
+        case nodeMapping: NodeMapping           => emitSingleNode(b, nodeMapping)
+        case unionNodeMapping: UnionNodeMapping => emitUnionNode(b, unionNodeMapping)
+        case _                                  => // ignore
       }
     }
   }
@@ -125,27 +124,6 @@ case class NodeMappingEmitter(
     )
   }
 
-  protected def emitConditionalNode(b: EntryBuilder, conditionalNodeMapping: ConditionalNodeMapping): Unit = {
-    b.entry(
-        conditionalNodeMapping.name.value(),
-        _.obj { b =>
-          emitAnyNode(b, conditionalNodeMapping)
-          b.entry(
-              "conditional",
-              _.obj {
-                b =>
-                  if (conditionalNodeMapping.ifMapping.nonEmpty)
-                    b.entry("if", aliasFor(conditionalNodeMapping.ifMapping.value()).getOrElse(""))
-                  if (conditionalNodeMapping.thenMapping.nonEmpty)
-                    b.entry("then", aliasFor(conditionalNodeMapping.thenMapping.value()).getOrElse(""))
-                  if (conditionalNodeMapping.elseMapping.nonEmpty)
-                    b.entry("else", aliasFor(conditionalNodeMapping.elseMapping.value()).getOrElse(""))
-              }
-          )
-        }
-    )
-  }
-
   def emitAnyNode(b: EntryBuilder, anyMapping: AnyMapping): Unit = {
     if (anyMapping.and.nonEmpty) {
       val members = anyMapping.and.flatMap(member => aliasFor(member.value()))
@@ -166,6 +144,19 @@ case class NodeMappingEmitter(
       b.entry(
           "components",
           _.list(b => members.foreach(component => ScalarEmitter(AmfScalar(component)).emit(b)))
+      )
+    }
+    if (anyMapping.ifMapping.nonEmpty) {
+      b.entry(
+          "conditional",
+          _.obj { b =>
+            if (anyMapping.ifMapping.nonEmpty)
+              b.entry("if", aliasFor(anyMapping.ifMapping.value()).getOrElse(""))
+            if (anyMapping.thenMapping.nonEmpty)
+              b.entry("then", aliasFor(anyMapping.thenMapping.value()).getOrElse(""))
+            if (anyMapping.elseMapping.nonEmpty)
+              b.entry("else", aliasFor(anyMapping.elseMapping.value()).getOrElse(""))
+          }
       )
     }
   }

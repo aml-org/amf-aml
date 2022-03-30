@@ -1779,7 +1779,7 @@
       {
         "@id": "#/declarations/InnerAndMember1",
         "@type": [
-          "meta:ConditionalNodeMapping",
+          "meta:NodeMapping",
           "shacl:Shape",
           "doc:DomainElement"
         ],
@@ -1843,7 +1843,7 @@
       {
         "@id": "#/declarations/AndMember2",
         "@type": [
-          "meta:ConditionalNodeMapping",
+          "meta:NodeMapping",
           "shacl:Shape",
           "doc:DomainElement"
         ],

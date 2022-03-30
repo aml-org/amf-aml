@@ -546,7 +546,7 @@
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/AndMember2",
 "@type": [
-"http://a.ml/vocabularies/meta#ConditionalNodeMapping",
+"http://a.ml/vocabularies/meta#NodeMapping",
 "http://www.w3.org/ns/shacl#Shape",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -569,8 +569,7 @@
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/ConditionNoMatch"
 }
-],
-"http://a.ml/vocabularies/document#extends": []
+]
 },
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml/CombiningMapping_2",
@@ -1006,7 +1005,7 @@
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/InnerAndMember1",
 "@type": [
-"http://a.ml/vocabularies/meta#ConditionalNodeMapping",
+"http://a.ml/vocabularies/meta#NodeMapping",
 "http://www.w3.org/ns/shacl#Shape",
 "http://a.ml/vocabularies/document#DomainElement"
 ],
@@ -1029,8 +1028,7 @@
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/InnerConditionNoMatch"
 }
-],
-"http://a.ml/vocabularies/document#extends": []
+]
 },
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml/CombiningMapping_1",
