@@ -12,9 +12,15 @@ abstract class AnyMapping(fields: Fields) extends DomainElement {
   def and: Seq[StrField]        = fields.field(And)
   def or: Seq[StrField]         = fields.field(Or)
   def components: Seq[StrField] = fields.field(Components)
+  def ifMapping: StrField       = fields.field(If)
+  def thenMapping: StrField     = fields.field(Then)
+  def elseMapping: StrField     = fields.field(Else)
 
   def withAnd(andMapping: Seq[String]): AnyMapping        = set(And, andMapping)
   def withOr(orMapping: Seq[String]): AnyMapping          = set(Or, orMapping)
   def withComponents(components: Seq[String]): AnyMapping = set(Components, components)
+  def withIfMapping(ifMapping: String): AnyMapping        = set(If, ifMapping)
+  def withThenMapping(thenMapping: String): AnyMapping    = set(Then, thenMapping)
+  def withElseMapping(elseMapping: String): AnyMapping    = set(Else, elseMapping)
 
 }

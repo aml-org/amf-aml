@@ -1,10 +1,9 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
 import amf.aml.internal.parse.instances.ClosedInstanceNode.checkNode
-import amf.aml.internal.parse.instances.DialectInstanceParser.{computeParsingScheme, emptyElement, encodedElementDefaultId, typesFrom}
+import amf.aml.internal.parse.instances.DialectInstanceParser.{computeParsingScheme, emptyElement, typesFrom}
 import amf.aml.internal.parse.instances.InstanceNodeIdHandling.generateNodeId
 import amf.aml.internal.parse.instances.parser.IncludeNodeParser.resolveLink
 import amf.aml.internal.parse.instances.{DialectInstanceContext, NodeMappableHelper}
@@ -60,7 +59,6 @@ case class InstanceNodeParser(root: Root)(implicit ctx: DialectInstanceContext) 
     // if we are parsing a patch document we mark the node as abstract
 
     if (ctx.isPatch) result.withAbstract(true)
-    assignDefinedByAndTypes(mappable, result)
     result
   }
 
@@ -98,6 +96,8 @@ case class InstanceNodeParser(root: Root)(implicit ctx: DialectInstanceContext) 
       case "$include" => IncludeNodeParser.parse(ast, mappable, defaultId, givenAnnotations)
       case _ =>
         mappable match {
+          case conditional: AnyMapping if conditional.ifMapping.nonEmpty =>
+            parseConditionally(path, defaultId, astMap, conditional)
           case mapping: NodeMapping =>
             parseWithNodeMapping(defaultId,
                                  astMap,
@@ -109,20 +109,18 @@ case class InstanceNodeParser(root: Root)(implicit ctx: DialectInstanceContext) 
                                  mapping)
           case unionMapping: UnionNodeMapping =>
             parseObjectUnion(defaultId, Seq(path), ast, unionMapping, additionalProperties)
-          case conditionalMapping: ConditionalNodeMapping =>
-            parseConditionally(path, defaultId, astMap, conditionalMapping)
         }
 
     }
   }
 
   object IfThenElseBranchCriteria {
-    def choose(map: YMap, mapping: ConditionalNodeMapping)(implicit ctx: DialectInstanceContext): Option[String] = {
+    def choose(map: YMap, mapping: AnyMapping)(implicit ctx: DialectInstanceContext): Option[String] = {
       mapping.ifMapping.option()
         .flatMap(ifMappingId => choose(map, ifMappingId, mapping))
     }
 
-    def choose(map: YMap, ifMappingId: String, mapping: ConditionalNodeMapping)(implicit ctx: DialectInstanceContext): Option[String] = {
+    def choose(map: YMap, ifMappingId: String, mapping: AnyMapping)(implicit ctx: DialectInstanceContext): Option[String] = {
       ctx.findNodeMapping(ifMappingId).flatMap { ifMapping =>
         val (ifParsedNode, conformsParsing) = couldParse(map, ifMapping)
         if (!conformsParsing) return mapping.elseMapping.option()
@@ -159,7 +157,7 @@ case class InstanceNodeParser(root: Root)(implicit ctx: DialectInstanceContext) 
   private def parseConditionally(path: String,
                                  defaultId: String,
                                  astMap: YMap,
-                                 mappable: ConditionalNodeMapping): DialectDomainElement = {
+                                 mappable: AnyMapping): DialectDomainElement = {
     IfThenElseBranchCriteria
       .choose(astMap, mappable)
       .flatMap(ctx.findNodeMapping)

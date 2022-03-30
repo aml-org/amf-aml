@@ -66,4 +66,6 @@ class DialectsResolutionTest extends DialectResolutionCycleTests {
   multiCycleTest("Extended mapping 1", s"$basePath/extended-mapping-1/")
 
   multiCycleTest("Extended mapping 2", s"$basePath/extended-mapping-2/")
+
+  multiCycleTest("Extended mapping 3", s"$basePath/extended-mapping-3/")
 }

@@ -184,15 +184,17 @@ case class NodeFieldEmitters(node: DomainElement,
         nodeMapping
           .propertiesMapping()
           .find(_.nodePropertyMapping().value() == iri)
-      case unionMapping: UnionNodeMapping => checkRangeIds(unionMapping.objectRange().map(_.value()), iri)
-      case conditionalMapping: ConditionalNodeMapping =>
-        checkRangeIds(Seq(conditionalMapping.ifMapping.value(),
-                          conditionalMapping.thenMapping.value(),
-                          conditionalMapping.elseMapping.value()),
-                      iri)
-
+          .orElse(checkRangeIds(anyMappingIds(nodeMapping), iri))
+      case unionMapping: UnionNodeMapping =>
+        checkRangeIds(unionMapping.objectRange().map(_.value()) ++ anyMappingIds(unionMapping), iri)
     }
   }
+
+  private def anyMappingIds(anyMapping: AnyMapping): Seq[String] = {
+    (Seq(anyMapping.ifMapping.option(), anyMapping.thenMapping.option(), anyMapping.elseMapping.option()).flatten ++
+      anyMapping.and ++ anyMapping.or).map(_.toString)
+  }
+
   private def checkRangeIds(rangeIds: Seq[String], iri: String): Option[PropertyMapping] = {
     val nodeMappingsInRange = rangeIds.map { id: String =>
       findNodeMappingById(id) match {

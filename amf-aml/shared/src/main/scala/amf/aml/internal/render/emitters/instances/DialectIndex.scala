@@ -2,7 +2,7 @@ package amf.aml.internal.render.emitters.instances
 
 import amf.aml.client.scala.model.document.{Dialect, DialectLibrary}
 import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
-import amf.aml.client.scala.model.domain.{ConditionalNodeMapping, NodeMapping, UnionNodeMapping}
+import amf.aml.client.scala.model.domain.{AnyMapping, NodeMapping, UnionNodeMapping}
 import amf.aml.internal.render.emitters.instances.DialectIndex.NodeMappingId
 
 import scala.collection.mutable
@@ -29,19 +29,22 @@ class DialectIndex(private val dialect: Dialect, private val finder: NodeMappabl
 
   def findAllNodeMappings(mappableId: String): Seq[NodeMapping] = {
     findNodeMappingById(mappableId) match {
-      case (_, nodeMapping: NodeMapping) => Seq(nodeMapping)
+      case (_, nodeMapping: NodeMapping) => Seq(nodeMapping) ++ anyMappingNodeMappings(nodeMapping)
       case (_, unionMapping: UnionNodeMapping) =>
         val mappables = unionMapping.objectRange() map { rangeId =>
           findNodeMappingById(rangeId.value())._2
         }
-        mappables.collect { case nodeMapping: NodeMapping => nodeMapping }
-      case (_, conditionalMapping: ConditionalNodeMapping) =>
-        val mappables = Seq(conditionalMapping.ifMapping.value(),
-                            conditionalMapping.thenMapping.value(),
-                            conditionalMapping.thenMapping.value()).map(id => findNodeMappingById(id)._2)
-        mappables.collect { case nodeMapping: NodeMapping => nodeMapping }
+        mappables.collect { case nodeMapping: NodeMapping => nodeMapping } ++ anyMappingNodeMappings(unionMapping)
       case _ => Nil
     }
+  }
+
+  private def anyMappingNodeMappings(anyMapping: AnyMapping): Seq[NodeMapping] = {
+    val conditionalFields =
+      Seq(anyMapping.ifMapping.option(), anyMapping.thenMapping.option(), anyMapping.elseMapping.option()).flatten
+    val combiningFields = (anyMapping.and ++ anyMapping.or).map(_.value())
+    val mappables       = (conditionalFields ++ combiningFields).map(id => findNodeMappingById(id)._2)
+    mappables.collect { case nodeMapping: NodeMapping => nodeMapping }
   }
 
   def maybeFindNodeMappingById(nodeMappingId: NodeMappingId): Option[(Dialect, AnyNodeMappable)] = {

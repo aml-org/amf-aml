@@ -1,26 +1,25 @@
 package amf.aml.internal.render.emitters.instances
 import amf.aml.client.scala.AMLConfiguration
+import amf.aml.client.scala.model.document.{Dialect, ExternalContext}
+import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
+import amf.aml.client.scala.model.domain.NodeMapping
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
+import amf.aml.internal.render.emitters.common.{ExternalEmitter, IdCounter}
 import amf.core.client.common.position.Position
-import amf.core.internal.annotations.Aliases.{Alias, FullUrl, ImportLocation, RefId}
+import amf.core.client.common.position.Position.ZERO
+import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
+import amf.core.client.scala.model.domain.AmfObject
+import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.annotations.Aliases.{Alias, FullUrl, ImportLocation}
 import amf.core.internal.annotations.{Aliases, LexicalInformation, ReferencedInfo}
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
-import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
-import amf.core.client.scala.model.domain.AmfObject
-import amf.core.client.common.position.Position.ZERO
-import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.aml.internal.render.emitters.common.{ExternalEmitter, IdCounter}
-import amf.aml.client.scala.model.document.{Dialect, DialectLibrary, ExternalContext}
-import amf.aml.client.scala.model.domain.{ConditionalNodeMapping, NodeMappable, NodeMapping, UnionNodeMapping}
-import org.yaml.model.YDocument.EntryBuilder
 import amf.core.internal.utils.Regexes.Path
-import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
-import amf.aml.internal.render.emitters.instances.DialectIndex.NodeMappingId
 import org.mulesoft.common.collections.FilterType
 import org.mulesoft.common.core.CachedFunction
 import org.mulesoft.common.functional.MonadInstances.identityMonad
+import org.yaml.model.YDocument.EntryBuilder
 
 import scala.collection.mutable
 

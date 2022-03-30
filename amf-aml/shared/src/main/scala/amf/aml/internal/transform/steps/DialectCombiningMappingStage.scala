@@ -2,7 +2,7 @@ package amf.aml.internal.transform.steps
 
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
-import amf.aml.client.scala.model.domain.{AnyMapping, ConditionalNodeMapping, NodeMapping, UnionNodeMapping}
+import amf.aml.client.scala.model.domain.{AnyMapping, NodeMapping, UnionNodeMapping}
 import amf.aml.internal.metamodel.domain.AnyMappingModel
 import amf.aml.internal.render.emitters.common.IdCounter
 import amf.aml.internal.render.emitters.instances.{DefaultNodeMappableFinder, DialectIndex}
@@ -98,17 +98,18 @@ class DialectCombiningMappingStage extends TransformationStep() {
   private def getComponents(mapping: AnyMapping): Seq[AnyNodeMappable] = mapping match {
     case and: AnyMapping if and.and.nonEmpty => findAllMappings(and.and)
     case or: AnyMapping if or.or.nonEmpty    => findAllMappings(or.or)
-    case union: UnionNodeMapping             => findAllMappings(union.objectRange())
-    case conditional: ConditionalNodeMapping => findAllMappings(Seq(conditional.thenMapping, conditional.elseMapping))
-    case other: AnyNodeMappable              => Seq(other)
+    case conditional: AnyMapping if conditional.ifMapping.nonEmpty =>
+      findAllMappings(Seq(conditional.thenMapping, conditional.elseMapping))
+    case union: UnionNodeMapping => findAllMappings(union.objectRange())
+    case other: AnyNodeMappable  => Seq(other)
   }
 
   // Evaluates if the mapping is a combination group (an allOf or an oneOf/conditional with extended mapping)
   private def isCombinationGroup(anyMapping: AnyMapping) = anyMapping match {
     case any: AnyMapping if any.and.nonEmpty => true
-    // TODO When conditional is extracted to AnyMapping add an or in the second if condition
-    case node: NodeMapping if node.propertiesMapping().nonEmpty && node.or.nonEmpty => true
-    case _                                                                          => false
+    case node: NodeMapping if node.propertiesMapping().nonEmpty && (node.or.nonEmpty || node.ifMapping.nonEmpty) =>
+      true
+    case _ => false
   }
 
   // This method returns the components + the extended schema
@@ -120,13 +121,19 @@ class DialectCombiningMappingStage extends TransformationStep() {
   private def getExtendedMapping(anyMapping: AnyMapping): Option[NodeMapping] = anyMapping match {
     case nodeMapping: NodeMapping if nodeMapping.propertiesMapping().nonEmpty =>
       val extension = nodeMapping.copyElement(Annotations(VirtualElement())).asInstanceOf[NodeMapping]
-      extension.fields.removeField(AnyMappingModel.And)
-      extension.fields.removeField(AnyMappingModel.Or)
-      // TODO When conditional is extracted remove fields here
+      removeCombiningFields(extension)
       setMappingName(extension)
       registerMappingDeclaration(extension)
       Some(extension)
     case _ => None
+  }
+
+  private def removeCombiningFields(mapping: NodeMapping) = {
+    mapping.fields.removeField(AnyMappingModel.And)
+    mapping.fields.removeField(AnyMappingModel.Or)
+    mapping.fields.removeField(AnyMappingModel.If)
+    mapping.fields.removeField(AnyMappingModel.Then)
+    mapping.fields.removeField(AnyMappingModel.Else)
   }
 
   private def findAllMappings(mappingIds: Seq[StrField]): Seq[AnyNodeMappable] = mappingIds.map(findMapping)
