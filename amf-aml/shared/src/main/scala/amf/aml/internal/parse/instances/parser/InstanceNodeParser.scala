@@ -58,6 +58,10 @@ case class InstanceNodeParser(root: Root)(implicit ctx: DialectInstanceContext) 
     }
     // if we are parsing a patch document we mark the node as abstract
 
+    mappable match {
+      case anyMappable: AnyMapping if anyMappable.and.nonEmpty || anyMappable.or.nonEmpty || anyMappable.ifMapping.option().nonEmpty => // don't do anything
+      case _ => assignDefinedByAndTypes(mappable, result)
+    }
     if (ctx.isPatch) result.withAbstract(true)
     result
   }
