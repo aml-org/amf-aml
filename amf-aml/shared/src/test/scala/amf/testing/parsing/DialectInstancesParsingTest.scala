@@ -1179,6 +1179,84 @@ trait DialectInstancesParsingTest extends DialectTests {
                      directory = s"$basePath/if-then-else-invalid-if/")
   }
 
+  multiGoldenTest("combination: allOf with nested oneOf from YAML to JSON-LD", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/allOf-with-nested-oneOf/"
+    )
+  }
+
+  multiSourceTest("combination: allOf with nested oneOf from JSON-LD to YAML", "instance.%s") { config =>
+    cycleWithDialect("dialect.yaml",
+                     config.source,
+                     "instance.cycled.yaml",
+                     Some(Mimes.`application/yaml`),
+                     directory = s"$basePath/allOf-with-nested-oneOf/")
+  }
+
+  multiGoldenTest("combination: allOf with simple mappings from YAML to JSON-LD", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/allOf-simple/"
+    )
+  }
+
+  multiSourceTest("combination: allOf with simple mappings from JSON-LD to YAML", "instance.%s") { config =>
+    cycleWithDialect("dialect.yaml",
+                     config.source,
+                     "instance.cycled.yaml",
+                     Some(Mimes.`application/yaml`),
+                     directory = s"$basePath/allOf-simple/")
+  }
+
+  multiGoldenTest("combination: allOf with simple mappings and properties from YAML to JSON-LD", "instance.%s") {
+    config =>
+      cycleWithDialect(
+          "dialect.yaml",
+          "instance.yaml",
+          config.golden,
+          mediaType = Some(Mimes.`application/ld+json`),
+          renderOptions = Some(config.renderOptions),
+          directory = s"$basePath/allOf-properties/"
+      )
+  }
+
+  multiSourceTest("combination: allOf with simple mappings and properties from JSON-LD to YAML", "instance.%s") {
+    config =>
+      cycleWithDialect("dialect.yaml",
+                       config.source,
+                       "instance.cycled.yaml",
+                       Some(Mimes.`application/yaml`),
+                       directory = s"$basePath/allOf-properties/")
+  }
+
+  multiGoldenTest("combination: allOf with oneOf and if-then-else from YAML to JSON-LD", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/allOf-oneOf-if-then-else/"
+    )
+  }
+
+  multiSourceTest("combination: allOf with oneOf and if-then-else JSON-LD to YAML", "instance.%s") { config =>
+    cycleWithDialect("dialect.yaml",
+                     config.source,
+                     "instance.cycled.yaml",
+                     Some(Mimes.`application/yaml`),
+                     directory = s"$basePath/allOf-oneOf-if-then-else/")
+  }
+
   //noinspection SameParameterValue
   protected def withInlineDialect(source: String,
                                   golden: String,

@@ -171,7 +171,7 @@ trait AmlEmittersHelper extends DialectEmitterHelper {
   }
 
   type NodeMappingId = String
-  private val index = DialectIndex(dialect, nodeMappableFinder)
+  protected val index = DialectIndex(dialect, nodeMappableFinder)
 
   def findAllNodeMappings(mappableId: String): Seq[NodeMapping] = index.findAllNodeMappings(mappableId)
   def findNodeMappingById(nodeMappingId: NodeMappingId): (Dialect, AnyNodeMappable) =

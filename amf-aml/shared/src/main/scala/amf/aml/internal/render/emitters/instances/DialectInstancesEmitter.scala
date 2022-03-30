@@ -8,6 +8,7 @@ import amf.core.client.scala.model.document.EncodesModel
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.SpecOrdering.Lexical
 import amf.aml.client.scala.model.document._
+import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.registries.AMLRegistry
 import org.yaml.model.YDocument
@@ -34,6 +35,19 @@ case class DialectInstancesEmitter(instance: DialectInstanceUnit,
     })
   }
 
+  private def findRootNodeMapping(encodesModel: EncodesModel, dialectRoot: String): AnyNodeMappable = {
+    index.findNodeMappingById(dialectRoot)._2 match {
+      case union: UnionNodeMapping => index.findNodeMappingById(union.id)._2
+      case _ =>
+        val typesToLookup = encodesModel.encodes.meta.typeIris
+        typesToLookup
+          .foldLeft[Option[AnyNodeMappable]](None) { (result, typeIri) =>
+            result.orElse(index.maybeFindNodeMappingById(typeIri).map(_._2))
+          }
+          .getOrElse(index.findNodeMappingById(dialectRoot)._2)
+    }
+  }
+
   private def emitEncoded(b: PartBuilder, encoded: EncodesModel): Unit = {
 
     val schema = s"${dialect.name().value()} ${dialect.version().value()}"
@@ -52,7 +66,7 @@ case class DialectInstancesEmitter(instance: DialectInstanceUnit,
          dialect.documents().fragments().find(_.documentName().is(f.fragment().value())).map(_.encoded().value()).get)
     }
 
-    val (_, rootNodeMapping) = findNodeMappingById(root)
+    val rootNodeMapping = findRootNodeMapping(encoded, root)
 
     val discriminator = rootNodeMapping match {
       case mapping: UnionNodeMapping => Some(DiscriminatorHelper(mapping, this))

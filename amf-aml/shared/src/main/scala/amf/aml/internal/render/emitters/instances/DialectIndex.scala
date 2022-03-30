@@ -14,6 +14,17 @@ object DialectIndex {
 
 class DialectIndex(private val dialect: Dialect, private val finder: NodeMappableFinder) {
   val cache: mutable.HashMap[NodeMappingId, (Dialect, AnyNodeMappable)] = mutable.HashMap.empty
+  val compositeCache: mutable.HashMap[Set[String], AnyMapping]          = mutable.HashMap.empty
+
+  def findCompositeMapping(components: Set[String]): Option[AnyMapping] = {
+    compositeCache.get(components) match {
+      case Some(mapping) => Some(mapping)
+      case _ =>
+        dialect.declares
+          .collect { case mapping: AnyMapping if mapping.components.nonEmpty => mapping }
+          .find(mapping => mapping.components.flatMap(_.option()).toSet.equals(components))
+    }
+  }
 
   def findNodeMappingById(nodeMappingId: NodeMappingId): (Dialect, AnyNodeMappable) = {
     cache

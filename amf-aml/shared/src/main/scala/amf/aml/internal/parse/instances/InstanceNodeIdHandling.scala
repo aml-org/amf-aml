@@ -145,23 +145,6 @@ object InstanceNodeIdHandling {
 
 trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstanceParser =>
 
-  protected def generateNodeId(node: DialectDomainElement,
-                               nodeMap: YMap,
-                               path: Seq[String],
-                               defaultId: String,
-                               mapping: NodeMapping,
-                               additionalProperties: Map[String, Any] = Map(),
-                               rootNode: Boolean): String = {
-    InstanceNodeIdHandling.generateNodeId(node,
-                                          nodeMap,
-                                          path,
-                                          defaultId,
-                                          mapping,
-                                          additionalProperties,
-                                          rootNode,
-                                          root)
-  }
-
   protected def idTemplate(node: DialectDomainElement,
                            nodeMap: YMap,
                            path: Seq[String],

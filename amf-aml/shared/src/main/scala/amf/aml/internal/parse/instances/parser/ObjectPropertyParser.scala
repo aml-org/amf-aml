@@ -62,7 +62,7 @@ object SimpleObjectPropertyParser {
     ctx.dialect.declares.find(_.id == rangeId) match {
       case Some(nodeMapping: NodeMappable) =>
         val dialectDomainElement =
-          nodeParser(id, nestedObjectId, propertyEntry.value, nodeMapping, additionalProperties)
+          nodeParser(id, nestedObjectId, propertyEntry.value, nodeMapping, additionalProperties, false)
         node.withObjectField(property, dialectDomainElement, Right(propertyEntry))
       case _ => // ignore
     }
