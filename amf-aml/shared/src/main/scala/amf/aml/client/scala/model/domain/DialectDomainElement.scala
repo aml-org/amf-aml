@@ -2,6 +2,7 @@ package amf.aml.client.scala.model.domain
 
 import amf.aml.internal.annotations.YNodeAnnotationOperations.getAnnotationsOf
 import amf.aml.internal.metamodel.domain.DialectDomainElementModel
+import amf.aml.internal.parse.instances.DialectInstanceParser.typesFrom
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.client.scala.vocabulary.Namespace
@@ -169,6 +170,14 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
+  private[amf] def setProperty(property: PropertyLikeMapping[_],
+                               value: Any,
+                               scalarAnn: Annotations,
+                               fieldAnn: Annotations): DialectDomainElement = {
+    set(property.toField(), AmfScalar(value, scalarAnn), fieldAnn)
+    this
+  }
+
   private[amf] def setProperty(property: PropertyLikeMapping[_], value: Any, entry: YMapEntry): DialectDomainElement = {
     set(property.toField(), AmfScalar(value, Annotations(entry.value)), Annotations(entry))
     this
@@ -264,4 +273,12 @@ object DialectDomainElement {
 
   def apply(annotations: Annotations): DialectDomainElement =
     DialectDomainElement(Fields(), annotations)
+
+  def apply(id: String, mapping: NodeMapping, annotations: Annotations): DialectDomainElement = {
+    DialectDomainElement(annotations)
+      .withDefinedBy(mapping)
+      .withId(id)
+      .withDefinedBy(mapping)
+      .withInstanceTypes(typesFrom(mapping))
+  }
 }

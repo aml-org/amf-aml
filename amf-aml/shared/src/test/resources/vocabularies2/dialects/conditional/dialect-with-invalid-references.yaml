@@ -1,0 +1,34 @@
+#%Dialect 1.0
+dialect: Test
+version: "1.0"
+
+external:
+  schema-org: https://schema.org/
+
+documents:
+  root:
+    encodes: RootMapping
+
+nodeMappings:
+  RootMapping:
+    conditional:
+        if: NotExists
+        then: NotExists_1
+        else: NotExists_2
+  ConditionMapping:
+    mapping:
+      someField:
+        range: string
+        enum: [ "conditional-value" ]
+        mandatory: true
+  ThenMapping:
+    mapping:
+      someField:
+        range: string
+        propertyTerm: schema-org.name
+  ElseMapping:
+    mapping:
+      someOtherField:
+        range: string
+        propertyTerm: schema-org.description
+

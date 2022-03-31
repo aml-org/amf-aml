@@ -22,20 +22,20 @@ object AnnotationsParser {
       implicit ctx: ParserContext): Any = {
 
     computeAnnotationInfo(ast) flatMap { ai =>
-      computeSemanticExtensionParser(ctx)
+      computeSemanticExtensionParser(ctx, ai.key)
         .flatMap { parser =>
           val id    = node.id + s"${ai.prefix.map(_ + "/").getOrElse("/")}${ai.suffix}"
           val types = node.meta.`type`.map(_.iri())
-          parser.parse(ai.key, types, ai.entry, ctx, id)
+          parser.parse(types, ai.entry, ctx, id)
         }
         .orElse(parseRegularAnnotation(node, declarations, ctx, ai))
         .map(extension => node.add(CustomDomainProperties, extension))
     }
   }
 
-  private def computeSemanticExtensionParser(ctx: ParserContext) = {
+  private def computeSemanticExtensionParser(ctx: ParserContext, key: String) = {
     ctx match {
-      case diCtx: DialectInstanceContext => Some(diCtx.extensionsFacade)
+      case diCtx: DialectInstanceContext => Some(diCtx.extensionsFacadeBuilder.extensionName(key))
       case _                             => None
     }
   }

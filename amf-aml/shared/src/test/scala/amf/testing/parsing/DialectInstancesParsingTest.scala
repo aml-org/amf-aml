@@ -1002,7 +1002,8 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
-  test("Cyclic references") {
+  // TODO W-10795527
+  ignore("Cyclic references") {
     cycleWithDialect(
         "dialect.yaml",
         "instance.flattened.jsonld",
@@ -1096,6 +1097,86 @@ trait DialectInstancesParsingTest extends DialectTests {
         renderOptions = Some(RenderOptions().withPrettyPrint.withCompactUris),
         directory = s"$basePath/json-root-union/"
     )
+  }
+
+  test("Instance cycle with mapping ref without term obj") {
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.json",
+        "instance.golden.json",
+        mediaType = Some(Mimes.`application/json`),
+        renderOptions = Some(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/without-term-obj/"
+    )
+  }
+
+  test("Instance cycle with mapping ref without term seq") {
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.json",
+        "instance.golden.json",
+        mediaType = Some(Mimes.`application/json`),
+        renderOptions = Some(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/without-term-seq/"
+    )
+  }
+
+  multiGoldenTest("if/then/else parsing error should go with else branch", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/if-then-else-parsing-error/"
+    )
+  }
+
+  multiGoldenTest("if/then/else valid if should go with then branch", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/if-then-else-valid-if/"
+    )
+  }
+
+  multiGoldenTest("if/then/else invalid if should go with else branch", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/if-then-else-invalid-if/"
+    )
+  }
+
+  multiSourceTest("if/then/else parsing error should go with else branch from JSON-LD to YAML", "instance.%s") {
+    config =>
+      cycleWithDialect("dialect.yaml",
+                       config.source,
+                       "instance.multi-source.yaml",
+                       Some(Mimes.`application/yaml`),
+                       directory = s"$basePath/if-then-else-parsing-error/")
+  }
+
+  multiSourceTest("if/then/else valid if should go with then branch from JSON-LD to YAML", "instance.%s") { config =>
+    cycleWithDialect("dialect.yaml",
+                     config.source,
+                     "instance.multi-source.yaml",
+                     Some(Mimes.`application/yaml`),
+                     directory = s"$basePath/if-then-else-valid-if/")
+  }
+
+  multiSourceTest("if/then/else invalid if should go with else branch from JSON-LD to YAML", "instance.%s") { config =>
+    cycleWithDialect("dialect.yaml",
+                     config.source,
+                     "instance.multi-source.yaml",
+                     Some(Mimes.`application/yaml`),
+                     directory = s"$basePath/if-then-else-invalid-if/")
   }
 
   //noinspection SameParameterValue

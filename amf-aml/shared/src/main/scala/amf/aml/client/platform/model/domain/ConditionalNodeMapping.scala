@@ -9,7 +9,8 @@ import amf.aml.client.scala.model.domain.{ConditionalNodeMapping => InternalCond
 
 @JSExportAll
 case class ConditionalNodeMapping(override private[amf] val _internal: InternalConditionalNodeMapping)
-    extends DomainElement
+    extends AnyMapping(_internal)
+    with DomainElement
     with Linkable {
 
   @JSExportTopLevel("ConditionalNodeMapping")

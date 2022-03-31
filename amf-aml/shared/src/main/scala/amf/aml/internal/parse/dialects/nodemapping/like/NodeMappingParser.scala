@@ -1,4 +1,5 @@
 package amf.aml.internal.parse.dialects.nodemapping.like
+
 import amf.aml.client.scala.model.domain.{NodeMapping, PropertyMapping}
 import amf.aml.internal.metamodel.domain.{MergePolicies, NodeMappingModel, PropertyMappingModel}
 import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
@@ -8,7 +9,7 @@ import amf.aml.internal.parse.dialects.property.like.PropertyLikeMappingParser
 import amf.aml.internal.parse.instances.BaseDirective
 import amf.aml.internal.validate.DialectValidations
 import amf.aml.internal.validate.DialectValidations.{DialectError, VariablesDefinedInBase}
-import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.datanode.DataNodeParser
 import amf.core.internal.metamodel.domain.ShapeModel
@@ -30,13 +31,17 @@ trait DefaultFacetParsing {
   }
 }
 
-class NodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikeParserInterface with DefaultFacetParsing {
+class NodeMappingParser(implicit ctx: DialectContext)
+    extends NodeMappingLikeParserInterface
+    with DefaultFacetParsing
+    with AnyMappingParser {
 
   override def parse(map: YMap, adopt: DomainElement => Any, isFragment: Boolean): NodeMapping = {
 
     val nodeMapping = NodeMapping(map)
-
     adopt(nodeMapping)
+
+    super.parse(map, nodeMapping)
 
     if (!isFragment) ctx.closedNode("nodeMapping", nodeMapping.id, map)
 
@@ -54,6 +59,15 @@ class NodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikePar
                                s"Cannot find class term with alias $classTermId",
                                entry.value.location)
           }
+        }
+    )
+
+    map.key(
+        "additionalProperties",
+        entry => {
+          val value   = entry.value.as[Boolean]
+          val negated = !value
+          nodeMapping.set(NodeMappingModel.Closed, AmfScalar(negated, Annotations.inferred()), Annotations(entry))
         }
     )
 

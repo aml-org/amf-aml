@@ -28,15 +28,32 @@ trait DialectSyntax { this: DialectContext =>
       "nodeMappings" -> false
   )
 
-  val nodeMapping: Map[String, Required] = Map(
-      "classTerm"   -> false,
-      "mapping"     -> false,
-      "idProperty"  -> false,
-      "idTemplate"  -> false,
-      "patch"       -> false,
-      "extends"     -> false,
-      "union"       -> false,
-      "conditional" -> false
+  val anyMapping: Map[String, Required] = Map(
+      "anyOf"      -> false,
+      "oneOf"      -> false,
+      "components" -> false
+  )
+
+  val nodeMapping: Map[String, Required] = anyMapping ++ Map(
+      "classTerm"            -> false,
+      "mapping"              -> false,
+      "idProperty"           -> false,
+      "idTemplate"           -> false,
+      "patch"                -> false,
+      "extends"              -> false,
+      "union"                -> false,
+      "conditional"          -> false,
+      "additionalProperties" -> false
+  )
+
+  val conditionalMapping: Map[String, Required] = anyMapping ++ Map(
+      "conditional" -> true
+  )
+
+  val conditionalMappingInner: Map[String, Required] = Map(
+      "if"   -> true,
+      "then" -> true,
+      "else" -> true,
   )
 
   val propertyLikeMapping: Map[String, Required] = Map(
@@ -71,7 +88,8 @@ trait DialectSyntax { this: DialectContext =>
       "mapValue"     -> false,
       "mapTermKey"   -> false,
       "mapTermValue" -> false,
-      "patch"        -> false
+      "patch"        -> false,
+      "default"      -> false
   )
 
   val documentsMapping: Map[String, Required] = Map(
@@ -94,6 +112,8 @@ trait DialectSyntax { this: DialectContext =>
       case "library"                 => library
       case "fragment"                => fragment
       case "nodeMapping"             => nodeMapping
+      case "conditionalMappingInner" => conditionalMappingInner
+      case "conditionalMapping"      => conditionalMapping
       case "annotationMapping"       => annotationMapping
       case "propertyMapping"         => propertyMapping
       case "documentsMapping"        => documentsMapping

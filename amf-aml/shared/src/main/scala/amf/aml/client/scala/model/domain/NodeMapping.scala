@@ -1,16 +1,15 @@
 package amf.aml.client.scala.model.domain
 
-import amf.core.client.scala.model.StrField
-import amf.core.client.scala.model.domain.{DataNode, DomainElement, Linkable}
-import amf.core.internal.parser.domain.{Annotations, Fields}
-import amf.core.internal.utils._
 import amf.aml.internal.metamodel.domain.NodeMappingModel
 import amf.aml.internal.metamodel.domain.NodeMappingModel._
-import amf.core.internal.metamodel.domain.ShapeModel
+import amf.core.client.scala.model.domain.{DomainElement, Linkable}
+import amf.core.client.scala.model.{BoolField, StrField}
+import amf.core.internal.parser.domain.{Annotations, Fields}
+import amf.core.internal.utils._
 import org.yaml.model.YMap
 
 class NodeMapping(override val fields: Fields, override val annotations: Annotations)
-    extends DomainElement
+    extends AnyMapping(fields)
     with Linkable
     with MergeableMapping
     with NodeMappable[NodeMappingModel.type] {
@@ -20,10 +19,12 @@ class NodeMapping(override val fields: Fields, override val annotations: Annotat
   def nodetypeMapping: StrField                 = fields.field(NodeTypeMapping)
   def propertiesMapping(): Seq[PropertyMapping] = fields.field(PropertiesMapping)
   def idTemplate: StrField                      = fields.field(IdTemplate)
+  def closed: BoolField                         = fields.field(Closed)
   def resolvedExtends: Seq[String]              = fields.field(ResolvedExtends)
 
   def withNodeTypeMapping(nodeType: String): NodeMapping              = set(NodeTypeMapping, nodeType)
   def withPropertiesMapping(props: Seq[PropertyMapping]): NodeMapping = setArrayWithoutId(PropertiesMapping, props)
+  def withClosed(value: Boolean): NodeMapping                         = set(Closed, value)
   def withIdTemplate(idTemplate: String): NodeMapping                 = set(IdTemplate, idTemplate)
   def withResolvedExtends(ids: Seq[String]): NodeMapping              = set(ResolvedExtends, ids)
 

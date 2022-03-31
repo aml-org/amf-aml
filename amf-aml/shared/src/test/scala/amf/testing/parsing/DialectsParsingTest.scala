@@ -349,31 +349,31 @@ trait DialectsParsingTest extends DialectTests {
 
   test("Parse dialect with $id directive") {
     cycle(
-      "dialect.yaml",
-      "dialect.jsonld",
-      Some(Mimes.`application/ld+json`),
-      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-      directory = s"$basePath/id-directive"
+        "dialect.yaml",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/id-directive"
     )
   }
 
   test("Parse dialect library with $id directive") {
     cycle(
-      "dialect.yaml",
-      "dialect.jsonld",
-      Some(Mimes.`application/ld+json`),
-      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-      directory = s"$basePath/id-directive-library"
+        "dialect.yaml",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/id-directive-library"
     )
   }
 
   test("Parse dialect fragment with $id directive") {
     cycle(
-      "dialect.yaml",
-      "dialect.jsonld",
-      Some(Mimes.`application/ld+json`),
-      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-      directory = s"$basePath/id-directive-fragment"
+        "dialect.yaml",
+        "dialect.jsonld",
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+        directory = s"$basePath/id-directive-fragment"
     )
   }
 
@@ -423,5 +423,130 @@ trait DialectsParsingTest extends DialectTests {
           "dialect.cycled.yaml",
           mediaType = Some(Mimes.`application/yaml`),
           directory = s"$basePath/default-facet")
+  }
+
+  multiGoldenTest("Conditional facet in dialect", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/conditional"
+    )
+  }
+
+//  multiSourceTest("Render conditional facet from JSON-LD", "dialect.%s") { config =>
+//    cycle(config.source,
+//          "dialect.cycled.jsonld.yaml",
+//          mediaType = Some(Mimes.`application/yaml`),
+//          directory = s"$basePath/conditional")
+//  }
+
+  test("Render conditional facet from YAML") {
+    cycle("dialect.yaml", "dialect.cycled.yaml", Some(Mimes.`application/yaml`), directory = s"$basePath/conditional")
+  }
+
+  multiGoldenTest("Additional properties facet parsing", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/additional-properties"
+    )
+  }
+
+  multiSourceTest("Render additional properties facet from JSON-LD", "dialect.%s") { config =>
+    cycle(config.source,
+          "dialect.cycled.jsonld.yaml",
+          mediaType = Some(Mimes.`application/yaml`),
+          directory = s"$basePath/additional-properties")
+  }
+
+  test("Render additional properties facet from YAML") {
+    cycle("dialect.yaml",
+          "dialect.cycled.yaml",
+          Some(Mimes.`application/yaml`),
+          directory = s"$basePath/additional-properties")
+  }
+
+  multiGoldenTest("Parse enum values with different types of values", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/enum-scalars"
+    )
+  }
+
+  multiSourceTest("Parse enum values with different types of values from JSON-LD to YAML", "dialect.%s") { config =>
+    cycle(config.source,
+          "dialect.cycled.yaml",
+          mediaType = Some(Mimes.`application/yaml`),
+          directory = s"$basePath/enum-scalars")
+  }
+
+  multiGoldenTest("AllOf facet parsing", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/allOf"
+    )
+  }
+
+//  multiSourceTest("AllOf facet from JSON-LD", "dialect.%s") { config =>
+//    cycle(config.source,
+//          "dialect.cycled.jsonld.yaml",
+//          mediaType = Some(Mimes.`application/yaml`),
+//          directory = s"$basePath/allOf")
+//  }
+
+  test("Render allOf facet from YAML") {
+    cycle("dialect.yaml", "dialect.cycled.yaml", Some(Mimes.`application/yaml`), directory = s"$basePath/allOf")
+  }
+
+  multiGoldenTest("OneOf facet parsing", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/oneOf"
+    )
+  }
+
+//  multiSourceTest("OneOf facet from JSON-LD", "dialect.%s") { config =>
+//    cycle(config.source,
+//          "dialect.cycled.jsonld.yaml",
+//          mediaType = Some(Mimes.`application/yaml`),
+//          directory = s"$basePath/oneOf")
+//  }
+
+  test("Render oneOf facet from YAML") {
+    cycle("dialect.yaml", "dialect.cycled.yaml", Some(Mimes.`application/yaml`), directory = s"$basePath/oneOf")
+  }
+
+  multiGoldenTest("Components facet parsing", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/components"
+    )
+  }
+
+//  multiSourceTest("Components facet from JSON-LD", "dialect.%s") { config =>
+//    cycle(config.source,
+//          "dialect.cycled.jsonld.yaml",
+//          mediaType = Some(Mimes.`application/yaml`),
+//          directory = s"$basePath/components")
+//  }
+
+  test("Render components facet from YAML") {
+    cycle("dialect.yaml", "dialect.cycled.yaml", Some(Mimes.`application/yaml`), directory = s"$basePath/components")
   }
 }

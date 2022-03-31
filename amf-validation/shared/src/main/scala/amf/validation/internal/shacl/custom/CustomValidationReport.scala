@@ -56,7 +56,7 @@ class ReportBuilder(messageStyle: MessageStyle) {
 
 case class CustomValidationReport(var rs: List[ValidationResult] = Nil) extends ValidationReport {
 
-  override def conforms: Boolean = results.exists(_.severity == SeverityLevels.VIOLATION)
+  override def conforms: Boolean = !results.exists(_.severity == SeverityLevels.VIOLATION)
 
   override def results: List[ValidationResult] = rs
 }

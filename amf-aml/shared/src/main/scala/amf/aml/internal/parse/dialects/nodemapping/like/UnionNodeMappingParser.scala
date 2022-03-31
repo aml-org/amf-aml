@@ -10,12 +10,16 @@ import amf.core.client.scala.model.domain.{AmfArray, AmfScalar, DomainElement}
 import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.{YMap, YScalar, YSequence, YType}
 
-class UnionNodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLikeParserInterface {
+class UnionNodeMappingParser(implicit ctx: DialectContext)
+    extends NodeMappingLikeParserInterface
+    with AnyMappingParser {
 
   override def parse(map: YMap, adopt: DomainElement => Any, isFragment: Boolean): UnionNodeMapping = {
-    val unionNodeMapping = UnionNodeMapping(map)
 
+    val unionNodeMapping = UnionNodeMapping(map)
     adopt(unionNodeMapping)
+
+    super.parse(map, unionNodeMapping)
 
     map.key(
         "union",
@@ -23,7 +27,7 @@ class UnionNodeMappingParser(implicit ctx: DialectContext) extends NodeMappingLi
           entry.value.tagType match {
             case YType.Seq =>
               try {
-                val nodes = entry.value.as[YSequence].nodes.map(n => AmfScalar(n.as[String], Annotations(n)))
+                val nodes = MappingParsingHelper.entrySeqNodesToString(entry)
                 unionNodeMapping.set(ObjectRange, AmfArray(nodes, Annotations(entry.value)), Annotations(entry))
               } catch {
                 case _: Exception =>

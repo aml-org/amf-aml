@@ -5,8 +5,22 @@ import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.parse.instances.parser.ObjectCollectionPropertyParser.NodeParser
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.domain.DomainElement
+import amf.core.client.scala.parse.document.SyamlBasedParserErrorHandler
 import amf.core.internal.parser.Root
 import org.yaml.model.{YMap, YMapEntry, YNode}
+
+object LiteralPropertyParser {
+  def parse(propertyEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(
+      implicit ctx: DialectInstanceContext): Unit = {
+    setLiteralValue(propertyEntry, property, node)
+  }
+
+  private def setLiteralValue(entry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(
+      implicit ctx: DialectInstanceContext): Unit = {
+    val parsed = LiteralValueParser.parseLiteralValue(entry.value, property, node)(ctx.eh)
+    LiteralValueSetter.setLiteralValue(parsed, entry, property, node)
+  }
+}
 
 class ElementPropertyParser(private val root: Root, private val rootMap: YMap, private val nodeParser: NodeParser) {
 
@@ -14,7 +28,7 @@ class ElementPropertyParser(private val root: Root, private val rootMap: YMap, p
       implicit ctx: DialectInstanceContext): Unit = {
     property.classification() match {
       case ExtensionPointProperty    => parseDialectExtension(id, propertyEntry, property, node)
-      case LiteralProperty           => parseLiteralProperty(id, propertyEntry, property, node)
+      case LiteralProperty           => LiteralPropertyParser.parse(propertyEntry, property, node)
       case LiteralPropertyCollection => parseLiteralCollectionProperty(id, propertyEntry, property, node)
       case ObjectProperty            => parseObjectProperty(id, propertyEntry, property, node)
       case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
@@ -96,26 +110,6 @@ class ElementPropertyParser(private val root: Root, private val rootMap: YMap, p
                                          additionalProperties,
                                          parseObjectUnion,
                                          nodeParser)
-  }
-
-  protected def parseLiteralValue(value: YNode, property: PropertyLikeMapping[_], node: DialectDomainElement)(
-      implicit ctx: DialectInstanceContext): Option[_] = {
-
-    LiteralValueParser.parseLiteralValue(value, property, node)
-  }
-
-  // TODO: This should receive annotations instead of an entry. Unrelated concepts in the same method
-  protected def setLiteralValue(entry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(
-      implicit ctx: DialectInstanceContext): Unit = {
-    val parsed = parseLiteralValue(entry.value, property, node)
-    LiteralValueSetter.setLiteralValue(parsed, entry, property, node)
-  }
-
-  protected def parseLiteralProperty(id: String,
-                                     propertyEntry: YMapEntry,
-                                     property: PropertyLikeMapping[_],
-                                     node: DialectDomainElement)(implicit ctx: DialectInstanceContext): Unit = {
-    setLiteralValue(propertyEntry, property, node)
   }
 
   protected def parseLiteralCollectionProperty(

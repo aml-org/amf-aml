@@ -1,0 +1,19 @@
+#%Dialect 1.0
+dialect: SemEx
+version: "1.0"
+documents:
+  root:
+    encodes: MultipleEnums
+
+nodeMappings:
+  MultipleEnums:
+    mapping:
+      a:
+        range: number
+        minimum: 3.01
+        maximum: 8.01
+        enum:
+          - 2.0
+          - 7.0
+          - 10.0
+

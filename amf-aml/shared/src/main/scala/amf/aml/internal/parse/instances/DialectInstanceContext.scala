@@ -5,9 +5,11 @@ import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
 import amf.aml.client.scala.model.domain.{DialectDomainElement, DocumentMapping, NodeMappable, PublicNodeMapping}
 import amf.aml.internal.parse.common.{DeclarationContext, SyntaxErrorReporter}
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
-import amf.aml.internal.semantic.SemanticExtensionsFacade
+import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
+import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SyamlBasedParserErrorHandler}
-import amf.core.internal.parser.YMapOps
+import amf.core.internal.parser.{ParseConfigOverride, YMapOps}
+import amf.core.internal.validation.core.ValidationProfile
 import org.yaml.model._
 
 import scala.language.existentials
@@ -15,7 +17,8 @@ import scala.language.existentials
 class DialectInstanceContext(var dialect: Dialect,
                              val nodeMappableFinder: NodeMappableFinder,
                              private val wrapped: ParserContext,
-                             private val ds: Option[DialectInstanceDeclarations] = None)
+                             private val ds: Option[DialectInstanceDeclarations] = None,
+                             val constraints: Option[ValidationProfile] = None)
     extends SyamlBasedParserErrorHandler(wrapped.rootContextDocument,
                                          wrapped.refs,
                                          wrapped.futureDeclarations,
@@ -29,7 +32,8 @@ class DialectInstanceContext(var dialect: Dialect,
   val libraryDeclarationsNodeMappings: Map[String, NodeMappable] = parseDeclaredNodeMappings("library")
   val rootDeclarationsNodeMappings: Map[String, NodeMappable]    = parseDeclaredNodeMappings("root")
 
-  val extensionsFacade: SemanticExtensionsFacade = SemanticExtensionsFacade(wrapped.config)
+  val extensionsFacadeBuilder: SemanticExtensionsFacadeBuilder = (name: String) =>
+    SemanticExtensionsFacade(name, wrapped.config)
 
   def computeRootProps: Set[String] = {
     val declarationProps: Set[String] = Option(dialect.documents()).flatMap(_.declarationsPath().option()) match {
@@ -122,5 +126,13 @@ class DialectInstanceContext(var dialect: Dialect,
       case _ if isIncludeMap(node) => Left(node.as[YMap].key("$include").get.value.as[String])
       case _                       => Right(node)
     }
+  }
+
+  def copy(errorHandler: AMFErrorHandler): DialectInstanceContext = {
+    new DialectInstanceContext(dialect,
+                               nodeMappableFinder,
+                               wrapped.copy(config = ParseConfigOverride(errorHandler, wrapped.config)),
+                               ds,
+                               constraints)
   }
 }

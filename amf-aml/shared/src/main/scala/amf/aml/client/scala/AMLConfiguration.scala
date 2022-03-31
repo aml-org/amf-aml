@@ -19,7 +19,7 @@ import amf.aml.internal.render.plugin.{
 }
 import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, DialectTransformationPipeline}
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
-import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin}
+import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin, DialectEnumValidationPlugin}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config._
 import amf.core.client.scala.errorhandling.{
@@ -248,6 +248,7 @@ object AMLConfiguration extends PlatformSecrets {
       new AMLDialectRenderingPlugin() ::
       new AMLVocabularyRenderingPlugin() ::
       new AMLValidationPlugin() ::
+      DialectEnumValidationPlugin ::
       Nil
 
     // we might need to register editing pipeline as well because of legacy behaviour.

@@ -1,0 +1,18 @@
+#%Dialect 1.0
+dialect: DoubleEnums
+version: "1.0"
+documents:
+  root:
+    encodes: MultipleEnums
+
+nodeMappings:
+  MultipleEnums:
+    mapping:
+      validEnum:
+        range: double
+        enum:
+          - 5.78
+      invalidEnum:
+        range: double
+        enum:
+          - 5.78

@@ -1,0 +1,37 @@
+#%Dialect 1.0
+nodeMappings:
+  HeaderInjection:
+    mapping:
+      inboundHeaders:
+        range: SchemaNode
+        mandatory: false
+        allowMultiple: true
+      outboundHeaders:
+        range: SchemaNode_1
+        mandatory: false
+        allowMultiple: true
+  SchemaNode:
+    mapping:
+      key:
+        range: string
+        mandatory: false
+      value:
+        range: string
+        mandatory: false
+  SchemaNode_1:
+    mapping:
+      key:
+        range: string
+        mandatory: false
+      value:
+        range: string
+        mandatory: false
+external:
+  security: anypoint://vocabulary/policy.yaml#
+  config: anypoint://vocabulary/policy.yaml#
+  ns0: anypoint://vocabulary/policy.yaml#
+dialect: amf-json-schema-generated-dialect
+version: "1.0"
+documents:
+  root:
+    encodes: HeaderInjection

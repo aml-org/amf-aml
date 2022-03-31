@@ -1,6 +1,6 @@
 package amf.aml.client.scala.model.domain
 
-import amf.aml.internal.metamodel.domain.ConditionalNodeMappingModel
+import amf.aml.internal.metamodel.domain.{AnyMappingModel, ConditionalNodeMappingModel}
 import amf.aml.internal.metamodel.domain.ConditionalNodeMappingModel._
 import amf.core.client.scala.model.StrField
 import amf.core.client.scala.model.domain.{DomainElement, Linkable}
@@ -8,8 +8,8 @@ import amf.core.internal.parser.domain.{Annotations, Fields}
 import amf.core.internal.utils._
 import org.yaml.model.YMap
 
-case class ConditionalNodeMapping(fields: Fields, annotations: Annotations)
-    extends DomainElement
+case class ConditionalNodeMapping(override val fields: Fields, override val annotations: Annotations)
+    extends AnyMapping(fields)
     with Linkable
     with MergeableMapping
     with NodeMappable[ConditionalNodeMappingModel.type] {

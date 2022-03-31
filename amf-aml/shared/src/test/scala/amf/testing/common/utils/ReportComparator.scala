@@ -26,7 +26,12 @@ trait ReportComparator extends FileAssertionTest with Matchers {
           assertion
         }
       }
-      .getOrElse { Future.successful { report.conforms shouldBe true } }
+      .getOrElse {
+        Future.successful {
+          if (!report.conforms) Console.err.println(report.toString())
+          report.conforms shouldBe true
+        }
+      }
   }
 
   protected def processGoldenPath(path: String): String

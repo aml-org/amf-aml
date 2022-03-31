@@ -7,11 +7,7 @@ import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.Iri
 import amf.core.internal.metamodel.domain._
 
-object ConditionalNodeMappingModel
-    extends DomainElementModel
-    with LinkableElementModel
-    with MergeableMappingModel
-    with NodeMappableModel {
+object ConditionalNodeMappingModel extends AnyMappingModel {
 
   val If: Field = Field(
       Iri,
@@ -38,7 +34,7 @@ object ConditionalNodeMappingModel
   )
 
   override val fields
-    : List[Field] = Name :: If :: Then :: Else :: LinkableElementModel.fields ++ DomainElementModel.fields
+    : List[Field] = Name :: If :: Then :: Else :: LinkableElementModel.fields ++ DomainElementModel.fields ++ AnyMappingModel.fields
 
   override val `type`
     : List[ValueType] = Namespace.Meta + "ConditionalNodeMapping" :: Namespace.Shacl + "Shape" :: DomainElementModel.`type`

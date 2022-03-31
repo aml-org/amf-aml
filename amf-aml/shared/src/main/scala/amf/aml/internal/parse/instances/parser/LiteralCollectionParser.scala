@@ -14,7 +14,7 @@ object LiteralCollectionParser {
           .as[YSequence]
           .nodes
           .flatMap { elemValue =>
-            LiteralValueParser.parseLiteralValue(elemValue, property, node)
+            LiteralValueParser.parseLiteralValue(elemValue, property, node)(ctx.eh)
           }
 
         values.headOption match {
@@ -23,7 +23,7 @@ object LiteralCollectionParser {
         }
 
       case _ =>
-        LiteralValueParser.parseLiteralValue(propertyEntry.value, property, node) match {
+        LiteralValueParser.parseLiteralValue(propertyEntry.value, property, node)(ctx.eh) match {
           case Some(("link", v)) => Seq(v)
           case Some(v)           => Seq(v)
           case _                 => Nil
