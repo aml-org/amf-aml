@@ -33,16 +33,10 @@ nodeMappings:
         range: string
         propertyTerm: schema-org.description
   CombiningMapping_1:
-    mapping:
-      am01:
-        range: string
-      am02:
-        range: string
-  CombiningMapping_2:
     components:
       - ThenMapping
       - ElseMapping
-      - CombiningMapping_1
+      - Root
     mapping:
       am01:
         range: string
