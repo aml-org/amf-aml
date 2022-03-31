@@ -33,12 +33,12 @@ nodeMappings:
         range: string
       am32:
         range: string
-  CombiningMapping_2:
+  CombiningMapping_1:
     components:
       - Member1
       - Member2
       - Member3
-      - CombiningMapping_1
+      - Root
     mapping:
       am01:
         range: string
@@ -55,12 +55,6 @@ nodeMappings:
       am31:
         range: string
       am32:
-        range: string
-  CombiningMapping_1:
-    mapping:
-      am01:
-        range: string
-      am02:
         range: string
 dialect: Mapping extended
 version: "1.0"

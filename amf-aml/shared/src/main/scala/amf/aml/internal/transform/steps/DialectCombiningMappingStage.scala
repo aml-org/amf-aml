@@ -84,7 +84,7 @@ class DialectCombiningMappingStage extends TransformationStep() {
       components.map(findMapping).map(component => component.link(component.name.toString).asInstanceOf[NodeMapping])
     mapping.withExtends(componentMappings)
     mapping.extend.zipWithIndex.foreach {
-      case (e, i) => e.withId(s"${e.id}-link-extends-${i}")
+      case (e, i) => e.withId(s"${e.id}-link-extends-$i")
     }
   }
 
@@ -117,23 +117,11 @@ class DialectCombiningMappingStage extends TransformationStep() {
   private def getCombinationGroup(anyMapping: AnyMapping): Seq[AnyNodeMappable] =
     getComponents(anyMapping) ++ getExtendedMapping(anyMapping)
 
-  // If there is an extended mapping I need to extract it to a new declaration
+  // If there is an extended mapping I will return the same mapping.
+  // It is already collected so it will be ignored in the next cycle.
   private def getExtendedMapping(anyMapping: AnyMapping): Option[NodeMapping] = anyMapping match {
-    case nodeMapping: NodeMapping if nodeMapping.propertiesMapping().nonEmpty =>
-      val extension = nodeMapping.copyElement(Annotations(VirtualElement())).asInstanceOf[NodeMapping]
-      removeCombiningFields(extension)
-      setMappingName(extension)
-      registerMappingDeclaration(extension)
-      Some(extension)
-    case _ => None
-  }
-
-  private def removeCombiningFields(mapping: NodeMapping) = {
-    mapping.fields.removeField(AnyMappingModel.And)
-    mapping.fields.removeField(AnyMappingModel.Or)
-    mapping.fields.removeField(AnyMappingModel.If)
-    mapping.fields.removeField(AnyMappingModel.Then)
-    mapping.fields.removeField(AnyMappingModel.Else)
+    case nodeMapping: NodeMapping if nodeMapping.propertiesMapping().nonEmpty => Some(nodeMapping)
+    case _                                                                    => None
   }
 
   private def findAllMappings(mappingIds: Seq[StrField]): Seq[AnyNodeMappable] = mappingIds.map(findMapping)
