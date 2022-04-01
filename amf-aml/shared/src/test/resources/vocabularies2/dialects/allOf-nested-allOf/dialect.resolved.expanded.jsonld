@@ -237,6 +237,11 @@
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/InnerOrMember1"
 }
 ],
+"http://www.w3.org/ns/shacl#closed": [
+{
+"@value": false
+}
+],
 "http://a.ml/vocabularies/amf/aml#components": [
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/InnerConditionNoMatch"
@@ -394,6 +399,11 @@
 },
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/AndMember3"
+}
+],
+"http://www.w3.org/ns/shacl#closed": [
+{
+"@value": false
 }
 ],
 "http://a.ml/vocabularies/amf/aml#components": [
@@ -637,6 +647,11 @@
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/InnerOrMember2"
 }
 ],
+"http://www.w3.org/ns/shacl#closed": [
+{
+"@value": false
+}
+],
 "http://a.ml/vocabularies/amf/aml#components": [
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/InnerConditionMatch"
@@ -759,6 +774,11 @@
 },
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/AndMember3"
+}
+],
+"http://www.w3.org/ns/shacl#closed": [
+{
+"@value": false
 }
 ],
 "http://a.ml/vocabularies/amf/aml#components": [
@@ -932,6 +952,11 @@
 },
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/InnerOrMember2"
+}
+],
+"http://www.w3.org/ns/shacl#closed": [
+{
+"@value": false
 }
 ],
 "http://a.ml/vocabularies/amf/aml#components": [
@@ -1116,6 +1141,11 @@
 },
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/allOf-nested-allOf/dialect.yaml#/declarations/InnerOrMember1"
+}
+],
+"http://www.w3.org/ns/shacl#closed": [
+{
+"@value": false
 }
 ],
 "http://a.ml/vocabularies/amf/aml#components": [

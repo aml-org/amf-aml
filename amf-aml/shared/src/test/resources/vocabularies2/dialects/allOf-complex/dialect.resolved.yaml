@@ -66,6 +66,7 @@ nodeMappings:
         propertyTerm: schema-org.something
       om21:
         range: boolean
+    additionalProperties: true
   CombiningMapping_4:
     components:
       - AndMember1
@@ -81,6 +82,7 @@ nodeMappings:
         propertyTerm: schema-org.no-something
       om21:
         range: boolean
+    additionalProperties: true
   CombiningMapping_1:
     components:
       - AndMember1
@@ -98,6 +100,7 @@ nodeMappings:
         range: string
       om12:
         range: number
+    additionalProperties: true
   CombiningMapping_3:
     components:
       - AndMember1
@@ -115,5 +118,6 @@ nodeMappings:
         range: string
       om12:
         range: number
+    additionalProperties: true
 dialect: Mapping AllOf
 version: "1.0"

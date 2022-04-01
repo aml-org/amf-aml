@@ -136,6 +136,7 @@
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/extended-mapping-2/dialect.yaml#/declarations/Root"
 }
 ],
+"http://www.w3.org/ns/shacl#closed": false,
 "http://a.ml/vocabularies/amf/aml#components": [
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/extended-mapping-2/dialect.yaml#/declarations/Member1"
@@ -192,6 +193,7 @@
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/extended-mapping-2/dialect.yaml#/declarations/Root"
 }
 ],
+"http://www.w3.org/ns/shacl#closed": false,
 "http://a.ml/vocabularies/amf/aml#components": [
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/extended-mapping-2/dialect.yaml#/declarations/Member3"
@@ -248,6 +250,7 @@
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/extended-mapping-2/dialect.yaml#/declarations/Root"
 }
 ],
+"http://www.w3.org/ns/shacl#closed": false,
 "http://a.ml/vocabularies/amf/aml#components": [
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/extended-mapping-2/dialect.yaml#/declarations/Member2"

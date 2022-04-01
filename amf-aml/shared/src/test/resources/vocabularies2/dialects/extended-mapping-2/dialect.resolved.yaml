@@ -46,6 +46,7 @@ nodeMappings:
         range: string
       am12:
         range: string
+    additionalProperties: true
   CombiningMapping_3:
     components:
       - Member3
@@ -59,6 +60,7 @@ nodeMappings:
         range: string
       am32:
         range: string
+    additionalProperties: true
   CombiningMapping_2:
     components:
       - Member2
@@ -72,5 +74,6 @@ nodeMappings:
         range: string
       am22:
         range: string
+    additionalProperties: true
 dialect: Mapping extended
 version: "1.0"

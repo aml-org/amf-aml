@@ -56,5 +56,6 @@ nodeMappings:
         range: string
       am32:
         range: string
+    additionalProperties: true
 dialect: Mapping extended
 version: "1.0"
