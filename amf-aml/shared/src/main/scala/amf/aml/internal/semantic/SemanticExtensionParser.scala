@@ -18,7 +18,7 @@ import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.{YDocument, YMap, YMapEntry, YNode}
 
-class SemanticExtensionParser(finder: ExtensionDialectFinder) {
+class SemanticExtensionParser(finder: ExtensionDialectFinder, specAnnotationValidator: AnnotationSchemaValidator) {
 
   def parse(extensionName: String,
             parentTypes: Seq[String],
@@ -26,7 +26,9 @@ class SemanticExtensionParser(finder: ExtensionDialectFinder) {
             ctx: ParserContext,
             extensionId: String): Option[DomainExtension] = {
     findExtensionMapping(extensionName, parentTypes, finder).map {
-      case (mapping, dialect) => parseSemanticExtension(dialect, mapping, ast, ctx, extensionId, extensionName)
+      case (mapping, dialect) =>
+        specAnnotationValidator.validate(extensionName, ast.key, ctx.eh)
+        parseSemanticExtension(dialect, mapping, ast, ctx, extensionId, extensionName)
     }
   }
 

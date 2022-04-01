@@ -7,6 +7,7 @@ import amf.aml.internal.validate.DialectValidations.MissingVocabulary
 import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.parse.document.ParserContext
+import amf.core.internal.annotations.SourceAST
 import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.parser.domain.Annotations
