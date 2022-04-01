@@ -44,6 +44,7 @@ nodeMappings:
       someField:
         range: string
         propertyTerm: schema-org.name
+    additionalProperties: true
   CombiningMapping_2:
     components:
       - ElseMapping
@@ -56,5 +57,6 @@ nodeMappings:
       someOtherField:
         range: string
         propertyTerm: schema-org.description
+    additionalProperties: true
 dialect: Mapping extended
 version: "1.0"

@@ -127,6 +127,7 @@
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/extended-mapping-3/dialect.yaml#/declarations/Root"
 }
 ],
+"http://www.w3.org/ns/shacl#closed": false,
 "http://a.ml/vocabularies/amf/aml#components": [
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/extended-mapping-3/dialect.yaml#/declarations/ThenMapping"
@@ -177,6 +178,7 @@
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/extended-mapping-3/dialect.yaml#/declarations/Root"
 }
 ],
+"http://www.w3.org/ns/shacl#closed": false,
 "http://a.ml/vocabularies/amf/aml#components": [
 {
 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/extended-mapping-3/dialect.yaml#/declarations/ElseMapping"

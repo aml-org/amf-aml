@@ -93,6 +93,7 @@ nodeMappings:
         range: string
       om12:
         range: number
+    additionalProperties: true
   CombiningMapping_6:
     components:
       - AndMember1
@@ -109,6 +110,7 @@ nodeMappings:
       c2:
         range: string
         propertyTerm: schema-org.no-other-something
+    additionalProperties: true
   CombiningMapping_8:
     components:
       - AndMember1
@@ -124,6 +126,7 @@ nodeMappings:
         propertyTerm: schema-org.no-something
       om21:
         range: boolean
+    additionalProperties: true
   CombiningMapping_2:
     components:
       - AndMember1
@@ -140,6 +143,7 @@ nodeMappings:
       c2:
         range: string
         propertyTerm: schema-org.no-other-something
+    additionalProperties: true
   CombiningMapping_5:
     components:
       - AndMember1
@@ -156,6 +160,7 @@ nodeMappings:
       c2:
         range: string
         propertyTerm: schema-org.other-something
+    additionalProperties: true
   CombiningMapping_4:
     components:
       - AndMember1
@@ -171,6 +176,7 @@ nodeMappings:
         propertyTerm: schema-org.something
       om21:
         range: boolean
+    additionalProperties: true
   CombiningMapping_7:
     components:
       - AndMember1
@@ -188,6 +194,7 @@ nodeMappings:
         range: string
       om12:
         range: number
+    additionalProperties: true
   CombiningMapping_1:
     components:
       - AndMember1
@@ -204,5 +211,6 @@ nodeMappings:
       c2:
         range: string
         propertyTerm: schema-org.other-something
+    additionalProperties: true
 dialect: Mapping AllOf
 version: "1.0"

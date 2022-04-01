@@ -18,7 +18,7 @@ import scala.language.higherKinds
 
 object ObjectCollectionPropertyParser extends NodeMappableHelper {
 
-  type NodeParser = (String, String, YNode, NodeMappable, Map[String, Any]) => DialectDomainElement
+  type NodeParser = (String, String, YNode, NodeMappable, Map[String, Any], Boolean) => DialectDomainElement
 
   type ObjectUnionParser[T <: DomainElement] =
     (String, Seq[String], YNode, NodeWithDiscriminator[_], Map[String, Any]) => DialectDomainElement
@@ -51,7 +51,7 @@ object ObjectCollectionPropertyParser extends NodeMappableHelper {
             ctx.dialect.declares.find(_.id == range.head) match {
               case Some(nodeMapping: NodeMappable) =>
                 val dialectDomainElement =
-                  nodeParser(id, nestedObjectId, elementNode, nodeMapping, additionalProperties)
+                  nodeParser(id, nestedObjectId, elementNode, nodeMapping, additionalProperties, false)
                 checkDuplicated(dialectDomainElement, elementNode, idsMap)
                 Some(dialectDomainElement)
               case _ => None

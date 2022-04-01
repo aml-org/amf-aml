@@ -7,7 +7,7 @@ import amf.aml.internal.metamodel.document.DialectInstanceModel
 import amf.aml.client.scala.model.document.{DialectInstanceFragment, DialectInstanceProcessingData}
 import amf.aml.client.scala.model.domain.{DialectDomainElement, DocumentsModel}
 import amf.aml.internal.parse.instances.DialectInstanceParser.encodedElementDefaultId
-import amf.aml.internal.parse.instances.parser.InstanceNodeParser
+import amf.aml.internal.parse.instances.parser.InstanceElementParser
 import amf.aml.internal.validate.DialectValidations.DialectError
 import com.github.ghik.silencer.silent
 
@@ -47,7 +47,7 @@ class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: Diale
         ctx.findNodeMapping(documentMapping.encoded().value()) match {
           case Some(nodeMapping) =>
             val path = dialectInstanceFragment.id + "#"
-            InstanceNodeParser(root).parse(path, path + "/", map, nodeMapping, Map(), givenAnnotations = None)
+            InstanceElementParser(root).parse(path, path + "/", map, nodeMapping, Map(), givenAnnotations = None)
           case _ =>
             emptyElementWithViolation(s"Could not find node mapping for: ${documentMapping.encoded().value()}")
         }

@@ -31,7 +31,7 @@ object DialectExtensionParser {
                 ctx.nestedDialects ++= Seq(dialect)
                 ctx.withCurrentDialect(dialect) {
                   val dialectDomainElement =
-                    nodeParser(id, nestedObjectId, propertyEntry.value, nodeMapping, Map.empty)
+                    nodeParser(id, nestedObjectId, propertyEntry.value, nodeMapping, Map.empty, false)
                   node.withObjectField(property, dialectDomainElement, Right(propertyEntry))
                 }
               case None =>

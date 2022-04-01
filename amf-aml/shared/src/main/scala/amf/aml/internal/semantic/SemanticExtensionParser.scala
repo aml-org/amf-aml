@@ -3,7 +3,7 @@ package amf.aml.internal.semantic
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.{AnnotationMapping, DialectDomainElement}
 import amf.aml.internal.parse.instances.DialectInstanceContext
-import amf.aml.internal.parse.instances.parser.{ElementPropertyParser, InstanceNodeParser}
+import amf.aml.internal.parse.instances.parser.{ElementPropertyParser, InstanceElementParser}
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.semantic.SemanticExtensionHelper.{findAnnotationMapping, findSemanticExtension}
 import amf.aml.internal.semantic.SemanticExtensionOps.findExtensionMapping
@@ -78,7 +78,7 @@ class SemanticExtensionParser(finder: ExtensionDialectFinder) {
     // TODO: improve, shouldn't have to create fake root node
     val fakeRoot        = Root(SyamlParsedDocument(YDocument(YMap.empty)), "", "", Seq.empty, UnspecifiedReference, "{}")
     val instanceElement = DialectDomainElement().withId("someId")
-    val nodeParser      = InstanceNodeParser(fakeRoot)
+    val nodeParser      = InstanceElementParser(fakeRoot)
     val propertyParser  = new ElementPropertyParser(fakeRoot, YMap.empty, nodeParser.parse)
     propertyParser.parse(extensionId, ast, mapping, instanceElement)
     ctx.futureDeclarations.resolve()

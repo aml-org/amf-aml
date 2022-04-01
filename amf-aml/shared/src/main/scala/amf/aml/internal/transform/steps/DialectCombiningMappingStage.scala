@@ -88,6 +88,8 @@ class DialectCombiningMappingStage extends TransformationStep() {
     mapping.extend.zipWithIndex.foreach {
       case (e, i) => e.withId(s"${e.id}-link-extends-$i")
     }
+    // TODO: We will set here an 'additionalProperties: true' for all combination mappings. Maybe this should be inherit from the extends in a future
+    mapping.withClosed(false)
   }
 
   // This method collect the schema defined at the same level

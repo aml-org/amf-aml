@@ -1,0 +1,53 @@
+#%Dialect 1.0
+dialect: Mapping AllOf
+version: 1.0
+external:
+  schema-org: https://schema.org/
+documents:
+  root:
+    encodes: Root
+nodeMappings:
+  Root:
+    allOf:
+      - OrMember1
+      - AndMember2
+  AndMember1:
+    mapping:
+      am11:
+        range: string
+      am12:
+        range: string
+  AndMember2:
+    mapping:
+      am21:
+        range: string
+      am22:
+        range: string
+  Member11:
+    mapping:
+      am11:
+        range: string
+        mandatory: true
+  Member12:
+    mapping:
+      am12:
+        range: string
+        mandatory: true
+  OrMember1:
+    oneOf:
+      - Member11
+      - Member12
+  combining_mapping_1:
+    components:
+      - AndMember2
+      - Member11
+    extends:
+      - AndMember2
+      - Member11
+  combining_mapping_2:
+    components:
+      - AndMember2
+      - Member12
+    extends:
+      - AndMember2
+      - Member12
