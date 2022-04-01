@@ -23,4 +23,8 @@ abstract class AnyMapping(fields: Fields) extends DomainElement {
   def withThenMapping(thenMapping: String): AnyMapping    = set(Then, thenMapping)
   def withElseMapping(elseMapping: String): AnyMapping    = set(Else, elseMapping)
 
+  def isAny: Boolean         = and.nonEmpty
+  def isOr: Boolean          = or.nonEmpty
+  def isConditional: Boolean = ifMapping.nonEmpty
+
 }

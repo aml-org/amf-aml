@@ -3,7 +3,7 @@ package amf.aml.internal.transform.steps
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
 import amf.aml.client.scala.model.domain.{AnyMapping, NodeMapping, UnionNodeMapping}
-import amf.aml.internal.metamodel.domain.AnyMappingModel
+import amf.aml.internal.metamodel.domain.{AnyMappingModel, NodeMappingModel}
 import amf.aml.internal.render.emitters.common.IdCounter
 import amf.aml.internal.render.emitters.instances.{DefaultNodeMappableFinder, DialectIndex}
 import amf.core.client.scala.AMFGraphConfiguration
@@ -20,6 +20,8 @@ import scala.collection.mutable
 
 // This stage generates all the combining mappings of an allOf field.
 // This is needed to have an indexed list of the mappings to link from a parsed DialectDomainElement
+// Currently supported allOf, allOf with properties, oneOf with properties and conditional with properties.
+// Not supported allOf, oneOf and conditional mixed between them.
 class DialectCombiningMappingStage extends TransformationStep() {
 
   var dialect: Option[Dialect]                 = None
@@ -96,9 +98,9 @@ class DialectCombiningMappingStage extends TransformationStep() {
   }
 
   private def getComponents(mapping: AnyMapping): Seq[AnyNodeMappable] = mapping match {
-    case and: AnyMapping if and.and.nonEmpty => findAllMappings(and.and)
-    case or: AnyMapping if or.or.nonEmpty    => findAllMappings(or.or)
-    case conditional: AnyMapping if conditional.ifMapping.nonEmpty =>
+    case and: AnyMapping if and.isAny => findAllMappings(and.and)
+    case or: AnyMapping if or.isOr    => findAllMappings(or.or)
+    case conditional: AnyMapping if conditional.isConditional =>
       findAllMappings(Seq(conditional.thenMapping, conditional.elseMapping))
     case union: UnionNodeMapping => findAllMappings(union.objectRange())
     case other: AnyNodeMappable  => Seq(other)
@@ -106,22 +108,60 @@ class DialectCombiningMappingStage extends TransformationStep() {
 
   // Evaluates if the mapping is a combination group (an allOf or an oneOf/conditional with extended mapping)
   private def isCombinationGroup(anyMapping: AnyMapping) = anyMapping match {
-    case any: AnyMapping if any.and.nonEmpty => true
-    case node: NodeMapping if node.propertiesMapping().nonEmpty && (node.or.nonEmpty || node.ifMapping.nonEmpty) =>
-      true
-    case _ => false
+    case any: AnyMapping if any.isAny                                                 => true
+    case node: NodeMapping if node.hasProperties && (node.isOr || node.isConditional) => true
+    case _                                                                            => false
   }
 
   // This method returns the components + the extended schema
   // It assumes that you already evaluated that it is an combination group
-  private def getCombinationGroup(anyMapping: AnyMapping): Seq[AnyNodeMappable] =
-    getComponents(anyMapping) ++ getExtendedMapping(anyMapping)
+  private def getCombinationGroup(anyMapping: AnyMapping): Seq[AnyNodeMappable] = {
+    val extendedMapping = getExtendedMapping(anyMapping)
+    anyMapping match {
+      case any if any.isAny   => getComponents(anyMapping) ++ extendedMapping
+      case other: NodeMapping =>
+        // In this flow I already know that there is an extended mapping, because I know that it is an combination group and it is not an any
+        // Here I will generate an oneOf/conditional + props in a allOf like structure
+        // (I will return the oneOf/conditional in one mapping and the properties in other, like they are elements of a parent allOf)
+        generateAllOfLikeElements(other)
+    }
+  }
 
   // If there is an extended mapping I will return the same mapping.
   // It is already collected so it will be ignored in the next cycle.
   private def getExtendedMapping(anyMapping: AnyMapping): Option[NodeMapping] = anyMapping match {
     case nodeMapping: NodeMapping if nodeMapping.propertiesMapping().nonEmpty => Some(nodeMapping)
     case _                                                                    => None
+  }
+
+  // This method generates a mapping copy removing certain fields.
+  // This is necessary because a extended oneOf/conditional is basically 2 different mappings.
+  // So I need to generate a combination with both of them
+  private def generateAllOfLikeElements(baseMapping: NodeMapping): Seq[NodeMapping] = {
+    val temporalBase = generateClone(baseMapping)
+    removeNodeMappingFields(temporalBase)
+    val temporalExtension = generateClone(baseMapping)
+    removeCombiningFields(temporalExtension)
+    Seq(temporalBase, temporalExtension)
+  }
+
+  private def generateClone(original: NodeMapping): NodeMapping = {
+    val copy = original.copyElement().asInstanceOf[NodeMapping]
+    copy.withName(original.name.value())
+    copy.withId(original.id)
+    copy
+  }
+
+  private def removeCombiningFields(mapping: NodeMapping): Unit = {
+    mapping.fields.removeField(AnyMappingModel.And)
+    mapping.fields.removeField(AnyMappingModel.Or)
+    mapping.fields.removeField(AnyMappingModel.If)
+    mapping.fields.removeField(AnyMappingModel.Then)
+    mapping.fields.removeField(AnyMappingModel.Else)
+  }
+
+  private def removeNodeMappingFields(mapping: NodeMapping): Unit = {
+    mapping.fields.removeField(NodeMappingModel.PropertiesMapping)
   }
 
   private def findAllMappings(mappingIds: Seq[StrField]): Seq[AnyNodeMappable] = mappingIds.map(findMapping)

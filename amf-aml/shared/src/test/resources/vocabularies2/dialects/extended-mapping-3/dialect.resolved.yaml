@@ -35,7 +35,6 @@ nodeMappings:
   CombiningMapping_1:
     components:
       - ThenMapping
-      - ElseMapping
       - Root
     mapping:
       am01:
@@ -45,6 +44,15 @@ nodeMappings:
       someField:
         range: string
         propertyTerm: schema-org.name
+  CombiningMapping_2:
+    components:
+      - ElseMapping
+      - Root
+    mapping:
+      am01:
+        range: string
+      am02:
+        range: string
       someOtherField:
         range: string
         propertyTerm: schema-org.description
