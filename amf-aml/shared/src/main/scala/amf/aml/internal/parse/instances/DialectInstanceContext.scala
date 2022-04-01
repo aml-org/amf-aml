@@ -8,6 +8,7 @@ import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.aml.internal.semantic.{SemanticExtensionsFacade, SemanticExtensionsFacadeBuilder}
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.{ParserContext, SyamlBasedParserErrorHandler}
+import amf.core.internal.annotations.SourceAST
 import amf.core.internal.parser.{ParseConfigOverride, YMapOps}
 import amf.core.internal.validation.core.ValidationProfile
 import org.yaml.model._
