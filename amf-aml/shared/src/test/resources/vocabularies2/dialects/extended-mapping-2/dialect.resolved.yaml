@@ -36,8 +36,6 @@ nodeMappings:
   CombiningMapping_1:
     components:
       - Member1
-      - Member2
-      - Member3
       - Root
     mapping:
       am01:
@@ -48,13 +46,31 @@ nodeMappings:
         range: string
       am12:
         range: string
-      am21:
+  CombiningMapping_3:
+    components:
+      - Member3
+      - Root
+    mapping:
+      am01:
         range: string
-      am22:
+      am02:
         range: string
       am31:
         range: string
       am32:
+        range: string
+  CombiningMapping_2:
+    components:
+      - Member2
+      - Root
+    mapping:
+      am01:
+        range: string
+      am02:
+        range: string
+      am21:
+        range: string
+      am22:
         range: string
 dialect: Mapping extended
 version: "1.0"
