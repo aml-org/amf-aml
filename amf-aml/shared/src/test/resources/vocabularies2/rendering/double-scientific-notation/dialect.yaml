@@ -1,0 +1,11 @@
+#%Dialect 1.0
+dialect: Double
+version: "1.0"
+nodeMappings:
+  Root:
+    mapping:
+      doubleValue:
+        range: double
+documents:
+  root:
+    encodes: Root

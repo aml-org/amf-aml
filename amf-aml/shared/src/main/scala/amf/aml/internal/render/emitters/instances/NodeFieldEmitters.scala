@@ -127,6 +127,7 @@ case class NodeFieldEmitters(node: DomainElement,
                          annotations: Option[Annotations] = None): EntryEmitter = {
     val formatted = scalar.value match {
       case date: SimpleDateTime => date.toString
+      case double: Double       => removeMaybeExponential(double)
       case other                => other
     }
 
@@ -206,5 +207,11 @@ case class NodeFieldEmitters(node: DomainElement,
     //        val nodeMetaTypes = node.meta.typeIri.map(_ -> true).toMap
     //        nodeMappingsInRange = nodeMappingsInRange.filter { nodeMapping => nodeMetaTypes.contains(nodeMapping.id) }
     nodeMappingsInRange.flatMap(_.propertiesMapping()).find(_.nodePropertyMapping().value() == iri)
+  }
+
+  // If the value of a Double is minor to the max value of a Long I will emit it without scientific notation
+  private def removeMaybeExponential(input: Double): Any = input.toString match {
+    case exponential if exponential.contains("E") && (input < Long.MaxValue) => input.toLong
+    case _                                                                   => input
   }
 }
