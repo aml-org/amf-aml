@@ -28,7 +28,7 @@ class NodeMapping(override val fields: Fields, override val annotations: Annotat
   def withIdTemplate(idTemplate: String): NodeMapping                 = set(IdTemplate, idTemplate)
   def withResolvedExtends(ids: Seq[String]): NodeMapping              = set(ResolvedExtends, ids)
 
-  def hasProperties: Boolean = propertiesMapping().nonEmpty
+  private[amf] def hasProperties: Boolean = propertiesMapping().nonEmpty
 
   /**
     * Returns the properties forming the primary key for this node.
