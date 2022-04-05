@@ -100,9 +100,9 @@ class DialectCombiningMappingStage extends TransformationStep() {
   }
 
   private def getComponents(mapping: AnyMapping): Seq[AnyNodeMappable] = mapping match {
-    case and: AnyMapping if and.isAny => findAllMappings(and.and)
-    case or: AnyMapping if or.isOr    => findAllMappings(or.or)
-    case conditional: AnyMapping if conditional.isConditional =>
+    case and: AnyMapping if and.hasAny => findAllMappings(and.and)
+    case or: AnyMapping if or.hasOr    => findAllMappings(or.or)
+    case conditional: AnyMapping if conditional.hasConditional =>
       findAllMappings(Seq(conditional.thenMapping, conditional.elseMapping))
     case union: UnionNodeMapping => findAllMappings(union.objectRange())
     case other: AnyNodeMappable  => Seq(other)
@@ -110,9 +110,9 @@ class DialectCombiningMappingStage extends TransformationStep() {
 
   // Evaluates if the mapping is a combination group (an allOf or an oneOf/conditional with extended mapping)
   private def isCombinationGroup(anyMapping: AnyMapping) = anyMapping match {
-    case any: AnyMapping if any.isAny                                                 => true
-    case node: NodeMapping if node.hasProperties && (node.isOr || node.isConditional) => true
-    case _                                                                            => false
+    case any: AnyMapping if any.hasAny                                                  => true
+    case node: NodeMapping if node.hasProperties && (node.hasOr || node.hasConditional) => true
+    case _                                                                              => false
   }
 
   // This method returns the components + the extended schema
@@ -120,7 +120,7 @@ class DialectCombiningMappingStage extends TransformationStep() {
   private def getCombinationGroup(anyMapping: AnyMapping): Seq[AnyNodeMappable] = {
     val extendedMapping = getExtendedMapping(anyMapping)
     anyMapping match {
-      case any if any.isAny   => getComponents(anyMapping) ++ extendedMapping
+      case any if any.hasAny  => getComponents(anyMapping) ++ extendedMapping
       case other: NodeMapping =>
         // In this flow I already know that there is an extended mapping, because I know that it is an combination group and it is not an any
         // Here I will generate an oneOf/conditional + props in a allOf like structure
