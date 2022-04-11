@@ -12,7 +12,12 @@ class DefaultNodeClassSorter() {
       (Namespace.Document + "Unit").iri(),
       (Namespace.Shacl + "Shape").iri(),
       (Namespace.Shapes + "Shape").iri(),
-      (Namespace.ApiContract + "Message").iri()
+      (Namespace.ApiContract + "Message").iri(),
+      (Namespace.Core + "Operation").iri(),
+      (Namespace.Core + "Parameter").iri(),
+      (Namespace.Core + "Payload").iri(),
+      (Namespace.Core + "Request").iri(),
+      (Namespace.Core + "Response").iri()
   )
 
   def sortedClassesOf(node: Node): Seq[String] = {
