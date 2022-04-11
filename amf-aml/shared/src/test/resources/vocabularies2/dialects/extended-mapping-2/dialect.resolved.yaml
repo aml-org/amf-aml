@@ -1,0 +1,79 @@
+#%Dialect 1.0
+external:
+  schema-org: https://schema.org/
+documents:
+  root:
+    encodes: Root
+nodeMappings:
+  Root:
+    oneOf:
+      - Member1
+      - Member2
+      - Member3
+    mapping:
+      am01:
+        range: string
+      am02:
+        range: string
+  Member1:
+    mapping:
+      am11:
+        range: string
+      am12:
+        range: string
+  Member2:
+    mapping:
+      am21:
+        range: string
+      am22:
+        range: string
+  Member3:
+    mapping:
+      am31:
+        range: string
+      am32:
+        range: string
+  CombiningMapping_1:
+    components:
+      - Member1
+      - Root
+    mapping:
+      am01:
+        range: string
+      am02:
+        range: string
+      am11:
+        range: string
+      am12:
+        range: string
+    additionalProperties: true
+  CombiningMapping_3:
+    components:
+      - Member3
+      - Root
+    mapping:
+      am01:
+        range: string
+      am02:
+        range: string
+      am31:
+        range: string
+      am32:
+        range: string
+    additionalProperties: true
+  CombiningMapping_2:
+    components:
+      - Member2
+      - Root
+    mapping:
+      am01:
+        range: string
+      am02:
+        range: string
+      am21:
+        range: string
+      am22:
+        range: string
+    additionalProperties: true
+dialect: Mapping extended
+version: "1.0"

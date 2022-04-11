@@ -157,11 +157,11 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
             entry.value.as[YMap].entries.foreach { declarationEntry =>
               val declarationName = declarationEntry.key.as[YScalar].text
               val id              = pathSegment(declarationsId, List(declarationName))
-              val node = InstanceNodeParser(root).parse(declarationsId,
-                                                        id,
-                                                        declarationEntry.value,
-                                                        nodeMapping,
-                                                        givenAnnotations = Some(Annotations(declarationEntry)))
+              val node = InstanceElementParser(root).parse(declarationsId,
+                                                           id,
+                                                           declarationEntry.value,
+                                                           nodeMapping,
+                                                           givenAnnotations = Some(Annotations(declarationEntry)))
 
               // lookup by ref name
               node.set(DialectDomainElementModel.DeclarationName,
@@ -187,13 +187,13 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
           val additionalKey =
             if (documents.keyProperty().value()) Some(ctx.dialect.name().value())
             else None
-          InstanceNodeParser(root).parse(path,
-                                         encodedElementDefaultId(dialectInstance),
-                                         map,
-                                         nodeMapping,
-                                         rootNode = true,
-                                         givenAnnotations = None,
-                                         additionalKey = additionalKey)
+          InstanceElementParser(root).parse(path,
+                                            encodedElementDefaultId(dialectInstance),
+                                            map,
+                                            nodeMapping,
+                                            rootNode = true,
+                                            givenAnnotations = None,
+                                            additionalKey = additionalKey)
         case _ =>
           emptyElementWithViolation(s"Could not find node mapping for: ${mapping.encoded().value()}")
       }

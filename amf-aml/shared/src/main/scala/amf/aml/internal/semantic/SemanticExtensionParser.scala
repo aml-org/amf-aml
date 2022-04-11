@@ -3,7 +3,7 @@ package amf.aml.internal.semantic
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.{AnnotationMapping, DialectDomainElement}
 import amf.aml.internal.parse.instances.DialectInstanceContext
-import amf.aml.internal.parse.instances.parser.{ElementPropertyParser, InstanceNodeParser}
+import amf.aml.internal.parse.instances.parser.{ElementPropertyParser, InstanceElementParser}
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
 import amf.aml.internal.semantic.SemanticExtensionHelper.{findAnnotationMapping, findSemanticExtension}
 import amf.aml.internal.semantic.SemanticExtensionOps.findExtensionMapping
@@ -18,7 +18,7 @@ import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
 import org.yaml.model.{YDocument, YMap, YMapEntry, YNode}
 
-class SemanticExtensionParser(finder: ExtensionDialectFinder) {
+class SemanticExtensionParser(finder: ExtensionDialectFinder, specAnnotationValidator: AnnotationSchemaValidator) {
 
   def parse(extensionName: String,
             parentTypes: Seq[String],
@@ -26,7 +26,9 @@ class SemanticExtensionParser(finder: ExtensionDialectFinder) {
             ctx: ParserContext,
             extensionId: String): Option[DomainExtension] = {
     findExtensionMapping(extensionName, parentTypes, finder).map {
-      case (mapping, dialect) => parseSemanticExtension(dialect, mapping, ast, ctx, extensionId, extensionName)
+      case (mapping, dialect) =>
+        specAnnotationValidator.validate(extensionName, ast.key, ctx.eh)
+        parseSemanticExtension(dialect, mapping, ast, ctx, extensionId, extensionName)
     }
   }
 
@@ -78,7 +80,7 @@ class SemanticExtensionParser(finder: ExtensionDialectFinder) {
     // TODO: improve, shouldn't have to create fake root node
     val fakeRoot        = Root(SyamlParsedDocument(YDocument(YMap.empty)), "", "", Seq.empty, UnspecifiedReference, "{}")
     val instanceElement = DialectDomainElement().withId("someId")
-    val nodeParser      = InstanceNodeParser(fakeRoot)
+    val nodeParser      = InstanceElementParser(fakeRoot)
     val propertyParser  = new ElementPropertyParser(fakeRoot, YMap.empty, nodeParser.parse)
     propertyParser.parse(extensionId, ast, mapping, instanceElement)
     ctx.futureDeclarations.resolve()

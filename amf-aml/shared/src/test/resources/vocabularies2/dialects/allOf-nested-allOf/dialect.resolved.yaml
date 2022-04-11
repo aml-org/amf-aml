@@ -1,0 +1,156 @@
+#%Dialect 1.0
+external:
+  schema-org: https://schema.org/
+documents:
+  root:
+    encodes: Root
+nodeMappings:
+  Root:
+    allOf:
+      - AndMember1
+      - AndMember2
+      - AndMember3
+  AndMember1:
+    mapping:
+      am11:
+        range: string
+      am12:
+        range: string
+  AndMember2:
+    conditional:
+      if: Condition
+      then: ConditionMatch
+      else: ConditionNoMatch
+  AndMember3:
+    allOf:
+      - InnerAndMember1
+      - InnerAndMember2
+  Condition:
+    mapping:
+      c1:
+        range: string
+        enum:
+          - something
+  ConditionMatch:
+    mapping:
+      c1:
+        range: string
+        propertyTerm: schema-org.something
+  ConditionNoMatch:
+    mapping:
+      c1:
+        range: string
+        propertyTerm: schema-org.no-something
+  InnerAndMember1:
+    conditional:
+      if: InnerCondition
+      then: InnerConditionMatch
+      else: InnerConditionNoMatch
+  InnerAndMember2:
+    oneOf:
+      - InnerOrMember1
+      - InnerOrMember2
+  InnerCondition:
+    mapping:
+      c2:
+        range: string
+        enum:
+          - other-something
+  InnerConditionMatch:
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.other-something
+  InnerConditionNoMatch:
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.no-other-something
+  InnerOrMember1:
+    mapping:
+      om11:
+        range: string
+      om12:
+        range: number
+  InnerOrMember2:
+    mapping:
+      om21:
+        range: boolean
+  CombiningMapping_3:
+    components:
+      - InnerConditionNoMatch
+      - InnerOrMember1
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.no-other-something
+      om11:
+        range: string
+      om12:
+        range: number
+    additionalProperties: true
+  CombiningMapping_6:
+    components:
+      - AndMember1
+      - ConditionNoMatch
+      - AndMember3
+    mapping:
+      am11:
+        range: string
+      am12:
+        range: string
+      c1:
+        range: string
+        propertyTerm: schema-org.no-something
+    additionalProperties: true
+  CombiningMapping_2:
+    components:
+      - InnerConditionMatch
+      - InnerOrMember2
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.other-something
+      om21:
+        range: boolean
+    additionalProperties: true
+  CombiningMapping_5:
+    components:
+      - AndMember1
+      - ConditionMatch
+      - AndMember3
+    mapping:
+      am11:
+        range: string
+      am12:
+        range: string
+      c1:
+        range: string
+        propertyTerm: schema-org.something
+    additionalProperties: true
+  CombiningMapping_4:
+    components:
+      - InnerConditionNoMatch
+      - InnerOrMember2
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.no-other-something
+      om21:
+        range: boolean
+    additionalProperties: true
+  CombiningMapping_1:
+    components:
+      - InnerConditionMatch
+      - InnerOrMember1
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.other-something
+      om11:
+        range: string
+      om12:
+        range: number
+    additionalProperties: true
+dialect: Mapping AllOf
+version: "1.0"

@@ -1,0 +1,80 @@
+#%Dialect 1.0
+dialect: Mapping AllOf
+version: "1.0"
+external:
+  schema-org: https://schema.org/
+documents:
+  root:
+    encodes: Root
+nodeMappings:
+  Root:
+    allOf:
+      - AndMember1
+      - AndMember2
+      - AndMember3
+  AndMember1:
+    mapping:
+      am11:
+        range: string
+      am12:
+        range: string
+  AndMember2:
+    conditional:
+      if: Condition
+      then: ConditionMatch
+      else: ConditionNoMatch
+  AndMember3:
+    oneOf:
+      - OrMember1
+      - OrMember2
+  Condition:
+    mapping:
+      c1:
+        range: string
+        enum:
+          - something
+  ConditionMatch:
+    mapping:
+      c1:
+        range: string
+        propertyTerm: schema-org.something
+  ConditionNoMatch:
+    mapping:
+      c1:
+        range: string
+        propertyTerm: schema-org.no-something
+  OrMember1:
+    conditional:
+      if: InnerCondition
+      then: InnerConditionMatch
+      else: InnerConditionNoMatch
+  OrMember2:
+    oneOf:
+      - InnerOrMember1
+      - InnerOrMember2
+  InnerCondition:
+    mapping:
+      c2:
+        range: string
+        enum:
+          - other-something
+  InnerConditionMatch:
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.other-something
+  InnerConditionNoMatch:
+    mapping:
+      c2:
+        range: string
+        propertyTerm: schema-org.no-other-something
+  InnerOrMember1:
+    mapping:
+      om11:
+        range: string
+      om12:
+        range: number
+  InnerOrMember2:
+    mapping:
+      om21:
+        range: boolean

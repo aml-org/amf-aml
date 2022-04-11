@@ -1,0 +1,34 @@
+#%Dialect 1.0
+dialect: Mapping extended
+version: "1.0"
+external:
+  schema-org: https://schema.org/
+documents:
+  root:
+    encodes: "#/declarations/Root"
+nodeMappings:
+  Root:
+    allOf: []
+    mapping:
+      am01:
+        range: string
+      am02:
+        range: string
+  Member1:
+    mapping:
+      am11:
+        range: string
+      am12:
+        range: string
+  Member2:
+    mapping:
+      am21:
+        range: string
+      am22:
+        range: string
+  Member3:
+    mapping:
+      am31:
+        range: string
+      am32:
+        range: string

@@ -1,0 +1,76 @@
+#%Dialect 1.0
+dialect: Mapping AllOf
+version: 1.0
+external:
+  schema-org: https://schema.org/
+documents:
+  root:
+    encodes: Root
+nodeMappings:
+  Root:
+    allOf:
+      - OrMember1
+      - Conditional
+  Member11:
+    mapping:
+      am11:
+        range: string
+        mandatory: true
+  Member12:
+    mapping:
+      am12:
+        range: string
+        mandatory: true
+  OrMember1:
+    oneOf:
+      - Member11
+      - Member12
+  Conditional:
+    conditional:
+      if: IfAppliesMapping
+      then: ThenAppliesMapping
+      else: ElseAppliesMapping
+
+  IfAppliesMapping:
+    mapping:
+      aProp:
+        range: string
+        enum: ["then-mapping"]
+  ThenAppliesMapping:
+    mapping:
+      aProp:
+        range: string
+        enum: [ "then-mapping" ]
+  ElseAppliesMapping:
+    mapping:
+      aProp:
+        range: string
+        enum: [ "else-mapping" ]
+  combining_mapping_1:
+    components:
+      - ThenAppliesMapping
+      - Member11
+    extends:
+      - ThenAppliesMapping
+      - Member11
+  combining_mapping_2:
+    components:
+      - ElseAppliesMapping
+      - Member11
+    extends:
+      - ElseAppliesMapping
+      - Member11
+  combining_mapping_3:
+    components:
+      - ThenAppliesMapping
+      - Member12
+    extends:
+      - ThenAppliesMapping
+      - Member12
+  combining_mapping_4:
+    components:
+      - ElseAppliesMapping
+      - Member12
+    extends:
+      - ElseAppliesMapping
+      - Member12

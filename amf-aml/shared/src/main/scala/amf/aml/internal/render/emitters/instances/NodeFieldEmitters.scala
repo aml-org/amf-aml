@@ -127,6 +127,7 @@ case class NodeFieldEmitters(node: DomainElement,
                          annotations: Option[Annotations] = None): EntryEmitter = {
     val formatted = scalar.value match {
       case date: SimpleDateTime => date.toString
+      case double: Double       => removeMaybeExponential(double)
       case other                => other
     }
 
@@ -184,15 +185,17 @@ case class NodeFieldEmitters(node: DomainElement,
         nodeMapping
           .propertiesMapping()
           .find(_.nodePropertyMapping().value() == iri)
-      case unionMapping: UnionNodeMapping => checkRangeIds(unionMapping.objectRange().map(_.value()), iri)
-      case conditionalMapping: ConditionalNodeMapping =>
-        checkRangeIds(Seq(conditionalMapping.ifMapping.value(),
-                          conditionalMapping.thenMapping.value(),
-                          conditionalMapping.elseMapping.value()),
-                      iri)
-
+          .orElse(checkRangeIds(anyMappingIds(nodeMapping), iri))
+      case unionMapping: UnionNodeMapping =>
+        checkRangeIds(unionMapping.objectRange().map(_.value()) ++ anyMappingIds(unionMapping), iri)
     }
   }
+
+  private def anyMappingIds(anyMapping: AnyMapping): Seq[String] = {
+    (Seq(anyMapping.ifMapping.option(), anyMapping.thenMapping.option(), anyMapping.elseMapping.option()).flatten ++
+      anyMapping.and ++ anyMapping.or).map(_.toString)
+  }
+
   private def checkRangeIds(rangeIds: Seq[String], iri: String): Option[PropertyMapping] = {
     val nodeMappingsInRange = rangeIds.map { id: String =>
       findNodeMappingById(id) match {
@@ -204,5 +207,11 @@ case class NodeFieldEmitters(node: DomainElement,
     //        val nodeMetaTypes = node.meta.typeIri.map(_ -> true).toMap
     //        nodeMappingsInRange = nodeMappingsInRange.filter { nodeMapping => nodeMetaTypes.contains(nodeMapping.id) }
     nodeMappingsInRange.flatMap(_.propertiesMapping()).find(_.nodePropertyMapping().value() == iri)
+  }
+
+  // If the value of a Double is minor to the max value of a Long I will emit it without scientific notation
+  private def removeMaybeExponential(input: Double): Any = input.toString match {
+    case exponential if exponential.contains("E") && (input < Long.MaxValue) => input.toLong
+    case _                                                                   => input
   }
 }

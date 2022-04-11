@@ -1,0 +1,7 @@
+#%Mapping AllOf 1.0
+am11: a
+am12: b
+am21: c
+am22: d
+root1: 5
+root2: aString

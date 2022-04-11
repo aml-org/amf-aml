@@ -43,7 +43,7 @@ object ObjectMapPropertyParser extends NodeMappableHelper {
         case range: Seq[String] if range.size == 1 =>
           ctx.dialect.declares.find(_.id == range.head) match {
             case Some(nodeMapping: NodeMappable) if keyEntry.value.tagType != YType.Null =>
-              Some(nodeParser(id, nestedObjectId, keyEntry.value, nodeMapping, keyAdditionalProperties))
+              Some(nodeParser(id, nestedObjectId, keyEntry.value, nodeMapping, keyAdditionalProperties, false))
             case _ => None
           }
         case _ => None

@@ -3,9 +3,9 @@ package amf.aml.internal.parse.dialects
 import amf.aml.client.scala.model.document.{Dialect, DialectFragment, DialectLibrary}
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.metamodel.document.DialectModel
-import amf.aml.internal.metamodel.document.DialectModel.{Externals, fields}
+import amf.aml.internal.metamodel.document.DialectModel.Externals
 import amf.aml.internal.metamodel.domain.UnionNodeMappingModel.ObjectRange
-import amf.aml.internal.metamodel.domain.{ConditionalNodeMappingModel, NodeMappingModel, PropertyMappingModel}
+import amf.aml.internal.metamodel.domain.{NodeMappingModel, PropertyMappingModel}
 import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
 import amf.aml.internal.parse.dialects.DialectAstOps._
 import amf.aml.internal.parse.dialects.nodemapping.like.NodeMappingLikeParser
@@ -294,16 +294,19 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
     val allMembers = mappable.and.flatMap(member => findIdOrError(member, mappable))
     if (allMembers.nonEmpty) mappable.withAnd(allMembers)
-
     val oneMembers = mappable.or.flatMap(member => findIdOrError(member, mappable))
     if (oneMembers.nonEmpty) mappable.withOr(oneMembers)
-
     val components = mappable.components.flatMap(member => findIdOrError(member, mappable))
     if (components.nonEmpty) mappable.withComponents(components)
+    if (mappable.ifMapping.nonEmpty)
+      findIdOrError(mappable.ifMapping, mappable).foreach(mappable.withIfMapping)
+    if (mappable.thenMapping.nonEmpty)
+      findIdOrError(mappable.thenMapping, mappable).foreach(mappable.withThenMapping)
+    if (mappable.elseMapping.nonEmpty)
+      findIdOrError(mappable.elseMapping, mappable).foreach(mappable.withElseMapping)
 
     mappable match {
-      case unionNodeMapping: UnionNodeMapping             => checkNodeMappableReferences(unionNodeMapping)
-      case conditionalNodeMapping: ConditionalNodeMapping => checkNodeMappableReferences(conditionalNodeMapping)
+      case unionNodeMapping: UnionNodeMapping => checkNodeMappableReferences(unionNodeMapping)
       case nodeMapping: Member =>
         nodeMapping.propertiesMapping().foreach { propertyMapping =>
           checkNodeMappableReferences(propertyMapping)
@@ -368,16 +371,6 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                                          .getOrElse(Annotations()))
       case _ => // ignore
     }
-  }
-
-  // Replaces inner conditional fields references from names to ids
-  protected def checkNodeMappableReferences[T <: DomainElement](mappable: ConditionalNodeMapping): Unit = {
-    if (mappable.ifMapping.nonEmpty)
-      findIdOrError(mappable.ifMapping, mappable).foreach(mappable.withIfMapping)
-    if (mappable.thenMapping.nonEmpty)
-      findIdOrError(mappable.thenMapping, mappable).foreach(mappable.withThenMapping)
-    if (mappable.elseMapping.nonEmpty)
-      findIdOrError(mappable.elseMapping, mappable).foreach(mappable.withElseMapping)
   }
 
   private def memberIdFromName[T <: DomainElement](name: String, union: NodeWithDiscriminator[_]): Option[String] = {
@@ -514,10 +507,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               }
 
               parseNodeMapping(entry, adopt) match {
-                case Some(nodeMapping: NodeMapping)                   => ctx.declarations += nodeMapping
-                case Some(unionMapping: UnionNodeMapping)             => ctx.declarations += unionMapping
-                case Some(conditionalMapping: ConditionalNodeMapping) => ctx.declarations += conditionalMapping
-                case _                                                => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry.location)
+                case Some(nodeMapping: NodeMapping)       => ctx.declarations += nodeMapping
+                case Some(unionMapping: UnionNodeMapping) => ctx.declarations += unionMapping
+                case _                                    => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry.location)
               }
 
             }

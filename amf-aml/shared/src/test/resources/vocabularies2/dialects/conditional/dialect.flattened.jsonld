@@ -183,7 +183,7 @@
     {
       "@id": "#/declarations/RootMapping",
       "@type": [
-        "meta:ConditionalNodeMapping",
+        "meta:NodeMapping",
         "shacl:Shape",
         "doc:DomainElement"
       ],

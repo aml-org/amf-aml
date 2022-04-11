@@ -29,7 +29,7 @@ trait DialectSyntax { this: DialectContext =>
   )
 
   val anyMapping: Map[String, Required] = Map(
-      "anyOf"      -> false,
+      "allOf"      -> false,
       "oneOf"      -> false,
       "components" -> false
   )
@@ -44,10 +44,6 @@ trait DialectSyntax { this: DialectContext =>
       "union"                -> false,
       "conditional"          -> false,
       "additionalProperties" -> false
-  )
-
-  val conditionalMapping: Map[String, Required] = anyMapping ++ Map(
-      "conditional" -> true
   )
 
   val conditionalMappingInner: Map[String, Required] = Map(
@@ -113,7 +109,6 @@ trait DialectSyntax { this: DialectContext =>
       case "fragment"                => fragment
       case "nodeMapping"             => nodeMapping
       case "conditionalMappingInner" => conditionalMappingInner
-      case "conditionalMapping"      => conditionalMapping
       case "annotationMapping"       => annotationMapping
       case "propertyMapping"         => propertyMapping
       case "documentsMapping"        => documentsMapping

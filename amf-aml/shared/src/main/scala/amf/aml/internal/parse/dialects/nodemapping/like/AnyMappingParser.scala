@@ -17,6 +17,7 @@ trait AnyMappingParser {
     processAnyMappingField(map, mapping, "allOf", AnyMappingModel.And)
     processAnyMappingField(map, mapping, "oneOf", AnyMappingModel.Or)
     processAnyMappingField(map, mapping, "components", AnyMappingModel.Components)
+    ConditionalParser.parse(map, mapping)
     mapping
 
   }

@@ -398,6 +398,16 @@ class DialectInstanceRenderTest extends DialectTests {
                      directory = instances)
   }
 
+  test("Big double without scientific notation") {
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        "instance-golden.yaml",
+        mediaType = Some(Mimes.`application/yaml`),
+        directory = s"$basePath/double-scientific-notation"
+    )
+  }
+
 }
 
 class ResolvedDialectInstancesRenderTest extends DialectTests {

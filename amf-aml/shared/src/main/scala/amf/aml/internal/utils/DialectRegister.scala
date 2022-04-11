@@ -2,7 +2,7 @@ package amf.aml.internal.utils
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.domain.{NodeMapping, ObjectMapProperty}
+import amf.aml.client.scala.model.domain.{NodeMapping, ObjectMapProperty, PropertyMapping}
 import amf.aml.internal.metamodel.domain.DialectDomainElementModel
 import amf.aml.internal.namespace.DialectNamespaceAliases
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
@@ -21,7 +21,7 @@ import amf.core.internal.plugins.AMFPlugin
 import amf.core.internal.validation.core.{SeverityMapping, ValidationProfile}
 
 object DialectRegister {
-  val SEMANTIC_EXTENSIONS_PROFILE = ProfileName("SEMANTIC_EXTENSIONS_PROFILE")
+  val SEMANTIC_EXTENSIONS_PROFILE: ProfileName = ProfileName("SEMANTIC_EXTENSIONS_PROFILE")
 }
 
 private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfiguration) {
@@ -33,6 +33,11 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
       resolveDialect(cloned)
     }
   }
+
+  lazy val domainMapProperties: Seq[PropertyMapping] = dialect.declares.collect {
+    case nodeMapping: NodeMapping =>
+      nodeMapping.propertiesMapping().filter(_.classification() == ObjectMapProperty)
+  }.flatten
 
   def register(): AMLConfiguration = {
     val existingDialects = configuration.configurationState().getDialects()
@@ -80,14 +85,9 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
 
   private def buildMetamodel(nodeMapping: NodeMapping): DialectDomainElementModel = {
     val nodeType = nodeMapping.nodetypeMapping
-    val fields   = nodeMapping.propertiesMapping().map(_.toField)
-    val mapPropertiesInDomain = dialect.declares
-      .collect {
-        case nodeMapping: NodeMapping =>
-          nodeMapping.propertiesMapping().filter(_.classification() == ObjectMapProperty)
-      }
-      .flatten
-      .filter(prop => prop.objectRange().exists(_.value() == nodeMapping.id))
+    val fields   = nodeMapping.propertiesMapping().map(_.toField())
+    val mapPropertiesInDomain =
+      domainMapProperties.filter(prop => prop.objectRange().exists(_.value() == nodeMapping.id))
 
     val mapPropertiesFields =
       mapPropertiesInDomain
@@ -96,8 +96,6 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
         .map(iri => Field(Type.Str, ValueType(iri.value()), ModelDoc(ModelVocabularies.Parser, "custom", iri.value())))
 
     val nodeTypes = nodeType.option().map(Seq(_)).getOrElse(Nil)
-    val result =
-      new DialectDomainElementModel(nodeTypes :+ nodeMapping.id, fields ++ mapPropertiesFields, Some(nodeMapping))
-    result
+    new DialectDomainElementModel(nodeTypes :+ nodeMapping.id, fields ++ mapPropertiesFields, Some(nodeMapping))
   }
 }
