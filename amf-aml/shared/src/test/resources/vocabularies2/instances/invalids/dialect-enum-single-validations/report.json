@@ -1,0 +1,64 @@
+{
+  "@type": "http://www.w3.org/ns/shacl#ValidationReport",
+  "http://www.w3.org/ns/shacl#conforms": false,
+  "http://www.w3.org/ns/shacl#result": [
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "anId"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://a.ml/vocabularies/data#propertyA"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Cannot find expected range for property http://a.ml/vocabularies/data#propertyA (propertyA). Found 'http://www.w3.org/2001/XMLSchema#string', expected 'http://www.w3.org/2001/XMLSchema#integer'",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/amf/aml#inconsistent-property-range-value"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 10,
+          "http://a.ml/vocabularies/amf/parser#column": 12
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 10,
+          "http://a.ml/vocabularies/amf/parser#column": 29
+        }
+      }
+    },
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-enum-single-validations/invalid.json"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://a.ml/vocabularies/data#propertyA"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Property 'propertyA'  value must be of type http://www.w3.org/2001/XMLSchema#integer",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/invalids/dialect-enum-single-validations/invalid.json#/declarations/MyNodeMapping_propertyA_dataRange_validation"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 10,
+          "http://a.ml/vocabularies/amf/parser#column": 12
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 10,
+          "http://a.ml/vocabularies/amf/parser#column": 29
+        }
+      }
+    }
+  ]
+}

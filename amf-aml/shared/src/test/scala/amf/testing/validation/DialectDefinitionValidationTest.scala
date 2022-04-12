@@ -170,4 +170,20 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
     validate("../../../dialects/enum-dialect-validation-incorrect-type/dialect.yaml",
              Some("../../dialects/enum-dialect-validation-incorrect-type/report.json"))
   }
+
+  test("Node mapping with multiple properties with enums - Valid") {
+    validate("/dialect-enum-multiple-validations/valid.json", None)
+  }
+
+  test("Node mapping with multiple properties with enums - Invalid") {
+    validate("/dialect-enum-multiple-validations/invalid.json", Some("/dialect-enum-multiple-validations/report.json"))
+  }
+
+  test("Node mapping with single properties with enums - Valid") {
+    validate("/dialect-enum-single-validations/valid.json", None)
+  }
+
+  test("Node mapping with single properties with enums - Invalid") {
+    validate("/dialect-enum-single-validations/invalid.json", Some("/dialect-enum-single-validations/report.json"))
+  }
 }
