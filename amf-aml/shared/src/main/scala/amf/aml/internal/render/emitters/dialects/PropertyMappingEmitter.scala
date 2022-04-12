@@ -1,29 +1,18 @@
 package amf.aml.internal.render.emitters.dialects
 
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping}
+import amf.aml.internal.metamodel.domain.{PropertyLikeMappingModel, PropertyMappingModel}
+import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.core.client.common.position.Position
 import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.LexicalInformation
-import amf.core.internal.render.BaseEmitters.{
-  ArrayEmitter,
-  EntryPartEmitter,
-  MapEntryEmitter,
-  ScalarEmitter,
-  ValueEmitter,
-  pos,
-  traverse
-}
+import amf.core.internal.parser.domain.{Annotations, FieldEntry}
+import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ScalarEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.aml.internal.render.emitters.instances.NodeMappableFinder
-import amf.aml.internal.metamodel.domain.{PropertyLikeMappingModel, PropertyMappingModel}
-import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping, WithDefaultFacet}
-import amf.core.client.scala.errorhandling.IgnoringErrorHandler
-import amf.core.internal.datanode.DataNodeEmitter
-import amf.core.internal.metamodel.domain.ShapeModel
-import amf.core.internal.parser.domain.{Annotations, FieldEntry}
 import org.mulesoft.common.collections.FilterType
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
@@ -120,15 +109,6 @@ case class PropertyLikeMappingEmitter[T <: PropertyLikeMappingModel](
       result ++= Seq(MapEntryEmitter("unique", value.toString, YType.Bool, pos))
     }
 
-    propertyLikeMapping.fields.entry(PropertyMappingModel.MinCount) foreach { entry =>
-      val value = entry.value.value.asInstanceOf[AmfScalar].value
-      val pos   = fieldPos(propertyLikeMapping, entry.field)
-      value match {
-        case 0 => result ++= Seq(MapEntryEmitter("mandatory", "false", YType.Bool, pos))
-        case 1 => result ++= Seq(MapEntryEmitter("mandatory", "true", YType.Bool, pos))
-      }
-    }
-
     propertyLikeMapping.fields.entry(PropertyMappingModel.Pattern) foreach { entry =>
       val value = entry.value.value.asInstanceOf[AmfScalar].value.toString
       val pos   = fieldPos(propertyLikeMapping, entry.field)
@@ -172,6 +152,7 @@ case class PropertyLikeMappingEmitter[T <: PropertyLikeMappingModel](
       }
     }
 
+    result ++= MandatoryEmitter(propertyLikeMapping).emitters()
     result ++= emitDiscriminator(propertyLikeMapping)
     result
   }
@@ -199,6 +180,36 @@ case class EnumEmitter(entry: FieldEntry, ordering: SpecOrdering) extends EntryE
       }
 
   override def position(): Position = pos(entry.value.annotations)
+}
+
+case class MandatoryEmitter[T <: PropertyLikeMappingModel](propertyMapping: PropertyLikeMapping[T])
+    extends PosExtractor {
+
+  def emitters(): Seq[EntryEmitter] = {
+
+    var emitters: Seq[EntryEmitter] = Seq()
+
+    propertyMapping.mandatory().option() match {
+      case Some(mandatory) =>
+        val mandatoryPos = fieldPos(propertyMapping, PropertyMappingModel.Mandatory)
+        propertyMapping.minCount().option() match {
+          case Some(minCount) =>
+            val minCountPos = fieldPos(propertyMapping, PropertyMappingModel.MinCount)
+            emitters ++= Seq(MapEntryEmitter("minItems", minCount.toString, YType.Int, minCountPos),
+                             MapEntryEmitter("mandatory", mandatory.toString, YType.Bool, mandatoryPos))
+          case None => Seq(MapEntryEmitter("mandatory", mandatory.toString, YType.Bool, mandatoryPos))
+        }
+      case None =>
+        propertyMapping.minCount().option() match {
+          case Some(minCount) =>
+            val minCountPos = fieldPos(propertyMapping, PropertyMappingModel.MinCount)
+            emitters ++= Seq(MapEntryEmitter("mandatory", (minCount == 1).toString, YType.Bool, minCountPos))
+          case None => // Nothing to do
+        }
+    }
+
+    emitters
+  }
 }
 
 case class PropertyMappingEmitter(

@@ -499,4 +499,6 @@ trait DialectsParsingTest extends DialectTests {
   // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("Extended mapping 3", s"$basePath/extended-mapping-3")
 
+  multiCycleTest("MinItems facet", s"$basePath/min-items")
+
 }
