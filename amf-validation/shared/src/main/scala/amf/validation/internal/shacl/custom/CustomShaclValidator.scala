@@ -250,7 +250,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
             // If minCount is > 0 and it is mandatory, this comes from minItems = n + mandatory = true
             // I need to check the presence and length of the array, the original constraint will handle it
             if (minCount > 0 && mandatory)
-              validateMinCount(validationSpecification, propertyConstraint, element, reportBuilder)
+              validateArrayPropertyLengthAndPresence(validationSpecification,
+                                                     propertyConstraint,
+                                                     element,
+                                                     reportBuilder,
+                                                     mustBePresent = mandatory,
+                                                     minItems = Some(minCount))
           case None =>
             // If there is no mandatory key, I run the original constraint
             validateMinCount(validationSpecification, propertyConstraint, element, reportBuilder)
@@ -354,8 +359,18 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
         minItems match {
           case Some(minLength) =>
             // The key is present and I should check the array length
-            if (!(arr.values.length >= minLength))
-              reportFailure(validationSpecification, propertyConstraint, parentElement.id, reportBuilder)
+            if (!(arr.values.length >= minLength)) {
+              reportFailure(validationSpecification.copy(message = s"Array must have a minimum of $minLength items"),
+                            propertyConstraint,
+                            parentElement.id,
+                            reportBuilder)
+
+//              reportFailure(validationSpecification,
+//                            parentElement.id,
+//                            "",
+//                            Some(s"Array must have a minimum of $minLength items"),
+//                            reportBuilder)
+            }
 
           case None => // Only need to check that the key is present
         }

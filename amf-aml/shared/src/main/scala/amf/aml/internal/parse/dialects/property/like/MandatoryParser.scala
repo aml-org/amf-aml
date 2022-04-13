@@ -56,19 +56,15 @@ case class MandatoryParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_
 
   }
 
-  private def parseMandatory: Option[ParsedEntry] = map.key("mandatory") match {
-    case Some(entry) =>
-      val required = ScalarNode(entry.value).boolean().toBool
-      val value    = if (required) 1 else 0
-      Some(ParsedEntry(value, entry))
-    case None => None
+  private def parseMandatory: Option[ParsedEntry] = map.key("mandatory").map { entry =>
+    val required = ScalarNode(entry.value).boolean().toBool
+    val value    = if (required) 1 else 0
+    ParsedEntry(value, entry)
   }
 
-  private def parseMinItems: Option[ParsedEntry] = map.key("minItems") match {
-    case Some(entry) =>
-      val value = ScalarNode(entry.value).integer().toNumber.intValue()
-      Some(ParsedEntry(value, entry))
-    case None => None
+  private def parseMinItems: Option[ParsedEntry] = map.key("minItems").map { entry =>
+    val value = ScalarNode(entry.value).integer().toNumber.intValue()
+    ParsedEntry(value, entry)
   }
 
   private case class ParsedEntry(value: Int, entry: YMapEntry)

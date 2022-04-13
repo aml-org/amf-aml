@@ -13,7 +13,7 @@
       "http://www.w3.org/ns/shacl#resultPath": {
         "@id": "http://a.ml/vocabularies/data#arrayProperty"
       },
-      "http://www.w3.org/ns/shacl#resultMessage": "Property 'arrayProperty' is mandatory",
+      "http://www.w3.org/ns/shacl#resultMessage": "Array must have a minimum of 5 items",
       "http://www.w3.org/ns/shacl#sourceShape": {
         "@id": "http://a.ml/vocabularies/data#file://amf-aml/shared/src/test/resources/vocabularies2/validation/minItems-n-mandatory-false/dialect.yaml#/declarations/Root_arrayProperty_required_validation"
       },
