@@ -65,7 +65,8 @@ trait DialectSyntax { this: DialectContext =>
       "enum"                  -> false,
       "typeDiscriminatorName" -> false,
       "typeDiscriminator"     -> false,
-      "unique"                -> false
+      "unique"                -> false,
+      "minItems"              -> false
   )
 
   val annotationMapping: Map[String, Required] = propertyLikeMapping ++ Map(

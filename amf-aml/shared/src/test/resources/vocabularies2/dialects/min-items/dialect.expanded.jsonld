@@ -1,0 +1,880 @@
+[
+  {
+    "@id": "",
+    "@type": [
+      "meta:Dialect",
+      "doc:Document",
+      "doc:Fragment",
+      "doc:Module",
+      "doc:Unit"
+    ],
+    "core:name": [
+      {
+        "@value": "Mapping MinItems properties"
+      }
+    ],
+    "core:version": [
+      {
+        "@value": "1.0"
+      }
+    ],
+    "meta:documents": [
+      {
+        "@id": "/documents",
+        "@type": [
+          "meta:DocumentsModel",
+          "doc:DomainElement"
+        ],
+        "meta:rootDocument": [
+          {
+            "@id": "#/documents/root",
+            "@type": [
+              "meta:DocumentMapping",
+              "doc:DomainElement"
+            ],
+            "core:name": [
+              {
+                "@value": "Mapping MinItems properties 1.0"
+              }
+            ],
+            "meta:encodedNode": [
+              {
+                "@id": "#/declarations/Root"
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/documents/root/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/documents/root/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml#/documents/root"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(6,7)-(9,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/documents/root/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "meta:encodedNode"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(7,4)-(9,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "/documents#/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "/documents#/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml/documents"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(6,0)-(9,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "/documents#/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "meta:rootDocument"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(6,2)-(9,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:location": [
+      {
+        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml"
+      }
+    ],
+    "doc:root": [
+      {
+        "@value": true
+      }
+    ],
+    "doc:processingData": [
+      {
+        "@id": "#/BaseUnitProcessingData",
+        "@type": [
+          "doc:BaseUnitProcessingData"
+        ],
+        "doc:transformed": [
+          {
+            "@value": false
+          }
+        ],
+        "doc:sourceSpec": [
+          {
+            "@value": "AML 1.0"
+          }
+        ]
+      }
+    ],
+    "sourcemaps:sources": [
+      {
+        "@id": "#/source-map",
+        "@type": [
+          "sourcemaps:SourceMap"
+        ],
+        "sourcemaps:lexical": [
+          {
+            "@id": "#/source-map/lexical/element_3",
+            "sourcemaps:element": [
+              {
+                "@value": "core:version"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(3,0)-(5,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_1",
+            "sourcemaps:element": [
+              {
+                "@value": "core:name"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(2,0)-(3,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_0",
+            "sourcemaps:element": [
+              {
+                "@value": "meta:documents"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(5,0)-(9,0)]"
+              }
+            ]
+          },
+          {
+            "@id": "#/source-map/lexical/element_2",
+            "sourcemaps:element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "[(2,0)-(35,0)]"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "doc:declares": [
+      {
+        "@id": "#/declarations/Root",
+        "@type": [
+          "meta:NodeMapping",
+          "shacl:Shape",
+          "doc:DomainElement"
+        ],
+        "core:name": [
+          {
+            "@value": "Root"
+          }
+        ],
+        "shacl:property": [
+          {
+            "@id": "#/declarations/Root/property/Items0MandatoryFalse",
+            "@type": [
+              "meta:NodePropertyMapping",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#Items0MandatoryFalse"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "Items0MandatoryFalse"
+              }
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "meta:allowMultiple": [
+              {
+                "@value": true
+              }
+            ],
+            "shacl:mandatory": [
+              {
+                "@value": false
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/Root/property/Items0MandatoryFalse/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryFalse/source-map/lexical/element_5",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "meta:allowMultiple"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(24,8)-(25,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryFalse/source-map/lexical/element_3",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml#/declarations/Root/property/Items0MandatoryFalse"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(22,27)-(27,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryFalse/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:minCount"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(25,8)-(26,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryFalse/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:mandatory"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(26,8)-(27,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryFalse/source-map/lexical/element_2",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "core:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(22,6)-(22,26)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryFalse/source-map/lexical/element_4",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:datatype"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(23,8)-(24,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "#/declarations/Root/property/Items5MandatoryTrue",
+            "@type": [
+              "meta:NodePropertyMapping",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#Items5MandatoryTrue"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "Items5MandatoryTrue"
+              }
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 5
+              }
+            ],
+            "meta:allowMultiple": [
+              {
+                "@value": true
+              }
+            ],
+            "shacl:mandatory": [
+              {
+                "@value": true
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/Root/property/Items5MandatoryTrue/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/Root/property/Items5MandatoryTrue/source-map/lexical/element_5",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "meta:allowMultiple"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(19,8)-(20,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items5MandatoryTrue/source-map/lexical/element_3",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml#/declarations/Root/property/Items5MandatoryTrue"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(17,26)-(22,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items5MandatoryTrue/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:minCount"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(20,8)-(21,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items5MandatoryTrue/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:mandatory"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(21,8)-(22,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items5MandatoryTrue/source-map/lexical/element_2",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "core:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(17,6)-(17,25)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items5MandatoryTrue/source-map/lexical/element_4",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:datatype"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(18,8)-(19,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "#/declarations/Root/property/Items0MandatoryTrue",
+            "@type": [
+              "meta:NodePropertyMapping",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#Items0MandatoryTrue"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "Items0MandatoryTrue"
+              }
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 0
+              }
+            ],
+            "meta:allowMultiple": [
+              {
+                "@value": true
+              }
+            ],
+            "shacl:mandatory": [
+              {
+                "@value": true
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/Root/property/Items0MandatoryTrue/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryTrue/source-map/lexical/element_5",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "meta:allowMultiple"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(14,8)-(15,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryTrue/source-map/lexical/element_3",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml#/declarations/Root/property/Items0MandatoryTrue"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(12,26)-(17,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryTrue/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:minCount"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(15,8)-(16,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryTrue/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:mandatory"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(16,8)-(17,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryTrue/source-map/lexical/element_2",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "core:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(12,6)-(12,25)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items0MandatoryTrue/source-map/lexical/element_4",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:datatype"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(13,8)-(14,0)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "#/declarations/Root/property/NoItemsMandatoryTrue",
+            "@type": [
+              "meta:NodePropertyMapping",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#NoItemsMandatoryTrue"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "NoItemsMandatoryTrue"
+              }
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 1
+              }
+            ],
+            "meta:allowMultiple": [
+              {
+                "@value": true
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/Root/property/NoItemsMandatoryTrue/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/Root/property/NoItemsMandatoryTrue/source-map/lexical/element_4",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:minCount"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(34,8)-(35,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/NoItemsMandatoryTrue/source-map/lexical/element_2",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml#/declarations/Root/property/NoItemsMandatoryTrue"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(31,27)-(35,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/NoItemsMandatoryTrue/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "meta:allowMultiple"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(33,8)-(34,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/NoItemsMandatoryTrue/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:datatype"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(32,8)-(33,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/NoItemsMandatoryTrue/source-map/lexical/element_3",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "core:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(31,6)-(31,26)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "@id": "#/declarations/Root/property/Items5NoMandatory",
+            "@type": [
+              "meta:NodePropertyMapping",
+              "doc:DomainElement"
+            ],
+            "shacl:path": [
+              {
+                "@id": "http://a.ml/vocabularies/data#Items5NoMandatory"
+              }
+            ],
+            "core:name": [
+              {
+                "@value": "Items5NoMandatory"
+              }
+            ],
+            "shacl:datatype": [
+              {
+                "@id": "http://www.w3.org/2001/XMLSchema#string"
+              }
+            ],
+            "shacl:minCount": [
+              {
+                "@value": 5
+              }
+            ],
+            "meta:allowMultiple": [
+              {
+                "@value": true
+              }
+            ],
+            "shacl:mandatory": [
+              {
+                "@value": false
+              }
+            ],
+            "sourcemaps:sources": [
+              {
+                "@id": "#/declarations/Root/property/Items5NoMandatory/source-map",
+                "@type": [
+                  "sourcemaps:SourceMap"
+                ],
+                "sourcemaps:lexical": [
+                  {
+                    "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/lexical/element_4",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:minCount"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(30,8)-(31,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/lexical/element_2",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml#/declarations/Root/property/Items5NoMandatory"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(27,24)-(31,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/lexical/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "meta:allowMultiple"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(29,8)-(30,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/lexical/element_1",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:datatype"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(28,8)-(29,0)]"
+                      }
+                    ]
+                  },
+                  {
+                    "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/lexical/element_3",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "core:name"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "[(27,6)-(27,23)]"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "sourcemaps:sources": [
+          {
+            "@id": "#/declarations/Root/source-map",
+            "@type": [
+              "sourcemaps:SourceMap"
+            ],
+            "sourcemaps:lexical": [
+              {
+                "@id": "#/declarations/Root/source-map/lexical/element_2",
+                "sourcemaps:element": [
+                  {
+                    "@value": "core:name"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(10,2)-(10,6)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/Root/source-map/lexical/element_0",
+                "sourcemaps:element": [
+                  {
+                    "@value": "shacl:property"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(11,4)-(35,0)]"
+                  }
+                ]
+              },
+              {
+                "@id": "#/declarations/Root/source-map/lexical/element_1",
+                "sourcemaps:element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml#/declarations/Root"
+                  }
+                ],
+                "sourcemaps:value": [
+                  {
+                    "@value": "[(10,2)-(35,0)]"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "@context": {
+      "@base": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/min-items/dialect.yaml",
+      "shacl": "http://www.w3.org/ns/shacl#",
+      "doc": "http://a.ml/vocabularies/document#",
+      "core": "http://a.ml/vocabularies/core#",
+      "sourcemaps": "http://a.ml/vocabularies/document-source-maps#",
+      "meta": "http://a.ml/vocabularies/meta#"
+    }
+  }
+]

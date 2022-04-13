@@ -1,0 +1,33 @@
+#%Dialect 1.0
+dialect: Mapping MinItems properties
+version: "1.0"
+documents:
+  root:
+    encodes: Root
+nodeMappings:
+  Root:
+    mapping:
+      Items0MandatoryTrue:
+        range: string
+        allowMultiple: true
+        minItems: 0
+        mandatory: true
+      Items5MandatoryTrue:
+        range: string
+        allowMultiple: true
+        minItems: 5
+        mandatory: true
+      Items0MandatoryFalse:
+        range: string
+        allowMultiple: true
+        minItems: 0
+        mandatory: false
+      Items5NoMandatory:
+        range: string
+        allowMultiple: true
+        minItems: 5
+        mandatory: false
+      NoItemsMandatoryTrue:
+        range: string
+        allowMultiple: true
+        mandatory: true

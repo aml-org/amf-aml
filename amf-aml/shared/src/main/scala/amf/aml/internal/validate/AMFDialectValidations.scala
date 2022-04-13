@@ -133,7 +133,8 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
       )
     }
 
-    if (prop.minCount().nonNull && prop.minCount().value() > 0) {
+    // Mandatory field will be validated along with minCount
+    if (prop.minCount().nonNull) {
       val message = s"Property '${finalPropName}' is mandatory"
       validations += new ValidationSpecification(
           name = validationId(node, finalPropName.value(), "required"),
@@ -146,7 +147,8 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                   ramlPropertyId = prop.nodePropertyMapping().value(),
                   name = validationId(node, finalPropName.value(), "required") + "/prop",
                   message = Some(message),
-                  minCount = Some("1")
+                  minCount = prop.minCount().option().map(_.toString),
+                  mandatory = prop.mandatory().option().map(_.toString)
               ))
       )
     }

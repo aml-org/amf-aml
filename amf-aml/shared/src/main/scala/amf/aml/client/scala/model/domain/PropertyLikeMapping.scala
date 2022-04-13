@@ -22,6 +22,7 @@ trait PropertyLikeMapping[M <: PropertyLikeMappingModel]
   def enum(): Seq[AnyField]           = fields.field(meta.Enum)
   def unique(): BoolField             = fields.field(meta.Unique)
   def externallyLinkable(): BoolField = fields.field(meta.ExternallyLinkable)
+  def mandatory(): BoolField          = fields.field(meta.Mandatory)
   def nodesInRange: Seq[String] = {
     val range = objectRange()
     if (range.isEmpty) {
@@ -45,10 +46,13 @@ trait PropertyLikeMapping[M <: PropertyLikeMappingModel]
   def withSorted(sorted: Boolean): this.type                 = set(meta.Sorted, sorted)
   def withUnique(unique: Boolean): this.type                 = set(meta.Unique, unique)
   def withExternallyLinkable(linkable: Boolean): this.type   = set(meta.ExternallyLinkable, linkable)
+  def withMandatory(mandatory: Boolean): this.type           = set(meta.Mandatory, mandatory)
 
   def classification(): PropertyClassification = PropertyLikeMappingClassifier.classification(this)
 
   def toField(): Field = PropertyLikeMappingToFieldConverter.convert(this)
+
+  private[amf] def isMultiple: Boolean = allowMultiple().option().getOrElse(false)
 
   def meta: M
 }
