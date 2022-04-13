@@ -20,27 +20,33 @@ import org.yaml.model.{YNode, YScalar}
 case class DialectEnumValidator() extends ShaclReportAdaptation {
 
   def validate(dialect: Dialect): AMFValidationReport = {
-    val eh         = new SyamlAMFErrorHandler(DefaultErrorHandler())
     val candidates = LiteralCandidateCollector.collect(dialect)
     val reports = candidates.map { candidate =>
-      val validations =
-        new AMFDialectValidations(dialect)(DefaultNodeMappableFinder(dialect)).propertyValidations(candidate.node)
-      val nodes = candidate.enums.flatMap(toNode)
-      parseErrors(eh, candidate, nodes)
-      val reports = nodes.map {
-        case (_, scalar) =>
-          val report = validate(scalar, candidate, validations)
-          adaptToAmfReport(dialect,
-                           AmlProfile,
-                           report,
-                           scalar.annotations.location(),
-                           LexicalInformation(scalar.annotations.lexical()))
-      }
-      val mergedReport: AMFValidationReport = mergeReports(dialect, reports)
-      mergedReport.copy(results = mergedReport.results ++ eh.getResults)
+      val eh = new SyamlAMFErrorHandler(DefaultErrorHandler()) // create error handler for each candidate to avoid duplicating errors in report
+      validateCandidate(dialect, eh, candidate)
     }
     val mergedReport = mergeReports(dialect, reports)
     mergedReport
+  }
+
+  private def validateCandidate(dialect: Dialect, eh: SyamlAMFErrorHandler, candidate: AmlValidationCandidate) = {
+    val validations =
+      new AMFDialectValidations(dialect)(DefaultNodeMappableFinder(dialect))
+        .propertyValidations(candidate.node)
+        .filter(_.propertyConstraints.exists(_.ramlPropertyId == candidate.mapping.nodePropertyMapping().value())) // should optimize this
+    val nodes = candidate.enums.flatMap(toNode)
+    parseErrors(eh, candidate, nodes)
+    val reports = nodes.map {
+      case (_, scalar) =>
+        val report = validate(scalar, candidate, validations)
+        adaptToAmfReport(dialect,
+                         AmlProfile,
+                         report,
+                         scalar.annotations.location(),
+                         LexicalInformation(scalar.annotations.lexical()))
+    }
+    val mergedReport: AMFValidationReport = mergeReports(dialect, reports)
+    mergedReport.copy(results = mergedReport.results ++ eh.getResults)
   }
 
   private def mergeReports(dialect: Dialect, reports: Seq[AMFValidationReport]) = {
