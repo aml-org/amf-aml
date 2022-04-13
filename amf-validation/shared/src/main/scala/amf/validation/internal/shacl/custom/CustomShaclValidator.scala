@@ -1,11 +1,10 @@
 package amf.validation.internal.shacl.custom
 
 import amf.core.client.common.validation.MessageStyle
-import amf.core.client.scala.model.{DataType, ValueField}
+import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.annotations.SourceAST
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils._
@@ -15,13 +14,9 @@ import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   CustomShaclFunctions,
   ValidationInfo
 }
-import amf.validation.internal.shacl.custom.DefaultElementExtractor.{extractElement, toNativeScalar}
 import org.mulesoft.common.time.SimpleDateTime
-import org.yaml.model.YScalar
 
 import java.net.URISyntaxException
-import scala.collection.mutable
-import scala.concurrent.{ExecutionContext, Future}
 
 object CustomShaclValidator {
 
@@ -230,8 +225,37 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
       case _       =>
     }
     propertyConstraint.minCount match {
-      case Some(_) => validateMinCount(validationSpecification, propertyConstraint, element, reportBuilder)
-      case _       =>
+      case Some(minCountValue) =>
+        val minCount = minCountValue.toInt
+        propertyConstraint.mandatory match {
+          case Some(mandatoryValue) =>
+            // If I have minCount and mandatory, I know I am in an array
+            val mandatory = mandatoryValue == "true"
+            // If minCount is 0 and it is mandatory, this comes from minItems = 0 + mandatory = true
+            // I need to check only the presence of the property, empty arrays are valid
+            if (minCount == 0 && mandatory)
+              validateArrayPropertyLengthAndPresence(validationSpecification,
+                                                     propertyConstraint,
+                                                     element,
+                                                     reportBuilder,
+                                                     mustBePresent = mandatory)
+            // If minCount is > 0 and it is not mandatory, this comes from minItems = n
+            // I need to check only the length of the array, but only if it is present
+            if (minCount > 0 && !mandatory)
+              validateArrayPropertyLengthAndPresence(validationSpecification,
+                                                     propertyConstraint,
+                                                     element,
+                                                     reportBuilder,
+                                                     minItems = Some(minCount))
+            // If minCount is > 0 and it is mandatory, this comes from minItems = n + mandatory = true
+            // I need to check the presence and length of the array, the original constraint will handle it
+            if (minCount > 0 && mandatory)
+              validateMinCount(validationSpecification, propertyConstraint, element, reportBuilder)
+          case None =>
+            // If there is no mandatory key, I run the original constraint
+            validateMinCount(validationSpecification, propertyConstraint, element, reportBuilder)
+        }
+      case _ =>
     }
     propertyConstraint.maxLength match {
       case Some(_) => validateMaxLength(validationSpecification, propertyConstraint, element, reportBuilder)
@@ -315,6 +339,29 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
       }
     } else {
       throw new Exception(s"Unsupported property node value ${propertyConstraint.node.get}")
+    }
+  }
+
+  private def validateArrayPropertyLengthAndPresence(validationSpecification: ValidationSpecification,
+                                                     propertyConstraint: PropertyConstraint,
+                                                     parentElement: DomainElement,
+                                                     reportBuilder: ReportBuilder,
+                                                     mustBePresent: Boolean = false,
+                                                     minItems: Option[Int] = None): Unit = {
+    extractor.extractPropertyValue(propertyConstraint, parentElement) match {
+      // The key is present and it is an array
+      case Some(ExtractedPropertyValue(arr: AmfArray, _)) =>
+        minItems match {
+          case Some(minLength) =>
+            // The key is present and I should check the array length
+            if (!(arr.values.length >= minLength))
+              reportFailure(validationSpecification, propertyConstraint, parentElement.id, reportBuilder)
+
+          case None => // Only need to check that the key is present
+        }
+      case _ =>
+        // The key is not present missing
+        if (mustBePresent) reportFailure(validationSpecification, propertyConstraint, parentElement.id, reportBuilder)
     }
   }
 

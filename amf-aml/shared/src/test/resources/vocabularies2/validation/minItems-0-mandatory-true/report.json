@@ -1,0 +1,35 @@
+{
+  "@type": "http://www.w3.org/ns/shacl#ValidationReport",
+  "http://www.w3.org/ns/shacl#conforms": false,
+  "http://www.w3.org/ns/shacl#result": [
+    {
+      "@type": "http://www.w3.org/ns/shacl#ValidationResult",
+      "http://www.w3.org/ns/shacl#resultSeverity": {
+        "@id": "http://www.w3.org/ns/shacl#Violation"
+      },
+      "http://www.w3.org/ns/shacl#focusNode": {
+        "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/validation/minItems-0-mandatory-true/instance-invalid.yaml#/encodes"
+      },
+      "http://www.w3.org/ns/shacl#resultPath": {
+        "@id": "http://a.ml/vocabularies/data#arrayProperty"
+      },
+      "http://www.w3.org/ns/shacl#resultMessage": "Property 'arrayProperty' is mandatory",
+      "http://www.w3.org/ns/shacl#sourceShape": {
+        "@id": "http://a.ml/vocabularies/data#file://amf-aml/shared/src/test/resources/vocabularies2/validation/minItems-0-mandatory-true/dialect.yaml#/declarations/Root_arrayProperty_required_validation"
+      },
+      "http://a.ml/vocabularies/amf/parser#lexicalPosition": {
+        "@type": "http://a.ml/vocabularies/amf/parser#Position",
+        "http://a.ml/vocabularies/amf/parser#start": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 1,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        },
+        "http://a.ml/vocabularies/amf/parser#end": {
+          "@type": "http://a.ml/vocabularies/amf/parser#Location",
+          "http://a.ml/vocabularies/amf/parser#line": 1,
+          "http://a.ml/vocabularies/amf/parser#column": 0
+        }
+      }
+    }
+  ]
+}
