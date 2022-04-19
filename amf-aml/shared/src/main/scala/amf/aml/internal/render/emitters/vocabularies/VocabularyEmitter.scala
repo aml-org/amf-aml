@@ -279,27 +279,30 @@ case class VocabularyEmitter(vocabulary: Vocabulary, document: DocumentCreator) 
   private def vocabularyPropertiesEmitter(ordering: SpecOrdering) = {
     var emitters: Seq[EntryEmitter] = Nil
 
-    emitters ++= Seq(new EntryEmitter {
-      override def emit(b: EntryBuilder): Unit = {
-        MapEntryEmitter("base", vocabulary.base.value()).emit(b)
-      }
+    if (vocabulary.base.nonEmpty) {
+      emitters ++= Seq(new EntryEmitter {
+        override def emit(b: EntryBuilder): Unit = {
+          MapEntryEmitter("base", vocabulary.base.value()).emit(b)
+        }
 
-      override def position(): Position = ZERO
+        override def position(): Position = ZERO
 
-    })
+      })
+    }
 
-    emitters ++= Seq(new EntryEmitter {
-      override def emit(b: EntryBuilder): Unit = MapEntryEmitter("vocabulary", vocabulary.name.value()).emit(b)
+    if (vocabulary.name.nonEmpty) {
+      emitters ++= Seq(new EntryEmitter {
+        override def emit(b: EntryBuilder): Unit = MapEntryEmitter("vocabulary", vocabulary.name.value()).emit(b)
 
-      override def position(): Position =
-        vocabulary.fields
-          .get(VocabularyModel.Name)
-          .annotations
-          .find(classOf[LexicalInformation])
-          .map(_.range.start)
-          .getOrElse(ZERO)
-    })
-
+        override def position(): Position =
+          vocabulary.fields
+            .get(VocabularyModel.Name)
+            .annotations
+            .find(classOf[LexicalInformation])
+            .map(_.range.start)
+            .getOrElse(ZERO)
+      })
+    }
     if (vocabulary.usage.nonEmpty) {
       emitters ++= Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = MapEntryEmitter("usage", vocabulary.usage.value()).emit(b)
