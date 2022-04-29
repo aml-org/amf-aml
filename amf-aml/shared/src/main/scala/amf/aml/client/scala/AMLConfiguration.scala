@@ -50,29 +50,36 @@ import org.mulesoft.common.collections.FilterType
 
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  * The configuration object required for using AML
+/** The configuration object required for using AML
   *
-  * @param resolvers [[AMFResolvers]]
-  * @param errorHandlerProvider [[ErrorHandlerProvider]]
-  * @param registry [[AMLRegistry]]
-  * @param listeners a Set of [[AMFEventListener]]
-  * @param options [[AMFOptions]]
+  * @param resolvers
+  *   [[AMFResolvers]]
+  * @param errorHandlerProvider
+  *   [[ErrorHandlerProvider]]
+  * @param registry
+  *   [[AMLRegistry]]
+  * @param listeners
+  *   a Set of [[AMFEventListener]]
+  * @param options
+  *   [[AMFOptions]]
   */
-class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFResolvers,
-                                     override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
-                                     override private[amf] val registry: AMLRegistry,
-                                     override private[amf] val listeners: Set[AMFEventListener],
-                                     override private[amf] val options: AMFOptions)
-    extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
+class AMLConfiguration private[amf] (
+    override private[amf] val resolvers: AMFResolvers,
+    override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
+    override private[amf] val registry: AMLRegistry,
+    override private[amf] val listeners: Set[AMFEventListener],
+    override private[amf] val options: AMFOptions
+) extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
-  override protected[amf] def copy(resolvers: AMFResolvers = resolvers,
-                                   errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
-                                   registry: AMFRegistry = registry,
-                                   listeners: Set[AMFEventListener] = listeners,
-                                   options: AMFOptions = options): AMLConfiguration =
+  override protected[amf] def copy(
+      resolvers: AMFResolvers = resolvers,
+      errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
+      registry: AMFRegistry = registry,
+      listeners: Set[AMFEventListener] = listeners,
+      options: AMFOptions = options
+  ): AMLConfiguration =
     new AMLConfiguration(resolvers, errorHandlerProvider, registry.asInstanceOf[AMLRegistry], listeners, options)
 
   /** Contains common AMF graph operations associated to documents */
@@ -84,34 +91,38 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   /** Contains methods to get information about the current state of the configuration */
   def configurationState(): AMLConfigurationState = new AMLConfigurationState(this)
 
-  /**
-    * Set [[ParsingOptions]]
-    * @param parsingOptions [[ParsingOptions]] to add to configuration object
-    * @return [[AMLConfiguration]] with [[ParsingOptions]] added
+  /** Set [[ParsingOptions]]
+    * @param parsingOptions
+    *   [[ParsingOptions]] to add to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[ParsingOptions]] added
     */
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =
     super._withParsingOptions(parsingOptions)
 
-  /**
-    * Add a [[ResourceLoader]]
-    * @param rl [[ResourceLoader]] to add to configuration object
-    * @return [[AMLConfiguration]] with the [[ResourceLoader]] added
+  /** Add a [[ResourceLoader]]
+    * @param rl
+    *   [[ResourceLoader]] to add to configuration object
+    * @return
+    *   [[AMLConfiguration]] with the [[ResourceLoader]] added
     */
   override def withResourceLoader(rl: ResourceLoader): AMLConfiguration =
     super._withResourceLoader(rl)
 
-  /**
-    * Set the configuration [[ResourceLoader]]s
-    * @param rl a list of [[ResourceLoader]] to set to the configuration object
-    * @return [[AMLConfiguration]] with [[ResourceLoader]]s set
+  /** Set the configuration [[ResourceLoader]]s
+    * @param rl
+    *   a list of [[ResourceLoader]] to set to the configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[ResourceLoader]]s set
     */
   override def withResourceLoaders(rl: List[ResourceLoader]): AMLConfiguration =
     super._withResourceLoaders(rl)
 
-  /**
-    * Set [[UnitCache]]
-    * @param cache [[UnitCache]] to add to configuration object
-    * @return [[AMLConfiguration]] with [[UnitCache]] added
+  /** Set [[UnitCache]]
+    * @param cache
+    *   [[UnitCache]] to add to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[UnitCache]] added
     */
   override def withUnitCache(cache: UnitCache): AMLConfiguration =
     super._withUnitCache(cache)
@@ -131,20 +142,22 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     super._withValidationProfile(profile)
 
   // Keep AMF internal, done to avoid recomputing validations every time a config is requested
-  private[amf] override def withValidationProfile(profile: ValidationProfile,
-                                                  effective: EffectiveValidations): AMLConfiguration =
+  private[amf] override def withValidationProfile(
+      profile: ValidationProfile,
+      effective: EffectiveValidations
+  ): AMLConfiguration =
     super._withValidationProfile(profile, effective)
 
-  /**
-    * Add a [[TransformationPipeline]]
-    * @param pipeline [[TransformationPipeline]] to add to configuration object
-    * @return [[AMLConfiguration]] with [[TransformationPipeline]] added
+  /** Add a [[TransformationPipeline]]
+    * @param pipeline
+    *   [[TransformationPipeline]] to add to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[TransformationPipeline]] added
     */
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMLConfiguration =
     super._withTransformationPipeline(pipeline)
 
-  /**
-    * AMF internal method just to facilitate the construction
+  /** AMF internal method just to facilitate the construction
     * @param pipelines
     * @return
     */
@@ -154,18 +167,20 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
   override def withRenderOptions(renderOptions: RenderOptions): AMLConfiguration =
     super._withRenderOptions(renderOptions)
 
-  /**
-    * Set [[ErrorHandlerProvider]]
-    * @param provider [[ErrorHandlerProvider]] to set to configuration object
-    * @return [[AMLConfiguration]] with [[ErrorHandlerProvider]] set
+  /** Set [[ErrorHandlerProvider]]
+    * @param provider
+    *   [[ErrorHandlerProvider]] to set to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[ErrorHandlerProvider]] set
     */
   override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMLConfiguration =
     super._withErrorHandlerProvider(provider)
 
-  /**
-    * Add an [[AMFEventListener]]
-    * @param listener [[AMFEventListener]] to add to configuration object
-    * @return [[AMLConfiguration]] with [[AMFEventListener]] added
+  /** Add an [[AMFEventListener]]
+    * @param listener
+    *   [[AMFEventListener]] to add to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[AMFEventListener]] added
     */
   override def withEventListener(listener: AMFEventListener): AMLConfiguration = super._withEventListener(listener)
 
@@ -183,18 +198,20 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     copy(registry = registry.withAliases(aliases))
   }
 
-  /**
-    * Set [[BaseExecutionEnvironment]]
-    * @param executionEnv [[BaseExecutionEnvironment]] to set to configuration object
-    * @return [[AMLConfiguration]] with [[BaseExecutionEnvironment]] set
+  /** Set [[BaseExecutionEnvironment]]
+    * @param executionEnv
+    *   [[BaseExecutionEnvironment]] to set to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[BaseExecutionEnvironment]] set
     */
   override def withExecutionEnvironment(executionEnv: ExecutionEnvironment): AMLConfiguration =
     super._withExecutionEnvironment(executionEnv)
 
-  /**
-    * Register a Dialect
-    * @param url URL of the Dialect to register
-    * @return A CompletableFuture of [[AMLConfiguration]]
+  /** Register a Dialect
+    * @param url
+    *   URL of the Dialect to register
+    * @return
+    *   A CompletableFuture of [[AMLConfiguration]]
     */
   def withDialect(url: String): Future[AMLConfiguration] = {
     baseUnitClient().parseDialect(url).map {
@@ -203,17 +220,19 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
     }
   }
 
-  /**
-    * Register a Dialect
-    * @param dialect [[Dialect]] to register
-    * @return [[AMLConfiguration]] with [[Dialect]] registered
+  /** Register a Dialect
+    * @param dialect
+    *   [[Dialect]] to register
+    * @return
+    *   [[AMLConfiguration]] with [[Dialect]] registered
     */
   def withDialect(dialect: Dialect): AMLConfiguration = DialectRegister(dialect, this).register()
 
-  /**
-    * Register a [[Dialect]] linked from a [[DialectInstance]]
-    * @param url of the [[DialectInstance]]
-    * @return A CompletableFuture of [[AMLConfiguration]]
+  /** Register a [[Dialect]] linked from a [[DialectInstance]]
+    * @param url
+    *   of the [[DialectInstance]]
+    * @return
+    *   A CompletableFuture of [[AMLConfiguration]]
     */
   def forInstance(url: String): Future[AMLConfiguration] = {
     val collector = new DialectReferencesCollector
@@ -239,7 +258,9 @@ class AMLConfiguration private[amf] (override private[amf] val resolvers: AMFRes
 
 object AMLConfiguration extends PlatformSecrets {
 
-  /** Predefined environment to deal with AML documents based on AMFGraphConfiguration {@link amf.core.client.scala.AMFGraphConfiguration.predefined predefined()} method */
+  /** Predefined environment to deal with AML documents based on AMFGraphConfiguration {@link
+    * amf.core.client.scala.AMFGraphConfiguration.predefined predefined()} method
+    */
   def predefined(): AMLConfiguration = {
     val predefinedGraphConfiguration: AMFGraphConfiguration = AMFGraphConfiguration.predefined().emptyEntities()
     VocabulariesRegister.register() // TODO ARM remove when APIMF-3000 is done

@@ -15,7 +15,8 @@ import amf.core.internal.parser.YMapOps
 import scala.collection.mutable
 
 case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap, references: Seq[ParsedReference])(
-    implicit ctx: DialectInstanceContext) {
+    implicit ctx: DialectInstanceContext
+) {
 
   def parse(location: String): ReferenceCollector[AmfObject] = {
     val result = CallbackReferenceCollector(DialectInstanceRegister())
@@ -45,7 +46,8 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
         entry => {
           val annotation: Annotation =
             AliasesLocation(
-                Annotations(entry.key).find(classOf[LexicalInformation]).map(_.range.start.line).getOrElse(0))
+                Annotations(entry.key).find(classOf[LexicalInformation]).map(_.range.start.line).getOrElse(0)
+            )
           dialectInstance.annotations += annotation
           entry.value
             .as[YMap]
@@ -59,7 +61,12 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
                   collectAlias(dialectInstance, alias -> ReferencedInfo(module.id, module.id, url))
                   result += (alias, module)
                 case other =>
-                  ctx.eh.violation(DialectError, id, s"Expected vocabulary module but found: '$other'", e.location) // todo Uses should only reference modules...
+                  ctx.eh.violation(
+                      DialectError,
+                      id,
+                      s"Expected vocabulary module but found: '$other'",
+                      e.location
+                  ) // todo Uses should only reference modules...
               }
             })
         }

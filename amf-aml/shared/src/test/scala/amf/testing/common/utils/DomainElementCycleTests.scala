@@ -24,13 +24,15 @@ trait DomainElementCycleTests
   val basePath: String
   val baseHint: Hint
 
-  protected def renderElement(dialect: String,
-                              source: String,
-                              extractor: BaseUnit => Option[DomainElement],
-                              golden: String,
-                              hint: Hint = baseHint,
-                              directory: String = basePath,
-                              baseConfig: AMLConfiguration = AMLConfiguration.predefined()): Future[Assertion] = {
+  protected def renderElement(
+      dialect: String,
+      source: String,
+      extractor: BaseUnit => Option[DomainElement],
+      golden: String,
+      hint: Hint = baseHint,
+      directory: String = basePath,
+      baseConfig: AMLConfiguration = AMLConfiguration.predefined()
+  ): Future[Assertion] = {
 
     withDialect(s"file://$directory/$dialect") { (d, amlConfig) =>
       val nextConfig = baseConfig.configurationState().getDialects().foldLeft(amlConfig) { (config, dialect) =>
@@ -40,11 +42,13 @@ trait DomainElementCycleTests
     }
   }
 
-  final def cycleElement(source: String,
-                         extractor: BaseUnit => Option[DomainElement],
-                         golden: String,
-                         amlConfig: AMLConfiguration,
-                         directory: String = basePath): Future[Assertion] = {
+  final def cycleElement(
+      source: String,
+      extractor: BaseUnit => Option[DomainElement],
+      golden: String,
+      amlConfig: AMLConfiguration,
+      directory: String = basePath
+  ): Future[Assertion] = {
     for {
       b <- parse(s"file://$directory/$source", platform, amlConfig)
       t <- Future.successful { transform(b) }

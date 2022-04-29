@@ -9,8 +9,7 @@ import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.Future
 
-/**
-  * Cycle tests using temporary file and directory creator
+/** Cycle tests using temporary file and directory creator
   */
 abstract class MultiJsonLDAsyncFunSuite extends AsyncFunSuite {
   def testedForms: Seq[JsonLdDocumentForm] = Seq(FlattenedForm, EmbeddedForm)
@@ -34,7 +33,8 @@ abstract class MultiJsonLDAsyncFunSuite extends AsyncFunSuite {
 
   // Single source, multiple JSON-LD outputs
   def multiGoldenTest(testText: String, goldenNamePattern: String)(
-      testFn: WithJsonLDGoldenConfig => Future[Assertion]): Unit = {
+      testFn: WithJsonLDGoldenConfig => Future[Assertion]
+  ): Unit = {
     testedForms.foreach { form =>
       validatePattern(goldenNamePattern, "goldenNamePattern")
       val golden = goldenNamePattern.format(form.extension)
@@ -45,7 +45,8 @@ abstract class MultiJsonLDAsyncFunSuite extends AsyncFunSuite {
 
   // Multiple JSON-LD sources, single output
   def multiSourceTest(testText: String, sourceNamePattern: String)(
-      testFn: WithJsonLDSourceConfig => Future[Assertion]): Unit = {
+      testFn: WithJsonLDSourceConfig => Future[Assertion]
+  ): Unit = {
     testedForms.foreach { form =>
       validatePattern(sourceNamePattern, "sourceNamePattern")
       val source = sourceNamePattern.format(form.extension)
@@ -56,7 +57,8 @@ abstract class MultiJsonLDAsyncFunSuite extends AsyncFunSuite {
 
   // Multiple JSON-LD sources, multiple JSON-LD outputs. Each source matches exactly one output
   def multiTest(testText: String, sourceNamePattern: String, goldenNamePattern: String)(
-      testFn: WithJsonLDGoldenAndSourceConfig => Future[Assertion]): Unit = {
+      testFn: WithJsonLDGoldenAndSourceConfig => Future[Assertion]
+  ): Unit = {
     testedForms.foreach { form =>
       validatePattern(sourceNamePattern, "sourceNamePattern")
       validatePattern(goldenNamePattern, "goldenNamePattern")

@@ -17,10 +17,12 @@ class JapaneseDialectInstancesValidationTest extends DialectInstanceValidation w
 
   val basePath = "file://amf-aml/shared/src/test/resources/vocabularies2/japanese/instances/"
 
-  def validate(dialect: String,
-               instance: String,
-               golden: Option[String] = None,
-               path: String = basePath): Future[Assertion] = {
+  def validate(
+      dialect: String,
+      instance: String,
+      golden: Option[String] = None,
+      path: String = basePath
+  ): Future[Assertion] = {
     validation(dialect, instance, path) flatMap {
       reportComparator.assertReport(_, golden.map(g => s"$path/$g"))
     }

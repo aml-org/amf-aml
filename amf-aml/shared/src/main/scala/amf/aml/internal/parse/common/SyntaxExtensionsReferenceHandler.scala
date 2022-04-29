@@ -15,8 +15,8 @@ class SyntaxExtensionsReferenceHandler(errorHandler: AMFErrorHandler) extends Re
   implicit val eh: SYamlAMFParserErrorHandler = new SYamlAMFParserErrorHandler(errorHandler)
 
   override def collect(parsedDoc: ParsedDocument, ctx: ParserContext): CompilerReferenceCollector = {
-    val dialects = ctx.config.sortedRootParsePlugins.collect {
-      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect.nameAndVersion()
+    val dialects = ctx.config.sortedRootParsePlugins.collect { case plugin: AMLDialectInstanceParsingPlugin =>
+      plugin.dialect.nameAndVersion()
     }
     collect(parsedDoc, dialects)
   }

@@ -14,7 +14,8 @@ import scala.collection.mutable
 class DynamicTypeParser(
     linkFinder: NodeFinder,
     sourcesRetriever: SourcesRetriever,
-    sorter: DefaultNodeClassSorter = new DefaultNodeClassSorter())(implicit val ctx: RdfParserContext)
+    sorter: DefaultNodeClassSorter = new DefaultNodeClassSorter()
+)(implicit val ctx: RdfParserContext)
     extends RdfParserCommon {
 
   def parse(property: PropertyObject): Option[DataNode] = {
@@ -26,8 +27,10 @@ class DynamicTypeParser(
         case obj: ObjectNode =>
           obj.withId(node.subject)
           node.getKeys().foreach { uri =>
-            if (uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri() &&
-                uri != (Namespace.Core + "name").iri()) { // we do this to prevent parsing name of annotations
+            if (
+                uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri() &&
+                uri != (Namespace.Core + "name").iri()
+            ) { // we do this to prevent parsing name of annotations
 
               val dataNode = node.getProperties(uri).get.head match {
                 case literal @ Literal(_, _)    => DynamicLiteralParser.parse(literal)
@@ -95,7 +98,7 @@ class DynamicTypeParser(
         linkFinder.findLink(id) match {
           case Some(node) =>
             node.getProperties((Namespace.Rdf + "first").iri()).isDefined ||
-              node.getProperties((Namespace.Rdf + "rest").iri()).isDefined
+            node.getProperties((Namespace.Rdf + "rest").iri()).isDefined
           case _ => false
         }
       case _ => false

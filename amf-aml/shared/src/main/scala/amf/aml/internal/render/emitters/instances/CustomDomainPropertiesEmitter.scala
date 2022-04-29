@@ -18,7 +18,8 @@ import org.yaml.model.{YDocument, YType}
 object CustomDomainPropertiesEmitter {
 
   def apply(node: DialectDomainElement, registry: AMLRegistry, ordering: SpecOrdering, renderOptions: RenderOptions)(
-      implicit nodeMappableFinder: NodeMappableFinder): Seq[EntryEmitter] = {
+      implicit nodeMappableFinder: NodeMappableFinder
+  ): Seq[EntryEmitter] = {
     node.fields.get(DomainElementModel.CustomDomainProperties) match {
       case AmfArray(customDomainProperties, _) =>
         customDomainProperties.flatMap {

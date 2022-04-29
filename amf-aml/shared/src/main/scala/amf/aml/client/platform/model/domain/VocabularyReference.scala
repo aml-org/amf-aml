@@ -8,8 +8,7 @@ import amf.aml.client.scala.model.domain.{VocabularyReference => InternalVocabul
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
 @JSExportAll
-case class VocabularyReference(override private[amf] val _internal: InternalVocabularyReference)
-    extends DomainElement {
+case class VocabularyReference(override private[amf] val _internal: InternalVocabularyReference) extends DomainElement {
 
   @JSExportTopLevel("VocabularyReference")
   def this() = this(InternalVocabularyReference())

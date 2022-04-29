@@ -30,10 +30,12 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
     this
   }
 
-  override def addTriple(subject: String,
-                         predicate: String,
-                         objLiteralValue: String,
-                         objLiteralType: Option[String]): RdfModel = {
+  override def addTriple(
+      subject: String,
+      predicate: String,
+      objLiteralValue: String,
+      objLiteralType: Option[String]
+  ): RdfModel = {
     nodesCache = nodesCache - subject
     model.add(
         model.createStatement(
@@ -97,13 +99,15 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
               resourceClasses ++= Seq(statement.getObject.asResource().getURI)
             } else if (statement.getObject.isLiteral) {
               val lit = statement.getObject.asLiteral()
-              resourceProperties = resourceProperties.updated(predicate,
-                                                              oldProps ++ Seq(
-                                                                  Literal(
-                                                                      value = lit.getLexicalForm,
-                                                                      literalType = Some(lit.getDatatypeURI)
-                                                                  )
-                                                              ))
+              resourceProperties = resourceProperties.updated(
+                  predicate,
+                  oldProps ++ Seq(
+                      Literal(
+                          value = lit.getLexicalForm,
+                          literalType = Some(lit.getDatatypeURI)
+                      )
+                  )
+              )
             } else if (statement.getObject.isResource) {
               resourceProperties = resourceProperties.updated(
                   predicate,
@@ -141,8 +145,7 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
     parser.parse(model)
   }
 
-  /**
-    * Write model as a String representation
+  /** Write model as a String representation
     *
     * @param mediaType
     * @return

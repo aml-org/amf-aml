@@ -42,11 +42,17 @@ class RdfPluginsTests extends AsyncFunSuite with RdfPlatformSecrets with Matcher
       parsed   <- client.parse(path)
       rendered <- Future.successful(client.render(parsed.baseUnit))
     } yield {
-      assert(rendered.contains(
-        "<file://api.raml#/BaseUnitProcessingData> <http://a.ml/vocabularies/document#transformed> \"false\"^^<http://www.w3.org/2001/XMLSchema#boolean>"))
+      assert(
+          rendered.contains(
+              "<file://api.raml#/BaseUnitProcessingData> <http://a.ml/vocabularies/document#transformed> \"false\"^^<http://www.w3.org/2001/XMLSchema#boolean>"
+          )
+      )
       assert(rendered.contains("<file://api.raml> <http://a.ml/vocabularies/document#version> \"2.1.0\""))
-      assert(rendered.contains(
-        "file://api.raml> <http://a.ml/vocabularies/document#root> \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean>"))
+      assert(
+          rendered.contains(
+              "file://api.raml> <http://a.ml/vocabularies/document#root> \"true\"^^<http://www.w3.org/2001/XMLSchema#boolean>"
+          )
+      )
     }
   }
 

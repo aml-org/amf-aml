@@ -12,9 +12,11 @@ class DefaultAMLTransformationPipeline(override val name: String) extends Transf
 }
 
 private object RedirectResolutionByModel extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     val runner = TransformationPipelineRunner(errorHandler, configuration)
     model match {
       case _: DialectInstancePatch => runner.run(model, DialectInstancePatchTransformationPipeline())

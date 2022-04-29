@@ -38,11 +38,13 @@ class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests 
   }
 
   test("Resolve patch properties to AML") {
-    cycleWithDialect("dialect.yaml",
-                     "patch.yaml",
-                     "patch.resolved.yaml",
-                     Some(`application/yaml`),
-                     directory = s"$basePath/patch-properties/")
+    cycleWithDialect(
+        "dialect.yaml",
+        "patch.yaml",
+        "patch.resolved.yaml",
+        Some(`application/yaml`),
+        directory = s"$basePath/patch-properties/"
+    )
   }
 
   multiGoldenTest("Resolve declares on self-encoded dialect instance", "instance.%s") { config =>

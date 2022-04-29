@@ -15,7 +15,8 @@ case class FragmentMappingEmitter(
     dialect: Dialect,
     fragment: DocumentMapping,
     ordering: SpecOrdering,
-    aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
+    aliases: Map[String, (String, String)]
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasesConsumer {
 

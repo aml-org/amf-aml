@@ -11,9 +11,11 @@ import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.transform.TransformationStep
 
 class DialectInstanceReferencesResolutionStage() extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     new DialectInstanceReferencesResolution()(errorHandler).transform(model)
   }
 }
@@ -30,9 +32,11 @@ private class DialectInstanceReferencesResolution(implicit errorHandler: AMFErro
   }
 
   // Internal request that checks for mutually recursive types
-  protected def recursiveTransformInvocation(model: BaseUnit,
-                                             modelResolver: Option[ModelReferenceResolver],
-                                             mutuallyRecursive: Seq[String]): BaseUnit = {
+  protected def recursiveTransformInvocation(
+      model: BaseUnit,
+      modelResolver: Option[ModelReferenceResolver],
+      mutuallyRecursive: Seq[String]
+  ): BaseUnit = {
     this.mutuallyRecursive = mutuallyRecursive
     this.model = Some(model)
     this.modelResolver = Some(modelResolver.getOrElse(new ModelReferenceResolver(model)))

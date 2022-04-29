@@ -8,25 +8,33 @@ import org.yaml.model.YScalar
 case class ExtractedPropertyValue(value: AmfElement, nativeScalar: Option[Any])
 
 trait ElementExtractor {
-  def extractPlainPropertyValue(propertyConstraint: PropertyConstraint,
-                                element: DomainElement): Seq[ExtractedPropertyValue]
+  def extractPlainPropertyValue(
+      propertyConstraint: PropertyConstraint,
+      element: DomainElement
+  ): Seq[ExtractedPropertyValue]
 
   def extractPlainPredicateValue(predicate: String, element: DomainElement): Seq[ExtractedPropertyValue]
 
-  def extractPropertyValue(propertyConstraint: PropertyConstraint,
-                           element: DomainElement): Option[ExtractedPropertyValue]
+  def extractPropertyValue(
+      propertyConstraint: PropertyConstraint,
+      element: DomainElement
+  ): Option[ExtractedPropertyValue]
 }
 
 object DefaultElementExtractor extends ElementExtractor {
-  def extractPlainPropertyValue(propertyConstraint: PropertyConstraint,
-                                element: DomainElement): Seq[ExtractedPropertyValue] =
+  def extractPlainPropertyValue(
+      propertyConstraint: PropertyConstraint,
+      element: DomainElement
+  ): Seq[ExtractedPropertyValue] =
     extractPlainPredicateValue(propertyConstraint.ramlPropertyId, element)
 
   def extractPlainPredicateValue(predicate: String, element: DomainElement): Seq[ExtractedPropertyValue] =
     extractElement(predicate, element).map(toNativeScalar).getOrElse(Nil)
 
-  def extractPropertyValue(propertyConstraint: PropertyConstraint,
-                           element: DomainElement): Option[ExtractedPropertyValue] = {
+  def extractPropertyValue(
+      propertyConstraint: PropertyConstraint,
+      element: DomainElement
+  ): Option[ExtractedPropertyValue] = {
     extractElement(propertyConstraint.ramlPropertyId, element).map {
       case s: AmfScalar =>
         ExtractedPropertyValue(s, Some(amfScalarToScala(s)))
@@ -64,14 +72,18 @@ object DefaultElementExtractor extends ElementExtractor {
 }
 
 class ScalarElementExtractor(scalar: AmfScalar) extends ElementExtractor {
-  override def extractPlainPropertyValue(propertyConstraint: PropertyConstraint,
-                                         element: DomainElement): Seq[ExtractedPropertyValue] = Seq(value())
+  override def extractPlainPropertyValue(
+      propertyConstraint: PropertyConstraint,
+      element: DomainElement
+  ): Seq[ExtractedPropertyValue] = Seq(value())
 
   override def extractPlainPredicateValue(predicate: String, element: DomainElement): Seq[ExtractedPropertyValue] =
     Seq(value())
 
-  override def extractPropertyValue(propertyConstraint: PropertyConstraint,
-                                    element: DomainElement): Option[ExtractedPropertyValue] = {
+  override def extractPropertyValue(
+      propertyConstraint: PropertyConstraint,
+      element: DomainElement
+  ): Option[ExtractedPropertyValue] = {
     Some(value())
   }
 

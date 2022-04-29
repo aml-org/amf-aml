@@ -16,9 +16,8 @@ class SemanticExtensionFinder(val extensions: Map[String, Dialect], val extracto
   private val cache: CachedFunction[String, (SemanticExtension, Dialect), Seq] = CachedFunction.fromMonadic {
     uriOrString =>
       extensions
-        .map {
-          case (extensionName, dialect) =>
-            (dialect.extensions().find(p => p.extensionName().value() == extensionName), dialect)
+        .map { case (extensionName, dialect) =>
+          (dialect.extensions().find(p => p.extensionName().value() == extensionName), dialect)
         }
         .collect { case (Some(extension), dialect) => (extension, dialect) }
         .filter { case (extension, _) => extractor.extractSearchField(extension).contains(uriOrString) }

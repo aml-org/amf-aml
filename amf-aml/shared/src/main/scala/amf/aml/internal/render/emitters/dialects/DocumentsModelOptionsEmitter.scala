@@ -14,7 +14,8 @@ import org.yaml.model.YType
 case class DocumentsModelOptionsEmitter(
     dialect: Dialect,
     ordering: SpecOrdering,
-    aliases: Map[String, (String, String)] = Map())(implicit val nodeMappableFinder: NodeMappableFinder)
+    aliases: Map[String, (String, String)] = Map()
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasesConsumer {
 
@@ -22,7 +23,11 @@ case class DocumentsModelOptionsEmitter(
   var emitters: Seq[EntryEmitter] = Seq()
 
   private def hasOptions: Boolean =
-    Seq(mapping.selfEncoded().option(), mapping.declarationsPath().option(), mapping.keyProperty().option()).flatten.nonEmpty
+    Seq(
+        mapping.selfEncoded().option(),
+        mapping.declarationsPath().option(),
+        mapping.keyProperty().option()
+    ).flatten.nonEmpty
 
   val sortedNodes: Seq[MapEntryEmitter] = if (hasOptions) {
     val options =
@@ -32,10 +37,12 @@ case class DocumentsModelOptionsEmitter(
           "keyProperty"      -> mapping.keyProperty().option(),
           "referenceStyle"   -> mapping.referenceStyle().option()
       )
-    val types = Map("selfEncoded" -> YType.Bool,
-                    "keyProperty"      -> YType.Bool,
-                    "declarationsPath" -> YType.Str,
-                    "referenceStyle"   -> YType.Str)
+    val types = Map(
+        "selfEncoded"      -> YType.Bool,
+        "keyProperty"      -> YType.Bool,
+        "declarationsPath" -> YType.Str,
+        "referenceStyle"   -> YType.Str
+    )
     val annotations = Map(
         "selfEncoded"      -> mapping.selfEncoded().annotations(),
         "declarationsPath" -> mapping.declarationsPath().annotations(),
@@ -44,14 +51,13 @@ case class DocumentsModelOptionsEmitter(
     )
 
     val optionNodes: Seq[MapEntryEmitter] = options
-      .map {
-        case (optionName, maybeValue) =>
-          maybeValue map { value =>
-            val key                = optionName
-            val nodetype           = types(optionName)
-            val position: Position = pos(annotations(optionName))
-            MapEntryEmitter(optionName, value.toString, nodetype, position)
-          }
+      .map { case (optionName, maybeValue) =>
+        maybeValue map { value =>
+          val key                = optionName
+          val nodetype           = types(optionName)
+          val position: Position = pos(annotations(optionName))
+          MapEntryEmitter(optionName, value.toString, nodetype, position)
+        }
       }
       .collect({ case Some(node) => node })
       .toSeq
@@ -62,9 +68,12 @@ case class DocumentsModelOptionsEmitter(
 
   override def emit(b: EntryBuilder): Unit = {
     if (sortedNodes.nonEmpty) {
-      b.entry("options", _.obj { b =>
-        traverse(sortedNodes, b)
-      })
+      b.entry(
+          "options",
+          _.obj { b =>
+            traverse(sortedNodes, b)
+          }
+      )
     }
   }
 

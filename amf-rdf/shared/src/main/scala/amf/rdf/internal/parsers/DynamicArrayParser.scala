@@ -7,8 +7,7 @@ import amf.rdf.client.scala.{PropertyObject, Uri}
 import amf.rdf.internal.graph.NodeFinder
 import amf.rdf.internal.{RdfParserCommon, RdfParserContext}
 
-class DynamicArrayParser(linkFinder: NodeFinder, sourcesRetriever: SourcesRetriever)(
-    implicit val ctx: RdfParserContext)
+class DynamicArrayParser(linkFinder: NodeFinder, sourcesRetriever: SourcesRetriever)(implicit val ctx: RdfParserContext)
     extends RdfParserCommon {
   def parse(propertyObject: PropertyObject): ArrayNode = {
     val nodeAnnotations = linkFinder.findLink(propertyObject) match {

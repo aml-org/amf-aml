@@ -24,14 +24,13 @@ object RdfParsePlugin extends AMFParsePlugin with RdfPlatformSecrets {
     document.parsed match {
       case RdfModelDocument(model) =>
         val rootNodeLocation = document.location
-        val parser = RdfModelParser(ctx.config, new EntitiesFacade(ctx.config))
+        val parser           = RdfModelParser(ctx.config, new EntitiesFacade(ctx.config))
         parser.parse(model, rootNodeLocation)
       case _ => throw UnsupportedParsedDocumentException
     }
   }
 
-  /**
-    * media types which specifies vendors that are parsed by this plugin.
+  /** media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Seq(Mimes.`text/n3`)
 

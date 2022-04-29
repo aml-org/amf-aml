@@ -7,10 +7,11 @@ import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping}
 
-class DialectDomainElementModel(val typeIri: Seq[String] = Seq(),
-                                val typeFields: Seq[Field] = Nil,
-                                val nodeMapping: Option[NodeMapping] = None)
-    extends DomainElementModel
+class DialectDomainElementModel(
+    val typeIri: Seq[String] = Seq(),
+    val typeFields: Seq[Field] = Nil,
+    val nodeMapping: Option[NodeMapping] = None
+) extends DomainElementModel
     with LinkableElementModel {
 
   override val fields: List[Field] =

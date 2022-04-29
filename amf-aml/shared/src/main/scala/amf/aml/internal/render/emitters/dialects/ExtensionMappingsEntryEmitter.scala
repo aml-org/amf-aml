@@ -11,9 +11,11 @@ import amf.aml.client.scala.model.domain.SemanticExtension
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 
-case class ExtensionMappingsEntryEmitter(dialect: Dialect,
-                                         aliases: Map[String, (String, String)],
-                                         ordering: SpecOrdering)(implicit val nodeMappableFinder: NodeMappableFinder)
+case class ExtensionMappingsEntryEmitter(
+    dialect: Dialect,
+    aliases: Map[String, (String, String)],
+    ordering: SpecOrdering
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with GroupPosition {
 
@@ -32,17 +34,21 @@ case class ExtensionMappingsEntryEmitter(dialect: Dialect,
   private def extensions = dialect.extensions()
 }
 
-case class SemanticExtensionEmitter(dialect: Dialect,
-                                    element: SemanticExtension,
-                                    aliases: Map[String, (String, String)],
-                                    ordering: SpecOrdering)(implicit val nodeMappableFinder: NodeMappableFinder)
+case class SemanticExtensionEmitter(
+    dialect: Dialect,
+    element: SemanticExtension,
+    aliases: Map[String, (String, String)],
+    ordering: SpecOrdering
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    val emitters = emitAlias(element.extensionName().value(),
-                             element.extensionMappingDefinition(),
-                             SemanticExtensionModel.ExtensionMappingDefinition,
-                             YType.Str).toSeq
+    val emitters = emitAlias(
+        element.extensionName().value(),
+        element.extensionMappingDefinition(),
+        SemanticExtensionModel.ExtensionMappingDefinition,
+        YType.Str
+    ).toSeq
     traverse(ordering.sorted(emitters), b)
   }
 

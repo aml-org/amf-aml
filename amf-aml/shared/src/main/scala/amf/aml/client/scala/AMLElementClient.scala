@@ -14,9 +14,9 @@ class AMLElementClient private[amf] (protected override val configuration: AMLCo
 
   override def getConfiguration: AMLConfiguration = configuration
 
-  /**
-    * Currently supports rendering of dialect domain elements
-    * @param references : optional parameter which will improve emission of references defined in element
+  /** Currently supports rendering of dialect domain elements
+    * @param references
+    *   : optional parameter which will improve emission of references defined in element
     */
   def renderElement(element: DomainElement, references: Seq[BaseUnit] = Nil): YNode = {
 
@@ -26,7 +26,8 @@ class AMLElementClient private[amf] (protected override val configuration: AMLCo
       .find(
           _.declares
             .collectFirst({ case nm: NodeMapping if element.meta.`type`.exists(_.iri() == nm.id) => nm })
-            .isDefined)
+            .isDefined
+      )
       .map { d =>
         AmlDomainElementEmitter.emit(element, d, configuration.errorHandlerProvider.errorHandler(), references)
       }

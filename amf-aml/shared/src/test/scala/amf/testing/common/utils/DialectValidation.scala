@@ -13,16 +13,18 @@ trait DialectValidation extends AsyncFunSuite with PlatformSecrets {
   protected val path: String
   protected val reportComparator: ReportComparator = UniquePlatformReportComparator
 
-  protected def validate(dialectPath: String,
-                         goldenReport: Option[String],
-                         jsonldReport: Boolean = true,
-                         multiPlatform: Boolean = true): Future[Assertion] = {
+  protected def validate(
+      dialectPath: String,
+      goldenReport: Option[String],
+      jsonldReport: Boolean = true,
+      multiPlatform: Boolean = true
+  ): Future[Assertion] = {
 
     val configuration = AMLConfiguration.predefined()
     val client        = configuration.baseUnitClient()
     for {
-      parsed    <- client.parseDialect("file://" + path + dialectPath)
-      report    <- client.validate(parsed.dialect).map(report => report.merge(AMFValidationReport.unknownProfile(parsed)))
+      parsed <- client.parseDialect("file://" + path + dialectPath)
+      report <- client.validate(parsed.dialect).map(report => report.merge(AMFValidationReport.unknownProfile(parsed)))
       assertion <- reportComparator.assertReport(report, goldenReport.map(g => s"$path/$g"), jsonldReport)
     } yield {
       assertion

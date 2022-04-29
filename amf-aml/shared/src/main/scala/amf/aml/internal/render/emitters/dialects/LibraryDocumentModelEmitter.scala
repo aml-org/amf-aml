@@ -14,7 +14,8 @@ import org.yaml.model.YDocument.EntryBuilder
 case class LibraryDocumentModelEmitter(
     dialect: Dialect,
     ordering: SpecOrdering,
-    aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
+    aliases: Map[String, (String, String)]
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasesConsumer {
   val mapping: DocumentMapping    = dialect.documents().library()
@@ -33,17 +34,23 @@ case class LibraryDocumentModelEmitter(
     emitters ++= Seq(new EntryEmitter {
 
       override def emit(b: EntryBuilder): Unit = {
-        b.entry("declares", _.obj { b =>
-          traverse(sortedNodes, b)
-        })
+        b.entry(
+            "declares",
+            _.obj { b =>
+              traverse(sortedNodes, b)
+            }
+        )
       }
 
       override def position(): Position = sortedNodes.head.position
     })
 
-    b.entry("library", _.obj { b =>
-      traverse(ordering.sorted(emitters), b)
-    })
+    b.entry(
+        "library",
+        _.obj { b =>
+          traverse(ordering.sorted(emitters), b)
+        }
+    )
   }
 
   override def position(): Position = {

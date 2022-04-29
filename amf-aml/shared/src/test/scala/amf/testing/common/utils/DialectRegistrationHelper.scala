@@ -11,8 +11,9 @@ import amf.core.internal.unsafe.PlatformBuilder.platform
 import scala.concurrent.{ExecutionContext, Future}
 
 trait DialectRegistrationHelper {
-  protected def withDialect[T](uri: String)(fn: (Dialect, AMLConfiguration) => Future[T])(
-      implicit ec: ExecutionContext): Future[T] = {
+  protected def withDialect[T](
+      uri: String
+  )(fn: (Dialect, AMLConfiguration) => Future[T])(implicit ec: ExecutionContext): Future[T] = {
     val configuration = AMLConfiguration.predefined()
     val context       = new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build()
     for {
@@ -21,7 +22,8 @@ trait DialectRegistrationHelper {
       resolved <- Future.successful(
           TransformationPipelineRunner(DefaultErrorHandler(), configuration)
             .run(dialect, DialectTransformationPipeline())
-            .asInstanceOf[Dialect])
+            .asInstanceOf[Dialect]
+      )
       dialectConfig <- Future.successful(configuration.withDialect(resolved))
       result        <- fn(resolved, dialectConfig)
     } yield {

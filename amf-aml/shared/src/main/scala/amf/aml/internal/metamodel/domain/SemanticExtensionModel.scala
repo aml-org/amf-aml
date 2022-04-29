@@ -6,20 +6,18 @@ import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVo
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.aml.client.scala.model.domain.SemanticExtension
 
-/**
-  * Defines a the relation extension name -> extension mapping to be applied to target documents. An extension is defined
-  * with an annotation mapping. Whenever we encounter an annotation in the target document (e.g. RAML API) we check if
-  * the name of the annotation matches the ExtensionName fields value and if it does, we parse the value of such annotation
-  * using the range of the ExtensionMappingDefinition.
-  * e.g.
-  *   /myEndpoint:
-  *     (extension-name): extension-range (derived from extension mapping definition)
+/** Defines a the relation extension name -> extension mapping to be applied to target documents. An extension is
+  * defined with an annotation mapping. Whenever we encounter an annotation in the target document (e.g. RAML API) we
+  * check if the name of the annotation matches the ExtensionName fields value and if it does, we parse the value of
+  * such annotation using the range of the ExtensionMappingDefinition. e.g. /myEndpoint: (extension-name):
+  * extension-range (derived from extension mapping definition)
   */
 object SemanticExtensionModel extends DomainElementModel {
   val ExtensionName: Field = Field(
       Str,
       Namespace.Core + "name",
-      ModelDoc(ModelVocabularies.Core, "name", "Name that identifies an extension in the target document"))
+      ModelDoc(ModelVocabularies.Core, "name", "Name that identifies an extension in the target document")
+  )
 
   val ExtensionMappingDefinition: Field = Field(
       Iri,

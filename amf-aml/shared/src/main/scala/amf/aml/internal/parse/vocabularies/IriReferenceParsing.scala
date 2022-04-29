@@ -6,9 +6,11 @@ import org.yaml.model.YPart
 
 trait IriReferenceParsing {
 
-  protected def parseIriAlias(iris: Seq[String],
-                              computeAliasedTerm: String => Option[String],
-                              onError: String => Unit) = {
+  protected def parseIriAlias(
+      iris: Seq[String],
+      computeAliasedTerm: String => Option[String],
+      onError: String => Unit
+  ) = {
     iris.flatMap { term =>
       computeAliasedTerm(term) match {
         case Some(v) => Some(AmfScalar(v, Annotations.synthesized()))

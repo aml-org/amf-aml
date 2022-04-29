@@ -13,12 +13,16 @@ object VocabularyModel extends ModuleModel with ExternalContextModel {
 
   val Name =
     Field(Str, Namespace.Core + "name", ModelDoc(ModelVocabularies.Core, "name", "Name for an entity"))
-  val Base = Field(Str,
-                   Namespace.Meta + "base",
-                   ModelDoc(ModelVocabularies.Meta, "base", "Base URI prefix for definitions in this vocabulary"))
-  val Imports = Field(Array(VocabularyReferenceModel),
-                      Namespace.Owl + "imports",
-                      ModelDoc(ExternalModelVocabularies.Owl, "import", "import relationships between vocabularies"))
+  val Base = Field(
+      Str,
+      Namespace.Meta + "base",
+      ModelDoc(ModelVocabularies.Meta, "base", "Base URI prefix for definitions in this vocabulary")
+  )
+  val Imports = Field(
+      Array(VocabularyReferenceModel),
+      Namespace.Owl + "imports",
+      ModelDoc(ExternalModelVocabularies.Owl, "import", "import relationships between vocabularies")
+  )
 
   override def modelInstance: AmfObject = Vocabulary()
 

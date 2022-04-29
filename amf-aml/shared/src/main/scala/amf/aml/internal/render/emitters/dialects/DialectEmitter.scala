@@ -18,9 +18,9 @@ trait DocumentCreator {
   def apply(content: Seq[EntryEmitter]): YDocument
 }
 
-case class DialectEmitter(dialect: Dialect, document: DocumentCreator)(
-    implicit val nodeMappableFinder: NodeMappableFinder)
-    extends DialectDocumentsEmitters {
+case class DialectEmitter(dialect: Dialect, document: DocumentCreator)(implicit
+    val nodeMappableFinder: NodeMappableFinder
+) extends DialectDocumentsEmitters {
 
   val ordering: SpecOrdering = Lexical
   val aliases: Map[RefKey, (Alias, ImportLocation)] =

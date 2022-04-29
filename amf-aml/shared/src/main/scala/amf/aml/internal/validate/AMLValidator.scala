@@ -22,8 +22,9 @@ import scala.concurrent.{ExecutionContext, Future}
 
 object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstraints {
 
-  def validate(baseUnit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[ValidationResult] = {
+  def validate(baseUnit: BaseUnit, options: ValidationOptions)(implicit
+      executionContext: ExecutionContext
+  ): Future[ValidationResult] = {
 
     val configuration = options.config
     val amfConfig     = options.config.amfConfig
@@ -52,8 +53,10 @@ object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstrai
     }
   }
 
-  private def buildValidations(profile: ProfileName,
-                               constraints: Map[ProfileName, ValidationProfile]): EffectiveValidations = {
+  private def buildValidations(
+      profile: ProfileName,
+      constraints: Map[ProfileName, ValidationProfile]
+  ): EffectiveValidations = {
     val instanceValidations = EffectiveValidationsCompute
       .build(profile, constraints)
       .getOrElse(EffectiveValidations())
@@ -61,8 +64,8 @@ object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstrai
   }
 
   private def collectDialects(amfConfig: => AMFGraphConfiguration) = {
-    amfConfig.registry.getPluginsRegistry.rootParsePlugins.collect {
-      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
+    amfConfig.registry.getPluginsRegistry.rootParsePlugins.collect { case plugin: AMLDialectInstanceParsingPlugin =>
+      plugin.dialect
     }
   }
 
@@ -75,7 +78,8 @@ object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstrai
   private def computeValidationProfilesOfDependencies(
       dialectInstance: DialectInstanceUnit,
       knownDialects: Seq[Dialect],
-      constraints: Map[ProfileName, ValidationProfile])(implicit executionContext: ExecutionContext) = {
+      constraints: Map[ProfileName, ValidationProfile]
+  )(implicit executionContext: ExecutionContext) = {
     @silent("deprecated") // Silent can only be used in assignment expressions
     val graphDependencies =
       if (dialectInstance.processingData.graphDependencies.nonEmpty) {
@@ -91,10 +95,12 @@ object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstrai
 
   }
 
-  private def addValidations(validations: EffectiveValidations,
-                             dependenciesValidations: Seq[ValidationProfile]): EffectiveValidations = {
-    dependenciesValidations.foldLeft(validations) {
-      case (effective, profile) => effective.someEffective(profile)
+  private def addValidations(
+      validations: EffectiveValidations,
+      dependenciesValidations: Seq[ValidationProfile]
+  ): EffectiveValidations = {
+    dependenciesValidations.foldLeft(validations) { case (effective, profile) =>
+      effective.someEffective(profile)
     }
   }
 }

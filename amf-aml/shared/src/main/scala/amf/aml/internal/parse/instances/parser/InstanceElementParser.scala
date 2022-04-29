@@ -22,36 +22,42 @@ case class InstanceElementParser(root: Root)(implicit ctx: DialectInstanceContex
 
   private val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
-  def parse(path: String,
-            id: String,
-            entry: YNode,
-            mapping: NodeMappable,
-            additionalProperties: Map[String, Any],
-            parseAllOf: Boolean)(implicit ctx: DialectInstanceContext): DialectDomainElement =
+  def parse(
+      path: String,
+      id: String,
+      entry: YNode,
+      mapping: NodeMappable,
+      additionalProperties: Map[String, Any],
+      parseAllOf: Boolean
+  )(implicit ctx: DialectInstanceContext): DialectDomainElement =
     parse(path, id, entry, mapping, additionalProperties, givenAnnotations = None, parseAllOf = parseAllOf)
 
-  def parse(path: String,
-            defaultId: String,
-            ast: YNode,
-            mappable: NodeMappable,
-            additionalProperties: Map[String, Any] = Map(),
-            rootNode: Boolean = false,
-            givenAnnotations: Option[Annotations],
-            additionalKey: Option[String] = None,
-            parseAllOf: Boolean = true)(implicit ctx: DialectInstanceContext): DialectDomainElement = {
+  def parse(
+      path: String,
+      defaultId: String,
+      ast: YNode,
+      mappable: NodeMappable,
+      additionalProperties: Map[String, Any] = Map(),
+      rootNode: Boolean = false,
+      givenAnnotations: Option[Annotations],
+      additionalKey: Option[String] = None,
+      parseAllOf: Boolean = true
+  )(implicit ctx: DialectInstanceContext): DialectDomainElement = {
     val result: DialectDomainElement = ast.tagType match {
       case YType.Map =>
         val astMap = ast.as[YMap]
-        parseNodeMap(path,
-                     defaultId,
-                     astMap,
-                     ast,
-                     mappable,
-                     additionalProperties,
-                     rootNode,
-                     givenAnnotations,
-                     additionalKey,
-                     parseAllOf)
+        parseNodeMap(
+            path,
+            defaultId,
+            astMap,
+            ast,
+            mappable,
+            additionalProperties,
+            rootNode,
+            givenAnnotations,
+            additionalKey,
+            parseAllOf
+        )
 
       case YType.Str     => resolveLink(ast, mappable, defaultId, givenAnnotations)
       case YType.Include => resolveLink(ast, mappable, defaultId, givenAnnotations)
@@ -67,7 +73,7 @@ case class InstanceElementParser(root: Root)(implicit ctx: DialectInstanceContex
           if anyMappable.and.nonEmpty || anyMappable.or.nonEmpty || anyMappable.ifMapping
             .option()
             .nonEmpty => // don't do anything
-      case _          => assignDefinedByAndTypes(mappable, result)
+      case _ => assignDefinedByAndTypes(mappable, result)
     }
     if (ctx.isPatch) result.withAbstract(true)
     result
@@ -83,26 +89,30 @@ case class InstanceElementParser(root: Root)(implicit ctx: DialectInstanceContex
     }
   }
 
-  private def checkNodeForAdditionalKeys(id: String,
-                                         nodetype: String,
-                                         entries: Map[YNode, YNode],
-                                         mapping: NodeMapping,
-                                         ast: YPart,
-                                         rootNode: Boolean,
-                                         additionalKey: Option[String])(implicit ctx: DialectInstanceContext): Unit = {
+  private def checkNodeForAdditionalKeys(
+      id: String,
+      nodetype: String,
+      entries: Map[YNode, YNode],
+      mapping: NodeMapping,
+      ast: YPart,
+      rootNode: Boolean,
+      additionalKey: Option[String]
+  )(implicit ctx: DialectInstanceContext): Unit = {
     checkNode(id, nodetype, entries, mapping, ast, rootNode, additionalKey)
   }
 
-  private def parseNodeMap(path: String,
-                           defaultId: String,
-                           astMap: YMap,
-                           ast: YNode,
-                           mappable: NodeMappable,
-                           additionalProperties: Map[String, Any],
-                           rootNode: Boolean,
-                           givenAnnotations: Option[Annotations],
-                           additionalKey: Option[String],
-                           parseAllOf: Boolean = true)(implicit ctx: DialectInstanceContext) = {
+  private def parseNodeMap(
+      path: String,
+      defaultId: String,
+      astMap: YMap,
+      ast: YNode,
+      mappable: NodeMappable,
+      additionalProperties: Map[String, Any],
+      rootNode: Boolean,
+      givenAnnotations: Option[Annotations],
+      additionalKey: Option[String],
+      parseAllOf: Boolean = true
+  )(implicit ctx: DialectInstanceContext) = {
     computeParsingScheme(astMap) match {
       case "$ref"     => RefNodeParser.parse(defaultId, astMap, mappable, root)
       case "$include" => IncludeNodeParser.parse(ast, mappable, defaultId, givenAnnotations)
@@ -113,28 +123,32 @@ case class InstanceElementParser(root: Root)(implicit ctx: DialectInstanceContex
             val applicableMapping = ApplicableMappingFinder(root).find(map, any)
             applicableMapping
               .map { foundMapping =>
-                parseWithNodeMapping(defaultId,
-                                     astMap,
-                                     ast,
-                                     additionalProperties,
-                                     rootNode,
-                                     givenAnnotations,
-                                     additionalKey,
-                                     foundMapping)
+                parseWithNodeMapping(
+                    defaultId,
+                    astMap,
+                    ast,
+                    additionalProperties,
+                    rootNode,
+                    givenAnnotations,
+                    additionalKey,
+                    foundMapping
+                )
               }
               .getOrElse {
                 // TODO: add error
                 emptyElement(defaultId, astMap, mappable, givenAnnotations)
               }
           case mapping: NodeMapping =>
-            parseWithNodeMapping(defaultId,
-                                 astMap,
-                                 ast,
-                                 additionalProperties,
-                                 rootNode,
-                                 givenAnnotations,
-                                 additionalKey,
-                                 mapping)
+            parseWithNodeMapping(
+                defaultId,
+                astMap,
+                ast,
+                additionalProperties,
+                rootNode,
+                givenAnnotations,
+                additionalKey,
+                mapping
+            )
           case unionMapping: UnionNodeMapping =>
             parseObjectUnion(defaultId, Seq(path), ast, unionMapping, additionalProperties)
         }
@@ -142,14 +156,16 @@ case class InstanceElementParser(root: Root)(implicit ctx: DialectInstanceContex
     }
   }
 
-  private def parseWithNodeMapping(defaultId: String,
-                                   astMap: YMap,
-                                   ast: YNode,
-                                   additionalProperties: Map[String, Any],
-                                   rootNode: Boolean,
-                                   givenAnnotations: Option[Annotations],
-                                   additionalKey: Option[String],
-                                   mapping: NodeMapping)(implicit ctx: DialectInstanceContext) = {
+  private def parseWithNodeMapping(
+      defaultId: String,
+      astMap: YMap,
+      ast: YNode,
+      additionalProperties: Map[String, Any],
+      rootNode: Boolean,
+      givenAnnotations: Option[Annotations],
+      additionalKey: Option[String],
+      mapping: NodeMapping
+  )(implicit ctx: DialectInstanceContext) = {
     val annotations                = givenAnnotations.getOrElse(Annotations(ast))
     val node: DialectDomainElement = DialectDomainElement(defaultId.urlDecoded, mapping, annotations)
     val finalId =
@@ -175,10 +191,12 @@ case class InstanceElementParser(root: Root)(implicit ctx: DialectInstanceContex
     else defaultId
   }
 
-  private def parseProperty(id: String,
-                            propertyEntry: YMapEntry,
-                            property: PropertyMapping,
-                            node: DialectDomainElement)(implicit ctx: DialectInstanceContext): Unit = {
+  private def parseProperty(
+      id: String,
+      propertyEntry: YMapEntry,
+      property: PropertyMapping,
+      node: DialectDomainElement
+  )(implicit ctx: DialectInstanceContext): Unit = {
     new ElementPropertyParser(root, map, parse).parse(id, propertyEntry, property, node)
   }
 
@@ -187,7 +205,8 @@ case class InstanceElementParser(root: Root)(implicit ctx: DialectInstanceContex
       path: Seq[String],
       ast: YNode,
       unionMapping: NodeWithDiscriminator[_],
-      additionalProperties: Map[String, Any] = Map())(implicit ctx: DialectInstanceContext): DialectDomainElement = {
+      additionalProperties: Map[String, Any] = Map()
+  )(implicit ctx: DialectInstanceContext): DialectDomainElement = {
 
     ObjectUnionParser.parse(defaultId, path, ast, unionMapping, additionalProperties, root, map, parseProperty)
   }

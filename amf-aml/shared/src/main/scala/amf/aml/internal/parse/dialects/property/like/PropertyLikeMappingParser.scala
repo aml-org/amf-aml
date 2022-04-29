@@ -10,7 +10,8 @@ import org.yaml.model.{YMap, YPart}
 
 case class PropertyLikeMappingParser[T <: PropertyLikeMapping[_ <: PropertyLikeMappingModel]](
     map: YMap,
-    propertyLikeMapping: T)(implicit val ctx: DialectContext) {
+    propertyLikeMapping: T
+)(implicit val ctx: DialectContext) {
   def parse(): Unit = {
     val meta = propertyLikeMapping.meta
 

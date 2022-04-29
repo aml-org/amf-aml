@@ -15,15 +15,18 @@ import org.yaml.model._
 
 import scala.language.existentials
 
-class DialectInstanceContext(var dialect: Dialect,
-                             val nodeMappableFinder: NodeMappableFinder,
-                             private val wrapped: ParserContext,
-                             private val ds: Option[DialectInstanceDeclarations] = None,
-                             val constraints: Option[ValidationProfile] = None)
-    extends SyamlBasedParserErrorHandler(wrapped.rootContextDocument,
-                                         wrapped.refs,
-                                         wrapped.futureDeclarations,
-                                         wrapped.config)
+class DialectInstanceContext(
+    var dialect: Dialect,
+    val nodeMappableFinder: NodeMappableFinder,
+    private val wrapped: ParserContext,
+    private val ds: Option[DialectInstanceDeclarations] = None,
+    val constraints: Option[ValidationProfile] = None
+) extends SyamlBasedParserErrorHandler(
+        wrapped.rootContextDocument,
+        wrapped.refs,
+        wrapped.futureDeclarations,
+        wrapped.config
+    )
     with DeclarationContext
     with SyntaxErrorReporter {
 
@@ -103,9 +106,8 @@ class DialectInstanceContext(var dialect: Dialect,
       }
       .getOrElse(Nil)
 
-    declarations.foldLeft(Map[String, NodeMappable]()) {
-      case (acc, (name, mapping)) =>
-        acc + (name -> mapping)
+    declarations.foldLeft(Map[String, NodeMappable]()) { case (acc, (name, mapping)) =>
+      acc + (name -> mapping)
     }
   }
 
@@ -130,10 +132,12 @@ class DialectInstanceContext(var dialect: Dialect,
   }
 
   def copy(errorHandler: AMFErrorHandler): DialectInstanceContext = {
-    new DialectInstanceContext(dialect,
-                               nodeMappableFinder,
-                               wrapped.copy(config = ParseConfigOverride(errorHandler, wrapped.config)),
-                               ds,
-                               constraints)
+    new DialectInstanceContext(
+        dialect,
+        nodeMappableFinder,
+        wrapped.copy(config = ParseConfigOverride(errorHandler, wrapped.config)),
+        ds,
+        constraints
+    )
   }
 }

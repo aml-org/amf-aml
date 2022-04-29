@@ -9,8 +9,6 @@ trait HasObjectRangeModel extends DomainElementModel {
   val ObjectRange: Field = Field(
       SortedArray(Iri),
       Namespace.Shacl + "node",
-      ModelDoc(ExternalModelVocabularies.Shacl,
-               "range",
-               "Object constraint over the type of the mapped graph property")
+      ModelDoc(ExternalModelVocabularies.Shacl, "range", "Object constraint over the type of the mapped graph property")
   )
 }

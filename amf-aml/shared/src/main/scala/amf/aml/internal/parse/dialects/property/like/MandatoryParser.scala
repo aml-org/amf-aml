@@ -11,8 +11,9 @@ import org.yaml.model.{YMap, YMapEntry}
 
 import scala.language.implicitConversions
 
-case class MandatoryParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(
-    implicit val ctx: DialectContext) {
+case class MandatoryParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(implicit
+    val ctx: DialectContext
+) {
   def parse(): Unit = {
 
     // If I have minItems and mandatory ==> minCount = minItems & mandatory = mandatory
@@ -30,9 +31,11 @@ case class MandatoryParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_
     if (existsMinItems && propertyLikeMapping.isMultiple) {
       val minItemsValue = minItems.get.value
       val minItemsEntry = minItems.get.entry
-      propertyLikeMapping.set(propertyLikeMapping.meta.MinCount,
-                              AmfScalar(minItemsValue, Annotations(minItemsEntry.value)),
-                              Annotations(minItemsEntry))
+      propertyLikeMapping.set(
+          propertyLikeMapping.meta.MinCount,
+          AmfScalar(minItemsValue, Annotations(minItemsEntry.value)),
+          Annotations(minItemsEntry)
+      )
     }
 
     // Mandatory key will be processed based on the presence or not of minItems key
@@ -41,14 +44,18 @@ case class MandatoryParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_
       val mandatoryEntry = mandatory.get.entry
       // If mandatory and minItems keys exist, mandatory will be saved as a boolean in Mandatory field
       if (existsMinItems) {
-        propertyLikeMapping.set(propertyLikeMapping.meta.Mandatory,
-                                AmfScalar(mandatoryValue.toBoolean, Annotations(mandatoryEntry.value)),
-                                Annotations(mandatoryEntry))
+        propertyLikeMapping.set(
+            propertyLikeMapping.meta.Mandatory,
+            AmfScalar(mandatoryValue.toBoolean, Annotations(mandatoryEntry.value)),
+            Annotations(mandatoryEntry)
+        )
       } else {
         // If mandatory key exists but minItems key not, mandatory will be saved in MinCount field (the original behavior)
-        propertyLikeMapping.set(propertyLikeMapping.meta.MinCount,
-                                AmfScalar(mandatoryValue, Annotations(mandatoryEntry.value)),
-                                Annotations(mandatoryEntry))
+        propertyLikeMapping.set(
+            propertyLikeMapping.meta.MinCount,
+            AmfScalar(mandatoryValue, Annotations(mandatoryEntry.value)),
+            Annotations(mandatoryEntry)
+        )
       }
     } else if (existsMinItems)
       propertyLikeMapping.set(propertyLikeMapping.meta.Mandatory, AmfScalar(false), Annotations(VirtualElement()))

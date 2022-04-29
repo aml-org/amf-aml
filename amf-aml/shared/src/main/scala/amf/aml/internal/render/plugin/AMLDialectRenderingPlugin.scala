@@ -12,10 +12,12 @@ import amf.core.internal.remote.Mimes._
 import org.yaml.model.YDocument
 
 class AMLDialectRenderingPlugin extends SYAMLBasedRenderPlugin {
-  override def emit[T](unit: BaseUnit,
-                       builder: ASTBuilder[T],
-                       renderConfiguration: RenderConfiguration,
-                       mediaType: String): Boolean = {
+  override def emit[T](
+      unit: BaseUnit,
+      builder: ASTBuilder[T],
+      renderConfiguration: RenderConfiguration,
+      mediaType: String
+  ): Boolean = {
     builder match {
       case sb: SYAMLASTBuilder =>
         val maybeDocument: Option[YDocument] = emitDoc(unit, renderConfiguration, mediaType)
@@ -43,8 +45,8 @@ class AMLDialectRenderingPlugin extends SYAMLBasedRenderPlugin {
   }
 
   private def getDialects(renderConfiguration: RenderConfiguration) = {
-    renderConfiguration.renderPlugins.collect {
-      case plugin: AMLDialectInstanceRenderingPlugin => plugin.dialect
+    renderConfiguration.renderPlugins.collect { case plugin: AMLDialectInstanceRenderingPlugin =>
+      plugin.dialect
     }
   }
 
@@ -62,8 +64,10 @@ class AMLDialectRenderingPlugin extends SYAMLBasedRenderPlugin {
 
   override def mediaTypes: Seq[String] = Seq(`application/yaml`, `application/json`)
 
-  override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderConfig: RenderConfiguration,
-                                            errorHandler: AMFErrorHandler): Option[YDocument] =
+  override protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ): Option[YDocument] =
     throw new UnsupportedOperationException("Unreachable code")
 }

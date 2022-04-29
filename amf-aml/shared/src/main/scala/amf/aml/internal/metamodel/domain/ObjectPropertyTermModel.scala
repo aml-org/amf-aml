@@ -6,7 +6,7 @@ import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.aml.client.scala.model.domain.ObjectPropertyTerm
 
 object ObjectPropertyTermModel extends PropertyTermModel {
-  override val `type`
-    : List[ValueType]                   = Namespace.Owl + "ObjectProperty" :: Namespace.Meta + "Property" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] =
+    Namespace.Owl + "ObjectProperty" :: Namespace.Meta + "Property" :: DomainElementModel.`type`
   override def modelInstance: AmfObject = ObjectPropertyTerm()
 }

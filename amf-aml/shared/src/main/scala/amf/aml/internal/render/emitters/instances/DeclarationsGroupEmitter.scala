@@ -13,17 +13,19 @@ import amf.core.internal.utils.AmfStrings
 import amf.aml.internal.metamodel.domain.NodeMappableModel
 import amf.aml.internal.registries.AMLRegistry
 
-case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
-                                    publicNodeMapping: PublicNodeMapping,
-                                    nodeMappable: NodeMappable[_ <: NodeMappableModel],
-                                    instance: DialectInstanceUnit,
-                                    dialect: Dialect,
-                                    ordering: SpecOrdering,
-                                    declarationsPath: Seq[String],
-                                    aliases: Map[String, (String, String)],
-                                    keyPropertyId: Option[String] = None,
-                                    renderOptions: RenderOptions,
-                                    registry: AMLRegistry)(implicit val nodeMappableFinder: NodeMappableFinder)
+case class DeclarationsGroupEmitter(
+    declared: Seq[DialectDomainElement],
+    publicNodeMapping: PublicNodeMapping,
+    nodeMappable: NodeMappable[_ <: NodeMappableModel],
+    instance: DialectInstanceUnit,
+    dialect: Dialect,
+    ordering: SpecOrdering,
+    declarationsPath: Seq[String],
+    aliases: Map[String, (String, String)],
+    keyPropertyId: Option[String] = None,
+    renderOptions: RenderOptions,
+    registry: AMLRegistry
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AmlEmittersHelper {
 
@@ -59,14 +61,16 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
                   b => {
                     val discriminatorProperty =
                       discriminator.flatMap(_.compute(decl))
-                    DialectNodeEmitter(decl,
-                                       nodeMappable,
-                                       instance.references,
-                                       dialect,
-                                       ordering,
-                                       discriminator = discriminatorProperty,
-                                       renderOptions = renderOptions,
-                                       registry = registry).emit(b)
+                    DialectNodeEmitter(
+                        decl,
+                        nodeMappable,
+                        instance.references,
+                        dialect,
+                        ordering,
+                        discriminator = discriminatorProperty,
+                        renderOptions = renderOptions,
+                        registry = registry
+                    ).emit(b)
                   }
               )
             }
@@ -76,17 +80,19 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
       b.entry(
           declarationsPath.head,
           _.obj { b =>
-            DeclarationsGroupEmitter(declared,
-                                     publicNodeMapping,
-                                     nodeMappable,
-                                     instance,
-                                     dialect,
-                                     ordering,
-                                     declarationsPath.tail,
-                                     aliases,
-                                     keyPropertyId,
-                                     renderOptions,
-                                     registry).emit(b)
+            DeclarationsGroupEmitter(
+                declared,
+                publicNodeMapping,
+                nodeMappable,
+                instance,
+                dialect,
+                ordering,
+                declarationsPath.tail,
+                aliases,
+                keyPropertyId,
+                renderOptions,
+                registry
+            ).emit(b)
           }
       )
     }
@@ -108,6 +114,7 @@ case class DeclarationsGroupEmitter(declared: Seq[DialectDomainElement],
           .map { lexInfo =>
             lexInfo.range.start
           }
-          .getOrElse(ZERO))
+          .getOrElse(ZERO)
+    )
   }
 }

@@ -19,8 +19,9 @@ import scala.util.{Failure, Success}
 
 object AnnotationsParser {
 
-  def parseAnnotations(ast: YMap, node: AmfObject, declarations: VocabularyDeclarations)(
-      implicit ctx: ParserContext): Any = {
+  def parseAnnotations(ast: YMap, node: AmfObject, declarations: VocabularyDeclarations)(implicit
+      ctx: ParserContext
+  ): Any = {
 
     computeAnnotationInfo(ast) flatMap { ai =>
       computeSemanticExtensionParser(ctx, ai.key)
@@ -41,10 +42,12 @@ object AnnotationsParser {
     }
   }
 
-  private def parseRegularAnnotation(node: AmfObject,
-                                     declarations: VocabularyDeclarations,
-                                     ctx: ParserContext,
-                                     ai: AnnotationInfo): Option[DomainExtension] = {
+  private def parseRegularAnnotation(
+      node: AmfObject,
+      declarations: VocabularyDeclarations,
+      ctx: ParserContext,
+      ai: AnnotationInfo
+  ): Option[DomainExtension] = {
     val value = ai.entry.value
     val key   = ai.originalKey
     declarations.resolveExternalNamespace(ai.prefix, ai.suffix) match {
@@ -62,11 +65,12 @@ object AnnotationsParser {
       case Failure(ex) =>
         declarations.usedVocabs.get(ai.prefix.getOrElse("")) match {
           case Some(vocabulary) =>
-            val id               = node.id + (if (node.id.endsWith("/") || node.id.endsWith("#")) "" else "/") + s"${ai.prefix.map(_ + "/").getOrElse("/")}$ai.suffix"
+            val id =
+              node.id + (if (node.id.endsWith("/") || node.id.endsWith("#")) "" else "/") + s"${ai.prefix.map(_ + "/").getOrElse("/")}$ai.suffix"
             val parsedAnnotation = DynamicExtensionParser(value, Some(id))(ctx).parse()
             val base             = vocabulary.base.value()
-            val propertyId       = if (base.endsWith("#") || base.endsWith("/")) base + ai.suffix else base + "/" + ai.suffix
-            val property         = CustomDomainProperty(Annotations(value)).withId(propertyId).withName(ai.key)
+            val propertyId = if (base.endsWith("#") || base.endsWith("/")) base + ai.suffix else base + "/" + ai.suffix
+            val property   = CustomDomainProperty(Annotations(value)).withId(propertyId).withName(ai.key)
             val extension = DomainExtension()
               .withId(id)
               .set(DomainExtensionModel.Extension, parsedAnnotation, Annotations.inferred())

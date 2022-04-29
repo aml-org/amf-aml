@@ -26,17 +26,21 @@ case class DialectFragmentParser(into: DocumentsModel)(override implicit val ctx
               .withDocumentName(fragmentName)
               .withId(into.id + s"/fragments/${fragmentName.urlComponentEncoded}")
             val nodeMapping = ctx.declarations.findNodeMappingOrError(entry.value)(nodeId, SearchScope.All)
-            documentsMapping.set(DocumentMappingModel.EncodedNode,
-                                 AmfScalar(nodeMapping.id, Annotations(entry.value)),
-                                 Annotations(entry))
+            documentsMapping.set(
+                DocumentMappingModel.EncodedNode,
+                AmfScalar(nodeMapping.id, Annotations(entry.value)),
+                Annotations(entry)
+            )
           }
         case _ =>
           ctx.eh.violation(DeclarationNotFound, "", s"NodeMappable ${entry.value} not found", entry.location)
           val documentMapping = DocumentMapping(entry.value)
           val nodeMapping     = ctx.declarations.ErrorNodeMappable(entry.key, entry.value)
-          documentMapping.set(DocumentMappingModel.EncodedNode,
-                              AmfScalar(nodeMapping, Annotations(entry.value)),
-                              Annotations(entry))
+          documentMapping.set(
+              DocumentMappingModel.EncodedNode,
+              AmfScalar(nodeMapping, Annotations(entry.value)),
+              Annotations(entry)
+          )
           Seq(documentMapping)
       }
       into.set(DocumentsModelModel.Fragments, AmfArray(docs, Annotations(entry.value)), Annotations(entry))

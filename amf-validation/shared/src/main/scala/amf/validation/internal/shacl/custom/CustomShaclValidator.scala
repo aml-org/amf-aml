@@ -29,9 +29,11 @@ object CustomShaclValidator {
   type CustomShaclFunctions = Map[String, CustomShaclFunction]
 }
 
-class CustomShaclValidator(customFunctions: CustomShaclFunctions,
-                           messageStyle: MessageStyle,
-                           extractor: ElementExtractor = DefaultElementExtractor) {
+class CustomShaclValidator(
+    customFunctions: CustomShaclFunctions,
+    messageStyle: MessageStyle,
+    extractor: ElementExtractor = DefaultElementExtractor
+) {
 
   def validate(unit: BaseUnit, validations: Seq[ValidationSpecification]): ValidationReport = {
     val reportBuilder: ReportBuilder = new ReportBuilder(messageStyle)
@@ -54,17 +56,21 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     reportBuilder.build()
   }
 
-  private def validateProperty(element: DomainElement,
-                               validation: ValidationSpecification,
-                               builder: ReportBuilder): Unit = {
+  private def validateProperty(
+      element: DomainElement,
+      validation: ValidationSpecification,
+      builder: ReportBuilder
+  ): Unit = {
     validation.propertyConstraints.foreach { propertyConstraint =>
       validatePropertyConstraint(validation, propertyConstraint, element, builder)
     }
   }
 
-  private def validateIdentityTransformation(element: DomainElement,
-                                             validations: Seq[ValidationSpecification],
-                                             reportBuilder: ReportBuilder): Unit = {
+  private def validateIdentityTransformation(
+      element: DomainElement,
+      validations: Seq[ValidationSpecification],
+      reportBuilder: ReportBuilder
+  ): Unit = {
     val classes        = element.meta.`type`.map(_.iri())
     val isExternalLink = element.isExternalLink.value()
     validations.foreach { specification =>
@@ -76,9 +82,11 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
   }
 
   // this is always (?s sh:nodeKind sh:IRI), we still put the checking logic in place
-  private def validateObjectsOf(element: DomainElement,
-                                validationSpecification: ValidationSpecification,
-                                reportBuilder: ReportBuilder): Unit = {
+  private def validateObjectsOf(
+      element: DomainElement,
+      validationSpecification: ValidationSpecification,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     validationSpecification.targetObject.foreach { property =>
       findFieldTarget(element, property) match {
         case Some((_: Annotations, objectsOf: AmfArray)) =>
@@ -118,9 +126,11 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
   private def extractElement(fieldUri: String, element: DomainElement): Option[AmfElement] =
     element.fields.getValueAsOption(fieldUri).map(_.value)
 
-  private def validateElement(element: DomainElement,
-                              validationSpecification: ValidationSpecification,
-                              reportBuilder: ReportBuilder): Unit = {
+  private def validateElement(
+      element: DomainElement,
+      validationSpecification: ValidationSpecification,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     validationSpecification.closed match {
       case Some(_) => validateClosed(validationSpecification)
       case _       => // ignore
@@ -144,7 +154,9 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
                     FunctionConstraint(
                         message = Some(validationSpecification.message),
                         internalFunction = Some(functionConstraintName)
-                    ))),
+                    )
+                )
+            ),
             element,
             reportBuilder
         )
@@ -160,12 +172,15 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
 
   private def validateCustom(validationSpecification: ValidationSpecification): Unit = {
     throw new Exception(
-        s"Arbitrary SHACL validations not supported in custom SHACL validator: ${validationSpecification.id}")
+        s"Arbitrary SHACL validations not supported in custom SHACL validator: ${validationSpecification.id}"
+    )
   }
 
-  private def validateFunctionConstraint(validationSpecification: ValidationSpecification,
-                                         element: DomainElement,
-                                         reportBuilder: ReportBuilder): Unit = {
+  private def validateFunctionConstraint(
+      validationSpecification: ValidationSpecification,
+      element: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     val functionConstraint = validationSpecification.functionConstraint.get
     functionConstraint.internalFunction.foreach(name => {
       val validationFunction = getFunctionForName(name)
@@ -175,7 +190,7 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
           case Some(ValidationInfo(field, customMessage, _)) => // why annotations are never used?
             reportFailure(validationSpecification, element.id, field.toString, customMessage, reportBuilder)
           case _ => reportFailure(validationSpecification, element.id, "", reportBuilder = reportBuilder)
-      }
+        }
       validationFunction.run(element, onValidation)
     })
   }
@@ -186,10 +201,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
       throw new Exception(s"Custom function validations not supported in custom SHACL validator: $name")
   }
 
-  private def validateNodeConstraint(validationSpecification: ValidationSpecification,
-                                     nodeConstraint: NodeConstraint,
-                                     element: DomainElement,
-                                     reportBuilder: ReportBuilder): Unit = {
+  private def validateNodeConstraint(
+      validationSpecification: ValidationSpecification,
+      nodeConstraint: NodeConstraint,
+      element: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     val nodeKindIri = (Namespace.Shacl + "nodeKind").iri()
     val shaclIri    = (Namespace.Shacl + "IRI").iri()
 
@@ -212,10 +229,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validatePropertyConstraint(validationSpecification: ValidationSpecification,
-                                         propertyConstraint: PropertyConstraint,
-                                         element: DomainElement,
-                                         reportBuilder: ReportBuilder): Unit = {
+  private def validatePropertyConstraint(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      element: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     propertyConstraint.node match {
       case Some(_) => validatePropertyNode(validationSpecification, propertyConstraint, element, reportBuilder)
       case _       =>
@@ -234,28 +253,34 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
             // If minCount is 0 and it is mandatory, this comes from minItems = 0 + mandatory = true
             // I need to check only the presence of the property, empty arrays are valid
             if (minCount == 0 && mandatory)
-              validateArrayPropertyLengthAndPresence(validationSpecification,
-                                                     propertyConstraint,
-                                                     element,
-                                                     reportBuilder,
-                                                     mustBePresent = mandatory)
+              validateArrayPropertyLengthAndPresence(
+                  validationSpecification,
+                  propertyConstraint,
+                  element,
+                  reportBuilder,
+                  mustBePresent = mandatory
+              )
             // If minCount is > 0 and it is not mandatory, this comes from minItems = n
             // I need to check only the length of the array, but only if it is present
             if (minCount > 0 && !mandatory)
-              validateArrayPropertyLengthAndPresence(validationSpecification,
-                                                     propertyConstraint,
-                                                     element,
-                                                     reportBuilder,
-                                                     minItems = Some(minCount))
+              validateArrayPropertyLengthAndPresence(
+                  validationSpecification,
+                  propertyConstraint,
+                  element,
+                  reportBuilder,
+                  minItems = Some(minCount)
+              )
             // If minCount is > 0 and it is mandatory, this comes from minItems = n + mandatory = true
             // I need to check the presence and length of the array, the original constraint will handle it
             if (minCount > 0 && mandatory)
-              validateArrayPropertyLengthAndPresence(validationSpecification,
-                                                     propertyConstraint,
-                                                     element,
-                                                     reportBuilder,
-                                                     mustBePresent = mandatory,
-                                                     minItems = Some(minCount))
+              validateArrayPropertyLengthAndPresence(
+                  validationSpecification,
+                  propertyConstraint,
+                  element,
+                  reportBuilder,
+                  mustBePresent = mandatory,
+                  minItems = Some(minCount)
+              )
           case None =>
             // If there is no mandatory key, I run the original constraint
             validateMinCount(validationSpecification, propertyConstraint, element, reportBuilder)
@@ -316,10 +341,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateClass(validationSpecification: ValidationSpecification,
-                            propertyConstraint: PropertyConstraint,
-                            element: DomainElement,
-                            reportBuilder: ReportBuilder): Unit = {
+  private def validateClass(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      element: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPropertyValue(propertyConstraint, element).foreach {
       case ExtractedPropertyValue(obj: AmfObject, _) =>
         val current = obj.meta.`type`.map(_.iri())
@@ -329,10 +356,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validatePropertyNode(validationSpecification: ValidationSpecification,
-                                   propertyConstraint: PropertyConstraint,
-                                   parentElement: DomainElement,
-                                   reportBuilder: ReportBuilder): Unit = {
+  private def validatePropertyNode(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     if (propertyConstraint.node.get.endsWith("NonEmptyList")) {
       extractor.extractPropertyValue(propertyConstraint, parentElement) match {
         case Some(ExtractedPropertyValue(arr: AmfArray, _)) =>
@@ -347,12 +376,14 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateArrayPropertyLengthAndPresence(validationSpecification: ValidationSpecification,
-                                                     propertyConstraint: PropertyConstraint,
-                                                     parentElement: DomainElement,
-                                                     reportBuilder: ReportBuilder,
-                                                     mustBePresent: Boolean = false,
-                                                     minItems: Option[Int] = None): Unit = {
+  private def validateArrayPropertyLengthAndPresence(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder,
+      mustBePresent: Boolean = false,
+      minItems: Option[Int] = None
+  ): Unit = {
     extractor.extractPropertyValue(propertyConstraint, parentElement) match {
       // The key is present and it is an array
       case Some(ExtractedPropertyValue(arr: AmfArray, _)) =>
@@ -360,10 +391,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
           case Some(minLength) =>
             // The key is present and I should check the array length
             if (!(arr.values.length >= minLength)) {
-              reportFailure(validationSpecification.copy(message = s"Array must have a minimum of $minLength items"),
-                            propertyConstraint,
-                            parentElement.id,
-                            reportBuilder)
+              reportFailure(
+                  validationSpecification.copy(message = s"Array must have a minimum of $minLength items"),
+                  propertyConstraint,
+                  parentElement.id,
+                  reportBuilder
+              )
 
 //              reportFailure(validationSpecification,
 //                            parentElement.id,
@@ -380,10 +413,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateMinCount(validationSpecification: ValidationSpecification,
-                               propertyConstraint: PropertyConstraint,
-                               parentElement: DomainElement,
-                               reportBuilder: ReportBuilder): Unit = {
+  private def validateMinCount(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPropertyValue(propertyConstraint, parentElement) match {
       case Some(ExtractedPropertyValue(arr: AmfArray, _)) =>
         if (!(arr.values.length >= propertyConstraint.minCount.get.toInt)) {
@@ -408,10 +443,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateMaxCount(validationSpecification: ValidationSpecification,
-                               propertyConstraint: PropertyConstraint,
-                               parentElement: DomainElement,
-                               reportBuilder: ReportBuilder): Unit = {
+  private def validateMaxCount(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPropertyValue(propertyConstraint, parentElement) match {
 
       case Some(ExtractedPropertyValue(arr: AmfArray, _)) =>
@@ -429,10 +466,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateMinLength(validationSpecification: ValidationSpecification,
-                                propertyConstraint: PropertyConstraint,
-                                parentElement: DomainElement,
-                                reportBuilder: ReportBuilder): Unit = {
+  private def validateMinLength(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPlainPropertyValue(propertyConstraint, parentElement) match {
       case Seq(ExtractedPropertyValue(_: AmfScalar, Some(value: String))) =>
         if (!(propertyConstraint.minLength.get.toInt <= value.length)) {
@@ -449,10 +488,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateMaxLength(validationSpecification: ValidationSpecification,
-                                propertyConstraint: PropertyConstraint,
-                                parentElement: DomainElement,
-                                reportBuilder: ReportBuilder): Unit = {
+  private def validateMaxLength(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPlainPropertyValue(propertyConstraint, parentElement) match {
       case Seq(ExtractedPropertyValue(_: AmfScalar, Some(value: String))) =>
         if (!(propertyConstraint.maxLength.get.toInt > value.length)) {
@@ -463,10 +504,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateIn(validationSpecification: ValidationSpecification,
-                         propertyConstraint: PropertyConstraint,
-                         parentElement: DomainElement,
-                         reportBuilder: ReportBuilder): Unit = {
+  private def validateIn(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
       case ExtractedPropertyValue(_: AmfScalar, Some(value: Any)) =>
         if (!propertyConstraint.in.contains(value)) {
@@ -477,10 +520,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateMaxInclusive(validationSpecification: ValidationSpecification,
-                                   propertyConstraint: PropertyConstraint,
-                                   parentElement: DomainElement,
-                                   reportBuilder: ReportBuilder): Unit = {
+  private def validateMaxInclusive(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
       case ExtractedPropertyValue(_: AmfScalar, Some(value: Long)) =>
         if (propertyConstraint.maxInclusive.get.contains(".")) {
@@ -530,10 +575,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateMaxExclusive(validationSpecification: ValidationSpecification,
-                                   propertyConstraint: PropertyConstraint,
-                                   parentElement: DomainElement,
-                                   reportBuilder: ReportBuilder): Unit = {
+  private def validateMaxExclusive(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
       case ExtractedPropertyValue(_: AmfScalar, Some(value: Long)) =>
         if (propertyConstraint.maxExclusive.get.contains(".")) {
@@ -583,10 +630,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateMinInclusive(validationSpecification: ValidationSpecification,
-                                   propertyConstraint: PropertyConstraint,
-                                   parentElement: DomainElement,
-                                   reportBuilder: ReportBuilder): Unit = {
+  private def validateMinInclusive(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
       case ExtractedPropertyValue(_: AmfScalar, Some(value: Long)) =>
         if (propertyConstraint.minInclusive.get.contains(".")) {
@@ -636,10 +685,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validateMinExclusive(validationSpecification: ValidationSpecification,
-                                   propertyConstraint: PropertyConstraint,
-                                   parentElement: DomainElement,
-                                   reportBuilder: ReportBuilder): Unit = {
+  private def validateMinExclusive(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
       case ExtractedPropertyValue(_: AmfScalar, Some(value: Long)) =>
         if (propertyConstraint.minExclusive.get.contains(".")) {
@@ -689,10 +740,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def validatePattern(validationSpecification: ValidationSpecification,
-                              propertyConstraint: PropertyConstraint,
-                              parentElement: DomainElement,
-                              reportBuilder: ReportBuilder): Unit = {
+  private def validatePattern(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     extractor.extractPlainPropertyValue(propertyConstraint, parentElement).foreach {
       case ExtractedPropertyValue(scalar: AmfScalar, _) =>
         if (valueDoesntComplyWithPattern(propertyConstraint, scalar))
@@ -705,10 +758,12 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     Option(value).isDefined && propertyConstraint.pattern.get.r.findFirstIn(value.toString).isEmpty
   }
 
-  private def validateDataType(validationSpecification: ValidationSpecification,
-                               propertyConstraint: PropertyConstraint,
-                               parentElement: DomainElement,
-                               reportBuilder: ReportBuilder): Unit = {
+  private def validateDataType(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parentElement: DomainElement,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     val xsdString       = DataType.String
     val xsdBoolean      = DataType.Boolean
     val xsdInteger      = DataType.Integer
@@ -723,7 +778,6 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
       case ExtractedPropertyValue(_: AmfScalar, maybeScalarValue) =>
         propertyConstraint.datatype match {
           case Some(s) if s == xsdString => // ignore
-
           case Some(s) if s == xsdBoolean =>
             maybeScalarValue match {
               case Some(_: Boolean) => // ignore
@@ -783,14 +837,15 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  /**
-    * Check if argument is a valid URI, URL or URN
+  /** Check if argument is a valid URI, URL or URN
     */
-  def validateURI(validationSpecification: ValidationSpecification,
-                  propertyConstraint: PropertyConstraint,
-                  id: String,
-                  value: Option[Any],
-                  reportBuilder: ReportBuilder): Unit = {
+  def validateURI(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      id: String,
+      value: Option[Any],
+      reportBuilder: ReportBuilder
+  ): Unit = {
     value.foreach { v =>
       try {
         v.toString.normalizePath
@@ -801,18 +856,22 @@ class CustomShaclValidator(customFunctions: CustomShaclFunctions,
     }
   }
 
-  private def reportFailure(validationSpecification: ValidationSpecification,
-                            propertyConstraint: PropertyConstraint,
-                            id: String,
-                            reportBuilder: ReportBuilder): Unit = {
+  private def reportFailure(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      id: String,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     reportBuilder.reportFailure(validationSpecification, propertyConstraint, id)
   }
 
-  private def reportFailure(validationSpec: ValidationSpecification,
-                            id: String,
-                            path: String,
-                            customMessage: Option[String] = None,
-                            reportBuilder: ReportBuilder): Unit = {
+  private def reportFailure(
+      validationSpec: ValidationSpecification,
+      id: String,
+      path: String,
+      customMessage: Option[String] = None,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     reportBuilder.reportFailure(validationSpec, id, path, customMessage)
   }
 }

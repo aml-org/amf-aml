@@ -6,8 +6,9 @@ import org.yaml.model.{YMapEntry, YSequence, YType}
 
 object LiteralCollectionParser {
 
-  def parse(propertyEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(
-      implicit ctx: DialectInstanceContext): Unit = {
+  def parse(propertyEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(implicit
+      ctx: DialectInstanceContext
+  ): Unit = {
     val finalValues = propertyEntry.value.tagType match {
       case YType.Seq =>
         val values = propertyEntry.value

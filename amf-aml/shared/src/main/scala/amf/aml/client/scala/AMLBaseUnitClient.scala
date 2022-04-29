@@ -18,10 +18,11 @@ class AMLBaseUnitClient private[amf] (protected override val configuration: AMLC
 
   override def getConfiguration: AMLConfiguration = configuration
 
-  /**
-    * parse a [[Dialect]]
-    * @param url of the resource to parse
-    * @return a Future [[AMLDialectResult]]
+  /** parse a [[Dialect]]
+    * @param url
+    *   of the resource to parse
+    * @return
+    *   a Future [[AMLDialectResult]]
     */
   def parseDialect(url: String): Future[AMLDialectResult] = AMFParser.parse(url, configuration).map {
     case result: AMFParseResult if result.baseUnit.isInstanceOf[Dialect] =>
@@ -30,10 +31,11 @@ class AMLBaseUnitClient private[amf] (protected override val configuration: AMLC
       throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, DialectModel)
   }
 
-  /**
-    * parse a [[DialectInstance]]
-    * @param url of the resource to parse
-    * @return a Future [[AMLDialectInstanceResult]]
+  /** parse a [[DialectInstance]]
+    * @param url
+    *   of the resource to parse
+    * @return
+    *   a Future [[AMLDialectInstanceResult]]
     */
   def parseDialectInstance(url: String): Future[AMLDialectInstanceResult] = AMFParser.parse(url, configuration).map {
     case result: AMFParseResult if result.baseUnit.isInstanceOf[DialectInstance] =>
@@ -42,10 +44,11 @@ class AMLBaseUnitClient private[amf] (protected override val configuration: AMLC
       throw InvalidBaseUnitTypeException.forMeta(other.baseUnit.meta, DialectInstanceModel)
   }
 
-  /**
-    * parse a [[Vocabulary]]
-    * @param url of the resource to parse
-    * @return a Future [[AMLVocabularyResult]]
+  /** parse a [[Vocabulary]]
+    * @param url
+    *   of the resource to parse
+    * @return
+    *   a Future [[AMLVocabularyResult]]
     */
   def parseVocabulary(url: String): Future[AMLVocabularyResult] = AMFParser.parse(url, configuration).map {
     case result: AMFParseResult if result.baseUnit.isInstanceOf[Vocabulary] =>

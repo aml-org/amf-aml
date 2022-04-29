@@ -8,8 +8,9 @@ import org.yaml.model.YMap
 
 object JSONPointerUnionFinder {
 
-  def find(map: YMap, allPossibleMappings: Seq[NodeMapping], id: String, root: YMap)(
-      implicit ctx: DialectInstanceContext): DialectDomainElement = {
+  def find(map: YMap, allPossibleMappings: Seq[NodeMapping], id: String, root: YMap)(implicit
+      ctx: DialectInstanceContext
+  ): DialectDomainElement = {
     val entry   = map.key("$ref").get
     val pointer = entry.value.as[String]
     val fullPointer = if (pointer.startsWith("#")) {

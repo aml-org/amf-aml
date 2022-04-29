@@ -31,8 +31,8 @@ object DefaultNodeMappableFinder {
   def apply(dialect: Dialect)       = new DefaultNodeMappableFinder(computeReferencesTree(dialect))
   def apply(dialects: Seq[Dialect]) = new DefaultNodeMappableFinder(dialects)
   def apply(ctx: ParserContext) = {
-    val knownDialects = ctx.config.sortedRootParsePlugins.collect {
-      case plugin: AMLDialectInstanceParsingPlugin => plugin.dialect
+    val knownDialects = ctx.config.sortedRootParsePlugins.collect { case plugin: AMLDialectInstanceParsingPlugin =>
+      plugin.dialect
     }
     new DefaultNodeMappableFinder(knownDialects)
   }
@@ -67,8 +67,8 @@ case class DefaultNodeMappableFinder(dialects: Seq[Dialect]) extends NodeMappabl
       .map { dialect =>
         (dialect, dialect.declares.find(_.id == nodeMappableId))
       }
-      .collectFirst {
-        case (dialect, Some(nodeMapping: NodeMapping)) => (dialect, nodeMapping)
+      .collectFirst { case (dialect, Some(nodeMapping: NodeMapping)) =>
+        (dialect, nodeMapping)
       }
   }
 
@@ -87,17 +87,16 @@ trait DialectEmitterHelper {
     val idCounter = new IdCounter()
     unit.references.toStream
       .filter(_.isInstanceOf[DeclaresModel])
-      .map {
-        case m: DeclaresModel =>
-          val key            = referenceIndexKeyFor(m)
-          val importLocation = getImportLocation(unit, m)
-          aliases.get(key) match {
-            case Some(alias) =>
-              key -> (alias, importLocation)
-            case None =>
-              val generatedAlias = idCounter.genId("uses")
-              key -> (generatedAlias, importLocation)
-          }
+      .map { case m: DeclaresModel =>
+        val key            = referenceIndexKeyFor(m)
+        val importLocation = getImportLocation(unit, m)
+        aliases.get(key) match {
+          case Some(alias) =>
+            key -> (alias, importLocation)
+          case None =>
+            val generatedAlias = idCounter.genId("uses")
+            key -> (generatedAlias, importLocation)
+        }
       }
       .toMap
   }
@@ -106,9 +105,8 @@ trait DialectEmitterHelper {
     unit.annotations
       .find(classOf[Aliases])
       .map { aliasesAnnotation =>
-        aliasesAnnotation.aliases.map {
-          case (alias, ReferencedInfo(_, fullUrl, _)) =>
-            fullUrl -> alias
+        aliasesAnnotation.aliases.map { case (alias, ReferencedInfo(_, fullUrl, _)) =>
+          fullUrl -> alias
         }.toMap
       }
       .getOrElse(Map.empty)
@@ -146,18 +144,21 @@ trait AmlEmittersHelper extends DialectEmitterHelper {
     if (model.externals.nonEmpty) {
       Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
-          b.entry("$external", _.obj({ b =>
-            traverse(ordering.sorted(model.externals.map(external => ExternalEmitter(external, ordering))), b)
-          }))
+          b.entry(
+              "$external",
+              _.obj({ b =>
+                traverse(ordering.sorted(model.externals.map(external => ExternalEmitter(external, ordering))), b)
+              })
+          )
         }
 
         override def position(): Position = {
           model.externals
-            .map(
-                e =>
-                  e.annotations
-                    .find(classOf[LexicalInformation])
-                    .map(_.range.start))
+            .map(e =>
+              e.annotations
+                .find(classOf[LexicalInformation])
+                .map(_.range.start)
+            )
             .filter(_.nonEmpty)
             .map(_.get)
             .sortBy(_.line)

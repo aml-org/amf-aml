@@ -15,21 +15,22 @@ import amf.rdf.internal.{RdfParserCommon, RdfParserContext, _}
 
 import scala.collection.mutable.ListBuffer
 
-class ObjectParser(val rootId: String,
-                   val recursionControl: RecursionControl,
-                   val plugins: EntitiesFacade,
-                   val nodeFinder: NodeFinder,
-                   val sourcesRetriever: SourcesRetriever)(implicit val ctx: RdfParserContext)
+class ObjectParser(
+    val rootId: String,
+    val recursionControl: RecursionControl,
+    val plugins: EntitiesFacade,
+    val nodeFinder: NodeFinder,
+    val sourcesRetriever: SourcesRetriever
+)(implicit val ctx: RdfParserContext)
     extends RdfParserCommon {
 
   private def isSelfEncoded(node: Node) = node.subject == rootId
 
   private lazy val extensions = ctx.config.registryContext.getRegistry.getEntitiesRegistry.extensionTypes
-  private lazy val extensionFields = extensions.map {
-    case (iriDomain, extensions) =>
-      iriDomain -> extensions.map {
-        case (iri, fieldType) => Field(fieldType, ValueType(iri))
-      }
+  private lazy val extensionFields = extensions.map { case (iriDomain, extensions) =>
+    iriDomain -> extensions.map { case (iri, fieldType) =>
+      Field(fieldType, ValueType(iri))
+    }
   }
 
   private def extensionsFor(model: ModelDefaultBuilder): Seq[Field] = {
@@ -128,11 +129,13 @@ class ObjectParser(val rootId: String,
     }
   }
 
-  private def traverse(instance: AmfObject,
-                       f: Field,
-                       properties: Seq[PropertyObject],
-                       sources: SourceMap,
-                       key: String): Unit = {
+  private def traverse(
+      instance: AmfObject,
+      f: Field,
+      properties: Seq[PropertyObject],
+      sources: SourceMap,
+      key: String
+  ): Unit = {
     val property = properties.head
     f.`type` match {
       case DataNodeModel => // dynamic nodes parsed here
@@ -152,7 +155,8 @@ class ObjectParser(val rootId: String,
             ctx.eh.violation(
                 UnableToParseRdfDocument,
                 instance.id,
-                s"Error parsing RDF graph node, unknown linked node for property $key in node ${instance.id}")
+                s"Error parsing RDF graph node, unknown linked node for property $key in node ${instance.id}"
+            )
         }
 
       case array: SortedArray if properties.length == 1 =>
@@ -161,7 +165,8 @@ class ObjectParser(val rootId: String,
         ctx.eh.violation(
             UnableToParseRdfDocument,
             instance.id,
-            s"Error, more than one sorted array values found in node for property $key in node ${instance.id}")
+            s"Error, more than one sorted array values found in node for property $key in node ${instance.id}"
+        )
       case a: Array =>
         val items = properties
         val values: Seq[AmfElement] = a.element match {
@@ -172,7 +177,8 @@ class ObjectParser(val rootId: String,
               findLink(n) match {
                 case Some(o) => parse(o, shouldParseUnit)
                 case _       => None
-            })
+              }
+            )
           case Str | Iri => items.map(StringIriUriRegexParser.parse)
           case Any =>
             items.flatMap(v => AnyTypeConverter.tryConvert(v)(ctx.eh))
@@ -186,17 +192,16 @@ class ObjectParser(val rootId: String,
   def parseDynamicType(id: PropertyObject): Option[DataNode] =
     new DynamicTypeParser(nodeFinder, sourcesRetriever).parse(id)
 
-  private def parseList(instance: AmfObject,
-                        l: SortedArray,
-                        field: Field,
-                        properties: Seq[PropertyObject],
-                        annotations: Annotations): Unit =
+  private def parseList(
+      instance: AmfObject,
+      l: SortedArray,
+      field: Field,
+      properties: Seq[PropertyObject],
+      annotations: Annotations
+  ): Unit =
     instance.setArray(field, parseList(l.element, findLink(properties.head)), annotations)
 
-  private def parseScalar(instance: AmfObject,
-                          field: Field,
-                          property: PropertyObject,
-                          annotations: Annotations): Unit =
+  private def parseScalar(instance: AmfObject, field: Field, property: PropertyObject, annotations: Annotations): Unit =
     ScalarTypeConverter.tryConvert(field.`type`, property)(ctx.eh).foreach(instance.set(field, _, annotations))
 
   private def parseAny(instance: AmfObject, field: Field, property: PropertyObject, annotations: Annotations): Unit =

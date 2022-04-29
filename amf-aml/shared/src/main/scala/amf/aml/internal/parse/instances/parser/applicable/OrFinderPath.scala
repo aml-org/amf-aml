@@ -10,8 +10,9 @@ import org.yaml.model.YMap
 
 case class OrFinderPath(root: Root) extends FinderPath {
 
-  override def walk(mapping: AnyMapping, map: YMap, index: DialectIndex, finder: ApplicableMappingFinder)(
-      implicit ctx: DialectInstanceContext): ApplicableMapping = {
+  override def walk(mapping: AnyMapping, map: YMap, index: DialectIndex, finder: ApplicableMappingFinder)(implicit
+      ctx: DialectInstanceContext
+  ): ApplicableMapping = {
     if (mapping.or.isEmpty) return ApplicableMapping.empty
     val orMappings = findMappingsFor(mapping.or, index)
     val applicableList = orMappings.map { mapping =>
@@ -24,8 +25,9 @@ case class OrFinderPath(root: Root) extends FinderPath {
     applicableList.find(_.couldFind).getOrElse(invalid)
   }
 
-  protected def findMatches(map: YMap, index: DialectIndex, orMap: AnyMapping, finder: ApplicableMappingFinder)(
-      implicit ctx: DialectInstanceContext): ApplicableMapping = {
+  protected def findMatches(map: YMap, index: DialectIndex, orMap: AnyMapping, finder: ApplicableMappingFinder)(implicit
+      ctx: DialectInstanceContext
+  ): ApplicableMapping = {
     val applies = conformsAgainstProperties(map, orMap, root)
     if (!applies) ApplicableMapping(couldFind = false, Set.empty[String])
     else {
