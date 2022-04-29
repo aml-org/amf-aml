@@ -9,12 +9,14 @@ import org.yaml.model.{YMap, YMapEntry, YNode, YSequence, YType}
 
 object ExternalLinkPropertyParser {
 
-  def parse(id: String,
-            propertyEntry: YMapEntry,
-            property: PropertyLikeMapping[_],
-            node: DialectDomainElement,
-            root: Root,
-            propertyParser: PropertyParser)(implicit ctx: DialectInstanceContext): Unit = {
+  def parse(
+      id: String,
+      propertyEntry: YMapEntry,
+      property: PropertyLikeMapping[_],
+      node: DialectDomainElement,
+      root: Root,
+      propertyParser: PropertyParser
+  )(implicit ctx: DialectInstanceContext): Unit = {
     // First extract the mapping information
     // External links only work over single ranges, not unions or literal ranges
     val maybeMapping: Option[NodeMapping] = property.objectRange() match {
@@ -29,10 +31,12 @@ object ExternalLinkPropertyParser {
         }
       case _ =>
         ctx.eh
-          .violation(DialectError,
-                     id,
-                     s"Individual object range required for external link property",
-                     propertyEntry.location)
+          .violation(
+              DialectError,
+              id,
+              s"Individual object range required for external link property",
+              propertyEntry.location
+          )
         None
     }
 
@@ -61,10 +65,12 @@ object ExternalLinkPropertyParser {
             if (elems.nonEmpty)
               node.withObjectCollectionProperty(property, elems, Right(propertyEntry))
           case YType.Seq if !allowMultiple => // error
-            ctx.eh.violation(DialectError,
-                             id,
-                             s"AllowMultiple not enable, sequence of external links not supported",
-                             propertyEntry.location)
+            ctx.eh.violation(
+                DialectError,
+                id,
+                s"AllowMultiple not enable, sequence of external links not supported",
+                propertyEntry.location
+            )
           case _ =>
             ctx.eh.violation(DialectError, id, s"Not supported external link range", propertyEntry.location)
         }
@@ -77,7 +83,8 @@ object ExternalLinkPropertyParser {
       node: YNode,
       mapping: NodeMapping,
       root: Root,
-      parseProperty: PropertyParser)(implicit ctx: DialectInstanceContext): Option[DialectDomainElement] = {
+      parseProperty: PropertyParser
+  )(implicit ctx: DialectInstanceContext): Option[DialectDomainElement] = {
     ExternalLinkGenerator.generate(id, node, mapping, root, parseProperty)
   }
 }

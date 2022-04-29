@@ -29,8 +29,8 @@ case class Dialect(fields: Fields, annotations: Annotations)
   def version(): StrField                  = fields.field(Version)
   def documents(): DocumentsModel          = fields.field(Documents)
   def extensions(): Seq[SemanticExtension] = fields.field(Extensions)
-  def annotationMappings(): Seq[AnnotationMapping] = declares.collect {
-    case mapping: AnnotationMapping => mapping
+  def annotationMappings(): Seq[AnnotationMapping] = declares.collect { case mapping: AnnotationMapping =>
+    mapping
   }
 
   def nameAndVersion(): String = s"${name().value()} ${version().value()}"
@@ -120,7 +120,8 @@ case class Dialect(fields: Fields, annotations: Annotations)
       .mapValues(values =>
         values.map { x =>
           x._2
-        }.toMap)
+        }.toMap
+      )
   }
 }
 

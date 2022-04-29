@@ -31,10 +31,11 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
   /** Contains methods to get information about the current state of the configuration */
   def configurationState(): AMLConfigurationState = new AMLConfigurationState(this)
 
-  /**
-    * Set [[ParsingOptions]]
-    * @param parsingOptions [[ParsingOptions]] to add to configuration object
-    * @return [[AMLConfiguration]] with [[ParsingOptions]] added
+  /** Set [[ParsingOptions]]
+    * @param parsingOptions
+    *   [[ParsingOptions]] to add to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[ParsingOptions]] added
     */
   override def withParsingOptions(parsingOptions: ParsingOptions): AMLConfiguration =
     _internal.withParsingOptions(parsingOptions)
@@ -45,71 +46,80 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
   override def withErrorHandlerProvider(provider: ErrorHandlerProvider): AMLConfiguration =
     _internal.withErrorHandlerProvider(() => provider.errorHandler())
 
-  /**
-    * Add a [[ResourceLoader]]
-    * @param rl [[ResourceLoader]] to add to configuration object
-    * @return [[AMLConfiguration]] with the [[ResourceLoader]] added
+  /** Add a [[ResourceLoader]]
+    * @param rl
+    *   [[ResourceLoader]] to add to configuration object
+    * @return
+    *   [[AMLConfiguration]] with the [[ResourceLoader]] added
     */
   override def withResourceLoader(rl: ResourceLoader): AMLConfiguration =
     _internal.withResourceLoader(ResourceLoaderMatcher.asInternal(rl))
 
-  /**
-    * Set the configuration [[ResourceLoader]]s
-    * @param rl a list of [[ResourceLoader]] to set to the configuration object
-    * @return [[AMLConfiguration]] with [[ResourceLoader]]s set
+  /** Set the configuration [[ResourceLoader]]s
+    * @param rl
+    *   a list of [[ResourceLoader]] to set to the configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[ResourceLoader]]s set
     */
   override def withResourceLoaders(rl: ClientList[ResourceLoader]): AMLConfiguration =
     _internal.withResourceLoaders(rl.asInternal.toList)
 
-  /**
-    * Set [[UnitCache]]
-    * @param cache [[UnitCache]] to add to configuration object
-    * @return [[AMLConfiguration]] with [[UnitCache]] added
+  /** Set [[UnitCache]]
+    * @param cache
+    *   [[UnitCache]] to add to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[UnitCache]] added
     */
   override def withUnitCache(cache: UnitCache): AMLConfiguration =
     _internal.withUnitCache(UnitCacheMatcher.asInternal(cache))
 
-  /**
-    * Add a [[TransformationPipeline]]
-    * @param pipeline [[TransformationPipeline]] to add to configuration object
-    * @return [[AMLConfiguration]] with [[TransformationPipeline]] added
+  /** Add a [[TransformationPipeline]]
+    * @param pipeline
+    *   [[TransformationPipeline]] to add to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[TransformationPipeline]] added
     */
   override def withTransformationPipeline(pipeline: TransformationPipeline): AMLConfiguration =
     _internal.withTransformationPipeline(pipeline)
 
-  /**
-    * Add an [[AMFEventListener]]
-    * @param listener [[AMFEventListener]] to add to configuration object
-    * @return [[AMLConfiguration]] with [[AMFEventListener]] added
+  /** Add an [[AMFEventListener]]
+    * @param listener
+    *   [[AMFEventListener]] to add to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[AMFEventListener]] added
     */
   override def withEventListener(listener: AMFEventListener): AMLConfiguration = _internal.withEventListener(listener)
 
-  /**
-    * Set [[BaseExecutionEnvironment]]
-    * @param executionEnv [[BaseExecutionEnvironment]] to set to configuration object
-    * @return [[AMLConfiguration]] with [[BaseExecutionEnvironment]] set
+  /** Set [[BaseExecutionEnvironment]]
+    * @param executionEnv
+    *   [[BaseExecutionEnvironment]] to set to configuration object
+    * @return
+    *   [[AMLConfiguration]] with [[BaseExecutionEnvironment]] set
     */
   override def withExecutionEnvironment(executionEnv: BaseExecutionEnvironment): AMLConfiguration =
     _internal.withExecutionEnvironment(executionEnv._internal)
 
-  /**
-    * Register a Dialect
-    * @param dialect [[Dialect]] to register
-    * @return [[AMLConfiguration]] with [[Dialect]] registered
+  /** Register a Dialect
+    * @param dialect
+    *   [[Dialect]] to register
+    * @return
+    *   [[AMLConfiguration]] with [[Dialect]] registered
     */
   override def withDialect(dialect: Dialect): AMLConfiguration = _internal.withDialect(dialect)
 
-  /**
-    * Register a Dialect
-    * @param url URL of the Dialect to register
-    * @return A CompletableFuture of [[AMLConfiguration]]
+  /** Register a Dialect
+    * @param url
+    *   URL of the Dialect to register
+    * @return
+    *   A CompletableFuture of [[AMLConfiguration]]
     */
   def withDialect(url: String): ClientFuture[AMLConfiguration] = _internal.withDialect(url).asClient
 
-  /**
-    * Register a [[Dialect]] linked from a [[DialectInstance]]
-    * @param url of the [[DialectInstance]]
-    * @return A CompletableFuture of [[AMLConfiguration]]
+  /** Register a [[Dialect]] linked from a [[DialectInstance]]
+    * @param url
+    *   of the [[DialectInstance]]
+    * @return
+    *   A CompletableFuture of [[AMLConfiguration]]
     */
   def forInstance(url: String): ClientFuture[AMLConfiguration] = _internal.forInstance(url).asClient
 

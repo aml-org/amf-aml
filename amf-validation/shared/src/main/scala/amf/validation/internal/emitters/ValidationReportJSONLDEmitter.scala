@@ -10,8 +10,7 @@ import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YDocument, YType}
 import org.yaml.render.JsonRender
 
-/**
-  * Generates a JSON-LD graph with for an AMF validation report
+/** Generates a JSON-LD graph with for an AMF validation report
   */
 object ValidationReportJSONLDEmitter {
 
@@ -72,7 +71,8 @@ object ValidationReportJSONLDEmitter {
               case SeverityLevels.VIOLATION => shacl("Violation")
               case _                        => throw new Exception(s"Unknown severity level $severity")
             }
-        ))
+        )
+    )
   }
 
   def emitPosition(b: PartBuilder, pos: LexicalInformation): Unit = {

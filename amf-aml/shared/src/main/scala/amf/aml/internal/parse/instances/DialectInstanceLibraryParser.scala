@@ -17,7 +17,8 @@ class DialectInstanceLibraryParser(root: Root)(implicit override val ctx: Dialec
           DialectInstanceProcessingData()
             .withTransformed(false)
             .withDefinedBy(ctx.dialect.id)
-            .adopted(root.location + "#"))
+            .adopted(root.location + "#")
+      )
       .withDefinedBy(ctx.dialect.id)
 
     parseDeclarations("library")

@@ -16,8 +16,7 @@ case class Node(subject: String, classes: Seq[String], private val properties: M
   }
 }
 
-/**
-  * Base class for all the RDF native models in different platforms
+/** Base class for all the RDF native models in different platforms
   */
 abstract class RdfModel {
   var anonCounter = 0
@@ -31,24 +30,22 @@ abstract class RdfModel {
     s"http://amf.org/anon/$anonCounter"
   }
 
-  /**
-    * Load RDF string representation in this model
+  /** Load RDF string representation in this model
     * @param text
     * @param mediaType
     */
   def load(mediaType: String, text: String)
 
-  /**
-    * Write model as a String representation
+  /** Write model as a String representation
     * @param mediaType
     * @return
     */
   def serializeString(mediaType: String): Option[String]
 
-  /**
-    * Write model using a writer
+  /** Write model using a writer
     * @param mediaType
-    * @param writer writer where to send the representation
+    * @param writer
+    *   writer where to send the representation
     * @return
     */
   def serializeWriter[W: Output](mediaType: String, writer: W): Option[W]

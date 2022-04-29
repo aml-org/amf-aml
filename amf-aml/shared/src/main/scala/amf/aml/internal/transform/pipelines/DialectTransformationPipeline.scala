@@ -11,10 +11,12 @@ import amf.core.internal.transform.stages.SourceInformationStage
 class DialectTransformationPipeline private (override val name: String) extends TransformationPipeline() {
 
   override def steps: Seq[TransformationStep] =
-    Seq(new DialectCombiningMappingStage(),
+    Seq(
+        new DialectCombiningMappingStage(),
         new DialectReferencesResolutionStage(),
         new DialectNodeExtensionStage(),
-        SourceInformationStage)
+        SourceInformationStage
+    )
 
 }
 

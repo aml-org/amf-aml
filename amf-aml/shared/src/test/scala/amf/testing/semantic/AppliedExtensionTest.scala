@@ -14,7 +14,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class AppliedExtensionTest extends AsyncFunSuite with Matchers {
 
-  val basePath                                             = "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/"
+  val basePath = "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/"
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Applied extensions") {

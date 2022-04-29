@@ -7,8 +7,7 @@ import amf.aml.client.scala.model.domain.{ClassTerm => InternalClassTerm}
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
-/**
-  * Class term from a vocabulary model
+/** Class term from a vocabulary model
   */
 @JSExportAll
 case class ClassTerm(override private[amf] val _internal: InternalClassTerm) extends DomainElement {
@@ -16,38 +15,32 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
   @JSExportTopLevel("ClassTerm")
   def this() = this(InternalClassTerm())
 
-  /**
-    * Name of the term used as the basis of the term URI identifeir
+  /** Name of the term used as the basis of the term URI identifeir
     * @return
     */
   def name: StrField = _internal.name
 
-  /**
-    * Human readable name for the term
+  /** Human readable name for the term
     * @return
     */
   def displayName: StrField = _internal.displayName
 
-  /**
-    * Human readable long description of the term
+  /** Human readable long description of the term
     * @return
     */
   def description: StrField = _internal.description
 
-  /**
-    * Properties that have the class term in the domain
+  /** Properties that have the class term in the domain
     * @return
     */
   def properties: ClientList[StrField] = _internal.properties.asClient
 
-  /**
-    * List of super terms for the class term
+  /** List of super terms for the class term
     * @return
     */
   def subClassOf: ClientList[StrField] = _internal.subClassOf.asClient
 
-  /**
-    * Sets the name for the class term
+  /** Sets the name for the class term
     * @param name
     * @return
     */
@@ -56,8 +49,7 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     this
   }
 
-  /**
-    * Sets the human readable name of the term
+  /** Sets the human readable name of the term
     * @param displayName
     * @return
     */
@@ -66,8 +58,7 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     this
   }
 
-  /**
-    * Sets the description of the class term
+  /** Sets the description of the class term
     * @param description
     * @return
     */
@@ -76,8 +67,7 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     this
   }
 
-  /**
-    * Sets the class term in the domain of the provaded properties
+  /** Sets the class term in the domain of the provaded properties
     * @param properties
     * @return
     */
@@ -86,8 +76,7 @@ case class ClassTerm(override private[amf] val _internal: InternalClassTerm) ext
     this
   }
 
-  /**
-    * Sets the super classes for this class term
+  /** Sets the super classes for this class term
     * @param superClasses
     * @return
     */

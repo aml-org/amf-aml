@@ -25,7 +25,7 @@ object ConditionalParser {
               ctx.closedNode("conditionalMappingInner", mapping.id, innerMap)
             case _ =>
               ctx.eh.violation(DialectError, mapping.id, s"Conditional mapping must be a map", entry.value.location)
-        }
+          }
     )
   }
 

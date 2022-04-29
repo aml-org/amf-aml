@@ -13,9 +13,11 @@ trait ReportComparator extends FileAssertionTest with Matchers {
 
   implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
-  def assertReport(report: AMFValidationReport,
-                   goldenOption: Option[String] = None,
-                   jsonldReport: Boolean = true): Future[Assertion] = {
+  def assertReport(
+      report: AMFValidationReport,
+      goldenOption: Option[String] = None,
+      jsonldReport: Boolean = true
+  ): Future[Assertion] = {
     goldenOption
       .map(processGoldenPath)
       .map { golden =>

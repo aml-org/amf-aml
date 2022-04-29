@@ -43,8 +43,7 @@ abstract class PropertyTerm(override private[amf] val _internal: InternalPropert
   }
 }
 
-/**
-  * Object property term from a vocabulary
+/** Object property term from a vocabulary
   * @param _internal
   */
 @JSExportAll
@@ -56,8 +55,7 @@ case class ObjectPropertyTerm(override private[amf] val _internal: InternalObjec
 
 }
 
-/**
-  * Datatype property term from a vocabulary
+/** Datatype property term from a vocabulary
   * @param _internal
   */
 @JSExportAll

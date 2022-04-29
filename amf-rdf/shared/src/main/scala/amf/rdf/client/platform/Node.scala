@@ -16,8 +16,7 @@ class PropertyObject private[amf] (private[amf] val internal: InternalPropertyOb
 }
 
 @JSExportAll
-case class Literal private[amf] (private[amf] override val internal: InternalLiteral)
-    extends PropertyObject(internal) {
+case class Literal private[amf] (private[amf] override val internal: InternalLiteral) extends PropertyObject(internal) {
   def literalType: ClientOption[String] = internal.literalType.asClient
 }
 

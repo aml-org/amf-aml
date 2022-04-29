@@ -49,7 +49,7 @@ trait DialectSyntax { this: DialectContext =>
   val conditionalMappingInner: Map[String, Required] = Map(
       "if"   -> true,
       "then" -> true,
-      "else" -> true,
+      "else" -> true
   )
 
   val propertyLikeMapping: Map[String, Required] = Map(
@@ -124,14 +124,13 @@ trait DialectSyntax { this: DialectContext =>
       }
     }
 
-    allowedProps.foreach {
-      case (propName, mandatory) =>
-        val props = map.map.keySet.map(_.as[YScalar].text)
-        if (mandatory) {
-          if (!props.contains(propName)) {
-            missingPropertyViolation(id, propName, nodeType, map)
-          }
+    allowedProps.foreach { case (propName, mandatory) =>
+      val props = map.map.keySet.map(_.as[YScalar].text)
+      if (mandatory) {
+        if (!props.contains(propName)) {
+          missingPropertyViolation(id, propName, nodeType, map)
         }
+      }
     }
   }
 

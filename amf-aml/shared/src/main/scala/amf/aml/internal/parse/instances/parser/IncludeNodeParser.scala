@@ -9,15 +9,17 @@ import org.yaml.model.{YNode, YScalar}
 
 object IncludeNodeParser extends NodeMappableHelper {
 
-  def parse(ast: YNode, mapping: NodeMappable, id: String, givenAnnotations: Option[Annotations])(
-      implicit ctx: DialectInstanceContext): DialectDomainElement = {
+  def parse(ast: YNode, mapping: NodeMappable, id: String, givenAnnotations: Option[Annotations])(implicit
+      ctx: DialectInstanceContext
+  ): DialectDomainElement = {
     val link = resolveLink(ast, mapping, id, givenAnnotations)
     link.annotations += RefInclude()
     link
   }
 
-  def resolveLink(ast: YNode, mapping: NodeMappable, id: String, givenAnnotations: Option[Annotations])(
-      implicit ctx: DialectInstanceContext): DialectDomainElement = {
+  def resolveLink(ast: YNode, mapping: NodeMappable, id: String, givenAnnotations: Option[Annotations])(implicit
+      ctx: DialectInstanceContext
+  ): DialectDomainElement = {
     val refTuple = ctx.link(ast) match {
       case Left(key) =>
         (key, ctx.declarations.findDialectDomainElement(key, mapping, SearchScope.Fragments))

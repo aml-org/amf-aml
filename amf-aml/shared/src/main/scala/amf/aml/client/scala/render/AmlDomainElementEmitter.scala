@@ -16,13 +16,15 @@ import org.yaml.model.YNode
 
 object AmlDomainElementEmitter extends DomainElementEmitter[Dialect] {
 
-  /**
-    * @param references : optional parameter which will improve emission of references defined in element
+  /** @param references
+    *   : optional parameter which will improve emission of references defined in element
     */
-  override def emit(element: DomainElement,
-                    emissionStructure: Dialect,
-                    eh: AMFErrorHandler,
-                    references: Seq[BaseUnit] = Nil): YNode = {
+  override def emit(
+      element: DomainElement,
+      emissionStructure: Dialect,
+      eh: AMFErrorHandler,
+      references: Seq[BaseUnit] = Nil
+  ): YNode = {
 
     val partEmitter = element match {
       case element: DialectDomainElement =>
@@ -32,22 +34,26 @@ object AmlDomainElementEmitter extends DomainElementEmitter[Dialect] {
     nodeOrError(partEmitter, element.id, eh)
   }
 
-  private def dialectDomainElementEmitter(dialect: Dialect,
-                                          references: Seq[BaseUnit],
-                                          element: DialectDomainElement,
-                                          registry: AMLRegistry) = {
+  private def dialectDomainElementEmitter(
+      dialect: Dialect,
+      references: Seq[BaseUnit],
+      element: DialectDomainElement,
+      registry: AMLRegistry
+  ) = {
     val renderOptions = RenderOptions()
     val nodeMappable  = element.definedBy
     val discriminator = element.annotations.find(classOf[DiscriminatorField]).map(a => a.key -> a.value)
     val dialects      = references.collect { case dialect: Dialect => dialect }
     val finder        = DefaultNodeMappableFinder(dialects)
-    DialectNodeEmitter(element,
-                       nodeMappable,
-                       references,
-                       dialect,
-                       SpecOrdering.Lexical,
-                       discriminator = discriminator,
-                       renderOptions = renderOptions,
-                       registry = registry)(finder)
+    DialectNodeEmitter(
+        element,
+        nodeMappable,
+        references,
+        dialect,
+        SpecOrdering.Lexical,
+        discriminator = discriminator,
+        renderOptions = renderOptions,
+        registry = registry
+    )(finder)
   }
 }

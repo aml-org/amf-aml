@@ -25,7 +25,12 @@ class RdfModel(private[amf] var internal: InternalRdfModel) {
     this
   }
 
-  def addLiteralTriple(subject: String, predicate: String, objLiteralValue: String, objLiteralType: String): RdfModel = {
+  def addLiteralTriple(
+      subject: String,
+      predicate: String,
+      objLiteralValue: String,
+      objLiteralType: String
+  ): RdfModel = {
     this.internal = internal.addTriple(subject, predicate, objLiteralValue, Some(objLiteralType))
     this
   }
@@ -34,15 +39,13 @@ class RdfModel(private[amf] var internal: InternalRdfModel) {
 
   def nextAnonId(): String = internal.nextAnonId()
 
-  /**
-    * Load RDF string representation in this model
+  /** Load RDF string representation in this model
     * @param text
     * @param mediaType
     */
   def load(mediaType: String, text: String) = internal.load(mediaType, text)
 
-  /**
-    * Write model as a String representation
+  /** Write model as a String representation
     * @param mediaType
     * @return
     */

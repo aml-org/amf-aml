@@ -17,10 +17,12 @@ class EntitiesFacade private[amf] (parserConfig: ParseConfiguration) {
     typeModel.isInstanceOf[DocumentModel] || typeModel.isInstanceOf[EncodesModel] || typeModel
       .isInstanceOf[DeclaresModel] || typeModel.isInstanceOf[BaseUnitModel]
 
-  def retrieveType(id: String,
-                   node: Node,
-                   findBaseUnit: Boolean = false,
-                   visitedSelfEncoded: Boolean = false): Option[ModelDefaultBuilder] = {
+  def retrieveType(
+      id: String,
+      node: Node,
+      findBaseUnit: Boolean = false,
+      visitedSelfEncoded: Boolean = false
+  ): Option[ModelDefaultBuilder] = {
     val types = sorter.sortedClassesOf(node)
 
     val foundType = types.find { t =>

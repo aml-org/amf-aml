@@ -21,7 +21,8 @@ case class PropertyRangeEmitters[T <: PropertyLikeMappingModel](
     dialect: Dialect,
     propertyMapping: PropertyLikeMapping[T],
     ordering: SpecOrdering,
-    aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
+    aliases: Map[String, (String, String)]
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends AliasesConsumer
     with PosExtractor {
 
@@ -74,9 +75,12 @@ case class PropertyRangeEmitters[T <: PropertyLikeMappingModel](
       else if (targets.size > 1)
         emitters ++= Seq(new EntryEmitter {
           override def emit(b: EntryBuilder): Unit =
-            b.entry("range", _.list { b =>
-              targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
-            })
+            b.entry(
+                "range",
+                _.list { b =>
+                  targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
+                }
+            )
           override def position(): Position = pos
         })
     }
@@ -89,7 +93,8 @@ case class PropertyLikeMappingEmitter[T <: PropertyLikeMappingModel](
     dialect: Dialect,
     propertyLikeMapping: PropertyLikeMapping[T],
     ordering: SpecOrdering,
-    aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
+    aliases: Map[String, (String, String)]
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends AliasesConsumer
     with PosExtractor
     with DiscriminatorEmitter {
@@ -160,10 +165,13 @@ case class PropertyLikeMappingEmitter[T <: PropertyLikeMappingModel](
 
 case class EnumEmitter(entry: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
-    b.entry("enum", _.list { b =>
-      val scalars = emitters(entry.arrayValues)
-      traverse(ordering.sorted(scalars), b)
-    })
+    b.entry(
+        "enum",
+        _.list { b =>
+          val scalars = emitters(entry.arrayValues)
+          traverse(ordering.sorted(scalars), b)
+        }
+    )
   }
 
   private def emitters(values: Seq[Any]): Seq[ScalarEmitter] =
@@ -195,8 +203,10 @@ case class MandatoryEmitter[T <: PropertyLikeMappingModel](propertyMapping: Prop
         propertyMapping.minCount().option() match {
           case Some(minCount) =>
             val minCountPos = fieldPos(propertyMapping, PropertyMappingModel.MinCount)
-            emitters ++= Seq(MapEntryEmitter("minItems", minCount.toString, YType.Int, minCountPos),
-                             MapEntryEmitter("mandatory", mandatory.toString, YType.Bool, mandatoryPos))
+            emitters ++= Seq(
+                MapEntryEmitter("minItems", minCount.toString, YType.Int, minCountPos),
+                MapEntryEmitter("mandatory", mandatory.toString, YType.Bool, mandatoryPos)
+            )
           case None => Seq(MapEntryEmitter("mandatory", mandatory.toString, YType.Bool, mandatoryPos))
         }
       case None =>
@@ -216,7 +226,8 @@ case class PropertyMappingEmitter(
     dialect: Dialect,
     propertyMapping: PropertyMapping,
     ordering: SpecOrdering,
-    aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
+    aliases: Map[String, (String, String)]
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with DiscriminatorEmitter
     with AliasesConsumer

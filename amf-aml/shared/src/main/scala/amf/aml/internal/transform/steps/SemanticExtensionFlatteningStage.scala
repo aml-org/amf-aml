@@ -13,9 +13,11 @@ class SemanticExtensionFlatteningStage() extends TransformationStep {
 
   private lazy val filterFields = DomainExtensionModel.fields
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     model.transform(hasSemanticExtension, transform)(errorHandler)
   }
 

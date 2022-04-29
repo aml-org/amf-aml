@@ -17,12 +17,14 @@ trait BuildCycleTestCommon extends FileAssertionTest {
 
   def basePath: String
 
-  case class CycleConfig(source: String,
-                         golden: String,
-                         directory: String = basePath,
-                         syntax: Option[Syntax] = None,
-                         pipeline: Option[String] = None,
-                         transformWith: Option[Spec] = None) {
+  case class CycleConfig(
+      source: String,
+      golden: String,
+      directory: String = basePath,
+      syntax: Option[Syntax] = None,
+      pipeline: Option[String] = None,
+      transformWith: Option[Spec] = None
+  ) {
     val sourcePath: String = directory + source
     val goldenPath: String = directory + golden
   }

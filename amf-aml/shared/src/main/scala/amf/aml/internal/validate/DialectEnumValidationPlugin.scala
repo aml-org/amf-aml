@@ -15,8 +15,9 @@ object DialectEnumValidationPlugin extends AMFValidatePlugin {
 
   override def applies(element: ValidationInfo): Boolean = element.baseUnit.isInstanceOf[Dialect]
 
-  override def validate(unit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[ValidationResult] = {
+  override def validate(unit: BaseUnit, options: ValidationOptions)(implicit
+      executionContext: ExecutionContext
+  ): Future[ValidationResult] = {
     unit match {
       case dialect: Dialect =>
         val validator = DialectEnumValidator()

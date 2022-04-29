@@ -11,67 +11,73 @@ import scala.collection.immutable
 /** Contains methods to get information about the current state of the configuration */
 class AMLConfigurationState private[amf] (protected val configuration: AMLConfiguration) {
 
-  /**
-    * Get all instances of registered dialects
-    * @return a Seq of [[Dialect]]
+  /** Get all instances of registered dialects
+    * @return
+    *   a Seq of [[Dialect]]
     */
   def getDialects(): immutable.Seq[Dialect] = getDialectsByCondition(_ => true)
 
-  /**
-    * Find an instance of registered dialect with the provided name and version
-    * @param name of the dialect to find
-    * @return a Seq of [[Dialect]]
+  /** Find an instance of registered dialect with the provided name and version
+    * @param name
+    *   of the dialect to find
+    * @return
+    *   a Seq of [[Dialect]]
     */
   def getDialect(name: String): immutable.Seq[Dialect] = getDialectsByCondition(dialectNameFilter(name))
 
-  /**
-    * Find an instance of registered dialect with the provided name and version
-    * @param name of the dialect to find
-    * @param version of dialect to find
-    * @return an Option of [[Dialect]]
+  /** Find an instance of registered dialect with the provided name and version
+    * @param name
+    *   of the dialect to find
+    * @param version
+    *   of dialect to find
+    * @return
+    *   an Option of [[Dialect]]
     */
   def getDialect(name: String, version: String): Option[Dialect] =
     getDialectsByCondition(dialectNameAndVersionFilter(name, version)).headOption
 
-  /**
-    * Get all instances of SemanticExtensions present in the registered dialects
-    * @return a Seq of [[SemanticExtension]]
+  /** Get all instances of SemanticExtensions present in the registered dialects
+    * @return
+    *   a Seq of [[SemanticExtension]]
     */
   def getExtensions(): Seq[SemanticExtension] = SemanticExtensionHelper.getExtensions(configuration)
 
-  /**
-    * Find all instances of semantic extensions in the provided dialect filtering by the param
-    * @param uri of the propertyTerm of the semantic extension to search
-    * @return a Seq of [[SemanticExtension]]
+  /** Find all instances of semantic extensions in the provided dialect filtering by the param
+    * @param uri
+    *   of the propertyTerm of the semantic extension to search
+    * @return
+    *   a Seq of [[SemanticExtension]]
     */
   def findSemanticByPropertyTerm(uri: String): Option[(SemanticExtension, Dialect)] =
     SemanticExtensionHelper.byPropertyTerm(configuration).find(uri).headOption
 
-  /**
-    * Find all instances of semantic extensions in the provided dialect filtering by the param
-    * @param uri of the target field of the semantic extension to search
-    * @return a Seq of [[SemanticExtension]]
+  /** Find all instances of semantic extensions in the provided dialect filtering by the param
+    * @param uri
+    *   of the target field of the semantic extension to search
+    * @return
+    *   a Seq of [[SemanticExtension]]
     */
   def findSemanticByTarget(uri: String): Seq[(SemanticExtension, Dialect)] =
     SemanticExtensionHelper.byTargetFinder(configuration).find(uri)
 
-  /**
-    * Find all instances of semantic extensions in the provided dialect filtering by the param
-    * @param name of the semantic extension to search
-    * @return a Option of [[SemanticExtension]]
+  /** Find all instances of semantic extensions in the provided dialect filtering by the param
+    * @param name
+    *   of the semantic extension to search
+    * @return
+    *   a Option of [[SemanticExtension]]
     */
   def findSemanticByName(name: String): Option[(SemanticExtension, Dialect)] =
     SemanticExtensionHelper.byNameFinder(configuration).find(name).headOption
 
   def findDialectFor(dialectInstance: DialectInstance): Option[Dialect] = {
     @silent("deprecated") // Silent can only be used in assignment expressions
-    val a = getDialects().find(
-        dialect =>
-          dialectInstance.processingData
-            .definedBy()
-            .option()
-            .orElse(dialectInstance.definedBy().option())
-            .contains(dialect.id))
+    val a = getDialects().find(dialect =>
+      dialectInstance.processingData
+        .definedBy()
+        .option()
+        .orElse(dialectInstance.definedBy().option())
+        .contains(dialect.id)
+    )
     a
   }
 

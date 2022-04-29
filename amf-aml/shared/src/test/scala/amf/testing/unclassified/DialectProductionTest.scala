@@ -78,10 +78,12 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   test("Can parse validation dialect instance") {
-    cycleWithDialect("validation_dialect.yaml",
-                     "validation_instance1.yaml",
-                     "validation_instance1.yaml.yaml",
-                     Some(Yaml))
+    cycleWithDialect(
+        "validation_dialect.yaml",
+        "validation_instance1.yaml",
+        "validation_instance1.yaml.yaml",
+        Some(Yaml)
+    )
   }
 
   multiGoldenTest("Can parse validation dialect cfg1 instance", "example1_instance.%s") { config =>
@@ -122,11 +124,13 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
   }
 
   test("Can parse and generate ABOUT-github dialect instance") {
-    cycleWithDialect("ABOUT-GitHub-dialect.yaml",
-                     "example.yaml",
-                     "example.yaml.yaml",
-                     Some(Yaml),
-                     basePath + "ABOUT/github/")
+    cycleWithDialect(
+        "ABOUT-GitHub-dialect.yaml",
+        "example.yaml",
+        "example.yaml.yaml",
+        Some(Yaml),
+        basePath + "ABOUT/github/"
+    )
   }
 
   multiGoldenTest("Can parse ABOUT-hosted dialectinstance", "ABOUT_hosted.%s") { config =>
@@ -142,34 +146,42 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   // TODO migrate to multiGoldenTest
   test("Can parse and generate Instance dialect instance 1") {
-    cycleWithDialect("dialect.yaml",
-                     "instance1.yaml",
-                     "instance1.json",
-                     syntax = Some(Syntax.JsonLd),
-                     basePath + "Instagram/")
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance1.yaml",
+        "instance1.json",
+        syntax = Some(Syntax.JsonLd),
+        basePath + "Instagram/"
+    )
   }
 
   test("Can parse and generate Instance dialect instance 2") {
-    cycleWithDialect("dialect.yaml",
-                     "instance2.yaml",
-                     "instance2.json",
-                     syntax = Some(Syntax.JsonLd),
-                     basePath + "Instagram/")
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance2.yaml",
+        "instance2.json",
+        syntax = Some(Syntax.JsonLd),
+        basePath + "Instagram/"
+    )
   }
 
   test("Can parse activity instances") {
-    cycleWithDialect("activity.yaml",
-                     "stream1.yaml",
-                     "stream1.json",
-                     syntax = Some(Syntax.JsonLd),
-                     basePath + "streams/")
+    cycleWithDialect(
+        "activity.yaml",
+        "stream1.yaml",
+        "stream1.json",
+        syntax = Some(Syntax.JsonLd),
+        basePath + "streams/"
+    )
   }
 
   test("Can parse activity deployments demo") {
-    cycleWithDialect("dialect.yaml",
-                     "deployment.yaml",
-                     "deployment.json",
-                     syntax = Some(Syntax.JsonLd),
-                     basePath + "deployments_demo/")
+    cycleWithDialect(
+        "dialect.yaml",
+        "deployment.yaml",
+        "deployment.json",
+        syntax = Some(Syntax.JsonLd),
+        basePath + "deployments_demo/"
+    )
   }
 }

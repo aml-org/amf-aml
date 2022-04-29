@@ -6,9 +6,11 @@ import amf.aml.internal.semantic.SemanticExtensionHelper.{findAnnotationMapping,
 
 object SemanticExtensionOps {
 
-  def findExtensionMapping(name: String,
-                           parentTypes: Seq[String],
-                           finder: ExtensionDialectFinder): Option[(AnnotationMapping, Dialect)] = {
+  def findExtensionMapping(
+      name: String,
+      parentTypes: Seq[String],
+      finder: ExtensionDialectFinder
+  ): Option[(AnnotationMapping, Dialect)] = {
     findExtensionDialect(name, finder).flatMap { dialect =>
       findSemanticExtension(dialect, name)
         .map(findAnnotationMapping(dialect, _))

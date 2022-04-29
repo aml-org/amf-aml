@@ -12,21 +12,26 @@ object ClassTermModel extends DomainElementModel {
   val Name: Field =
     Field(Str, Namespace.Core + "name", ModelDoc(ModelVocabularies.Core, "name", "Name of the ClassTerm"))
 
-  val DisplayName: Field = Field(Str,
-                                 Namespace.Core + "displayName",
-                                 ModelDoc(ModelVocabularies.Core, "displayName", "Human readable name for the term"))
+  val DisplayName: Field = Field(
+      Str,
+      Namespace.Core + "displayName",
+      ModelDoc(ModelVocabularies.Core, "displayName", "Human readable name for the term")
+  )
   val Description: Field = Field(
       Str,
       Namespace.Core + "description",
-      ModelDoc(ModelVocabularies.Core, "description", "Human readable description for the term"))
+      ModelDoc(ModelVocabularies.Core, "description", "Human readable description for the term")
+  )
   val Properties: Field = Field(
       Array(Iri),
       Namespace.Meta + "properties",
-      ModelDoc(ModelVocabularies.Meta, "properties", "Properties that have the ClassTerm in the domain"))
+      ModelDoc(ModelVocabularies.Meta, "properties", "Properties that have the ClassTerm in the domain")
+  )
   val SubClassOf: Field = Field(
       Array(Iri),
       Namespace.Rdfs + "subClassOf",
-      ModelDoc(ExternalModelVocabularies.Rdfs, "subClassOf", "Subsumption relationship across terms"))
+      ModelDoc(ExternalModelVocabularies.Rdfs, "subClassOf", "Subsumption relationship across terms")
+  )
 
   override def modelInstance: AmfObject = ClassTerm()
 

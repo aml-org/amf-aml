@@ -14,13 +14,14 @@ import scala.concurrent.Future
 
 trait BuildCycleRdfTests extends BuildCycleTestCommon {
 
-  def cycleFullRdf(source: String,
-                   golden: String,
-                   directory: String = basePath,
-                   amlConfig: AMLConfiguration =
-                     AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
-                   syntax: Option[Syntax] = None,
-                   pipeline: Option[String] = None): Future[Assertion] = {
+  def cycleFullRdf(
+      source: String,
+      golden: String,
+      directory: String = basePath,
+      amlConfig: AMLConfiguration = AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
+      syntax: Option[Syntax] = None,
+      pipeline: Option[String] = None
+  ): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, directory, syntax, pipeline, None)
 
@@ -34,13 +35,15 @@ trait BuildCycleRdfTests extends BuildCycleTestCommon {
   }
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
-  def cycleRdf(source: String,
-               golden: String,
-               amlConfig: AMLConfiguration,
-               directory: String = basePath,
-               syntax: Option[Syntax] = None,
-               pipeline: Option[String] = None,
-               transformWith: Option[Spec] = None): Future[Assertion] = {
+  def cycleRdf(
+      source: String,
+      golden: String,
+      amlConfig: AMLConfiguration,
+      directory: String = basePath,
+      syntax: Option[Syntax] = None,
+      pipeline: Option[String] = None,
+      transformWith: Option[Spec] = None
+  ): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, directory, syntax, pipeline, transformWith)
 

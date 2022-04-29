@@ -5,42 +5,50 @@ import org.yaml.model.{YNode, YPart, YScalar}
 
 object ClosedInstanceNode {
 
-  def checkNode(id: String,
-                nodetype: String,
-                entries: Map[YNode, YNode],
-                mapping: NodeMapping,
-                ast: YPart,
-                rootNode: Boolean,
-                additionalKey: Option[String])(implicit ctx: DialectInstanceContext): Unit = {
+  def checkNode(
+      id: String,
+      nodetype: String,
+      entries: Map[YNode, YNode],
+      mapping: NodeMapping,
+      ast: YPart,
+      rootNode: Boolean,
+      additionalKey: Option[String]
+  )(implicit ctx: DialectInstanceContext): Unit = {
     if (rootNode) checkRootNode(id, nodetype, entries, mapping, ast, additionalKey)
     else checkClosedNode(id, nodetype, entries, mapping, ast, additionalKey)
   }
 
-  def checkRootNode(id: String,
-                    nodetype: String,
-                    entries: Map[YNode, YNode],
-                    mapping: NodeMapping,
-                    ast: YPart,
-                    additionalKey: Option[String])(implicit ctx: DialectInstanceContext): Unit = {
+  def checkRootNode(
+      id: String,
+      nodetype: String,
+      entries: Map[YNode, YNode],
+      mapping: NodeMapping,
+      ast: YPart,
+      additionalKey: Option[String]
+  )(implicit ctx: DialectInstanceContext): Unit = {
     val excluded = ctx.rootProps
     checkNode(id, nodetype, entries, mapping, ast, excluded ++ additionalKey.toSet)
   }
 
-  def checkClosedNode(id: String,
-                      nodetype: String,
-                      entries: Map[YNode, YNode],
-                      mapping: NodeMapping,
-                      ast: YPart,
-                      additionalKey: Option[String])(implicit ctx: DialectInstanceContext): Unit = {
+  def checkClosedNode(
+      id: String,
+      nodetype: String,
+      entries: Map[YNode, YNode],
+      mapping: NodeMapping,
+      ast: YPart,
+      additionalKey: Option[String]
+  )(implicit ctx: DialectInstanceContext): Unit = {
     checkNode(id, nodetype, entries, mapping, ast, additionalKey.toSet)
   }
 
-  private def checkNode(id: String,
-                        nodetype: String,
-                        entries: Map[YNode, YNode],
-                        mapping: NodeMapping,
-                        ast: YPart,
-                        excludedKeys: Set[String])(implicit ctx: DialectInstanceContext): Unit = {
+  private def checkNode(
+      id: String,
+      nodetype: String,
+      entries: Map[YNode, YNode],
+      mapping: NodeMapping,
+      ast: YPart,
+      excludedKeys: Set[String]
+  )(implicit ctx: DialectInstanceContext): Unit = {
     val allowedEntryKeys = mapping.propertiesMapping().map(_.name().value()).toSet.union(excludedKeys)
     val entriesToTest = entries.keys
       .map(_.value.asInstanceOf[YScalar].text)

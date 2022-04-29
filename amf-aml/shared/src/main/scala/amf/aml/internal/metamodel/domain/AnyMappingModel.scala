@@ -26,37 +26,45 @@ trait AnyMappingModel
   val Components: Field = Field(
       Array(Iri),
       Namespace.AmfAml + "components",
-      ModelDoc(ExternalModelVocabularies.Shacl,
-               "components",
-               "Array of component mappings in case of component combination generated mapping")
+      ModelDoc(
+          ExternalModelVocabularies.Shacl,
+          "components",
+          "Array of component mappings in case of component combination generated mapping"
+      )
   )
 
   val If: Field = Field(
       Iri,
       Namespace.AmfAml + "if",
-      ModelDoc(ExternalModelVocabularies.Shacl,
-               "if",
-               "Conditional constraint if over the type of the mapped graph property")
+      ModelDoc(
+          ExternalModelVocabularies.Shacl,
+          "if",
+          "Conditional constraint if over the type of the mapped graph property"
+      )
   )
 
   val Then: Field = Field(
       Iri,
       Namespace.AmfAml + "then",
-      ModelDoc(ExternalModelVocabularies.Shacl,
-               "then",
-               "Conditional constraint then over the type of the mapped graph property")
+      ModelDoc(
+          ExternalModelVocabularies.Shacl,
+          "then",
+          "Conditional constraint then over the type of the mapped graph property"
+      )
   )
 
   val Else: Field = Field(
       Iri,
       Namespace.AmfAml + "else",
-      ModelDoc(ExternalModelVocabularies.Shacl,
-               "else",
-               "Conditional constraint else over the type of the mapped graph property")
+      ModelDoc(
+          ExternalModelVocabularies.Shacl,
+          "else",
+          "Conditional constraint else over the type of the mapped graph property"
+      )
   )
 
-  override val `type`
-    : List[ValueType] = Namespace.Meta + "AnyMapping" :: Namespace.Shacl + "Shape" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] =
+    Namespace.Meta + "AnyMapping" :: Namespace.Shacl + "Shape" :: DomainElementModel.`type`
 
 }
 

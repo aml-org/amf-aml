@@ -30,9 +30,7 @@ class NodeMapping(override val fields: Fields, override val annotations: Annotat
 
   private[amf] def hasProperties: Boolean = propertiesMapping().nonEmpty
 
-  /**
-    * Returns the properties forming the primary key for this node.
-    * Properties are already sorted.
+  /** Returns the properties forming the primary key for this node. Properties are already sorted.
     */
   def primaryKey(): Seq[PropertyMapping] =
     propertiesMapping()
@@ -41,10 +39,12 @@ class NodeMapping(override val fields: Fields, override val annotations: Annotat
 
   override def linkCopy(): NodeMapping = NodeMapping().withId(id)
 
-  override def resolveUnreferencedLink[T](label: String,
-                                          annotations: Annotations,
-                                          unresolved: T,
-                                          supportsRecursion: Boolean): T = {
+  override def resolveUnreferencedLink[T](
+      label: String,
+      annotations: Annotations,
+      unresolved: T,
+      supportsRecursion: Boolean
+  ): T = {
     val unresolvedNodeMapping = unresolved.asInstanceOf[NodeMapping]
     val linked: T             = link(label, annotations)
     if (supportsRecursion && linked.isInstanceOf[Linkable])

@@ -12,8 +12,8 @@ import amf.aml.client.scala.model.domain.DocumentMapping
 import org.yaml.model.YDocument.EntryBuilder
 
 case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)])(
-    implicit val nodeMappableFinder: NodeMappableFinder)
-    extends EntryEmitter
+    implicit val nodeMappableFinder: NodeMappableFinder
+) extends EntryEmitter
     with AliasesConsumer {
   val mapping: DocumentMapping    = dialect.documents().root()
   var emitters: Seq[EntryEmitter] = Seq()
@@ -38,9 +38,12 @@ case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, al
       emitters ++= Seq(new EntryEmitter {
 
         override def emit(b: EntryBuilder): Unit = {
-          b.entry("declares", _.obj { b =>
-            traverse(sortedNodes, b)
-          })
+          b.entry(
+              "declares",
+              _.obj { b =>
+                traverse(sortedNodes, b)
+              }
+          )
         }
 
         override def position(): Position = {
@@ -48,9 +51,12 @@ case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, al
         }
       })
     }
-    b.entry("root", _.obj { b =>
-      traverse(ordering.sorted(emitters), b)
-    })
+    b.entry(
+        "root",
+        _.obj { b =>
+          traverse(ordering.sorted(emitters), b)
+        }
+    )
   }
 
   override def position(): Position =

@@ -13,10 +13,12 @@ import org.yaml.model.YType
 
 import scala.collection.mutable.ArrayBuffer
 
-case class AnnotationMappingsEntryEmitter(dialect: Dialect,
-                                          annotationMappings: Seq[AnnotationMapping],
-                                          aliases: Map[String, (String, String)],
-                                          ordering: SpecOrdering)(implicit val nodeMappableFinder: NodeMappableFinder)
+case class AnnotationMappingsEntryEmitter(
+    dialect: Dialect,
+    annotationMappings: Seq[AnnotationMapping],
+    aliases: Map[String, (String, String)],
+    ordering: SpecOrdering
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasesConsumer
     with PosExtractor
@@ -36,10 +38,12 @@ case class AnnotationMappingsEntryEmitter(dialect: Dialect,
   override def position(): Position = groupPosition(annotationMappings)
 }
 
-case class AnnotationMappingEmitter(dialect: Dialect,
-                                    element: AnnotationMapping,
-                                    aliases: Map[String, (String, String)],
-                                    ordering: SpecOrdering)(implicit val nodeMappableFinder: NodeMappableFinder)
+case class AnnotationMappingEmitter(
+    dialect: Dialect,
+    element: AnnotationMapping,
+    aliases: Map[String, (String, String)],
+    ordering: SpecOrdering
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasEmitter {
   override def emit(b: EntryBuilder): Unit = {

@@ -10,8 +10,9 @@ import org.yaml.model.{YMap, YMapEntry, YNode, YScalar}
 
 object NodeMappingLikeParser {
 
-  def parse(entry: YMapEntry, adopt: DomainElement => Any, isFragment: Boolean = false)(
-      implicit ctx: DialectContext): AnyNodeMappable = {
+  def parse(entry: YMapEntry, adopt: DomainElement => Any, isFragment: Boolean = false)(implicit
+      ctx: DialectContext
+  ): AnyNodeMappable = {
 
     entry.value.as[YMap] match {
       case uMap if applies(uMap, UnionNodeMappingParser.identifierKey) =>
@@ -21,8 +22,9 @@ object NodeMappingLikeParser {
 
   }
 
-  def resolveNodeMappingLink(map: YMap, entry: YNode, adopt: DomainElement => Any)(
-      implicit ctx: DialectContext): Some[NodeMapping] = {
+  def resolveNodeMappingLink(map: YMap, entry: YNode, adopt: DomainElement => Any)(implicit
+      ctx: DialectContext
+  ): Some[NodeMapping] = {
     val refTuple = ctx.link(entry) match {
       case Left(key) =>
         (key, ctx.declarations.findNodeMapping(key, SearchScope.Fragments))
@@ -35,7 +37,9 @@ object NodeMappingLikeParser {
         val linkedNode = s
           .link(text, Annotations(entry.value))
           .asInstanceOf[NodeMapping]
-        adopt(linkedNode) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+        adopt(
+            linkedNode
+        ) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
         Some(linkedNode)
       case (text: String, _) =>
         val linkedNode = NodeMapping(map)

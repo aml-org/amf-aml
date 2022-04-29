@@ -25,15 +25,19 @@ case class SemanticExtensionParser(entry: YMapEntry, parent: String)(implicit va
         val extensionMappingDefinition =
           ctx.declarations.findAnnotationMappingOrError(entry.value)(definitionRawRef, SearchScope.All)
         semantic
-          .set(SemanticExtensionModel.ExtensionMappingDefinition,
-               AmfScalar(extensionMappingDefinition.id, Annotations(entry.value)),
-               Annotations(entry))
+          .set(
+              SemanticExtensionModel.ExtensionMappingDefinition,
+              AmfScalar(extensionMappingDefinition.id, Annotations(entry.value)),
+              Annotations(entry)
+          )
 
       case t =>
-        ctx.eh.violation(DialectError,
-                         parent,
-                         s"Invalid type $t (expected ${YType.Str}) for semantic extension node $name",
-                         entry.value.location)
+        ctx.eh.violation(
+            DialectError,
+            parent,
+            s"Invalid type $t (expected ${YType.Str}) for semantic extension node $name",
+            entry.value.location
+        )
     }
   }
 }

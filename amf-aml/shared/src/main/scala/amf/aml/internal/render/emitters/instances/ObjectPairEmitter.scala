@@ -10,11 +10,12 @@ import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YDocument
 
-case class ObjectPairEmitter(key: String,
-                             array: AmfArray,
-                             propertyMapping: PropertyMapping,
-                             annotations: Option[Annotations] = None)
-    extends EntryEmitter {
+case class ObjectPairEmitter(
+    key: String,
+    array: AmfArray,
+    propertyMapping: PropertyMapping,
+    annotations: Option[Annotations] = None
+) extends EntryEmitter {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     val keyProperty   = propertyMapping.mapTermKeyProperty().value()
     val valueProperty = propertyMapping.mapTermValueProperty().value()

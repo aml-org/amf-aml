@@ -14,15 +14,14 @@ import org.yaml.model.YDocument.EntryBuilder
 import amf.aml.internal.render.emitters.dialects.FieldEntryImplicit.FieldEntryWithPosition
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 
-case class RamlDialectLibraryEmitter(library: DialectLibrary, document: DocumentCreator)(
-    implicit val nodeMappableFinder: NodeMappableFinder)
-    extends DialectDocumentsEmitters {
+case class RamlDialectLibraryEmitter(library: DialectLibrary, document: DocumentCreator)(implicit
+    val nodeMappableFinder: NodeMappableFinder
+) extends DialectDocumentsEmitters {
 
   val ordering: SpecOrdering    = Lexical
   override val dialect: Dialect = toDialect(library)
-  val aliases
-    : Map[RefKey, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(dialect) ++ buildExternalsAliasIndexFrom(
-      dialect)
+  val aliases: Map[RefKey, (Alias, ImportLocation)] =
+    buildReferenceAliasIndexFrom(dialect) ++ buildExternalsAliasIndexFrom(dialect)
 
   def emitDialectLibrary(): YDocument = {
     val content: Seq[EntryEmitter] = rootLevelEmitters(ordering) ++ dialectEmitters(ordering)

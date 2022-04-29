@@ -50,10 +50,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           case t =>
             val defaultId = defaultDialectId()
             ctx.eh
-              .violation(DialectError,
-                         defaultId,
-                         s"Invalid type $t for $$id directive. Expected ${YType.Str}",
-                         entry.value.location)
+              .violation(
+                  DialectError,
+                  defaultId,
+                  s"Invalid type $t for $$id directive. Expected ${YType.Str}",
+                  entry.value.location
+              )
             defaultId
         }
       case None =>
@@ -85,14 +87,18 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
           val entries = extensionsEntry.value.as[YMap].entries
           val semanticExtensions =
             entries.map(e => SemanticExtensionParser(e, s"${dialect.id}/semantic-extensions").parse())
-          dialect.setArrayWithoutId(DialectModel.Extensions,
-                                    semanticExtensions,
-                                    Annotations(extensionsEntry) ++= Annotations.virtual())
+          dialect.setArrayWithoutId(
+              DialectModel.Extensions,
+              semanticExtensions,
+              Annotations(extensionsEntry) ++= Annotations.virtual()
+          )
         case t =>
-          ctx.eh.violation(DialectError,
-                           dialect.id,
-                           s"Invalid type $t for 'extensions' node. Expected map",
-                           extensionsEntry.value)
+          ctx.eh.violation(
+              DialectError,
+              dialect.id,
+              s"Invalid type $t for 'extensions' node. Expected map",
+              extensionsEntry.value
+          )
       }
     }
   }
@@ -110,9 +116,11 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
     if (ctx.declarations.externals.nonEmpty) {
       val entry = map.key("external").get
-      dialect.set(Externals,
-                  AmfArray(ctx.declarations.externals.values.toSeq, Annotations(entry.value)),
-                  Annotations(entry))
+      dialect.set(
+          Externals,
+          AmfArray(ctx.declarations.externals.values.toSeq, Annotations(entry.value)),
+          Annotations(entry)
+      )
     }
 
     parseDeclarations(dialect.id, map)
@@ -163,17 +171,24 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     parseAnnotationMappingDeclarations(map, parent)
   }
 
-  /**
-    * Recursively collects members from unions and nested unions
-    * @param union union to extract members from
-    * @param path path to show error on nested ambiguities
-    * @return Map member -> path from root level union
+  /** Recursively collects members from unions and nested unions
+    * @param union
+    *   union to extract members from
+    * @param path
+    *   path to show error on nested ambiguities
+    * @return
+    *   Map member -> path from root level union
     */
-  private def flattenedMembersFrom(union: NodeWithDiscriminator[_],
-                                   path: Seq[UnionNodeMapping] = Nil): Map[NodeMapping, Seq[UnionNodeMapping]] = {
+  private def flattenedMembersFrom(
+      union: NodeWithDiscriminator[_],
+      path: Seq[UnionNodeMapping] = Nil
+  ): Map[NodeMapping, Seq[UnionNodeMapping]] = {
     membersFrom(union).flatMap {
       case anotherUnion: UnionNodeMapping if !path.contains(union) =>
-        flattenedMembersFrom(anotherUnion, path :+ anotherUnion) // if member is another union get its members recursively
+        flattenedMembersFrom(
+            anotherUnion,
+            path :+ anotherUnion
+        ) // if member is another union get its members recursively
       case nodeMapping: NodeMapping => Some(nodeMapping -> path)
       case _                        => None
     }.toMap
@@ -191,10 +206,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   type Member            = NodeMapping
   type ConcatenatedNames = String
 
-  /**
-    * Ambiguity kinds:
+  /** Ambiguity kinds:
     *   - Un-avoidable: cannot distinguish between two union members
-    *   - Eventual: some times cannot distinguish between two union members, depending on the value of the dialect instance
+    *   - Eventual: some times cannot distinguish between two union members, depending on the value of the dialect
+    *     instance
     *
     * Conditions for un-avoidable ambiguity:
     *   - Set of property names is exactly the same between two union members
@@ -202,8 +217,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     * Conditions for eventual ambiguity:
     *   - Set of MANDATORY property names is exactly the same between two union members
     *
-    * @param union Union to calculate ambiguity over its members
-    * @tparam T type of union: union node mapping or union property mapping
+    * @param union
+    *   Union to calculate ambiguity over its members
+    * @tparam T
+    *   type of union: union node mapping or union property mapping
     */
   def checkAmbiguity[T <: DomainElement](union: NodeWithDiscriminator[_]): Unit = {
     val membersPathIndex = flattenedMembersFrom(union)
@@ -225,20 +242,24 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     unavoidableCache.foreach {
       case (_, members) if members.size > 1 =>
         val names = members.map(buildPath).sorted.mkString(", ")
-        ctx.eh.violation(UnavoidableAmbiguity,
-                         union.id,
-                         s"Union is ambiguous. Members $names have the same set of property names",
-                         union.annotations)
+        ctx.eh.violation(
+            UnavoidableAmbiguity,
+            union.id,
+            s"Union is ambiguous. Members $names have the same set of property names",
+            union.annotations
+        )
       case _ => // Ignore
     }
 
     eventualCache.foreach {
       case (_, members) if members.size > 1 =>
         val names = members.map(buildPath).sorted.mkString(", ")
-        ctx.eh.warning(EventualAmbiguity,
-                       union.id,
-                       s"Union might be ambiguous. Members $names have the same set of mandatory property names",
-                       union.annotations)
+        ctx.eh.warning(
+            EventualAmbiguity,
+            union.id,
+            s"Union might be ambiguous. Members $names have the same set of mandatory property names",
+            union.annotations
+        )
       case _ => // Ignore
     }
   }
@@ -246,7 +267,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   private def updateAmbiguityCaches[T <: DomainElement](
       member: Member,
       unavoidableCache: mutable.HashMap[ConcatenatedNames, Seq[Member]],
-      eventualCache: mutable.HashMap[ConcatenatedNames, Seq[Member]]) = {
+      eventualCache: mutable.HashMap[ConcatenatedNames, Seq[Member]]
+  ) = {
 
     val allProperties = member
       .propertiesMapping()
@@ -315,18 +337,16 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
   }
 
-  /**
-    * This method:
-    *  1. replaces union & discriminator members references to other node mappings from their name to their id
-    *  2. validates union & discriminator members exist
-    *  3. checks for ambiguity
+  /** This method:
+    *   1. replaces union & discriminator members references to other node mappings from their name to their id 2.
+    *      validates union & discriminator members exist 3. checks for ambiguity
     */
   protected def checkNodeMappableReferences[T <: DomainElement](mappable: NodeWithDiscriminator[_]): Unit = {
     val memberStream = mappable.objectRange().toStream
     val memberIdsStream = memberStream
       .map(field => (memberIdFromName(field.value(), mappable), field.annotations()))
-      .filter {
-        case (optionalValue, _) => optionalValue.isDefined
+      .filter { case (optionalValue, _) =>
+        optionalValue.isDefined
       }
       .map(t => AmfScalar(t._1.get, t._2))
 
@@ -337,38 +357,41 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
     if (memberIdsStream.nonEmpty) {
       val objectRangeValue = mappable.fields.getValue(ObjectRange)
-      mappable.set(ObjectRange,
-                   AmfArray(memberIdsStream, objectRangeValue.value.annotations),
-                   objectRangeValue.annotations)
+      mappable.set(
+          ObjectRange,
+          AmfArray(memberIdsStream, objectRangeValue.value.annotations),
+          objectRangeValue.annotations
+      )
     }
 
     // Setting ids we left unresolved in typeDiscriminators
     Option(mappable.typeDiscriminator()) match {
       case Some(typeDiscriminators) =>
         val fieldValue = mappable.fields.entry(PropertyMappingModel.TypeDiscriminator).map(_.value)
-        val discriminatorValueMapping = typeDiscriminators.flatMap {
-          case (name, discriminatorValue) =>
-            ctx.declarations
-              .findNodeMapping(name, All)
-              .map(_.id -> discriminatorValue)
-              .orElse {
-                ctx.missingPropertyRangeViolation(
-                    name,
-                    mappable.id,
-                    fieldValue
-                      .map(_.annotations)
-                      .getOrElse(mappable.annotations)
-                )
-                None
-              }
+        val discriminatorValueMapping = typeDiscriminators.flatMap { case (name, discriminatorValue) =>
+          ctx.declarations
+            .findNodeMapping(name, All)
+            .map(_.id -> discriminatorValue)
+            .orElse {
+              ctx.missingPropertyRangeViolation(
+                  name,
+                  mappable.id,
+                  fieldValue
+                    .map(_.annotations)
+                    .getOrElse(mappable.annotations)
+              )
+              None
+            }
         }
-        mappable.withTypeDiscriminator(discriminatorValueMapping,
-                                       fieldValue
-                                         .map(_.annotations)
-                                         .getOrElse(Annotations()),
-                                       fieldValue
-                                         .map(_.value.annotations)
-                                         .getOrElse(Annotations()))
+        mappable.withTypeDiscriminator(
+            discriminatorValueMapping,
+            fieldValue
+              .map(_.annotations)
+              .getOrElse(Annotations()),
+            fieldValue
+              .map(_.value.annotations)
+              .getOrElse(Annotations())
+        )
       case _ => // ignore
     }
   }
@@ -395,7 +418,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                 .orElse(
                     union.fields
                       .entry(PropertyMappingModel.ObjectRange)
-                      .map(_.value.annotations))
+                      .map(_.value.annotations)
+                )
                 .getOrElse(union.annotations)
               ctx.missingPropertyRangeViolation(
                   name,
@@ -482,47 +506,53 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
             val nodeName = entry.key.toString
             if (AmlScalars.all.contains(nodeName)) {
               ctx.eh
-                .violation(DialectError,
-                           parent,
-                           s"Error parsing node mapping: '$nodeName' is a reserved name",
-                           entry.location)
+                .violation(
+                    DialectError,
+                    parent,
+                    s"Error parsing node mapping: '$nodeName' is a reserved name",
+                    entry.location
+                )
             } else {
               val adopt: DomainElement => Any = {
                 case nodeMapping: NodeMappable =>
                   val name = ScalarNode(entry.key).string()
                   nodeMapping.set(NodeMappingModel.Name, name, Annotations(entry.key)).adopted(parent)
-                  nodeMapping.annotations.reject(
-                      a =>
-                        a.isInstanceOf[SourceAST] ||
-                          a.isInstanceOf[LexicalInformation] ||
-                          a.isInstanceOf[SourceLocation] ||
-                          a.isInstanceOf[SourceNode])
+                  nodeMapping.annotations.reject(a =>
+                    a.isInstanceOf[SourceAST] ||
+                      a.isInstanceOf[LexicalInformation] ||
+                      a.isInstanceOf[SourceLocation] ||
+                      a.isInstanceOf[SourceNode]
+                  )
                   nodeMapping.annotations ++= Annotations(entry)
                 case _ =>
-                  ctx.eh.violation(DialectError,
-                                   parent,
-                                   s"Error only valid node mapping or union mapping can be declared",
-                                   entry.location)
+                  ctx.eh.violation(
+                      DialectError,
+                      parent,
+                      s"Error only valid node mapping or union mapping can be declared",
+                      entry.location
+                  )
                   None
               }
 
               parseNodeMapping(entry, adopt) match {
                 case Some(nodeMapping: NodeMapping)       => ctx.declarations += nodeMapping
                 case Some(unionMapping: UnionNodeMapping) => ctx.declarations += unionMapping
-                case _                                    => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry.location)
+                case _ => ctx.eh.violation(DialectError, parent, s"Error parsing shape '$entry'", entry.location)
               }
 
             }
           }
         case YType.Null =>
-        case t          => ctx.eh.violation(DialectError, parent, s"Invalid type $t for 'nodeMappings' node.", e.value.location)
+        case t => ctx.eh.violation(DialectError, parent, s"Invalid type $t for 'nodeMappings' node.", e.value.location)
       }
     }
   }
 
-  def parseNodeMapping(entry: YMapEntry,
-                       adopt: DomainElement => Any,
-                       fragment: Boolean = false): Option[NodeMappable] = {
+  def parseNodeMapping(
+      entry: YMapEntry,
+      adopt: DomainElement => Any,
+      fragment: Boolean = false
+  ): Option[NodeMappable] = {
     entry.value.tagType match {
       // 1) inlined node mapping
       case YType.Map =>
@@ -548,7 +578,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
               .link(text, Annotations(entry.value))
               .asInstanceOf[NodeMapping]
               .withName(text) // we setup the local reference in the name
-            adopt(linkedNode) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+            adopt(
+                linkedNode
+            ) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
             Some(linkedNode)
           case (text: String, _) =>
             val nodeMappingTmp = adopt(NodeMapping()).asInstanceOf[NodeMapping]
@@ -646,7 +678,8 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     val fragment = toFragment(dialect)
 
     parseNodeMapping(
-        YMapEntry(YNode("fragment"), map), {
+        YMapEntry(YNode("fragment"), map),
+        {
           case mapping: NodeMapping      => mapping.withId(fragment.id + "/fragment").withName("fragment")
           case mapping: UnionNodeMapping => mapping.withId(fragment.id + "/fragment").withName("fragment")
         },

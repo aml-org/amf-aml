@@ -18,8 +18,10 @@ trait DialectInstanceUnitModel { self: BaseUnitModel =>
     Field(
         DialectInstanceProcessingDataModel,
         Document + "processingData",
-        ModelDoc(ModelVocabularies.AmlDoc,
-                 "processingData",
-                 "Field with utility data to be used in Base Unit processing")
+        ModelDoc(
+            ModelVocabularies.AmlDoc,
+            "processingData",
+            "Field with utility data to be used in Base Unit processing"
+        )
     )
 }

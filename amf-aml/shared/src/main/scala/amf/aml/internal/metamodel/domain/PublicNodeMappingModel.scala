@@ -15,7 +15,8 @@ object PublicNodeMappingModel extends DomainElementModel {
   val MappedNode: Field = Field(
       Iri,
       Namespace.Meta + "mappedNode",
-      ModelDoc(ModelVocabularies.Meta, "mappedNode", "Node in the dialect definition associated to this mapping"))
+      ModelDoc(ModelVocabularies.Meta, "mappedNode", "Node in the dialect definition associated to this mapping")
+  )
 
   override def fields: List[Field] = Name :: MappedNode :: DomainElementModel.fields
 

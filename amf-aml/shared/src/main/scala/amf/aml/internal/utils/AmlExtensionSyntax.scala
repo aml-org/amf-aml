@@ -16,10 +16,10 @@ package object AmlExtensionSyntax {
 
   implicit class RichExternalsSeq(val externals: Seq[External]) extends AnyVal {
 
-    /**
-      * Fixes collisions when nested externals use the same alias
+    /** Fixes collisions when nested externals use the same alias
       *
-      * @return external sequence with handled collisions
+      * @return
+      *   external sequence with handled collisions
       */
     def fixAliasCollisions: Seq[External] = {
       val aliasIndex: mutable.Map[Aliases.Alias, Aliases.FullUrl] = mutable.Map.empty
@@ -32,7 +32,9 @@ package object AmlExtensionSyntax {
             val alias   = external.alias.value()
             val uriHash = external.base.value().hashCode
             external
-              .withAlias(s"$alias-$uriHash") // Appending the uri hash avoids enumeration problems & guarantees uniqueness
+              .withAlias(
+                  s"$alias-$uriHash"
+              ) // Appending the uri hash avoids enumeration problems & guarantees uniqueness
             Some(external)
           case None =>
             aliasIndex.put(external.alias.value(), external.base.value())
@@ -56,20 +58,20 @@ package object AmlExtensionSyntax {
       externals ++ nestedExternals
     }
 
-    def recursivelyFindDeclarations(model: BaseUnit = this.baseUnit,
-                                    acc: Map[String, NodeMappable] = Map()): Map[String, NodeMappable] = {
+    def recursivelyFindDeclarations(
+        model: BaseUnit = this.baseUnit,
+        acc: Map[String, NodeMappable] = Map()
+    ): Map[String, NodeMappable] = {
       val updateDeclarations = model match {
         case lib: DeclaresModel =>
-          lib.declares.collect { case nodeMapping: NodeMappable => nodeMapping }.foldLeft(acc) {
-            case (acc, mapping) =>
-              acc.updated(mapping.id, mapping)
+          lib.declares.collect { case nodeMapping: NodeMappable => nodeMapping }.foldLeft(acc) { case (acc, mapping) =>
+            acc.updated(mapping.id, mapping)
           }
         case _ => acc
       }
 
-      model.references.collect { case lib: DeclaresModel => lib }.foldLeft(updateDeclarations) {
-        case (acc, lib) =>
-          recursivelyFindDeclarations(lib, acc)
+      model.references.collect { case lib: DeclaresModel => lib }.foldLeft(updateDeclarations) { case (acc, lib) =>
+        recursivelyFindDeclarations(lib, acc)
       }
     }
   }

@@ -14,8 +14,9 @@ object ExternalLinkGenerator extends BaseDirectiveOverride {
 
   type PropertyParser = (String, YMapEntry, PropertyMapping, DialectDomainElement) => Unit
 
-  def generate(id: String, node: YNode, mapping: NodeMapping, root: Root, propertyParser: PropertyParser)(
-      implicit ctx: DialectInstanceContext): Option[DialectDomainElement] = {
+  def generate(id: String, node: YNode, mapping: NodeMapping, root: Root, propertyParser: PropertyParser)(implicit
+      ctx: DialectInstanceContext
+  ): Option[DialectDomainElement] = {
     lazy val instanceTypes = typesFrom(mapping)
     node.tagType match {
       case YType.Str => // plain link -> we generate an anonymous node and set the id to the ref and correct type information
@@ -84,7 +85,8 @@ object ExternalLinkGenerator extends BaseDirectiveOverride {
         ctx.eh.violation(
             DialectError,
             id,
-            "AML links must URI links (strings or maps with $id directive) or ID Template links (maps with idTemplate variables)")
+            "AML links must URI links (strings or maps with $id directive) or ID Template links (maps with idTemplate variables)"
+        )
         None
     }
   }

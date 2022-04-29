@@ -12,22 +12,26 @@ abstract class PropertyTermModel extends DomainElementModel {
   val DisplayName: Field = Field(
       Str,
       Namespace.Core + "displayName",
-      ModelDoc(ModelVocabularies.Core, "displayName", "Human readable name for the property term"))
+      ModelDoc(ModelVocabularies.Core, "displayName", "Human readable name for the property term")
+  )
 
   val Description: Field = Field(
       Str,
       Namespace.Core + "description",
-      ModelDoc(ModelVocabularies.Core, "description", "Human readable description of the property term"))
+      ModelDoc(ModelVocabularies.Core, "description", "Human readable description of the property term")
+  )
 
   val Range: Field = Field(
       Iri,
       Namespace.Rdfs + "range",
-      ModelDoc(ExternalModelVocabularies.Rdfs, "range", "Range of the proeprty term, scalar or object"))
+      ModelDoc(ExternalModelVocabularies.Rdfs, "range", "Range of the proeprty term, scalar or object")
+  )
 
   val SubPropertyOf: Field = Field(
       Array(Iri),
       Namespace.Rdfs + "subPropertyOf",
-      ModelDoc(ExternalModelVocabularies.Rdfs, "subPropertyOf", "Subsumption relationship for terms"))
+      ModelDoc(ExternalModelVocabularies.Rdfs, "subPropertyOf", "Subsumption relationship for terms")
+  )
 
   override def fields: List[Field] = DisplayName :: Description :: Range :: SubPropertyOf :: DomainElementModel.fields
 }

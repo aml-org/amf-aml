@@ -11,9 +11,9 @@ import scala.concurrent.ExecutionContext
 class DialectDomainElementRenderTest extends DomainElementCycleTests {
 
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  override val basePath: String                            = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
-  override val baseHint: Hint                              = VocabularyYamlHint
-  val rendering: String                                    = "amf-aml/shared/src/test/resources/vocabularies2/rendering"
+  override val basePath: String = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
+  override val baseHint: Hint   = VocabularyYamlHint
+  val rendering: String         = "amf-aml/shared/src/test/resources/vocabularies2/rendering"
 
   val encodes: BaseUnit => Option[DomainElement] = {
     case e: EncodesModel =>
@@ -28,11 +28,13 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
   }
 
   test("Simple node union rendering") {
-    renderElement("dialect.yaml",
-                  "instance.yaml",
-                  encodes,
-                  "instance-encodes.yaml",
-                  directory = s"$rendering/simple-node-union")
+    renderElement(
+        "dialect.yaml",
+        "instance.yaml",
+        encodes,
+        "instance-encodes.yaml",
+        directory = s"$rendering/simple-node-union"
+    )
   }
 
   test("render 1 (AMF) test") {
@@ -82,11 +84,13 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
   test("render 16 test") {
     for {
       loadedConfig <- AMLConfiguration.predefined().withDialect(s"file://$basePath/dialect16b.yaml")
-      assertion <- renderElement("dialect16a.yaml",
-                                 "example16a.yaml",
-                                 encodes,
-                                 "example16a-encodes.yaml",
-                                 baseConfig = loadedConfig)
+      assertion <- renderElement(
+          "dialect16a.yaml",
+          "example16a.yaml",
+          encodes,
+          "example16a-encodes.yaml",
+          baseConfig = loadedConfig
+      )
     } yield {
       assertion
     }
@@ -99,11 +103,13 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
   test("render 16 $include test") {
     for {
       loadedConfig <- AMLConfiguration.predefined().withDialect(s"file://$basePath/dialect16b.yaml")
-      assertion <- renderElement("dialect16a.yaml",
-                                 "example16c.yaml",
-                                 encodes,
-                                 "example16c-encodes.yaml",
-                                 baseConfig = loadedConfig)
+      assertion <- renderElement(
+          "dialect16a.yaml",
+          "example16c.yaml",
+          encodes,
+          "example16c-encodes.yaml",
+          baseConfig = loadedConfig
+      )
     } yield {
       assertion
     }

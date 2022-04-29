@@ -20,24 +20,27 @@ import org.yaml.model.{YDocument, YMap, YMapEntry, YNode}
 
 class SemanticExtensionParser(finder: ExtensionDialectFinder, specAnnotationValidator: AnnotationSchemaValidator) {
 
-  def parse(extensionName: String,
-            parentTypes: Seq[String],
-            ast: YMapEntry,
-            ctx: ParserContext,
-            extensionId: String): Option[DomainExtension] = {
-    findExtensionMapping(extensionName, parentTypes, finder).map {
-      case (mapping, dialect) =>
-        specAnnotationValidator.validate(extensionName, ast.key, ctx.eh)
-        parseSemanticExtension(dialect, mapping, ast, ctx, extensionId, extensionName)
+  def parse(
+      extensionName: String,
+      parentTypes: Seq[String],
+      ast: YMapEntry,
+      ctx: ParserContext,
+      extensionId: String
+  ): Option[DomainExtension] = {
+    findExtensionMapping(extensionName, parentTypes, finder).map { case (mapping, dialect) =>
+      specAnnotationValidator.validate(extensionName, ast.key, ctx.eh)
+      parseSemanticExtension(dialect, mapping, ast, ctx, extensionId, extensionName)
     }
   }
 
-  private def parseSemanticExtension(dialect: Dialect,
-                                     mapping: AnnotationMapping,
-                                     ast: YMapEntry,
-                                     ctx: ParserContext,
-                                     extensionId: String,
-                                     extensionName: String): DomainExtension = {
+  private def parseSemanticExtension(
+      dialect: Dialect,
+      mapping: AnnotationMapping,
+      ast: YMapEntry,
+      ctx: ParserContext,
+      extensionId: String,
+      extensionName: String
+  ): DomainExtension = {
 
     implicit val instanceCtx: DialectInstanceContext = instanceContext(dialect, ctx)
 
@@ -75,10 +78,11 @@ class SemanticExtensionParser(finder: ExtensionDialectFinder, specAnnotationVali
     CustomDomainProperty(Annotations(value)).withId(instanceElement.id).withName(key, Annotations())
   }
 
-  private def parseAnnotation(mapping: AnnotationMapping, ast: YMapEntry, extensionId: String)(
-      implicit ctx: DialectInstanceContext) = {
+  private def parseAnnotation(mapping: AnnotationMapping, ast: YMapEntry, extensionId: String)(implicit
+      ctx: DialectInstanceContext
+  ) = {
     // TODO: improve, shouldn't have to create fake root node
-    val fakeRoot        = Root(SyamlParsedDocument(YDocument(YMap.empty)), "", "", Seq.empty, UnspecifiedReference, "{}")
+    val fakeRoot = Root(SyamlParsedDocument(YDocument(YMap.empty)), "", "", Seq.empty, UnspecifiedReference, "{}")
     val instanceElement = DialectDomainElement().withId("someId")
     val nodeParser      = InstanceElementParser(fakeRoot)
     val propertyParser  = new ElementPropertyParser(fakeRoot, YMap.empty, nodeParser.parse)

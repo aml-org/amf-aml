@@ -9,7 +9,8 @@ trait SemanticExtensionConstraints {
 
   protected def withSemanticExtensionsConstraints(
       validations: EffectiveValidations,
-      constraints: Map[ProfileName, ValidationProfile]): EffectiveValidations = {
+      constraints: Map[ProfileName, ValidationProfile]
+  ): EffectiveValidations = {
     constraints
       .get(DialectRegister.SEMANTIC_EXTENSIONS_PROFILE)
       .map(profile => validations.someEffective(profile))
