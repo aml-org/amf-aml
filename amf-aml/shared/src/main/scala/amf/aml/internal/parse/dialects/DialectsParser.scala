@@ -685,8 +685,9 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
         },
         fragment = true
     ) match {
-      case Some(encoded: DomainElement) => fragment.fields.setWithoutId(FragmentModel.Encodes, encoded)
-      case _                            => // ignore
+      case Some(encoded: DomainElement) =>
+        fragment.fields.setWithoutId(FragmentModel.Encodes, encoded, Annotations.inferred())
+      case _ => // ignore
     }
 
     fragment.processingData.withSourceSpec(AML)
