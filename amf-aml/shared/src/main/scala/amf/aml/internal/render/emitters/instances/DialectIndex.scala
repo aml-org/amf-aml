@@ -63,15 +63,15 @@ class DialectIndex(private val dialect: Dialect, private val finder: NodeMappabl
       .find { element =>
         element.id == nodeMappingId
       }
-      .collect {
-        case mappable: AnyNodeMappable => (dialect, mappable)
+      .collect { case mappable: AnyNodeMappable =>
+        (dialect, mappable)
       } orElse {
       dialect.references
-        .collect {
-          case lib: DialectLibrary => lib.declares.find(_.id == nodeMappingId)
+        .collect { case lib: DialectLibrary =>
+          lib.declares.find(_.id == nodeMappingId)
         }
-        .collectFirst {
-          case Some(mapping: AnyNodeMappable) => (dialect, mapping)
+        .collectFirst { case Some(mapping: AnyNodeMappable) =>
+          (dialect, mapping)
         }
     } orElse findNodeInRegistry(nodeMappingId)
   }

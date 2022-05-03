@@ -16,23 +16,28 @@ object PropertyMappingModel
   val MapKeyProperty: Field = Field(
       Str,
       Namespace.Meta + "mapProperty",
-      ModelDoc(ModelVocabularies.Meta,
-               "mapLabelProperty",
-               "Marks the mapping as a 'map' mapping syntax. Directly related with mapTermKeyProperty")
+      ModelDoc(
+          ModelVocabularies.Meta,
+          "mapLabelProperty",
+          "Marks the mapping as a 'map' mapping syntax. Directly related with mapTermKeyProperty"
+      )
   )
 
   val MapValueProperty: Field = Field(
       Str,
       Namespace.Meta + "mapValueProperty",
-      ModelDoc(ModelVocabularies.Meta,
-               "mapLabelValueProperty",
-               "Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty")
+      ModelDoc(
+          ModelVocabularies.Meta,
+          "mapLabelValueProperty",
+          "Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty"
+      )
   )
 
   val MapTermKeyProperty: Field = Field(
       Iri,
       Namespace.Meta + "mapTermProperty",
-      ModelDoc(ModelVocabularies.Meta, "mapTermPropertyUri", "Marks the mapping as a 'map' mapping syntax. "))
+      ModelDoc(ModelVocabularies.Meta, "mapTermPropertyUri", "Marks the mapping as a 'map' mapping syntax. ")
+  )
 
   val MapTermValueProperty: Field = Field(
       Iri,
@@ -48,8 +53,8 @@ object PropertyMappingModel
 
   override def modelInstance: AmfObject = PropertyMapping()
 
-  override val `type`
-    : List[ValueType] = Namespace.Meta + "NodePropertyMapping" :: /* Namespace.Shacl + "PropertyShape" :: */ DomainElementModel.`type`
+  override val `type`: List[ValueType] =
+    Namespace.Meta + "NodePropertyMapping" :: /* Namespace.Shacl + "PropertyShape" :: */ DomainElementModel.`type`
 
   override val doc: ModelDoc = ModelDoc(
       ModelVocabularies.Meta,

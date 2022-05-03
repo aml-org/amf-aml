@@ -15,40 +15,46 @@ import amf.core.internal.render.emitters.EntryEmitter
 import org.mulesoft.common.time.SimpleDateTime
 
 object SemanticExtensionNodeEmitter {
-  def apply(node: DomainElement,
-            nodeMappable: NodeMappable[_ <: NodeMappableModel],
-            dialect: Dialect,
-            ordering: SpecOrdering,
-            renderOptions: RenderOptions,
-            registry: AMLRegistry,
-            keyOverride: String)(implicit finder: NodeMappableFinder): NodeFieldEmitters = {
-    NodeFieldEmitters(node,
-                      nodeMappable,
-                      dialect.references,
-                      dialect,
-                      ordering,
-                      None,
-                      None,
-                      emitDialect = false,
-                      topLevelEmitters = Nil,
-                      renderOptions,
-                      registry,
-                      Some(keyOverride))
+  def apply(
+      node: DomainElement,
+      nodeMappable: NodeMappable[_ <: NodeMappableModel],
+      dialect: Dialect,
+      ordering: SpecOrdering,
+      renderOptions: RenderOptions,
+      registry: AMLRegistry,
+      keyOverride: String
+  )(implicit finder: NodeMappableFinder): NodeFieldEmitters = {
+    NodeFieldEmitters(
+        node,
+        nodeMappable,
+        dialect.references,
+        dialect,
+        ordering,
+        None,
+        None,
+        emitDialect = false,
+        topLevelEmitters = Nil,
+        renderOptions,
+        registry,
+        Some(keyOverride)
+    )
   }
 }
 
-case class NodeFieldEmitters(node: DomainElement,
-                             nodeMappable: NodeMappable[_ <: NodeMappableModel],
-                             references: Seq[BaseUnit],
-                             dialect: Dialect,
-                             ordering: SpecOrdering,
-                             keyPropertyId: Option[String] = None,
-                             discriminator: Option[(String, String)] = None,
-                             emitDialect: Boolean = false,
-                             topLevelEmitters: Seq[EntryEmitter] = Nil,
-                             renderOptions: RenderOptions,
-                             registry: AMLRegistry,
-                             keyOverride: Option[String] = None)(implicit val nodeMappableFinder: NodeMappableFinder)
+case class NodeFieldEmitters(
+    node: DomainElement,
+    nodeMappable: NodeMappable[_ <: NodeMappableModel],
+    references: Seq[BaseUnit],
+    dialect: Dialect,
+    ordering: SpecOrdering,
+    keyPropertyId: Option[String] = None,
+    discriminator: Option[(String, String)] = None,
+    emitDialect: Boolean = false,
+    topLevelEmitters: Seq[EntryEmitter] = Nil,
+    renderOptions: RenderOptions,
+    registry: AMLRegistry,
+    keyOverride: Option[String] = None
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends AmlEmittersHelper {
 
   def emitField(field: Field): Option[EntryEmitter] = {
@@ -65,11 +71,13 @@ case class NodeFieldEmitters(node: DomainElement,
     }
   }
 
-  private def emitterFor(field: Field,
-                         propertyMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel],
-                         key: String,
-                         propertyClassification: PropertyClassification,
-                         value: Value) = {
+  private def emitterFor(
+      field: Field,
+      propertyMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel],
+      key: String,
+      propertyClassification: PropertyClassification,
+      value: Value
+  ) = {
     (value.value, propertyClassification) match {
       case (scalar: AmfScalar, _) => emitScalar(key, field, scalar, Some(value.annotations))
 
@@ -104,27 +112,33 @@ case class NodeFieldEmitters(node: DomainElement,
     }
   }
 
-  protected def emitExternalLink(key: String,
-                                 target: AmfElement,
-                                 propertyMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel],
-                                 annotations: Option[Annotations] = None): EntryEmitter = {
+  protected def emitExternalLink(
+      key: String,
+      target: AmfElement,
+      propertyMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel],
+      annotations: Option[Annotations] = None
+  ): EntryEmitter = {
 
-    ExternalLinkEmitter(key,
-                        dialect,
-                        target,
-                        propertyMapping,
-                        annotations,
-                        keyPropertyId,
-                        references,
-                        ordering,
-                        renderOptions,
-                        registry)
+    ExternalLinkEmitter(
+        key,
+        dialect,
+        target,
+        propertyMapping,
+        annotations,
+        keyPropertyId,
+        references,
+        ordering,
+        renderOptions,
+        registry
+    )
   }
 
-  private def emitScalar(key: String,
-                         field: Field,
-                         scalar: AmfScalar,
-                         annotations: Option[Annotations] = None): EntryEmitter = {
+  private def emitScalar(
+      key: String,
+      field: Field,
+      scalar: AmfScalar,
+      annotations: Option[Annotations] = None
+  ): EntryEmitter = {
     val formatted = scalar.value match {
       case date: SimpleDateTime => date.toString
       case double: Double       => removeMaybeExponential(double)
@@ -134,46 +148,58 @@ case class NodeFieldEmitters(node: DomainElement,
     ValueEmitter(key, FieldEntry(field, Value(AmfScalar(formatted), annotations.getOrElse(scalar.annotations))))
   }
 
-  private def emitScalarArray(key: String,
-                              field: Field,
-                              array: AmfArray,
-                              annotations: Option[Annotations]): EntryEmitter =
+  private def emitScalarArray(
+      key: String,
+      field: Field,
+      array: AmfArray,
+      annotations: Option[Annotations]
+  ): EntryEmitter =
     ArrayEmitter(key, FieldEntry(field, Value(array, annotations.getOrElse(array.annotations))), ordering)
 
-  protected def emitObjectEntry(key: String,
-                                target: AmfElement,
-                                propertyMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel],
-                                annotations: Option[Annotations] = None): EntryEmitter = {
+  protected def emitObjectEntry(
+      key: String,
+      target: AmfElement,
+      propertyMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel],
+      annotations: Option[Annotations] = None
+  ): EntryEmitter = {
 
-    DialectObjectEntryEmitter(key,
-                              target,
-                              propertyMapping,
-                              references,
-                              dialect,
-                              ordering,
-                              renderOptions,
-                              annotations,
-                              registry)
+    DialectObjectEntryEmitter(
+        key,
+        target,
+        propertyMapping,
+        references,
+        dialect,
+        ordering,
+        renderOptions,
+        annotations,
+        registry
+    )
   }
 
   protected def emitExternalObject(key: String, element: DialectDomainElement): EntryEmitter = {
     val (externalDialect, nextNodeMapping) = findNodeMappingById(element.definedBy.id)
 
-    EntryPartEmitter(key,
-                     DialectNodeEmitter(element,
-                                        nextNodeMapping,
-                                        references,
-                                        externalDialect,
-                                        ordering,
-                                        emitDialect = true,
-                                        renderOptions = renderOptions,
-                                        registry = registry))
+    EntryPartEmitter(
+        key,
+        DialectNodeEmitter(
+            element,
+            nextNodeMapping,
+            references,
+            externalDialect,
+            ordering,
+            emitDialect = true,
+            renderOptions = renderOptions,
+            registry = registry
+        )
+    )
   }
 
-  private def emitObjectPairs(key: String,
-                              array: AmfArray,
-                              propertyMapping: PropertyMapping,
-                              annotations: Option[Annotations] = None): EntryEmitter = {
+  private def emitObjectPairs(
+      key: String,
+      array: AmfArray,
+      propertyMapping: PropertyMapping,
+      annotations: Option[Annotations] = None
+  ): EntryEmitter = {
     ObjectPairEmitter(key, array, propertyMapping, annotations)
   }
 

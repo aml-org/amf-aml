@@ -53,9 +53,11 @@ class VocabularyDefinitionValidationTest
     validate("class-term-with-null-entries.yaml", Some("class-term-with-null-entries.jsonld"), "parser-errors")
   }
 
-  protected def validate(vocabulary: String,
-                         goldenReport: Option[String] = None,
-                         path: String): Future[scalatest.Assertion] = {
+  protected def validate(
+      vocabulary: String,
+      goldenReport: Option[String] = None,
+      path: String
+  ): Future[scalatest.Assertion] = {
     val configuration = AMLConfiguration.predefined()
     val report = for {
       report <- configuration

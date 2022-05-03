@@ -41,9 +41,12 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
     if (dialect.externals.nonEmpty) {
       Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
-          b.entry("external", _.obj({ b =>
-            traverse(ordering.sorted(dialect.externals.map(external => ExternalEmitter(external, ordering))), b)
-          }))
+          b.entry(
+              "external",
+              _.obj({ b =>
+                traverse(ordering.sorted(dialect.externals.map(external => ExternalEmitter(external, ordering))), b)
+              })
+          )
         }
 
         override def position(): Position = {
@@ -59,9 +62,11 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
     }
   }
 
-  private def nodeMappingDeclarationEmitters(dialect: Dialect,
-                                             ordering: SpecOrdering,
-                                             aliases: Map[String, (String, String)]): Seq[EntryEmitter] = {
+  private def nodeMappingDeclarationEmitters(
+      dialect: Dialect,
+      ordering: SpecOrdering,
+      aliases: Map[String, (String, String)]
+  ): Seq[EntryEmitter] = {
     type NodeMappable = NodeMappable.AnyNodeMappable
     val nodeMappingDeclarations: Seq[NodeMappable] = dialect.declares.collect {
       case nm: NodeMapping      => nm
@@ -72,20 +77,24 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
     else Nil
   }
 
-  private def annotationMappingDeclarationEmitters(dialect: Dialect,
-                                                   aliases: Map[String, (String, String)],
-                                                   ordering: SpecOrdering): Seq[EntryEmitter] = {
-    val annotationMappings = dialect.declares.collect {
-      case mapping: AnnotationMapping => mapping
+  private def annotationMappingDeclarationEmitters(
+      dialect: Dialect,
+      aliases: Map[String, (String, String)],
+      ordering: SpecOrdering
+  ): Seq[EntryEmitter] = {
+    val annotationMappings = dialect.declares.collect { case mapping: AnnotationMapping =>
+      mapping
     }
     if (annotationMappings.nonEmpty)
       Seq(AnnotationMappingsEntryEmitter(dialect, annotationMappings, aliases, ordering))
     else Seq.empty
   }
 
-  private def extensionsEmitter(dialect: Dialect,
-                                aliases: Map[String, (String, String)],
-                                ordering: SpecOrdering): Seq[EntryEmitter] = {
+  private def extensionsEmitter(
+      dialect: Dialect,
+      aliases: Map[String, (String, String)],
+      ordering: SpecOrdering
+  ): Seq[EntryEmitter] = {
     if (dialect.extensions().nonEmpty) Seq(ExtensionMappingsEntryEmitter(dialect, aliases, ordering))
     else Seq.empty
   }

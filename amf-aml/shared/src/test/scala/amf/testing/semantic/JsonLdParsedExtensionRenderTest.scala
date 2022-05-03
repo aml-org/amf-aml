@@ -21,10 +21,7 @@ class JsonLdParsedExtensionRenderTest extends FunSuiteCycleTests with AsyncBefor
 
   test("Non-flattened semantic extensions with scalar range should not be rendered to JSON-LD") {
     getConfig("dialect-scalar-extensions.yaml").flatMap { config =>
-      cycle("instance-scalar.yaml",
-            golden = "instance-scalar.parsed.jsonld",
-            syntax = Some(JsonLd),
-            amlConfig = config)
+      cycle("instance-scalar.yaml", golden = "instance-scalar.parsed.jsonld", syntax = Some(JsonLd), amlConfig = config)
     }
   }
 

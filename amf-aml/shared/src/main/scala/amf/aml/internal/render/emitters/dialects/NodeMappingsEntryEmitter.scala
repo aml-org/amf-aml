@@ -9,10 +9,12 @@ import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import org.yaml.model.YDocument.EntryBuilder
 
-case class NodeMappingsEntryEmitter(dialect: Dialect,
-                                    nodeMappingDeclarations: Seq[NodeMappable.AnyNodeMappable],
-                                    aliases: Map[String, (String, String)],
-                                    ordering: SpecOrdering)(implicit val nodeMappableFinder: NodeMappableFinder)
+case class NodeMappingsEntryEmitter(
+    dialect: Dialect,
+    nodeMappingDeclarations: Seq[NodeMappable.AnyNodeMappable],
+    aliases: Map[String, (String, String)],
+    ordering: SpecOrdering
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with GroupPosition {
 

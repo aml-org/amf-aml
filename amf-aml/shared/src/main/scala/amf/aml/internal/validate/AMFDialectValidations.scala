@@ -66,8 +66,10 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
     }
   }
 
-  protected def emitEntityValidations(node: NodeMapping,
-                                      recursion: mutable.Set[String]): List[ValidationSpecification] = {
+  protected def emitEntityValidations(
+      node: NodeMapping,
+      recursion: mutable.Set[String]
+  ): List[ValidationSpecification] = {
     node
       .propertiesMapping()
       .flatMap { propertyMapping =>
@@ -76,8 +78,10 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
       .toList
   }
 
-  protected def emitRootUnionNodeMapping(nodeMapping: UnionNodeMapping,
-                                         recursion: mutable.Set[String]): List[ValidationSpecification] = {
+  protected def emitRootUnionNodeMapping(
+      nodeMapping: UnionNodeMapping,
+      recursion: mutable.Set[String]
+  ): List[ValidationSpecification] = {
     val validations: ListBuffer[ValidationSpecification] = ListBuffer.empty
     val range                                            = nodeMapping.objectRange().map(_.value())
     range.foreach { rangeId =>
@@ -91,10 +95,12 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
     validations.toList
   }
 
-  protected def emitPropertyValidations(node: AnyNodeMappable,
-                                        prop: PropertyLikeMapping[_],
-                                        propertyName: Option[StrField] = None,
-                                        targetClass: Option[String] = None): List[ValidationSpecification] = {
+  protected def emitPropertyValidations(
+      node: AnyNodeMappable,
+      prop: PropertyLikeMapping[_],
+      propertyName: Option[StrField] = None,
+      targetClass: Option[String] = None
+  ): List[ValidationSpecification] = {
     val validations: ListBuffer[ValidationSpecification] = ListBuffer.empty
 
     val finalTargetClass        = targetClass.getOrElse(node.id)
@@ -107,12 +113,14 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
           ramlMessage = Some(message),
           oasMessage = Some(message),
           targetClass = Set(finalTargetClass),
-          propertyConstraints = Seq(PropertyConstraint(
-              ramlPropertyId = prop.nodePropertyMapping().value(),
-              name = validationId(node, finalPropName.value(), "minimum") + "/prop",
-              message = Some(message),
-              minInclusive = Some(minValue.toString)
-          ))
+          propertyConstraints = Seq(
+              PropertyConstraint(
+                  ramlPropertyId = prop.nodePropertyMapping().value(),
+                  name = validationId(node, finalPropName.value(), "minimum") + "/prop",
+                  message = Some(message),
+                  minInclusive = Some(minValue.toString)
+              )
+          )
       )
     }
 
@@ -124,12 +132,14 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
           ramlMessage = Some(message),
           oasMessage = Some(message),
           targetClass = Set(finalTargetClass),
-          propertyConstraints = Seq(PropertyConstraint(
-              ramlPropertyId = prop.nodePropertyMapping().value(),
-              name = validationId(node, finalPropName.value(), "maximum") + "/prop",
-              message = Some(message),
-              maxInclusive = Some(maxValue.toString)
-          ))
+          propertyConstraints = Seq(
+              PropertyConstraint(
+                  ramlPropertyId = prop.nodePropertyMapping().value(),
+                  name = validationId(node, finalPropName.value(), "maximum") + "/prop",
+                  message = Some(message),
+                  maxInclusive = Some(maxValue.toString)
+              )
+          )
       )
     }
 
@@ -149,12 +159,15 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                   message = Some(message),
                   minCount = prop.minCount().option().map(_.toString),
                   mandatory = prop.mandatory().option().map(_.toString)
-              ))
+              )
+          )
       )
     }
 
-    if (!prop.allowMultiple().value() && prop
-          .isInstanceOf[PropertyMapping] && prop.asInstanceOf[PropertyMapping].mapTermKeyProperty().isNullOrEmpty) {
+    if (
+        !prop.allowMultiple().value() && prop
+          .isInstanceOf[PropertyMapping] && prop.asInstanceOf[PropertyMapping].mapTermKeyProperty().isNullOrEmpty
+    ) {
       val message = s"Property '${finalPropName}' cannot have more than 1 value"
       validations += new ValidationSpecification(
           name = validationId(node, finalPropName.value(), "notCollection"),
@@ -168,7 +181,8 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                   name = validationId(node, finalPropName.value(), "notCollection") + "/prop",
                   message = Some(message),
                   maxCount = Some("1")
-              ))
+              )
+          )
       )
     }
 
@@ -187,7 +201,8 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                     name = validationId(node, finalPropName.value(), "pattern") + "/prop",
                     message = Some(message),
                     pattern = Some(pattern)
-                ))
+                )
+            )
         )
       case _ => // ignore
     }
@@ -207,7 +222,8 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                   name = validationId(node, finalPropName.value(), "enum") + "/prop",
                   message = Some(message),
                   in = values.toSet
-              ))
+              )
+          )
       )
     }
 
@@ -232,7 +248,8 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                       name = validationId(node, finalPropName.value(), "dialectRange") + "/prop",
                       message = Some(message),
                       datatype = Some(DataType.Double)
-                  ))
+                  )
+              )
           )
 
         case DataType.Link =>
@@ -249,7 +266,8 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                       name = validationId(node, finalPropName.value(), "dialectRange") + "/prop",
                       message = Some(message),
                       datatype = Some(DataType.AnyUri)
-                  ))
+                  )
+              )
           )
 
         case literal if literal.endsWith("guid") =>
@@ -266,7 +284,8 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                       name = validationId(node, finalPropName.value(), "dataRange") + "/prop",
                       message = Some(message),
                       datatype = Some((Namespace.Xsd + "string").iri())
-                  ))
+                  )
+              )
           )
         case literal =>
           val message = s"Property '${finalPropName}'  value must be of type $dataRange"
@@ -282,15 +301,18 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                       name = validationId(node, finalPropName.value(), "dataRange") + "/prop",
                       message = Some(message),
                       datatype = Some(literal)
-                  ))
+                  )
+              )
           )
 
       }
     }
 
-    if (prop.objectRange().nonEmpty &&
+    if (
+        prop.objectRange().nonEmpty &&
         !prop.objectRange().map(_.value()).contains((Namespace.Meta + "anyNode").iri()) &&
-        !prop.externallyLinkable().option().getOrElse(false)) {
+        !prop.externallyLinkable().option().getOrElse(false)
+    ) {
 
       val effectiveRange: Set[String] = prop
         .objectRange()
@@ -316,7 +338,8 @@ class AMFDialectValidations(val dialect: Dialect)(implicit val nodeMappableFinde
                   name = validationId(node, finalPropName.value(), "objectRange") + "/prop",
                   message = Some(message),
                   `class` = effectiveRange.toSeq
-              ))
+              )
+          )
       )
     }
 

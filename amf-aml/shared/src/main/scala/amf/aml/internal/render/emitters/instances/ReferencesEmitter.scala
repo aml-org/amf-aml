@@ -15,9 +15,12 @@ case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases
     val modules = baseUnit.references.collect({ case m: DeclaresModel => m })
     if (modules.nonEmpty) {
 
-      b.entry("uses", _.obj { b =>
-        traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, aliases))), b)
-      })
+      b.entry(
+          "uses",
+          _.obj { b =>
+            traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, aliases))), b)
+          }
+      )
     }
   }
 

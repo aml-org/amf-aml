@@ -17,16 +17,20 @@ class ReportBuilder(messageStyle: MessageStyle) {
 
   private val results: mutable.ListBuffer[ValidationResult] = mutable.ListBuffer.empty
 
-  def reportFailure(validationSpecification: ValidationSpecification,
-                    propertyConstraint: PropertyConstraint,
-                    id: String): Unit = {
+  def reportFailure(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      id: String
+  ): Unit = {
     reportFailure(validationSpecification, id, propertyConstraint.ramlPropertyId)
   }
 
-  def reportFailure(validationSpec: ValidationSpecification,
-                    id: String,
-                    path: String,
-                    customMessage: Option[String] = None): Unit = {
+  def reportFailure(
+      validationSpec: ValidationSpecification,
+      id: String,
+      path: String,
+      customMessage: Option[String] = None
+  ): Unit = {
     registerResult(
         CustomValidationResult(
             message = customMessage.orElse(getMessageOf(validationSpec, messageStyle)),
@@ -35,7 +39,8 @@ class ReportBuilder(messageStyle: MessageStyle) {
             focusNode = id,
             severity = ShaclSeverityUris.amfSeverity(validationSpec.severity),
             sourceShape = validationSpec.id
-        ))
+        )
+    )
   }
 
   private def registerResult(result: ValidationResult): Unit = {

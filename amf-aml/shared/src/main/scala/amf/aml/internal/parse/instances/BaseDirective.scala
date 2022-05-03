@@ -6,9 +6,8 @@ import amf.aml.internal.parse.instances.BaseDirective.baseFrom
 
 import scala.util.matching.Regex
 
-/**
-  * Base of an URI (spec definition): the beginning part of a URI until the first (inclusive) '#' character or else
-  * the first '/' character (excluding the ones from the protocol) if no '#' character is defined
+/** Base of an URI (spec definition): the beginning part of a URI until the first (inclusive) '#' character or else the
+  * first '/' character (excluding the ones from the protocol) if no '#' character is defined
   */
 trait BaseDirectiveOverride {
 
@@ -30,10 +29,11 @@ object BaseDirective {
   val HashRegex: Regex  = "(http://|file://)?([^#]*)#(.*)".r("protocol", "base", "tail")
   val SlashRegex: Regex = "(http://|file://)?([^/]*)/(.*)".r("protocol", "base", "tail")
 
-  /**
-    * Extracts the base from the supplied URI
-    * @param uri input uri
-    * @return base if defined, whole uri otherwise
+  /** Extracts the base from the supplied URI
+    * @param uri
+    *   input uri
+    * @return
+    *   base if defined, whole uri otherwise
     */
   def baseFrom(uri: String): String = {
     uri match {

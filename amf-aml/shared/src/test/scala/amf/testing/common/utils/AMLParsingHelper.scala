@@ -9,13 +9,15 @@ import scala.concurrent.{ExecutionContext, Future}
 
 trait AMLParsingHelper {
 
-  final def parse(uri: String, platform: Platform, configuration: AMLConfiguration)(
-      implicit ec: ExecutionContext): Future[BaseUnit] =
+  final def parse(uri: String, platform: Platform, configuration: AMLConfiguration)(implicit
+      ec: ExecutionContext
+  ): Future[BaseUnit] =
     new AMFCompiler(new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build())
       .build()
 
-  final def parse(uri: String, platform: Platform, spec: Option[String], configuration: AMLConfiguration)(
-      implicit ec: ExecutionContext): Future[BaseUnit] =
+  final def parse(uri: String, platform: Platform, spec: Option[String], configuration: AMLConfiguration)(implicit
+      ec: ExecutionContext
+  ): Future[BaseUnit] =
     new AMFCompiler(new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build())
       .build()
 

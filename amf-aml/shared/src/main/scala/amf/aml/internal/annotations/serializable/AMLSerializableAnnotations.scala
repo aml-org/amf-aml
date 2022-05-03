@@ -2,13 +2,7 @@ package amf.aml.internal.annotations.serializable
 
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.internal.annotations.serializable.SerializableAnnotations
-import amf.aml.internal.annotations.{
-  AliasesLocation,
-  CustomBase,
-  CustomId,
-  JsonPointerRef,
-  RefInclude
-}
+import amf.aml.internal.annotations.{AliasesLocation, CustomBase, CustomId, JsonPointerRef, RefInclude}
 
 private[amf] object AMLSerializableAnnotations extends SerializableAnnotations {
 

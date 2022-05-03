@@ -16,22 +16,25 @@ import amf.core.internal.render.emitters.EntryEmitter
 
 class SemanticExtensionRenderer(finder: ExtensionDialectFinder, registry: AMLRegistry) {
 
-  def render(key: String,
-             extension: DomainExtension,
-             parentTypes: Seq[String],
-             ordering: SpecOrdering,
-             renderOptions: RenderOptions): Option[EntryEmitter] = {
+  def render(
+      key: String,
+      extension: DomainExtension,
+      parentTypes: Seq[String],
+      ordering: SpecOrdering,
+      renderOptions: RenderOptions
+  ): Option[EntryEmitter] = {
     findMappingThatDefinesExtension(extension, parentTypes)
-      .flatMap {
-        case (mapping, dialect) =>
-          val finder = DefaultNodeMappableFinder(dialect)
-          SemanticExtensionNodeEmitter(extension, mapping, dialect, ordering, renderOptions, registry, key)(finder)
-            .emitField(mapping.toField())
+      .flatMap { case (mapping, dialect) =>
+        val finder = DefaultNodeMappableFinder(dialect)
+        SemanticExtensionNodeEmitter(extension, mapping, dialect, ordering, renderOptions, registry, key)(finder)
+          .emitField(mapping.toField())
       }
   }
 
-  private def findMappingThatDefinesExtension(extension: DomainExtension,
-                                              parentTypes: Seq[String]): Option[(AnnotationMapping, Dialect)] = {
+  private def findMappingThatDefinesExtension(
+      extension: DomainExtension,
+      parentTypes: Seq[String]
+  ): Option[(AnnotationMapping, Dialect)] = {
     val maybeName = Option(extension.definedBy).flatMap(_.name.option())
     maybeName
       .flatMap(name => findExtensionMapping(name, parentTypes, finder))

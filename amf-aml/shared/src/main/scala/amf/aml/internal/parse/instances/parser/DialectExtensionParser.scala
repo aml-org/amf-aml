@@ -10,12 +10,14 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 object DialectExtensionParser {
 
-  def parse(id: String,
-            propertyEntry: YMapEntry,
-            property: PropertyLikeMapping[_],
-            node: DialectDomainElement,
-            root: Root,
-            nodeParser: NodeParser)(implicit ctx: DialectInstanceContext): Unit = {
+  def parse(
+      id: String,
+      propertyEntry: YMapEntry,
+      property: PropertyLikeMapping[_],
+      node: DialectDomainElement,
+      root: Root,
+      nodeParser: NodeParser
+  )(implicit ctx: DialectInstanceContext): Unit = {
     val nestedObjectId = pathSegment(id, List(propertyEntry.key.as[YScalar].text))
     propertyEntry.value.tagType match {
       case YType.Str | YType.Include =>
@@ -35,10 +37,12 @@ object DialectExtensionParser {
                   node.withObjectField(property, dialectDomainElement, Right(propertyEntry))
                 }
               case None =>
-                ctx.eh.violation(DialectError,
-                                 id,
-                                 s"Cannot find dialect for nested anyNode mapping $dialectNode",
-                                 nested.value.location)
+                ctx.eh.violation(
+                    DialectError,
+                    id,
+                    s"Cannot find dialect for nested anyNode mapping $dialectNode",
+                    nested.value.location
+                )
             }
           case None =>
             computeParsingScheme(map) match {
@@ -54,17 +58,21 @@ object DialectExtensionParser {
     }
   }
 
-  protected def resolveLinkProperty(propertyEntry: YMapEntry,
-                                    mapping: PropertyLikeMapping[_],
-                                    id: String,
-                                    node: DialectDomainElement,
-                                    isRef: Boolean = false)(implicit ctx: DialectInstanceContext): Unit =
+  protected def resolveLinkProperty(
+      propertyEntry: YMapEntry,
+      mapping: PropertyLikeMapping[_],
+      id: String,
+      node: DialectDomainElement,
+      isRef: Boolean = false
+  )(implicit ctx: DialectInstanceContext): Unit =
     LinkIncludePropertyParser.parse(propertyEntry, mapping, id, node, isRef)
 
-  protected def resolveJSONPointerProperty(map: YMap,
-                                           mapping: PropertyLikeMapping[_],
-                                           id: String,
-                                           node: DialectDomainElement,
-                                           root: Root)(implicit ctx: DialectInstanceContext): Unit =
+  protected def resolveJSONPointerProperty(
+      map: YMap,
+      mapping: PropertyLikeMapping[_],
+      id: String,
+      node: DialectDomainElement,
+      root: Root
+  )(implicit ctx: DialectInstanceContext): Unit =
     JSONPointerPropertyParser.parse(map, mapping, id, node, root)
 }

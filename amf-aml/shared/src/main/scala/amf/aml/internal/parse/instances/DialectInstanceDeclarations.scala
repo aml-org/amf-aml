@@ -6,10 +6,11 @@ import amf.core.internal.parser.domain.{FutureDeclarations, SearchScope}
 import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMappable}
 import amf.aml.internal.parse.vocabularies.VocabularyDeclarations
 
-class DialectInstanceDeclarations(var dialectDomainElements: Map[String, DialectDomainElement] = Map(),
-                                  errorHandler: AMFErrorHandler,
-                                  futureDeclarations: FutureDeclarations)
-    extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations)
+class DialectInstanceDeclarations(
+    var dialectDomainElements: Map[String, DialectDomainElement] = Map(),
+    errorHandler: AMFErrorHandler,
+    futureDeclarations: FutureDeclarations
+) extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations)
     with NodeMappableHelper {
 
   /** Get or create specified library. */
@@ -24,8 +25,10 @@ class DialectInstanceDeclarations(var dialectDomainElements: Map[String, Dialect
     }
   }
 
-  def registerDialectDomainElement(name: String,
-                                   dialectDomainElement: DialectDomainElement): DialectInstanceDeclarations = {
+  def registerDialectDomainElement(
+      name: String,
+      dialectDomainElement: DialectDomainElement
+  ): DialectInstanceDeclarations = {
     dialectDomainElements += (name -> dialectDomainElement)
     if (!dialectDomainElement.isUnresolved) {
       futureDeclarations.resolveRef(name, dialectDomainElement)
@@ -33,9 +36,11 @@ class DialectInstanceDeclarations(var dialectDomainElements: Map[String, Dialect
     this
   }
 
-  def findDialectDomainElement(key: String,
-                               nodeMapping: NodeMappable,
-                               scope: SearchScope.Scope): Option[DialectDomainElement] = {
+  def findDialectDomainElement(
+      key: String,
+      nodeMapping: NodeMappable,
+      scope: SearchScope.Scope
+  ): Option[DialectDomainElement] = {
     val nodeMappingIds = allNodeMappingIds(nodeMapping)
     findForType(key, _.asInstanceOf[DialectInstanceDeclarations].dialectDomainElements, scope) collect {
       case dialectDomainElement: DialectDomainElement if nodeMappingIds.contains(dialectDomainElement.definedBy.id) =>

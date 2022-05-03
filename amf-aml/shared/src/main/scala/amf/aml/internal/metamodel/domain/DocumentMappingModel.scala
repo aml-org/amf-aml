@@ -12,12 +12,14 @@ object DocumentMappingModel extends DomainElementModel {
   val DocumentName: Field = Field(
       Str,
       Namespace.Core + "name",
-      ModelDoc(ModelVocabularies.Core, "name", "Name of the document for a dialect base unit"))
+      ModelDoc(ModelVocabularies.Core, "name", "Name of the document for a dialect base unit")
+  )
 
   val EncodedNode: Field = Field(
       Iri,
       Namespace.Meta + "encodedNode",
-      ModelDoc(ModelVocabularies.Meta, "encodedNode", "Node in the dialect encoded in the target mapped base unit"))
+      ModelDoc(ModelVocabularies.Meta, "encodedNode", "Node in the dialect encoded in the target mapped base unit")
+  )
 
   val DeclaredNodes: Field = Field(
       Array(PublicNodeMappingModel),

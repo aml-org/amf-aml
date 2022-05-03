@@ -28,12 +28,10 @@ case class AnnotationMapping(override private[amf] val _internal: InternalAnnota
   def sorted(): BoolField                 = _internal.sorted()
   def typeDiscriminator(): ClientMap[String] = Option(_internal.typeDiscriminator()) match {
     case Some(m) =>
-      m.foldLeft(mutable.Map[String, String]()) {
-          case (acc, (k, v)) =>
-            acc.put(k, v)
-            acc
-        }
-        .asClient
+      m.foldLeft(mutable.Map[String, String]()) { case (acc, (k, v)) =>
+        acc.put(k, v)
+        acc
+      }.asClient
     case None => mutable.Map[String, String]().asClient
   }
   def typeDiscriminatorName(): StrField = _internal.typeDiscriminatorName()

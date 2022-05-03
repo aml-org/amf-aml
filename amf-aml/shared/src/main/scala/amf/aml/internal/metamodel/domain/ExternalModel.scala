@@ -9,9 +9,11 @@ import amf.aml.client.scala.model.domain.External
 
 object ExternalModel extends DomainElementModel {
 
-  val DisplayName: Field = Field(Str,
-                                 Namespace.Core + "displayName",
-                                 ModelDoc(ModelVocabularies.Core, "displayName", "The display name of the item"))
+  val DisplayName: Field = Field(
+      Str,
+      Namespace.Core + "displayName",
+      ModelDoc(ModelVocabularies.Core, "displayName", "The display name of the item")
+  )
   val Base: Field =
     Field(Str, Namespace.Meta + "base", ModelDoc(ModelVocabularies.Meta, "base", "Base URI for the external model"))
 
@@ -19,6 +21,6 @@ object ExternalModel extends DomainElementModel {
 
   override def fields: List[Field] = DisplayName :: Base :: DomainElementModel.fields
 
-  override val `type`
-    : List[ValueType] = Namespace.Owl + "Ontology" :: Namespace.Meta + "ExternalVocabulary" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] =
+    Namespace.Owl + "Ontology" :: Namespace.Meta + "ExternalVocabulary" :: DomainElementModel.`type`
 }

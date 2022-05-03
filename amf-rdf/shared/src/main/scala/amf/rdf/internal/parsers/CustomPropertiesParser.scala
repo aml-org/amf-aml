@@ -10,9 +10,9 @@ import amf.rdf.client.scala.{Literal, Node, Uri}
 import amf.rdf.internal.graph.NodeFinder
 import amf.rdf.internal.{RdfParserCommon, RdfParserContext}
 
-class CustomPropertiesParser(linkFinder: NodeFinder, sourcesRetriever: SourcesRetriever)(
-    implicit val ctx: RdfParserContext)
-    extends RdfParserCommon {
+class CustomPropertiesParser(linkFinder: NodeFinder, sourcesRetriever: SourcesRetriever)(implicit
+    val ctx: RdfParserContext
+) extends RdfParserCommon {
   def parse(node: Node, instance: DomainElement): Unit = {
     val properties: Seq[String] = node
       .getProperties(DomainElementModel.CustomDomainProperties.value.iri())
@@ -74,8 +74,8 @@ class CustomPropertiesParser(linkFinder: NodeFinder, sourcesRetriever: SourcesRe
         .fieldsMeta()
         .find(f => e.element.is(f.value.iri()))
         .foreach(f => {
-          instance.fields.entry(f).foreach {
-            case FieldEntry(_, value) => value.value.annotations += DomainExtensionAnnotation(e)
+          instance.fields.entry(f).foreach { case FieldEntry(_, value) =>
+            value.value.annotations += DomainExtensionAnnotation(e)
           }
         })
     }

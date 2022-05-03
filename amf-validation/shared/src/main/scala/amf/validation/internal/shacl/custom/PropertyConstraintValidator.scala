@@ -7,8 +7,10 @@ import amf.core.internal.validation.core.{PropertyConstraint, ValidationSpecific
 import org.yaml.model.YScalar
 
 object PropertyConstraintValidator {
-  def extractPropertyValue(propertyConstraint: PropertyConstraint,
-                           element: AmfObject): Option[(Annotations, AmfElement, Option[Any])] = {
+  def extractPropertyValue(
+      propertyConstraint: PropertyConstraint,
+      element: AmfObject
+  ): Option[(Annotations, AmfElement, Option[Any])] = {
     extractPredicateValue(propertyConstraint.ramlPropertyId, element)
   }
 
@@ -51,8 +53,10 @@ trait ConstraintValidator {
 trait PropertyConstraintValidator {
 
   def canValidate(spec: PropertyConstraint): Boolean
-  def validate(spec: ValidationSpecification,
-               propertyConstraint: PropertyConstraint,
-               parent: AmfObject,
-               reportBuilder: ReportBuilder)
+  def validate(
+      spec: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      parent: AmfObject,
+      reportBuilder: ReportBuilder
+  )
 }

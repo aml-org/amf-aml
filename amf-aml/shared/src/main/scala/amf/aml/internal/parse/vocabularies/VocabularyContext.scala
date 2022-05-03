@@ -9,10 +9,12 @@ import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 import org.yaml.model.YPart
 
 class VocabularyContext(private val wrapped: ParserContext, private val ds: Option[VocabularyDeclarations] = None)
-    extends SyamlBasedParserErrorHandler(wrapped.rootContextDocument,
-                                         wrapped.refs,
-                                         wrapped.futureDeclarations,
-                                         wrapped.config)
+    extends SyamlBasedParserErrorHandler(
+        wrapped.rootContextDocument,
+        wrapped.refs,
+        wrapped.futureDeclarations,
+        wrapped.config
+    )
     with VocabularySyntax
     with SyntaxErrorReporter {
 
@@ -46,10 +48,12 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
     }
   }
 
-  def resolvePropertyTermAlias(base: String,
-                               propertyTermAlias: String,
-                               where: YPart,
-                               strictLocal: Boolean): Option[String] = {
+  def resolvePropertyTermAlias(
+      base: String,
+      propertyTermAlias: String,
+      where: YPart,
+      strictLocal: Boolean
+  ): Option[String] = {
     if (propertyTermAlias.contains(".")) {
       val prefix = propertyTermAlias.split("\\.").head
       val value  = propertyTermAlias.split("\\.").last
@@ -74,7 +78,12 @@ class VocabularyContext(private val wrapped: ParserContext, private val ds: Opti
     }
   }
 
-  def resolveClassTermAlias(base: String, classTermAlias: String, where: YPart, strictLocal: Boolean): Option[String] = {
+  def resolveClassTermAlias(
+      base: String,
+      classTermAlias: String,
+      where: YPart,
+      strictLocal: Boolean
+  ): Option[String] = {
     if (classTermAlias.contains(".")) {
       val prefix = classTermAlias.split("\\.").head
       val value  = classTermAlias.split("\\.").last

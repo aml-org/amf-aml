@@ -6,12 +6,11 @@ import amf.aml.internal.metamodel.domain.NodeMappingModel
 class NodeMappingResolver(val child: NodeMapping) {
 
   def resolveExtension: NodeMapping = {
-    val resolvedExtends = child.extend.map {
-      case parent: NodeMapping =>
-        val resolvedParent = new NodeMappingResolver(parent).resolveExtension
-        resolveIdTemplate(child, resolvedParent)
-        resolvePropertyMappings(child, resolvedParent)
-        parent.id
+    val resolvedExtends = child.extend.map { case parent: NodeMapping =>
+      val resolvedParent = new NodeMappingResolver(parent).resolveExtension
+      resolveIdTemplate(child, resolvedParent)
+      resolvePropertyMappings(child, resolvedParent)
+      parent.id
     }
     // we store the extended reference and remove the extends property
     if (resolvedExtends.nonEmpty) child.withResolvedExtends(resolvedExtends)

@@ -9,10 +9,11 @@ import amf.core.internal.rdf.SerializableAnnotationsFacade
 import scala.collection.mutable
 import scala.collection.mutable.ListBuffer
 
-class RdfParserContext(rootContextDocument: String = "",
-                       futureDeclarations: FutureDeclarations = EmptyFutureDeclarations(),
-                       config: ParseConfiguration)
-    extends ParserContext(rootContextDocument, Seq.empty, futureDeclarations, config) {
+class RdfParserContext(
+    rootContextDocument: String = "",
+    futureDeclarations: FutureDeclarations = EmptyFutureDeclarations(),
+    config: ParseConfiguration
+) extends ParserContext(rootContextDocument, Seq.empty, futureDeclarations, config) {
 
   val unresolvedReferences: mutable.Map[String, Seq[DomainElement]] = mutable.Map[String, Seq[DomainElement]]()
   val unresolvedExtReferencesMap: mutable.Map[String, ExternalSourceElement] =

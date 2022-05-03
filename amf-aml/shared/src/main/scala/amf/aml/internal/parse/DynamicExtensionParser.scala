@@ -18,13 +18,14 @@ import org.yaml.model._
 
 import scala.collection.mutable.ListBuffer
 
-/**
-  * Parse an object as a fully dynamic value.
+/** Parse an object as a fully dynamic value.
   */
-case class DynamicExtensionParser(node: YNode,
-                                  parent: Option[String] = None,
-                                  idCounter: IdCounter = new IdCounter,
-                                  aliasCounter: AliasCounter = AliasCounter())(implicit ctx: ParserContext) {
+case class DynamicExtensionParser(
+    node: YNode,
+    parent: Option[String] = None,
+    idCounter: IdCounter = new IdCounter,
+    aliasCounter: AliasCounter = AliasCounter()
+)(implicit ctx: ParserContext) {
 
   def parseTimestamp(node: YNode): (Seq[String], Seq[String]) = {
     val text = node.as[YScalar].text.toLowerCase()
@@ -83,7 +84,13 @@ case class DynamicExtensionParser(node: YNode,
 
         case other =>
           val parsed = parseScalar(YScalar(other.toString()), "string")
-          ctx.eh.violation(DialectError, parsed.id, None, s"Cannot parse data node from AST structure '$other'", node.location)
+          ctx.eh.violation(
+              DialectError,
+              parsed.id,
+              None,
+              s"Cannot parse data node from AST structure '$other'",
+              node.location
+          )
           parsed
       }
     }

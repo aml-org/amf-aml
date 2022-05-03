@@ -11,7 +11,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class DialectInstanceAssertionTest extends AsyncFunSuite with Matchers {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  val basePath                                             = "file://amf-aml/shared/src/test/resources/vocabularies2/instances/"
+  val basePath = "file://amf-aml/shared/src/test/resources/vocabularies2/instances/"
 
   def parseDialectInstance(dialectPath: String, instancePath: String): Future[AMLDialectInstanceResult] = {
     AMLConfiguration.predefined().withDialect(dialectPath) flatMap { config =>

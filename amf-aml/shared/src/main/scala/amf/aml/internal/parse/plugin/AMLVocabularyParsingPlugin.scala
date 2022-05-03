@@ -38,13 +38,11 @@ class AMLVocabularyParsingPlugin extends AMFParsePlugin {
 
   override def priority: PluginPriority = NormalPriority
 
-  /**
-    * media types which specifies vendors that are parsed by this plugin.
+  /** media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Seq(`application/yaml`, `application/json`)
 
-  /**
-    * media types which specifies vendors that may be referenced.
+  /** media types which specifies vendors that may be referenced.
     */
   override def validSpecsToReference: scala.Seq[Spec] = Seq(Spec.AML)
 

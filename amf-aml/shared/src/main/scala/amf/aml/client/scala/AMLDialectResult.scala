@@ -9,8 +9,7 @@ private[amf] object AMLDialectResult {
     Some((result.dialect, result.results))
 }
 
-class AMLDialectResult(val dialect: Dialect, results: Seq[AMFValidationResult])
-    extends AMFParseResult(dialect, results)
+class AMLDialectResult(val dialect: Dialect, results: Seq[AMFValidationResult]) extends AMFParseResult(dialect, results)
 
 class AMLDialectInstanceResult(val dialectInstance: DialectInstance, results: Seq[AMFValidationResult])
     extends AMFParseResult(dialectInstance, results)

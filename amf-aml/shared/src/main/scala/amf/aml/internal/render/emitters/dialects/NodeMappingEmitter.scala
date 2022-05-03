@@ -18,7 +18,8 @@ case class NodeMappingEmitter(
     dialect: Dialect,
     nodeMappable: NodeMappable[_ <: NodeMappableModel],
     ordering: SpecOrdering,
-    aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
+    aliases: Map[String, (String, String)]
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with DiscriminatorEmitter
     with AliasesConsumer
@@ -67,13 +68,16 @@ case class NodeMappingEmitter(
             if (nodeMapping.extend.length == 1) {
               b.entry("extends", nodeMapping.extend.head.asInstanceOf[Linkable].linkLabel.value())
             } else {
-              b.entry("extends", l => {
-                l.list { b =>
-                  nodeMapping.extend.foreach { e =>
-                    b.+=(YNode(e.asInstanceOf[Linkable].linkLabel.value()))
+              b.entry(
+                  "extends",
+                  l => {
+                    l.list { b =>
+                      nodeMapping.extend.foreach { e =>
+                        b.+=(YNode(e.asInstanceOf[Linkable].linkLabel.value()))
+                      }
+                    }
                   }
-                }
-              })
+              )
             }
           }
 
@@ -110,9 +114,12 @@ case class NodeMappingEmitter(
 
             emitters ++= Seq(new EntryEmitter {
               override def emit(b: EntryBuilder): Unit =
-                b.entry("union", _.list { b =>
-                  targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
-                })
+                b.entry(
+                    "union",
+                    _.list { b =>
+                      targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
+                    }
+                )
               override def position(): Position = pos
             })
 

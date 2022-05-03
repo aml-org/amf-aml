@@ -37,8 +37,10 @@ class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: Diale
     dialectInstanceFragment.set(DialectInstanceModel.Encodes, dialectDomainElement, Annotations.inferred())
   }
 
-  private def parseEncodedFragment(dialectInstanceFragment: DialectInstanceFragment,
-                                   fragmentName: String): DialectDomainElement = {
+  private def parseEncodedFragment(
+      dialectInstanceFragment: DialectInstanceFragment,
+      fragmentName: String
+  ): DialectDomainElement = {
     val documentMapping = Option(ctx.dialect.documents()).flatMap { documents =>
       documents.fragments().find(fragmentName == _.documentName().value())
     }

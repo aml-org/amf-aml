@@ -10,9 +10,8 @@ trait MappingDeclarer { this: BaseUnit with DeclaresModel =>
       case Some(mapping: NodeMapping) => Some(mapping)
       case _ =>
         references
-          .collect {
-            case lib: MappingDeclarer =>
-              lib
+          .collect { case lib: MappingDeclarer =>
+            lib
           }
           .map { dec =>
             dec.findNodeMapping(mappingId)

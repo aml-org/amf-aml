@@ -12,25 +12,31 @@ import amf.core.internal.plugins.render.RenderConfiguration
 import amf.core.internal.render.SpecOrdering
 import org.yaml.model.YMapEntry
 
-class SemanticExtensionsFacade private (annotation: String,
-                                        val registry: AMLRegistry,
-                                        specAnnotationValidator: AnnotationSchemaValidator) {
+class SemanticExtensionsFacade private (
+    annotation: String,
+    val registry: AMLRegistry,
+    specAnnotationValidator: AnnotationSchemaValidator
+) {
 
   private val finder   = CachedExtensionDialectFinder(registry)
   private val parser   = new SemanticExtensionParser(finder, specAnnotationValidator)
   private val renderer = new SemanticExtensionRenderer(finder, registry)
 
-  def parse(parentTypes: Seq[String],
-            ast: YMapEntry,
-            ctx: ParserContext,
-            extensionId: String): Option[DomainExtension] = {
+  def parse(
+      parentTypes: Seq[String],
+      ast: YMapEntry,
+      ctx: ParserContext,
+      extensionId: String
+  ): Option[DomainExtension] = {
     parser.parse(annotation, parentTypes, ast, ctx, extensionId)
   }
 
-  def render(extension: DomainExtension,
-             parentTypes: Seq[String],
-             ordering: SpecOrdering,
-             renderOptions: RenderOptions) = {
+  def render(
+      extension: DomainExtension,
+      parentTypes: Seq[String],
+      ordering: SpecOrdering,
+      renderOptions: RenderOptions
+  ) = {
     renderer.render(annotation, extension, parentTypes, ordering, renderOptions)
   }
 }
@@ -44,19 +50,25 @@ object SemanticExtensionsFacade {
   def apply(extensionName: String, registry: AMLRegistry): SemanticExtensionsFacade =
     new SemanticExtensionsFacade(extensionName, registry, IgnoreAnnotationSchemaValidator)
 
-  def apply(extensionName: String,
-            dialect: Dialect,
-            annotationSchemaValidator: AnnotationSchemaValidator): SemanticExtensionsFacade =
-    new SemanticExtensionsFacade(extensionName,
-                                 AMLRegistry.apply(AMLRegistry.empty, Seq(dialect)),
-                                 annotationSchemaValidator)
+  def apply(
+      extensionName: String,
+      dialect: Dialect,
+      annotationSchemaValidator: AnnotationSchemaValidator
+  ): SemanticExtensionsFacade =
+    new SemanticExtensionsFacade(
+        extensionName,
+        AMLRegistry.apply(AMLRegistry.empty, Seq(dialect)),
+        annotationSchemaValidator
+    )
 
-  def apply(extensionName: String,
-            config: ParseConfiguration,
-            annotationSchemaValidator: AnnotationSchemaValidator): SemanticExtensionsFacade =
+  def apply(
+      extensionName: String,
+      config: ParseConfiguration,
+      annotationSchemaValidator: AnnotationSchemaValidator
+  ): SemanticExtensionsFacade =
     config.registryContext.getRegistry match {
       case registry: AMLRegistry => new SemanticExtensionsFacade(extensionName, registry, annotationSchemaValidator)
-      case other                 => new SemanticExtensionsFacade(extensionName, AMLRegistry(other), annotationSchemaValidator)
+      case other => new SemanticExtensionsFacade(extensionName, AMLRegistry(other), annotationSchemaValidator)
     }
 
   def apply(extensionName: String, config: ParseConfiguration): SemanticExtensionsFacade =

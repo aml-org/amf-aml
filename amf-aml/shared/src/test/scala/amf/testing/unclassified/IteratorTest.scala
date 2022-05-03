@@ -8,7 +8,7 @@ import scala.concurrent.ExecutionContext
 
 trait IteratorTest extends DialectTests with Matchers {
 
-  val basePath                                             = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
+  val basePath = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Domain element iterator in self encoded dialect instance") {
@@ -26,7 +26,8 @@ trait IteratorTest extends DialectTests with Matchers {
       assert(
           baseUnit
             .findById("file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets")
-            .isDefined)
+            .isDefined
+      )
     })
   }
 

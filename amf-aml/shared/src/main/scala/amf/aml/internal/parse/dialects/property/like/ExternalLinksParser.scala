@@ -8,7 +8,8 @@ import amf.aml.internal.validate.DialectValidations.DialectError
 import org.yaml.model.YMap
 
 case class ExternalLinksParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(
-    implicit ctx: DialectContext) {
+    implicit ctx: DialectContext
+) {
   def parse(): Unit = {
     map.key(
         "isLink",
@@ -20,7 +21,8 @@ case class ExternalLinksParser(map: YMap, propertyLikeMapping: PropertyLikeMappi
               ctx.eh.violation(
                   DialectError,
                   s"Aml links support in property mappings only can be declared in object properties but scalar range detected: $v",
-                  entry.value)
+                  entry.value
+              )
             case _ => // ignore
           }
         }

@@ -23,10 +23,12 @@ class AMLVocabularyRenderingPlugin extends SYAMLBasedRenderPlugin {
 
   override def mediaTypes: Seq[String] = Seq(`application/yaml`, `application/json`)
 
-  override def emit[T](unit: BaseUnit,
-                       builder: ASTBuilder[T],
-                       renderConfiguration: RenderConfiguration,
-                       mediaType: String): Boolean = {
+  override def emit[T](
+      unit: BaseUnit,
+      builder: ASTBuilder[T],
+      renderConfiguration: RenderConfiguration,
+      mediaType: String
+  ): Boolean = {
     builder match {
       case sb: SYAMLASTBuilder =>
         val maybeDocument: Option[YDocument] = emitDoc(unit, renderConfiguration, mediaType)
@@ -46,9 +48,11 @@ class AMLVocabularyRenderingPlugin extends SYAMLBasedRenderPlugin {
     }
   }
 
-  protected def unparseAsYDocument(unit: BaseUnit,
-                                   renderConfig: RenderConfiguration,
-                                   errorHandler: AMFErrorHandler): Option[YDocument] = {
+  protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ): Option[YDocument] = {
     throw new UnsupportedOperationException("Unreachable code")
   }
 }

@@ -10,14 +10,12 @@ trait AliasesConsumer extends AmlEmittersHelper {
   def aliasFor(id: String): Option[String] = {
     if (Option(id).isEmpty) {
       None
-    }
-    else {
+    } else {
       maybeFindNodeMappingById(id) match {
         case Some((_, nodeMapping: NodeMappable)) =>
           if (id.startsWith(dialect.id)) {
             Some(nodeMapping.name.value())
-          }
-          else {
+          } else {
             val matchingAliases = aliases.keySet.filter(id.contains(_))
             // we pick the most specific (longer) matching URI
             matchingAliases.toList.sorted.reverse.headOption.map { key =>
@@ -32,8 +30,7 @@ trait AliasesConsumer extends AmlEmittersHelper {
           if (id.startsWith(dialect.id)) {
             // local reference
             Some(id.split(dialect.id).last.replace("/declarations/", ""))
-          }
-          else {
+          } else {
             aliases.keySet.find(id.contains(_)) map { key =>
               val alias = aliases(key)._1
               val postfix = id.split(key).last match {
@@ -42,8 +39,7 @@ trait AliasesConsumer extends AmlEmittersHelper {
               }
               if (postfix.startsWith("#")) {
                 alias + "." + postfix.drop(1) // recursive references
-              }
-              else {
+              } else {
                 alias + "." + postfix
               }
             }

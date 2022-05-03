@@ -19,28 +19,32 @@ import org.yaml.model.YDocument.PartBuilder
 
 import scala.language.existentials
 
-class RootDialectNodeEmitter(node: DialectDomainElement,
-                             nodeMappable: NodeMappable[_ <: NodeMappableModel],
-                             instance: DialectInstanceUnit,
-                             dialect: Dialect,
-                             ordering: SpecOrdering,
-                             keyPropertyId: Option[String] = None,
-                             discriminator: Option[(String, String)] = None,
-                             emitDialect: Boolean = false,
-                             topLevelEmitters: Seq[EntryEmitter] = Nil,
-                             renderOptions: RenderOptions,
-                             registry: AMLRegistry)(implicit nodeMappableFinder: NodeMappableFinder)
-    extends DialectNodeEmitter(node,
-                               nodeMappable,
-                               instance.references,
-                               dialect,
-                               ordering,
-                               keyPropertyId,
-                               discriminator,
-                               emitDialect,
-                               topLevelEmitters,
-                               renderOptions,
-                               registry) {
+class RootDialectNodeEmitter(
+    node: DialectDomainElement,
+    nodeMappable: NodeMappable[_ <: NodeMappableModel],
+    instance: DialectInstanceUnit,
+    dialect: Dialect,
+    ordering: SpecOrdering,
+    keyPropertyId: Option[String] = None,
+    discriminator: Option[(String, String)] = None,
+    emitDialect: Boolean = false,
+    topLevelEmitters: Seq[EntryEmitter] = Nil,
+    renderOptions: RenderOptions,
+    registry: AMLRegistry
+)(implicit nodeMappableFinder: NodeMappableFinder)
+    extends DialectNodeEmitter(
+        node,
+        nodeMappable,
+        instance.references,
+        dialect,
+        ordering,
+        keyPropertyId,
+        discriminator,
+        emitDialect,
+        topLevelEmitters,
+        renderOptions,
+        registry
+    ) {
 
   lazy val referencesAliasIndex: Map[RefId, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(instance)
 
@@ -68,34 +72,34 @@ class RootDialectNodeEmitter(node: DialectDomainElement,
       if (root.encoded().value() == node.id) {
         Nil
       } else {
-        root.declaredNodes().foldLeft(Seq[EntryEmitter]()) {
-          case (acc, publicNodeMapping) =>
-            val publicMappings = findAllNodeMappings(publicNodeMapping.mappedNode().value()).map(_.id).toSet
-            val declared = model.declares.collect {
-              case elem: DialectDomainElement if publicMappings.contains(elem.definedBy.id) => elem
+        root.declaredNodes().foldLeft(Seq[EntryEmitter]()) { case (acc, publicNodeMapping) =>
+          val publicMappings = findAllNodeMappings(publicNodeMapping.mappedNode().value()).map(_.id).toSet
+          val declared = model.declares.collect {
+            case elem: DialectDomainElement if publicMappings.contains(elem.definedBy.id) => elem
+          }
+          if (declared.nonEmpty) {
+            findNodeMappingById(publicNodeMapping.mappedNode().value()) match {
+              case (_, nodeMappable: NodeMappable) =>
+                acc ++ Seq(
+                    DeclarationsGroupEmitter(
+                        declared,
+                        publicNodeMapping,
+                        nodeMappable,
+                        instance,
+                        dialect,
+                        ordering,
+                        docs
+                          .declarationsPath()
+                          .option()
+                          .getOrElse("/")
+                          .split("/"),
+                        referencesAliasIndex,
+                        renderOptions = renderOptions,
+                        registry = registry
+                    )
+                )
             }
-            if (declared.nonEmpty) {
-              findNodeMappingById(publicNodeMapping.mappedNode().value()) match {
-                case (_, nodeMappable: NodeMappable) =>
-                  acc ++ Seq(
-                      DeclarationsGroupEmitter(
-                          declared,
-                          publicNodeMapping,
-                          nodeMappable,
-                          instance,
-                          dialect,
-                          ordering,
-                          docs
-                            .declarationsPath()
-                            .option()
-                            .getOrElse("/")
-                            .split("/"),
-                          referencesAliasIndex,
-                          renderOptions = renderOptions,
-                          registry = registry
-                      ))
-              }
-            } else acc
+          } else acc
         }
       }
     }
@@ -103,17 +107,19 @@ class RootDialectNodeEmitter(node: DialectDomainElement,
   }
 }
 
-case class DialectNodeEmitter(node: DialectDomainElement,
-                              nodeMappable: NodeMappable[_ <: NodeMappableModel],
-                              references: Seq[BaseUnit],
-                              dialect: Dialect,
-                              ordering: SpecOrdering,
-                              keyPropertyId: Option[String] = None,
-                              discriminator: Option[(String, String)] = None,
-                              emitDialect: Boolean = false,
-                              topLevelEmitters: Seq[EntryEmitter] = Nil,
-                              renderOptions: RenderOptions,
-                              registry: AMLRegistry)(implicit val nodeMappableFinder: NodeMappableFinder)
+case class DialectNodeEmitter(
+    node: DialectDomainElement,
+    nodeMappable: NodeMappable[_ <: NodeMappableModel],
+    references: Seq[BaseUnit],
+    dialect: Dialect,
+    ordering: SpecOrdering,
+    keyPropertyId: Option[String] = None,
+    discriminator: Option[(String, String)] = None,
+    emitDialect: Boolean = false,
+    topLevelEmitters: Seq[EntryEmitter] = Nil,
+    renderOptions: RenderOptions,
+    registry: AMLRegistry
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends PartEmitter
     with AmlEmittersHelper {
 
@@ -137,17 +143,19 @@ case class DialectNodeEmitter(node: DialectDomainElement,
   }
 
   private def fieldAndExtensionEmitters: Seq[EntryEmitter] = {
-    val fieldEmitter = NodeFieldEmitters(node,
-                                         nodeMappable,
-                                         references,
-                                         dialect,
-                                         ordering,
-                                         keyPropertyId,
-                                         discriminator,
-                                         emitDialect,
-                                         topLevelEmitters,
-                                         renderOptions,
-                                         registry)
+    val fieldEmitter = NodeFieldEmitters(
+        node,
+        nodeMappable,
+        references,
+        dialect,
+        ordering,
+        keyPropertyId,
+        discriminator,
+        emitDialect,
+        topLevelEmitters,
+        renderOptions,
+        registry
+    )
     uniqueFields(node.meta).flatMap { field =>
       field match {
         case DomainElementModel.CustomDomainProperties =>

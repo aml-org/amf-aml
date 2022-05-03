@@ -12,9 +12,9 @@ import scala.scalajs.js.annotation.JSExportAll
 abstract class BaseAMLElementClient private[amf] (private val _internal: InternalAMLClient)
     extends AMFGraphElementClient(_internal) {
 
-  /**
-    * Currently supports rendering of dialect domain elements
-    * @param references : optional parameter which will improve emission of references defined in element
+  /** Currently supports rendering of dialect domain elements
+    * @param references
+    *   : optional parameter which will improve emission of references defined in element
     */
   def renderToBuilder[T](element: DomainElement, builder: DocBuilder[T]): Unit
 

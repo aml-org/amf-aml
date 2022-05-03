@@ -65,7 +65,8 @@ class AMLConfigurationPluginTest extends AsyncFunSuite with Matchers {
   }
 
   private def withLoadedConfig(config: AMLConfiguration = AMLConfiguration.predefined(), path: String)(
-      block: AMLConfiguration => Future[Assertion]) = {
+      block: AMLConfiguration => Future[Assertion]
+  ) = {
     val futureResult = config.baseUnitClient().parseDialect(path)
     futureResult.flatMap { result =>
       result.conforms shouldBe true

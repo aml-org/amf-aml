@@ -42,10 +42,12 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
     this
   }
 
-  override def addTriple(subject: String,
-                         predicate: String,
-                         objLiteralValue: String,
-                         objLiteralType: Option[String]): RdfModel = {
+  override def addTriple(
+      subject: String,
+      predicate: String,
+      objLiteralValue: String,
+      objLiteralType: Option[String]
+  ): RdfModel = {
     nodesCache = nodesCache - subject
     val s = checkAnon(subject)
     val p = rdf.namedNode(predicate)
@@ -98,7 +100,8 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
 
           statements
             .sortWith((t1, t2) =>
-              (t1.predicate.uri.asInstanceOf[String] compareTo t2.predicate.uri.asInstanceOf[String]) > 0)
+              (t1.predicate.uri.asInstanceOf[String] compareTo t2.predicate.uri.asInstanceOf[String]) > 0
+            )
             .foreach { statement =>
               val property = statement.predicate.uri.asInstanceOf[String]
 
@@ -124,13 +127,14 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
                 )
 
               } else {
-                resourceProperties =
-                  resourceProperties.updated(property,
-                                             oldProps ++ Seq(
-                                                 Uri(
-                                                     value = s"${Option(obj.uri).getOrElse(obj.toCanonical())}"
-                                                 )
-                                             ))
+                resourceProperties = resourceProperties.updated(
+                    property,
+                    oldProps ++ Seq(
+                        Uri(
+                            value = s"${Option(obj.uri).getOrElse(obj.toCanonical())}"
+                        )
+                    )
+                )
               }
             }
 
@@ -146,8 +150,7 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
     rdf.parse(text, model, "", effectiveMediaType)
   }
 
-  /**
-    * Write model as a String representation
+  /** Write model as a String representation
     *
     * @param mediaType
     * @return
@@ -156,11 +159,11 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
     throw new Exception("Sync rdf serialization not supported yet")
   }
 
-  /**
-    * Write model using a writer
+  /** Write model using a writer
     *
     * @param mediaType
-    * @param writer writer where to send the representation
+    * @param writer
+    *   writer where to send the representation
     * @return
     */
   override def serializeWriter[W: Output](mediaType: String, writer: W): Option[W] = {

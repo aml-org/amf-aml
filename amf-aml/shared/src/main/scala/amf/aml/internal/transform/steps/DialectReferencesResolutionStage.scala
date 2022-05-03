@@ -23,15 +23,19 @@ import scala.collection.mutable
 class DialectReferencesResolutionStage() extends TransformationStep() {
   type NodeMappable = NodeMappable.AnyNodeMappable
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     val finalDeclarationsMap = mutable.Map[String, NodeMappable]()
     val unitDeclarations     = model.asInstanceOf[DeclaresModel].declares.filterType[NodeMappable]
 
-    iteratePending(pending = unitDeclarations,
-                   alreadyResolved = finalDeclarationsMap,
-                   allDeclarations = model.recursivelyFindDeclarations())
+    iteratePending(
+        pending = unitDeclarations,
+        alreadyResolved = finalDeclarationsMap,
+        allDeclarations = model.recursivelyFindDeclarations()
+    )
 
     linkExtendedNodes(finalDeclarationsMap)
 
@@ -76,9 +80,11 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
     resolved
   }
 
-  def iteratePending(pending: Seq[NodeMappable],
-                     alreadyResolved: mutable.Map[String, NodeMappable],
-                     allDeclarations: Map[String, NodeMappable]): Unit = {
+  def iteratePending(
+      pending: Seq[NodeMappable],
+      alreadyResolved: mutable.Map[String, NodeMappable],
+      allDeclarations: Map[String, NodeMappable]
+  ): Unit = {
     if (pending.nonEmpty) {
       (pending.head, pending.tail) match {
         case (head, tail) if alreadyResolved.contains(head.id) =>
@@ -119,15 +125,19 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
       acc
     }
 
-    if (nodeMappable.name
+    if (
+        nodeMappable.name
           .value()
-          .contains(".")) { // this might come from a library TODO: check collisions in names
+          .contains(".")
+    ) { // this might come from a library TODO: check collisions in names
       nodeMappable.withName(genName(nodeMappable.name.value().split(".").last, allDeclarations))
     }
   }
 
-  private def collectReferencesFrom(nodeMappable: NodeMappable,
-                                    allDeclarations: Map[String, NodeMappable]): Seq[NodeMappable] = {
+  private def collectReferencesFrom(
+      nodeMappable: NodeMappable,
+      allDeclarations: Map[String, NodeMappable]
+  ): Seq[NodeMappable] = {
     def collectRange(element: HasObjectRange[_]) = {
       for {
         range            <- element.objectRange()

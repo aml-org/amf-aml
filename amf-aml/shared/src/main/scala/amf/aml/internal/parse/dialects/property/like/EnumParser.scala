@@ -9,8 +9,9 @@ import amf.aml.internal.parse.dialects.DialectContext
 import amf.aml.internal.validate.DialectValidations.DialectError
 import org.yaml.model.{YMap, YScalar, YSequence, YType}
 
-case class EnumParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(
-    implicit ctx: DialectContext) {
+case class EnumParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(implicit
+    ctx: DialectContext
+) {
   def parse(): Unit = {
     map.key(
         "enum",
@@ -27,9 +28,7 @@ case class EnumParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: P
                 None
             }
           }
-          propertyLikeMapping.set(propertyLikeMapping.meta.Enum,
-                                  AmfArray(values, Annotations(seq)),
-                                  Annotations(entry))
+          propertyLikeMapping.set(propertyLikeMapping.meta.Enum, AmfArray(values, Annotations(seq)), Annotations(entry))
         }
     )
   }

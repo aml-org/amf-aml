@@ -39,8 +39,9 @@ case class PropertyTermParser()(implicit val ctx: VocabularyContext)
     propertyTerm
   }
 
-  private def parseExtends(map: YMap, propertyTerm: PropertyTerm, vocabulary: Vocabulary)(
-      implicit ctx: VocabularyContext) = {
+  private def parseExtends(map: YMap, propertyTerm: PropertyTerm, vocabulary: Vocabulary)(implicit
+      ctx: VocabularyContext
+  ) = {
     map.key(
         "extends",
         entry => {
@@ -50,15 +51,18 @@ case class PropertyTermParser()(implicit val ctx: VocabularyContext)
               term => ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true),
               term => ctx.missingPropertyTermWarning(term, propertyTerm.id, entry.value)
           )
-          propertyTerm.set(ObjectPropertyTermModel.SubPropertyOf,
-                           AmfArray(superClasses, Annotations(entry.value)),
-                           Annotations(entry))
+          propertyTerm.set(
+              ObjectPropertyTermModel.SubPropertyOf,
+              AmfArray(superClasses, Annotations(entry.value)),
+              Annotations(entry)
+          )
         }
     )
   }
 
-  private def parseRange(map: YMap, propertyTerm: PropertyTerm, vocabulary: Vocabulary)(
-      implicit ctx: VocabularyContext) = {
+  private def parseRange(map: YMap, propertyTerm: PropertyTerm, vocabulary: Vocabulary)(implicit
+      ctx: VocabularyContext
+  ) = {
     map.key(
         "range",
         entry => {
@@ -84,17 +88,23 @@ case class PropertyTermParser()(implicit val ctx: VocabularyContext)
   }
 
   private def parseDescription(map: YMap, propertyTerm: PropertyTerm) = {
-    map.key("description", entry => {
-      val value = ValueNode(entry.value)
-      propertyTerm.set(ClassTermModel.Description, value.string())
-    })
+    map.key(
+        "description",
+        entry => {
+          val value = ValueNode(entry.value)
+          propertyTerm.set(ClassTermModel.Description, value.string())
+        }
+    )
   }
 
   private def parseDisplayName(map: YMap, propertyTerm: PropertyTerm) = {
-    map.key("displayName", entry => {
-      val value = ValueNode(entry.value)
-      propertyTerm.set(ClassTermModel.DisplayName, value.string())
-    })
+    map.key(
+        "displayName",
+        entry => {
+          val value = ValueNode(entry.value)
+          propertyTerm.set(ClassTermModel.DisplayName, value.string())
+        }
+    )
   }
 
   private def createPropertyTerm(entry: YMapEntry) = {

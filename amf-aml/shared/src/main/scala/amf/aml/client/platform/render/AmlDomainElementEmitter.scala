@@ -21,7 +21,8 @@ object AmlDomainElementEmitter {
       .find(
           _.declares
             .collectFirst({ case nm: NodeMapping if internalElement.meta.`type`.exists(_.iri() == nm.id) => nm })
-            .isDefined)
+            .isDefined
+      )
       .foreach { emissionStructure =>
         val handler = amlConfig._internal.errorHandlerProvider.errorHandler()
         val node    = InternalAmlDomainElementEmitter.emit(internalElement, emissionStructure, handler)

@@ -34,9 +34,8 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
     }
   }
 
-  lazy val domainMapProperties: Seq[PropertyMapping] = dialect.declares.collect {
-    case nodeMapping: NodeMapping =>
-      nodeMapping.propertiesMapping().filter(_.classification() == ObjectMapProperty)
+  lazy val domainMapProperties: Seq[PropertyMapping] = dialect.declares.collect { case nodeMapping: NodeMapping =>
+    nodeMapping.propertiesMapping().filter(_.classification() == ObjectMapProperty)
   }.flatten
 
   def register(): AMLConfiguration = {
@@ -52,21 +51,28 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
     updateSemanticExtensionsProfile(newConfig, profile)
   }
 
-  private def updateSemanticExtensionsProfile(config: AMLConfiguration,
-                                              dialectProfile: ValidationProfile): AMLConfiguration = {
+  private def updateSemanticExtensionsProfile(
+      config: AMLConfiguration,
+      dialectProfile: ValidationProfile
+  ): AMLConfiguration = {
     val validationsToPropagate = dialectProfile.validations.diff(AMFDialectValidations.staticValidations)
 
     val profile = config.getRegistry.getConstraintsRules.getOrElse(
         SEMANTIC_EXTENSIONS_PROFILE,
-        ValidationProfile(SEMANTIC_EXTENSIONS_PROFILE, None, Seq.empty, SeverityMapping()))
-    val nextProfile = profile.copy(severities = profile.severities.concat(dialectProfile.severities),
-                                   validations = profile.validations ++ validationsToPropagate)
+        ValidationProfile(SEMANTIC_EXTENSIONS_PROFILE, None, Seq.empty, SeverityMapping())
+    )
+    val nextProfile = profile.copy(
+        severities = profile.severities.concat(dialectProfile.severities),
+        validations = profile.validations ++ validationsToPropagate
+    )
     config.withValidationProfile(nextProfile)
   }
 
   private def plugins(constraints: ValidationProfile): List[AMFPlugin[_]] = {
-    List(new AMLDialectInstanceParsingPlugin(dialect, Some(constraints)),
-         new AMLDialectInstanceRenderingPlugin(dialect))
+    List(
+        new AMLDialectInstanceParsingPlugin(dialect, Some(constraints)),
+        new AMLDialectInstanceRenderingPlugin(dialect)
+    )
   }
 
   private[amf] def resolveDialect(cloned: Dialect) = {
@@ -77,8 +83,8 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
 
   private lazy val domainModels = {
     dialect.declares
-      .collect({
-        case n: NodeMapping => n.id -> buildMetamodel(n)
+      .collect({ case n: NodeMapping =>
+        n.id -> buildMetamodel(n)
       })
       .toMap
   }

@@ -16,28 +16,35 @@ import amf.core.internal.registries.{AMFRegistry, PluginsRegistry}
 import amf.core.internal.validation.EffectiveValidations
 import amf.core.internal.validation.core.ValidationProfile
 
-/**
-  * Registry to store plugins, entities, transformation pipelines, constraint rules and semantic extensions
+/** Registry to store plugins, entities, transformation pipelines, constraint rules and semantic extensions
   *
-  * @param plugins                 [[PluginsRegistry]]
-  * @param entitiesRegistry        [[EntitiesRegistry]]
-  * @param transformationPipelines a map of [[TransformationPipeline]]s
-  * @param constraintsRules        a map of [[ProfileName]] -> [[amf.core.internal.validation.core.ValidationProfile]]
-  * @param extensions              a map of [[SemanticExtension]] -> [[Dialect]]
+  * @param plugins
+  *   [[PluginsRegistry]]
+  * @param entitiesRegistry
+  *   [[EntitiesRegistry]]
+  * @param transformationPipelines
+  *   a map of [[TransformationPipeline]]s
+  * @param constraintsRules
+  *   a map of [[ProfileName]] -> [[amf.core.internal.validation.core.ValidationProfile]]
+  * @param extensions
+  *   a map of [[SemanticExtension]] -> [[Dialect]]
   */
-private[amf] class AMLRegistry(plugins: PluginsRegistry,
-                               entitiesRegistry: EntitiesRegistry,
-                               transformationPipelines: Map[String, TransformationPipeline],
-                               constraintsRules: Map[ProfileName, ValidationProfile],
-                               effectiveValidations: Map[ProfileName, EffectiveValidations],
-                               extensions: Map[String, Dialect],
-                               namespaceAliases: NamespaceAliases)
-    extends AMFRegistry(plugins,
-                        entitiesRegistry,
-                        transformationPipelines,
-                        constraintsRules,
-                        effectiveValidations,
-                        namespaceAliases) {
+private[amf] class AMLRegistry(
+    plugins: PluginsRegistry,
+    entitiesRegistry: EntitiesRegistry,
+    transformationPipelines: Map[String, TransformationPipeline],
+    constraintsRules: Map[ProfileName, ValidationProfile],
+    effectiveValidations: Map[ProfileName, EffectiveValidations],
+    extensions: Map[String, Dialect],
+    namespaceAliases: NamespaceAliases
+) extends AMFRegistry(
+        plugins,
+        entitiesRegistry,
+        transformationPipelines,
+        constraintsRules,
+        effectiveValidations,
+        namespaceAliases
+    ) {
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMLRegistry = copy(plugins = plugins.withPlugin(amfPlugin))
 
@@ -91,20 +98,24 @@ private[amf] class AMLRegistry(plugins: PluginsRegistry,
 
   private[amf] def findExtension(extensionName: String): Option[Dialect] = extensions.get(extensionName)
 
-  private def copy(plugins: PluginsRegistry = plugins,
-                   entitiesRegistry: EntitiesRegistry = entitiesRegistry,
-                   transformationPipelines: Map[String, TransformationPipeline] = transformationPipelines,
-                   constraintsRules: Map[ProfileName, ValidationProfile] = constraintsRules,
-                   effectiveValidations: Map[ProfileName, EffectiveValidations] = effectiveValidations,
-                   extensions: Map[String, Dialect] = extensions,
-                   namespaceAliases: NamespaceAliases = namespaceAliases): AMLRegistry =
-    new AMLRegistry(plugins,
-                    entitiesRegistry,
-                    transformationPipelines,
-                    constraintsRules,
-                    effectiveValidations,
-                    extensions,
-                    namespaceAliases)
+  private def copy(
+      plugins: PluginsRegistry = plugins,
+      entitiesRegistry: EntitiesRegistry = entitiesRegistry,
+      transformationPipelines: Map[String, TransformationPipeline] = transformationPipelines,
+      constraintsRules: Map[ProfileName, ValidationProfile] = constraintsRules,
+      effectiveValidations: Map[ProfileName, EffectiveValidations] = effectiveValidations,
+      extensions: Map[String, Dialect] = extensions,
+      namespaceAliases: NamespaceAliases = namespaceAliases
+  ): AMLRegistry =
+    new AMLRegistry(
+        plugins,
+        entitiesRegistry,
+        transformationPipelines,
+        constraintsRules,
+        effectiveValidations,
+        extensions,
+        namespaceAliases
+    )
 
 }
 
@@ -112,13 +123,15 @@ object AMLRegistry {
 
   /** Creates an empty AML Registry */
   val empty =
-    new AMLRegistry(PluginsRegistry.empty,
-                    EntitiesRegistry.empty,
-                    Map.empty,
-                    Map.empty,
-                    Map.empty,
-                    Map.empty,
-                    NamespaceAliases())
+    new AMLRegistry(
+        PluginsRegistry.empty,
+        EntitiesRegistry.empty,
+        Map.empty,
+        Map.empty,
+        Map.empty,
+        Map.empty,
+        NamespaceAliases()
+    )
 
   def apply(registry: AMFRegistry): AMLRegistry =
     new AMLRegistry(
