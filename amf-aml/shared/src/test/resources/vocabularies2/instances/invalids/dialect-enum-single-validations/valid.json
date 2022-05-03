@@ -1,0 +1,24 @@
+{
+  "$type": "Dialect 1.0",
+  "nodeMappings": {
+    "MyNodeMapping": {
+      "mapping": {
+        "propertyA": {
+          "range": "string",
+          "mandatory": true,
+          "enum": [
+            "some-enum-value"
+          ]
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "dialect": "Test",
+  "version": "1.0",
+  "documents": {
+    "root": {
+      "encodes": "MyNodeMapping"
+    }
+  }
+}

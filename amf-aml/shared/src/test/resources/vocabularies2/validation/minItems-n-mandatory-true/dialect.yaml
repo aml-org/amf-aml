@@ -1,0 +1,15 @@
+#%Dialect 1.0
+dialect: MinItems
+version: "1.0"
+documents:
+  root:
+    encodes: Root
+
+nodeMappings:
+  Root:
+    mapping:
+      arrayProperty:
+        range: string
+        allowMultiple: true
+        minItems: 5
+        mandatory: true

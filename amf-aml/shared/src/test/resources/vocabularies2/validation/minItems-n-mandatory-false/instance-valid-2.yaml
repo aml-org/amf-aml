@@ -1,0 +1,8 @@
+#%MinItems 1.0
+arrayProperty:
+  - a
+  - b
+  - c
+  - d
+  - e
+  - f

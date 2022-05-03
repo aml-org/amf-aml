@@ -1,15 +1,9 @@
 package amf.aml.internal.metamodel.domain
 
+import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.metamodel.Field
 import amf.core.internal.metamodel.Type.{Any, Bool, Double, Int, Iri, SortedArray, Str}
-import amf.core.internal.metamodel.domain.{
-  DataNodeModel,
-  DomainElementModel,
-  ExternalModelVocabularies,
-  ModelDoc,
-  ModelVocabularies
-}
-import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.metamodel.domain.{DomainElementModel, ExternalModelVocabularies, ModelDoc, ModelVocabularies}
 
 /**
   * Mappings form with which graph properties can be derived (annotation mappings, property mappings)
@@ -83,5 +77,15 @@ trait PropertyLikeMappingModel extends DomainElementModel with HasObjectRangeMod
       Bool,
       Namespace.Meta + "externallyLinkable",
       ModelDoc(ModelVocabularies.Meta, "linkable", "Marks this object property as supporting external links")
+  )
+
+  val Mandatory: Field = Field(
+      Bool,
+      Namespace.Shacl + "mandatory",
+      ModelDoc(
+          ExternalModelVocabularies.Shacl,
+          "mandatory",
+          "Mandatory constraint over the property. Different from minCount because it only checks the presence of property"
+      )
   )
 }

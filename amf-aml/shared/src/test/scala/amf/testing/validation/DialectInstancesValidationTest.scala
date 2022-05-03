@@ -255,4 +255,42 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
   test("Enum with boolean values") {
     validate("dialect.yaml", "instance.yaml", Some("report.json"), path = s"$basePath/enum-boolean")
   }
+
+  test("MinItems 0 with mandatory true valid") {
+    validate("dialect.yaml", "instance-valid.yaml", None, path = s"$basePath/minItems-0-mandatory-true")
+  }
+
+  test("MinItems 0 with mandatory true invalid") {
+    validate("dialect.yaml",
+             "instance-invalid.yaml",
+             Some("report.json"),
+             path = s"$basePath/minItems-0-mandatory-true")
+  }
+
+  test("MinItems n with mandatory false valid 1") {
+    validate("dialect.yaml", "instance-valid-1.yaml", None, path = s"$basePath/minItems-n-mandatory-false")
+  }
+
+  test("MinItems n with mandatory false valid 2") {
+    validate("dialect.yaml", "instance-valid-2.yaml", None, path = s"$basePath/minItems-n-mandatory-false")
+  }
+
+  test("MinItems n with mandatory false invalid") {
+    validate("dialect.yaml",
+             "instance-invalid.yaml",
+             Some("report.json"),
+             path = s"$basePath/minItems-n-mandatory-false")
+  }
+
+  test("MinItems n with mandatory true valid") {
+    validate("dialect.yaml", "instance-valid.yaml", None, path = s"$basePath/minItems-n-mandatory-true")
+  }
+
+  test("MinItems n with mandatory true invalid") {
+    validate("dialect.yaml",
+             "instance-invalid.yaml",
+             Some("report.json"),
+             path = s"$basePath/minItems-n-mandatory-true")
+  }
+
 }
