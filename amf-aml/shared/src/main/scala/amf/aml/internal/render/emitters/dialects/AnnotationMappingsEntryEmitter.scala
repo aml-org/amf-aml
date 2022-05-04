@@ -1,13 +1,13 @@
 package amf.aml.internal.render.emitters.dialects
 
-import amf.core.client.common.position.Position
-import amf.core.internal.render.BaseEmitters.{ArrayEmitter, pos, traverse}
-import amf.core.internal.render.SpecOrdering
-import amf.core.internal.render.emitters.EntryEmitter
-import amf.aml.internal.render.emitters.instances.NodeMappableFinder
-import amf.aml.internal.metamodel.domain.AnnotationMappingModel.Domain
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.AnnotationMapping
+import amf.aml.internal.metamodel.domain.AnnotationMappingModel.Domain
+import amf.aml.internal.render.emitters.instances.NodeMappableFinder
+import amf.core.internal.render.BaseEmitters.{pos, traverse}
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 

@@ -517,12 +517,12 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
                 case nodeMapping: NodeMappable =>
                   val name = ScalarNode(entry.key).string()
                   nodeMapping.set(NodeMappingModel.Name, name, Annotations(entry.key)).adopted(parent)
-                  nodeMapping.annotations.reject(
-                      a =>
-                        a.isInstanceOf[SourceAST[_]] ||
-                          a.isInstanceOf[LexicalInformation] ||
-                          a.isInstanceOf[SourceLocation] ||
-                          a.isInstanceOf[SourceNode])
+                  nodeMapping.annotations.reject(a =>
+                    a.isInstanceOf[SourceAST] ||
+                      a.isInstanceOf[LexicalInformation] ||
+                      a.isInstanceOf[SourceLocation] ||
+                      a.isInstanceOf[SourceNode]
+                  )
                   nodeMapping.annotations ++= Annotations(entry)
                 case _ =>
                   ctx.eh.violation(

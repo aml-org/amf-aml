@@ -3,10 +3,10 @@ package amf.aml.internal.render.emitters.dialects
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.NodeMappable
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
-import amf.core.client.common.position.Position
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 
 case class NodeMappingsEntryEmitter(

@@ -1,16 +1,16 @@
 package amf.aml.internal.render.emitters.dialects
 
-import amf.core.internal.annotations.Aliases.{Alias, FullUrl, ImportLocation}
-import amf.core.internal.render.BaseEmitters._
-import amf.core.internal.render.SpecOrdering.Lexical
-import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
-import amf.core.internal.render.SpecOrdering
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.internal.metamodel.document.DialectModel
 import amf.aml.internal.render.emitters.dialects.FieldEntryImplicit._
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
-import amf.aml.internal.metamodel.document.DialectModel
-import amf.aml.client.scala.model.document.Dialect
+import amf.core.internal.annotations.Aliases.{Alias, ImportLocation}
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.SpecOrdering.Lexical
+import amf.core.internal.render.emitters.EntryEmitter
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.EntryBuilder
 

@@ -1,17 +1,17 @@
 package amf.aml.internal.render.emitters.dialects
 
+import amf.aml.client.scala.model.document.{Dialect, Vocabulary}
+import amf.aml.client.scala.model.domain.{AnnotationMapping, NodeMappable, NodeMapping, UnionNodeMapping}
+import amf.aml.internal.render.emitters.common.ExternalEmitter
+import amf.aml.internal.render.emitters.instances.AmlEmittersHelper
+import amf.core.client.scala.model.document.DeclaresModel
 import amf.core.internal.annotations.Aliases.{Alias, ImportLocation}
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.render.BaseEmitters.traverse
-import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.client.scala.model.document.DeclaresModel
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.internal.render.SpecOrdering
-import amf.aml.internal.render.emitters.common.ExternalEmitter
-import amf.aml.internal.render.emitters.instances.AmlEmittersHelper
-import amf.aml.client.scala.model.document.{Dialect, Vocabulary}
-import amf.aml.client.scala.model.domain.{AnnotationMapping, NodeMappable, NodeMapping, UnionNodeMapping}
+import amf.core.internal.render.emitters.EntryEmitter
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.EntryBuilder
 
 trait DialectDocumentsEmitters extends AmlEmittersHelper {

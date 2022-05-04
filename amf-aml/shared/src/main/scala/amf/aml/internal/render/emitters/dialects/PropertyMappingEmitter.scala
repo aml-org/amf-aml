@@ -4,8 +4,6 @@ import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.metamodel.domain.{PropertyLikeMappingModel, PropertyMappingModel}
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.LexicalInformation
@@ -13,6 +11,8 @@ import amf.core.internal.parser.domain.{Annotations, FieldEntry}
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ScalarEmitter, pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.mulesoft.common.collections.FilterType
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType

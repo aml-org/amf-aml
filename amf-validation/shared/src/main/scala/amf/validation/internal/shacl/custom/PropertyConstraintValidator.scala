@@ -32,7 +32,7 @@ object PropertyConstraintValidator {
   }
 
   def amfScalarToScala(scalar: AmfScalar): Any = {
-    scalar.annotations.find(classOf[SourceAST[_]]) match {
+    scalar.annotations.find(classOf[SourceAST]) match {
       case Some(ast: SourceYPart) =>
         ast.ast match {
           case yscalar: YScalar => yscalar.value

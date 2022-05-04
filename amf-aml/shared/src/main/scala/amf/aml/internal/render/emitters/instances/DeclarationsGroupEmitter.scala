@@ -1,17 +1,17 @@
 package amf.aml.internal.render.emitters.instances
-import amf.core.internal.annotations.LexicalInformation
-import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.client.scala.config.RenderOptions
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
-import amf.core.internal.render.SpecOrdering
 import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
 import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMappable, PublicNodeMapping, UnionNodeMapping}
-import org.yaml.model.YDocument.EntryBuilder
-import org.yaml.model.YNode
-import amf.core.internal.utils.AmfStrings
 import amf.aml.internal.metamodel.domain.NodeMappableModel
 import amf.aml.internal.registries.AMLRegistry
+import amf.core.client.scala.config.RenderOptions
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import amf.core.internal.utils.AmfStrings
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
+import org.yaml.model.YDocument.EntryBuilder
+import org.yaml.model.YNode
 
 case class DeclarationsGroupEmitter(
     declared: Seq[DialectDomainElement],

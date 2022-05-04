@@ -1,9 +1,9 @@
 package amf.testing.parsing
 
 import amf.aml.client.scala.model.document.DialectInstance
-import amf.core.client.common.position.Range
 import amf.aml.client.scala.{AMLConfiguration, AMLDialectInstanceResult}
 import amf.core.client.scala.model.domain.AmfArray
+import org.mulesoft.common.client.lexical.PositionRange
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
@@ -35,7 +35,7 @@ class DialectInstanceAssertionTest extends AsyncFunSuite with Matchers {
     val instance = s"$basePath/rest-connector/instance.yaml"
     parseDialectInstance(dialect, instance) flatMap { result =>
       val lexical = getDialectInstanceFirstValue(result.dialectInstance).annotations.lexical()
-      lexical shouldEqual Range((3, 2), (6, 0))
+      lexical shouldEqual PositionRange((3, 2), (6, 0))
     }
   }
 
@@ -45,7 +45,7 @@ class DialectInstanceAssertionTest extends AsyncFunSuite with Matchers {
     val instance     = s"$basePath/rest-connector/instance.yaml"
     parseDialectInstance(dialectUnion, instance) flatMap { result =>
       val lexical = getDialectInstanceFirstValue(result.dialectInstance).annotations.lexical()
-      lexical shouldEqual Range((3, 2), (6, 0))
+      lexical shouldEqual PositionRange((3, 2), (6, 0))
     }
   }
 

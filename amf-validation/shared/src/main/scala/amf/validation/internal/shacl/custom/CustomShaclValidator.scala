@@ -16,6 +16,7 @@ import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   ValidationInfo
 }
 import org.mulesoft.common.time.SimpleDateTime
+import org.yaml.model.YScalar
 
 import java.net.URISyntaxException
 
@@ -859,23 +860,12 @@ class CustomShaclValidator(
     }
   }
 
-  private def amfScalarToScala(scalar: AmfScalar): Any = {
-    scalar.annotations.find(classOf[SourceAST[_]]) match {
-      case Some(ast: SourceYPart) =>
-        ast.ast match {
-          case yscalar: YScalar => yscalar.value
-          case _                => scalar.value
-        }
-      case Some(_) => scalar.value
-      case None =>
-        scalar.value
-    }
-  }
-
-  private def reportFailure(validationSpecification: ValidationSpecification,
-                            propertyConstraint: PropertyConstraint,
-                            id: String,
-                            reportBuilder: ReportBuilder): Unit = {
+  private def reportFailure(
+      validationSpecification: ValidationSpecification,
+      propertyConstraint: PropertyConstraint,
+      id: String,
+      reportBuilder: ReportBuilder
+  ): Unit = {
     reportBuilder.reportFailure(validationSpecification, propertyConstraint, id)
   }
 

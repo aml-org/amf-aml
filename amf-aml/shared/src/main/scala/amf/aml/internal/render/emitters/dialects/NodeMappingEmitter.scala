@@ -4,13 +4,13 @@ import amf.aml.client.scala.model.document.{Dialect, DialectFragment}
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.metamodel.domain.{NodeMappableModel, UnionNodeMappingModel}
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement, Linkable}
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, ScalarEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YNode
 
