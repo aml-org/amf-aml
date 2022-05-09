@@ -25,6 +25,7 @@ object LiteralValueSetter {
       case Some(i: Int)              => node.setProperty(property, i, entry)
       case Some(f: Float)            => node.setProperty(property, f, entry)
       case Some(d: Double)           => node.setProperty(property, d, entry)
+      case Some(l: Long)             => node.setProperty(property, l, entry)
       case Some(s: String)           => node.setProperty(property, s, entry)
       case Some(("link", l: String)) => node.setProperty(property, l, entry)
       case Some(d: SimpleDateTime)   => node.setProperty(property, d, entry)
@@ -69,6 +70,8 @@ object LiteralValueParser {
           if property.literalRange().value() == DataType.Float ||
             property.literalRange().value() == DataType.Double =>
         Some(value.as[Double])
+      case YType.Int if property.literalRange().value() == DataType.Long =>
+        Some(value.as[Long])
       case YType.Int =>
         inconsistentPropertyRangeValueViolation(
             nodeId,

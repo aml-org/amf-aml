@@ -1377,6 +1377,27 @@ trait DialectInstancesParsingTest extends DialectTests {
     )
   }
 
+  multiGoldenTest("Long datatype YAML to JSON-LD", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        "instance.yaml",
+        config.golden,
+        mediaType = Some(Mimes.`application/ld+json`),
+        renderOptions = Some(config.renderOptions),
+        directory = s"$basePath/long-datatype/"
+    )
+  }
+
+  multiSourceTest("Long datatype JSON-LD to YAML", "instance.%s") { config =>
+    cycleWithDialect(
+        "dialect.yaml",
+        config.source,
+        "instance.cycled.yaml",
+        Some(Mimes.`application/yaml`),
+        directory = s"$basePath/long-datatype/"
+    )
+  }
+
   // noinspection SameParameterValue
   protected def withInlineDialect(
       source: String,

@@ -520,4 +520,6 @@ trait DialectsParsingTest extends DialectTests {
 
   multiCycleTest("MinItems facet", s"$basePath/min-items")
 
+  multiCycleTest("Long datatype", s"$basePath/long-datatype")
+
 }

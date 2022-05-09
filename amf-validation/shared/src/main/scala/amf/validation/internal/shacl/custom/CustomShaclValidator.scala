@@ -767,6 +767,7 @@ class CustomShaclValidator(
     val xsdString       = DataType.String
     val xsdBoolean      = DataType.Boolean
     val xsdInteger      = DataType.Integer
+    val xsdLong         = DataType.Long
     val xsdDouble       = DataType.Double
     val xsdDate         = DataType.Date
     val xsdDateTime     = DataType.DateTime
@@ -784,7 +785,8 @@ class CustomShaclValidator(
               case _ =>
                 reportFailure(validationSpecification, propertyConstraint, parentElement.id, reportBuilder)
             }
-          case Some(s) if s == xsdInteger =>
+
+          case Some(s) if (s == xsdInteger | s == xsdLong) =>
             maybeScalarValue match {
               case Some(_: Integer) => // ignore
               case Some(_: Long)    => // ignore
