@@ -28,8 +28,8 @@ case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: 
               range match {
                 case "guid" =>
                   setLiteralRange((Namespace.Shapes + "guid").iri(), entry)
-                case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
-                    "time" | "date" | "anyType" =>
+                case "string" | "integer" | "long" | "boolean" | "float" | "decimal" | "double" | "duration" |
+                    "dateTime" | "time" | "date" | "anyType" =>
                   setLiteralRange((Namespace.Xsd + range).iri(), entry)
                 case "anyUri"      => setLiteralRange(DataType.AnyUri, entry)
                 case "link"        => setLiteralRange((Namespace.Shapes + "link").iri(), entry)

@@ -316,4 +316,13 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
     )
   }
 
+  test("Long datatype test") {
+    validate(
+        "dialect.yaml",
+        "instance.yaml",
+        None,
+        path = s"$instancesPath/long-datatype"
+    )
+  }
+
 }

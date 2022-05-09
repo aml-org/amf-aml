@@ -33,10 +33,9 @@ object PropertyLikeMappingToFieldConverter {
         case Some(literal) if literal.endsWith("number")  => Type.Float
         case Some(literal) if literal == DataType.Integer => Type.Int
         case Some(literal) if literal == DataType.Float   => Type.Float
-        case Some(literal) if literal == DataType.Double =>
-          Type.Double
-        case Some(literal) if literal == DataType.Boolean =>
-          Type.Bool
+        case Some(literal) if literal == DataType.Double  => Type.Double
+        case Some(literal) if literal == DataType.Long    => Type.Long
+        case Some(literal) if literal == DataType.Boolean => Type.Bool
         case Some(literal) if literal == DataType.Decimal => Type.Int
         case Some(literal) if literal == DataType.Time    => Type.Time
         case Some(literal) if literal == DataType.Date    => Type.Date
