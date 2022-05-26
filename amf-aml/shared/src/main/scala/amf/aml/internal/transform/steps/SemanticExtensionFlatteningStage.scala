@@ -8,6 +8,7 @@ import amf.core.client.scala.model.domain.extensions.DomainExtension
 import amf.core.client.scala.transform.TransformationStep
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel._
+import amf.core.internal.parser.domain.FieldEntry
 
 class SemanticExtensionFlatteningStage() extends TransformationStep {
 
@@ -18,7 +19,11 @@ class SemanticExtensionFlatteningStage() extends TransformationStep {
       errorHandler: AMFErrorHandler,
       configuration: AMFGraphConfiguration
   ): BaseUnit = {
-    model.transform(hasSemanticExtension, transform)(errorHandler)
+    model.iterator().foreach {
+      case element: DomainElement if hasSemanticExtension(element) => compactExtensionsIntoElement(element)
+      case _                                                       => // Ignore
+    }
+    model
   }
 
   private def hasSemanticExtension(element: DomainElement): Boolean = {
@@ -26,10 +31,6 @@ class SemanticExtensionFlatteningStage() extends TransformationStep {
   }
 
   private def isSemanticExtension(extension: DomainExtension): Boolean = Option(extension.extension).isEmpty
-
-  private def transform(element: DomainElement, isCycle: Boolean): Option[DomainElement] = {
-    Some(compactExtensionsIntoElement(element))
-  }
 
   private def compactExtensionsIntoElement(element: DomainElement): DomainElement = {
     element.customDomainProperties.filter(isSemanticExtension).foldLeft(element) { (elem, extension) =>
@@ -44,7 +45,7 @@ class SemanticExtensionFlatteningStage() extends TransformationStep {
     } else element.withCustomDomainProperties(notSemanticExtensions)
   }
 
-  private def compactableFields(extension: DomainExtension) = {
+  private def compactableFields(extension: DomainExtension): Iterable[FieldEntry] = {
     extension.fields.fields().filter(p => !filterFields.contains(p.field))
   }
 }
