@@ -65,11 +65,13 @@ trait SyntaxErrorReporter { this: ParserContext =>
     )
   }
 
-  def inconsistentPropertyRangeValueViolation(node: String,
-                                              property: PropertyLikeMapping[_],
-                                              expected: String,
-                                              found: String,
-                                              valueNode: YNode): Unit = {
+  def inconsistentPropertyRangeValueViolation(
+      node: String,
+      property: PropertyLikeMapping[_],
+      expected: String,
+      found: String,
+      valueNode: YNode
+  ): Unit = {
     eh.violation(
         InconsistentPropertyRangeValueSpecification,
         node,

@@ -28,21 +28,18 @@ trait BuildCycleTests extends BuildCycleTestCommon {
 
   /** Compile source with specified hint. Dump to target and assert against same source file. */
   def cycle(source: String, golden: String, directory: String, eh: AMFErrorHandler): Future[Assertion] =
-    cycle(source,
-          golden,
-          None,
-          directory,
-          amlConfig = AMLConfiguration.predefined().withErrorHandlerProvider(() => eh))
+    cycle(source, golden, None, directory, amlConfig = AMLConfiguration.predefined().withErrorHandlerProvider(() => eh))
 
   /** Compile source with specified hint. Render to temporary file and assert against golden. */
-  final def cycle(source: String,
-                  golden: String,
-                  syntax: Option[Syntax],
-                  directory: String = basePath,
-                  amlConfig: AMLConfiguration =
-                    AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
-                  pipeline: Option[String] = None,
-                  transformWith: Option[Spec] = None): Future[Assertion] = {
+  final def cycle(
+      source: String,
+      golden: String,
+      syntax: Option[Syntax],
+      directory: String = basePath,
+      amlConfig: AMLConfiguration = AMLConfiguration.predefined().withErrorHandlerProvider(() => UnhandledErrorHandler),
+      pipeline: Option[String] = None,
+      transformWith: Option[Spec] = None
+  ): Future[Assertion] = {
 
     val config = CycleConfig(source, golden, directory, syntax, pipeline, transformWith)
 

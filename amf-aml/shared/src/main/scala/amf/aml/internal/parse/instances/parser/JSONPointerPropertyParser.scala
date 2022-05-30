@@ -9,8 +9,9 @@ import org.yaml.model.YMap
 
 object JSONPointerPropertyParser {
 
-  def parse(map: YMap, mapping: PropertyLikeMapping[_], id: String, node: DialectDomainElement, root: Root)(
-      implicit ctx: DialectInstanceContext): Unit = {
+  def parse(map: YMap, mapping: PropertyLikeMapping[_], id: String, node: DialectDomainElement, root: Root)(implicit
+      ctx: DialectInstanceContext
+  ): Unit = {
     val entry   = map.key("$ref").get
     val pointer = entry.value.as[String]
     val fullPointer = if (pointer.startsWith("#")) {
@@ -32,13 +33,17 @@ object JSONPointerPropertyParser {
             val linkedExternal = s
               .link(pointer, Annotations(map))
               .asInstanceOf[DialectDomainElement]
-              .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+              .withId(
+                  id
+              ) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
             node.withObjectField(mapping, linkedExternal, Right(entry))
           case None =>
-            ctx.eh.violation(DialectError,
-                             id,
-                             s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
-                             map.location)
+            ctx.eh.violation(
+                DialectError,
+                id,
+                s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
+                map.location
+            )
         }
       case None =>
         ctx.eh.violation(

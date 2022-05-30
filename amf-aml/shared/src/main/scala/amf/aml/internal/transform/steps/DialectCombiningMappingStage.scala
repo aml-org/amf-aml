@@ -29,9 +29,11 @@ class DialectCombiningMappingStage extends TransformationStep() {
   var visitedCombinations: mutable.Set[String] = mutable.Set()
   val counter: IdCounter                       = new IdCounter
 
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
 
     model match {
       case dialect: Dialect =>
@@ -85,8 +87,8 @@ class DialectCombiningMappingStage extends TransformationStep() {
     val componentMappings =
       components.map(findMapping).map(component => component.link(component.name.toString).asInstanceOf[NodeMapping])
     mapping.withExtends(componentMappings)
-    mapping.extend.zipWithIndex.foreach {
-      case (e, i) => e.withId(s"${e.id}-link-extends-$i")
+    mapping.extend.zipWithIndex.foreach { case (e, i) =>
+      e.withId(s"${e.id}-link-extends-$i")
     }
     // TODO: We will set here an 'additionalProperties: true' for all combination mappings. Maybe this should be inherit from the extends in a future
     mapping.withClosed(false)

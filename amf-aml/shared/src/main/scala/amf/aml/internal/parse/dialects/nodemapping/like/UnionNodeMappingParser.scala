@@ -31,16 +31,20 @@ class UnionNodeMappingParser(implicit ctx: DialectContext)
                 unionNodeMapping.set(ObjectRange, AmfArray(nodes, Annotations(entry.value)), Annotations(entry))
               } catch {
                 case _: Exception =>
-                  ctx.eh.violation(DialectError,
-                                   unionNodeMapping.id,
-                                   s"Union node mappings must be declared as lists of node mapping references",
-                                   entry.value.location)
+                  ctx.eh.violation(
+                      DialectError,
+                      unionNodeMapping.id,
+                      s"Union node mappings must be declared as lists of node mapping references",
+                      entry.value.location
+                  )
               }
             case _ =>
-              ctx.eh.violation(DialectError,
-                               unionNodeMapping.id,
-                               s"Union node mappings must be declared as lists of node mapping references",
-                               entry.value.location)
+              ctx.eh.violation(
+                  DialectError,
+                  unionNodeMapping.id,
+                  s"Union node mappings must be declared as lists of node mapping references",
+                  entry.value.location
+              )
           }
         }
     )
@@ -49,10 +53,9 @@ class UnionNodeMappingParser(implicit ctx: DialectContext)
         "typeDiscriminator",
         entry => {
           val types = entry.value.as[YMap]
-          val typeMapping = types.entries.foldLeft(Map[String, String]()) {
-            case (acc, e) =>
-              val nodeMappingId = e.value.as[YScalar].text
-              acc + (e.key.as[YScalar].text -> nodeMappingId)
+          val typeMapping = types.entries.foldLeft(Map[String, String]()) { case (acc, e) =>
+            val nodeMappingId = e.value.as[YScalar].text
+            acc + (e.key.as[YScalar].text -> nodeMappingId)
           }
           unionNodeMapping.withTypeDiscriminator(typeMapping, Annotations(entry), Annotations(types))
         }

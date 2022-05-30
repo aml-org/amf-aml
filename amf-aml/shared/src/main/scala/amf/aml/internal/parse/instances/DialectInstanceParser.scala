@@ -44,10 +44,12 @@ object DialectInstanceParser extends NodeMappableHelper {
             else m.value.toOption[YMap]
           case Some(o) =>
             ctx.eh
-              .violation(DialectError,
-                         "",
-                         s"Invalid node type for declarations path ${o.value.tagType.toString()}",
-                         o.location)
+              .violation(
+                  DialectError,
+                  "",
+                  s"Invalid node type for declarations path ${o.value.tagType.toString()}",
+                  o.location
+              )
             None
           case _ => None
         }
@@ -55,7 +57,8 @@ object DialectInstanceParser extends NodeMappableHelper {
   }
 
   def emptyElement(defaultId: String, ast: YNode, mappable: NodeMappable, givenAnnotations: Option[Annotations])(
-      implicit ctx: DialectInstanceContext): DialectDomainElement = {
+      implicit ctx: DialectInstanceContext
+  ): DialectDomainElement = {
     val mappings = mappable match {
       case m: NodeMapping => Seq(m.nodetypeMapping.value(), mappable.id)
       case _              => Seq(mappable.id)
@@ -125,8 +128,7 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
     if (references.baseUnitReferences().nonEmpty)
       dialectInstance.withReferences(references.baseUnitReferences())
     if (ctx.nestedDialects.nonEmpty) {
-      dialectInstance.processingData.withGraphDependencies(ctx.nestedDialects.map(nd =>
-        nd.location().getOrElse(nd.id)))
+      dialectInstance.processingData.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
       @silent("deprecated") // Silent can only be used in assignment expressions
       val a = dialectInstance.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
     }
@@ -149,29 +151,32 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
       pathOption.map(p => if (p.startsWith("/")) p else "/" + p).map(p => if (p.endsWith("/")) p else p + "/")
     val paths: List[String] = pathOption.map(_.split("/").toList).getOrElse(Nil)
     findDeclarationsMap(paths, map).foreach { declarationsMap =>
-      declarationsNodeMappings.foreach {
-        case (name, nodeMapping) =>
-          declarationsMap.entries.find(_.key.as[YScalar].text == name).foreach { entry =>
-            addDeclarationKey(DeclarationKey(entry))
-            val declarationsId = root.location + "#" + normalizedPath.getOrElse("/") + name.urlComponentEncoded
-            entry.value.as[YMap].entries.foreach { declarationEntry =>
-              val declarationName = declarationEntry.key.as[YScalar].text
-              val id              = pathSegment(declarationsId, List(declarationName))
-              val node = InstanceElementParser(root).parse(declarationsId,
-                                                           id,
-                                                           declarationEntry.value,
-                                                           nodeMapping,
-                                                           givenAnnotations = Some(Annotations(declarationEntry)))
+      declarationsNodeMappings.foreach { case (name, nodeMapping) =>
+        declarationsMap.entries.find(_.key.as[YScalar].text == name).foreach { entry =>
+          addDeclarationKey(DeclarationKey(entry))
+          val declarationsId = root.location + "#" + normalizedPath.getOrElse("/") + name.urlComponentEncoded
+          entry.value.as[YMap].entries.foreach { declarationEntry =>
+            val declarationName = declarationEntry.key.as[YScalar].text
+            val id              = pathSegment(declarationsId, List(declarationName))
+            val node = InstanceElementParser(root).parse(
+                declarationsId,
+                id,
+                declarationEntry.value,
+                nodeMapping,
+                givenAnnotations = Some(Annotations(declarationEntry))
+            )
 
-              // lookup by ref name
-              node.set(DialectDomainElementModel.DeclarationName,
-                       AmfScalar(declarationName, Annotations(declarationEntry.key)),
-                       Annotations(declarationEntry.key))
-              ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
-              // lookup by JSON pointer, absolute URI
-              ctx.registerJsonPointerDeclaration(id, node)
-            }
+            // lookup by ref name
+            node.set(
+                DialectDomainElementModel.DeclarationName,
+                AmfScalar(declarationName, Annotations(declarationEntry.key)),
+                Annotations(declarationEntry.key)
+            )
+            ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
+            // lookup by JSON pointer, absolute URI
+            ctx.registerJsonPointerDeclaration(id, node)
           }
+        }
       }
     }
   }
@@ -187,13 +192,15 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
           val additionalKey =
             if (documents.keyProperty().value()) Some(ctx.dialect.name().value())
             else None
-          InstanceElementParser(root).parse(path,
-                                            encodedElementDefaultId(dialectInstance),
-                                            map,
-                                            nodeMapping,
-                                            rootNode = true,
-                                            givenAnnotations = None,
-                                            additionalKey = additionalKey)
+          InstanceElementParser(root).parse(
+              path,
+              encodedElementDefaultId(dialectInstance),
+              map,
+              nodeMapping,
+              rootNode = true,
+              givenAnnotations = None,
+              additionalKey = additionalKey
+          )
         case _ =>
           emptyElementWithViolation(s"Could not find node mapping for: ${mapping.encoded().value()}")
       }

@@ -14,8 +14,8 @@ object DialectNamespaceAliases {
     val annotAliases: Seq[(Alias, Namespace)] = dialect.annotations
       .find(classOf[Aliases])
       .map { aliasesAnnotation =>
-        aliasesAnnotation.aliases.toList.map {
-          case (alias, ReferencedInfo(_, url, _)) => alias -> Namespace(url)
+        aliasesAnnotation.aliases.toList.map { case (alias, ReferencedInfo(_, url, _)) =>
+          alias -> Namespace(url)
         }
       }
       .getOrElse(Nil)

@@ -13,16 +13,14 @@ object StringIriUriRegexParser {
   def parse(property: PropertyObject): AmfScalar = AmfScalar(s"${property.value}")
 }
 
-/**
-
-  * TODO this has very similar logic to AnyTypeConverter, we need to review why are we first match by type in tryConvert
-
-  * and then we match by PropertyObject in the same way as we do in AnyTypeConverter. Maybe these logics can be merged or
-
+/** TODO this has very similar logic to AnyTypeConverter, we need to review why are we first match by type in tryConvert
+  *
+  * and then we match by PropertyObject in the same way as we do in AnyTypeConverter. Maybe these logics can be merged
+  * or
+  *
   * make one dependent on the other. Furthermore check why are we including the extra cases for Iri, Str, RegExp and
-
+  *
   * LiteralUri here and not in AnyTypeConverter.
-
   */
 // Left as object to avoid creating instances of it due to AMF Service request.
 

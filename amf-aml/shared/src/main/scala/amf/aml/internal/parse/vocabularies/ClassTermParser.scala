@@ -37,8 +37,9 @@ case class ClassTermParser()(implicit val ctx: VocabularyContext)
     classTerm
   }
 
-  private def parseExtends(classTermMap: YMap, classTerm: ClassTerm, vocabulary: Vocabulary)(
-      implicit ctx: VocabularyContext) = {
+  private def parseExtends(classTermMap: YMap, classTerm: ClassTerm, vocabulary: Vocabulary)(implicit
+      ctx: VocabularyContext
+  ) = {
     classTermMap.key(
         "extends",
         entry => {
@@ -49,15 +50,14 @@ case class ClassTermParser()(implicit val ctx: VocabularyContext)
               term => ctx.missingClassTermWarning(term, classTerm.id, entry.value)
           )
 
-          classTerm.set(ClassTermModel.SubClassOf,
-                        AmfArray(superClasses, Annotations(entry.value)),
-                        Annotations(entry))
+          classTerm.set(ClassTermModel.SubClassOf, AmfArray(superClasses, Annotations(entry.value)), Annotations(entry))
         }
     )
   }
 
-  private def parseProperties(classTermMap: YMap, classTerm: ClassTerm, vocabulary: Vocabulary)(
-      implicit ctx: VocabularyContext) = {
+  private def parseProperties(classTermMap: YMap, classTerm: ClassTerm, vocabulary: Vocabulary)(implicit
+      ctx: VocabularyContext
+  ) = {
     classTermMap.key(
         "properties",
         entry => {
@@ -69,24 +69,28 @@ case class ClassTermParser()(implicit val ctx: VocabularyContext)
           )
 
           if (properties.nonEmpty)
-            classTerm.set(ClassTermModel.Properties,
-                          AmfArray(properties, Annotations(entry.value)),
-                          Annotations(entry))
+            classTerm.set(ClassTermModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
         }
     )
   }
 
   private def parseDescription(classTermMap: YMap, classTerm: ClassTerm) = {
-    classTermMap.key("description", entry => {
-      val value = ValueNode(entry.value)
-      classTerm.set(ClassTermModel.Description, value.string())
-    })
+    classTermMap.key(
+        "description",
+        entry => {
+          val value = ValueNode(entry.value)
+          classTerm.set(ClassTermModel.Description, value.string())
+        }
+    )
   }
 
   private def parseDisplayName(classTermMap: YMap, classTerm: ClassTerm) = {
-    classTermMap.key("displayName", entry => {
-      val value = ValueNode(entry.value)
-      classTerm.set(ClassTermModel.DisplayName, value.string())
-    })
+    classTermMap.key(
+        "displayName",
+        entry => {
+          val value = ValueNode(entry.value)
+          classTerm.set(ClassTermModel.DisplayName, value.string())
+        }
+    )
   }
 }

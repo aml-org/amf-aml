@@ -14,8 +14,9 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YSequence}
 
 object KeyValuePropertyParser {
 
-  def parse(id: String, propertyEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(
-      implicit ctx: DialectInstanceContext): Unit = {
+  def parse(id: String, propertyEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(implicit
+      ctx: DialectInstanceContext
+  ): Unit = {
     val (propertyKeyMapping, propertyValueMapping) = computeMapKeyAndValueFrom(property)
     if (propertyKeyMapping.isDefined && propertyValueMapping.isDefined) {
       val nested = ctx.dialect.declares.find(_.id == property.objectRange().head.value()) match {
@@ -32,9 +33,11 @@ object KeyValuePropertyParser {
               .withDefinedBy(nodeMapping)
               .withInstanceTypes(effectiveTypes)
             try {
-              nestedNode.set(Field(Str, ValueType(propertyKeyMapping.get)),
-                             AmfScalar(pair.key.as[YScalar].text),
-                             Annotations(pair.key))
+              nestedNode.set(
+                  Field(Str, ValueType(propertyKeyMapping.get)),
+                  AmfScalar(pair.key.as[YScalar].text),
+                  Annotations(pair.key)
+              )
 
               if (valueAllowsMultiple) {
                 pair.value.value match {
@@ -45,22 +48,23 @@ object KeyValuePropertyParser {
                         Annotations(pair.value)
                     )
                   case scalar: YScalar =>
-                    nestedNode.set(Field(Array(Str), ValueType(propertyValueMapping.get)),
-                                   AmfArray(Seq(AmfScalar(scalar.text))),
-                                   Annotations(pair.value))
+                    nestedNode.set(
+                        Field(Array(Str), ValueType(propertyValueMapping.get)),
+                        AmfArray(Seq(AmfScalar(scalar.text))),
+                        Annotations(pair.value)
+                    )
                   case _ => // ignore
                 }
               } else {
-                nestedNode.set(Field(Str, ValueType(propertyValueMapping.get)),
-                               AmfScalar(pair.value.as[YScalar].text),
-                               Annotations(pair.value))
+                nestedNode.set(
+                    Field(Str, ValueType(propertyValueMapping.get)),
+                    AmfScalar(pair.value.as[YScalar].text),
+                    Annotations(pair.value)
+                )
               }
             } catch {
               case e: UnknownMapKeyProperty =>
-                ctx.eh.violation(DialectError,
-                                 e.id,
-                                 s"Cannot find mapping for key map property ${e.id}",
-                                 pair.location)
+                ctx.eh.violation(DialectError, e.id, s"Cannot find mapping for key map property ${e.id}", pair.location)
             }
             Some(nestedNode)
           }
@@ -77,10 +81,12 @@ object KeyValuePropertyParser {
       node.withObjectCollectionProperty(property, nested, Left(propertyEntry.key))
 
     } else {
-      ctx.eh.violation(DialectError,
-                       id,
-                       s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
-                       propertyEntry.location)
+      ctx.eh.violation(
+          DialectError,
+          id,
+          s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
+          propertyEntry.location
+      )
     }
   }
 

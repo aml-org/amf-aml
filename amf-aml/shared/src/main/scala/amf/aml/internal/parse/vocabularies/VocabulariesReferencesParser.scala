@@ -27,21 +27,22 @@ case class VocabulariesReferencesParser(map: YMap, references: Seq[ParsedReferen
           entry.value
             .as[YMap]
             .entries
-            .foreach(
-                e => {
-                  val alias: String = e.key.as[YScalar].text
-                  val url: String   = e.value.as[YScalar].text
-                  target(url)
-                    .foreach {
-                      case module: DeclaresModel =>
-                        result += (alias, collectAlias(module, alias -> ReferencedInfo(module.id, module.id, url)))
-                      case other =>
-                        ctx.eh.violation(ExpectedVocabularyModule,
-                                         id,
-                                         s"Expected vocabulary module but found: $other",
-                                         e.location) // todo Uses should only reference modules...
-                    }
-                })
+            .foreach(e => {
+              val alias: String = e.key.as[YScalar].text
+              val url: String   = e.value.as[YScalar].text
+              target(url)
+                .foreach {
+                  case module: DeclaresModel =>
+                    result += (alias, collectAlias(module, alias -> ReferencedInfo(module.id, module.id, url)))
+                  case other =>
+                    ctx.eh.violation(
+                        ExpectedVocabularyModule,
+                        id,
+                        s"Expected vocabulary module but found: $other",
+                        e.location
+                    ) // todo Uses should only reference modules...
+                }
+            })
     )
   }
 

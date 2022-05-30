@@ -13,8 +13,9 @@ import amf.core.internal.utils.UriUtils
  */
 object JsonPointerResolver extends NodeMappableHelper with PlatformSecrets {
 
-  def resolveJSONPointer(map: YMap, mapping: NodeMappable, id: String, root: Root)(
-      implicit ctx: DialectInstanceContext): DialectDomainElement = {
+  def resolveJSONPointer(map: YMap, mapping: NodeMappable, id: String, root: Root)(implicit
+      ctx: DialectInstanceContext
+  ): DialectDomainElement = {
     val mappingIds = allNodeMappingIds(mapping)
     val entry      = map.key("$ref").get
     val pointer    = entry.value.as[String]

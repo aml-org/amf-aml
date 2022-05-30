@@ -42,7 +42,8 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     if (isLink)
       linkTarget.map(_.id.split("#").last.split("/").last).getOrElse {
         throw new Exception(s"Cannot produce local reference without linked element at elem $id")
-      } else id.split("#").last.split("/").last
+      }
+    else id.split("#").last.split("/").last
   }
 
   def includeName: String = {
@@ -52,7 +53,8 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         .getOrElse(
             linkTarget
               .map(_.id.split("#").head)
-              .getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id")))
+              .getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id"))
+        )
     else
       throw new Exception(s"Cannot produce include reference without linked element at elem $id")
   }
@@ -107,14 +109,18 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   def withLiteralProperty(propertyIri: String, value: List[Any]): this.type =
     setLiteralPropertyBase(propertyIri, value)
 
-  private[amf] def setObjectField(property: PropertyMapping,
-                                  value: DialectDomainElement,
-                                  node: YNode): DialectDomainElement =
+  private[amf] def setObjectField(
+      property: PropertyMapping,
+      value: DialectDomainElement,
+      node: YNode
+  ): DialectDomainElement =
     withObjectField(property, value, Left(node))
 
-  private[amf] def withObjectField(property: PropertyLikeMapping[_],
-                                   value: DialectDomainElement,
-                                   node: Either[YNode, YMapEntry]): DialectDomainElement = {
+  private[amf] def withObjectField(
+      property: PropertyLikeMapping[_],
+      value: DialectDomainElement,
+      node: Either[YNode, YMapEntry]
+  ): DialectDomainElement = {
     val (annotations, _) = getAnnotationsOf(node)
     if (value.isUnresolved) {
       value.toFutureRef {
@@ -122,10 +128,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
           val f = property.toField()
           set(
               f,
-              resolveUnreferencedLink(value.refName,
-                                      value.annotations,
-                                      resolvedDialectDomainElement,
-                                      value.supportsRecursion.option().getOrElse(false))
+              resolveUnreferencedLink(
+                  value.refName,
+                  value.annotations,
+                  resolvedDialectDomainElement,
+                  value.supportsRecursion.option().getOrElse(false)
+              )
                 .withId(value.id),
               annotations
           )
@@ -140,14 +148,18 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
-  private[amf] def withObjectCollectionProperty(property: PropertyLikeMapping[_],
-                                                value: Seq[DialectDomainElement],
-                                                node: YNode): DialectDomainElement =
+  private[amf] def withObjectCollectionProperty(
+      property: PropertyLikeMapping[_],
+      value: Seq[DialectDomainElement],
+      node: YNode
+  ): DialectDomainElement =
     withObjectCollectionProperty(property, value, Left(node))
 
-  private[amf] def withObjectCollectionProperty(property: PropertyLikeMapping[_],
-                                                value: Seq[DialectDomainElement],
-                                                node: Either[YNode, YMapEntry]): DialectDomainElement = {
+  private[amf] def withObjectCollectionProperty(
+      property: PropertyLikeMapping[_],
+      value: Seq[DialectDomainElement],
+      node: Either[YNode, YMapEntry]
+  ): DialectDomainElement = {
     val f                               = property.toField()
     val (annotations, annotationsValue) = getAnnotationsOf(node)
     value match {
@@ -170,10 +182,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
-  private[amf] def setProperty(property: PropertyLikeMapping[_],
-                               value: Any,
-                               scalarAnn: Annotations,
-                               fieldAnn: Annotations): DialectDomainElement = {
+  private[amf] def setProperty(
+      property: PropertyLikeMapping[_],
+      value: Any,
+      scalarAnn: Annotations,
+      fieldAnn: Annotations
+  ): DialectDomainElement = {
     set(property.toField(), AmfScalar(value, scalarAnn), fieldAnn)
     this
   }
@@ -189,17 +203,19 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     this
   }
 
-  private[amf] def setProperty(property: PropertyLikeMapping[_],
-                               value: Seq[Any],
-                               entry: YMapEntry): DialectDomainElement = {
+  private[amf] def setProperty(
+      property: PropertyLikeMapping[_],
+      value: Seq[Any],
+      entry: YMapEntry
+  ): DialectDomainElement = {
     set(property.toField(), AmfArray(value.map(AmfScalar(_)), Annotations(entry.value)), Annotations(entry))
     this
   }
 
   private[amf] def objectCollectionProperty(f: Field): Seq[DialectDomainElement] = getObjectByProperty(f.value.iri())
-  private[amf] def objectProperty(f: Field): Option[DialectDomainElement]        = objectCollectionProperty(f).headOption
-  private[amf] def literalProperty(f: Field): Option[Any]                        = literalProperties(f).headOption
-  private[amf] def literalProperties(f: Field): Seq[Any]                         = graph.scalarByField(f)
+  private[amf] def objectProperty(f: Field): Option[DialectDomainElement] = objectCollectionProperty(f).headOption
+  private[amf] def literalProperty(f: Field): Option[Any]                 = literalProperties(f).headOption
+  private[amf] def literalProperties(f: Field): Seq[Any]                  = graph.scalarByField(f)
 
   private[amf] override def componentId: String = "element"
 
@@ -234,9 +250,11 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
   override def meta: DialectDomainElementModel =
     if (instanceTypes.isEmpty) DialectDomainElementModel()
     else {
-      new DialectDomainElementModel(instanceTypes.distinct,
-                                    instanceDefinedBy.map(_.propertiesMapping().map(_.toField)).getOrElse(Seq.empty),
-                                    instanceDefinedBy)
+      new DialectDomainElementModel(
+          instanceTypes.distinct,
+          instanceDefinedBy.map(_.propertiesMapping().map(_.toField)).getOrElse(Seq.empty),
+          instanceDefinedBy
+      )
     }
 
   override def linkCopy(): DialectDomainElement = {
@@ -246,10 +264,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       .withInstanceTypes(instanceTypes)
   }
 
-  override def resolveUnreferencedLink[T](label: String,
-                                          annotations: Annotations,
-                                          unresolved: T,
-                                          supportsRecursion: Boolean): T = {
+  override def resolveUnreferencedLink[T](
+      label: String,
+      annotations: Annotations,
+      unresolved: T,
+      supportsRecursion: Boolean
+  ): T = {
     val unresolvedNodeMapping = unresolved.asInstanceOf[DialectDomainElement]
     val linked: T             = unresolvedNodeMapping.link(label, annotations)
     if (supportsRecursion && linked.isInstanceOf[Linkable])

@@ -12,7 +12,8 @@ import org.yaml.model.YType
 trait DiscriminatorEmitter extends PosExtractor with AliasesConsumer {
 
   def emitDiscriminator[M <: NodeWithDiscriminatorModel](
-      nodeWithDiscriminator: NodeWithDiscriminator[M]): Seq[EntryEmitter] = {
+      nodeWithDiscriminator: NodeWithDiscriminator[M]
+  ): Seq[EntryEmitter] = {
     var emitters: Seq[EntryEmitter] = Seq()
     nodeWithDiscriminator.fields.entry(nodeWithDiscriminator.meta.TypeDiscriminator) foreach { entry =>
       val pos          = fieldPos(nodeWithDiscriminator, entry.field)
@@ -22,12 +23,11 @@ trait DiscriminatorEmitter extends PosExtractor with AliasesConsumer {
           b.entry(
               "typeDiscriminator",
               _.obj { b =>
-                typesMapping.foreach {
-                  case (alias, nodeMappingId) =>
-                    aliasFor(nodeMappingId) match {
-                      case Some(nodeMapping) => b.entry(alias, nodeMapping)
-                      case _                 => b.entry(alias, nodeMappingId)
-                    }
+                typesMapping.foreach { case (alias, nodeMappingId) =>
+                  aliasFor(nodeMappingId) match {
+                    case Some(nodeMapping) => b.entry(alias, nodeMapping)
+                    case _                 => b.entry(alias, nodeMappingId)
+                  }
                 }
               }
           )

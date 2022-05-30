@@ -27,7 +27,8 @@ object InstanceNodeIdHandling {
   }
 
   def idTemplate(node: DialectDomainElement, nodeMap: YMap, path: Seq[String], mapping: NodeMapping, root: Root)(
-      implicit ctx: DialectInstanceContext): String = {
+      implicit ctx: DialectInstanceContext
+  ): String = {
     val template = replaceTemplateVariables(node.id, nodeMap, mapping.idTemplate.value())
     prependRootIfIsRelative(template, path, root)
   }
@@ -50,8 +51,9 @@ object InstanceNodeIdHandling {
     }
   }
 
-  private def replaceTemplateVariables(nodeId: String, nodeMap: YMap, originalTemplate: String)(
-      implicit ctx: DialectInstanceContext): String = {
+  private def replaceTemplateVariables(nodeId: String, nodeMap: YMap, originalTemplate: String)(implicit
+      ctx: DialectInstanceContext
+  ): String = {
     var template = originalTemplate
     // template resolution
     val regex = "(\\{[^}]+\\})".r
@@ -71,14 +73,16 @@ object InstanceNodeIdHandling {
     template
   }
 
-  def generateNodeId(node: DialectDomainElement,
-                     nodeMap: YMap,
-                     path: Seq[String],
-                     encodedDefaultId: String,
-                     mapping: NodeMapping,
-                     additionalProperties: Map[String, Any] = Map(),
-                     rootNode: Boolean,
-                     root: Root)(implicit ctx: DialectInstanceContext): String = {
+  def generateNodeId(
+      node: DialectDomainElement,
+      nodeMap: YMap,
+      path: Seq[String],
+      encodedDefaultId: String,
+      mapping: NodeMapping,
+      additionalProperties: Map[String, Any] = Map(),
+      rootNode: Boolean,
+      root: Root
+  )(implicit ctx: DialectInstanceContext): String = {
     val defaultDecodedId = encodedDefaultId.urlDecoded
     val generatedId =
       if (rootNode && isSelfEncoded)
@@ -103,7 +107,8 @@ object InstanceNodeIdHandling {
       path: Seq[String],
       defaultId: String,
       mapping: NodeMapping,
-      additionalProperties: Map[String, Any] = Map())(implicit ctx: DialectInstanceContext): String = {
+      additionalProperties: Map[String, Any] = Map()
+  )(implicit ctx: DialectInstanceContext): String = {
     var allFound           = true
     var keyId: Seq[String] = Seq()
     mapping.primaryKey().foreach { key =>
@@ -116,15 +121,18 @@ object InstanceNodeIdHandling {
             case Some(v) => keyId = keyId ++ Seq(v.toString)
             case _ =>
               ctx.eh
-                .violation(DialectError,
-                           node.id,
-                           s"Cannot find unique mandatory property '$propertyName'",
-                           nodeMap.location)
+                .violation(
+                    DialectError,
+                    node.id,
+                    s"Cannot find unique mandatory property '$propertyName'",
+                    nodeMap.location
+                )
               allFound = false
           }
       }
     }
-    if (allFound) { path.mkString("/") + "/" + keyId.mkString("_") } else { defaultId }
+    if (allFound) { path.mkString("/") + "/" + keyId.mkString("_") }
+    else { defaultId }
   }
 
   private def isSelfEncoded(implicit ctx: DialectInstanceContext) = {
@@ -145,10 +153,12 @@ object InstanceNodeIdHandling {
 
 trait InstanceNodeIdHandling extends BaseDirectiveOverride { this: DialectInstanceParser =>
 
-  protected def idTemplate(node: DialectDomainElement,
-                           nodeMap: YMap,
-                           path: Seq[String],
-                           mapping: NodeMapping): String = {
+  protected def idTemplate(
+      node: DialectDomainElement,
+      nodeMap: YMap,
+      path: Seq[String],
+      mapping: NodeMapping
+  ): String = {
     InstanceNodeIdHandling.idTemplate(node, nodeMap, path, mapping, root)
   }
 

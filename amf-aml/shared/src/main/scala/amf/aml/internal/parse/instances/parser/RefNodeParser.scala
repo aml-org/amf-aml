@@ -8,8 +8,9 @@ import org.yaml.model.YMap
 
 object RefNodeParser extends NodeMappableHelper {
 
-  def parse(defaultId: String, astMap: YMap, mappable: NodeMappable, root: Root)(
-      implicit ctx: DialectInstanceContext) = {
+  def parse(defaultId: String, astMap: YMap, mappable: NodeMappable, root: Root)(implicit
+      ctx: DialectInstanceContext
+  ) = {
     val ref = JsonPointerResolver.resolveJSONPointer(astMap, mappable, defaultId, root)
     ref.annotations += JsonPointerRef()
     mappable match {

@@ -18,8 +18,7 @@ object RdfSyntaxParsePlugin extends AMFSyntaxParsePlugin with RdfPlatformSecrets
 
   override def mainMediaType: String = Mimes.`text/n3`
 
-  /**
-    * media types which specifies vendors that are parsed by this plugin.
+  /** media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String]                 = Seq(Mimes.`text/n3`)
   override def applies(element: CharSequence): Boolean = true

@@ -7,8 +7,7 @@ import org.apache.jena.util.FileUtils
 
 import java.io.StringWriter
 
-/**
-  * Transforms a RDF Model into a JSON-LD string
+/** Transforms a RDF Model into a JSON-LD string
   */
 object RDFPrinter {
 

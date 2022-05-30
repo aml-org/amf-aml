@@ -8,14 +8,15 @@ import amf.aml.client.scala.model.domain.{ClassTerm, External, PropertyTerm}
 
 import scala.util.{Failure, Success, Try}
 
-class VocabularyDeclarations(var externals: Map[String, External] = Map(),
-                             var classTerms: Map[String, ClassTerm] = Map(),
-                             var propertyTerms: Map[String, PropertyTerm] = Map(),
-                             var usedVocabs: Map[String, Vocabulary] = Map(),
-                             libs: Map[String, VocabularyDeclarations] = Map(),
-                             errorHandler: AMFErrorHandler,
-                             futureDeclarations: FutureDeclarations)
-    extends Declarations(libs, Map(), Map(), errorHandler, futureDeclarations) {
+class VocabularyDeclarations(
+    var externals: Map[String, External] = Map(),
+    var classTerms: Map[String, ClassTerm] = Map(),
+    var propertyTerms: Map[String, PropertyTerm] = Map(),
+    var usedVocabs: Map[String, Vocabulary] = Map(),
+    libs: Map[String, VocabularyDeclarations] = Map(),
+    errorHandler: AMFErrorHandler,
+    futureDeclarations: FutureDeclarations
+) extends Declarations(libs, Map(), Map(), errorHandler, futureDeclarations) {
 
   def registerTerm(term: PropertyTerm): Unit = {
     if (!term.name.value().contains(".")) {

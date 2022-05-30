@@ -17,10 +17,10 @@ class AMLElementClient private[amf] (private val _internal: InternalAMLElementCl
     this(new InternalAMLElementClient(configuration))
   }
 
-  /**
-    * Currently supports rendering of dialect domain elements
+  /** Currently supports rendering of dialect domain elements
     *
-    * @param references : optional parameter which will improve emission of references defined in element
+    * @param references
+    *   : optional parameter which will improve emission of references defined in element
     */
   override def renderToBuilder[T](element: DomainElement, builder: DocBuilder[T]): Unit = {
     AmlDomainElementEmitter.emitToBuilder(element, getConfiguration(), builder)

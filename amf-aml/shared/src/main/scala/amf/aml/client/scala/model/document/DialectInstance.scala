@@ -30,9 +30,10 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
 
   private[amf] override def componentId: String = ""
 
-  override def transform(selector: DomainElement => Boolean,
-                         transformation: (DomainElement, Boolean) => Option[DomainElement])(
-      implicit errorHandler: AMFErrorHandler): BaseUnit = {
+  override def transform(
+      selector: DomainElement => Boolean,
+      transformation: (DomainElement, Boolean) => Option[DomainElement]
+  )(implicit errorHandler: AMFErrorHandler): BaseUnit = {
     val domainElementAdapter  = new DomainElementSelectorAdapter(selector)
     val transformationAdapter = new DomainElementTransformationAdapter(transformation)
     val transformationData    = TransformationData(domainElementAdapter, transformationAdapter)

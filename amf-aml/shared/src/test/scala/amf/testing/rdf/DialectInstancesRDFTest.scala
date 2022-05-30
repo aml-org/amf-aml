@@ -48,40 +48,50 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with FileAssertionTe
   }
 
   test("RDF 1 Vocabulary full test") {
-    cycleFullRdf("example1.yaml",
-                 "example1.yaml",
-                 "amf-aml/shared/src/test/resources/vocabularies2/vocabularies/",
-                 syntax = Some(Syntax.Yaml))
+    cycleFullRdf(
+        "example1.yaml",
+        "example1.yaml",
+        "amf-aml/shared/src/test/resources/vocabularies2/vocabularies/",
+        syntax = Some(Syntax.Yaml)
+    )
   }
 
   test("RDF 1 Dialect full test") {
-    cycleFullRdf("example1.yaml",
-                 "example1.yaml",
-                 "amf-aml/shared/src/test/resources/vocabularies2/dialects/",
-                 syntax = Some(Syntax.Yaml))
+    cycleFullRdf(
+        "example1.yaml",
+        "example1.yaml",
+        "amf-aml/shared/src/test/resources/vocabularies2/dialects/",
+        syntax = Some(Syntax.Yaml)
+    )
   }
 
   test("EngDemos vocabulary test") {
-    cycleFullRdf("eng_demos.yaml",
-                 "eng_demos.yaml",
-                 "amf-aml/shared/src/test/resources/vocabularies2/production/",
-                 syntax = Some(Syntax.Yaml))
+    cycleFullRdf(
+        "eng_demos.yaml",
+        "eng_demos.yaml",
+        "amf-aml/shared/src/test/resources/vocabularies2/production/",
+        syntax = Some(Syntax.Yaml)
+    )
   }
 
   test("Container Configuration 0.2 ex1 test") {
-    cycleFullRdfWithDialect("dialect.yaml",
-                            "ex1.yaml",
-                            "ex1.yaml",
-                            syntax = Some(Syntax.Yaml),
-                            "amf-aml/shared/src/test/resources/vocabularies2/production/system2/")
+    cycleFullRdfWithDialect(
+        "dialect.yaml",
+        "ex1.yaml",
+        "ex1.yaml",
+        syntax = Some(Syntax.Yaml),
+        "amf-aml/shared/src/test/resources/vocabularies2/production/system2/"
+    )
   }
 
   test("Container Configuration 0.2 ex2 test") {
-    cycleFullRdfWithDialect("dialect.yaml",
-                            "ex2.yaml",
-                            "ex2.yaml",
-                            syntax = Some(Syntax.Yaml),
-                            "amf-aml/shared/src/test/resources/vocabularies2/production/system2/")
+    cycleFullRdfWithDialect(
+        "dialect.yaml",
+        "ex2.yaml",
+        "ex2.yaml",
+        syntax = Some(Syntax.Yaml),
+        "amf-aml/shared/src/test/resources/vocabularies2/production/system2/"
+    )
   }
 
   test("Dialect instance with array of any") {
@@ -112,22 +122,26 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with FileAssertionTe
     }
   }
 
-  private def cycleRdfWithDialect(dialect: String,
-                                  source: String,
-                                  golden: String,
-                                  syntax: Option[Syntax],
-                                  directory: String = basePath) = {
+  private def cycleRdfWithDialect(
+      dialect: String,
+      source: String,
+      golden: String,
+      syntax: Option[Syntax],
+      directory: String = basePath
+  ) = {
 
     withDialect(s"file://$directory/$dialect") { (_, config) =>
       cycleRdf(source, golden, config, syntax = syntax)
     }
   }
 
-  private def cycleFullRdfWithDialect(dialect: String,
-                                      source: String,
-                                      golden: String,
-                                      syntax: Option[Syntax],
-                                      directory: String = basePath) = {
+  private def cycleFullRdfWithDialect(
+      dialect: String,
+      source: String,
+      golden: String,
+      syntax: Option[Syntax],
+      directory: String = basePath
+  ) = {
     withDialect(s"file://$directory/$dialect") { (_, config) =>
       cycleFullRdf(source, golden, directory, config, syntax)
     }

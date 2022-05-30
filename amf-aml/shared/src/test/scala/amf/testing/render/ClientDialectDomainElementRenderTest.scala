@@ -9,9 +9,9 @@ import scala.concurrent.ExecutionContext
 
 class ClientDialectDomainElementRenderTest extends ClientDomainElementTests {
   override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  override val basePath: String                            = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
-  override val baseHint: Hint                              = VocabularyYamlHint
-  val rendering: String                                    = "amf-aml/shared/src/test/resources/vocabularies2/rendering"
+  override val basePath: String = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
+  override val baseHint: Hint   = VocabularyYamlHint
+  val rendering: String         = "amf-aml/shared/src/test/resources/vocabularies2/rendering"
 
   val encodes: BaseUnit => Option[DomainElement] = {
     case e: EncodesModel =>
@@ -20,11 +20,13 @@ class ClientDialectDomainElementRenderTest extends ClientDomainElementTests {
   }
 
   test("Simple node union rendering") {
-    renderElement("dialect.yaml",
-                  "instance.yaml",
-                  encodes,
-                  "instance-encodes.yaml",
-                  directory = s"$rendering/simple-node-union")
+    renderElement(
+        "dialect.yaml",
+        "instance.yaml",
+        encodes,
+        "instance-encodes.yaml",
+        directory = s"$rendering/simple-node-union"
+    )
   }
 
   test("render 1 (AMF) test") {

@@ -19,8 +19,9 @@ class AMLValidationPlugin() extends AMFValidatePlugin {
 
   override def applies(info: ValidationInfo): Boolean = info.baseUnit.isInstanceOf[DialectInstanceUnit]
 
-  override def validate(unit: BaseUnit, options: ValidationOptions)(
-      implicit executionContext: ExecutionContext): Future[ValidationResult] = {
+  override def validate(unit: BaseUnit, options: ValidationOptions)(implicit
+      executionContext: ExecutionContext
+  ): Future[ValidationResult] = {
     AMLValidator.validate(unit, options)
   }
 }

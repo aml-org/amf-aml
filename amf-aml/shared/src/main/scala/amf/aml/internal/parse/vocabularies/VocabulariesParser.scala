@@ -44,26 +44,24 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
     parsePropertyTerms(map)
 
     val declarables = ctx.terms()
-    val imported = ctx.imported map {
-      case (alias, library) =>
-        VocabularyReference()
-          .withAlias(alias)
-          .withReference(library.id)
-          .withBase(library.base.value())
-          .adopted(vocabulary.id)
+    val imported = ctx.imported map { case (alias, library) =>
+      VocabularyReference()
+        .withAlias(alias)
+        .withReference(library.id)
+        .withBase(library.base.value())
+        .adopted(vocabulary.id)
     }
     if (imported.nonEmpty)
       vocabulary.withImports(imported.toSeq)
     addDeclarationsToModel(vocabulary, declarables)
     if (references.nonEmpty) vocabulary.withReferences(references.baseUnitReferences())
     // we raise exceptions for missing terms
-    ctx.pendingLocal.foreach {
-      case (term, alias, location, isProperty) =>
-        if (isProperty) {
-          ctx.missingPropertyTermWarning(term, vocabulary.id, location)
-        } else {
-          ctx.missingClassTermWarning(term, vocabulary.id, location)
-        }
+    ctx.pendingLocal.foreach { case (term, alias, location, isProperty) =>
+      if (isProperty) {
+        ctx.missingPropertyTermWarning(term, vocabulary.id, location)
+      } else {
+        ctx.missingClassTermWarning(term, vocabulary.id, location)
+      }
     }
 
     vocabulary.processingData.withSourceSpec(AML)
@@ -71,10 +69,13 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
   }
 
   private def parseUsage(vocabulary: Vocabulary) = {
-    map.key("usage", entry => {
-      val value = ValueNode(entry.value)
-      vocabulary.set(VocabularyModel.Usage, value.string(), Annotations(entry))
-    })
+    map.key(
+        "usage",
+        entry => {
+          val value = ValueNode(entry.value)
+          vocabulary.set(VocabularyModel.Usage, value.string(), Annotations(entry))
+        }
+    )
   }
 
   private def parseBase(vocabulary: Vocabulary) = {

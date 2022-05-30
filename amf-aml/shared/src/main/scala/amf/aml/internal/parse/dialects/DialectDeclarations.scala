@@ -10,11 +10,12 @@ import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.vocabularies.VocabularyDeclarations
 import org.yaml.model.YPart
 
-class DialectDeclarations(var nodeMappings: Map[String, NodeMappable[_]] = Map(),
-                          var annotationMappings: Map[String, AnnotationMapping] = Map(),
-                          errorHandler: AMFErrorHandler,
-                          futureDeclarations: FutureDeclarations)
-    extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
+class DialectDeclarations(
+    var nodeMappings: Map[String, NodeMappable[_]] = Map(),
+    var annotationMappings: Map[String, AnnotationMapping] = Map(),
+    errorHandler: AMFErrorHandler,
+    futureDeclarations: FutureDeclarations
+) extends VocabularyDeclarations(Map(), Map(), Map(), Map(), Map(), errorHandler, futureDeclarations) {
 
   type NodeMappable = NodeMappable.AnyNodeMappable
 
@@ -49,8 +50,8 @@ class DialectDeclarations(var nodeMappings: Map[String, NodeMappable[_]] = Map()
   }
 
   def findNodeMapping(key: String, scope: SearchScope.Scope): Option[NodeMappable] = {
-    findForType(key, _.asInstanceOf[DialectDeclarations].nodeMappings, scope) collect {
-      case nm: NodeMappable => nm
+    findForType(key, _.asInstanceOf[DialectDeclarations].nodeMappings, scope) collect { case nm: NodeMappable =>
+      nm
     }
   }
 

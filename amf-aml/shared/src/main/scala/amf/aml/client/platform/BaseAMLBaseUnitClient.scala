@@ -16,28 +16,31 @@ abstract class BaseAMLBaseUnitClient private[amf] (private val _internal: Intern
 
   protected implicit val ec: ExecutionContext = _internal.getConfiguration.getExecutionContext
 
-  /**
-    * parse a [[amf.aml.client.scala.model.document.Dialect]]
+  /** parse a [[amf.aml.client.scala.model.document.Dialect]]
     *
-    * @param url of the resource to parse
-    * @return a CompletableFuture [[AMLDialectResult]]
+    * @param url
+    *   of the resource to parse
+    * @return
+    *   a CompletableFuture [[AMLDialectResult]]
     */
   def parseDialect(url: String): ClientFuture[AMLDialectResult] = _internal.parseDialect(url).asClient
 
-  /**
-    * parse a [[amf.aml.client.scala.model.document.DialectInstance]]
+  /** parse a [[amf.aml.client.scala.model.document.DialectInstance]]
     *
-    * @param url of the resource to parse
-    * @return a CompletableFuture [[AMLDialectInstanceResult]]
+    * @param url
+    *   of the resource to parse
+    * @return
+    *   a CompletableFuture [[AMLDialectInstanceResult]]
     */
   def parseDialectInstance(url: String): ClientFuture[AMLDialectInstanceResult] =
     _internal.parseDialectInstance(url).asClient
 
-  /**
-    * parse a [[amf.aml.client.scala.model.document.Vocabulary]]
+  /** parse a [[amf.aml.client.scala.model.document.Vocabulary]]
     *
-    * @param url of the resource to parse
-    * @return a CompletableFuture [[AMLVocabularyResult]]
+    * @param url
+    *   of the resource to parse
+    * @return
+    *   a CompletableFuture [[AMLVocabularyResult]]
     */
   def parseVocabulary(url: String): ClientFuture[AMLVocabularyResult] = _internal.parseVocabulary(url).asClient
 }

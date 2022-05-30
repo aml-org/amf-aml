@@ -20,13 +20,15 @@ trait DialectTests
     with DialectRegistrationHelper {
   val basePath: String
 
-  protected def cycleWithDialect(dialect: String,
-                                 source: String,
-                                 golden: String,
-                                 mediaType: Option[String],
-                                 directory: String = basePath,
-                                 renderOptions: Option[RenderOptions] = None,
-                                 baseConfig: AMLConfiguration = AMLConfiguration.predefined()): Future[Assertion] = {
+  protected def cycleWithDialect(
+      dialect: String,
+      source: String,
+      golden: String,
+      mediaType: Option[String],
+      directory: String = basePath,
+      renderOptions: Option[RenderOptions] = None,
+      baseConfig: AMLConfiguration = AMLConfiguration.predefined()
+  ): Future[Assertion] = {
     withDialect(s"file://$directory/$dialect") { (_, configuration) =>
       val config = renderOptions.fold(configuration)(r => configuration.withRenderOptions(r))
       val nextConfig = baseConfig.configurationState().getDialects().foldLeft(config) { (config, dialect) =>
@@ -59,11 +61,13 @@ trait DialectTests
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withPrettyPrint.withSourceMaps
 
-  final def cycle(source: String,
-                  golden: String,
-                  mediaType: Option[String],
-                  amlConfig: AMLConfiguration = AMLConfiguration.predefined(),
-                  directory: String = basePath): Future[Assertion] = {
+  final def cycle(
+      source: String,
+      golden: String,
+      mediaType: Option[String],
+      amlConfig: AMLConfiguration = AMLConfiguration.predefined(),
+      directory: String = basePath
+  ): Future[Assertion] = {
 
     for {
       b <- parse(s"file://$directory/$source", platform, amlConfig)

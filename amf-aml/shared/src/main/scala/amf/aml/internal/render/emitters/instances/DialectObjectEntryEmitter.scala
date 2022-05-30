@@ -25,7 +25,8 @@ private case class DialectObjectEntryEmitter[M <: PropertyLikeMappingModel](
     ordering: SpecOrdering,
     renderOptions: RenderOptions,
     annotations: Option[Annotations] = None,
-    registry: AMLRegistry)(implicit val nodeMappableFinder: NodeMappableFinder)
+    registry: AMLRegistry
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AmlEmittersHelper {
 
@@ -57,11 +58,11 @@ private case class DialectObjectEntryEmitter[M <: PropertyLikeMappingModel](
       elements.foldLeft(Map[DialectNodeEmitter, DialectDomainElement]()) {
         case (acc, dialectDomainElement: DialectDomainElement) =>
           // Let's see if this element has a discriminator to add
-          nodeMappings.find(
-              nodeMapping =>
-                dialectDomainElement.meta.`type`
-                  .map(_.iri())
-                  .exists(i => i == nodeMapping.nodetypeMapping.value() || i == nodeMapping.id)) match {
+          nodeMappings.find(nodeMapping =>
+            dialectDomainElement.meta.`type`
+              .map(_.iri())
+              .exists(i => i == nodeMapping.nodetypeMapping.value() || i == nodeMapping.id)
+          ) match {
             case Some(nextNodeMapping) =>
               val nodeEmitter = DialectNodeEmitter(
                   dialectDomainElement,
@@ -93,9 +94,11 @@ private case class DialectObjectEntryEmitter[M <: PropertyLikeMappingModel](
     }
   }
 
-  private def emitMap(b: EntryBuilder,
-                      mapElements: Map[DialectNodeEmitter, DialectDomainElement],
-                      keyPropertyIdValue: String): Unit = {
+  private def emitMap(
+      b: EntryBuilder,
+      mapElements: Map[DialectNodeEmitter, DialectDomainElement],
+      keyPropertyIdValue: String
+  ): Unit = {
     b.entry(
         key,
         _.obj { b =>
@@ -114,9 +117,12 @@ private case class DialectObjectEntryEmitter[M <: PropertyLikeMappingModel](
   }
 
   def emitArray(b: EntryBuilder, mappedElements: Map[DialectNodeEmitter, DialectDomainElement]): Unit = {
-    b.entry(key, _.list { b =>
-      ordering.sorted(mappedElements.keys.toSeq).foreach(_.emit(b))
-    })
+    b.entry(
+        key,
+        _.list { b =>
+          ordering.sorted(mappedElements.keys.toSeq).foreach(_.emit(b))
+        }
+    )
   }
 
   def emitSingleElement(b: EntryBuilder, mappedElements: Map[DialectNodeEmitter, DialectDomainElement]): Unit = {

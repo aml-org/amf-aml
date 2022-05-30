@@ -13,10 +13,10 @@ import amf.aml.internal.validate.DialectValidations.DialectError
 import org.yaml.model.YMap
 
 case class PropertyTermParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(
-    implicit val ctx: DialectContext) {
+    implicit val ctx: DialectContext
+) {
 
-  /**
-    * Requires that the property like mapping has a name for fallback to work
+  /** Requires that the property like mapping has a name for fallback to work
     */
   def parse(): Unit = {
     map.key("propertyTerm") match {
@@ -25,14 +25,18 @@ case class PropertyTermParser(map: YMap, propertyLikeMapping: PropertyLikeMappin
         val propertyTermId = value.string().toString
         ctx.declarations.findPropertyTerm(propertyTermId, SearchScope.All) match {
           case Some(propertyTerm) =>
-            propertyLikeMapping.set(NodePropertyMapping,
-                                    AmfScalar(propertyTerm.id, Annotations(e.value)),
-                                    Annotations(e))
+            propertyLikeMapping.set(
+                NodePropertyMapping,
+                AmfScalar(propertyTerm.id, Annotations(e.value)),
+                Annotations(e)
+            )
           case _ =>
-            ctx.eh.violation(DialectError,
-                             propertyLikeMapping.id,
-                             s"Cannot find property term with alias $propertyTermId",
-                             e.value.location)
+            ctx.eh.violation(
+                DialectError,
+                propertyLikeMapping.id,
+                s"Cannot find property term with alias $propertyTermId",
+                e.value.location
+            )
         }
       case _ =>
         val name = propertyLikeMapping.name().value()

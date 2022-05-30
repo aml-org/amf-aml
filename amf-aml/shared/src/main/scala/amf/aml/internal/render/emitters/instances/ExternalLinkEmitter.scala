@@ -27,7 +27,8 @@ case class ExternalLinkEmitter[M <: PropertyLikeMappingModel](
     references: Seq[BaseUnit],
     ordering: SpecOrdering,
     renderOptions: RenderOptions,
-    registry: AMLRegistry)(implicit val nodeMappableFinder: NodeMappableFinder)
+    registry: AMLRegistry
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AmlEmittersHelper {
   override def emit(b: YDocument.EntryBuilder): Unit = {
@@ -37,28 +38,27 @@ case class ExternalLinkEmitter[M <: PropertyLikeMappingModel](
           target match {
             case array: AmfArray =>
               e.list(l => {
-                array.values.asInstanceOf[Seq[DialectDomainElement]].foreach {
-                  elem =>
-                    if (elem.fields.nonEmpty) { // map reference
-                      nodeMappingForObjectProperty(propertyMapping, elem) match {
-                        case Some(rangeMapping) =>
-                          DialectNodeEmitter(
-                              elem,
-                              rangeMapping,
-                              references,
-                              dialect,
-                              ordering,
-                              discriminator = None,
-                              keyPropertyId = keyPropertyId,
-                              renderOptions = renderOptions,
-                              registry = registry
-                          ).emit(l)
-                        case _ => // ignore, error
-                      }
-                    } else { // just link
-                      emitCustomId(elem, l)
-                      emitCustomBase(elem, l)
+                array.values.asInstanceOf[Seq[DialectDomainElement]].foreach { elem =>
+                  if (elem.fields.nonEmpty) { // map reference
+                    nodeMappingForObjectProperty(propertyMapping, elem) match {
+                      case Some(rangeMapping) =>
+                        DialectNodeEmitter(
+                            elem,
+                            rangeMapping,
+                            references,
+                            dialect,
+                            ordering,
+                            discriminator = None,
+                            keyPropertyId = keyPropertyId,
+                            renderOptions = renderOptions,
+                            registry = registry
+                        ).emit(l)
+                      case _ => // ignore, error
                     }
+                  } else { // just link
+                    emitCustomId(elem, l)
+                    emitCustomBase(elem, l)
+                  }
                 }
               })
             case element: DialectDomainElement =>
@@ -69,18 +69,20 @@ case class ExternalLinkEmitter[M <: PropertyLikeMappingModel](
     )
   }
 
-  protected def nodeMappingForObjectProperty(propertyMapping: PropertyLikeMapping[_],
-                                             dialectDomainElement: DialectDomainElement): Option[NodeMappable] = {
+  protected def nodeMappingForObjectProperty(
+      propertyMapping: PropertyLikeMapping[_],
+      dialectDomainElement: DialectDomainElement
+  ): Option[NodeMappable] = {
     // this can be multiple mappings if we have a union in the range or a range pointing to a union mapping
     val nodeMappings: Seq[NodeMapping] =
       propertyMapping.objectRange().flatMap { rangeNodeMapping =>
         findAllNodeMappings(rangeNodeMapping.value())
       }
-    nodeMappings.find(
-        nodeMapping =>
-          dialectDomainElement.meta.`type`
-            .map(_.iri())
-            .exists(i => i == nodeMapping.nodetypeMapping.value() || i == nodeMapping.id))
+    nodeMappings.find(nodeMapping =>
+      dialectDomainElement.meta.`type`
+        .map(_.iri())
+        .exists(i => i == nodeMapping.nodetypeMapping.value() || i == nodeMapping.id)
+    )
   }
 
   private def emitCustomId(elem: DialectDomainElement, b: PartBuilder): Unit = {

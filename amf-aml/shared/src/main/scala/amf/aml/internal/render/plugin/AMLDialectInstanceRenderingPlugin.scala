@@ -15,9 +15,9 @@ import com.github.ghik.silencer.silent
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}
 import org.yaml.model.YDocument
 
-/**
-  * Parsing plugin for dialect instance like units derived from a resolved dialect
-  * @param dialect resolved dialect
+/** Parsing plugin for dialect instance like units derived from a resolved dialect
+  * @param dialect
+  *   resolved dialect
   */
 class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
     extends SYAMLBasedRenderPlugin
@@ -26,10 +26,12 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
 
   override def priority: PluginPriority = NormalPriority
 
-  override def emit[T](unit: BaseUnit,
-                       builder: ASTBuilder[T],
-                       config: RenderConfiguration,
-                       mediaType: String): Boolean = {
+  override def emit[T](
+      unit: BaseUnit,
+      builder: ASTBuilder[T],
+      config: RenderConfiguration,
+      mediaType: String
+  ): Boolean = {
     builder match {
       case sb: SYAMLASTBuilder =>
         unparse(unit, config) exists { doc =>
@@ -41,15 +43,17 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
   }
 
   private def unparse(unit: BaseUnit, config: RenderConfiguration) = {
-    val dialects = config.renderPlugins.collect {
-      case plugin: AMLDialectInstanceRenderingPlugin => plugin.dialect
+    val dialects = config.renderPlugins.collect { case plugin: AMLDialectInstanceRenderingPlugin =>
+      plugin.dialect
     }
     val finder = DefaultNodeMappableFinder(dialects)
     unit match {
       case instance: DialectInstanceUnit =>
         Some(
             DialectInstancesEmitter(instance, dialect, config.renderOptions, AMLRegistry(config.registry, dialects))(
-                finder).emitInstance())
+                finder
+            ).emitInstance()
+        )
       case _ => None
     }
   }
@@ -67,8 +71,10 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
   override def mediaTypes: Seq[String] =
     Seq(`application/yaml`, `application/json`)
 
-  override protected def unparseAsYDocument(unit: BaseUnit,
-                                            renderConfig: RenderConfiguration,
-                                            errorHandler: AMFErrorHandler): Option[YDocument] =
+  override protected def unparseAsYDocument(
+      unit: BaseUnit,
+      renderConfig: RenderConfiguration,
+      errorHandler: AMFErrorHandler
+  ): Option[YDocument] =
     throw new UnsupportedOperationException("Unreachable code")
 }

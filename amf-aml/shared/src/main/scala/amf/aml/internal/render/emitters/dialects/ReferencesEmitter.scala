@@ -14,9 +14,12 @@ case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases
   val modules: Seq[BaseUnit with DeclaresModel] = baseUnit.references.collect({ case m: DeclaresModel => m })
   override def emit(b: EntryBuilder): Unit = {
     if (modules.nonEmpty) {
-      b.entry("uses", _.obj { b =>
-        traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, aliases))), b)
-      })
+      b.entry(
+          "uses",
+          _.obj { b =>
+            traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, aliases))), b)
+          }
+      )
     }
   }
 

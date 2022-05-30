@@ -12,9 +12,11 @@ object NodeMappingModel extends AnyMappingModel with ClosedModel {
   val NodeTypeMapping: Field = Field(
       Iri,
       Namespace.Shacl + "targetClass",
-      ModelDoc(ExternalModelVocabularies.Shacl,
-               "targetClass",
-               "Target class whose instances will need to match the constraint described for the node")
+      ModelDoc(
+          ExternalModelVocabularies.Shacl,
+          "targetClass",
+          "Target class whose instances will need to match the constraint described for the node"
+      )
   )
   val PropertiesMapping: Field = Field(
       Array(PropertyMappingModel),
@@ -24,9 +26,11 @@ object NodeMappingModel extends AnyMappingModel with ClosedModel {
   val IdTemplate: Field = Field(
       Str,
       Namespace.ApiContract + "uriTemplate",
-      ModelDoc(ModelVocabularies.ApiContract,
-               "uriTemplate",
-               "URI template that will be used to generate the URI of the parsed nodeds in the graph")
+      ModelDoc(
+          ModelVocabularies.ApiContract,
+          "uriTemplate",
+          "URI template that will be used to generate the URI of the parsed nodeds in the graph"
+      )
   )
   val ResolvedExtends: Field = Field(Array(Iri), Namespace.Meta + "resolvedExtends")
 
@@ -35,6 +39,6 @@ object NodeMappingModel extends AnyMappingModel with ClosedModel {
 
   override def modelInstance: AmfObject = NodeMapping()
 
-  override val `type`
-    : List[ValueType] = Namespace.Meta + "NodeMapping" :: Namespace.Shacl + "Shape" :: DomainElementModel.`type`
+  override val `type`: List[ValueType] =
+    Namespace.Meta + "NodeMapping" :: Namespace.Shacl + "Shape" :: DomainElementModel.`type`
 }

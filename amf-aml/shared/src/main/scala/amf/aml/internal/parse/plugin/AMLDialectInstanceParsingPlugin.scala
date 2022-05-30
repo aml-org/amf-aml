@@ -17,9 +17,9 @@ import amf.core.internal.remote.{AmlDialectSpec, Mimes, Spec}
 import amf.core.internal.validation.core.ValidationProfile
 import org.mulesoft.common.core.Strings
 
-/**
-  * Parsing plugin for dialect instance like units derived from a resolved dialect
-  * @param dialect resolved dialect
+/** Parsing plugin for dialect instance like units derived from a resolved dialect
+  * @param dialect
+  *   resolved dialect
   */
 class AMLDialectInstanceParsingPlugin(val dialect: Dialect, val constraints: Option[ValidationProfile] = None)
     extends AMFParsePlugin
@@ -35,10 +35,8 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect, val constraints: Opt
     val finder = DefaultNodeMappableFinder(ctx)
     val maybeUnit = guess.from(root) map {
       case kind.DialectInstanceFragment =>
-        /**
-          * Extract a name form the hint. Examples:
-          * #%Library / Dialect 1.0               -> Library
-          * #%My Fragment / My Test Dialect 1.0   -> My Fragment
+        /** Extract a name form the hint. Examples: #%Library / Dialect 1.0 -> Library #%My Fragment / My Test Dialect
+          * 1.0 -> My Fragment
           */
         val name = {
           val hint          = guess.hint(root).get // Should always be defined
@@ -46,13 +44,16 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect, val constraints: Opt
           normalizedStr.substring(0, normalizedStr.indexOf("/"))
         }
         new DialectInstanceFragmentParser(root)(
-            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints)).parse(name)
+            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints)
+        ).parse(name)
       case kind.DialectInstanceLibrary =>
         new DialectInstanceLibraryParser(root)(
-            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints)).parse()
+            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints)
+        ).parse()
       case kind.DialectInstancePatch =>
         new DialectInstancePatchParser(root)(
-            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints).forPatch())
+            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints).forPatch()
+        )
           .parse()
       case kind.DialectInstance =>
         new DialectInstanceParser(root)(new DialectInstanceContext(dialect, finder, ctx, constraints = constraints))
@@ -71,15 +72,13 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect, val constraints: Opt
 
   override def applies(root: Root): Boolean = guess.from(root).isDefined
 
-  /**
-    * media types which specifies vendors that are parsed by this plugin.
+  /** media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Seq(Mimes.`application/yaml`, `application/json`)
 
   override def spec: Spec = AmlDialectSpec(dialect.nameAndVersion())
 
-  /**
-    * media types which specifies vendors that may be referenced.
+  /** media types which specifies vendors that may be referenced.
     */
   override def validSpecsToReference: Seq[Spec] = Nil
 

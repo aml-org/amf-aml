@@ -1,0 +1,11 @@
+#%Dialect 1.0
+dialect: Long Datatype
+version: "1.0"
+documents:
+  root:
+    encodes: "#/declarations/Root"
+nodeMappings:
+  Root:
+    mapping:
+      something:
+        range: long

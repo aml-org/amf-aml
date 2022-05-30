@@ -13,9 +13,11 @@ object AmlSubGraphCollector {
     collect(sourceId, acc, Set(sourceId))
   }
 
-  private def collect(current: String,
-                      mappingMap: Map[String, NodeMappable],
-                      seen: Set[String] = Set.empty): Set[String] = {
+  private def collect(
+      current: String,
+      mappingMap: Map[String, NodeMappable],
+      seen: Set[String] = Set.empty
+  ): Set[String] = {
     mappingMap
       .get(current)
       .map { mapping =>

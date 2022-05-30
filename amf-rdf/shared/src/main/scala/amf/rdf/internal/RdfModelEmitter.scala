@@ -21,8 +21,7 @@ import org.mulesoft.common.time.SimpleDateTime
 
 import scala.collection.mutable.ListBuffer
 
-/**
-  * AMF RDF Model emitter
+/** AMF RDF Model emitter
   */
 class RdfModelEmitter(rdfModel: RdfModel, fieldProvision: ApplicableMetaFieldRenderProvider)
     extends MetaModelTypeMapping
@@ -97,34 +96,31 @@ class RdfModelEmitter(rdfModel: RdfModel, fieldProvision: ApplicableMetaFieldRen
       val customProperties: ListBuffer[String] = ListBuffer()
 
       // Collect element custom annotations
-      element.fields.entry(DomainElementModel.CustomDomainProperties) foreach {
-        case FieldEntry(_, v) =>
-          v.value match {
-            case AmfArray(values, _) =>
-              values.foreach {
-                case extension: DomainExtension =>
-                  val uri = extension.definedBy.id
-                  customProperties += uri
-                  createCustomExtension(id, uri, extension, None)
-              }
-            case _ => // ignore
-          }
+      element.fields.entry(DomainElementModel.CustomDomainProperties) foreach { case FieldEntry(_, v) =>
+        v.value match {
+          case AmfArray(values, _) =>
+            values.foreach { case extension: DomainExtension =>
+              val uri = extension.definedBy.id
+              customProperties += uri
+              createCustomExtension(id, uri, extension, None)
+            }
+          case _ => // ignore
+        }
       }
 
       // Collect element scalar fields custom annotations
       var count = 1
-      element.fields.foreach {
-        case (f, v) =>
-          v.value.annotations
-            .collect({ case e: DomainExtensionAnnotation => e })
-            .foreach(e => {
-              val extension = e.extension
-              val uri       = s"${element.id}/scalar-valued/$count/${extension.name.value()}"
-              customProperties += uri
-              adoptTree(uri, extension.extension) // Fix ids
-              createCustomExtension(id, uri, extension, Some(f))
-              count += 1
-            })
+      element.fields.foreach { case (f, v) =>
+        v.value.annotations
+          .collect({ case e: DomainExtensionAnnotation => e })
+          .foreach(e => {
+            val extension = e.extension
+            val uri       = s"${element.id}/scalar-valued/$count/${extension.name.value()}"
+            customProperties += uri
+            adoptTree(uri, extension.extension) // Fix ids
+            createCustomExtension(id, uri, extension, Some(f))
+            count += 1
+          })
       }
 
       if (customProperties.nonEmpty) {
@@ -134,10 +130,12 @@ class RdfModelEmitter(rdfModel: RdfModel, fieldProvision: ApplicableMetaFieldRen
       }
     }
 
-    private def createCustomExtension(subject: String,
-                                      uri: String,
-                                      extension: DomainExtension,
-                                      field: Option[Field] = None): Unit = {
+    private def createCustomExtension(
+        subject: String,
+        uri: String,
+        extension: DomainExtension,
+        field: Option[Field] = None
+    ): Unit = {
       rdfModel.addTriple(subject, uri, extension.extension.id)
       rdfModel.addTriple(uri, DomainExtensionModel.Name.value.iri(), extension.name.value(), None)
       field.foreach { f =>
@@ -151,10 +149,9 @@ class RdfModelEmitter(rdfModel: RdfModel, fieldProvision: ApplicableMetaFieldRen
       rdfModel
         .addTriple(subject, property, id)
         .addTriple(id, (Namespace.Rdf + "type").iri(), (Namespace.Rdfs + "Seq").iri())
-      seq.zipWithIndex.foreach {
-        case (e, i) =>
-          val memberTriple = (Namespace.Rdfs + s"_${i + 1}").iri()
-          objectValue(id, memberTriple, element, Value(e, Annotations()))
+      seq.zipWithIndex.foreach { case (e, i) =>
+        val memberTriple = (Namespace.Rdfs + s"_${i + 1}").iri()
+        objectValue(id, memberTriple, element, Value(e, Annotations()))
       }
     }
 
@@ -297,7 +294,7 @@ class RdfModelEmitter(rdfModel: RdfModel, fieldProvision: ApplicableMetaFieldRen
     private def createTypeNode(id: String, obj: Obj, maybeElement: Option[AmfObject] = None): Unit = {
       val allTypes = obj.`type`.map(_.iri())
       allTypes.foreach { t =>
-        //if (t != "http://a.ml/vocabularies/document#DomainElement" && t != "http://www.w3.org/ns/shacl#Shape" && t != "http://a.ml/vocabularies/shapes#Shape")
+        // if (t != "http://a.ml/vocabularies/document#DomainElement" && t != "http://www.w3.org/ns/shacl#Shape" && t != "http://a.ml/vocabularies/shapes#Shape")
         rdfModel.addTriple(id, (Namespace.Rdf + "type").iri(), t)
       }
     }
@@ -312,15 +309,13 @@ class RdfModelEmitter(rdfModel: RdfModel, fieldProvision: ApplicableMetaFieldRen
 
     private def createAnnotationNodes(id: String, sources: SourceMap): Unit = {
       val allAnnotations = sources.annotations ++ sources.eternals
-      allAnnotations.zipWithIndex.foreach({
-        case ((a, values), i) =>
-          values.zipWithIndex.foreach {
-            case ((iri, v), j) =>
-              val valueNodeId = s"${id}_${i}_$j"
-              rdfModel.addTriple(id, ValueType(Namespace.SourceMaps, a).iri(), valueNodeId)
-              rdfModel.addTriple(valueNodeId, SourceMapModel.Element.value.iri(), iri)
-              rdfModel.addTriple(valueNodeId, SourceMapModel.Value.value.iri(), v, None)
-          }
+      allAnnotations.zipWithIndex.foreach({ case ((a, values), i) =>
+        values.zipWithIndex.foreach { case ((iri, v), j) =>
+          val valueNodeId = s"${id}_${i}_$j"
+          rdfModel.addTriple(id, ValueType(Namespace.SourceMaps, a).iri(), valueNodeId)
+          rdfModel.addTriple(valueNodeId, SourceMapModel.Element.value.iri(), iri)
+          rdfModel.addTriple(valueNodeId, SourceMapModel.Value.value.iri(), v, None)
+        }
       })
     }
   }

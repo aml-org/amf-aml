@@ -11,7 +11,9 @@ import amf.validation.internal.shacl.custom.CustomShaclValidator
 import org.yaml.model.YMap
 
 object NodePropertyConforms {
-  def conformsAgainstProperties(map: YMap, mapping: AnyMapping, root: Root)(implicit ctx: DialectInstanceContext): Boolean = {
+  def conformsAgainstProperties(map: YMap, mapping: AnyMapping, root: Root)(implicit
+      ctx: DialectInstanceContext
+  ): Boolean = {
     mapping match {
       case nodeMapping: NodeMapping if nodeMapping.propertiesMapping().nonEmpty =>
         parseAndValidate(map, nodeMapping, root)
@@ -19,8 +21,9 @@ object NodePropertyConforms {
     }
   }
 
-  private def parseAndValidate(map: YMap, mapping: NodeMapping, root: Root)(
-      implicit ctx: DialectInstanceContext): Boolean = {
+  private def parseAndValidate(map: YMap, mapping: NodeMapping, root: Root)(implicit
+      ctx: DialectInstanceContext
+  ): Boolean = {
     val nextContext = ctx.copy(DefaultErrorHandler())
     val element =
       InstanceElementParser(root).parse("", mapping.id, map, mapping, Map.empty, parseAllOf = false)(nextContext)

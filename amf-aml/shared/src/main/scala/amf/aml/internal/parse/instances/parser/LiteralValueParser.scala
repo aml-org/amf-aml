@@ -14,15 +14,18 @@ import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.{YMapEntry, YNode, YScalar, YType}
 
 object LiteralValueSetter {
-  def setLiteralValue(parsed: Option[_],
-                      entry: YMapEntry,
-                      property: PropertyLikeMapping[_],
-                      node: DialectDomainElement): Unit = {
+  def setLiteralValue(
+      parsed: Option[_],
+      entry: YMapEntry,
+      property: PropertyLikeMapping[_],
+      node: DialectDomainElement
+  ): Unit = {
     parsed match {
       case Some(b: Boolean)          => node.setProperty(property, b, entry)
       case Some(i: Int)              => node.setProperty(property, i, entry)
       case Some(f: Float)            => node.setProperty(property, f, entry)
       case Some(d: Double)           => node.setProperty(property, d, entry)
+      case Some(l: Long)             => node.setProperty(property, l, entry)
       case Some(s: String)           => node.setProperty(property, s, entry)
       case Some(("link", l: String)) => node.setProperty(property, l, entry)
       case Some(d: SimpleDateTime)   => node.setProperty(property, d, entry)
@@ -33,13 +36,15 @@ object LiteralValueSetter {
 
 object LiteralValueParser {
 
-  def parseLiteralValue(value: YNode, property: PropertyLikeMapping[_], element: DialectDomainElement)(
-      implicit eh: AMFErrorHandler): Option[_] = {
+  def parseLiteralValue(value: YNode, property: PropertyLikeMapping[_], element: DialectDomainElement)(implicit
+      eh: AMFErrorHandler
+  ): Option[_] = {
     parseLiteralValue(value, property, element.id, Annotations(value))(new SyamlAMFErrorHandler(eh))
   }
 
   def parseLiteralValue(value: YNode, property: PropertyLikeMapping[_], nodeId: String, annotations: Annotations)(
-      implicit eh: SyamlAMFErrorHandler): Option[_] = {
+      implicit eh: SyamlAMFErrorHandler
+  ): Option[_] = {
 
     value.tagType match {
       case YType.Bool
@@ -48,11 +53,13 @@ object LiteralValueParser {
             .value() == DataType.Any =>
         Some(value.as[Boolean])
       case YType.Bool =>
-        inconsistentPropertyRangeValueViolation(nodeId,
-                                                property,
-                                                property.literalRange().value(),
-                                                DataType.Boolean,
-                                                annotations)(eh)
+        inconsistentPropertyRangeValueViolation(
+            nodeId,
+            property,
+            property.literalRange().value(),
+            DataType.Boolean,
+            annotations
+        )(eh)
         None
       case YType.Int
           if property.literalRange().value() == DataType.Integer || property
@@ -63,12 +70,16 @@ object LiteralValueParser {
           if property.literalRange().value() == DataType.Float ||
             property.literalRange().value() == DataType.Double =>
         Some(value.as[Double])
+      case YType.Int if property.literalRange().value() == DataType.Long =>
+        Some(value.as[Long])
       case YType.Int =>
-        inconsistentPropertyRangeValueViolation(nodeId,
-                                                property,
-                                                property.literalRange().value(),
-                                                DataType.Integer,
-                                                annotations)(eh)
+        inconsistentPropertyRangeValueViolation(
+            nodeId,
+            property,
+            property.literalRange().value(),
+            DataType.Integer,
+            annotations
+        )(eh)
         None
       case YType.Str
           if property.literalRange().value() == DataType.String || property.literalRange().value() == DataType.Any =>
@@ -85,11 +96,13 @@ object LiteralValueParser {
       case YType.Str if property.literalRange().value() == (Namespace.Shapes + "guid").iri() =>
         Some(value.as[YScalar].text)
       case YType.Str =>
-        inconsistentPropertyRangeValueViolation(nodeId,
-                                                property,
-                                                property.literalRange().value(),
-                                                DataType.String,
-                                                annotations)(eh)
+        inconsistentPropertyRangeValueViolation(
+            nodeId,
+            property,
+            property.literalRange().value(),
+            DataType.String,
+            annotations
+        )(eh)
         None
       case YType.Float
           if property.literalRange().value() == DataType.Float ||
@@ -98,11 +111,13 @@ object LiteralValueParser {
             property.literalRange().value() == DataType.Any =>
         Some(value.as[Double])
       case YType.Float =>
-        inconsistentPropertyRangeValueViolation(nodeId,
-                                                property,
-                                                property.literalRange().value(),
-                                                DataType.Float,
-                                                annotations)(eh)
+        inconsistentPropertyRangeValueViolation(
+            nodeId,
+            property,
+            property.literalRange().value(),
+            DataType.Float,
+            annotations
+        )(eh)
         None
 
       case YType.Timestamp
@@ -116,11 +131,13 @@ object LiteralValueParser {
         Some(value.as[YScalar].text)
 
       case YType.Timestamp =>
-        inconsistentPropertyRangeValueViolation(nodeId,
-                                                property,
-                                                property.literalRange().value(),
-                                                DataType.DateTime,
-                                                annotations)(eh)
+        inconsistentPropertyRangeValueViolation(
+            nodeId,
+            property,
+            property.literalRange().value(),
+            DataType.DateTime,
+            annotations
+        )(eh)
         Some(value.as[String])
 
       case YType.Null =>
@@ -131,11 +148,13 @@ object LiteralValueParser {
     }
   }
 
-  private def inconsistentPropertyRangeValueViolation(node: String,
-                                                      property: PropertyLikeMapping[_],
-                                                      expected: String,
-                                                      found: String,
-                                                      annotations: Annotations)(eh: SyamlAMFErrorHandler): Unit = {
+  private def inconsistentPropertyRangeValueViolation(
+      node: String,
+      property: PropertyLikeMapping[_],
+      expected: String,
+      found: String,
+      annotations: Annotations
+  )(eh: SyamlAMFErrorHandler): Unit = {
     eh.violation(
         InconsistentPropertyRangeValueSpecification,
         node,

@@ -8,11 +8,13 @@ import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import org.yaml.model.{YMapEntry, YScalar}
 
 object LinkIncludePropertyParser {
-  def parse(propertyEntry: YMapEntry,
-            mapping: PropertyLikeMapping[_],
-            id: String,
-            node: DialectDomainElement,
-            isRef: Boolean = false)(implicit ctx: DialectInstanceContext): Unit = {
+  def parse(
+      propertyEntry: YMapEntry,
+      mapping: PropertyLikeMapping[_],
+      id: String,
+      node: DialectDomainElement,
+      isRef: Boolean = false
+  )(implicit ctx: DialectInstanceContext): Unit = {
     val refTuple = ctx.link(propertyEntry.value) match {
       case Left(key) =>
         (key, ctx.declarations.findAnyDialectDomainElement(key, SearchScope.Fragments))
@@ -28,14 +30,18 @@ object LinkIncludePropertyParser {
             val linkedExternal = s
               .link(text, Annotations(propertyEntry.value))
               .asInstanceOf[DialectDomainElement]
-              .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
+              .withId(
+                  id
+              ) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
             if (isRef) linkedExternal.annotations += RefInclude()
             node.withObjectField(mapping, linkedExternal, Right(propertyEntry))
           case None =>
-            ctx.eh.violation(DialectError,
-                             id,
-                             s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
-                             propertyEntry.value.location)
+            ctx.eh.violation(
+                DialectError,
+                id,
+                s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
+                propertyEntry.value.location
+            )
         }
       case _ =>
         ctx.eh.violation(

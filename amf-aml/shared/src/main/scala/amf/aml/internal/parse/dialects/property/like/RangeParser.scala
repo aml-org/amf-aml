@@ -11,8 +11,9 @@ import amf.aml.client.scala.model.domain.PropertyLikeMapping
 import amf.aml.internal.parse.dialects.DialectContext
 import org.yaml.model.{YMap, YMapEntry, YSequence, YType}
 
-case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(
-    implicit val ctx: DialectContext) {
+case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: PropertyLikeMappingModel])(implicit
+    val ctx: DialectContext
+) {
   def parse(): Unit = {
     map.key(
         "range",
@@ -27,8 +28,8 @@ case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: 
               range match {
                 case "guid" =>
                   setLiteralRange((Namespace.Shapes + "guid").iri(), entry)
-                case "string" | "integer" | "boolean" | "float" | "decimal" | "double" | "duration" | "dateTime" |
-                    "time" | "date" | "anyType" =>
+                case "string" | "integer" | "long" | "boolean" | "float" | "decimal" | "double" | "duration" |
+                    "dateTime" | "time" | "date" | "anyType" =>
                   setLiteralRange((Namespace.Xsd + range).iri(), entry)
                 case "anyUri"      => setLiteralRange(DataType.AnyUri, entry)
                 case "link"        => setLiteralRange((Namespace.Shapes + "link").iri(), entry)
@@ -41,7 +42,8 @@ case class RangeParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: 
                   propertyLikeMapping.set(
                       ObjectRange,
                       AmfArray(Seq(AmfScalar(nodeMappingId, Annotations(entry.value))), Annotations.virtual()),
-                      Annotations(entry))
+                      Annotations(entry)
+                  )
               }
           }
         }

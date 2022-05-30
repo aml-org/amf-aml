@@ -26,10 +26,12 @@ trait DialectsParsingTest extends DialectTests {
     }
 
     multiSourceTest(s"$label parsing from JSON-LD to YAML", "dialect.%s") { config =>
-      cycle(config.source,
-            "dialect.cycled.jsonld.yaml",
-            mediaType = Some(Mimes.`application/yaml`),
-            directory = directory)
+      cycle(
+          config.source,
+          "dialect.cycled.jsonld.yaml",
+          mediaType = Some(Mimes.`application/yaml`),
+          directory = directory
+      )
     }
 
     test(s"$label parsing from YAML to YAML") {
@@ -260,10 +262,12 @@ trait DialectsParsingTest extends DialectTests {
 
   // Key Property tests
   multiGoldenTest("parse 19 test - with key property", "keyproperty/example19-keyproperty.%s") { config =>
-    cycle("keyproperty/example19-keyproperty.yaml",
-          config.golden,
-          Some(Mimes.`application/ld+json`),
-          amlConfig = config.config)
+    cycle(
+        "keyproperty/example19-keyproperty.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        amlConfig = config.config
+    )
   }
 
   multiSourceTest("generate 19 test - with key property", "keyproperty/example19-keyproperty.%s") { config =>
@@ -272,10 +276,12 @@ trait DialectsParsingTest extends DialectTests {
 
   // Reference Style tests
   multiGoldenTest("parse 19 test - with reference style", "referencestyle/example19-referencestyle.%s") { config =>
-    cycle("referencestyle/example19-referencestyle.yaml",
-          config.golden,
-          Some(Mimes.`application/ld+json`),
-          amlConfig = config.config)
+    cycle(
+        "referencestyle/example19-referencestyle.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        amlConfig = config.config
+    )
   }
 
   multiSourceTest("generate 19 test - with reference style", "referencestyle/example19-referencestyle.%s") { config =>
@@ -283,41 +289,51 @@ trait DialectsParsingTest extends DialectTests {
   }
 
   multiGoldenTest("Parse dialect with fragment", "dialect.%s") { config =>
-    cycle("dialect.yaml",
-          config.golden,
-          Some(Mimes.`application/ld+json`),
-          directory = s"$basePath/dialect-fragment",
-          amlConfig = config.config)
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        directory = s"$basePath/dialect-fragment",
+        amlConfig = config.config
+    )
   }
 
   multiGoldenTest("Parse dialect with library", "dialect.%s") { config =>
-    cycle("dialect.yaml",
-          config.golden,
-          Some(Mimes.`application/ld+json`),
-          directory = s"$basePath/dialect-library",
-          amlConfig = config.config)
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        directory = s"$basePath/dialect-library",
+        amlConfig = config.config
+    )
   }
 
   multiGoldenTest("Parse empty but present type discriminator field", "empty-type-discriminator-field.%s") { config =>
-    cycle("empty-type-discriminator-field.yaml",
-          config.golden,
-          Some(Mimes.`application/ld+json`),
-          amlConfig = config.config)
+    cycle(
+        "empty-type-discriminator-field.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        amlConfig = config.config
+    )
   }
 
   multiGoldenTest("Parse empty value in type discriminator", "empty-type-discriminator-value.%s") { config =>
-    cycle("empty-type-discriminator-value.yaml",
-          config.golden,
-          Some(Mimes.`application/ld+json`),
-          amlConfig = config.config)
+    cycle(
+        "empty-type-discriminator-value.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        amlConfig = config.config
+    )
   }
 
   multiGoldenTest("Parse annotation mappings & semantic extensions", "dialect.%s") { config =>
-    cycle("dialect.yaml",
-          config.golden,
-          Some(Mimes.`application/ld+json`),
-          directory = s"$basePath/annotation-mappings",
-          amlConfig = config.config)
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        directory = s"$basePath/annotation-mappings",
+        amlConfig = config.config
+    )
   }
 
   multiGoldenTest("Parse inexistent annotation mapping reference from semantic extensions", "dialect.%s") { config =>
@@ -412,15 +428,14 @@ trait DialectsParsingTest extends DialectTests {
     )
   }
 
-  multiGoldenTest("Empty semantic extension with name has lexical and SemEx array is Virtual", "dialect.%s") {
-    config =>
-      cycle(
-          "dialect.yaml",
-          config.golden,
-          Some(Mimes.`application/ld+json`),
-          AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
-          directory = s"$basePath/empty-semantic-extensions"
-      )
+  multiGoldenTest("Empty semantic extension with name has lexical and SemEx array is Virtual", "dialect.%s") { config =>
+    cycle(
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = s"$basePath/empty-semantic-extensions"
+    )
   }
 
   multiGoldenTest("Annotation mapping with multiple domains", "dialect.%s") { config =>
@@ -444,10 +459,12 @@ trait DialectsParsingTest extends DialectTests {
   }
 
   multiSourceTest("Generate default facet for property mappings", "dialect.%s") { config =>
-    cycle(config.source,
-          "dialect.cycled.yaml",
-          mediaType = Some(Mimes.`application/yaml`),
-          directory = s"$basePath/default-facet")
+    cycle(
+        config.source,
+        "dialect.cycled.yaml",
+        mediaType = Some(Mimes.`application/yaml`),
+        directory = s"$basePath/default-facet"
+    )
   }
 
   // TODO cycle from JSON-LD to YAML is affected by W-10890167
@@ -466,10 +483,12 @@ trait DialectsParsingTest extends DialectTests {
   }
 
   multiSourceTest("Parse enum values with different types of values from JSON-LD to YAML", "dialect.%s") { config =>
-    cycle(config.source,
-          "dialect.cycled.yaml",
-          mediaType = Some(Mimes.`application/yaml`),
-          directory = s"$basePath/enum-scalars")
+    cycle(
+        config.source,
+        "dialect.cycled.yaml",
+        mediaType = Some(Mimes.`application/yaml`),
+        directory = s"$basePath/enum-scalars"
+    )
   }
 
   // TODO cycle from JSON-LD to YAML is affected by W-10890167
@@ -500,5 +519,7 @@ trait DialectsParsingTest extends DialectTests {
   multiCycleTest("Extended mapping 3", s"$basePath/extended-mapping-3")
 
   multiCycleTest("MinItems facet", s"$basePath/min-items")
+
+  multiCycleTest("Long datatype", s"$basePath/long-datatype")
 
 }

@@ -13,8 +13,8 @@ import amf.aml.client.scala.model.domain.{DocumentsModel, PublicNodeMapping}
 import org.yaml.model.YDocument.EntryBuilder
 
 case class DocumentsModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)])(
-    implicit val nodeMappableFinder: NodeMappableFinder)
-    extends EntryEmitter
+    implicit val nodeMappableFinder: NodeMappableFinder
+) extends EntryEmitter
     with AliasesConsumer {
   val documents: DocumentsModel   = dialect.documents()
   var emitters: Seq[EntryEmitter] = Seq()

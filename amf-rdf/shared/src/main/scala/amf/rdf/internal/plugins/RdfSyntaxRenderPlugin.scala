@@ -18,8 +18,7 @@ object RdfSyntaxRenderPlugin extends AMFSyntaxRenderPlugin {
     }
   }
 
-  /**
-    * media types which specifies vendors that are parsed by this plugin.
+  /** media types which specifies vendors that are parsed by this plugin.
     */
   override def mediaTypes: Seq[String] = Seq(Mimes.`text/n3`)
 

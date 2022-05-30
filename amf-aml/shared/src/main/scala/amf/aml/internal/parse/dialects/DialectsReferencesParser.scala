@@ -4,12 +4,7 @@ import amf.core.internal.annotations.{Aliases, ReferencedInfo}
 import amf.core.internal.annotations.Aliases._
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, RecursiveUnit}
 import amf.core.client.scala.model.domain.AmfObject
-import amf.core.client.scala.parse.document.{
-  CallbackReferenceCollector,
-  ParsedReference,
-  Reference,
-  ReferenceCollector
-}
+import amf.core.client.scala.parse.document.{CallbackReferenceCollector, ParsedReference, Reference, ReferenceCollector}
 import amf.core.internal.parser.domain.Annotations
 import amf.aml.client.scala.model.document.{Dialect, DialectFragment, Vocabulary}
 import amf.aml.client.scala.model.domain.External
@@ -18,8 +13,9 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 import amf.aml.internal.parse.dialects.DialectAstOps._
 import amf.core.internal.parser.YScalarYRead
 
-case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq[ParsedReference])(
-    implicit ctx: DialectContext) {
+case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq[ParsedReference])(implicit
+    ctx: DialectContext
+) {
 
   def parse(): ReferenceCollector[AmfObject] = {
     val declarations = CallbackReferenceCollector(DialectRegister())
@@ -62,7 +58,12 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
             declarations += (alias, r)
           case None =>
             val node = dialect.location().getOrElse(dialect.id)
-            ctx.eh.violation(DialectError, node, s"Expected vocabulary module but found: $other", e.location) // todo Uses should only reference modules...
+            ctx.eh.violation(
+                DialectError,
+                node,
+                s"Expected vocabulary module but found: $other",
+                e.location
+            ) // todo Uses should only reference modules...
         }
     }
   }

@@ -15,14 +15,13 @@ object LiteralCandidateCollector {
   private def collectCandidates(dialect: Dialect) = {
     dialect
       .iterator()
-      .collect {
-        case node: NodeMapping =>
-          val properties = node.propertiesMapping().filter(_.`enum`().nonEmpty)
-          properties.flatMap { mapping =>
-            val scalarEnums = collectScalarValues(mapping, PropertyMappingModel.Enum)
-            if (scalarEnums.nonEmpty) Some(AmlValidationCandidate(node, mapping, scalarEnums))
-            else None
-          }
+      .collect { case node: NodeMapping =>
+        val properties = node.propertiesMapping().filter(_.`enum`().nonEmpty)
+        properties.flatMap { mapping =>
+          val scalarEnums = collectScalarValues(mapping, PropertyMappingModel.Enum)
+          if (scalarEnums.nonEmpty) Some(AmlValidationCandidate(node, mapping, scalarEnums))
+          else None
+        }
       }
       .toList
       .flatten

@@ -11,7 +11,8 @@ import org.yaml.model.YDocument.EntryBuilder
 case class FragmentsDocumentModelEmitter(
     dialect: Dialect,
     ordering: SpecOrdering,
-    aliases: Map[String, (String, String)])(implicit val nodeMappableFinder: NodeMappableFinder)
+    aliases: Map[String, (String, String)]
+)(implicit val nodeMappableFinder: NodeMappableFinder)
     extends EntryEmitter
     with AliasesConsumer {
   var emitters: Seq[EntryEmitter] = dialect.documents().fragments().map { fragmentMapping =>
@@ -20,11 +21,17 @@ case class FragmentsDocumentModelEmitter(
 
   override def emit(b: EntryBuilder): Unit = {
 
-    b.entry("fragments", _.obj { b =>
-      b.entry("encodes", _.obj { b =>
-        ordering.sorted(emitters).foreach(_.emit(b))
-      })
-    })
+    b.entry(
+        "fragments",
+        _.obj { b =>
+          b.entry(
+              "encodes",
+              _.obj { b =>
+                ordering.sorted(emitters).foreach(_.emit(b))
+              }
+          )
+        }
+    )
   }
 
   override def position(): Position =

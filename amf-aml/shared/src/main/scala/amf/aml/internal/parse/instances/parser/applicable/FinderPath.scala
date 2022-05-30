@@ -9,11 +9,13 @@ import org.yaml.model.YMap
 
 trait FinderPath {
 
-  def walk(mapping: AnyMapping, map: YMap, index: DialectIndex, finder: ApplicableMappingFinder)(
-      implicit ctx: DialectInstanceContext): ApplicableMapping
+  def walk(mapping: AnyMapping, map: YMap, index: DialectIndex, finder: ApplicableMappingFinder)(implicit
+      ctx: DialectInstanceContext
+  ): ApplicableMapping
 
-  protected def findMappingsFor(ids: Seq[StrField], index: DialectIndex)(
-      implicit ctx: DialectInstanceContext): Seq[AnyMapping] = {
+  protected def findMappingsFor(ids: Seq[StrField], index: DialectIndex)(implicit
+      ctx: DialectInstanceContext
+  ): Seq[AnyMapping] = {
     val mappings = ids
       .flatMap(_.option())
       .flatMap(index.maybeFindNodeMappingById)

@@ -17,9 +17,11 @@ import amf.core.client.scala.transform.TransformationStep
 import scala.language.postfixOps
 
 class DialectPatchApplicationStage() extends TransformationStep {
-  override def transform(model: BaseUnit,
-                         errorHandler: AMFErrorHandler,
-                         configuration: AMFGraphConfiguration): BaseUnit = {
+  override def transform(
+      model: BaseUnit,
+      errorHandler: AMFErrorHandler,
+      configuration: AMFGraphConfiguration
+  ): BaseUnit = {
     new DialectPatchApplication()(errorHandler).transform(model)
   }
 }
@@ -59,10 +61,12 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
   }
 
   private def applyPatch(target: DialectInstance, patch: DialectInstancePatch): DialectInstance = {
-    patchNode(Some(target.encodes.asInstanceOf[DialectDomainElement]),
-              target.location().get,
-              patch.encodes.asInstanceOf[DialectDomainElement],
-              patch.location().get) match {
+    patchNode(
+        Some(target.encodes.asInstanceOf[DialectDomainElement]),
+        target.location().get,
+        patch.encodes.asInstanceOf[DialectDomainElement],
+        patch.location().get
+    ) match {
       case Some(patchedDialectElement) => target.withEncodes(patchedDialectElement)
       case None =>
         target.fields.remove(DialectInstanceModel.Encodes.value.iri())
@@ -70,10 +74,12 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
     }
   }
 
-  private def patchNode(targetNode: Option[DialectDomainElement],
-                        targetLocation: String,
-                        patchNode: DialectDomainElement,
-                        patchLocation: String): Option[DialectDomainElement] = {
+  private def patchNode(
+      targetNode: Option[DialectDomainElement],
+      targetLocation: String,
+      patchNode: DialectDomainElement,
+      patchLocation: String
+  ): Option[DialectDomainElement] = {
     findNodeMergePolicy(patchNode) match {
       case INSERT =>
         patchNodeInsert(targetNode, targetLocation, patchNode, patchLocation)
@@ -104,18 +110,22 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
     property.mergePolicy.option().getOrElse("update")
 
   // add or ignore if present
-  private def patchNodeInsert(targetNode: Option[DialectDomainElement],
-                              targetLocation: String,
-                              patchNode: DialectDomainElement,
-                              patchLocation: String): Option[DialectDomainElement] = {
+  private def patchNodeInsert(
+      targetNode: Option[DialectDomainElement],
+      targetLocation: String,
+      patchNode: DialectDomainElement,
+      patchLocation: String
+  ): Option[DialectDomainElement] = {
     if (targetNode.isEmpty) Some(patchNode) else targetNode
   }
 
   // delete or ignore if not present
-  private def patchNodeDelete(targetNode: Option[DialectDomainElement],
-                              targetLocation: String,
-                              patchNode: DialectDomainElement,
-                              patchLocation: String): Option[DialectDomainElement] = {
+  private def patchNodeDelete(
+      targetNode: Option[DialectDomainElement],
+      targetLocation: String,
+      patchNode: DialectDomainElement,
+      patchLocation: String
+  ): Option[DialectDomainElement] = {
     if (targetNode.nonEmpty && sameNodeIdentity(targetNode.get, targetLocation, patchNode, patchLocation)) {
       None
     } else {
@@ -123,12 +133,14 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
     }
   }
 
-  private def patchProperty(targetNode: DialectDomainElement,
-                            patchField: Field,
-                            patchValue: Value,
-                            propertyMapping: PropertyMapping,
-                            targetLocation: String,
-                            patchLocation: String): Unit = {
+  private def patchProperty(
+      targetNode: DialectDomainElement,
+      patchField: Field,
+      patchValue: Value,
+      propertyMapping: PropertyMapping,
+      targetLocation: String,
+      patchLocation: String
+  ): Unit = {
     propertyMapping.classification() match {
       case LiteralProperty =>
         patchLiteralProperty(targetNode, patchField, patchValue, propertyMapping, targetLocation, patchLocation)
@@ -137,31 +149,37 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
       case ObjectProperty =>
         patchObjectProperty(targetNode, patchField, patchValue, propertyMapping, targetLocation, patchLocation)
       case ObjectPropertyCollection | ObjectMapProperty | ObjectPairProperty =>
-        patchObjectCollectionProperty(targetNode,
-                                      patchField,
-                                      patchValue,
-                                      propertyMapping,
-                                      targetLocation,
-                                      patchLocation)
+        patchObjectCollectionProperty(
+            targetNode,
+            patchField,
+            patchValue,
+            propertyMapping,
+            targetLocation,
+            patchLocation
+        )
       case _ =>
       // throw new Exception("Unsupported node mapping in patch")
 
     }
   }
 
-  private def patchLiteralProperty(targetNode: DialectDomainElement,
-                                   patchField: Field,
-                                   patchValue: Value,
-                                   propertyMapping: PropertyMapping,
-                                   targetLocation: String,
-                                   patchLocation: String): Unit = {
+  private def patchLiteralProperty(
+      targetNode: DialectDomainElement,
+      patchField: Field,
+      patchValue: Value,
+      propertyMapping: PropertyMapping,
+      targetLocation: String,
+      patchLocation: String
+  ): Unit = {
     findPropertyMappingMergePolicy(propertyMapping) match {
       case INSERT if !targetNode.graph.containsField(patchField) =>
         targetNode.graph.patchField(patchField, patchValue)
       case DELETE if targetNode.graph.containsField(patchField) =>
         try {
-          if (targetNode.fields.getValue(patchField).value.asInstanceOf[AmfScalar].value
-                == patchValue.value.asInstanceOf[AmfScalar].value)
+          if (
+              targetNode.fields.getValue(patchField).value.asInstanceOf[AmfScalar].value
+                == patchValue.value.asInstanceOf[AmfScalar].value
+          )
             targetNode.graph.removeField(patchField.toString)
         } catch {
           case _: Exception => // ignore
@@ -201,10 +219,12 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
     }
   }
 
-  private def patchLiteralCollectionProperty(targetNode: DialectDomainElement,
-                                             patchField: Field,
-                                             patchValue: Value,
-                                             propertyMapping: PropertyMapping): Unit = {
+  private def patchLiteralCollectionProperty(
+      targetNode: DialectDomainElement,
+      patchField: Field,
+      patchValue: Value,
+      propertyMapping: PropertyMapping
+  ): Unit = {
 
     val targetPropertyValue = getCollectionFrom(targetNode, patchField).toSet
     val patchPropertyValue  = getCollectionFrom(patchValue).toSet
@@ -246,20 +266,24 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
       .map(asDialectDomainElements)
   }
 
-  private def idIndex(elements: Seq[DialectDomainElement],
-                      targetLocation: String): Map[NeutralId, DialectDomainElement] = {
+  private def idIndex(
+      elements: Seq[DialectDomainElement],
+      targetLocation: String
+  ): Map[NeutralId, DialectDomainElement] = {
     val indexById = (element: DialectDomainElement) => neutralId(element.id, targetLocation) -> element
     elements
       .map(indexById)
       .toMap
   }
 
-  private def patchObjectCollectionProperty(targetNode: DialectDomainElement,
-                                            patchField: Field,
-                                            patchValue: Value,
-                                            propertyMapping: PropertyMapping,
-                                            targetLocation: String,
-                                            patchLocation: String): Unit = {
+  private def patchObjectCollectionProperty(
+      targetNode: DialectDomainElement,
+      patchField: Field,
+      patchValue: Value,
+      propertyMapping: PropertyMapping,
+      targetLocation: String,
+      patchLocation: String
+  ): Unit = {
 
     val targetElements: Seq[TargetDomainElement] = onlyDomainElements { getCollectionFrom(targetNode, patchField) }
     val patchElements: Seq[PatchDomainElement]   = onlyDomainElements { getCollectionFrom(patchValue) }
@@ -272,8 +296,8 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
       case INSERT =>
         // Elements not defined in target
         val toInsertElements = patchElementsIndex
-          .filter {
-            case (id, _) => !targetElementsIndex.contains(id)
+          .filter { case (id, _) =>
+            !targetElementsIndex.contains(id)
           }
           .values
           .toSeq
@@ -284,8 +308,8 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
 
       case DELETE =>
         // Elements defined by both patch and target
-        val toDeleteElements = patchElementsIndex.flatMap {
-          case (id, _) => targetElementsIndex.get(id)
+        val toDeleteElements = patchElementsIndex.flatMap { case (id, _) =>
+          targetElementsIndex.get(id)
         }.toSeq
 
         val unionElements = targetElements diff toDeleteElements
@@ -295,14 +319,13 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
       case UPDATE | UPSERT =>
         // Merge nodes defined for target and patch
         val mergedElementsIndex: Map[NeutralId, MergedDomainElement] =
-          patchElementsIndex.flatMap {
-            case (id, patchElement) =>
-              for {
-                targetElement <- targetElementsIndex.get(id)
-                mergedElement <- patchNode(Some(targetElement), targetLocation, patchElement, patchLocation)
-              } yield {
-                (id, mergedElement)
-              }
+          patchElementsIndex.flatMap { case (id, patchElement) =>
+            for {
+              targetElement <- targetElementsIndex.get(id)
+              mergedElement <- patchNode(Some(targetElement), targetLocation, patchElement, patchLocation)
+            } yield {
+              (id, mergedElement)
+            }
           }
 
         val unionElements = mergePolicy match {
@@ -329,12 +352,14 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
     }
   }
 
-  private def patchObjectProperty(targetNode: DialectDomainElement,
-                                  patchField: Field,
-                                  patchValue: Value,
-                                  propertyMapping: PropertyMapping,
-                                  targetLocation: String,
-                                  patchLocation: String): Unit = {
+  private def patchObjectProperty(
+      targetNode: DialectDomainElement,
+      patchField: Field,
+      patchValue: Value,
+      propertyMapping: PropertyMapping,
+      targetLocation: String,
+      patchLocation: String
+  ): Unit = {
     patchValue.value match {
       case patchDialectDomainElement: DialectDomainElement =>
         val targetNodeValue = targetNode.fields ? patchField
@@ -347,10 +372,12 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
   }
 
   // recursive merge if both present
-  private def patchNodeUpdate(targetNode: Option[DialectDomainElement],
-                              targetLocation: String,
-                              patchNode: DialectDomainElement,
-                              patchLocation: String): Option[DialectDomainElement] = {
+  private def patchNodeUpdate(
+      targetNode: Option[DialectDomainElement],
+      targetLocation: String,
+      patchNode: DialectDomainElement,
+      patchLocation: String
+  ): Option[DialectDomainElement] = {
     val nodeMapping = patchNode.definedBy
     if (targetNode.isDefined && sameNodeIdentity(targetNode.get, targetLocation, patchNode, patchLocation)) {
       patchNode.meta.fields.foreach { patchField =>
@@ -371,20 +398,24 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
   }
 
   // recursive merge if both present
-  private def patchNodeUpsert(targetNode: Option[DialectDomainElement],
-                              targetLocation: String,
-                              patchNode: DialectDomainElement,
-                              patchLocation: String): Option[DialectDomainElement] = {
+  private def patchNodeUpsert(
+      targetNode: Option[DialectDomainElement],
+      targetLocation: String,
+      patchNode: DialectDomainElement,
+      patchLocation: String
+  ): Option[DialectDomainElement] = {
     if (targetNode.isEmpty)
       patchNodeInsert(targetNode, targetLocation, patchNode, patchLocation)
     else
       patchNodeUpdate(targetNode, targetLocation, patchNode, patchLocation)
   }
 
-  private def sameNodeIdentity(target: DialectDomainElement,
-                               targetLocation: String,
-                               patchNode: DialectDomainElement,
-                               patchLocation: String): Boolean = {
+  private def sameNodeIdentity(
+      target: DialectDomainElement,
+      targetLocation: String,
+      patchNode: DialectDomainElement,
+      patchLocation: String
+  ): Boolean = {
     neutralId(target.id, targetLocation) == neutralId(patchNode.id, patchLocation)
   }
 

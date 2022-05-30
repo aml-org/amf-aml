@@ -21,15 +21,17 @@ case class ApplicableMappingFinder(private val root: Root) {
     val index                     = DialectIndex(ctx.dialect, DefaultNodeMappableFinder(ctx.dialect))
     val ApplicableMapping(_, ids) = find(map, mapping, index)
     val isMappingCombination      = ids.size != 1
-    if (isMappingCombination) index.findCompositeMapping(ids).collect { case mapping: NodeMapping => mapping } else
-      index.maybeFindNodeMappingById(ids.head).collect {
-        case (_, mapping: NodeMapping) => mapping
+    if (isMappingCombination) index.findCompositeMapping(ids).collect { case mapping: NodeMapping => mapping }
+    else
+      index.maybeFindNodeMappingById(ids.head).collect { case (_, mapping: NodeMapping) =>
+        mapping
       }
 
   }
 
-  private[parser] def find(map: YMap, mapping: AnyMapping, index: DialectIndex)(
-      implicit ctx: DialectInstanceContext): ApplicableMapping = {
+  private[parser] def find(map: YMap, mapping: AnyMapping, index: DialectIndex)(implicit
+      ctx: DialectInstanceContext
+  ): ApplicableMapping = {
     val appliesToCurrent =
       if (conformsAgainstProperties(map, mapping, root)) ApplicableMapping(couldFind = true, Set(mapping.id))
       else ApplicableMapping(couldFind = true, Set.empty[String])

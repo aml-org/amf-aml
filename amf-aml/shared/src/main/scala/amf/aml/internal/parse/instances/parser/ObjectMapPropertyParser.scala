@@ -15,13 +15,15 @@ import org.yaml.model.{YMap, YMapEntry, YScalar, YType}
 
 object ObjectMapPropertyParser extends NodeMappableHelper {
 
-  def parse[T <: DomainElement](id: String,
-                                propertyEntry: YMapEntry,
-                                property: PropertyMapping,
-                                node: DialectDomainElement,
-                                additionalProperties: Map[String, Any] = Map(),
-                                unionParser: ObjectUnionParser[T],
-                                nodeParser: NodeParser)(implicit ctx: DialectInstanceContext): Unit = {
+  def parse[T <: DomainElement](
+      id: String,
+      propertyEntry: YMapEntry,
+      property: PropertyMapping,
+      node: DialectDomainElement,
+      additionalProperties: Map[String, Any] = Map(),
+      unionParser: ObjectUnionParser[T],
+      nodeParser: NodeParser
+  )(implicit ctx: DialectInstanceContext): Unit = {
     val nested = propertyEntry.value.as[YMap].entries.map { keyEntry =>
       val path           = List(propertyEntry.key.as[YScalar].text, keyEntry.key.as[YScalar].text)
       val nestedObjectId = pathSegment(id, path)
@@ -59,14 +61,17 @@ object ObjectMapPropertyParser extends NodeMappableHelper {
   protected def checkHashProperties(
       node: DialectDomainElement,
       propertyMapping: PropertyMapping,
-      propertyEntry: YMapEntry)(implicit ctx: DialectInstanceContext): DialectDomainElement = {
+      propertyEntry: YMapEntry
+  )(implicit ctx: DialectInstanceContext): DialectDomainElement = {
     // TODO: check if the node already has a value and that it matches (maybe coming from a declaration)
     propertyMapping.mapTermKeyProperty().option() match {
       case Some(propId) =>
         try {
-          node.set(Field(Str, ValueType(propId)),
-                   AmfScalar(propertyEntry.key.as[YScalar].text),
-                   Annotations(propertyEntry.key))
+          node.set(
+              Field(Str, ValueType(propId)),
+              AmfScalar(propertyEntry.key.as[YScalar].text),
+              Annotations(propertyEntry.key)
+          )
           node.annotations.reject(_.isInstanceOf[LexicalInformation]) ++= Annotations(propertyEntry)
           node
         } catch {
@@ -78,8 +83,9 @@ object ObjectMapPropertyParser extends NodeMappableHelper {
     }
   }
 
-  protected def findHashProperties(propertyMapping: PropertyMapping, propertyEntry: YMapEntry)(
-      implicit ctx: DialectInstanceContext): Option[(String, Any)] = {
+  protected def findHashProperties(propertyMapping: PropertyMapping, propertyEntry: YMapEntry)(implicit
+      ctx: DialectInstanceContext
+  ): Option[(String, Any)] = {
     propertyMapping.mapTermKeyProperty().option() match {
       case Some(propId) => Some((propId, propertyEntry.key.as[YScalar].text))
       case None         => None

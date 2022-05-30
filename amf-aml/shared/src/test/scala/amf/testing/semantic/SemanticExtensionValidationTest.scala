@@ -21,10 +21,12 @@ class SemanticExtensionValidationTest extends DialectInstanceValidation {
 
   test("Semantic extensions without mandatory properties should fail") {
     getConfig(Seq("object-extensions.yaml", "scalar-extensions.yaml")).flatMap { config =>
-      validate("dialect.yaml",
-               "instances/invalid-obj-instance.yaml",
-               Some("reports/invalid-obj-report.report"),
-               config = config)
+      validate(
+          "dialect.yaml",
+          "instances/invalid-obj-instance.yaml",
+          Some("reports/invalid-obj-report.report"),
+          config = config
+      )
     }
   }
 
@@ -42,10 +44,12 @@ class SemanticExtensionValidationTest extends DialectInstanceValidation {
 
   test("Semantic extensions with boolean ranking should fail") {
     getConfig(Seq("object-extensions.yaml", "scalar-extensions.yaml")).flatMap { config =>
-      validate("dialect.yaml",
-               "instances/invalid-ranking-type-instance.yaml",
-               Some("reports/invalid-ranking-type-report.report"),
-               config = config)
+      validate(
+          "dialect.yaml",
+          "instances/invalid-ranking-type-instance.yaml",
+          Some("reports/invalid-ranking-type-report.report"),
+          config = config
+      )
     }
   }
 
@@ -57,10 +61,12 @@ class SemanticExtensionValidationTest extends DialectInstanceValidation {
 
   test("Unresolved links should be validated") {
     getConfig(Seq("object-extensions.yaml")).flatMap { config =>
-      validate("dialect.yaml",
-               "instances/invalid-obj-link.yaml",
-               Some("reports/invalid-obj-link.report"),
-               config = config)
+      validate(
+          "dialect.yaml",
+          "instances/invalid-obj-link.yaml",
+          Some("reports/invalid-obj-link.report"),
+          config = config
+      )
     }
   }
 
@@ -75,12 +81,14 @@ class SemanticExtensionValidationTest extends DialectInstanceValidation {
     loadedConfig.map(_.withErrorHandlerProvider(DefaultErrorHandlerProvider))
   }
 
-  private def validate(dialect: String,
-                       instance: String,
-                       golden: Option[String] = None,
-                       path: String = basePath,
-                       config: AMLConfiguration,
-                       comparator: ReportComparator = UniquePlatformReportComparator): Future[Assertion] = {
+  private def validate(
+      dialect: String,
+      instance: String,
+      golden: Option[String] = None,
+      path: String = basePath,
+      config: AMLConfiguration,
+      comparator: ReportComparator = UniquePlatformReportComparator
+  ): Future[Assertion] = {
     validation(dialect, instance, path, config) flatMap {
       comparator.assertReport(_, golden.map(g => s"$path/$g"), jsonldReport = false)
     }

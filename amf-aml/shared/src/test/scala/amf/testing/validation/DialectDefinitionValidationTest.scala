@@ -29,13 +29,17 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Test idTemplate variables overridable by $base directive") {
-    validate("/base-overridable-idTemplate-variable/dialect.yaml",
-             Some("/base-overridable-idTemplate-variable/report.json"))
+    validate(
+        "/base-overridable-idTemplate-variable/dialect.yaml",
+        Some("/base-overridable-idTemplate-variable/report.json")
+    )
   }
 
   test("Test mandatory property mapping without value") {
-    validate("/mandatory-property-mapping-without-value/dialect.yaml",
-             Some("mandatory-property-mapping-without-value/report.json"))
+    validate(
+        "/mandatory-property-mapping-without-value/dialect.yaml",
+        Some("mandatory-property-mapping-without-value/report.json")
+    )
   }
 
   test("Test un-avoidable ambiguity in node") {
@@ -59,8 +63,10 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Test nested un-avoidable ambiguity in property") {
-    validate("/nested-unavoidable-ambiguity-property/dialect.yaml",
-             Some("nested-unavoidable-ambiguity-property/report.json"))
+    validate(
+        "/nested-unavoidable-ambiguity-property/dialect.yaml",
+        Some("nested-unavoidable-ambiguity-property/report.json")
+    )
   }
 
   test("Test nested eventual ambiguity in node") {
@@ -68,8 +74,7 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Test nested eventual ambiguity in property") {
-    validate("/nested-eventual-ambiguity-property/dialect.yaml",
-             Some("nested-eventual-ambiguity-property/report.json"))
+    validate("/nested-eventual-ambiguity-property/dialect.yaml", Some("nested-eventual-ambiguity-property/report.json"))
   }
 
   test("Test node mapping with reserved names") {
@@ -85,15 +90,19 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Lexical range in unknown object range terms") {
-    validate("/invalid-union-objectRange/dialect.yaml",
-             Some("/invalid-union-objectRange/dialect.report"),
-             jsonldReport = false)
+    validate(
+        "/invalid-union-objectRange/dialect.yaml",
+        Some("/invalid-union-objectRange/dialect.report"),
+        jsonldReport = false
+    )
   }
 
   test("Lexical range of unknown property used as map key") {
-    validate("/unknown-map-key-property/dialect.yaml",
-             Some("/unknown-map-key-property/dialect.report"),
-             jsonldReport = false)
+    validate(
+        "/unknown-map-key-property/dialect.yaml",
+        Some("/unknown-map-key-property/dialect.report"),
+        jsonldReport = false
+    )
   }
 
   test("Empty type discriminator value") {
@@ -132,8 +141,10 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Empty extends property on node mapping reports error") {
-    validate("../../../dialects/empty-extends-on-node-mapping.yaml",
-             Some("../../dialects/empty-extends-on-node-mapping.validation.jsonld"))
+    validate(
+        "../../../dialects/empty-extends-on-node-mapping.yaml",
+        Some("../../dialects/empty-extends-on-node-mapping.validation.jsonld")
+    )
   }
 
   test("Valid ID directive on dialect") {
@@ -153,8 +164,10 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Dialect with if/then/else facet that point to nowhere") {
-    validate("../../../dialects/conditional/dialect-with-invalid-references.yaml",
-             Some("../../dialects/conditional/dialect-with-invalid-references.report.json"))
+    validate(
+        "../../../dialects/conditional/dialect-with-invalid-references.yaml",
+        Some("../../dialects/conditional/dialect-with-invalid-references.report.json")
+    )
   }
 
   test("Dialect with NodeMapping with additional properties") {
@@ -162,13 +175,17 @@ class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with D
   }
 
   test("Numeric enums in dialect get validated against their property mapping") {
-    validate("../../../dialects/enum-dialect-validation/dialect.yaml",
-             Some("../../dialects/enum-dialect-validation/report.json"))
+    validate(
+        "../../../dialects/enum-dialect-validation/dialect.yaml",
+        Some("../../dialects/enum-dialect-validation/report.json")
+    )
   }
 
   test("String enum in dialect get validated against their numeric property mapping") {
-    validate("../../../dialects/enum-dialect-validation-incorrect-type/dialect.yaml",
-             Some("../../dialects/enum-dialect-validation-incorrect-type/report.json"))
+    validate(
+        "../../../dialects/enum-dialect-validation-incorrect-type/dialect.yaml",
+        Some("../../dialects/enum-dialect-validation-incorrect-type/report.json")
+    )
   }
 
   test("Node mapping with multiple properties with enums - Valid") {
