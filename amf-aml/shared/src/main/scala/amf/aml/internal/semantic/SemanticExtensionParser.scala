@@ -48,8 +48,8 @@ class SemanticExtensionParser(finder: ExtensionDialectFinder, specAnnotationVali
 
     val instanceElement: DialectDomainElement = parseAnnotation(mapping, ast, extensionId)
 
-    val property                   = createCustomDomainProperty(instanceElement, extensionName, value)
-    val extension: DomainExtension = createDomainExtension(extensionName, value, extensionId, property)
+    val property                   = createCustomDomainProperty(instanceElement, extensionName, ast)
+    val extension: DomainExtension = createDomainExtension(extensionName, ast, extensionId, property)
     mergeAnnotationIntoExtension(instanceElement, extension)
   }
 
@@ -65,7 +65,7 @@ class SemanticExtensionParser(finder: ExtensionDialectFinder, specAnnotationVali
     }
   }
 
-  private def createDomainExtension(key: String, value: YNode, id: String, property: CustomDomainProperty) = {
+  private def createDomainExtension(key: String, value: YMapEntry, id: String, property: CustomDomainProperty) = {
     val extension = DomainExtension()
       .withId(id)
       .withDefinedBy(property)
@@ -74,8 +74,8 @@ class SemanticExtensionParser(finder: ExtensionDialectFinder, specAnnotationVali
     extension
   }
 
-  private def createCustomDomainProperty(instanceElement: DialectDomainElement, key: String, value: YNode) = {
-    CustomDomainProperty(Annotations(value)).withId(instanceElement.id).withName(key, Annotations())
+  private def createCustomDomainProperty(instanceElement: DialectDomainElement, key: String, ast: YMapEntry) = {
+    CustomDomainProperty(Annotations(ast)).withId(instanceElement.id).withName(key, Annotations())
   }
 
   private def parseAnnotation(mapping: AnnotationMapping, ast: YMapEntry, extensionId: String)(implicit
