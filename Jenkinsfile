@@ -53,6 +53,22 @@ pipeline {
         }
       }
     }
+    stage('Triggers') {
+      when {
+        anyOf {
+          branch 'develop'
+        }
+      }
+      steps {
+        script {
+          echo "Triggering amf on develop branch"
+          build job: 'application/AMF/amf/develop', wait: false
+
+          echo "Triggering amf-custom-validator-scalajs on develop branch"
+          build job: 'application/AMF/amf-custom-validator-scalajs/develop', wait: false
+        }
+      }
+    }
     stage('Tag version') {
       when {
         anyOf {
