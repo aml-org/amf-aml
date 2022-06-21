@@ -3,7 +3,7 @@ dialect: Mapping Additional properties
 version: "1.0"
 documents:
   root:
-    encodes: "#/declarations/Person"
+    encodes: Person
 nodeMappings:
   Person:
     mapping:

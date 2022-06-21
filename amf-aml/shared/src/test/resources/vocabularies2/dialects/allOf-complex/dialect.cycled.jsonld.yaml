@@ -5,10 +5,13 @@ external:
   schema-org: https://schema.org/
 documents:
   root:
-    encodes: "#/declarations/Root"
+    encodes: Root
 nodeMappings:
   Root:
-    allOf: []
+    allOf:
+      - AndMember1
+      - AndMember2
+      - AndMember3
   AndMember1:
     mapping:
       am11:
@@ -17,11 +20,13 @@ nodeMappings:
         range: string
   AndMember2:
     conditional:
-      if: ""
-      then: ""
-      else: ""
+      if: Condition
+      then: ConditionMatch
+      else: ConditionNoMatch
   AndMember3:
-    oneOf: []
+    oneOf:
+      - OrMember1
+      - OrMember2
   Condition:
     mapping:
       c1:

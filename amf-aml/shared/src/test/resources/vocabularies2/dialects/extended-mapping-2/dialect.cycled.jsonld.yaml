@@ -5,10 +5,13 @@ external:
   schema-org: https://schema.org/
 documents:
   root:
-    encodes: "#/declarations/Root"
+    encodes: Root
 nodeMappings:
   Root:
-    oneOf: []
+    oneOf:
+      - Member1
+      - Member2
+      - Member3
     mapping:
       am01:
         range: string

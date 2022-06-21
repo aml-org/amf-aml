@@ -5,13 +5,13 @@ external:
   schema-org: https://schema.org/
 documents:
   root:
-    encodes: "#/declarations/Root"
+    encodes: Root
 nodeMappings:
   Root:
     conditional:
-      if: ""
-      then: ""
-      else: ""
+      if: ConditionMapping
+      then: ThenMapping
+      else: ElseMapping
     mapping:
       am01:
         range: string

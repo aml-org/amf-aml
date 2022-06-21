@@ -8,4 +8,4 @@ nodeMappings:
         range: string
 documents:
   root:
-    encodes: "#/declarations/Person"
+    encodes: Person
