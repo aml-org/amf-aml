@@ -3,7 +3,7 @@ dialect: SemEx
 version: "1.0"
 documents:
   root:
-    encodes: "#/declarations/MultipleEnums"
+    encodes: MultipleEnums
 nodeMappings:
   MultipleEnums:
     mapping:

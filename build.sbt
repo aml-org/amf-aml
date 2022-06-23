@@ -26,7 +26,6 @@ sonarProperties ++= Map(
   "sonar.github.repository"          -> "mulesoft/amf-aml",
   "sonar.sources"                    -> "amf-aml/shared/src/main/scala",
   "sonar.tests"                      -> "amf-aml/shared/src/test/scala",
-  "sonar.scala.scoverage.reportPath" -> "aml-aml/jvm/target/scala-2.12/scoverage-report/scoverage.xml"
 )
 
 lazy val workspaceDirectory: File =

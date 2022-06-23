@@ -3,7 +3,7 @@ dialect: Mapping MinItems properties
 version: "1.0"
 documents:
   root:
-    encodes: "#/declarations/Root"
+    encodes: Root
 nodeMappings:
   Root:
     mapping:
