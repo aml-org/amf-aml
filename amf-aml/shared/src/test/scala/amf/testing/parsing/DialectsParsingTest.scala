@@ -467,7 +467,6 @@ trait DialectsParsingTest extends DialectTests {
     )
   }
 
-  // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("Conditional facet", s"$basePath/conditional")
 
   multiCycleTest("Additional properties facet", s"$basePath/additional-properties")
@@ -491,31 +490,22 @@ trait DialectsParsingTest extends DialectTests {
     )
   }
 
-  // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("AllOf facet", s"$basePath/allOf")
 
-  // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("OneOf facet", s"$basePath/oneOf")
 
-  // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("Components facet", s"$basePath/components")
 
-  // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("AllOf complex", s"$basePath/allOf-complex")
 
-  // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("AllOf nested", s"$basePath/allOf-nested")
 
-  // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("AllOf nested with allOf", s"$basePath/allOf-nested-allOf")
 
-  // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("Extended mapping 1", s"$basePath/extended-mapping-1")
 
-  // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("Extended mapping 2", s"$basePath/extended-mapping-2")
 
-  // TODO cycle from JSON-LD to YAML is affected by W-10890167
   multiCycleTest("Extended mapping 3", s"$basePath/extended-mapping-3")
 
   multiCycleTest("MinItems facet", s"$basePath/min-items")

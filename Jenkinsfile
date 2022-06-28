@@ -17,7 +17,7 @@ pipeline {
     stage('Test') {
       steps {
         wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'XTerm']) {
-          sh 'sbt -mem 4096 -Dfile.encoding=UTF-8 clean coverage test coverageReport'
+          sh 'sbt -mem 4096 -Dfile.encoding=UTF-8 clean coverage test coverageAggregate'
         }
       }
     }
@@ -50,6 +50,22 @@ pipeline {
               sbt publish
               echo "sbt publishing successful"
           '''
+        }
+      }
+    }
+    stage('Triggers') {
+      when {
+        anyOf {
+          branch 'develop'
+        }
+      }
+      steps {
+        script {
+          echo "Triggering amf on develop branch"
+          build job: 'application/AMF/amf/develop', wait: false
+
+          echo "Triggering amf-custom-validator-scalajs on develop branch"
+          build job: 'application/AMF/amf-custom-validator-scalajs/develop', wait: false
         }
       }
     }

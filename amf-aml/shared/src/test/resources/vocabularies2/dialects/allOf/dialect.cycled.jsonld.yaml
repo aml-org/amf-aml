@@ -3,10 +3,12 @@ dialect: Mapping AllOf
 version: "1.0"
 documents:
   root:
-    encodes: "#/declarations/Root"
+    encodes: Root
 nodeMappings:
   Root:
-    allOf: []
+    allOf:
+      - Member1
+      - Member2
   Member1:
     mapping:
       m11:

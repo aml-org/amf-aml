@@ -7,7 +7,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-ThisBuild / version := "6.0.9"
+ThisBuild / version := "6.0.10"
 ThisBuild / scalaVersion := "2.12.11"
 
 publish := {}
@@ -26,7 +26,6 @@ sonarProperties ++= Map(
   "sonar.github.repository"          -> "mulesoft/amf-aml",
   "sonar.sources"                    -> "amf-aml/shared/src/main/scala",
   "sonar.tests"                      -> "amf-aml/shared/src/test/scala",
-  "sonar.scala.coverage.reportPaths" -> "aml-aml/jvm/target/scala-2.12/scoverage-report/scoverage.xml"
 )
 
 lazy val workspaceDirectory: File =
@@ -35,7 +34,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "5.0.9"
+val amfCoreVersion = "5.0.10"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
