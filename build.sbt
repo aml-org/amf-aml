@@ -70,7 +70,7 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
   .in(file("./amf-aml"))
   .dependsOn(rdf % "test")
   .settings(commonSettings)
-  .dependsOn(validation)
+  .dependsOn(validation % "compile->compile;test->test")
   .jvmSettings(
     libraryDependencies += "org.scala-js"           %% "scalajs-stubs"          % scalaJSVersion % "provided",
     Compile /  packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-aml-javadoc.jar"
@@ -104,10 +104,11 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
   )
   .disablePlugins(SonarPlugin)
 
-lazy val validationJVM = validation.jvm.in(file("./amf-validation/jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
+lazy val validationJVM = validation.jvm.in(file("./amf-validation/jvm"))
+  .sourceDependency(amfCoreJVMRef % "compile->compile;test->test", amfCoreLibJVM % "compile->compile;test->test")
 lazy val validationJS = validation.js
   .in(file("./amf-validation/js"))
-  .sourceDependency(amfCoreJSRef, amfCoreLibJS)
+  .sourceDependency(amfCoreJSRef % "compile->compile;test->test", amfCoreLibJS % "compile->compile;test->test")
   .disablePlugins(SonarPlugin)
 
 /** **********************************************

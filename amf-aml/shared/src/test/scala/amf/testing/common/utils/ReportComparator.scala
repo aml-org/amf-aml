@@ -23,7 +23,7 @@ trait ReportComparator extends FileAssertionTest with Matchers {
       .map { golden =>
         for {
           actual    <- writeTemporaryFile(golden)(emitReport(report, jsonldReport))
-          assertion <- assertDifferences(actual, golden.stripPrefix("file://"))
+          assertion <- assertDifferences(actual, golden)
         } yield {
           assertion
         }
