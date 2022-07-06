@@ -1,11 +1,11 @@
 package amf.aml.internal.render.emitters.dialects
 
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.aml.client.scala.model.document.Dialect
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.EntryBuilder
 
 case class FragmentsDocumentModelEmitter(

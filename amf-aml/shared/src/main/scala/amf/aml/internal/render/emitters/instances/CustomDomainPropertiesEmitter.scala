@@ -3,7 +3,6 @@ package amf.aml.internal.render.emitters.instances
 import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.semantic.SemanticExtensionsFacade
-import amf.core.client.common.position.Position
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.domain.extensions.DomainExtension

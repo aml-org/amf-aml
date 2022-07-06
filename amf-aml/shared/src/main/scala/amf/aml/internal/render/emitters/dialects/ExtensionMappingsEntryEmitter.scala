@@ -3,11 +3,11 @@ package amf.aml.internal.render.emitters.dialects
 import amf.core.internal.render.BaseEmitters.{pos, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.client.common.position.Position
 import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.aml.internal.metamodel.domain.SemanticExtensionModel
 import amf.aml.client.scala.model.document.Dialect
 import amf.aml.client.scala.model.domain.SemanticExtension
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 

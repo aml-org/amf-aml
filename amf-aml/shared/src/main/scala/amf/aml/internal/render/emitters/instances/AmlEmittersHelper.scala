@@ -5,8 +5,6 @@ import amf.aml.client.scala.model.domain.NodeMappable.AnyNodeMappable
 import amf.aml.client.scala.model.domain.NodeMapping
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.render.emitters.common.{ExternalEmitter, IdCounter}
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.parse.document.ParserContext
@@ -16,6 +14,8 @@ import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
 import amf.core.internal.utils.Regexes.Path
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.mulesoft.common.collections.FilterType
 import org.mulesoft.common.core.CachedFunction
 import org.mulesoft.common.functional.MonadInstances.identityMonad

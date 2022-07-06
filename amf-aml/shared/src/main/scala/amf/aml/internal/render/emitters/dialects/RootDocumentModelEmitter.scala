@@ -1,14 +1,14 @@
 package amf.aml.internal.render.emitters.dialects
 
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import amf.aml.client.scala.model.document.Dialect
+import amf.aml.client.scala.model.domain.DocumentMapping
+import amf.aml.internal.render.emitters.instances.NodeMappableFinder
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.render.BaseEmitters.{MapEntryEmitter, traverse}
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.aml.internal.render.emitters.instances.NodeMappableFinder
-import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.domain.DocumentMapping
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.EntryBuilder
 
 case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, aliases: Map[String, (String, String)])(

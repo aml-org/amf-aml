@@ -3,12 +3,12 @@ package amf.aml.internal.render.emitters.instances
 import amf.aml.client.scala.model.document.DialectInstanceFragment
 import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.aml.internal.annotations.{JsonPointerRef, RefInclude}
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.annotations.{LexicalInformation, SourceNode}
 import amf.core.internal.render.BaseEmitters.TextScalarEmitter
 import amf.core.internal.render.emitters.PartEmitter
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.PartBuilder
 import org.yaml.model.{YNode, YType}
 

@@ -3,7 +3,7 @@ package amf.aml.internal.parse.instances.parser
 import amf.aml.client.scala.model.domain.DialectDomainElement
 import amf.aml.internal.annotations.RefInclude
 import amf.aml.internal.parse.instances.{DialectInstanceContext, NodeMappableHelper}
-import amf.core.internal.annotations.SourceAST
+import amf.core.internal.annotations.SourceYPart
 import amf.core.internal.parser.domain.{Annotations, SearchScope}
 import org.yaml.model.{YNode, YScalar}
 
@@ -36,7 +36,7 @@ object IncludeNodeParser extends NodeMappableHelper {
           .withId(id) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
         linkedNode
       case (text: String, _) =>
-        val loc = givenAnnotations.flatMap(_.find(classOf[SourceAST])).map(_.ast) match {
+        val loc = givenAnnotations.flatMap(_.find(classOf[SourceYPart])).map(_.ast) match {
           case Some(n) => n.location
           case _       => ast.location
         }
