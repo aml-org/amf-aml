@@ -1,14 +1,13 @@
 package amf.aml.internal.parse.common
 
+import amf.aml.client.scala.model.domain.PropertyLikeMapping
+import amf.aml.internal.metamodel.domain.PropertyMappingModel
+import amf.aml.internal.validate.DialectValidations._
 import amf.core.client.scala.parse.document.ParserContext
 import amf.core.internal.annotations.{LexicalInformation, SourceLocation}
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils.AmfStrings
-import amf.aml.internal.metamodel.domain.PropertyMappingModel
-import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping}
-import amf.aml.internal.validate.DialectValidations._
 import org.yaml.model.{YNode, YPart}
-import amf.core.client.common.position.Range
 
 trait SyntaxErrorReporter { this: ParserContext =>
 
@@ -77,7 +76,7 @@ trait SyntaxErrorReporter { this: ParserContext =>
         node,
         Some(property.nodePropertyMapping().value()),
         s"Cannot find expected range for property ${property.nodePropertyMapping().value()} (${property.name().value()}). Found '$found', expected '$expected'",
-        Some(new LexicalInformation(Range(valueNode.range))),
+        Some(new LexicalInformation(valueNode.range)),
         valueNode.sourceName.option
     )
 

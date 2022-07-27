@@ -1,12 +1,12 @@
 package amf.aml.internal.render.emitters.instances
 
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
+import amf.aml.internal.annotations.AliasesLocation
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.internal.render.BaseEmitters.traverse
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.aml.internal.annotations.AliasesLocation
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.EntryBuilder
 
 case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases: Map[String, (String, String)])

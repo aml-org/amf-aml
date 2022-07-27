@@ -1,12 +1,10 @@
 package amf.aml.internal.render.emitters.instances
 
 import amf.aml.client.scala.model.document.Dialect
-import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyLikeMapping, PropertyMapping}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyLikeMapping}
 import amf.aml.internal.annotations.{CustomBase, CustomId}
 import amf.aml.internal.metamodel.domain.PropertyLikeMappingModel
 import amf.aml.internal.registries.AMLRegistry
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain.{AmfArray, AmfElement}
@@ -14,6 +12,8 @@ import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.EntryEmitter
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument
 import org.yaml.model.YDocument.PartBuilder
 

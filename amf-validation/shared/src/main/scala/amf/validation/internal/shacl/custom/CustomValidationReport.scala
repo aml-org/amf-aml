@@ -44,7 +44,7 @@ class ReportBuilder(messageStyle: MessageStyle) {
   }
 
   private def registerResult(result: ValidationResult): Unit = {
-    val key = result.sourceShape + result.sourceConstraintComponent + result.focusNode
+    val key = result.sourceShape + result.sourceConstraintComponent + result.focusNode + result.message.getOrElse("")
     if (!duplicates.contains(key)) {
       duplicates += key
       results.append(result)

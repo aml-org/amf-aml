@@ -5,6 +5,7 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.annotations.{SourceAST, SourceYPart}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils._
@@ -15,6 +16,7 @@ import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   ValidationInfo
 }
 import org.mulesoft.common.time.SimpleDateTime
+import org.yaml.model.YScalar
 
 import java.net.URISyntaxException
 

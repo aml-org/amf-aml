@@ -54,6 +54,9 @@ private[amf] class AMLRegistry(
   override def withPlugins(amfPlugins: List[AMFPlugin[_]]): AMLRegistry =
     copy(plugins = plugins.withPlugins(amfPlugins))
 
+  override def withRootParsePlugin(aMFParsePlugin: AMFParsePlugin): AMLRegistry =
+    copy(plugins = plugins.withRootParsePlugin(aMFParsePlugin))
+
   override def withFallback(plugin: DomainParsingFallback): AMLRegistry = copy(plugins = plugins.withFallback(plugin))
 
   override def withConstraints(profile: ValidationProfile): AMLRegistry = {

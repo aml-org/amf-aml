@@ -4,8 +4,6 @@ import amf.aml.client.scala.model.domain._
 import amf.aml.internal.annotations.{CustomBase, CustomId}
 import amf.aml.internal.metamodel.domain.{DialectDomainElementModel, NodeMappableModel}
 import amf.aml.internal.registries.AMLRegistry
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel}
 import amf.core.internal.annotations.Aliases.{Alias, ImportLocation, RefId}
@@ -15,6 +13,8 @@ import amf.core.internal.metamodel.domain.DomainElementModel
 import amf.core.internal.render.BaseEmitters._
 import amf.core.internal.render.SpecOrdering
 import amf.core.internal.render.emitters.{EntryEmitter, PartEmitter}
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.PartBuilder
 
 import scala.language.existentials

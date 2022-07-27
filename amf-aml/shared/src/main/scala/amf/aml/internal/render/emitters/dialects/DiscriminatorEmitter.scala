@@ -1,11 +1,11 @@
 package amf.aml.internal.render.emitters.dialects
 
+import amf.aml.client.scala.model.domain.NodeWithDiscriminator
+import amf.aml.internal.metamodel.domain.NodeWithDiscriminatorModel
+import amf.core.client.scala.model.domain.AmfScalar
 import amf.core.internal.render.BaseEmitters.MapEntryEmitter
 import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.client.scala.model.domain.AmfScalar
-import amf.core.client.common.position.Position
-import amf.aml.internal.metamodel.domain.NodeWithDiscriminatorModel
-import amf.aml.client.scala.model.domain.NodeWithDiscriminator
+import org.mulesoft.common.client.lexical.Position
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.YType
 

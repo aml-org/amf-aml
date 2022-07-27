@@ -1,20 +1,20 @@
 package amf.aml.internal.render.emitters.vocabularies
 
-import amf.core.internal.annotations.LexicalInformation
-import amf.core.internal.render.BaseEmitters._
-import amf.core.internal.render.emitters.EntryEmitter
-import amf.core.client.scala.model.document.BaseUnit
-import amf.core.client.common.position.Position
-import amf.core.client.common.position.Position.ZERO
-import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.remote.Raml10
-import amf.core.internal.render.SpecOrdering
-import amf.aml.internal.render.emitters.common.ExternalEmitter
-import amf.aml.internal.metamodel.document.VocabularyModel
-import amf.aml.internal.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}
 import amf.aml.client.scala.model.document.Vocabulary
 import amf.aml.client.scala.model.domain.{ClassTerm, PropertyTerm, VocabularyReference}
+import amf.aml.internal.metamodel.document.VocabularyModel
+import amf.aml.internal.metamodel.domain.{ClassTermModel, ObjectPropertyTermModel}
+import amf.aml.internal.render.emitters.common.ExternalEmitter
 import amf.aml.internal.render.emitters.dialects.DocumentCreator
+import amf.core.client.scala.model.document.BaseUnit
+import amf.core.client.scala.vocabulary.Namespace
+import amf.core.internal.annotations.LexicalInformation
+import amf.core.internal.remote.Raml10
+import amf.core.internal.render.BaseEmitters._
+import amf.core.internal.render.SpecOrdering
+import amf.core.internal.render.emitters.EntryEmitter
+import org.mulesoft.common.client.lexical.Position
+import org.mulesoft.common.client.lexical.Position.ZERO
 import org.yaml.model.YDocument.EntryBuilder
 import org.yaml.model.{YDocument, YType}
 

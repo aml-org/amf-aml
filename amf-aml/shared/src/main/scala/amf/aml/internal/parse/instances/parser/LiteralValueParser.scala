@@ -2,14 +2,12 @@ package amf.aml.internal.parse.instances.parser
 
 import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping}
 import amf.aml.internal.validate.DialectValidations.{DialectError, InconsistentPropertyRangeValueSpecification}
-import amf.core.client.common.position.Range
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.parser.domain.Annotations
-import amf.core.internal.plugins.syntax.{SYamlBasedErrorHandler, SyamlAMFErrorHandler}
-import amf.core.internal.utils.AmfStrings
+import amf.core.internal.plugins.syntax.SyamlAMFErrorHandler
 import org.mulesoft.common.time.SimpleDateTime
 import org.yaml.model.{YMapEntry, YNode, YScalar, YType}
 
