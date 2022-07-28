@@ -1,6 +1,7 @@
 package amf.validation.internal.shacl.custom
 
 import amf.core.client.common.validation.{MessageStyle, OASStyle, RAMLStyle, SeverityLevels}
+import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.validation.core._
 
 import scala.collection.mutable
@@ -20,16 +21,20 @@ class ReportBuilder(messageStyle: MessageStyle) {
   def reportFailure(
       validationSpecification: ValidationSpecification,
       propertyConstraint: PropertyConstraint,
-      id: String
+      id: String,
+      position: Option[LexicalInformation],
+      location: Option[String]
   ): Unit = {
-    reportFailure(validationSpecification, id, propertyConstraint.ramlPropertyId)
+    reportFailure(validationSpecification, id, propertyConstraint.ramlPropertyId, None, position, location)
   }
 
   def reportFailure(
       validationSpec: ValidationSpecification,
       id: String,
       path: String,
-      customMessage: Option[String] = None
+      customMessage: Option[String] = None,
+      position: Option[LexicalInformation] = None,
+      location: Option[String] = None
   ): Unit = {
     registerResult(
         CustomValidationResult(
@@ -38,13 +43,16 @@ class ReportBuilder(messageStyle: MessageStyle) {
             sourceConstraintComponent = validationSpec.id,
             focusNode = id,
             severity = ShaclSeverityUris.amfSeverity(validationSpec.severity),
-            sourceShape = validationSpec.id
+            sourceShape = validationSpec.id,
+            position = position,
+            location = location
         )
     )
   }
 
   private def registerResult(result: ValidationResult): Unit = {
-    val key = result.sourceShape + result.sourceConstraintComponent + result.focusNode + result.message.getOrElse("")
+    val key =
+      result.sourceShape + result.sourceConstraintComponent + result.focusNode + result.message + result.position + result.location
     if (!duplicates.contains(key)) {
       duplicates += key
       results.append(result)

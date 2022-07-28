@@ -5,7 +5,7 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.annotations.{SourceAST, SourceYPart}
+import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceYPart}
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils._
@@ -189,12 +189,27 @@ class CustomShaclValidator(
       // depending if propertyInfo is provided, violation is thrown at a given property, or by default on element
       val onValidation = (validationInfo: Option[ValidationInfo]) =>
         validationInfo match {
-          case Some(ValidationInfo(field, customMessage, _)) => // why annotations are never used?
-            reportFailure(validationSpecification, element.id, field.toString, customMessage, reportBuilder)
-          case _ => reportFailure(validationSpecification, element.id, "", reportBuilder = reportBuilder)
+          case Some(ValidationInfo(field, customMessage, ann)) =>
+            reportBuilder.reportFailure(
+                validationSpecification,
+                element.id,
+                field.toString,
+                customMessage,
+                getPosition(ann),
+                getLocation(ann)
+            )
+          case _ => reportBuilder.reportFailure(validationSpecification, element.id, "")
         }
       validationFunction.run(element, onValidation)
     })
+  }
+
+  private def getPosition(annotations: Option[Annotations]): Option[LexicalInformation] = {
+    annotations flatMap (_.find(classOf[LexicalInformation]))
+  }
+
+  private def getLocation(annotations: Option[Annotations]): Option[String] = {
+    annotations flatMap (_.location())
   }
 
   private def getFunctionForName(name: String): CustomShaclFunction = customFunctions.get(name) match {
@@ -219,7 +234,7 @@ class CustomShaclValidator(
             validationSpecification.targetObject.foreach { targetObject =>
               extractor.extractPlainPredicateValue(targetObject, element).foreach {
                 case ExtractedPropertyValue(_: AmfScalar, Some(value: String)) if !value.contains("://") =>
-                  reportFailure(validationSpecification, element.id, "", reportBuilder = reportBuilder)
+                  reportBuilder.reportFailure(validationSpecification, element.id, "", None)
                 case _ => // ignore
               }
             }
@@ -353,7 +368,7 @@ class CustomShaclValidator(
       case ExtractedPropertyValue(obj: AmfObject, _) =>
         val current = obj.meta.`type`.map(_.iri())
         if (!propertyConstraint.`class`.exists(t => current.contains(t)))
-          reportBuilder.reportFailure(validationSpecification, propertyConstraint, element.id)
+          reportBuilder.reportFailure(validationSpecification, propertyConstraint, element.id, None, None)
       case _ => // ignore
     }
   }
@@ -866,16 +881,6 @@ class CustomShaclValidator(
       id: String,
       reportBuilder: ReportBuilder
   ): Unit = {
-    reportBuilder.reportFailure(validationSpecification, propertyConstraint, id)
-  }
-
-  private def reportFailure(
-      validationSpec: ValidationSpecification,
-      id: String,
-      path: String,
-      customMessage: Option[String] = None,
-      reportBuilder: ReportBuilder
-  ): Unit = {
-    reportBuilder.reportFailure(validationSpec, id, path, customMessage)
+    reportBuilder.reportFailure(validationSpecification, propertyConstraint, id, None, None)
   }
 }
