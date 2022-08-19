@@ -2,7 +2,7 @@ package amf.aml.internal.parse.vocabularies
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.parse.document.EmptyFutureDeclarations
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.parser.domain.{Declarations, FutureDeclarations}
+import amf.core.internal.parser.domain.{Declarations, FutureDeclarations, DotQualifiedNameExtractor}
 import amf.aml.client.scala.model.document.Vocabulary
 import amf.aml.client.scala.model.domain.{ClassTerm, External, PropertyTerm}
 
@@ -16,7 +16,7 @@ class VocabularyDeclarations(
     libs: Map[String, VocabularyDeclarations] = Map(),
     errorHandler: AMFErrorHandler,
     futureDeclarations: FutureDeclarations
-) extends Declarations(libs, Map(), Map(), errorHandler, futureDeclarations) {
+) extends Declarations(libs, Map(), Map(), errorHandler, futureDeclarations, DotQualifiedNameExtractor) {
 
   def registerTerm(term: PropertyTerm): Unit = {
     if (!term.name.value().contains(".")) {
