@@ -1,5 +1,6 @@
 package amf.validation.internal.shacl.custom
 
+import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.validation.core.ValidationResult
 
 case class CustomValidationResult(
@@ -8,5 +9,7 @@ case class CustomValidationResult(
     sourceConstraintComponent: String,
     focusNode: String,
     severity: String,
-    sourceShape: String
+    sourceShape: String,
+    position: Option[LexicalInformation],
+    location: Option[String]
 ) extends ValidationResult
