@@ -4,6 +4,7 @@ import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.semantic.SemanticExtensionHelper
+import amf.core.client.scala.transform.TransformationPipeline
 import com.github.ghik.silencer.silent
 
 import scala.collection.immutable
@@ -80,6 +81,14 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     )
     a
   }
+
+  /** Get all the transformation pipelines of the configuration
+    *
+    * @return
+    *   a Seq of [[TransformationPipeline]]
+    */
+  def getTransformationPipelines(): Seq[TransformationPipeline] =
+    configuration.registry.getTransformationPipelines.values.toSeq
 
   private def getDialectsByCondition(filter: AMLDialectInstanceParsingPlugin => Boolean): immutable.Seq[Dialect] =
     configuration.registry.getPluginsRegistry.rootParsePlugins.collect {
