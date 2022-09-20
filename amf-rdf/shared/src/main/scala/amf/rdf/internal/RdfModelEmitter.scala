@@ -15,6 +15,7 @@ import amf.core.internal.metamodel.document.SourceMapModel
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.metamodel.domain.{DomainElementModel, LinkableElementModel, ShapeModel}
 import amf.core.internal.parser.domain.{Annotations, FieldEntry, Value}
+import amf.core.internal.plugins.document.graph.emitter.utils.SourceMapEmitter
 import amf.core.internal.plugins.document.graph.emitter.{ApplicableMetaFieldRenderProvider, CommonEmitter}
 import amf.rdf.client.scala.RdfModel
 import org.mulesoft.common.time.SimpleDateTime
@@ -25,7 +26,7 @@ import scala.collection.mutable.ListBuffer
   */
 class RdfModelEmitter(rdfModel: RdfModel, fieldProvision: ApplicableMetaFieldRenderProvider)
     extends MetaModelTypeMapping
-    with CommonEmitter {
+    with SourceMapEmitter {
 
   def emit(unit: BaseUnit, options: RenderOptions): Unit = Emitter(options).root(unit)
 
@@ -57,8 +58,8 @@ class RdfModelEmitter(rdfModel: RdfModel, fieldProvision: ApplicableMetaFieldRen
         val modelFields = fieldProvision.fieldsFor(element, options) ++ (obj match {
           case _: ShapeModel =>
             Seq(
-                ShapeModel.CustomShapePropertyDefinitions,
-                ShapeModel.CustomShapeProperties
+              ShapeModel.CustomShapePropertyDefinitions,
+              ShapeModel.CustomShapeProperties
             )
           case _ => Nil
         }).filter(options.renderField)
