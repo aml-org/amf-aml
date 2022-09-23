@@ -138,6 +138,12 @@ class AMLConfiguration private[amf] (
   override def withReferenceParsePlugin(amfPlugin: AMFParsePlugin): AMLConfiguration =
     super._withReferenceParsePlugin(amfPlugin)
 
+  override def withRootParsePlugins(amfParsePlugin: List[AMFParsePlugin]): AMLConfiguration =
+    super._withRootParsePlugins(amfParsePlugin)
+
+  override def withReferenceParsePlugins(amfPlugin: List[AMFParsePlugin]): AMLConfiguration =
+    super._withReferenceParsePlugins(amfPlugin)
+
   override def withPlugins(plugins: List[AMFPlugin[_]]): AMLConfiguration =
     super._withPlugins(plugins)
 
