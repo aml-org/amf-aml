@@ -15,7 +15,7 @@ case class DialectInstanceLibrary(fields: Fields, annotations: Annotations)
 
   def declares: Seq[DomainElement] = fields.field(Declares)
 
-  private[amf] override def componentId: String = ""
+  override def componentId: String = ""
 }
 
 object DialectInstanceLibrary {
