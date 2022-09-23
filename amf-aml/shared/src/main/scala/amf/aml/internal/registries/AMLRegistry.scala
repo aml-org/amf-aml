@@ -51,11 +51,17 @@ private[amf] class AMLRegistry(
   override def withReferenceParsePlugin(plugin: AMFParsePlugin): AMLRegistry =
     copy(plugins = plugins.withReferenceParsePlugin(plugin))
 
+  override def withReferenceParsePlugins(parsePlugin: List[AMFParsePlugin]): AMLRegistry =
+    copy(plugins = plugins.withReferenceParsePlugins(parsePlugin))
+
   override def withPlugins(amfPlugins: List[AMFPlugin[_]]): AMLRegistry =
     copy(plugins = plugins.withPlugins(amfPlugins))
 
   override def withRootParsePlugin(aMFParsePlugin: AMFParsePlugin): AMLRegistry =
     copy(plugins = plugins.withRootParsePlugin(aMFParsePlugin))
+
+  override def withRootParsePlugins(amfParsePlugins: List[AMFParsePlugin]): AMLRegistry =
+    copy(plugins = plugins.withRootParsePlugins(amfParsePlugins))
 
   override def withFallback(plugin: DomainParsingFallback): AMLRegistry = copy(plugins = plugins.withFallback(plugin))
 
