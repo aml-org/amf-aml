@@ -4,11 +4,12 @@ import amf.core.client.common.transform._
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance, DialectInstancePatch}
+import amf.aml.internal.transform.steps.SemanticExtensionFlatteningStage
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner, TransformationStep}
 
 class DefaultAMLTransformationPipeline(override val name: String) extends TransformationPipeline {
-  override def steps: Seq[TransformationStep] = Seq(RedirectResolutionByModel)
+  override def steps: Seq[TransformationStep] = Seq(RedirectResolutionByModel, new SemanticExtensionFlatteningStage)
 }
 
 private object RedirectResolutionByModel extends TransformationStep {

@@ -34,6 +34,19 @@ class AppliedExtensionTest extends AsyncFunSuite with Matchers {
     }
   }
 
+  test("Applied and resolved extensions") {
+    assertResolvedModel("dialect-extensions.yaml", "instance.yaml") { instance =>
+      val maintainer = instance.encodes.graph.getObjectByProperty("http://a.ml/vocab#maintainer").head
+
+      val users = maintainer.graph.getObjectByProperty("http://a.ml/vocabularies/data#users")
+      users.foreach { user =>
+        user.graph.containsProperty("http://a.ml/vocab#username") shouldBe true
+        user.graph.containsProperty("http://a.ml/vocab#contributor") shouldBe true
+      }
+      users should have length 2
+    }
+  }
+
   test("Applied extensions with wrong target") {
 
     val PREFERRED_PROPERTY_TERM = "http://a.ml/vocab#preference"
@@ -64,7 +77,9 @@ class AppliedExtensionTest extends AsyncFunSuite with Matchers {
     value.annotations.find(classOf[LexicalInformation]) shouldNot be(empty)
   }
 
-  def assertModel(dialect: String, instance: String)(assertion: DialectInstance => Assertion): Future[Assertion] = {
+  def assertModel(dialect: String, instance: String, shouldTransform: Boolean = false)(
+      assertion: DialectInstance => Assertion
+  ): Future[Assertion] = {
     val config = AMLConfiguration
       .predefined()
       .withErrorHandlerProvider(() => UnhandledErrorHandler)
@@ -73,7 +88,17 @@ class AppliedExtensionTest extends AsyncFunSuite with Matchers {
       nextConfig <- config
       instance   <- nextConfig.baseUnitClient().parseDialectInstance(basePath + instance)
     } yield {
-      assertion(instance.dialectInstance)
+      val finalModel =
+        if (shouldTransform) transform(nextConfig, instance.dialectInstance) else instance.dialectInstance
+      assertion(finalModel)
     }
+  }
+
+  private def transform(config: AMLConfiguration, instance: DialectInstance) =
+    config.baseUnitClient().transform(instance).baseUnit.asInstanceOf[DialectInstance]
+  def assertResolvedModel(dialect: String, instance: String)(
+      assertion: DialectInstance => Assertion
+  ): Future[Assertion] = {
+    assertModel(dialect, instance, shouldTransform = true)(assertion)
   }
 }
