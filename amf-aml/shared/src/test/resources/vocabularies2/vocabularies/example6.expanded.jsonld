@@ -345,17 +345,17 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
-            "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
               {
-                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml#/source-map/aliases-array/element_0",
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml#/source-map/virtual-element/element_0",
                 "http://a.ml/vocabularies/document-source-maps#element": [
                   {
-                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml"
+                    "@value": "http://a.ml/vocabularies/document#declares"
                   }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
-                    "@value": "test->file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml::example3.yaml"
+                    "@value": "true"
                   }
                 ]
               }
@@ -397,6 +397,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(2,0)-(18,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml#/source-map/aliases-array/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "test->file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/vocabularies/example3.yaml::example3.yaml"
                   }
                 ]
               }

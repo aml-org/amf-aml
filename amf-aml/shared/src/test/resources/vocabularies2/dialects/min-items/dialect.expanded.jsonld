@@ -746,6 +746,21 @@
                 "@type": [
                   "sourcemaps:SourceMap"
                 ],
+                "sourcemaps:virtual-element": [
+                  {
+                    "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/virtual-element/element_0",
+                    "sourcemaps:element": [
+                      {
+                        "@value": "shacl:mandatory"
+                      }
+                    ],
+                    "sourcemaps:value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
+                ],
                 "sourcemaps:lexical": [
                   {
                     "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/lexical/element_4",

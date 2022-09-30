@@ -397,9 +397,9 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
         {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/source-map/aliases-array/element_0"
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/source-map/virtual-element/element_0"
         }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
@@ -420,6 +420,11 @@
         },
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/source-map/lexical/element_4"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/source-map/aliases-array/element_0"
         }
       ]
     },
@@ -455,6 +460,11 @@
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/github.vocabulary.yaml#/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
+      ],
+      "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/github.vocabulary.yaml#/source-map/virtual-element/element_0"
+        }
       ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
@@ -615,9 +625,9 @@
       ]
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/source-map/aliases-array/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml",
-      "http://a.ml/vocabularies/document-source-maps#value": "github->http://github.org/vocabulary#::http://github.org/vocabulary#::github.vocabulary.yaml"
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/meta#extensions",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/source-map/lexical/element_5",
@@ -650,6 +660,11 @@
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,0)-(5,0)]"
     },
     {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml#/source-map/aliases-array/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/dialect.yaml",
+      "http://a.ml/vocabularies/document-source-maps#value": "github->http://github.org/vocabulary#::http://github.org/vocabulary#::github.vocabulary.yaml"
+    },
+    {
       "@id": "http://github.org/vocabulary#contributor/source-map",
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
@@ -662,6 +677,11 @@
           "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/github.vocabulary.yaml#/source-map/virtual-element/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://a.ml/vocabularies/document#declares",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mappings/github.vocabulary.yaml#/source-map/lexical/element_2",
