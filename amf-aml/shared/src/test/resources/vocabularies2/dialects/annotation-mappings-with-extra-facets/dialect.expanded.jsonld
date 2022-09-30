@@ -585,6 +585,21 @@
         "@type": [
           "sourcemaps:SourceMap"
         ],
+        "sourcemaps:virtual-element": [
+          {
+            "@id": "#/source-map/virtual-element/element_0",
+            "sourcemaps:element": [
+              {
+                "@value": "meta:extensions"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "true"
+              }
+            ]
+          }
+        ],
         "sourcemaps:lexical": [
           {
             "@id": "#/source-map/lexical/element_4",
