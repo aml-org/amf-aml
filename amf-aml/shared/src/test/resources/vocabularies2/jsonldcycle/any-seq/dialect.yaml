@@ -1,0 +1,21 @@
+#%Dialect 1.0
+
+dialect: AnySeq
+version: 1.0
+
+external:
+  schema: https://schema.org/
+
+documents:
+  root:
+    encodes: RootNode
+
+nodeMappings:
+  RootNode:
+    classTerm: schema.Root
+
+    mapping:
+      in:
+        propertyTerm: schema.in
+        allowMultiple: true
+        range: any
