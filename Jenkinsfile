@@ -73,7 +73,7 @@ pipeline {
       when {
         anyOf {
           branch 'master'
-//           branch 'support/*'
+          branch 'support/*'
         }
       }
       steps {
