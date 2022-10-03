@@ -88,7 +88,10 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
       Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
   )
 
-lazy val validationJVM = validation.jvm.in(file("./amf-validation/jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
+lazy val validationJVM = validation.jvm
+  .in(file("./amf-validation/jvm"))
+  .sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
+  .disablePlugins(SonarPlugin)
 lazy val validationJS = validation.js
   .in(file("./amf-validation/js"))
   .sourceDependency(amfCoreJSRef, amfCoreLibJS)
@@ -107,7 +110,7 @@ lazy val rdf = crossProject(JSPlatform, JVMPlatform)
   .settings(commonSettings)
   .jvmSettings(
       libraryDependencies += "org.scala-js"              %% "scalajs-stubs" % scalaJSVersion % "provided",
-      libraryDependencies += "org.json4s"                %% "json4s-native" % "3.5.4",
+      libraryDependencies += "org.json4s"                %% "json4s-native" % "4.0.5",
       libraryDependencies += "org.apache.jena"            % "jena-arq"      % "3.17.0",
       libraryDependencies += "org.apache.thrift"          % "libthrift"     % "0.14.1", // CVE-2020-13949
       excludeDependencies += "org.apache.tomcat.embed"    % "tomcat-embed-core",
@@ -150,7 +153,9 @@ sonarProperties ++= Map(
     "sonar.sourceEncoding"    -> "UTF-8",
     "sonar.github.repository" -> "mulesoft/amf-aml",
     "sonar.branch.name"       -> branch,
-    "sonar.sources"           -> "amf-aml/shared/src/main/scala",
-    "sonar.tests"             -> "amf-aml/shared/src/test/scala",
-    "sonar.userHome"          -> "${buildDir}/.sonar"
+    "sonar.sources" -> "amf-aml/shared/src/main/scala, amf-rdf/shared/src/main/scala, amf-validation/shared/src/main/scala",
+    "sonar.tests"    -> "amf-aml/shared/src/test/scala, amf-rdf/shared/src/test/scala",
+    "sonar.userHome" -> "${buildDir}/.sonar"
 )
+
+Global / concurrentRestrictions += Tags.limit(Tags.Untagged, 1)
