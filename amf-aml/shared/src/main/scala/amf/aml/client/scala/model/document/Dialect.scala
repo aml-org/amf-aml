@@ -40,7 +40,7 @@ case class Dialect(fields: Fields, annotations: Annotations)
 
   override protected[amf] def profileName: Option[ProfileName] = Some(ProfileName(nameAndVersion()))
 
-  private[amf] override def componentId: String = ""
+  override def componentId: String = ""
 
   def withName(name: String): Dialect                             = set(Name, name)
   def withVersion(version: String): Dialect                       = set(Version, version)

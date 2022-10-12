@@ -26,7 +26,7 @@ class AnnotationMapping(override val fields: Fields, override val annotations: A
   override def meta: AnnotationMappingModel.type = AnnotationMappingModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = s"annotation-mappings/${name.value()}"
+  override def componentId: String = s"annotation-mappings/${name.value()}"
 
   override def linkCopy(): Linkable = AnnotationMapping().withId(id)
 

@@ -57,7 +57,7 @@ class NodeMapping(override val fields: Fields, override val annotations: Annotat
   }
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = {
+  override def componentId: String = {
     "/" + name.value().urlComponentEncoded
   }
 
