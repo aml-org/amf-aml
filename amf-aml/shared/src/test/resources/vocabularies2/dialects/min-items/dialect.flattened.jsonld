@@ -442,6 +442,11 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
+      "sourcemaps:virtual-element": [
+        {
+          "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/virtual-element/element_0"
+        }
+      ],
       "sourcemaps:lexical": [
         {
           "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/lexical/element_4"
@@ -589,6 +594,11 @@
       "@id": "#/declarations/Root/property/NoItemsMandatoryTrue/source-map/lexical/element_3",
       "sourcemaps:element": "core:name",
       "sourcemaps:value": "[(31,6)-(31,26)]"
+    },
+    {
+      "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/virtual-element/element_0",
+      "sourcemaps:element": "shacl:mandatory",
+      "sourcemaps:value": "true"
     },
     {
       "@id": "#/declarations/Root/property/Items5NoMandatory/source-map/lexical/element_4",

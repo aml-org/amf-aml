@@ -400,9 +400,9 @@
       "@type": [
         "sourcemaps:SourceMap"
       ],
-      "sourcemaps:aliases-array": [
+      "sourcemaps:virtual-element": [
         {
-          "@id": "#/source-map/aliases-array/element_0"
+          "@id": "#/source-map/virtual-element/element_0"
         }
       ],
       "sourcemaps:lexical": [
@@ -423,6 +423,11 @@
         },
         {
           "@id": "#/source-map/lexical/element_4"
+        }
+      ],
+      "sourcemaps:aliases-array": [
+        {
+          "@id": "#/source-map/aliases-array/element_0"
         }
       ]
     },
@@ -458,6 +463,11 @@
       "@id": "./github.vocabulary.yaml#/source-map",
       "@type": [
         "sourcemaps:SourceMap"
+      ],
+      "sourcemaps:virtual-element": [
+        {
+          "@id": "./github.vocabulary.yaml#/source-map/virtual-element/element_0"
+        }
       ],
       "sourcemaps:lexical": [
         {
@@ -618,9 +628,9 @@
       ]
     },
     {
-      "@id": "#/source-map/aliases-array/element_0",
-      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml",
-      "sourcemaps:value": "github->http://github.org/vocabulary#::http://github.org/vocabulary#::github.vocabulary.yaml"
+      "@id": "#/source-map/virtual-element/element_0",
+      "sourcemaps:element": "meta:extensions",
+      "sourcemaps:value": "true"
     },
     {
       "@id": "#/source-map/lexical/element_5",
@@ -653,6 +663,11 @@
       "sourcemaps:value": "[(3,0)-(5,0)]"
     },
     {
+      "@id": "#/source-map/aliases-array/element_0",
+      "sourcemaps:element": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml",
+      "sourcemaps:value": "github->http://github.org/vocabulary#::http://github.org/vocabulary#::github.vocabulary.yaml"
+    },
+    {
       "@id": "http://github.org/vocabulary#contributor/source-map",
       "@type": [
         "sourcemaps:SourceMap"
@@ -665,6 +680,11 @@
           "@id": "http://github.org/vocabulary#contributor/source-map/lexical/element_0"
         }
       ]
+    },
+    {
+      "@id": "./github.vocabulary.yaml#/source-map/virtual-element/element_0",
+      "sourcemaps:element": "doc:declares",
+      "sourcemaps:value": "true"
     },
     {
       "@id": "./github.vocabulary.yaml#/source-map/lexical/element_2",

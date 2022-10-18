@@ -405,6 +405,21 @@
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
             ],
+            "http://a.ml/vocabularies/document-source-maps#virtual-element": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/library.yaml#/source-map/virtual-element/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "http://a.ml/vocabularies/document#declares"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "true"
+                  }
+                ]
+              }
+            ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
                 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/dialect-library/library.yaml#/source-map/lexical/element_0",

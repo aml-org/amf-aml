@@ -1,0 +1,55 @@
+{
+"@graph": [
+{
+"@id": "file://amf-aml/shared/src/test/resources/vocabularies2/jsonldcycle/any-seq/instance.yaml/BaseUnitProcessingData",
+"@type": [
+"http://a.ml/vocabularies/document#DialectInstanceProcessingData"
+],
+"http://a.ml/vocabularies/meta#definedBy": [
+{
+"@id": "file://amf-aml/shared/src/test/resources/vocabularies2/jsonldcycle/any-seq/dialect.yaml"
+}
+],
+"http://a.ml/vocabularies/document#transformed": false,
+"http://a.ml/vocabularies/document#sourceSpec": "AnySeq 1.0"
+},
+{
+"@id": "file://amf-aml/shared/src/test/resources/vocabularies2/jsonldcycle/any-seq/instance.yaml#/encodes",
+"@type": [
+"https://schema.org/Root",
+"file://amf-aml/shared/src/test/resources/vocabularies2/jsonldcycle/any-seq/dialect.yaml#/declarations/RootNode",
+"http://a.ml/vocabularies/meta#DialectDomainElement",
+"http://a.ml/vocabularies/document#DomainElement"
+],
+"https://schema.org/in": [
+{
+"@value": "1",
+"@type": "http://www.w3.org/2001/XMLSchema#integer"
+},
+"2"
+]
+},
+{
+"@id": "file://amf-aml/shared/src/test/resources/vocabularies2/jsonldcycle/any-seq/instance.yaml",
+"@type": [
+"http://a.ml/vocabularies/meta#DialectInstance",
+"http://a.ml/vocabularies/document#Document",
+"http://a.ml/vocabularies/document#Fragment",
+"http://a.ml/vocabularies/document#Module",
+"http://a.ml/vocabularies/document#Unit"
+],
+"http://a.ml/vocabularies/meta#definedBy": [
+{
+"@id": "file://amf-aml/shared/src/test/resources/vocabularies2/jsonldcycle/any-seq/dialect.yaml"
+}
+],
+"http://a.ml/vocabularies/document#encodes": {
+"@id": "file://amf-aml/shared/src/test/resources/vocabularies2/jsonldcycle/any-seq/instance.yaml#/encodes"
+},
+"http://a.ml/vocabularies/document#root": true,
+"http://a.ml/vocabularies/document#processingData": {
+"@id": "file://amf-aml/shared/src/test/resources/vocabularies2/jsonldcycle/any-seq/instance.yaml/BaseUnitProcessingData"
+}
+}
+]
+}
