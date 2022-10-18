@@ -27,7 +27,7 @@ case class DocumentsModel(fields: Fields, annotations: Annotations) extends Doma
   override def meta: DocumentsModelModel.type = DocumentsModelModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
-  private[amf] override def componentId: String = "/documents"
+  override def componentId: String = "/documents"
 }
 
 object DocumentsModel {

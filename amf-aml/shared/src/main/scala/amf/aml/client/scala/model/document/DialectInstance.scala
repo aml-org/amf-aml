@@ -28,7 +28,7 @@ case class DialectInstance(fields: Fields, annotations: Annotations)
   def encodes: DomainElement       = fields.field(Encodes)
   def declares: Seq[DomainElement] = fields.field(Declares)
 
-  private[amf] override def componentId: String = ""
+  override def componentId: String = ""
 
   override def transform(
       selector: DomainElement => Boolean,
