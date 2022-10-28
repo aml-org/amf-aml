@@ -42,5 +42,6 @@ class DialectContext(private val wrapped: ParserContext, private val ds: Option[
 
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
   override def getMaxYamlReferences: _root_.scala.Option[Int] = wrapped.config.parsingOptions.maxYamlReferences
+  override def getMaxYamlJsonDepth: _root_.scala.Option[Int] = wrapped.config.parsingOptions.maxJsonYamlDepth
   override def fragments: Map[String, FragmentRef]            = Map.empty
 }
