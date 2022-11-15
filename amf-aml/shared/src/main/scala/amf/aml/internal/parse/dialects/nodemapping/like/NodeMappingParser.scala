@@ -18,6 +18,7 @@ import amf.core.internal.parser.domain.SearchScope.All
 import amf.core.internal.parser.domain.{Annotations, ScalarNode, SearchScope, ValueNode}
 import amf.core.internal.utils.AmfStrings
 import amf.core.internal.validation.CoreValidations.SyamlError
+import org.mulesoft.common.collections._
 import org.yaml.model._
 
 import scala.collection.immutable
@@ -108,7 +109,7 @@ class NodeMappingParser(implicit ctx: DialectContext)
           val (withTerm, withoutTerm) = properties.partition(_.nodePropertyMapping().option().nonEmpty)
           val filterProperties: immutable.Iterable[PropertyMapping] = withTerm
             .filter(_.nodePropertyMapping().option().nonEmpty)
-            .groupBy(p => p.nodePropertyMapping().value())
+            .legacyGroupBy(p => p.nodePropertyMapping().value())
             .flatMap({
               case (termKey, values) if values.length > 1 =>
                 ctx.eh.violation(
