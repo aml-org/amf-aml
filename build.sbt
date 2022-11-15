@@ -32,7 +32,7 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
     resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral),
     credentials ++= Common.credentials(),
     libraryDependencies ++= Seq(
-        "org.mule.common" %%% "scala-common-test" % "0.0.10" % Test,
+        "org.mule.common" %%% "scala-common-test" % "0.1.12" % Test,
         "org.slf4j"         % "slf4j-nop"         % "1.7.32" % Test
     ),
     Test / logBuffered := false
