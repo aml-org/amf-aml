@@ -18,7 +18,7 @@ case class DialectInstanceFragment(fields: Fields, annotations: Annotations)
 
   def fragment(): StrField = fields.field(Fragment)
 
-  private[amf] override def componentId: String = ""
+  override def componentId: String = ""
 
   def withFragment(fragmentId: String): DialectInstanceFragment =
     set(Fragment, fragmentId)
