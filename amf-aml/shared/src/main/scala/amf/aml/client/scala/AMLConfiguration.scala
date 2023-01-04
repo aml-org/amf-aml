@@ -203,9 +203,8 @@ class AMLConfiguration private[amf] (
     copy(registry = registry.withExtensions(dialect))
   }
 
-  private[amf] def withAliases(aliases: NamespaceAliases): AMLConfiguration = {
-    copy(registry = registry.withAliases(aliases))
-  }
+  override def withAliases(aliases: NamespaceAliases): AMLConfiguration =
+    super._withAliases(aliases)
 
   /** Set [[BaseExecutionEnvironment]]
     * @param executionEnv
