@@ -58,11 +58,11 @@ class RdfModelEmitter(rdfModel: RdfModel, fieldProvision: ApplicableMetaFieldRen
         val modelFields = fieldProvision.fieldsFor(element, options) ++ (obj match {
           case _: ShapeModel =>
             Seq(
-              ShapeModel.CustomShapePropertyDefinitions,
-              ShapeModel.CustomShapeProperties
+                ShapeModel.CustomShapePropertyDefinitions,
+                ShapeModel.CustomShapeProperties
             )
           case _ => Nil
-        }).filter(options.renderField)
+        })
 
         element match {
           case e: ObjectNode if options.isValidation =>
