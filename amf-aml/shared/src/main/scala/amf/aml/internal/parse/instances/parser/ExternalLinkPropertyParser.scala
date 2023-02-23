@@ -32,10 +32,10 @@ object ExternalLinkPropertyParser {
       case _ =>
         ctx.eh
           .violation(
-              DialectError,
-              id,
-              s"Individual object range required for external link property",
-              propertyEntry.location
+            DialectError,
+            id,
+            s"Individual object range required for external link property",
+            propertyEntry.location
           )
         None
     }
@@ -66,10 +66,10 @@ object ExternalLinkPropertyParser {
               node.withObjectCollectionProperty(property, elems, Right(propertyEntry))
           case YType.Seq if !allowMultiple => // error
             ctx.eh.violation(
-                DialectError,
-                id,
-                s"AllowMultiple not enable, sequence of external links not supported",
-                propertyEntry.location
+              DialectError,
+              id,
+              s"AllowMultiple not enable, sequence of external links not supported",
+              propertyEntry.location
             )
           case _ =>
             ctx.eh.violation(DialectError, id, s"Not supported external link range", propertyEntry.location)

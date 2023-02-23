@@ -26,41 +26,41 @@ class DialectRDFTest extends FunSuiteRdfCycleTests with PlatformSecrets with AML
 
   multiGoldenTest("RDF 3 test", "example3.rdf-cycled.%s") { config =>
     cycleFullRdf(
-        "example3.yaml",
-        config.golden,
-        directory = basePath,
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions),
-        syntax = Some(Syntax.JsonLd)
+      "example3.yaml",
+      config.golden,
+      directory = basePath,
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions),
+      syntax = Some(Syntax.JsonLd)
     )
   }
 
   multiGoldenTest("RDF 13 test", "example13.rdf-cycled.%s") { config =>
     cycleFullRdf(
-        "example13.yaml",
-        config.golden,
-        directory = basePath,
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions),
-        syntax = Some(Syntax.JsonLd)
+      "example13.yaml",
+      config.golden,
+      directory = basePath,
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions),
+      syntax = Some(Syntax.JsonLd)
     )
   }
 
   multiGoldenTest("RDF Production system2 dialect ex1  test", "dialectex1.%s") { config =>
     cycleFullRdf(
-        "dialectex1.yaml",
-        config.golden,
-        directory = s"${productionPath}system2/",
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions),
-        syntax = Some(Syntax.JsonLd)
+      "dialectex1.yaml",
+      config.golden,
+      directory = s"${productionPath}system2/",
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions),
+      syntax = Some(Syntax.JsonLd)
     )
   }
 
   multiGoldenTest("RDF Production system2 dialect ex2  test", "dialectex2.%s") { config =>
     cycleFullRdf(
-        "dialectex2.yaml",
-        config.golden,
-        directory = s"${productionPath}system2/",
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions),
-        syntax = Some(Syntax.JsonLd)
+      "dialectex2.yaml",
+      config.golden,
+      directory = s"${productionPath}system2/",
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions),
+      syntax = Some(Syntax.JsonLd)
     )
   }
 

@@ -21,15 +21,15 @@ trait DiscriminatorEmitter extends PosExtractor with AliasesConsumer {
       emitters ++= Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit =
           b.entry(
-              "typeDiscriminator",
-              _.obj { b =>
-                typesMapping.foreach { case (alias, nodeMappingId) =>
-                  aliasFor(nodeMappingId) match {
-                    case Some(nodeMapping) => b.entry(alias, nodeMapping)
-                    case _                 => b.entry(alias, nodeMappingId)
-                  }
+            "typeDiscriminator",
+            _.obj { b =>
+              typesMapping.foreach { case (alias, nodeMappingId) =>
+                aliasFor(nodeMappingId) match {
+                  case Some(nodeMapping) => b.entry(alias, nodeMapping)
+                  case _                 => b.entry(alias, nodeMappingId)
                 }
               }
+            }
           )
 
         override def position(): Position = pos

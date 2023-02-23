@@ -14,19 +14,19 @@ import amf.aml.client.scala.model.domain.SemanticExtension
   */
 object SemanticExtensionModel extends DomainElementModel {
   val ExtensionName: Field = Field(
-      Str,
-      Namespace.Core + "name",
-      ModelDoc(ModelVocabularies.Core, "name", "Name that identifies an extension in the target document")
+    Str,
+    Namespace.Core + "name",
+    ModelDoc(ModelVocabularies.Core, "name", "Name that identifies an extension in the target document")
   )
 
   val ExtensionMappingDefinition: Field = Field(
-      Iri,
-      Namespace.Meta + "extensionMappingDefinition",
-      ModelDoc(
-          ModelVocabularies.Meta,
-          "extensionMappingDefinition",
-          "Extension mapping (annotation mapping) definition used to parse a certain extension identified with the ExtensionName"
-      )
+    Iri,
+    Namespace.Meta + "extensionMappingDefinition",
+    ModelDoc(
+      ModelVocabularies.Meta,
+      "extensionMappingDefinition",
+      "Extension mapping (annotation mapping) definition used to parse a certain extension identified with the ExtensionName"
+    )
   )
 
   override def fields: List[Field] = ExtensionName :: ExtensionMappingDefinition :: DomainElementModel.fields
@@ -36,8 +36,8 @@ object SemanticExtensionModel extends DomainElementModel {
   override val `type`: List[ValueType] = Namespace.Meta + "ExtensionMapping" :: DomainElementModel.`type`
 
   override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Meta,
-      "SemanticExtension",
-      "Mapping a particular extension name to an extension definition"
+    ModelVocabularies.Meta,
+    "SemanticExtension",
+    "Mapping a particular extension name to an extension definition"
   )
 }

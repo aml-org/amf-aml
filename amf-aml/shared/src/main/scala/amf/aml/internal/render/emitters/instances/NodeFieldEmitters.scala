@@ -25,18 +25,18 @@ object SemanticExtensionNodeEmitter {
       keyOverride: String
   )(implicit finder: NodeMappableFinder): NodeFieldEmitters = {
     NodeFieldEmitters(
-        node,
-        nodeMappable,
-        dialect.references,
-        dialect,
-        ordering,
-        None,
-        None,
-        emitDialect = false,
-        topLevelEmitters = Nil,
-        renderOptions,
-        registry,
-        Some(keyOverride)
+      node,
+      nodeMappable,
+      dialect.references,
+      dialect,
+      ordering,
+      None,
+      None,
+      emitDialect = false,
+      topLevelEmitters = Nil,
+      renderOptions,
+      registry,
+      Some(keyOverride)
     )
   }
 }
@@ -120,16 +120,16 @@ case class NodeFieldEmitters(
   ): EntryEmitter = {
 
     ExternalLinkEmitter(
-        key,
-        dialect,
-        target,
-        propertyMapping,
-        annotations,
-        keyPropertyId,
-        references,
-        ordering,
-        renderOptions,
-        registry
+      key,
+      dialect,
+      target,
+      propertyMapping,
+      annotations,
+      keyPropertyId,
+      references,
+      ordering,
+      renderOptions,
+      registry
     )
   }
 
@@ -164,15 +164,15 @@ case class NodeFieldEmitters(
   ): EntryEmitter = {
 
     DialectObjectEntryEmitter(
-        key,
-        target,
-        propertyMapping,
-        references,
-        dialect,
-        ordering,
-        renderOptions,
-        annotations,
-        registry
+      key,
+      target,
+      propertyMapping,
+      references,
+      dialect,
+      ordering,
+      renderOptions,
+      annotations,
+      registry
     )
   }
 
@@ -180,17 +180,17 @@ case class NodeFieldEmitters(
     val (externalDialect, nextNodeMapping) = findNodeMappingById(element.definedBy.id)
 
     EntryPartEmitter(
-        key,
-        DialectNodeEmitter(
-            element,
-            nextNodeMapping,
-            references,
-            externalDialect,
-            ordering,
-            emitDialect = true,
-            renderOptions = renderOptions,
-            registry = registry
-        )
+      key,
+      DialectNodeEmitter(
+        element,
+        nextNodeMapping,
+        references,
+        externalDialect,
+        ordering,
+        emitDialect = true,
+        renderOptions = renderOptions,
+        registry = registry
+      )
     )
   }
 

@@ -65,15 +65,15 @@ private case class DialectObjectEntryEmitter[M <: PropertyLikeMappingModel](
           ) match {
             case Some(nextNodeMapping) =>
               val nodeEmitter = DialectNodeEmitter(
-                  dialectDomainElement,
-                  nextNodeMapping,
-                  references,
-                  dialect,
-                  ordering,
-                  discriminator = discriminator.compute(dialectDomainElement),
-                  keyPropertyId = keyPropertyId,
-                  renderOptions = renderOptions,
-                  registry = registry
+                dialectDomainElement,
+                nextNodeMapping,
+                references,
+                dialect,
+                ordering,
+                discriminator = discriminator.compute(dialectDomainElement),
+                keyPropertyId = keyPropertyId,
+                renderOptions = renderOptions,
+                registry = registry
               )
               acc + (nodeEmitter -> dialectDomainElement)
             case _ =>
@@ -100,28 +100,28 @@ private case class DialectObjectEntryEmitter[M <: PropertyLikeMappingModel](
       keyPropertyIdValue: String
   ): Unit = {
     b.entry(
-        key,
-        _.obj { b =>
-          ordering.sorted(mapElements.keys.toSeq).foreach { emitter =>
-            val dialectDomainElement = mapElements(emitter)
-            val mapKeyField =
-              dialectDomainElement.meta.fields
-                .find(_.value.iri() == keyPropertyIdValue)
-                .get
-            val mapKeyValue =
-              dialectDomainElement.fields.getValue(mapKeyField).toString
-            EntryPartEmitter(mapKeyValue, emitter).emit(b)
-          }
+      key,
+      _.obj { b =>
+        ordering.sorted(mapElements.keys.toSeq).foreach { emitter =>
+          val dialectDomainElement = mapElements(emitter)
+          val mapKeyField =
+            dialectDomainElement.meta.fields
+              .find(_.value.iri() == keyPropertyIdValue)
+              .get
+          val mapKeyValue =
+            dialectDomainElement.fields.getValue(mapKeyField).toString
+          EntryPartEmitter(mapKeyValue, emitter).emit(b)
         }
+      }
     )
   }
 
   def emitArray(b: EntryBuilder, mappedElements: Map[DialectNodeEmitter, DialectDomainElement]): Unit = {
     b.entry(
-        key,
-        _.list { b =>
-          ordering.sorted(mappedElements.keys.toSeq).foreach(_.emit(b))
-        }
+      key,
+      _.list { b =>
+        ordering.sorted(mappedElements.keys.toSeq).foreach(_.emit(b))
+      }
     )
   }
 

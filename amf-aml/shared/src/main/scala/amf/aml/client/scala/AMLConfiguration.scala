@@ -282,24 +282,24 @@ object AMLConfiguration extends PlatformSecrets {
 
     // we might need to register editing pipeline as well because of legacy behaviour.
     new AMLConfiguration(
-        predefinedGraphConfiguration.resolvers,
-        predefinedGraphConfiguration.errorHandlerProvider,
-        AMLRegistry(predefinedGraphConfiguration.getRegistry)
-          .withEntities(AMLEntities.entities)
-          .withAnnotations(AMLSerializableAnnotations.annotations),
-        predefinedGraphConfiguration.listeners,
-        predefinedGraphConfiguration.options
+      predefinedGraphConfiguration.resolvers,
+      predefinedGraphConfiguration.errorHandlerProvider,
+      AMLRegistry(predefinedGraphConfiguration.getRegistry)
+        .withEntities(AMLEntities.entities)
+        .withAnnotations(AMLSerializableAnnotations.annotations),
+      predefinedGraphConfiguration.listeners,
+      predefinedGraphConfiguration.options
     ).withPlugins(predefinedPlugins)
       .withTransformationPipeline(DefaultAMLTransformationPipeline())
   }
 
   def empty(): AMLConfiguration = {
     new AMLConfiguration(
-        AMFResolvers.predefined(),
-        DefaultErrorHandlerProvider,
-        AMLRegistry.empty,
-        Set.empty,
-        AMFOptions.default()
+      AMFResolvers.predefined(),
+      DefaultErrorHandlerProvider,
+      AMLRegistry.empty,
+      Set.empty,
+      AMFOptions.default()
     )
   }
 }

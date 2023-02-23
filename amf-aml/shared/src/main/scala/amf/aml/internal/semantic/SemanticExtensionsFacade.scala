@@ -56,9 +56,9 @@ object SemanticExtensionsFacade {
       annotationSchemaValidator: AnnotationSchemaValidator
   ): SemanticExtensionsFacade =
     new SemanticExtensionsFacade(
-        extensionName,
-        AMLRegistry.apply(AMLRegistry.empty, Seq(dialect)),
-        annotationSchemaValidator
+      extensionName,
+      AMLRegistry.apply(AMLRegistry.empty, Seq(dialect)),
+      annotationSchemaValidator
     )
 
   def apply(

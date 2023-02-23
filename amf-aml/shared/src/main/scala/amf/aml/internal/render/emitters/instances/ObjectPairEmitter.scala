@@ -20,31 +20,31 @@ case class ObjectPairEmitter(
     val keyProperty   = propertyMapping.mapTermKeyProperty().value()
     val valueProperty = propertyMapping.mapTermValueProperty().value()
     b.entry(
-        key,
-        _.obj { b =>
-          val sortedElements = array.values.sortBy(elementPosition)
-          sortedElements.foreach {
-            case element: DialectDomainElement =>
-              val keyField   = findFieldWithIri(keyProperty, element)
-              val valueField = findFieldWithIri(valueProperty, element)
-              if (keyField.isDefined && valueField.isDefined) {
-                val keyLiteral =
-                  element.fields.getValueAsOption(keyField.get).map(_.value)
-                val valueLiteral = element.fields
-                  .getValueAsOption(valueField.get)
-                  .map(_.value)
-                (keyLiteral, valueLiteral) match {
-                  case (Some(keyScalar: AmfScalar), Some(valueScalar: AmfScalar)) =>
-                    MapEntryEmitter(keyScalar.value.toString, valueScalar.value.toString).emit(b)
-                  case _ =>
-                    throw new Exception("Cannot generate object pair without scalar values for key and value")
-                }
-              } else {
-                throw new Exception("Cannot generate object pair with undefined key or value")
+      key,
+      _.obj { b =>
+        val sortedElements = array.values.sortBy(elementPosition)
+        sortedElements.foreach {
+          case element: DialectDomainElement =>
+            val keyField   = findFieldWithIri(keyProperty, element)
+            val valueField = findFieldWithIri(valueProperty, element)
+            if (keyField.isDefined && valueField.isDefined) {
+              val keyLiteral =
+                element.fields.getValueAsOption(keyField.get).map(_.value)
+              val valueLiteral = element.fields
+                .getValueAsOption(valueField.get)
+                .map(_.value)
+              (keyLiteral, valueLiteral) match {
+                case (Some(keyScalar: AmfScalar), Some(valueScalar: AmfScalar)) =>
+                  MapEntryEmitter(keyScalar.value.toString, valueScalar.value.toString).emit(b)
+                case _ =>
+                  throw new Exception("Cannot generate object pair without scalar values for key and value")
               }
-            case _ => // ignore
-          }
+            } else {
+              throw new Exception("Cannot generate object pair with undefined key or value")
+            }
+          case _ => // ignore
         }
+      }
     )
   }
 

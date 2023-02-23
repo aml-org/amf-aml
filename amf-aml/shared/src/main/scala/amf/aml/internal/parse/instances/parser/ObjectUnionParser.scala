@@ -57,19 +57,19 @@ object ObjectUnionParser {
           case _ =>
             val discriminatorName = unionMapping.typeDiscriminatorName().option()
             val mappings = findCompatibleMapping(
-                defaultId,
-                unionMembers,
-                discriminatorsMapping,
-                discriminatorName,
-                nodeMap,
-                additionalProperties.keys.toSeq
+              defaultId,
+              unionMembers,
+              discriminatorsMapping,
+              discriminatorName,
+              nodeMap,
+              additionalProperties.keys.toSeq
             )
             if (mappings.isEmpty) {
               ctx.eh.violation(
-                  DialectAmbiguousRangeSpecification,
-                  defaultId,
-                  s"Ambiguous node in union range, found 0 compatible mappings from ${allPossibleMappings.size} mappings: [${allPossibleMappings.map(_.id).mkString(",")}]",
-                  ast.location
+                DialectAmbiguousRangeSpecification,
+                defaultId,
+                s"Ambiguous node in union range, found 0 compatible mappings from ${allPossibleMappings.size} mappings: [${allPossibleMappings.map(_.id).mkString(",")}]",
+                ast.location
               )
               DialectDomainElement(annotations += FromUnionRangeMapping(allPossibleMappings.map(_.id)))
                 .withId(defaultId)
@@ -77,14 +77,14 @@ object ObjectUnionParser {
               val node: DialectDomainElement = DialectDomainElement(annotations).withDefinedBy(mappings.head)
               val finalId =
                 generateNodeId(
-                    node,
-                    nodeMap,
-                    path,
-                    defaultId,
-                    mappings.head,
-                    additionalProperties,
-                    rootNode = false,
-                    root
+                  node,
+                  nodeMap,
+                  path,
+                  defaultId,
+                  mappings.head,
+                  additionalProperties,
+                  rootNode = false,
+                  root
                 )
               node.withId(finalId)
               var instanceTypes: Seq[String] = Nil
@@ -108,22 +108,22 @@ object ObjectUnionParser {
               node.withInstanceTypes(instanceTypes ++ Seq(mappings.head.id))
               discriminatorAnnotation(discriminatorName, nodeMap).foreach(node.add)
               checkNodeForAdditionalKeys(
-                  finalId,
-                  mappings.head.id,
-                  nodeMap.map,
-                  mappings.head,
-                  nodeMap,
-                  rootNode = false,
-                  discriminatorName
+                finalId,
+                mappings.head.id,
+                nodeMap.map,
+                mappings.head,
+                nodeMap,
+                rootNode = false,
+                discriminatorName
               )
               node
             } else {
               ctx.eh.violation(
-                  DialectAmbiguousRangeSpecification,
-                  defaultId,
-                  None, // Some(property.nodePropertyMapping().value()),
-                  s"Ambiguous node, please provide a type disambiguator. Nodes ${mappings.map(_.id).mkString(",")} have been found compatible, only one is allowed",
-                  rootMap.location
+                DialectAmbiguousRangeSpecification,
+                defaultId,
+                None, // Some(property.nodePropertyMapping().value()),
+                s"Ambiguous node, please provide a type disambiguator. Nodes ${mappings.map(_.id).mkString(",")} have been found compatible, only one is allowed",
+                rootMap.location
               )
               DialectDomainElement(annotations)
                 .withId(defaultId)
@@ -153,10 +153,10 @@ object ObjectUnionParser {
             case Some(nodeMapping: NodeMapping) => Some(discriminatorValue -> nodeMapping)
             case _ =>
               ctx.eh.violation(
-                  DialectError,
-                  defaultId,
-                  s"Cannot find mapping for property $nodeMappingId in discriminator value '$discriminatorValue' in union",
-                  ast.location
+                DialectError,
+                defaultId,
+                s"Cannot find mapping for property $nodeMappingId in discriminator value '$discriminatorValue' in union",
+                ast.location
               )
               None
           }
@@ -177,10 +177,10 @@ object ObjectUnionParser {
         case _ =>
           ctx.eh
             .violation(
-                DialectError,
-                defaultId,
-                s"Cannot find mapping for property ${unionMapping.id} in union",
-                ast.location
+              DialectError,
+              defaultId,
+              s"Cannot find mapping for property ${unionMapping.id} in union",
+              ast.location
             )
           None
       }
@@ -203,10 +203,10 @@ object ObjectUnionParser {
           case Some(nodeMapping) => Seq(nodeMapping)
           case None =>
             ctx.eh.violation(
-                DialectError,
-                id,
-                s"Cannot find discriminator value for discriminator '$propertyName'",
-                nodeMap.location
+              DialectError,
+              id,
+              s"Cannot find discriminator value for discriminator '$propertyName'",
+              nodeMap.location
             )
             Nil
         }

@@ -50,9 +50,9 @@ case class DynamicExtensionParser(
   def parse(): DataNode = {
     if (aliasCounter.exceedsThreshold(node)) {
       ctx.violation(
-          CoreValidations.SyamlError,
-          parent.getOrElse(""),
-          "Exceeded maximum yaml references threshold"
+        CoreValidations.SyamlError,
+        parent.getOrElse(""),
+        "Exceeded maximum yaml references threshold"
       )
       DataObjectNode()
     } else {
@@ -85,11 +85,11 @@ case class DynamicExtensionParser(
         case other =>
           val parsed = parseScalar(YScalar(other.toString()), "string")
           ctx.eh.violation(
-              DialectError,
-              parsed.id,
-              None,
-              s"Cannot parse data node from AST structure '$other'",
-              node.location
+            DialectError,
+            parsed.id,
+            None,
+            s"Cannot parse data node from AST structure '$other'",
+            node.location
           )
           parsed
       }

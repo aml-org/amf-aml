@@ -62,10 +62,10 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
 
   private def applyPatch(target: DialectInstance, patch: DialectInstancePatch): DialectInstance = {
     patchNode(
-        Some(target.encodes.asInstanceOf[DialectDomainElement]),
-        target.location().get,
-        patch.encodes.asInstanceOf[DialectDomainElement],
-        patch.location().get
+      Some(target.encodes.asInstanceOf[DialectDomainElement]),
+      target.location().get,
+      patch.encodes.asInstanceOf[DialectDomainElement],
+      patch.location().get
     ) match {
       case Some(patchedDialectElement) => target.withEncodes(patchedDialectElement)
       case None =>
@@ -93,12 +93,12 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
         targetNode
       case FAIL =>
         errorHandler.violation(
-            InvalidDialectPatch,
-            patchNode.id,
-            None,
-            s"Node ${patchNode.meta.`type`.map(_.iri()).mkString(",")} cannot be patched",
-            patchNode.annotations.find(classOf[LexicalInformation]),
-            None
+          InvalidDialectPatch,
+          patchNode.id,
+          None,
+          s"Node ${patchNode.meta.`type`.map(_.iri()).mkString(",")} cannot be patched",
+          patchNode.annotations.find(classOf[LexicalInformation]),
+          None
         )
         None
     }
@@ -150,12 +150,12 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
         patchObjectProperty(targetNode, patchField, patchValue, propertyMapping, targetLocation, patchLocation)
       case ObjectPropertyCollection | ObjectMapProperty | ObjectPairProperty =>
         patchObjectCollectionProperty(
-            targetNode,
-            patchField,
-            patchValue,
-            propertyMapping,
-            targetLocation,
-            patchLocation
+          targetNode,
+          patchField,
+          patchValue,
+          propertyMapping,
+          targetLocation,
+          patchLocation
         )
       case _ =>
       // throw new Exception("Unsupported node mapping in patch")
@@ -177,8 +177,8 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
       case DELETE if targetNode.graph.containsField(patchField) =>
         try {
           if (
-              targetNode.fields.getValue(patchField).value.asInstanceOf[AmfScalar].value
-                == patchValue.value.asInstanceOf[AmfScalar].value
+            targetNode.fields.getValue(patchField).value.asInstanceOf[AmfScalar].value
+              == patchValue.value.asInstanceOf[AmfScalar].value
           )
             targetNode.graph.removeField(patchField.toString)
         } catch {
@@ -192,12 +192,12 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
       // ignore
       case FAIL =>
         errorHandler.violation(
-            InvalidDialectPatch,
-            targetNode.id,
-            None,
-            s"Property ${patchField.value.iri()} cannot be patched",
-            targetNode.fields.getValue(patchField).annotations.find(classOf[LexicalInformation]),
-            None
+          InvalidDialectPatch,
+          targetNode.id,
+          None,
+          s"Property ${patchField.value.iri()} cannot be patched",
+          targetNode.fields.getValue(patchField).annotations.find(classOf[LexicalInformation]),
+          None
         )
       case _ =>
       // ignore
@@ -242,12 +242,12 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
       // ignore
       case FAIL =>
         errorHandler.violation(
-            InvalidDialectPatch,
-            targetNode.id,
-            None,
-            s"Property ${patchField.value.iri()} cannot be patched",
-            patchValue.annotations.find(classOf[LexicalInformation]),
-            None
+          InvalidDialectPatch,
+          targetNode.id,
+          None,
+          s"Property ${patchField.value.iri()} cannot be patched",
+          patchValue.annotations.find(classOf[LexicalInformation]),
+          None
         )
       case _ =>
       // ignore
@@ -340,12 +340,12 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
 
       case FAIL =>
         errorHandler.violation(
-            InvalidDialectPatch,
-            targetNode.id,
-            None,
-            s"Property ${patchField.value.iri()} cannot be patched",
-            patchValue.annotations.find(classOf[LexicalInformation]),
-            None
+          InvalidDialectPatch,
+          targetNode.id,
+          None,
+          s"Property ${patchField.value.iri()} cannot be patched",
+          patchValue.annotations.find(classOf[LexicalInformation]),
+          None
         )
       case _ =>
       // ignore

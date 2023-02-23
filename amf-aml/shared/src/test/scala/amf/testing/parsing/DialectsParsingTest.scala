@@ -17,20 +17,20 @@ trait DialectsParsingTest extends DialectTests {
 
     multiGoldenTest(s"$label parsing from YAML to JSON-LD", "dialect.%s") { config =>
       cycle(
-          "dialect.yaml",
-          config.golden,
-          Some(Mimes.`application/ld+json`),
-          AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
-          directory = directory
+        "dialect.yaml",
+        config.golden,
+        Some(Mimes.`application/ld+json`),
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+        directory = directory
       )
     }
 
     multiSourceTest(s"$label parsing from JSON-LD to YAML", "dialect.%s") { config =>
       cycle(
-          config.source,
-          "dialect.cycled.jsonld.yaml",
-          mediaType = Some(Mimes.`application/yaml`),
-          directory = directory
+        config.source,
+        "dialect.cycled.jsonld.yaml",
+        mediaType = Some(Mimes.`application/yaml`),
+        directory = directory
       )
     }
 
@@ -263,10 +263,10 @@ trait DialectsParsingTest extends DialectTests {
   // Key Property tests
   multiGoldenTest("parse 19 test - with key property", "keyproperty/example19-keyproperty.%s") { config =>
     cycle(
-        "keyproperty/example19-keyproperty.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        amlConfig = config.config
+      "keyproperty/example19-keyproperty.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      amlConfig = config.config
     )
   }
 
@@ -277,10 +277,10 @@ trait DialectsParsingTest extends DialectTests {
   // Reference Style tests
   multiGoldenTest("parse 19 test - with reference style", "referencestyle/example19-referencestyle.%s") { config =>
     cycle(
-        "referencestyle/example19-referencestyle.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        amlConfig = config.config
+      "referencestyle/example19-referencestyle.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      amlConfig = config.config
     )
   }
 
@@ -290,69 +290,69 @@ trait DialectsParsingTest extends DialectTests {
 
   multiGoldenTest("Parse dialect with fragment", "dialect.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        directory = s"$basePath/dialect-fragment",
-        amlConfig = config.config
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      directory = s"$basePath/dialect-fragment",
+      amlConfig = config.config
     )
   }
 
   multiGoldenTest("Parse dialect with library", "dialect.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        directory = s"$basePath/dialect-library",
-        amlConfig = config.config
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      directory = s"$basePath/dialect-library",
+      amlConfig = config.config
     )
   }
 
   multiGoldenTest("Parse empty but present type discriminator field", "empty-type-discriminator-field.%s") { config =>
     cycle(
-        "empty-type-discriminator-field.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        amlConfig = config.config
+      "empty-type-discriminator-field.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      amlConfig = config.config
     )
   }
 
   multiGoldenTest("Parse empty value in type discriminator", "empty-type-discriminator-value.%s") { config =>
     cycle(
-        "empty-type-discriminator-value.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        amlConfig = config.config
+      "empty-type-discriminator-value.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      amlConfig = config.config
     )
   }
 
   multiGoldenTest("Parse annotation mappings & semantic extensions", "dialect.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        directory = s"$basePath/annotation-mappings",
-        amlConfig = config.config
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      directory = s"$basePath/annotation-mappings",
+      amlConfig = config.config
     )
   }
 
   multiGoldenTest("Parse inexistent annotation mapping reference from semantic extensions", "dialect.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        directory = s"$basePath/annotation-mappings-inexistent-ref",
-        amlConfig = config.config
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      directory = s"$basePath/annotation-mappings-inexistent-ref",
+      amlConfig = config.config
     )
   }
 
   multiGoldenTest("Parse annotation mappings with extra facets", "dialect.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
-        directory = s"$basePath/annotation-mappings-with-extra-facets"
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+      directory = s"$basePath/annotation-mappings-with-extra-facets"
     )
   }
 
@@ -360,110 +360,110 @@ trait DialectsParsingTest extends DialectTests {
 
   test("Parse simple JSON dialect") {
     cycle(
-        "dialect.json",
-        "dialect.jsonld",
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
-        directory = s"$basePath/json/simple"
+      "dialect.json",
+      "dialect.jsonld",
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
+      directory = s"$basePath/json/simple"
     )
   }
 
   test("Parse JSON dialect with library") {
     cycle(
-        "dialect.json",
-        "dialect.jsonld",
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
-        directory = s"$basePath/json/with-library"
+      "dialect.json",
+      "dialect.jsonld",
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
+      directory = s"$basePath/json/with-library"
     )
   }
 
   test("Parse JSON dialect with vocabulary") {
     cycle(
-        "dialect.json",
-        "dialect.jsonld",
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
-        directory = s"$basePath/json/with-vocabulary"
+      "dialect.json",
+      "dialect.jsonld",
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
+      directory = s"$basePath/json/with-vocabulary"
     )
   }
 
   test("Parse dialect with $id directive") {
     cycle(
-        "dialect.yaml",
-        "dialect.jsonld",
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-        directory = s"$basePath/id-directive"
+      "dialect.yaml",
+      "dialect.jsonld",
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+      directory = s"$basePath/id-directive"
     )
   }
 
   test("Parse dialect library with $id directive") {
     cycle(
-        "dialect.yaml",
-        "dialect.jsonld",
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-        directory = s"$basePath/id-directive-library"
+      "dialect.yaml",
+      "dialect.jsonld",
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+      directory = s"$basePath/id-directive-library"
     )
   }
 
   test("Parse dialect fragment with $id directive") {
     cycle(
-        "dialect.yaml",
-        "dialect.jsonld",
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
-        directory = s"$basePath/id-directive-fragment"
+      "dialect.yaml",
+      "dialect.jsonld",
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withPrettyPrint.withCompactUris),
+      directory = s"$basePath/id-directive-fragment"
     )
   }
 
   multiGoldenTest("Empty annotation mapping with name has lexical", "dialect.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
-        directory = s"$basePath/empty-annotation-mapping"
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+      directory = s"$basePath/empty-annotation-mapping"
     )
   }
 
   multiGoldenTest("Empty semantic extension with name has lexical and SemEx array is Virtual", "dialect.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
-        directory = s"$basePath/empty-semantic-extensions"
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+      directory = s"$basePath/empty-semantic-extensions"
     )
   }
 
   multiGoldenTest("Annotation mapping with multiple domains", "dialect.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
-        directory = s"$basePath/annotation-mapping-with-multiple-domains"
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+      directory = s"$basePath/annotation-mapping-with-multiple-domains"
     )
   }
 
   multiGoldenTest("Default facet for property mappings", "dialect.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
-        directory = s"$basePath/default-facet"
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+      directory = s"$basePath/default-facet"
     )
   }
 
   multiSourceTest("Generate default facet for property mappings", "dialect.%s") { config =>
     cycle(
-        config.source,
-        "dialect.cycled.yaml",
-        mediaType = Some(Mimes.`application/yaml`),
-        directory = s"$basePath/default-facet"
+      config.source,
+      "dialect.cycled.yaml",
+      mediaType = Some(Mimes.`application/yaml`),
+      directory = s"$basePath/default-facet"
     )
   }
 
@@ -473,20 +473,20 @@ trait DialectsParsingTest extends DialectTests {
 
   multiGoldenTest("Parse enum values with different types of values", "dialect.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
-        directory = s"$basePath/enum-scalars"
+      "dialect.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions.withCompactUris),
+      directory = s"$basePath/enum-scalars"
     )
   }
 
   multiSourceTest("Parse enum values with different types of values from JSON-LD to YAML", "dialect.%s") { config =>
     cycle(
-        config.source,
-        "dialect.cycled.yaml",
-        mediaType = Some(Mimes.`application/yaml`),
-        directory = s"$basePath/enum-scalars"
+      config.source,
+      "dialect.cycled.yaml",
+      mediaType = Some(Mimes.`application/yaml`),
+      directory = s"$basePath/enum-scalars"
     )
   }
 

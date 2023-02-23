@@ -10,9 +10,9 @@ import amf.aml.client.scala.model.domain.External
 object ExternalModel extends DomainElementModel {
 
   val DisplayName: Field = Field(
-      Str,
-      Namespace.Core + "displayName",
-      ModelDoc(ModelVocabularies.Core, "displayName", "The display name of the item")
+    Str,
+    Namespace.Core + "displayName",
+    ModelDoc(ModelVocabularies.Core, "displayName", "The display name of the item")
   )
   val Base: Field =
     Field(Str, Namespace.Meta + "base", ModelDoc(ModelVocabularies.Meta, "base", "Base URI for the external model"))

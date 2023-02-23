@@ -33,12 +33,12 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
 
   private def parseUses(declarations: ReferenceCollector[AmfObject]): Unit = {
     map.key(
-        "uses",
-        entry =>
-          entry.value
-            .as[YMap]
-            .entries
-            .foreach(entry => parseUsesEntry(entry, declarations))
+      "uses",
+      entry =>
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(entry => parseUsesEntry(entry, declarations))
     )
   }
 
@@ -59,10 +59,10 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
           case None =>
             val node = dialect.location().getOrElse(dialect.id)
             ctx.eh.violation(
-                DialectError,
-                node,
-                s"Expected vocabulary module but found: $other",
-                e.location
+              DialectError,
+              node,
+              s"Expected vocabulary module but found: $other",
+              e.location
             ) // todo Uses should only reference modules...
         }
     }
@@ -87,17 +87,17 @@ case class DialectsReferencesParser(dialect: Dialect, map: YMap, references: Seq
 
   private def parseExternals(result: ReferenceCollector[AmfObject]): Unit = {
     map.key(
-        "external",
-        entry =>
-          entry.value
-            .as[YMap]
-            .entries
-            .foreach(e => {
-              val alias: String = e.key.as[YScalar].text
-              val base: String  = e.value
-              val external      = External(e)
-              result += (alias, external.withAlias(alias, Annotations(e.key)).withBase(base, Annotations(e.value)))
-            })
+      "external",
+      entry =>
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            val alias: String = e.key.as[YScalar].text
+            val base: String  = e.value
+            val external      = External(e)
+            result += (alias, external.withAlias(alias, Annotations(e.key)).withBase(base, Annotations(e.value)))
+          })
     )
   }
 }

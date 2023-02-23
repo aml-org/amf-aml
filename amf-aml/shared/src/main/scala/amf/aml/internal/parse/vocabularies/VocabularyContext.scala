@@ -10,10 +10,10 @@ import org.yaml.model.YPart
 
 class VocabularyContext(private val wrapped: ParserContext, private val ds: Option[VocabularyDeclarations] = None)
     extends SyamlBasedParserErrorHandler(
-        wrapped.rootContextDocument,
-        wrapped.refs,
-        wrapped.futureDeclarations,
-        wrapped.config
+      wrapped.rootContextDocument,
+      wrapped.refs,
+      wrapped.futureDeclarations,
+      wrapped.config
     )
     with VocabularySyntax
     with SyntaxErrorReporter {

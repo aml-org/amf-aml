@@ -151,16 +151,16 @@ class CustomShaclValidator(
       // The custom SHACL validator cannot execute them, it still relies on the custom Scala function
       case Some(functionConstraintName) =>
         validateFunctionConstraint(
-            validationSpecification.copy(
-                functionConstraint = Some(
-                    FunctionConstraint(
-                        message = Some(validationSpecification.message),
-                        internalFunction = Some(functionConstraintName)
-                    )
-                )
-            ),
-            element,
-            reportBuilder
+          validationSpecification.copy(
+            functionConstraint = Some(
+              FunctionConstraint(
+                message = Some(validationSpecification.message),
+                internalFunction = Some(functionConstraintName)
+              )
+            )
+          ),
+          element,
+          reportBuilder
         )
       // Normal constraints here
       case _ => validateProperty(element, validationSpecification, reportBuilder)
@@ -174,7 +174,7 @@ class CustomShaclValidator(
 
   private def validateCustom(validationSpecification: ValidationSpecification): Unit = {
     throw new Exception(
-        s"Arbitrary SHACL validations not supported in custom SHACL validator: ${validationSpecification.id}"
+      s"Arbitrary SHACL validations not supported in custom SHACL validator: ${validationSpecification.id}"
     )
   }
 
@@ -191,12 +191,12 @@ class CustomShaclValidator(
         validationInfo match {
           case Some(ValidationInfo(field, customMessage, ann)) =>
             reportBuilder.reportFailure(
-                validationSpecification,
-                element.id,
-                field.toString,
-                customMessage,
-                getPosition(ann),
-                getLocation(ann)
+              validationSpecification,
+              element.id,
+              field.toString,
+              customMessage,
+              getPosition(ann),
+              getLocation(ann)
             )
           case _ => reportBuilder.reportFailure(validationSpecification, element.id, "")
         }
@@ -271,32 +271,32 @@ class CustomShaclValidator(
             // I need to check only the presence of the property, empty arrays are valid
             if (minCount == 0 && mandatory)
               validateArrayPropertyLengthAndPresence(
-                  validationSpecification,
-                  propertyConstraint,
-                  element,
-                  reportBuilder,
-                  mustBePresent = mandatory
+                validationSpecification,
+                propertyConstraint,
+                element,
+                reportBuilder,
+                mustBePresent = mandatory
               )
             // If minCount is > 0 and it is not mandatory, this comes from minItems = n
             // I need to check only the length of the array, but only if it is present
             if (minCount > 0 && !mandatory)
               validateArrayPropertyLengthAndPresence(
-                  validationSpecification,
-                  propertyConstraint,
-                  element,
-                  reportBuilder,
-                  minItems = Some(minCount)
+                validationSpecification,
+                propertyConstraint,
+                element,
+                reportBuilder,
+                minItems = Some(minCount)
               )
             // If minCount is > 0 and it is mandatory, this comes from minItems = n + mandatory = true
             // I need to check the presence and length of the array, the original constraint will handle it
             if (minCount > 0 && mandatory)
               validateArrayPropertyLengthAndPresence(
-                  validationSpecification,
-                  propertyConstraint,
-                  element,
-                  reportBuilder,
-                  mustBePresent = mandatory,
-                  minItems = Some(minCount)
+                validationSpecification,
+                propertyConstraint,
+                element,
+                reportBuilder,
+                mustBePresent = mandatory,
+                minItems = Some(minCount)
               )
           case None =>
             // If there is no mandatory key, I run the original constraint
@@ -409,10 +409,10 @@ class CustomShaclValidator(
             // The key is present and I should check the array length
             if (!(arr.values.length >= minLength)) {
               reportFailure(
-                  validationSpecification.copy(message = s"Array must have a minimum of $minLength items"),
-                  propertyConstraint,
-                  parentElement.id,
-                  reportBuilder
+                validationSpecification.copy(message = s"Array must have a minimum of $minLength items"),
+                propertyConstraint,
+                parentElement.id,
+                reportBuilder
               )
 
 //              reportFailure(validationSpecification,

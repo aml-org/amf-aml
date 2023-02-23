@@ -5,9 +5,9 @@ import amf.testing.validation.DialectInstancesValidationTest
 class JsDialectInstancesValidationTest extends DialectInstancesValidationTest {
   test("validation mule_config  example 1 incorrect") {
     validate(
-        "mule_config_dialect1.yaml",
-        "mule_config_instance_incorrect1.yaml",
-        Some("mule_config_instance_incorrect1.report.js.json")
+      "mule_config_dialect1.yaml",
+      "mule_config_instance_incorrect1.yaml",
+      Some("mule_config_instance_incorrect1.report.js.json")
     )
   }
 

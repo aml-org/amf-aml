@@ -12,9 +12,9 @@ import scala.language.higherKinds
 case class ApplicableMappingFinder(private val root: Root) {
 
   val paths = List(
-      AndFinderPath,
-      OrFinderPath(root),
-      IfThenElseFinderPath(root)
+    AndFinderPath,
+    OrFinderPath(root),
+    IfThenElseFinderPath(root)
   )
 
   def find(map: YMap, mapping: AnyMapping)(implicit ctx: DialectInstanceContext): Option[NodeMapping] = {

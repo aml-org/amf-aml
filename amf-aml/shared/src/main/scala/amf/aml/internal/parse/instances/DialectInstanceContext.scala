@@ -22,10 +22,10 @@ class DialectInstanceContext(
     private val ds: Option[DialectInstanceDeclarations] = None,
     val constraints: Option[ValidationProfile] = None
 ) extends SyamlBasedParserErrorHandler(
-        wrapped.rootContextDocument,
-        wrapped.refs,
-        wrapped.futureDeclarations,
-        wrapped.config
+      wrapped.rootContextDocument,
+      wrapped.refs,
+      wrapped.futureDeclarations,
+      wrapped.config
     )
     with DeclarationContext
     with SyntaxErrorReporter {
@@ -44,14 +44,14 @@ class DialectInstanceContext(
       case Some(declarationsPath) => Set(declarationsPath.split("/").head)
       case _ =>
         (
+          Option(dialect.documents())
+            .flatMap(d => Option(d.root()))
+            .map(_.declaredNodes().map(_.name().value()))
+            .getOrElse(Seq()) ++
             Option(dialect.documents())
-              .flatMap(d => Option(d.root()))
+              .flatMap(d => Option(d.library()))
               .map(_.declaredNodes().map(_.name().value()))
-              .getOrElse(Seq()) ++
-              Option(dialect.documents())
-                .flatMap(d => Option(d.library()))
-                .map(_.declaredNodes().map(_.name().value()))
-                .getOrElse(Seq())
+              .getOrElse(Seq())
         ).toSet
     }
     declarationProps ++ Seq("uses", "external").toSet
@@ -133,11 +133,11 @@ class DialectInstanceContext(
 
   def copy(errorHandler: AMFErrorHandler): DialectInstanceContext = {
     new DialectInstanceContext(
-        dialect,
-        nodeMappableFinder,
-        wrapped.copy(config = ParseConfigOverride(errorHandler, wrapped.config)),
-        ds,
-        constraints
+      dialect,
+      nodeMappableFinder,
+      wrapped.copy(config = ParseConfigOverride(errorHandler, wrapped.config)),
+      ds,
+      constraints
     )
   }
 }

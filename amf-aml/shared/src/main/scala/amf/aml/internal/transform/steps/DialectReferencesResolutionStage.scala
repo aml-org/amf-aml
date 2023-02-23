@@ -32,9 +32,9 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
     val unitDeclarations     = model.asInstanceOf[DeclaresModel].declares.filterType[NodeMappable]
 
     iteratePending(
-        pending = unitDeclarations,
-        alreadyResolved = finalDeclarationsMap,
-        allDeclarations = model.recursivelyFindDeclarations()
+      pending = unitDeclarations,
+      alreadyResolved = finalDeclarationsMap,
+      allDeclarations = model.recursivelyFindDeclarations()
     )
 
     linkExtendedNodes(finalDeclarationsMap)
@@ -126,9 +126,9 @@ class DialectReferencesResolutionStage() extends TransformationStep() {
     }
 
     if (
-        nodeMappable.name
-          .value()
-          .contains(".")
+      nodeMappable.name
+        .value()
+        .contains(".")
     ) { // this might come from a library TODO: check collisions in names
       nodeMappable.withName(genName(nodeMappable.name.value().split(".").last, allDeclarations))
     }

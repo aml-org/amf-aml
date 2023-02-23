@@ -35,10 +35,10 @@ case class LibraryDocumentModelEmitter(
 
       override def emit(b: EntryBuilder): Unit = {
         b.entry(
-            "declares",
-            _.obj { b =>
-              traverse(sortedNodes, b)
-            }
+          "declares",
+          _.obj { b =>
+            traverse(sortedNodes, b)
+          }
         )
       }
 
@@ -46,10 +46,10 @@ case class LibraryDocumentModelEmitter(
     })
 
     b.entry(
-        "library",
-        _.obj { b =>
-          traverse(ordering.sorted(emitters), b)
-        }
+      "library",
+      _.obj { b =>
+        traverse(ordering.sorted(emitters), b)
+      }
     )
   }
 

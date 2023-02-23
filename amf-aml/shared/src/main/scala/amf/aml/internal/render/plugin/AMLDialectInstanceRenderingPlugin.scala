@@ -50,9 +50,9 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
     unit match {
       case instance: DialectInstanceUnit =>
         Some(
-            DialectInstancesEmitter(instance, dialect, config.renderOptions, AMLRegistry(config.registry, dialects))(
-                finder
-            ).emitInstance()
+          DialectInstancesEmitter(instance, dialect, config.renderOptions, AMLRegistry(config.registry, dialects))(
+            finder
+          ).emitInstance()
         )
       case _ => None
     }

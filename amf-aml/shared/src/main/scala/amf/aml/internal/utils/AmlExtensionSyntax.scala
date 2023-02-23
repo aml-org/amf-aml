@@ -33,7 +33,7 @@ package object AmlExtensionSyntax {
             val uriHash = external.base.value().hashCode
             external
               .withAlias(
-                  s"$alias-$uriHash"
+                s"$alias-$uriHash"
               ) // Appending the uri hash avoids enumeration problems & guarantees uniqueness
             Some(external)
           case None =>

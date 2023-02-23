@@ -14,28 +14,28 @@ object ConditionalParser {
   def parse(map: YMap, mapping: AnyMapping)(implicit ctx: DialectContext): Unit = {
 
     map.key(
-        "conditional",
-        entry =>
-          entry.value.tagType match {
-            case YType.Map =>
-              val innerMap = entry.value.as[YMap]
-              parseConditionalField(innerMap, If, "if", mapping)
-              parseConditionalField(innerMap, Then, "then", mapping)
-              parseConditionalField(innerMap, Else, "else", mapping)
-              ctx.closedNode("conditionalMappingInner", mapping.id, innerMap)
-            case _ =>
-              ctx.eh.violation(DialectError, mapping.id, s"Conditional mapping must be a map", entry.value.location)
-          }
+      "conditional",
+      entry =>
+        entry.value.tagType match {
+          case YType.Map =>
+            val innerMap = entry.value.as[YMap]
+            parseConditionalField(innerMap, If, "if", mapping)
+            parseConditionalField(innerMap, Then, "then", mapping)
+            parseConditionalField(innerMap, Else, "else", mapping)
+            ctx.closedNode("conditionalMappingInner", mapping.id, innerMap)
+          case _ =>
+            ctx.eh.violation(DialectError, mapping.id, s"Conditional mapping must be a map", entry.value.location)
+        }
     )
   }
 
   private def parseConditionalField(map: YMap, field: Field, key: String, mapping: AnyMapping): Unit = {
     map.key(
-        key,
-        entry => {
-          val node = ValueNode(entry.value).string()
-          mapping.set(field, node, Annotations(entry))
-        }
+      key,
+      entry => {
+        val node = ValueNode(entry.value).string()
+        mapping.set(field, node, Annotations(entry))
+      }
     )
   }
 }

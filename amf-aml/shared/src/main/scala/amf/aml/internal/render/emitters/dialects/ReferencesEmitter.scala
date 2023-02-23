@@ -15,10 +15,10 @@ case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases
   override def emit(b: EntryBuilder): Unit = {
     if (modules.nonEmpty) {
       b.entry(
-          "uses",
-          _.obj { b =>
-            traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, aliases))), b)
-          }
+        "uses",
+        _.obj { b =>
+          traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, aliases))), b)
+        }
       )
     }
   }

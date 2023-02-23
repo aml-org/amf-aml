@@ -12,10 +12,10 @@ class DialectTransformationPipeline private (override val name: String) extends 
 
   override def steps: Seq[TransformationStep] =
     Seq(
-        new DialectCombiningMappingStage(),
-        new DialectReferencesResolutionStage(),
-        new DialectNodeExtensionStage(),
-        SourceInformationStage
+      new DialectCombiningMappingStage(),
+      new DialectReferencesResolutionStage(),
+      new DialectNodeExtensionStage(),
+      SourceInformationStage
     )
 
 }

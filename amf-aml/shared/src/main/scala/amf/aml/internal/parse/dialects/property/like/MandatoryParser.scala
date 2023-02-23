@@ -32,9 +32,9 @@ case class MandatoryParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_
       val minItemsValue = minItems.get.value
       val minItemsEntry = minItems.get.entry
       propertyLikeMapping.set(
-          propertyLikeMapping.meta.MinCount,
-          AmfScalar(minItemsValue, Annotations(minItemsEntry.value)),
-          Annotations(minItemsEntry)
+        propertyLikeMapping.meta.MinCount,
+        AmfScalar(minItemsValue, Annotations(minItemsEntry.value)),
+        Annotations(minItemsEntry)
       )
     }
 
@@ -45,16 +45,16 @@ case class MandatoryParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_
       // If mandatory and minItems keys exist, mandatory will be saved as a boolean in Mandatory field
       if (existsMinItems) {
         propertyLikeMapping.set(
-            propertyLikeMapping.meta.Mandatory,
-            AmfScalar(mandatoryValue.toBoolean, Annotations(mandatoryEntry.value)),
-            Annotations(mandatoryEntry)
+          propertyLikeMapping.meta.Mandatory,
+          AmfScalar(mandatoryValue.toBoolean, Annotations(mandatoryEntry.value)),
+          Annotations(mandatoryEntry)
         )
       } else {
         // If mandatory key exists but minItems key not, mandatory will be saved in MinCount field (the original behavior)
         propertyLikeMapping.set(
-            propertyLikeMapping.meta.MinCount,
-            AmfScalar(mandatoryValue, Annotations(mandatoryEntry.value)),
-            Annotations(mandatoryEntry)
+          propertyLikeMapping.meta.MinCount,
+          AmfScalar(mandatoryValue, Annotations(mandatoryEntry.value)),
+          Annotations(mandatoryEntry)
         )
       }
     } else if (existsMinItems)

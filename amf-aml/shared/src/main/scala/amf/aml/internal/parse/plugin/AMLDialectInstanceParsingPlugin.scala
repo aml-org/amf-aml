@@ -44,15 +44,15 @@ class AMLDialectInstanceParsingPlugin(val dialect: Dialect, val constraints: Opt
           normalizedStr.substring(0, normalizedStr.indexOf("/"))
         }
         new DialectInstanceFragmentParser(root)(
-            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints)
+          new DialectInstanceContext(dialect, finder, ctx, constraints = constraints)
         ).parse(name)
       case kind.DialectInstanceLibrary =>
         new DialectInstanceLibraryParser(root)(
-            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints)
+          new DialectInstanceContext(dialect, finder, ctx, constraints = constraints)
         ).parse()
       case kind.DialectInstancePatch =>
         new DialectInstancePatchParser(root)(
-            new DialectInstanceContext(dialect, finder, ctx, constraints = constraints).forPatch()
+          new DialectInstanceContext(dialect, finder, ctx, constraints = constraints).forPatch()
         )
           .parse()
       case kind.DialectInstance =>

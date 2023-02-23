@@ -70,11 +70,11 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
 
   private def parseUsage(vocabulary: Vocabulary) = {
     map.key(
-        "usage",
-        entry => {
-          val value = ValueNode(entry.value)
-          vocabulary.set(VocabularyModel.Usage, value.string(), Annotations(entry))
-        }
+      "usage",
+      entry => {
+        val value = ValueNode(entry.value)
+        vocabulary.set(VocabularyModel.Usage, value.string(), Annotations(entry))
+      }
     )
   }
 
@@ -100,27 +100,27 @@ class VocabulariesParser(root: Root)(implicit override val ctx: VocabularyContex
 
   private def parseClassTerms(map: YMap): Unit = {
     map.key(
-        "classTerms",
-        entry => {
-          addDeclarationKey(DeclarationKey(entry))
-          val classDeclarations = entry.value.as[YMap]
-          classDeclarations.entries.foreach { classTermDeclaration =>
-            ClassTermParser().parse(classTermDeclaration, vocabulary)
-          }
+      "classTerms",
+      entry => {
+        addDeclarationKey(DeclarationKey(entry))
+        val classDeclarations = entry.value.as[YMap]
+        classDeclarations.entries.foreach { classTermDeclaration =>
+          ClassTermParser().parse(classTermDeclaration, vocabulary)
         }
+      }
     )
   }
 
   private def parsePropertyTerms(map: YMap): Unit = {
     map.key(
-        "propertyTerms",
-        entry => {
-          addDeclarationKey(DeclarationKey(entry))
-          val classDeclarations = entry.value.as[YMap]
-          classDeclarations.entries.foreach { propertyTermDeclaration =>
-            PropertyTermParser().parse(propertyTermDeclaration, vocabulary)
-          }
+      "propertyTerms",
+      entry => {
+        addDeclarationKey(DeclarationKey(entry))
+        val classDeclarations = entry.value.as[YMap]
+        classDeclarations.entries.foreach { propertyTermDeclaration =>
+          PropertyTermParser().parse(propertyTermDeclaration, vocabulary)
         }
+      }
     )
   }
 }

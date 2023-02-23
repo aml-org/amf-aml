@@ -22,9 +22,9 @@ trait NodeWithDiscriminator[M <: NodeWithDiscriminatorModel] extends DomainEleme
       valueAnnotations: Annotations = Annotations()
   ): this.type =
     set(
-        meta.TypeDiscriminator,
-        AmfScalar(typesMapping.map { case (a, b) => s"$a->$b" }.mkString(","), valueAnnotations),
-        entryAnnotations
+      meta.TypeDiscriminator,
+      AmfScalar(typesMapping.map { case (a, b) => s"$a->$b" }.mkString(","), valueAnnotations),
+      entryAnnotations
     )
 
   override def meta: M

@@ -122,10 +122,10 @@ object InstanceNodeIdHandling {
             case _ =>
               ctx.eh
                 .violation(
-                    DialectError,
-                    node.id,
-                    s"Cannot find unique mandatory property '$propertyName'",
-                    nodeMap.location
+                  DialectError,
+                  node.id,
+                  s"Cannot find unique mandatory property '$propertyName'",
+                  nodeMap.location
                 )
               allFound = false
           }

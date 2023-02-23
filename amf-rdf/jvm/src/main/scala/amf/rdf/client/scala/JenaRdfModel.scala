@@ -21,11 +21,11 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
   override def addTriple(subject: String, predicate: String, objResource: String): RdfModel = {
     nodesCache = nodesCache - subject
     model.add(
-        model.createStatement(
-            checkAnon(subject),
-            model.createProperty(predicate),
-            checkAnon(objResource)
-        )
+      model.createStatement(
+        checkAnon(subject),
+        model.createProperty(predicate),
+        checkAnon(objResource)
+      )
     )
     this
   }
@@ -38,14 +38,14 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
   ): RdfModel = {
     nodesCache = nodesCache - subject
     model.add(
-        model.createStatement(
-            checkAnon(subject),
-            model.createProperty(predicate),
-            objLiteralType match {
-              case Some(typeId) => model.createTypedLiteral(objLiteralValue, typeId)
-              case None         => model.createLiteral(objLiteralValue)
-            }
-        )
+      model.createStatement(
+        checkAnon(subject),
+        model.createProperty(predicate),
+        objLiteralType match {
+          case Some(typeId) => model.createTypedLiteral(objLiteralValue, typeId)
+          case None         => model.createLiteral(objLiteralValue)
+        }
+      )
     )
     this
   }
@@ -100,22 +100,22 @@ class JenaRdfModel(val model: Model = ModelFactory.createDefaultModel()) extends
             } else if (statement.getObject.isLiteral) {
               val lit = statement.getObject.asLiteral()
               resourceProperties = resourceProperties.updated(
-                  predicate,
-                  oldProps ++ Seq(
-                      Literal(
-                          value = lit.getLexicalForm,
-                          literalType = Some(lit.getDatatypeURI)
-                      )
+                predicate,
+                oldProps ++ Seq(
+                  Literal(
+                    value = lit.getLexicalForm,
+                    literalType = Some(lit.getDatatypeURI)
                   )
+                )
               )
             } else if (statement.getObject.isResource) {
               resourceProperties = resourceProperties.updated(
-                  predicate,
-                  oldProps ++ Seq(
-                      Uri(
-                          value = statement.getObject.asResource().getURI
-                      )
+                predicate,
+                oldProps ++ Seq(
+                  Uri(
+                    value = statement.getObject.asResource().getURI
                   )
+                )
               )
             }
           }

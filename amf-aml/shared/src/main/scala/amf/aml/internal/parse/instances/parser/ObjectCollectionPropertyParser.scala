@@ -72,10 +72,10 @@ object ObjectCollectionPropertyParser extends NodeMappableHelper {
       case None => idsMap.update(dialectDomainElement.id, true)
       case _ =>
         ctx.eh.violation(
-            DialectError,
-            dialectDomainElement.id,
-            s"Duplicated element in collection ${dialectDomainElement.id}",
-            elementNode.location
+          DialectError,
+          dialectDomainElement.id,
+          s"Duplicated element in collection ${dialectDomainElement.id}",
+          elementNode.location
         )
     }
   }

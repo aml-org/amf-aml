@@ -28,8 +28,8 @@ object ValidationReportJSONLDEmitter {
         if (report.results.nonEmpty) {
           val sorted = report.results.sorted
           b.entry(
-              shacl("result"),
-              _.list(b => sorted.foreach(emitResult(b, _)))
+            shacl("result"),
+            _.list(b => sorted.foreach(emitResult(b, _)))
           )
         }
       }
@@ -41,21 +41,21 @@ object ValidationReportJSONLDEmitter {
       b.entry(JsonLdKeywords.Type, shacl("ValidationResult"))
       b.entry(shacl("resultSeverity"), emitViolation(_, result.severityLevel))
       b.entry(
-          shacl("focusNode"),
-          _.obj(_.entry(JsonLdKeywords.Id, result.targetNode))
+        shacl("focusNode"),
+        _.obj(_.entry(JsonLdKeywords.Id, result.targetNode))
       )
       result.targetProperty foreach {
         case path if path != "" =>
           b.entry(
-              shacl("resultPath"),
-              _.obj(_.entry(JsonLdKeywords.Id, path))
+            shacl("resultPath"),
+            _.obj(_.entry(JsonLdKeywords.Id, path))
           )
         case _ => // ignore
       }
       b.entry(shacl("resultMessage"), result.message)
       b.entry(
-          shacl("sourceShape"),
-          _.obj(_.entry(JsonLdKeywords.Id, result.validationId))
+        shacl("sourceShape"),
+        _.obj(_.entry(JsonLdKeywords.Id, result.validationId))
       )
       result.position.foreach(pos => b.entry(amfParser("lexicalPosition"), emitPosition(_, pos)))
     }
@@ -63,15 +63,15 @@ object ValidationReportJSONLDEmitter {
 
   private def emitViolation(b: PartBuilder, severity: String): Unit = {
     b.obj(
-        _.entry(
-            JsonLdKeywords.Id,
-            severity match {
-              case SeverityLevels.INFO      => shacl("Info")
-              case SeverityLevels.WARNING   => shacl("Warning")
-              case SeverityLevels.VIOLATION => shacl("Violation")
-              case _                        => throw new Exception(s"Unknown severity level $severity")
-            }
-        )
+      _.entry(
+        JsonLdKeywords.Id,
+        severity match {
+          case SeverityLevels.INFO      => shacl("Info")
+          case SeverityLevels.WARNING   => shacl("Warning")
+          case SeverityLevels.VIOLATION => shacl("Violation")
+          case _                        => throw new Exception(s"Unknown severity level $severity")
+        }
+      )
     )
   }
 
@@ -79,20 +79,20 @@ object ValidationReportJSONLDEmitter {
     b.obj { b =>
       b.entry(JsonLdKeywords.Type, amfParser("Position"))
       b.entry(
-          amfParser("start"),
-          _.obj { b =>
-            b.entry(JsonLdKeywords.Type, amfParser("Location"))
-            b.entry(amfParser("line"), raw(_, pos.range.start.line.toString, YType.Int))
-            b.entry(amfParser("column"), raw(_, pos.range.start.column.toString, YType.Int))
-          }
+        amfParser("start"),
+        _.obj { b =>
+          b.entry(JsonLdKeywords.Type, amfParser("Location"))
+          b.entry(amfParser("line"), raw(_, pos.range.start.line.toString, YType.Int))
+          b.entry(amfParser("column"), raw(_, pos.range.start.column.toString, YType.Int))
+        }
       )
       b.entry(
-          amfParser("end"),
-          _.obj { b =>
-            b.entry(JsonLdKeywords.Type, amfParser("Location"))
-            b.entry(amfParser("line"), raw(_, pos.range.end.line.toString, YType.Int))
-            b.entry(amfParser("column"), raw(_, pos.range.end.column.toString, YType.Int))
-          }
+        amfParser("end"),
+        _.obj { b =>
+          b.entry(JsonLdKeywords.Type, amfParser("Location"))
+          b.entry(amfParser("line"), raw(_, pos.range.end.line.toString, YType.Int))
+          b.entry(amfParser("column"), raw(_, pos.range.end.column.toString, YType.Int))
+        }
       )
     }
   }

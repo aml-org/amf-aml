@@ -38,10 +38,10 @@ case class PropertyLikeMappingParser[T <: PropertyLikeMapping[_ <: PropertyLikeM
     propertyLikeMapping.literalRange().option() foreach { literal =>
       if (literal == (Namespace.Shapes + "guid").iri() && !propertyLikeMapping.unique().option().getOrElse(false)) {
         ctx.eh.warning(
-            DialectValidations.GuidRangeWithoutUnique,
-            propertyLikeMapping.id,
-            s"Declaration of property '${propertyLikeMapping.name().value()}' with range GUID and without unique constraint",
-            ast.location
+          DialectValidations.GuidRangeWithoutUnique,
+          propertyLikeMapping.id,
+          s"Declaration of property '${propertyLikeMapping.name().value()}' with range GUID and without unique constraint",
+          ast.location
         )
       }
     }

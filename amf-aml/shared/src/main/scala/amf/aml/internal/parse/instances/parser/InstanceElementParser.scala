@@ -47,16 +47,16 @@ case class InstanceElementParser(root: Root)(implicit ctx: DialectInstanceContex
       case YType.Map =>
         val astMap = ast.as[YMap]
         parseNodeMap(
-            path,
-            defaultId,
-            astMap,
-            ast,
-            mappable,
-            additionalProperties,
-            rootNode,
-            givenAnnotations,
-            additionalKey,
-            parseAllOf
+          path,
+          defaultId,
+          astMap,
+          ast,
+          mappable,
+          additionalProperties,
+          rootNode,
+          givenAnnotations,
+          additionalKey,
+          parseAllOf
         )
 
       case YType.Str     => resolveLink(ast, mappable, defaultId, givenAnnotations)
@@ -124,14 +124,14 @@ case class InstanceElementParser(root: Root)(implicit ctx: DialectInstanceContex
             applicableMapping
               .map { foundMapping =>
                 parseWithNodeMapping(
-                    defaultId,
-                    astMap,
-                    ast,
-                    additionalProperties,
-                    rootNode,
-                    givenAnnotations,
-                    additionalKey,
-                    foundMapping
+                  defaultId,
+                  astMap,
+                  ast,
+                  additionalProperties,
+                  rootNode,
+                  givenAnnotations,
+                  additionalKey,
+                  foundMapping
                 )
               }
               .getOrElse {
@@ -140,14 +140,14 @@ case class InstanceElementParser(root: Root)(implicit ctx: DialectInstanceContex
               }
           case mapping: NodeMapping =>
             parseWithNodeMapping(
-                defaultId,
-                astMap,
-                ast,
-                additionalProperties,
-                rootNode,
-                givenAnnotations,
-                additionalKey,
-                mapping
+              defaultId,
+              astMap,
+              ast,
+              additionalProperties,
+              rootNode,
+              givenAnnotations,
+              additionalKey,
+              mapping
             )
           case unionMapping: UnionNodeMapping =>
             parseObjectUnion(defaultId, Seq(path), ast, unionMapping, additionalProperties)

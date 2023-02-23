@@ -26,16 +26,16 @@ case class PropertyTermParser(map: YMap, propertyLikeMapping: PropertyLikeMappin
         ctx.declarations.findPropertyTerm(propertyTermId, SearchScope.All) match {
           case Some(propertyTerm) =>
             propertyLikeMapping.set(
-                NodePropertyMapping,
-                AmfScalar(propertyTerm.id, Annotations(e.value)),
-                Annotations(e)
+              NodePropertyMapping,
+              AmfScalar(propertyTerm.id, Annotations(e.value)),
+              Annotations(e)
             )
           case _ =>
             ctx.eh.violation(
-                DialectError,
-                propertyLikeMapping.id,
-                s"Cannot find property term with alias $propertyTermId",
-                e.value.location
+              DialectError,
+              propertyLikeMapping.id,
+              s"Cannot find property term with alias $propertyTermId",
+              e.value.location
             )
         }
       case _ =>

@@ -11,10 +11,10 @@ import amf.core.internal.plugins.syntax.SYamlAMFParserErrorHandler
 
 class DialectContext(private val wrapped: ParserContext, private val ds: Option[DialectDeclarations] = None)
     extends SyamlBasedParserErrorHandler(
-        wrapped.rootContextDocument,
-        wrapped.refs,
-        wrapped.futureDeclarations,
-        wrapped.config
+      wrapped.rootContextDocument,
+      wrapped.refs,
+      wrapped.futureDeclarations,
+      wrapped.config
     )
     with DialectSyntax
     with DeclarationContext
@@ -42,6 +42,6 @@ class DialectContext(private val wrapped: ParserContext, private val ds: Option[
 
   override def findAnnotation(key: String, scope: SearchScope.Scope): Option[CustomDomainProperty] = None
   override def getMaxYamlReferences: _root_.scala.Option[Int] = wrapped.config.parsingOptions.maxYamlReferences
-  override def getMaxYamlJsonDepth: _root_.scala.Option[Int] = wrapped.config.parsingOptions.maxJsonYamlDepth
+  override def getMaxYamlJsonDepth: _root_.scala.Option[Int]  = wrapped.config.parsingOptions.maxJsonYamlDepth
   override def fragments: Map[String, FragmentRef]            = Map.empty
 }

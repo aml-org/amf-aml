@@ -19,8 +19,8 @@ class SemanticExtensionParserTest extends AsyncFunSuite with Matchers {
 
   test("Parse SE 2") {
     run(
-        s"$basePath/annotation-mappings-with-extra-facets/dialect.yaml",
-        Seq("maintainer", "rateLimiting", "owner", "anypointId", "accountType", "contactEmail", "ldapReferences")
+      s"$basePath/annotation-mappings-with-extra-facets/dialect.yaml",
+      Seq("maintainer", "rateLimiting", "owner", "anypointId", "accountType", "contactEmail", "ldapReferences")
     )
   }
 

@@ -111,13 +111,13 @@ class ElementPropertyParser(private val root: Root, private val rootMap: YMap, p
   )(implicit ctx: DialectInstanceContext): Unit = {
 
     ObjectCollectionPropertyParser.parse(
-        id,
-        propertyEntry,
-        property,
-        node,
-        additionalProperties,
-        parseObjectUnion,
-        nodeParser
+      id,
+      propertyEntry,
+      property,
+      node,
+      additionalProperties,
+      parseObjectUnion,
+      nodeParser
     )
   }
 

@@ -28,94 +28,94 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   multiGoldenTest("Can parse ABOUT dialect", "ABOUT-dialect.%s") { config =>
     cycle(
-        "ABOUT-dialect.yaml",
-        config.golden,
-        syntax = Some(Syntax.JsonLd),
-        directory = basePath + "ABOUT/",
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
+      "ABOUT-dialect.yaml",
+      config.golden,
+      syntax = Some(Syntax.JsonLd),
+      directory = basePath + "ABOUT/",
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
     )
   }
 
   // TODO migrate to multiGoldenTest
   test("Can parse validation dialect") {
     cycle(
-        "validation_dialect.yaml",
-        "validation_dialect.json",
-        amlConfig = AMLConfiguration
-          .predefined()
-          .withErrorHandlerProvider(() => UnhandledErrorHandler)
-          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd),
-        syntax = Some(Syntax.JsonLd)
+      "validation_dialect.yaml",
+      "validation_dialect.json",
+      amlConfig = AMLConfiguration
+        .predefined()
+        .withErrorHandlerProvider(() => UnhandledErrorHandler)
+        .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd),
+      syntax = Some(Syntax.JsonLd)
     )
   }
 
   // TODO migrate to multiGoldenTest
   test("Can parse and generate the Instagram dialect") {
     cycle(
-        "dialect.yaml",
-        "dialect.json",
-        syntax = Some(Syntax.JsonLd),
-        basePath + "Instagram/",
-        amlConfig = AMLConfiguration
-          .predefined()
-          .withErrorHandlerProvider(() => UnhandledErrorHandler)
-          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
+      "dialect.yaml",
+      "dialect.json",
+      syntax = Some(Syntax.JsonLd),
+      basePath + "Instagram/",
+      amlConfig = AMLConfiguration
+        .predefined()
+        .withErrorHandlerProvider(() => UnhandledErrorHandler)
+        .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
     )
   }
 
   // TODO migrate to multiGoldenTest
   test("Can parse and generate the activity dialect") {
     cycle(
-        "activity.yaml",
-        "activity.json",
-        syntax = Some(Syntax.JsonLd),
-        basePath + "streams/",
-        amlConfig = AMLConfiguration
-          .predefined()
-          .withErrorHandlerProvider(() => UnhandledErrorHandler)
-          .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
+      "activity.yaml",
+      "activity.json",
+      syntax = Some(Syntax.JsonLd),
+      basePath + "streams/",
+      amlConfig = AMLConfiguration
+        .predefined()
+        .withErrorHandlerProvider(() => UnhandledErrorHandler)
+        .withRenderOptions(RenderOptions().withPrettyPrint.withSourceMaps.withoutFlattenedJsonLd)
     )
   }
 
   test("Can parse validation dialect instance") {
     cycleWithDialect(
-        "validation_dialect.yaml",
-        "validation_instance1.yaml",
-        "validation_instance1.yaml.yaml",
-        Some(Yaml)
+      "validation_dialect.yaml",
+      "validation_instance1.yaml",
+      "validation_instance1.yaml.yaml",
+      Some(Yaml)
     )
   }
 
   multiGoldenTest("Can parse validation dialect cfg1 instance", "example1_instance.%s") { config =>
     cycleWithDialect(
-        "example1.yaml",
-        "example1_instance.yaml",
-        config.golden,
-        directory = s"${basePath}cfg/",
-        renderOptions = Some(config.renderOptions),
-        syntax = Some(Syntax.JsonLd)
+      "example1.yaml",
+      "example1_instance.yaml",
+      config.golden,
+      directory = s"${basePath}cfg/",
+      renderOptions = Some(config.renderOptions),
+      syntax = Some(Syntax.JsonLd)
     )
   }
 
   multiGoldenTest("Can parse validation dialect cfg2 instance", "example2_instance.%s") { config =>
     cycleWithDialect(
-        "example2.yaml",
-        "example2_instance.yaml",
-        config.golden,
-        directory = basePath + "cfg/",
-        renderOptions = Some(config.renderOptions),
-        syntax = Some(Syntax.JsonLd)
+      "example2.yaml",
+      "example2_instance.yaml",
+      config.golden,
+      directory = basePath + "cfg/",
+      renderOptions = Some(config.renderOptions),
+      syntax = Some(Syntax.JsonLd)
     )
   }
 
   multiGoldenTest("Can parse validation dialect cfg3 instance", "example3_instance.%s") { config =>
     cycleWithDialect(
-        "example3.yaml",
-        "example3_instance.yaml",
-        config.golden,
-        directory = basePath + "cfg/",
-        renderOptions = Some(config.renderOptions),
-        syntax = Some(Syntax.JsonLd)
+      "example3.yaml",
+      "example3_instance.yaml",
+      config.golden,
+      directory = basePath + "cfg/",
+      renderOptions = Some(config.renderOptions),
+      syntax = Some(Syntax.JsonLd)
     )
   }
 
@@ -125,63 +125,63 @@ class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTeste
 
   test("Can parse and generate ABOUT-github dialect instance") {
     cycleWithDialect(
-        "ABOUT-GitHub-dialect.yaml",
-        "example.yaml",
-        "example.yaml.yaml",
-        Some(Yaml),
-        basePath + "ABOUT/github/"
+      "ABOUT-GitHub-dialect.yaml",
+      "example.yaml",
+      "example.yaml.yaml",
+      Some(Yaml),
+      basePath + "ABOUT/github/"
     )
   }
 
   multiGoldenTest("Can parse ABOUT-hosted dialectinstance", "ABOUT_hosted.%s") { config =>
     cycleWithDialect(
-        "ABOUT-hosted-vcs-dialect.yaml",
-        "ABOUT_hosted.yaml",
-        config.golden,
-        directory = s"${basePath}ABOUT/",
-        renderOptions = Some(config.renderOptions),
-        syntax = Some(Syntax.JsonLd)
+      "ABOUT-hosted-vcs-dialect.yaml",
+      "ABOUT_hosted.yaml",
+      config.golden,
+      directory = s"${basePath}ABOUT/",
+      renderOptions = Some(config.renderOptions),
+      syntax = Some(Syntax.JsonLd)
     )
   }
 
   // TODO migrate to multiGoldenTest
   test("Can parse and generate Instance dialect instance 1") {
     cycleWithDialect(
-        "dialect.yaml",
-        "instance1.yaml",
-        "instance1.json",
-        syntax = Some(Syntax.JsonLd),
-        basePath + "Instagram/"
+      "dialect.yaml",
+      "instance1.yaml",
+      "instance1.json",
+      syntax = Some(Syntax.JsonLd),
+      basePath + "Instagram/"
     )
   }
 
   test("Can parse and generate Instance dialect instance 2") {
     cycleWithDialect(
-        "dialect.yaml",
-        "instance2.yaml",
-        "instance2.json",
-        syntax = Some(Syntax.JsonLd),
-        basePath + "Instagram/"
+      "dialect.yaml",
+      "instance2.yaml",
+      "instance2.json",
+      syntax = Some(Syntax.JsonLd),
+      basePath + "Instagram/"
     )
   }
 
   test("Can parse activity instances") {
     cycleWithDialect(
-        "activity.yaml",
-        "stream1.yaml",
-        "stream1.json",
-        syntax = Some(Syntax.JsonLd),
-        basePath + "streams/"
+      "activity.yaml",
+      "stream1.yaml",
+      "stream1.json",
+      syntax = Some(Syntax.JsonLd),
+      basePath + "streams/"
     )
   }
 
   test("Can parse activity deployments demo") {
     cycleWithDialect(
-        "dialect.yaml",
-        "deployment.yaml",
-        "deployment.json",
-        syntax = Some(Syntax.JsonLd),
-        basePath + "deployments_demo/"
+      "dialect.yaml",
+      "deployment.yaml",
+      "deployment.json",
+      syntax = Some(Syntax.JsonLd),
+      basePath + "deployments_demo/"
     )
   }
 }

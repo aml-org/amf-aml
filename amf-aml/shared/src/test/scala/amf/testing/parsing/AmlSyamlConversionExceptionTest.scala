@@ -13,17 +13,17 @@ class AmlSyamlConversionExceptionTest extends DialectValidation {
 
   test("Invalid uses entry key is not string") {
     validate(
-        "invalid-uses-entry-key-is-not-string.yaml",
-        Some("reports/invalid-uses-entry-key-is-not-string.report"),
-        false
+      "invalid-uses-entry-key-is-not-string.yaml",
+      Some("reports/invalid-uses-entry-key-is-not-string.report"),
+      false
     )
   }
 
   test("Invalid uses entry value is not string") {
     validate(
-        "invalid-uses-entry-value-is-not-string.yaml",
-        Some("reports/invalid-uses-entry-value-is-not-string.report"),
-        false
+      "invalid-uses-entry-value-is-not-string.yaml",
+      Some("reports/invalid-uses-entry-value-is-not-string.report"),
+      false
     )
   }
 }

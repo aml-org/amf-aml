@@ -44,90 +44,90 @@ case class NodeMappingEmitter(
 
   protected def emitSingleNode(b: EntryBuilder, nodeMapping: NodeMapping): Unit = {
     b.entry(
-        nodeMapping.name.value(),
-        _.obj { b =>
-          emitAnyNode(b, nodeMapping)
-          aliasFor(nodeMapping.nodetypeMapping.value()) match {
-            case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
-            case None                 => nodeMapping.nodetypeMapping
-          }
-          nodeMapping.propertiesMapping() match {
-            case properties: Seq[PropertyMapping] if properties.nonEmpty =>
-              b.entry(
-                  "mapping",
-                  _.obj { b =>
-                    val propertiesEmitters: Seq[PropertyMappingEmitter] = properties.map { pm: PropertyMapping =>
-                      PropertyMappingEmitter(dialect, pm, ordering, aliases)
-                    }
-                    traverse(ordering.sorted(propertiesEmitters), b)
+      nodeMapping.name.value(),
+      _.obj { b =>
+        emitAnyNode(b, nodeMapping)
+        aliasFor(nodeMapping.nodetypeMapping.value()) match {
+          case Some(classTermAlias) => MapEntryEmitter("classTerm", classTermAlias).emit(b)
+          case None                 => nodeMapping.nodetypeMapping
+        }
+        nodeMapping.propertiesMapping() match {
+          case properties: Seq[PropertyMapping] if properties.nonEmpty =>
+            b.entry(
+              "mapping",
+              _.obj { b =>
+                val propertiesEmitters: Seq[PropertyMappingEmitter] = properties.map { pm: PropertyMapping =>
+                  PropertyMappingEmitter(dialect, pm, ordering, aliases)
+                }
+                traverse(ordering.sorted(propertiesEmitters), b)
+              }
+            )
+          case _ => // ignore
+        }
+        if (nodeMapping.extend.nonEmpty) {
+          if (nodeMapping.extend.length == 1) {
+            b.entry("extends", nodeMapping.extend.head.asInstanceOf[Linkable].linkLabel.value())
+          } else {
+            b.entry(
+              "extends",
+              l => {
+                l.list { b =>
+                  nodeMapping.extend.foreach { e =>
+                    b.+=(YNode(e.asInstanceOf[Linkable].linkLabel.value()))
                   }
-              )
-            case _ => // ignore
-          }
-          if (nodeMapping.extend.nonEmpty) {
-            if (nodeMapping.extend.length == 1) {
-              b.entry("extends", nodeMapping.extend.head.asInstanceOf[Linkable].linkLabel.value())
-            } else {
-              b.entry(
-                  "extends",
-                  l => {
-                    l.list { b =>
-                      nodeMapping.extend.foreach { e =>
-                        b.+=(YNode(e.asInstanceOf[Linkable].linkLabel.value()))
-                      }
-                    }
-                  }
-              )
-            }
-          }
-
-          nodeMapping.closed.option().foreach { additionalProps =>
-            b.entry("additionalProperties", !additionalProps)
-          }
-          nodeMapping.idTemplate.option().foreach { idTemplate =>
-            b.entry("idTemplate", idTemplate)
-          }
-          nodeMapping.mergePolicy.option().foreach { policy =>
-            b.entry("patch", policy)
+                }
+              }
+            )
           }
         }
+
+        nodeMapping.closed.option().foreach { additionalProps =>
+          b.entry("additionalProperties", !additionalProps)
+        }
+        nodeMapping.idTemplate.option().foreach { idTemplate =>
+          b.entry("idTemplate", idTemplate)
+        }
+        nodeMapping.mergePolicy.option().foreach { policy =>
+          b.entry("patch", policy)
+        }
+      }
     )
   }
 
   protected def emitUnionNode(b: EntryBuilder, unionNodeMapping: UnionNodeMapping): Unit = {
     b.entry(
-        unionNodeMapping.name.value(),
-        _.obj { b =>
-          emitAnyNode(b, unionNodeMapping)
-          var emitters: Seq[EntryEmitter] = Seq()
-          val nodes                       = unionNodeMapping.objectRange()
-          if (nodes.nonEmpty) {
-            val pos = fieldPos(unionNodeMapping, UnionNodeMappingModel.ObjectRange)
-            val targets = nodes
-              .map { nodeId =>
-                aliasFor(nodeId.value()) match {
-                  case Some(nodeMappingAlias) => Some(nodeMappingAlias)
-                  case _                      => None
-                }
+      unionNodeMapping.name.value(),
+      _.obj { b =>
+        emitAnyNode(b, unionNodeMapping)
+        var emitters: Seq[EntryEmitter] = Seq()
+        val nodes                       = unionNodeMapping.objectRange()
+        if (nodes.nonEmpty) {
+          val pos = fieldPos(unionNodeMapping, UnionNodeMappingModel.ObjectRange)
+          val targets = nodes
+            .map { nodeId =>
+              aliasFor(nodeId.value()) match {
+                case Some(nodeMappingAlias) => Some(nodeMappingAlias)
+                case _                      => None
               }
-              .collect { case Some(alias) => alias }
+            }
+            .collect { case Some(alias) => alias }
 
-            emitters ++= Seq(new EntryEmitter {
-              override def emit(b: EntryBuilder): Unit =
-                b.entry(
-                    "union",
-                    _.list { b =>
-                      targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
-                    }
-                )
-              override def position(): Position = pos
-            })
+          emitters ++= Seq(new EntryEmitter {
+            override def emit(b: EntryBuilder): Unit =
+              b.entry(
+                "union",
+                _.list { b =>
+                  targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
+                }
+              )
+            override def position(): Position = pos
+          })
 
-            emitters ++= emitDiscriminator(unionNodeMapping)
+          emitters ++= emitDiscriminator(unionNodeMapping)
 
-            ordering.sorted(emitters).foreach(_.emit(b))
-          }
+          ordering.sorted(emitters).foreach(_.emit(b))
         }
+      }
     )
   }
 
@@ -135,35 +135,35 @@ case class NodeMappingEmitter(
     if (anyMapping.and.nonEmpty) {
       val members = anyMapping.and.flatMap(member => aliasFor(member.value()))
       b.entry(
-          "allOf",
-          _.list(b => members.foreach(member => ScalarEmitter(AmfScalar(member)).emit(b)))
+        "allOf",
+        _.list(b => members.foreach(member => ScalarEmitter(AmfScalar(member)).emit(b)))
       )
     }
     if (anyMapping.or.nonEmpty) {
       val members = anyMapping.or.flatMap(member => aliasFor(member.value()))
       b.entry(
-          "oneOf",
-          _.list(b => members.foreach(member => ScalarEmitter(AmfScalar(member)).emit(b)))
+        "oneOf",
+        _.list(b => members.foreach(member => ScalarEmitter(AmfScalar(member)).emit(b)))
       )
     }
     if (anyMapping.components.nonEmpty) {
       val members = anyMapping.components.flatMap(component => aliasFor(component.value()))
       b.entry(
-          "components",
-          _.list(b => members.foreach(component => ScalarEmitter(AmfScalar(component)).emit(b)))
+        "components",
+        _.list(b => members.foreach(component => ScalarEmitter(AmfScalar(component)).emit(b)))
       )
     }
     if (anyMapping.ifMapping.nonEmpty) {
       b.entry(
-          "conditional",
-          _.obj { b =>
-            if (anyMapping.ifMapping.nonEmpty)
-              b.entry("if", aliasFor(anyMapping.ifMapping.value()).getOrElse(""))
-            if (anyMapping.thenMapping.nonEmpty)
-              b.entry("then", aliasFor(anyMapping.thenMapping.value()).getOrElse(""))
-            if (anyMapping.elseMapping.nonEmpty)
-              b.entry("else", aliasFor(anyMapping.elseMapping.value()).getOrElse(""))
-          }
+        "conditional",
+        _.obj { b =>
+          if (anyMapping.ifMapping.nonEmpty)
+            b.entry("if", aliasFor(anyMapping.ifMapping.value()).getOrElse(""))
+          if (anyMapping.thenMapping.nonEmpty)
+            b.entry("then", aliasFor(anyMapping.thenMapping.value()).getOrElse(""))
+          if (anyMapping.elseMapping.nonEmpty)
+            b.entry("else", aliasFor(anyMapping.elseMapping.value()).getOrElse(""))
+        }
       )
     }
   }

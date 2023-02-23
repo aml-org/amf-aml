@@ -33,39 +33,39 @@ case class ExternalLinkEmitter[M <: PropertyLikeMappingModel](
     with AmlEmittersHelper {
   override def emit(b: YDocument.EntryBuilder): Unit = {
     b.entry(
-        key,
-        (e) => {
-          target match {
-            case array: AmfArray =>
-              e.list(l => {
-                array.values.asInstanceOf[Seq[DialectDomainElement]].foreach { elem =>
-                  if (elem.fields.nonEmpty) { // map reference
-                    nodeMappingForObjectProperty(propertyMapping, elem) match {
-                      case Some(rangeMapping) =>
-                        DialectNodeEmitter(
-                            elem,
-                            rangeMapping,
-                            references,
-                            dialect,
-                            ordering,
-                            discriminator = None,
-                            keyPropertyId = keyPropertyId,
-                            renderOptions = renderOptions,
-                            registry = registry
-                        ).emit(l)
-                      case _ => // ignore, error
-                    }
-                  } else { // just link
-                    emitCustomId(elem, l)
-                    emitCustomBase(elem, l)
+      key,
+      (e) => {
+        target match {
+          case array: AmfArray =>
+            e.list(l => {
+              array.values.asInstanceOf[Seq[DialectDomainElement]].foreach { elem =>
+                if (elem.fields.nonEmpty) { // map reference
+                  nodeMappingForObjectProperty(propertyMapping, elem) match {
+                    case Some(rangeMapping) =>
+                      DialectNodeEmitter(
+                        elem,
+                        rangeMapping,
+                        references,
+                        dialect,
+                        ordering,
+                        discriminator = None,
+                        keyPropertyId = keyPropertyId,
+                        renderOptions = renderOptions,
+                        registry = registry
+                      ).emit(l)
+                    case _ => // ignore, error
                   }
+                } else { // just link
+                  emitCustomId(elem, l)
+                  emitCustomBase(elem, l)
                 }
-              })
-            case element: DialectDomainElement =>
-              emitCustomId(element, e)
-              emitCustomBase(element, e)
-          }
+              }
+            })
+          case element: DialectDomainElement =>
+            emitCustomId(element, e)
+            emitCustomBase(element, e)
         }
+      }
     )
   }
 

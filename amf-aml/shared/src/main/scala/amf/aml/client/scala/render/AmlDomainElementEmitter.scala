@@ -46,14 +46,14 @@ object AmlDomainElementEmitter extends DomainElementEmitter[Dialect] {
     val dialects      = references.collect { case dialect: Dialect => dialect }
     val finder        = DefaultNodeMappableFinder(dialects)
     DialectNodeEmitter(
-        element,
-        nodeMappable,
-        references,
-        dialect,
-        SpecOrdering.Lexical,
-        discriminator = discriminator,
-        renderOptions = renderOptions,
-        registry = registry
+      element,
+      nodeMappable,
+      references,
+      dialect,
+      SpecOrdering.Lexical,
+      discriminator = discriminator,
+      renderOptions = renderOptions,
+      registry = registry
     )(finder)
   }
 }

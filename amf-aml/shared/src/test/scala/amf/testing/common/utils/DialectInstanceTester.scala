@@ -20,7 +20,7 @@ trait DialectInstanceTester extends DialectRegistrationHelper { this: FunSuiteCy
     withDialect(s"file://$directory/$dialect") { (_, config) =>
       val configuration =
         renderOptions.fold(
-            config.withRenderOptions(RenderOptions().withSourceMaps.withPrettyPrint.withoutFlattenedJsonLd)
+          config.withRenderOptions(RenderOptions().withSourceMaps.withPrettyPrint.withoutFlattenedJsonLd)
         )(r => config.withRenderOptions(r))
       cycle(source, golden, syntax, directory, configuration)
     }

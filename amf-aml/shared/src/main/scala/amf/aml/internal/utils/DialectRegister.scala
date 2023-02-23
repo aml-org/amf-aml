@@ -58,20 +58,20 @@ private[amf] case class DialectRegister(d: Dialect, configuration: AMLConfigurat
     val validationsToPropagate = dialectProfile.validations.diff(AMFDialectValidations.staticValidations)
 
     val profile = config.getRegistry.getConstraintsRules.getOrElse(
-        SEMANTIC_EXTENSIONS_PROFILE,
-        ValidationProfile(SEMANTIC_EXTENSIONS_PROFILE, None, Seq.empty, SeverityMapping())
+      SEMANTIC_EXTENSIONS_PROFILE,
+      ValidationProfile(SEMANTIC_EXTENSIONS_PROFILE, None, Seq.empty, SeverityMapping())
     )
     val nextProfile = profile.copy(
-        severities = profile.severities.concat(dialectProfile.severities),
-        validations = profile.validations ++ validationsToPropagate
+      severities = profile.severities.concat(dialectProfile.severities),
+      validations = profile.validations ++ validationsToPropagate
     )
     config.withValidationProfile(nextProfile)
   }
 
   private def plugins(constraints: ValidationProfile): List[AMFPlugin[_]] = {
     List(
-        new AMLDialectInstanceParsingPlugin(dialect, Some(constraints)),
-        new AMLDialectInstanceRenderingPlugin(dialect)
+      new AMLDialectInstanceParsingPlugin(dialect, Some(constraints)),
+      new AMLDialectInstanceRenderingPlugin(dialect)
     )
   }
 
