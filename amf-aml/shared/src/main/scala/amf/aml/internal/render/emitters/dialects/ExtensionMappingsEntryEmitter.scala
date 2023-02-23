@@ -21,11 +21,11 @@ case class ExtensionMappingsEntryEmitter(
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-        "extensions",
-        _.obj { b =>
-          val results = extensions.map(ext => SemanticExtensionEmitter(dialect, ext, aliases, ordering))
-          traverse(ordering.sorted(results), b)
-        }
+      "extensions",
+      _.obj { b =>
+        val results = extensions.map(ext => SemanticExtensionEmitter(dialect, ext, aliases, ordering))
+        traverse(ordering.sorted(results), b)
+      }
     )
   }
 
@@ -44,10 +44,10 @@ case class SemanticExtensionEmitter(
     with AliasEmitter {
   override def emit(b: EntryBuilder): Unit = {
     val emitters = emitAlias(
-        element.extensionName().value(),
-        element.extensionMappingDefinition(),
-        SemanticExtensionModel.ExtensionMappingDefinition,
-        YType.Str
+      element.extensionName().value(),
+      element.extensionMappingDefinition(),
+      SemanticExtensionModel.ExtensionMappingDefinition,
+      YType.Str
     ).toSeq
     traverse(ordering.sorted(emitters), b)
   }

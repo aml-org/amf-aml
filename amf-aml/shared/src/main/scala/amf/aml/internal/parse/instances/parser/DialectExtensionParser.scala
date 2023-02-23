@@ -38,10 +38,10 @@ object DialectExtensionParser {
                 }
               case None =>
                 ctx.eh.violation(
-                    DialectError,
-                    id,
-                    s"Cannot find dialect for nested anyNode mapping $dialectNode",
-                    nested.value.location
+                  DialectError,
+                  id,
+                  s"Cannot find dialect for nested anyNode mapping $dialectNode",
+                  nested.value.location
                 )
             }
           case None =>

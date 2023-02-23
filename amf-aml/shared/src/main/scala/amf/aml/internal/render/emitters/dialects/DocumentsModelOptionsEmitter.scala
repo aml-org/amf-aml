@@ -24,30 +24,30 @@ case class DocumentsModelOptionsEmitter(
 
   private def hasOptions: Boolean =
     Seq(
-        mapping.selfEncoded().option(),
-        mapping.declarationsPath().option(),
-        mapping.keyProperty().option()
+      mapping.selfEncoded().option(),
+      mapping.declarationsPath().option(),
+      mapping.keyProperty().option()
     ).flatten.nonEmpty
 
   val sortedNodes: Seq[MapEntryEmitter] = if (hasOptions) {
     val options =
       Map(
-          "selfEncoded"      -> mapping.selfEncoded().option(),
-          "declarationsPath" -> mapping.declarationsPath().option(),
-          "keyProperty"      -> mapping.keyProperty().option(),
-          "referenceStyle"   -> mapping.referenceStyle().option()
+        "selfEncoded"      -> mapping.selfEncoded().option(),
+        "declarationsPath" -> mapping.declarationsPath().option(),
+        "keyProperty"      -> mapping.keyProperty().option(),
+        "referenceStyle"   -> mapping.referenceStyle().option()
       )
     val types = Map(
-        "selfEncoded"      -> YType.Bool,
-        "keyProperty"      -> YType.Bool,
-        "declarationsPath" -> YType.Str,
-        "referenceStyle"   -> YType.Str
+      "selfEncoded"      -> YType.Bool,
+      "keyProperty"      -> YType.Bool,
+      "declarationsPath" -> YType.Str,
+      "referenceStyle"   -> YType.Str
     )
     val annotations = Map(
-        "selfEncoded"      -> mapping.selfEncoded().annotations(),
-        "declarationsPath" -> mapping.declarationsPath().annotations(),
-        "keyProperty"      -> mapping.keyProperty().annotations(),
-        "referenceStyle"   -> mapping.referenceStyle().annotations()
+      "selfEncoded"      -> mapping.selfEncoded().annotations(),
+      "declarationsPath" -> mapping.declarationsPath().annotations(),
+      "keyProperty"      -> mapping.keyProperty().annotations(),
+      "referenceStyle"   -> mapping.referenceStyle().annotations()
     )
 
     val optionNodes: Seq[MapEntryEmitter] = options
@@ -69,10 +69,10 @@ case class DocumentsModelOptionsEmitter(
   override def emit(b: EntryBuilder): Unit = {
     if (sortedNodes.nonEmpty) {
       b.entry(
-          "options",
-          _.obj { b =>
-            traverse(sortedNodes, b)
-          }
+        "options",
+        _.obj { b =>
+          traverse(sortedNodes, b)
+        }
       )
     }
   }

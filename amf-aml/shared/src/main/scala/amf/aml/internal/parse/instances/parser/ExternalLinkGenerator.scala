@@ -83,9 +83,9 @@ object ExternalLinkGenerator extends BaseDirectiveOverride {
 
       case _ => // error
         ctx.eh.violation(
-            DialectError,
-            id,
-            "AML links must URI links (strings or maps with $id directive) or ID Template links (maps with idTemplate variables)"
+          DialectError,
+          id,
+          "AML links must URI links (strings or maps with $id directive) or ID Template links (maps with idTemplate variables)"
         )
         None
     }

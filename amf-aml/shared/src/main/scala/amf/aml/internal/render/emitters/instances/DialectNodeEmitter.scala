@@ -33,17 +33,17 @@ class RootDialectNodeEmitter(
     registry: AMLRegistry
 )(implicit nodeMappableFinder: NodeMappableFinder)
     extends DialectNodeEmitter(
-        node,
-        nodeMappable,
-        instance.references,
-        dialect,
-        ordering,
-        keyPropertyId,
-        discriminator,
-        emitDialect,
-        topLevelEmitters,
-        renderOptions,
-        registry
+      node,
+      nodeMappable,
+      instance.references,
+      dialect,
+      ordering,
+      keyPropertyId,
+      discriminator,
+      emitDialect,
+      topLevelEmitters,
+      renderOptions,
+      registry
     ) {
 
   lazy val referencesAliasIndex: Map[RefId, (Alias, ImportLocation)] = buildReferenceAliasIndexFrom(instance)
@@ -81,22 +81,22 @@ class RootDialectNodeEmitter(
             findNodeMappingById(publicNodeMapping.mappedNode().value()) match {
               case (_, nodeMappable: NodeMappable) =>
                 acc ++ Seq(
-                    DeclarationsGroupEmitter(
-                        declared,
-                        publicNodeMapping,
-                        nodeMappable,
-                        instance,
-                        dialect,
-                        ordering,
-                        docs
-                          .declarationsPath()
-                          .option()
-                          .getOrElse("/")
-                          .split("/"),
-                        referencesAliasIndex,
-                        renderOptions = renderOptions,
-                        registry = registry
-                    )
+                  DeclarationsGroupEmitter(
+                    declared,
+                    publicNodeMapping,
+                    nodeMappable,
+                    instance,
+                    dialect,
+                    ordering,
+                    docs
+                      .declarationsPath()
+                      .option()
+                      .getOrElse("/")
+                      .split("/"),
+                    referencesAliasIndex,
+                    renderOptions = renderOptions,
+                    registry = registry
+                  )
                 )
             }
           } else acc
@@ -144,17 +144,17 @@ case class DialectNodeEmitter(
 
   private def fieldAndExtensionEmitters: Seq[EntryEmitter] = {
     val fieldEmitter = NodeFieldEmitters(
-        node,
-        nodeMappable,
-        references,
-        dialect,
-        ordering,
-        keyPropertyId,
-        discriminator,
-        emitDialect,
-        topLevelEmitters,
-        renderOptions,
-        registry
+      node,
+      nodeMappable,
+      references,
+      dialect,
+      ordering,
+      keyPropertyId,
+      discriminator,
+      emitDialect,
+      topLevelEmitters,
+      renderOptions,
+      registry
     )
     uniqueFields(node.meta).flatMap { field =>
       field match {

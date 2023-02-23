@@ -6,13 +6,13 @@ import amf.core.client.scala.vocabulary.Namespace
 
 trait MergeableMappingModel {
   val MergePolicy: Field = Field(
-      Str,
-      Namespace.Meta + "mergePolicy",
-      ModelDoc(
-          ModelVocabularies.Meta,
-          "mergePolicy",
-          "Indication of how to merge this graph node when applying a patch document"
-      )
+    Str,
+    Namespace.Meta + "mergePolicy",
+    ModelDoc(
+      ModelVocabularies.Meta,
+      "mergePolicy",
+      "Indication of how to merge this graph node when applying a patch document"
+    )
   )
 }
 

@@ -29,11 +29,11 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
 
   test("Simple node union rendering") {
     renderElement(
-        "dialect.yaml",
-        "instance.yaml",
-        encodes,
-        "instance-encodes.yaml",
-        directory = s"$rendering/simple-node-union"
+      "dialect.yaml",
+      "instance.yaml",
+      encodes,
+      "instance-encodes.yaml",
+      directory = s"$rendering/simple-node-union"
     )
   }
 
@@ -85,11 +85,11 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
     for {
       loadedConfig <- AMLConfiguration.predefined().withDialect(s"file://$basePath/dialect16b.yaml")
       assertion <- renderElement(
-          "dialect16a.yaml",
-          "example16a.yaml",
-          encodes,
-          "example16a-encodes.yaml",
-          baseConfig = loadedConfig
+        "dialect16a.yaml",
+        "example16a.yaml",
+        encodes,
+        "example16a-encodes.yaml",
+        baseConfig = loadedConfig
       )
     } yield {
       assertion
@@ -104,11 +104,11 @@ class DialectDomainElementRenderTest extends DomainElementCycleTests {
     for {
       loadedConfig <- AMLConfiguration.predefined().withDialect(s"file://$basePath/dialect16b.yaml")
       assertion <- renderElement(
-          "dialect16a.yaml",
-          "example16c.yaml",
-          encodes,
-          "example16c-encodes.yaml",
-          baseConfig = loadedConfig
+        "dialect16a.yaml",
+        "example16c.yaml",
+        encodes,
+        "example16c-encodes.yaml",
+        baseConfig = loadedConfig
       )
     } yield {
       assertion

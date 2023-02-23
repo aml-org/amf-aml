@@ -31,24 +31,24 @@ object LinkIncludePropertyParser {
               .link(text, Annotations(propertyEntry.value))
               .asInstanceOf[DialectDomainElement]
               .withId(
-                  id
+                id
               ) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
             if (isRef) linkedExternal.annotations += RefInclude()
             node.withObjectField(mapping, linkedExternal, Right(propertyEntry))
           case None =>
             ctx.eh.violation(
-                DialectError,
-                id,
-                s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
-                propertyEntry.value.location
+              DialectError,
+              id,
+              s"Cannot find dialect for anyNode node mapping ${s.definedBy.id}",
+              propertyEntry.value.location
             )
         }
       case _ =>
         ctx.eh.violation(
-            DialectError,
-            id,
-            s"anyNode reference must be to a known node or an external fragment, unknown value: '${propertyEntry.value}'",
-            propertyEntry.value.location
+          DialectError,
+          id,
+          s"anyNode reference must be to a known node or an external fragment, unknown value: '${propertyEntry.value}'",
+          propertyEntry.value.location
         )
     }
   }

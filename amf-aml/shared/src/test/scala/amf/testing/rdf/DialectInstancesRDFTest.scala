@@ -49,48 +49,48 @@ class DialectInstancesRDFTest extends FunSuiteRdfCycleTests with FileAssertionTe
 
   test("RDF 1 Vocabulary full test") {
     cycleFullRdf(
-        "example1.yaml",
-        "example1.yaml",
-        "amf-aml/shared/src/test/resources/vocabularies2/vocabularies/",
-        syntax = Some(Syntax.Yaml)
+      "example1.yaml",
+      "example1.yaml",
+      "amf-aml/shared/src/test/resources/vocabularies2/vocabularies/",
+      syntax = Some(Syntax.Yaml)
     )
   }
 
   test("RDF 1 Dialect full test") {
     cycleFullRdf(
-        "example1.yaml",
-        "example1.yaml",
-        "amf-aml/shared/src/test/resources/vocabularies2/dialects/",
-        syntax = Some(Syntax.Yaml)
+      "example1.yaml",
+      "example1.yaml",
+      "amf-aml/shared/src/test/resources/vocabularies2/dialects/",
+      syntax = Some(Syntax.Yaml)
     )
   }
 
   test("EngDemos vocabulary test") {
     cycleFullRdf(
-        "eng_demos.yaml",
-        "eng_demos.yaml",
-        "amf-aml/shared/src/test/resources/vocabularies2/production/",
-        syntax = Some(Syntax.Yaml)
+      "eng_demos.yaml",
+      "eng_demos.yaml",
+      "amf-aml/shared/src/test/resources/vocabularies2/production/",
+      syntax = Some(Syntax.Yaml)
     )
   }
 
   test("Container Configuration 0.2 ex1 test") {
     cycleFullRdfWithDialect(
-        "dialect.yaml",
-        "ex1.yaml",
-        "ex1.yaml",
-        syntax = Some(Syntax.Yaml),
-        "amf-aml/shared/src/test/resources/vocabularies2/production/system2/"
+      "dialect.yaml",
+      "ex1.yaml",
+      "ex1.yaml",
+      syntax = Some(Syntax.Yaml),
+      "amf-aml/shared/src/test/resources/vocabularies2/production/system2/"
     )
   }
 
   test("Container Configuration 0.2 ex2 test") {
     cycleFullRdfWithDialect(
-        "dialect.yaml",
-        "ex2.yaml",
-        "ex2.yaml",
-        syntax = Some(Syntax.Yaml),
-        "amf-aml/shared/src/test/resources/vocabularies2/production/system2/"
+      "dialect.yaml",
+      "ex2.yaml",
+      "ex2.yaml",
+      syntax = Some(Syntax.Yaml),
+      "amf-aml/shared/src/test/resources/vocabularies2/production/system2/"
     )
   }
 

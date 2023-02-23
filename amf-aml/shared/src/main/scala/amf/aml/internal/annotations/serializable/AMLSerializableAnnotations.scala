@@ -7,11 +7,11 @@ import amf.aml.internal.annotations.{AliasesLocation, CustomBase, CustomId, Json
 private[amf] object AMLSerializableAnnotations extends SerializableAnnotations {
 
   override val annotations: Map[String, AnnotationGraphLoader] = Map(
-      "aliases-location" -> AliasesLocation,
-      "custom-id"        -> CustomId,
-      "custom-base"      -> CustomBase,
-      "ref-include"      -> RefInclude,
-      "json-pointer-ref" -> JsonPointerRef
+    "aliases-location" -> AliasesLocation,
+    "custom-id"        -> CustomId,
+    "custom-base"      -> CustomBase,
+    "ref-include"      -> RefInclude,
+    "json-pointer-ref" -> JsonPointerRef
   )
 
 }

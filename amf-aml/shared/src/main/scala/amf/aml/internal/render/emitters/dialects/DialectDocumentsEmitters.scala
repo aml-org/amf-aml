@@ -42,10 +42,10 @@ trait DialectDocumentsEmitters extends AmlEmittersHelper {
       Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
           b.entry(
-              "external",
-              _.obj({ b =>
-                traverse(ordering.sorted(dialect.externals.map(external => ExternalEmitter(external, ordering))), b)
-              })
+            "external",
+            _.obj({ b =>
+              traverse(ordering.sorted(dialect.externals.map(external => ExternalEmitter(external, ordering))), b)
+            })
           )
         }
 

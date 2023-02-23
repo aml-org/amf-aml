@@ -28,8 +28,8 @@ class DynamicTypeParser(
           obj.withId(node.subject)
           node.getKeys().foreach { uri =>
             if (
-                uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri() &&
-                uri != (Namespace.Core + "name").iri()
+              uri != "@type" && uri != "@id" && uri != DomainElementModel.Sources.value.iri() &&
+              uri != (Namespace.Core + "name").iri()
             ) { // we do this to prevent parsing name of annotations
 
               val dataNode = node.getProperties(uri).get.head match {
@@ -117,9 +117,9 @@ class DynamicTypeParser(
   }
 
   private val dynamicBuilders: mutable.Map[String, Annotations => AmfObject] = mutable.Map(
-      LinkNode.builderType.iri()        -> domain.LinkNode.apply,
-      ArrayNode.builderType.iri()       -> domain.ArrayNode.apply,
-      ScalarNodeModel.`type`.head.iri() -> domain.ScalarNode.apply,
-      ObjectNode.builderType.iri()      -> domain.ObjectNode.apply
+    LinkNode.builderType.iri()        -> domain.LinkNode.apply,
+    ArrayNode.builderType.iri()       -> domain.ArrayNode.apply,
+    ScalarNodeModel.`type`.head.iri() -> domain.ScalarNode.apply,
+    ObjectNode.builderType.iri()      -> domain.ObjectNode.apply
   )
 }

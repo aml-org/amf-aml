@@ -8,10 +8,10 @@ class DialectInstancePatchTransformationPipeline private (override val name: Str
 
   override def steps: Seq[TransformationStep] =
     Seq(
-        new DialectInstanceReferencesResolutionStage(),
-        new DialectPatchApplicationStage(),
-        new CleanReferencesStage(),
-        new DeclarationsRemovalStage()
+      new DialectInstanceReferencesResolutionStage(),
+      new DialectPatchApplicationStage(),
+      new CleanReferencesStage(),
+      new DeclarationsRemovalStage()
     )
 
 }

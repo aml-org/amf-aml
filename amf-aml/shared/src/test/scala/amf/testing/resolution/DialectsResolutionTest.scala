@@ -15,11 +15,11 @@ class DialectsResolutionTest extends DialectResolutionCycleTests {
 
     multiGoldenTest(s"$label resolution to JSON-LD", "dialect.resolved.%s") { config =>
       cycle(
-          "dialect.yaml",
-          config.golden,
-          syntax = Some(Syntax.JsonLd),
-          directory = directory,
-          AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
+        "dialect.yaml",
+        config.golden,
+        syntax = Some(Syntax.JsonLd),
+        directory = directory,
+        AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
       )
     }
 
@@ -39,21 +39,21 @@ class DialectsResolutionTest extends DialectResolutionCycleTests {
 
   multiGoldenTest("Resolve dialect with fragment", "dialect.resolved.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        syntax = Some(Syntax.JsonLd),
-        directory = s"$basePath/dialect-fragment/",
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
+      "dialect.yaml",
+      config.golden,
+      syntax = Some(Syntax.JsonLd),
+      directory = s"$basePath/dialect-fragment/",
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
     )
   }
 
   multiGoldenTest("Resolve dialect with library", "dialect.resolved.%s") { config =>
     cycle(
-        "dialect.yaml",
-        config.golden,
-        syntax = Some(Syntax.JsonLd),
-        directory = s"$basePath/dialect-library/",
-        AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
+      "dialect.yaml",
+      config.golden,
+      syntax = Some(Syntax.JsonLd),
+      directory = s"$basePath/dialect-library/",
+      AMLConfiguration.predefined().withRenderOptions(config.renderOptions)
     )
   }
 

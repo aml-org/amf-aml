@@ -43,20 +43,20 @@ case class PropertyTermParser()(implicit val ctx: VocabularyContext)
       ctx: VocabularyContext
   ) = {
     map.key(
-        "extends",
-        entry => {
-          val refs = singleOrMultipleItemsAsString(entry)
-          val superClasses = parseIriAlias(
-              refs,
-              term => ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true),
-              term => ctx.missingPropertyTermWarning(term, propertyTerm.id, entry.value)
-          )
-          propertyTerm.set(
-              ObjectPropertyTermModel.SubPropertyOf,
-              AmfArray(superClasses, Annotations(entry.value)),
-              Annotations(entry)
-          )
-        }
+      "extends",
+      entry => {
+        val refs = singleOrMultipleItemsAsString(entry)
+        val superClasses = parseIriAlias(
+          refs,
+          term => ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true),
+          term => ctx.missingPropertyTermWarning(term, propertyTerm.id, entry.value)
+        )
+        propertyTerm.set(
+          ObjectPropertyTermModel.SubPropertyOf,
+          AmfArray(superClasses, Annotations(entry.value)),
+          Annotations(entry)
+        )
+      }
     )
   }
 
@@ -64,46 +64,46 @@ case class PropertyTermParser()(implicit val ctx: VocabularyContext)
       ctx: VocabularyContext
   ) = {
     map.key(
-        "range",
-        entry => {
-          val text = entry.value.as[YScalar].text
-          val rangeId = text match {
-            case "guid" =>
-              Some(AmfScalar((Namespace.Shapes + "guid").iri(), Annotations(entry.value)))
-            case "any" | "uri" | "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" |
-                "dateTime" =>
-              Some(AmfScalar(DataType(text), Annotations(entry.value)))
-            case classAlias =>
-              ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
-                case Some(classTermId) => Some(AmfScalar(classTermId, Annotations.synthesized()))
-                case None =>
-                  ctx.missingClassTermWarning(classAlias, propertyTerm.id, entry.value)
-                  None
-              }
-          }
-
-          rangeId.foreach(scalar => propertyTerm.set(DatatypePropertyTermModel.Range, scalar, Annotations(entry)))
+      "range",
+      entry => {
+        val text = entry.value.as[YScalar].text
+        val rangeId = text match {
+          case "guid" =>
+            Some(AmfScalar((Namespace.Shapes + "guid").iri(), Annotations(entry.value)))
+          case "any" | "uri" | "string" | "integer" | "float" | "double" | "long" | "boolean" | "time" | "date" |
+              "dateTime" =>
+            Some(AmfScalar(DataType(text), Annotations(entry.value)))
+          case classAlias =>
+            ctx.resolveClassTermAlias(vocabulary.base.value(), classAlias, entry.value, strictLocal = true) match {
+              case Some(classTermId) => Some(AmfScalar(classTermId, Annotations.synthesized()))
+              case None =>
+                ctx.missingClassTermWarning(classAlias, propertyTerm.id, entry.value)
+                None
+            }
         }
+
+        rangeId.foreach(scalar => propertyTerm.set(DatatypePropertyTermModel.Range, scalar, Annotations(entry)))
+      }
     )
   }
 
   private def parseDescription(map: YMap, propertyTerm: PropertyTerm) = {
     map.key(
-        "description",
-        entry => {
-          val value = ValueNode(entry.value)
-          propertyTerm.set(ClassTermModel.Description, value.string())
-        }
+      "description",
+      entry => {
+        val value = ValueNode(entry.value)
+        propertyTerm.set(ClassTermModel.Description, value.string())
+      }
     )
   }
 
   private def parseDisplayName(map: YMap, propertyTerm: PropertyTerm) = {
     map.key(
-        "displayName",
-        entry => {
-          val value = ValueNode(entry.value)
-          propertyTerm.set(ClassTermModel.DisplayName, value.string())
-        }
+      "displayName",
+      entry => {
+        val value = ValueNode(entry.value)
+        propertyTerm.set(ClassTermModel.DisplayName, value.string())
+      }
     )
   }
 

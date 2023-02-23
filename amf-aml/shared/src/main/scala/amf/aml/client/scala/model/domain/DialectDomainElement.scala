@@ -51,9 +51,9 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       linkLabel
         .option()
         .getOrElse(
-            linkTarget
-              .map(_.id.split("#").head)
-              .getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id"))
+          linkTarget
+            .map(_.id.split("#").head)
+            .getOrElse(throw new Exception(s"Cannot produce include reference without linked element at elem $id"))
         )
     else
       throw new Exception(s"Cannot produce include reference without linked element at elem $id")
@@ -127,15 +127,15 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
         case resolvedDialectDomainElement: DialectDomainElement =>
           val f = property.toField()
           set(
-              f,
-              resolveUnreferencedLink(
-                  value.refName,
-                  value.annotations,
-                  resolvedDialectDomainElement,
-                  value.supportsRecursion.option().getOrElse(false)
-              )
-                .withId(value.id),
-              annotations
+            f,
+            resolveUnreferencedLink(
+              value.refName,
+              value.annotations,
+              resolvedDialectDomainElement,
+              value.supportsRecursion.option().getOrElse(false)
+            )
+              .withId(value.id),
+            annotations
           )
         case resolved =>
           throw new Exception(s"Cannot resolve reference with not dialect domain element value ${resolved.id}")
@@ -251,9 +251,9 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     if (instanceTypes.isEmpty) DialectDomainElementModel()
     else {
       new DialectDomainElementModel(
-          instanceTypes.distinct,
-          instanceDefinedBy.map(_.propertiesMapping().map(_.toField)).getOrElse(Seq.empty),
-          instanceDefinedBy
+        instanceTypes.distinct,
+        instanceDefinedBy.map(_.propertiesMapping().map(_.toField)).getOrElse(Seq.empty),
+        instanceDefinedBy
       )
     }
 

@@ -65,8 +65,8 @@ case class DialectInstancesEmitter(
       case f: DialectInstanceFragment =>
         b.comment(s"%${f.fragment()} / $schema")
         (
-            Nil,
-            dialect.documents().fragments().find(_.documentName().is(f.fragment().value())).map(_.encoded().value()).get
+          Nil,
+          dialect.documents().fragments().find(_.documentName().is(f.fragment().value())).map(_.encoded().value()).get
         )
     }
 
@@ -80,16 +80,16 @@ case class DialectInstancesEmitter(
     val element = encoded.encodes.asInstanceOf[DialectDomainElement]
 
     new RootDialectNodeEmitter(
-        element,
-        rootNodeMapping,
-        instance,
-        dialect,
-        ordering,
-        None,
-        topLevelEmitters = externalEmitters(instance, ordering) ++ entry,
-        discriminator = discriminator.flatMap(_.compute(element)),
-        renderOptions = renderOptions,
-        registry = registry
+      element,
+      rootNodeMapping,
+      instance,
+      dialect,
+      ordering,
+      None,
+      topLevelEmitters = externalEmitters(instance, ordering) ++ entry,
+      discriminator = discriminator.flatMap(_.compute(element)),
+      renderOptions = renderOptions,
+      registry = registry
     ).emit(b)
   }
 

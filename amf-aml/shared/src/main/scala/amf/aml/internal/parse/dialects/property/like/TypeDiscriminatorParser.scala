@@ -12,15 +12,15 @@ case class TypeDiscriminatorParser(map: YMap, propertyLikeMapping: PropertyLikeM
 ) {
   def parse(): Unit = {
     map.key(
-        "typeDiscriminator",
-        entry => {
-          val types = entry.value.as[YMap]
-          val typeMapping = types.entries.foldLeft(Map[String, String]()) { case (acc, e) =>
-            val nodeMappingId = e.value.as[YScalar].text
-            acc + (e.key.as[YScalar].text -> nodeMappingId)
-          }
-          propertyLikeMapping.withTypeDiscriminator(typeMapping, Annotations(entry), Annotations(types))
+      "typeDiscriminator",
+      entry => {
+        val types = entry.value.as[YMap]
+        val typeMapping = types.entries.foldLeft(Map[String, String]()) { case (acc, e) =>
+          val nodeMappingId = e.value.as[YScalar].text
+          acc + (e.key.as[YScalar].text -> nodeMappingId)
         }
+        propertyLikeMapping.withTypeDiscriminator(typeMapping, Annotations(entry), Annotations(types))
+      }
     )
   }
 

@@ -52,11 +52,11 @@ object LiteralValueParser {
         Some(value.as[Boolean])
       case YType.Bool =>
         inconsistentPropertyRangeValueViolation(
-            nodeId,
-            property,
-            property.literalRange().value(),
-            DataType.Boolean,
-            annotations
+          nodeId,
+          property,
+          property.literalRange().value(),
+          DataType.Boolean,
+          annotations
         )(eh)
         None
       case YType.Int
@@ -72,11 +72,11 @@ object LiteralValueParser {
         Some(value.as[Long])
       case YType.Int =>
         inconsistentPropertyRangeValueViolation(
-            nodeId,
-            property,
-            property.literalRange().value(),
-            DataType.Integer,
-            annotations
+          nodeId,
+          property,
+          property.literalRange().value(),
+          DataType.Integer,
+          annotations
         )(eh)
         None
       case YType.Str
@@ -95,11 +95,11 @@ object LiteralValueParser {
         Some(value.as[YScalar].text)
       case YType.Str =>
         inconsistentPropertyRangeValueViolation(
-            nodeId,
-            property,
-            property.literalRange().value(),
-            DataType.String,
-            annotations
+          nodeId,
+          property,
+          property.literalRange().value(),
+          DataType.String,
+          annotations
         )(eh)
         None
       case YType.Float
@@ -110,11 +110,11 @@ object LiteralValueParser {
         Some(value.as[Double])
       case YType.Float =>
         inconsistentPropertyRangeValueViolation(
-            nodeId,
-            property,
-            property.literalRange().value(),
-            DataType.Float,
-            annotations
+          nodeId,
+          property,
+          property.literalRange().value(),
+          DataType.Float,
+          annotations
         )(eh)
         None
 
@@ -130,11 +130,11 @@ object LiteralValueParser {
 
       case YType.Timestamp =>
         inconsistentPropertyRangeValueViolation(
-            nodeId,
-            property,
-            property.literalRange().value(),
-            DataType.DateTime,
-            annotations
+          nodeId,
+          property,
+          property.literalRange().value(),
+          DataType.DateTime,
+          annotations
         )(eh)
         Some(value.as[String])
 
@@ -154,12 +154,12 @@ object LiteralValueParser {
       annotations: Annotations
   )(eh: SyamlAMFErrorHandler): Unit = {
     eh.violation(
-        InconsistentPropertyRangeValueSpecification,
-        node,
-        Some(property.nodePropertyMapping().value()),
-        s"Cannot find expected range for property ${property.nodePropertyMapping().value()} (${property.name().value()}). Found '$found', expected '$expected'",
-        Some(LexicalInformation(annotations.lexical())),
-        annotations.location()
+      InconsistentPropertyRangeValueSpecification,
+      node,
+      Some(property.nodePropertyMapping().value()),
+      s"Cannot find expected range for property ${property.nodePropertyMapping().value()} (${property.name().value()}). Found '$found', expected '$expected'",
+      Some(LexicalInformation(annotations.lexical())),
+      annotations.location()
     )
 
   }

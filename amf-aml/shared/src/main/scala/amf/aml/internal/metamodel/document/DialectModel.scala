@@ -19,19 +19,19 @@ object DialectModel extends DocumentModel with ExternalContextModel {
     Field(Str, Namespace.Core + "version", ModelDoc(ModelVocabularies.Core, "version", "Version of the dialect"))
 
   val Documents: Field = Field(
-      DocumentsModelModel,
-      Namespace.Meta + "documents",
-      ModelDoc(ModelVocabularies.Meta, "documents", "Document mapping for the the dialect")
+    DocumentsModelModel,
+    Namespace.Meta + "documents",
+    ModelDoc(ModelVocabularies.Meta, "documents", "Document mapping for the the dialect")
   )
 
   val Extensions: Field = Field(
-      Array(SemanticExtensionModel),
-      Namespace.Meta + "extensions",
-      ModelDoc(
-          ModelVocabularies.Meta,
-          "extensions",
-          "Extensions mappings derived from annotation mappings declarations in a dialect"
-      )
+    Array(SemanticExtensionModel),
+    Namespace.Meta + "extensions",
+    ModelDoc(
+      ModelVocabularies.Meta,
+      "extensions",
+      "Extensions mappings derived from annotation mappings declarations in a dialect"
+    )
   )
 
   override def modelInstance: AmfObject = Dialect()
@@ -42,8 +42,8 @@ object DialectModel extends DocumentModel with ExternalContextModel {
     Name :: Version :: Extensions :: Externals :: Documents :: BaseUnitModel.Location :: DocumentModel.fields
 
   override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Meta,
-      "Dialect",
-      "Definition of an AML dialect, mapping AST nodes from dialect documents into an output semantic graph"
+    ModelVocabularies.Meta,
+    "Dialect",
+    "Definition of an AML dialect, mapping AST nodes from dialect documents into an output semantic graph"
   )
 }

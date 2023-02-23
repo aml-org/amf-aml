@@ -24,9 +24,9 @@ class AMLElementClient private[amf] (protected override val configuration: AMLCo
       .configurationState()
       .getDialects()
       .find(
-          _.declares
-            .collectFirst({ case nm: NodeMapping if element.meta.`type`.exists(_.iri() == nm.id) => nm })
-            .isDefined
+        _.declares
+          .collectFirst({ case nm: NodeMapping if element.meta.`type`.exists(_.iri() == nm.id) => nm })
+          .isDefined
       )
       .map { d =>
         AmlDomainElementEmitter.emit(element, d, configuration.errorHandlerProvider.errorHandler(), references)

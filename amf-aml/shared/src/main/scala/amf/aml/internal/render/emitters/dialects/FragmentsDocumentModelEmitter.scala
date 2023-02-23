@@ -22,15 +22,15 @@ case class FragmentsDocumentModelEmitter(
   override def emit(b: EntryBuilder): Unit = {
 
     b.entry(
-        "fragments",
-        _.obj { b =>
-          b.entry(
-              "encodes",
-              _.obj { b =>
-                ordering.sorted(emitters).foreach(_.emit(b))
-              }
-          )
-        }
+      "fragments",
+      _.obj { b =>
+        b.entry(
+          "encodes",
+          _.obj { b =>
+            ordering.sorted(emitters).foreach(_.emit(b))
+          }
+        )
+      }
     )
   }
 

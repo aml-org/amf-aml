@@ -113,27 +113,27 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
               } else if (obj.termType.asInstanceOf[String] == "Literal") {
 
                 resourceProperties = resourceProperties.updated(
-                    property,
-                    oldProps ++ Seq(
-                        Literal(
-                            value = s"${obj.value}",
-                            literalType = if (Option(obj.datatype).isDefined) {
-                              Some(obj.datatype.uri.asInstanceOf[String])
-                            } else {
-                              None
-                            }
-                        )
+                  property,
+                  oldProps ++ Seq(
+                    Literal(
+                      value = s"${obj.value}",
+                      literalType = if (Option(obj.datatype).isDefined) {
+                        Some(obj.datatype.uri.asInstanceOf[String])
+                      } else {
+                        None
+                      }
                     )
+                  )
                 )
 
               } else {
                 resourceProperties = resourceProperties.updated(
-                    property,
-                    oldProps ++ Seq(
-                        Uri(
-                            value = s"${Option(obj.uri).getOrElse(obj.toCanonical())}"
-                        )
+                  property,
+                  oldProps ++ Seq(
+                    Uri(
+                      value = s"${Option(obj.uri).getOrElse(obj.toCanonical())}"
                     )
+                  )
                 )
               }
             }

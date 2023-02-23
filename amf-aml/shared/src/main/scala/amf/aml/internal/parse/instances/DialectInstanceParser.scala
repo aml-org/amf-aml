@@ -45,10 +45,10 @@ object DialectInstanceParser extends NodeMappableHelper {
           case Some(o) =>
             ctx.eh
               .violation(
-                  DialectError,
-                  "",
-                  s"Invalid node type for declarations path ${o.value.tagType.toString()}",
-                  o.location
+                DialectError,
+                "",
+                s"Invalid node type for declarations path ${o.value.tagType.toString()}",
+                o.location
               )
             None
           case _ => None
@@ -159,18 +159,18 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
             val declarationName = declarationEntry.key.as[YScalar].text
             val id              = pathSegment(declarationsId, List(declarationName))
             val node = InstanceElementParser(root).parse(
-                declarationsId,
-                id,
-                declarationEntry.value,
-                nodeMapping,
-                givenAnnotations = Some(Annotations(declarationEntry))
+              declarationsId,
+              id,
+              declarationEntry.value,
+              nodeMapping,
+              givenAnnotations = Some(Annotations(declarationEntry))
             )
 
             // lookup by ref name
             node.set(
-                DialectDomainElementModel.DeclarationName,
-                AmfScalar(declarationName, Annotations(declarationEntry.key)),
-                Annotations(declarationEntry.key)
+              DialectDomainElementModel.DeclarationName,
+              AmfScalar(declarationName, Annotations(declarationEntry.key)),
+              Annotations(declarationEntry.key)
             )
             ctx.declarations.registerDialectDomainElement(declarationEntry.key, node)
             // lookup by JSON pointer, absolute URI
@@ -193,13 +193,13 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
             if (documents.keyProperty().value()) Some(ctx.dialect.name().value())
             else None
           InstanceElementParser(root).parse(
-              path,
-              encodedElementDefaultId(dialectInstance),
-              map,
-              nodeMapping,
-              rootNode = true,
-              givenAnnotations = None,
-              additionalKey = additionalKey
+            path,
+            encodedElementDefaultId(dialectInstance),
+            map,
+            nodeMapping,
+            rootNode = true,
+            givenAnnotations = None,
+            additionalKey = additionalKey
           )
         case _ =>
           emptyElementWithViolation(s"Could not find node mapping for: ${mapping.encoded().value()}")

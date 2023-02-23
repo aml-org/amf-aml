@@ -37,16 +37,16 @@ class ReportBuilder(messageStyle: MessageStyle) {
       location: Option[String] = None
   ): Unit = {
     registerResult(
-        CustomValidationResult(
-            message = customMessage.orElse(getMessageOf(validationSpec, messageStyle)),
-            path = path,
-            sourceConstraintComponent = validationSpec.id,
-            focusNode = id,
-            severity = ShaclSeverityUris.amfSeverity(validationSpec.severity),
-            sourceShape = validationSpec.id,
-            position = position,
-            location = location
-        )
+      CustomValidationResult(
+        message = customMessage.orElse(getMessageOf(validationSpec, messageStyle)),
+        path = path,
+        sourceConstraintComponent = validationSpec.id,
+        focusNode = id,
+        severity = ShaclSeverityUris.amfSeverity(validationSpec.severity),
+        sourceShape = validationSpec.id,
+        position = position,
+        location = location
+      )
     )
   }
 

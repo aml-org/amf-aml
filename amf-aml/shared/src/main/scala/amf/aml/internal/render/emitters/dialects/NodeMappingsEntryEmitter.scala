@@ -20,13 +20,13 @@ case class NodeMappingsEntryEmitter(
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-        "nodeMappings",
-        _.obj { b =>
-          val nodeMappingEmitters = nodeMappingDeclarations.map { n =>
-            NodeMappingEmitter(dialect, n, ordering, aliases)
-          }
-          traverse(ordering.sorted(nodeMappingEmitters), b)
+      "nodeMappings",
+      _.obj { b =>
+        val nodeMappingEmitters = nodeMappingDeclarations.map { n =>
+          NodeMappingEmitter(dialect, n, ordering, aliases)
         }
+        traverse(ordering.sorted(nodeMappingEmitters), b)
+      }
     )
   }
 

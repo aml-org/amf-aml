@@ -6,101 +6,101 @@ trait DialectSyntax { this: DialectContext =>
   type Required = Boolean
 
   val dialect: Map[String, Required] = Map(
-      "$id"                -> false,
-      "$type"              -> false,
-      "dialect"            -> true,
-      "version"            -> true,
-      "usage"              -> false,
-      "external"           -> false,
-      "uses"               -> false,
-      "nodeMappings"       -> false,
-      "documents"          -> false,
-      "annotationMappings" -> false,
-      "extensions"         -> false
+    "$id"                -> false,
+    "$type"              -> false,
+    "dialect"            -> true,
+    "version"            -> true,
+    "usage"              -> false,
+    "external"           -> false,
+    "uses"               -> false,
+    "nodeMappings"       -> false,
+    "documents"          -> false,
+    "annotationMappings" -> false,
+    "extensions"         -> false
   )
 
   val library: Map[String, Required] = Map(
-      "$id"          -> false,
-      "$type"        -> false,
-      "usage"        -> false,
-      "external"     -> false,
-      "uses"         -> false,
-      "nodeMappings" -> false
+    "$id"          -> false,
+    "$type"        -> false,
+    "usage"        -> false,
+    "external"     -> false,
+    "uses"         -> false,
+    "nodeMappings" -> false
   )
 
   val anyMapping: Map[String, Required] = Map(
-      "allOf"      -> false,
-      "oneOf"      -> false,
-      "components" -> false
+    "allOf"      -> false,
+    "oneOf"      -> false,
+    "components" -> false
   )
 
   val nodeMapping: Map[String, Required] = anyMapping ++ Map(
-      "classTerm"            -> false,
-      "mapping"              -> false,
-      "idProperty"           -> false,
-      "idTemplate"           -> false,
-      "patch"                -> false,
-      "extends"              -> false,
-      "union"                -> false,
-      "conditional"          -> false,
-      "additionalProperties" -> false
+    "classTerm"            -> false,
+    "mapping"              -> false,
+    "idProperty"           -> false,
+    "idTemplate"           -> false,
+    "patch"                -> false,
+    "extends"              -> false,
+    "union"                -> false,
+    "conditional"          -> false,
+    "additionalProperties" -> false
   )
 
   val conditionalMappingInner: Map[String, Required] = Map(
-      "if"   -> true,
-      "then" -> true,
-      "else" -> true
+    "if"   -> true,
+    "then" -> true,
+    "else" -> true
   )
 
   val propertyLikeMapping: Map[String, Required] = Map(
-      "range"                 -> true,
-      "propertyTerm"          -> false,
-      "isLink"                -> false,
-      "mandatory"             -> false,
-      "pattern"               -> false,
-      "sorted"                -> false,
-      "minimum"               -> false,
-      "maximum"               -> false,
-      "allowMultiple"         -> false,
-      "enum"                  -> false,
-      "typeDiscriminatorName" -> false,
-      "typeDiscriminator"     -> false,
-      "unique"                -> false,
-      "minItems"              -> false
+    "range"                 -> true,
+    "propertyTerm"          -> false,
+    "isLink"                -> false,
+    "mandatory"             -> false,
+    "pattern"               -> false,
+    "sorted"                -> false,
+    "minimum"               -> false,
+    "maximum"               -> false,
+    "allowMultiple"         -> false,
+    "enum"                  -> false,
+    "typeDiscriminatorName" -> false,
+    "typeDiscriminator"     -> false,
+    "unique"                -> false,
+    "minItems"              -> false
   )
 
   val annotationMapping: Map[String, Required] = propertyLikeMapping ++ Map(
-      "domain" -> false
+    "domain" -> false
   )
 
   val fragment: Map[String, Required] = Map(
-      "$id"      -> false,
-      "usage"    -> false,
-      "external" -> false,
-      "uses"     -> false
+    "$id"      -> false,
+    "usage"    -> false,
+    "external" -> false,
+    "uses"     -> false
   ) ++ nodeMapping
 
   val propertyMapping: Map[String, Required] = propertyLikeMapping ++ Map(
-      "mapKey"       -> false,
-      "mapValue"     -> false,
-      "mapTermKey"   -> false,
-      "mapTermValue" -> false,
-      "patch"        -> false,
-      "default"      -> false
+    "mapKey"       -> false,
+    "mapValue"     -> false,
+    "mapTermKey"   -> false,
+    "mapTermValue" -> false,
+    "patch"        -> false,
+    "default"      -> false
   )
 
   val documentsMapping: Map[String, Required] = Map(
-      "root"      -> false,
-      "fragments" -> false,
-      "library"   -> false,
-      "options"   -> false
+    "root"      -> false,
+    "fragments" -> false,
+    "library"   -> false,
+    "options"   -> false
   )
 
   val documentsMappingOptions: Map[String, Required] = Map(
-      "selfEncoded"      -> false,
-      "declarationsPath" -> false,
-      "keyProperty"      -> false,
-      "referenceStyle"   -> false
+    "selfEncoded"      -> false,
+    "declarationsPath" -> false,
+    "keyProperty"      -> false,
+    "referenceStyle"   -> false
   )
 
   def closedNode(nodeType: String, id: String, map: YMap)(implicit errorHandler: IllegalTypeHandler): Unit = {
