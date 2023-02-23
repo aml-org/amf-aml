@@ -1,4 +1,3 @@
-import org.scalajs.core.tools.linker.ModuleKind
 import sbt.Keys.{libraryDependencies, resolvers}
 import sbtcrossproject.CrossPlugin.autoImport.crossProject
 import sbtsonar.SonarPlugin.autoImport.sonarProperties
@@ -20,19 +19,19 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "5.3.0-SNAPSHOT"
+val amfCoreVersion = "5.2.4-SCALAJS1.6-SNAPSHOT"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
 lazy val amfCoreLibJVM = "com.github.amlorg" %% "amf-core"        % amfCoreVersion
-lazy val amfCoreLibJS  = "com.github.amlorg" %% "amf-core_sjs0.6" % amfCoreVersion
+lazy val amfCoreLibJS  = "com.github.amlorg" %% "amf-core_sjs1" % amfCoreVersion
 
 val commonSettings = Common.settings ++ Common.publish ++ Seq(
     organization := "com.github.amlorg",
     resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral),
     credentials ++= Common.credentials(),
     libraryDependencies ++= Seq(
-        "org.mule.common" %%% "scala-common-test" % "0.1.12" % Test,
+        "org.mule.common" %%% "scala-common-test" % "0.1.12-SCALAJS1.6-SNAPSHOT" % Test,
         "org.slf4j"         % "slf4j-nop"         % "1.7.32" % Test
     ),
     Test / logBuffered := false
@@ -58,17 +57,19 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
   .settings(commonSettings)
   .dependsOn(validation)
   .jvmSettings(
-      libraryDependencies += "org.scala-js" %% "scalajs-stubs" % scalaJSVersion % "provided",
+      libraryDependencies += "org.scala-js" %% "scalajs-stubs" % "1.1.0" % "provided",
       Compile / packageDoc / artifactPath   := baseDirectory.value / "target" / "artifact" / "amf-aml-javadoc.jar"
   )
   .jsSettings(
-      scalaJSModuleKind                  := ModuleKind.CommonJSModule,
-      Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js",
-      scalacOptions += "-P:scalajs:suppressExportDeprecations"
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+    Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js",
+    jsDependencies += ProvidedJS / "shacl.js"
   )
 
 lazy val amlJVM = aml.jvm.in(file("./amf-aml/jvm"))
-lazy val amlJS  = aml.js.in(file("./amf-aml/js")).disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+lazy val amlJS  = aml.js.in(file("./amf-aml/js"))
+  .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+  .enablePlugins(JSDependenciesPlugin)
 
 /** ********************************************** AMF-Validation *********************************************
   */
@@ -84,7 +85,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
       Compile / packageDoc / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-validation-javadoc.jar"
   )
   .jsSettings(
-      scalaJSModuleKind                  := ModuleKind.CommonJSModule,
+    scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
       Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
   )
 
@@ -109,7 +110,7 @@ lazy val rdf = crossProject(JSPlatform, JVMPlatform)
   .in(file("./amf-rdf"))
   .settings(commonSettings)
   .jvmSettings(
-      libraryDependencies += "org.scala-js"              %% "scalajs-stubs" % scalaJSVersion % "provided",
+      libraryDependencies += "org.scala-js"              %% "scalajs-stubs" % "1.1.0" % "provided",
       libraryDependencies += "org.json4s"                %% "json4s-native" % "4.0.5",
       libraryDependencies += "org.apache.jena"            % "jena-arq"      % "3.17.0",
       libraryDependencies += "org.apache.thrift"          % "libthrift"     % "0.14.1", // CVE-2020-13949
@@ -122,9 +123,8 @@ lazy val rdf = crossProject(JSPlatform, JVMPlatform)
   )
   .jsSettings(
       jsDependencies += ProvidedJS / "shacl.js",
-      scalaJSModuleKind                  := ModuleKind.CommonJSModule,
-      Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-rdf-module.js",
-      scalacOptions += "-P:scalajs:suppressExportDeprecations"
+      scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
+      Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-rdf-module.js"
   )
 
 lazy val rdfJVM =
@@ -135,6 +135,7 @@ lazy val rdfJS =
     .in(file("./amf-rdf/js"))
     .sourceDependency(amfCoreJSRef, amfCoreLibJS)
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
+    .enablePlugins(JSDependenciesPlugin)
 
 ThisBuild / libraryDependencies ++= Seq(
     compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.1" cross CrossVersion.constant("2.12.13")),
