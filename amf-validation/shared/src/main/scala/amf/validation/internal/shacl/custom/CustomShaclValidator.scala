@@ -5,7 +5,7 @@ import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.vocabulary.Namespace
-import amf.core.internal.annotations.{LexicalInformation, SourceAST, SourceYPart}
+import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.metamodel.Field
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.utils._
@@ -16,18 +16,28 @@ import amf.validation.internal.shacl.custom.CustomShaclValidator.{
   ValidationInfo
 }
 import org.mulesoft.common.time.SimpleDateTime
-import org.yaml.model.YScalar
 
 import java.net.URISyntaxException
 
 object CustomShaclValidator {
 
   case class ValidationInfo(field: Field, message: Option[String] = None, annotations: Option[Annotations] = None)
+
+  object ValidationInfo {
+    def apply(field: Field, message: String, annotations: Annotations) =
+      new ValidationInfo(field, Some(message), Some(annotations))
+
+    def validationInfo(field: Field, message: String, annotations: Annotations): Option[ValidationInfo] = Some(
+      ValidationInfo(field, message, annotations)
+    )
+  }
+
   trait CustomShaclFunction {
     val name: String
     // When no validation info is provided, the validation is thrown in domain element level
     def run(element: AmfObject, validate: Option[ValidationInfo] => Unit): Unit
   }
+
   type CustomShaclFunctions = Map[String, CustomShaclFunction]
 }
 
@@ -803,7 +813,7 @@ class CustomShaclValidator(
                 reportFailure(validationSpecification, propertyConstraint, parentElement.id, reportBuilder)
             }
 
-          case Some(s) if (s == xsdInteger | s == xsdLong) =>
+          case Some(s) if s == xsdInteger | s == xsdLong =>
             maybeScalarValue match {
               case Some(_: Integer) => // ignore
               case Some(_: Long)    => // ignore
