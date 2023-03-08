@@ -16,8 +16,8 @@ object DialectLibraryModel extends ModuleModel with ExternalContextModel {
   override val fields: List[Field] = Externals :: Location :: ModuleModel.fields
 
   override val doc: ModelDoc = ModelDoc(
-      ModelVocabularies.Meta,
-      "DialectLibrary",
-      "Library of AML mappings that can be reused in different AML dialects"
+    ModelVocabularies.Meta,
+    "DialectLibrary",
+    "Library of AML mappings that can be reused in different AML dialects"
   )
 }

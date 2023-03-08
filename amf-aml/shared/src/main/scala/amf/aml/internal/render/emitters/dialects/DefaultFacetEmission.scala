@@ -14,9 +14,9 @@ trait DefaultFacetEmission extends PosExtractor {
       .default()
       .map { dataNode =>
         EntryPartEmitter(
-            "default",
-            DataNodeEmitter(dataNode, SpecOrdering.Lexical)(IgnoringErrorHandler),
-            position = fieldPos(mapping, ShapeModel.Default)
+          "default",
+          DataNodeEmitter(dataNode, SpecOrdering.Lexical)(IgnoringErrorHandler),
+          position = fieldPos(mapping, ShapeModel.Default)
         )
       }
       .toList

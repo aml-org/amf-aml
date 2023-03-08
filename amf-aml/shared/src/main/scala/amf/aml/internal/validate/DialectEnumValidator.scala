@@ -24,7 +24,7 @@ case class DialectEnumValidator() extends ShaclReportAdaptation {
     val reports = candidates.map { candidate =>
       val eh =
         new SyamlAMFErrorHandler(
-            DefaultErrorHandler()
+          DefaultErrorHandler()
         ) // create error handler for each candidate to avoid duplicating errors in report
       validateCandidate(dialect, eh, candidate)
     }
@@ -37,18 +37,18 @@ case class DialectEnumValidator() extends ShaclReportAdaptation {
       new AMFDialectValidations(dialect)(DefaultNodeMappableFinder(dialect))
         .propertyValidations(candidate.node)
         .filter(
-            _.propertyConstraints.exists(_.ramlPropertyId == candidate.mapping.nodePropertyMapping().value())
+          _.propertyConstraints.exists(_.ramlPropertyId == candidate.mapping.nodePropertyMapping().value())
         ) // should optimize this
     val nodes = candidate.enums.flatMap(toNode)
     parseErrors(eh, candidate, nodes)
     val reports = nodes.map { case (_, scalar) =>
       val report = validate(scalar, candidate, validations)
       adaptToAmfReport(
-          dialect,
-          AmlProfile,
-          report,
-          scalar.annotations.location(),
-          LexicalInformation(scalar.annotations.lexical())
+        dialect,
+        AmlProfile,
+        report,
+        scalar.annotations.location(),
+        LexicalInformation(scalar.annotations.lexical())
       )
     }
     val mergedReport: AMFValidationReport = mergeReports(dialect, reports)

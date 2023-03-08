@@ -16,10 +16,10 @@ case class ReferencesEmitter(baseUnit: BaseUnit, ordering: SpecOrdering, aliases
     if (modules.nonEmpty) {
 
       b.entry(
-          "uses",
-          _.obj { b =>
-            traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, aliases))), b)
-          }
+        "uses",
+        _.obj { b =>
+          traverse(ordering.sorted(modules.map(r => ReferenceEmitter(r, ordering, aliases))), b)
+        }
       )
     }
   }

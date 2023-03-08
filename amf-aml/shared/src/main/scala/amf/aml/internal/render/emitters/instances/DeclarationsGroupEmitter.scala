@@ -52,48 +52,48 @@ case class DeclarationsGroupEmitter(
     if (declarationsPath.isEmpty) {
       val declarationKey = publicNodeMapping.name().value()
       b.entry(
-          declarationKey,
-          _.obj { b =>
-            sortedDeclarations().foreach { decl =>
-              val identifier = computeIdentifier(decl)
-              b.entry(
-                  YNode(identifier),
-                  b => {
-                    val discriminatorProperty =
-                      discriminator.flatMap(_.compute(decl))
-                    DialectNodeEmitter(
-                        decl,
-                        nodeMappable,
-                        instance.references,
-                        dialect,
-                        ordering,
-                        discriminator = discriminatorProperty,
-                        renderOptions = renderOptions,
-                        registry = registry
-                    ).emit(b)
-                  }
-              )
-            }
+        declarationKey,
+        _.obj { b =>
+          sortedDeclarations().foreach { decl =>
+            val identifier = computeIdentifier(decl)
+            b.entry(
+              YNode(identifier),
+              b => {
+                val discriminatorProperty =
+                  discriminator.flatMap(_.compute(decl))
+                DialectNodeEmitter(
+                  decl,
+                  nodeMappable,
+                  instance.references,
+                  dialect,
+                  ordering,
+                  discriminator = discriminatorProperty,
+                  renderOptions = renderOptions,
+                  registry = registry
+                ).emit(b)
+              }
+            )
           }
+        }
       )
     } else {
       b.entry(
-          declarationsPath.head,
-          _.obj { b =>
-            DeclarationsGroupEmitter(
-                declared,
-                publicNodeMapping,
-                nodeMappable,
-                instance,
-                dialect,
-                ordering,
-                declarationsPath.tail,
-                aliases,
-                keyPropertyId,
-                renderOptions,
-                registry
-            ).emit(b)
-          }
+        declarationsPath.head,
+        _.obj { b =>
+          DeclarationsGroupEmitter(
+            declared,
+            publicNodeMapping,
+            nodeMappable,
+            instance,
+            dialect,
+            ordering,
+            declarationsPath.tail,
+            aliases,
+            keyPropertyId,
+            renderOptions,
+            registry
+          ).emit(b)
+        }
       )
     }
   }
@@ -109,12 +109,12 @@ case class DeclarationsGroupEmitter(
 
   def sortedDeclarations(): Seq[DialectDomainElement] = {
     declared.sortBy(
-        _.annotations
-          .find(classOf[LexicalInformation])
-          .map { lexInfo =>
-            lexInfo.range.start
-          }
-          .getOrElse(ZERO)
+      _.annotations
+        .find(classOf[LexicalInformation])
+        .map { lexInfo =>
+          lexInfo.range.start
+        }
+        .getOrElse(ZERO)
     )
   }
 }

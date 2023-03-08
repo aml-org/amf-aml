@@ -38,7 +38,7 @@ object NodeMappingLikeParser {
           .link(text, Annotations(entry.value))
           .asInstanceOf[NodeMapping]
         adopt(
-            linkedNode
+          linkedNode
         ) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
         Some(linkedNode)
       case (text: String, _) =>

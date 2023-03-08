@@ -26,12 +26,12 @@ case class AnnotationMappingsEntryEmitter(
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-        "annotationMappings",
-        _.obj { b =>
-          val emitters =
-            annotationMappings.map(mapping => AnnotationMappingEmitter(dialect, mapping, aliases, ordering))
-          traverse(ordering.sorted(emitters), b)
-        }
+      "annotationMappings",
+      _.obj { b =>
+        val emitters =
+          annotationMappings.map(mapping => AnnotationMappingEmitter(dialect, mapping, aliases, ordering))
+        traverse(ordering.sorted(emitters), b)
+      }
     )
   }
 
@@ -48,18 +48,18 @@ case class AnnotationMappingEmitter(
     with AliasEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-        element.name.value(),
-        _.obj { b =>
-          val emitters = ArrayBuffer.empty[EntryEmitter]
-          emitters ++= element.fields
-            .entry(Domain)
-            .map { entry =>
-              emitAliasSet("domain", entry, ordering, YType.Seq)
-            }
-            .toSeq
-          emitters.appendAll(PropertyLikeMappingEmitter(dialect, element, ordering, aliases).emitters)
-          traverse(ordering.sorted(emitters), b)
-        }
+      element.name.value(),
+      _.obj { b =>
+        val emitters = ArrayBuffer.empty[EntryEmitter]
+        emitters ++= element.fields
+          .entry(Domain)
+          .map { entry =>
+            emitAliasSet("domain", entry, ordering, YType.Seq)
+          }
+          .toSeq
+        emitters.appendAll(PropertyLikeMappingEmitter(dialect, element, ordering, aliases).emitters)
+        traverse(ordering.sorted(emitters), b)
+      }
     )
   }
 

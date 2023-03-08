@@ -17,13 +17,13 @@ object AnnotationMappingModel extends DomainElementModel with PropertyLikeMappin
   override val Name: Field = NodeMappingModel.Name
 
   val Domain: Field = Field(
-      Type.Array(Iri),
-      Namespace.AmfAml + "domain",
-      ModelDoc(
-          ModelVocabularies.AmlDoc,
-          "domain",
-          "Domain node type IRI for which a specific annotation mapping can be applied. Similar rdfs:domain but at an instance level, rather than schema level."
-      )
+    Type.Array(Iri),
+    Namespace.AmfAml + "domain",
+    ModelDoc(
+      ModelVocabularies.AmlDoc,
+      "domain",
+      "Domain node type IRI for which a specific annotation mapping can be applied. Similar rdfs:domain but at an instance level, rather than schema level."
+    )
   )
 
   override def fields: List[Field] =

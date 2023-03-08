@@ -86,8 +86,8 @@ class ObjectParser(
     model match {
       case shapeModel: ShapeModel =>
         shapeModel.fields ++ Seq(
-            ShapeModel.CustomShapePropertyDefinitions,
-            ShapeModel.CustomShapeProperties
+          ShapeModel.CustomShapePropertyDefinitions,
+          ShapeModel.CustomShapeProperties
         )
       case _ => model.fields
     }
@@ -153,9 +153,9 @@ class ObjectParser(
             }
           case _ =>
             ctx.eh.violation(
-                UnableToParseRdfDocument,
-                instance.id,
-                s"Error parsing RDF graph node, unknown linked node for property $key in node ${instance.id}"
+              UnableToParseRdfDocument,
+              instance.id,
+              s"Error parsing RDF graph node, unknown linked node for property $key in node ${instance.id}"
             )
         }
 
@@ -163,9 +163,9 @@ class ObjectParser(
         parseList(instance, array, f, properties, annots(sources, key))
       case _: SortedArray =>
         ctx.eh.violation(
-            UnableToParseRdfDocument,
-            instance.id,
-            s"Error, more than one sorted array values found in node for property $key in node ${instance.id}"
+          UnableToParseRdfDocument,
+          instance.id,
+          s"Error, more than one sorted array values found in node for property $key in node ${instance.id}"
         )
       case a: Array =>
         val items = properties

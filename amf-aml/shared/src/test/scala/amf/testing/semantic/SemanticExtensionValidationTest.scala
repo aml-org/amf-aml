@@ -22,10 +22,10 @@ class SemanticExtensionValidationTest extends DialectInstanceValidation {
   test("Semantic extensions without mandatory properties should fail") {
     getConfig(Seq("object-extensions.yaml", "scalar-extensions.yaml")).flatMap { config =>
       validate(
-          "dialect.yaml",
-          "instances/invalid-obj-instance.yaml",
-          Some("reports/invalid-obj-report.report"),
-          config = config
+        "dialect.yaml",
+        "instances/invalid-obj-instance.yaml",
+        Some("reports/invalid-obj-report.report"),
+        config = config
       )
     }
   }
@@ -33,11 +33,11 @@ class SemanticExtensionValidationTest extends DialectInstanceValidation {
   test("Semantic extensions without valid minimum or maximum should fail") {
     getConfig(Seq("object-extensions.yaml", "scalar-extensions.yaml")).flatMap { config =>
       validate(
-          "dialect.yaml",
-          "instances/invalid-ranking-instance.yaml",
-          Some("reports/invalid-ranking-report.report"),
-          config = config,
-          comparator = MultiPlatformReportComparator
+        "dialect.yaml",
+        "instances/invalid-ranking-instance.yaml",
+        Some("reports/invalid-ranking-report.report"),
+        config = config,
+        comparator = MultiPlatformReportComparator
       )
     }
   }
@@ -45,10 +45,10 @@ class SemanticExtensionValidationTest extends DialectInstanceValidation {
   test("Semantic extensions with boolean ranking should fail") {
     getConfig(Seq("object-extensions.yaml", "scalar-extensions.yaml")).flatMap { config =>
       validate(
-          "dialect.yaml",
-          "instances/invalid-ranking-type-instance.yaml",
-          Some("reports/invalid-ranking-type-report.report"),
-          config = config
+        "dialect.yaml",
+        "instances/invalid-ranking-type-instance.yaml",
+        Some("reports/invalid-ranking-type-report.report"),
+        config = config
       )
     }
   }
@@ -62,10 +62,10 @@ class SemanticExtensionValidationTest extends DialectInstanceValidation {
   test("Unresolved links should be validated") {
     getConfig(Seq("object-extensions.yaml")).flatMap { config =>
       validate(
-          "dialect.yaml",
-          "instances/invalid-obj-link.yaml",
-          Some("reports/invalid-obj-link.report"),
-          config = config
+        "dialect.yaml",
+        "instances/invalid-obj-link.yaml",
+        Some("reports/invalid-obj-link.report"),
+        config = config
       )
     }
   }

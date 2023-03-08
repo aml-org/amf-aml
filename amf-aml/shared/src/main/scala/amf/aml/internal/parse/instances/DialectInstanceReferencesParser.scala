@@ -42,34 +42,34 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
   private def parseLibraries(dialectInstance: BaseUnit, result: ReferenceCollector[AmfObject], id: String): Unit = {
     val parsedLibraries: mutable.Set[String] = mutable.Set()
     map.key(
-        "uses",
-        entry => {
-          val annotation: Annotation =
-            AliasesLocation(
-                Annotations(entry.key).find(classOf[LexicalInformation]).map(_.range.start.line).getOrElse(0)
-            )
-          dialectInstance.annotations += annotation
-          entry.value
-            .as[YMap]
-            .entries
-            .foreach(e => {
-              val alias: String = e.key.as[YScalar].text
-              val url: String   = library(e)
-              target(url).foreach {
-                case module: DeclaresModel =>
-                  parsedLibraries += url
-                  collectAlias(dialectInstance, alias -> ReferencedInfo(module.id, module.id, url))
-                  result += (alias, module)
-                case other =>
-                  ctx.eh.violation(
-                      DialectError,
-                      id,
-                      s"Expected vocabulary module but found: '$other'",
-                      e.location
-                  ) // todo Uses should only reference modules...
-              }
-            })
-        }
+      "uses",
+      entry => {
+        val annotation: Annotation =
+          AliasesLocation(
+            Annotations(entry.key).find(classOf[LexicalInformation]).map(_.range.start.line).getOrElse(0)
+          )
+        dialectInstance.annotations += annotation
+        entry.value
+          .as[YMap]
+          .entries
+          .foreach(e => {
+            val alias: String = e.key.as[YScalar].text
+            val url: String   = library(e)
+            target(url).foreach {
+              case module: DeclaresModel =>
+                parsedLibraries += url
+                collectAlias(dialectInstance, alias -> ReferencedInfo(module.id, module.id, url))
+                result += (alias, module)
+              case other =>
+                ctx.eh.violation(
+                  DialectError,
+                  id,
+                  s"Expected vocabulary module but found: '$other'",
+                  e.location
+                ) // todo Uses should only reference modules...
+            }
+          })
+      }
     )
     // Parsing $refs to libraries
     references.foreach {
@@ -100,13 +100,13 @@ case class DialectInstanceReferencesParser(dialectInstance: BaseUnit, map: YMap,
   }
   private def parseExternals(result: ReferenceCollector[AmfObject], id: String): Unit = {
     map.key(
-        "external",
-        entry => parseExternalEntry(result, entry)
+      "external",
+      entry => parseExternalEntry(result, entry)
     )
 
     map.key(
-        "$external",
-        entry => parseExternalEntry(result, entry)
+      "$external",
+      entry => parseExternalEntry(result, entry)
     )
   }
 

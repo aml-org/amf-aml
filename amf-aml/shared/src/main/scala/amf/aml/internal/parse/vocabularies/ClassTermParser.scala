@@ -41,17 +41,17 @@ case class ClassTermParser()(implicit val ctx: VocabularyContext)
       ctx: VocabularyContext
   ) = {
     classTermMap.key(
-        "extends",
-        entry => {
-          val terms = singleOrMultipleItemsAsString(entry)
-          val superClasses = parseIriAlias(
-              terms,
-              term => ctx.resolveClassTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true),
-              term => ctx.missingClassTermWarning(term, classTerm.id, entry.value)
-          )
+      "extends",
+      entry => {
+        val terms = singleOrMultipleItemsAsString(entry)
+        val superClasses = parseIriAlias(
+          terms,
+          term => ctx.resolveClassTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true),
+          term => ctx.missingClassTermWarning(term, classTerm.id, entry.value)
+        )
 
-          classTerm.set(ClassTermModel.SubClassOf, AmfArray(superClasses, Annotations(entry.value)), Annotations(entry))
-        }
+        classTerm.set(ClassTermModel.SubClassOf, AmfArray(superClasses, Annotations(entry.value)), Annotations(entry))
+      }
     )
   }
 
@@ -59,38 +59,38 @@ case class ClassTermParser()(implicit val ctx: VocabularyContext)
       ctx: VocabularyContext
   ) = {
     classTermMap.key(
-        "properties",
-        entry => {
-          val terms = singleOrMultipleItemsAsString(entry)
-          val properties = parseIriAlias(
-              terms,
-              term => ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true),
-              term => ctx.missingPropertyTermWarning(term, classTerm.id, entry.value)
-          )
+      "properties",
+      entry => {
+        val terms = singleOrMultipleItemsAsString(entry)
+        val properties = parseIriAlias(
+          terms,
+          term => ctx.resolvePropertyTermAlias(vocabulary.base.value(), term, entry.value, strictLocal = true),
+          term => ctx.missingPropertyTermWarning(term, classTerm.id, entry.value)
+        )
 
-          if (properties.nonEmpty)
-            classTerm.set(ClassTermModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
-        }
+        if (properties.nonEmpty)
+          classTerm.set(ClassTermModel.Properties, AmfArray(properties, Annotations(entry.value)), Annotations(entry))
+      }
     )
   }
 
   private def parseDescription(classTermMap: YMap, classTerm: ClassTerm) = {
     classTermMap.key(
-        "description",
-        entry => {
-          val value = ValueNode(entry.value)
-          classTerm.set(ClassTermModel.Description, value.string())
-        }
+      "description",
+      entry => {
+        val value = ValueNode(entry.value)
+        classTerm.set(ClassTermModel.Description, value.string())
+      }
     )
   }
 
   private def parseDisplayName(classTermMap: YMap, classTerm: ClassTerm) = {
     classTermMap.key(
-        "displayName",
-        entry => {
-          val value = ValueNode(entry.value)
-          classTerm.set(ClassTermModel.DisplayName, value.string())
-        }
+      "displayName",
+      entry => {
+        val value = ValueNode(entry.value)
+        classTerm.set(ClassTermModel.DisplayName, value.string())
+      }
     )
   }
 }

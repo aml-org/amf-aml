@@ -20,9 +20,9 @@ trait DialectRegistrationHelper {
       baseUnit <- new AMFCompiler(context).build()
       dialect  <- Future.successful { baseUnit.asInstanceOf[Dialect] }
       resolved <- Future.successful(
-          TransformationPipelineRunner(DefaultErrorHandler(), configuration)
-            .run(dialect, DialectTransformationPipeline())
-            .asInstanceOf[Dialect]
+        TransformationPipelineRunner(DefaultErrorHandler(), configuration)
+          .run(dialect, DialectTransformationPipeline())
+          .asInstanceOf[Dialect]
       )
       dialectConfig <- Future.successful(configuration.withDialect(resolved))
       result        <- fn(resolved, dialectConfig)

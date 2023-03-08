@@ -38,12 +38,12 @@ private[amf] class AMLRegistry(
     extensions: Map[String, Dialect],
     namespaceAliases: NamespaceAliases
 ) extends AMFRegistry(
-        plugins,
-        entitiesRegistry,
-        transformationPipelines,
-        constraintsRules,
-        effectiveValidations,
-        namespaceAliases
+      plugins,
+      entitiesRegistry,
+      transformationPipelines,
+      constraintsRules,
+      effectiveValidations,
+      namespaceAliases
     ) {
 
   override def withPlugin(amfPlugin: AMFPlugin[_]): AMLRegistry = copy(plugins = plugins.withPlugin(amfPlugin))
@@ -117,13 +117,13 @@ private[amf] class AMLRegistry(
       namespaceAliases: NamespaceAliases = namespaceAliases
   ): AMLRegistry =
     new AMLRegistry(
-        plugins,
-        entitiesRegistry,
-        transformationPipelines,
-        constraintsRules,
-        effectiveValidations,
-        extensions,
-        namespaceAliases
+      plugins,
+      entitiesRegistry,
+      transformationPipelines,
+      constraintsRules,
+      effectiveValidations,
+      extensions,
+      namespaceAliases
     )
 
 }
@@ -133,24 +133,24 @@ object AMLRegistry {
   /** Creates an empty AML Registry */
   val empty =
     new AMLRegistry(
-        PluginsRegistry.empty,
-        EntitiesRegistry.empty,
-        Map.empty,
-        Map.empty,
-        Map.empty,
-        Map.empty,
-        NamespaceAliases()
+      PluginsRegistry.empty,
+      EntitiesRegistry.empty,
+      Map.empty,
+      Map.empty,
+      Map.empty,
+      Map.empty,
+      NamespaceAliases()
     )
 
   def apply(registry: AMFRegistry): AMLRegistry =
     new AMLRegistry(
-        registry.getPluginsRegistry,
-        registry.getEntitiesRegistry,
-        registry.getTransformationPipelines,
-        registry.getConstraintsRules,
-        registry.getEffectiveValidations,
-        Map.empty,
-        registry.getNamespaceAliases
+      registry.getPluginsRegistry,
+      registry.getEntitiesRegistry,
+      registry.getTransformationPipelines,
+      registry.getConstraintsRules,
+      registry.getEffectiveValidations,
+      Map.empty,
+      registry.getNamespaceAliases
     )
 
   def apply(registry: AMFRegistry, dialects: Seq[Dialect]): AMLRegistry = {

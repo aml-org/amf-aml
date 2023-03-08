@@ -14,9 +14,9 @@ trait NodeMappableHelper {
   private def anyMappingMappables(anyMapping: AnyMapping): Set[String] =
     (anyMapping.and.map(_.value()) ++ anyMapping.or.map(_.value()) ++ anyMapping.components
       .map(_.value())).toSet ++ Set(
-        anyMapping.ifMapping.value(),
-        anyMapping.thenMapping.value(),
-        anyMapping.elseMapping.value()
+      anyMapping.ifMapping.value(),
+      anyMapping.thenMapping.value(),
+      anyMapping.elseMapping.value()
     )
 
   private def nodeMappingMappables(nodeMapping: NodeMapping): Set[String] =

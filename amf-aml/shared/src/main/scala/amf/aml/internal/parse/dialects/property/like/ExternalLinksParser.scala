@@ -12,20 +12,20 @@ case class ExternalLinksParser(map: YMap, propertyLikeMapping: PropertyLikeMappi
 ) {
   def parse(): Unit = {
     map.key(
-        "isLink",
-        entry => {
-          val isLink = entry.value.as[Boolean]
-          propertyLikeMapping.withExternallyLinkable(isLink)
-          propertyLikeMapping.literalRange().option() match {
-            case Some(v) =>
-              ctx.eh.violation(
-                  DialectError,
-                  s"Aml links support in property mappings only can be declared in object properties but scalar range detected: $v",
-                  entry.value
-              )
-            case _ => // ignore
-          }
+      "isLink",
+      entry => {
+        val isLink = entry.value.as[Boolean]
+        propertyLikeMapping.withExternallyLinkable(isLink)
+        propertyLikeMapping.literalRange().option() match {
+          case Some(v) =>
+            ctx.eh.violation(
+              DialectError,
+              s"Aml links support in property mappings only can be declared in object properties but scalar range detected: $v",
+              entry.value
+            )
+          case _ => // ignore
         }
+      }
     )
   }
 }

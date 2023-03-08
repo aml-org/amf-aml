@@ -22,9 +22,9 @@ case class DialectDeclaresParser(into: DocumentMapping)(override implicit val ct
         .withId(into.id + "/declaration/" + declarationName.toString.urlComponentEncoded)
       val nodeMapping = ctx.declarations.findNodeMappingOrError(entry.value)(declarationId, SearchScope.All)
       declarationMapping.set(
-          PublicNodeMappingModel.MappedNode,
-          AmfScalar(nodeMapping.id, Annotations(declarationEntry.value)),
-          Annotations(declarationEntry.value)
+        PublicNodeMappingModel.MappedNode,
+        AmfScalar(nodeMapping.id, Annotations(declarationEntry.value)),
+        Annotations(declarationEntry.value)
       )
 
     }

@@ -35,10 +35,10 @@ case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit va
       case t =>
         ctx.eh
           .violation(
-              DialectError,
-              parent,
-              s"Invalid type $t (expected ${YType.Map}) for annotation mapping node $name",
-              entry.value.location
+            DialectError,
+            parent,
+            s"Invalid type $t (expected ${YType.Map}) for annotation mapping node $name",
+            entry.value.location
           )
         annotationMapping
     }
@@ -50,9 +50,9 @@ case class AnnotationMappingParser(entry: YMapEntry, parent: String)(implicit va
         case YType.Str =>
           val classTerm = entry.value.asScalar.flatMap(scalar => scalarForClassTerm(scalar.text, scalar))
           parsedAnnotationMapping.set(
-              AnnotationMappingModel.Domain,
-              AmfArray(classTerm.toSeq, Annotations.virtual() += SingleValueArray()),
-              Annotations(entry)
+            AnnotationMappingModel.Domain,
+            AmfArray(classTerm.toSeq, Annotations.virtual() += SingleValueArray()),
+            Annotations(entry)
           )
         case YType.Seq =>
           val nodes            = entry.value.as[YSequence]

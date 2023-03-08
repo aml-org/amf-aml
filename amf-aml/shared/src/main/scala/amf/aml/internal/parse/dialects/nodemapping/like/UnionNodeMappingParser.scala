@@ -22,43 +22,43 @@ class UnionNodeMappingParser(implicit ctx: DialectContext)
     super.parse(map, unionNodeMapping)
 
     map.key(
-        "union",
-        entry => {
-          entry.value.tagType match {
-            case YType.Seq =>
-              try {
-                val nodes = MappingParsingHelper.entrySeqNodesToString(entry)
-                unionNodeMapping.set(ObjectRange, AmfArray(nodes, Annotations(entry.value)), Annotations(entry))
-              } catch {
-                case _: Exception =>
-                  ctx.eh.violation(
-                      DialectError,
-                      unionNodeMapping.id,
-                      s"Union node mappings must be declared as lists of node mapping references",
-                      entry.value.location
-                  )
-              }
-            case _ =>
-              ctx.eh.violation(
+      "union",
+      entry => {
+        entry.value.tagType match {
+          case YType.Seq =>
+            try {
+              val nodes = MappingParsingHelper.entrySeqNodesToString(entry)
+              unionNodeMapping.set(ObjectRange, AmfArray(nodes, Annotations(entry.value)), Annotations(entry))
+            } catch {
+              case _: Exception =>
+                ctx.eh.violation(
                   DialectError,
                   unionNodeMapping.id,
                   s"Union node mappings must be declared as lists of node mapping references",
                   entry.value.location
-              )
-          }
+                )
+            }
+          case _ =>
+            ctx.eh.violation(
+              DialectError,
+              unionNodeMapping.id,
+              s"Union node mappings must be declared as lists of node mapping references",
+              entry.value.location
+            )
         }
+      }
     )
 
     map.key(
-        "typeDiscriminator",
-        entry => {
-          val types = entry.value.as[YMap]
-          val typeMapping = types.entries.foldLeft(Map[String, String]()) { case (acc, e) =>
-            val nodeMappingId = e.value.as[YScalar].text
-            acc + (e.key.as[YScalar].text -> nodeMappingId)
-          }
-          unionNodeMapping.withTypeDiscriminator(typeMapping, Annotations(entry), Annotations(types))
+      "typeDiscriminator",
+      entry => {
+        val types = entry.value.as[YMap]
+        val typeMapping = types.entries.foldLeft(Map[String, String]()) { case (acc, e) =>
+          val nodeMappingId = e.value.as[YScalar].text
+          acc + (e.key.as[YScalar].text -> nodeMappingId)
         }
+        unionNodeMapping.withTypeDiscriminator(typeMapping, Annotations(entry), Annotations(types))
+      }
     )
 
     map.parse("typeDiscriminatorName", unionNodeMapping setParsing UnionNodeMappingModel.TypeDiscriminatorName)

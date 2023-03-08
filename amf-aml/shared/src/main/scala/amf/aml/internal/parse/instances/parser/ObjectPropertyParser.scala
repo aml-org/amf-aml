@@ -28,14 +28,14 @@ object ObjectPropertyParser extends NodeMappableHelper {
         node.withObjectField(property, parsedRange, Right(propertyEntry))
       case range: Seq[String] if range.size == 1 =>
         SimpleObjectPropertyParser.parse(
-            id,
-            nestedObjectId,
-            range.head,
-            propertyEntry,
-            property,
-            node,
-            additionalProperties,
-            nodeParser
+          id,
+          nestedObjectId,
+          range.head,
+          propertyEntry,
+          property,
+          node,
+          additionalProperties,
+          nodeParser
         )
       case _ => // TODO: throw exception, illegal range
     }

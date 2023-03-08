@@ -16,12 +16,12 @@ trait DialectInstanceUnitModel { self: BaseUnitModel =>
 
   override val ProcessingData: Field =
     Field(
-        DialectInstanceProcessingDataModel,
-        Document + "processingData",
-        ModelDoc(
-            ModelVocabularies.AmlDoc,
-            "processingData",
-            "Field with utility data to be used in Base Unit processing"
-        )
+      DialectInstanceProcessingDataModel,
+      Document + "processingData",
+      ModelDoc(
+        ModelVocabularies.AmlDoc,
+        "processingData",
+        "Field with utility data to be used in Base Unit processing"
+      )
     )
 }

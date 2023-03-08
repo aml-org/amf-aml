@@ -19,9 +19,9 @@ object AmlDomainElementEmitter {
       .configurationState()
       .getDialects()
       .find(
-          _.declares
-            .collectFirst({ case nm: NodeMapping if internalElement.meta.`type`.exists(_.iri() == nm.id) => nm })
-            .isDefined
+        _.declares
+          .collectFirst({ case nm: NodeMapping if internalElement.meta.`type`.exists(_.iri() == nm.id) => nm })
+          .isDefined
       )
       .foreach { emissionStructure =>
         val handler = amlConfig._internal.errorHandlerProvider.errorHandler()

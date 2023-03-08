@@ -73,12 +73,12 @@ private case class ClassTermEmitter(classTerm: ClassTerm, ordering: SpecOrdering
             b.entry("extends", aliasFor(classTerm.subClassOf.head.value(), aliasMapping))
           } else {
             b.entry(
-                "extends",
-                _.list({ l =>
-                  classTerm.subClassOf.foreach { extended =>
-                    l += aliasFor(extended.value(), aliasMapping)
-                  }
-                })
+              "extends",
+              _.list({ l =>
+                classTerm.subClassOf.foreach { extended =>
+                  l += aliasFor(extended.value(), aliasMapping)
+                }
+              })
             )
           }
         }
@@ -96,12 +96,12 @@ private case class ClassTermEmitter(classTerm: ClassTerm, ordering: SpecOrdering
       ctEmitters ++= Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
           b.entry(
-              "properties",
-              _.list({ l =>
-                classTerm.properties.foreach { prop =>
-                  l += aliasFor(prop.value(), aliasMapping)
-                }
-              })
+            "properties",
+            _.list({ l =>
+              classTerm.properties.foreach { prop =>
+                l += aliasFor(prop.value(), aliasMapping)
+              }
+            })
           )
         }
         override def position(): Position =
@@ -117,10 +117,10 @@ private case class ClassTermEmitter(classTerm: ClassTerm, ordering: SpecOrdering
       MapEntryEmitter(classAlias, "", YType.Null).emit(b)
     } else {
       b.entry(
-          classAlias,
-          _.obj({ ct =>
-            traverse(ordering.sorted(ctEmitters), ct)
-          })
+        classAlias,
+        _.obj({ ct =>
+          traverse(ordering.sorted(ctEmitters), ct)
+        })
       )
     }
   }
@@ -154,12 +154,12 @@ private case class PropertyTermEmitter(
             b.entry("extends", aliasFor(propertyTerm.subPropertyOf.head.value(), aliasMapping))
           } else {
             b.entry(
-                "extends",
-                _.list({ l =>
-                  propertyTerm.subPropertyOf.foreach { extended =>
-                    l += aliasFor(extended.value(), aliasMapping)
-                  }
-                })
+              "extends",
+              _.list({ l =>
+                propertyTerm.subPropertyOf.foreach { extended =>
+                  l += aliasFor(extended.value(), aliasMapping)
+                }
+              })
             )
           }
         }
@@ -191,10 +191,10 @@ private case class PropertyTermEmitter(
       MapEntryEmitter(propertyAlias, "", YType.Null).emit(b)
     } else {
       b.entry(
-          propertyAlias,
-          _.obj({ ct =>
-            traverse(ordering.sorted(ptEmitters), ct)
-          })
+        propertyAlias,
+        _.obj({ ct =>
+          traverse(ordering.sorted(ptEmitters), ct)
+        })
       )
     }
   }
@@ -248,10 +248,10 @@ case class VocabularyEmitter(vocabulary: Vocabulary, document: DocumentCreator) 
       Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
           b.entry(
-              "external",
-              _.obj({ b =>
-                traverse(ordering.sorted(vocabulary.externals.map(external => ExternalEmitter(external, ordering))), b)
-              })
+            "external",
+            _.obj({ b =>
+              traverse(ordering.sorted(vocabulary.externals.map(external => ExternalEmitter(external, ordering))), b)
+            })
           )
         }
 
@@ -275,15 +275,15 @@ case class VocabularyEmitter(vocabulary: Vocabulary, document: DocumentCreator) 
       Seq(new EntryEmitter {
         override def emit(b: EntryBuilder): Unit = {
           b.entry(
-              "uses",
-              _.obj({ b =>
-                traverse(
-                    ordering.sorted(
-                        vocabulary.imports.map(vocabularyRef => ImportEmitter(vocabularyRef, vocabulary, ordering))
-                    ),
-                    b
-                )
-              })
+            "uses",
+            _.obj({ b =>
+              traverse(
+                ordering.sorted(
+                  vocabulary.imports.map(vocabularyRef => ImportEmitter(vocabularyRef, vocabulary, ordering))
+                ),
+                b
+              )
+            })
           )
         }
 
@@ -347,22 +347,22 @@ case class VocabularyEmitter(vocabulary: Vocabulary, document: DocumentCreator) 
     val classTerms = vocabulary.declares.filter(_.isInstanceOf[ClassTerm]).asInstanceOf[Seq[ClassTerm]]
     if (classTerms.nonEmpty) {
       Seq(
-          new EntryEmitter {
-            override def emit(b: EntryBuilder): Unit =
-              b.entry(
-                  "classTerms",
-                  _.obj({ b =>
-                    traverse(ordering.sorted(classTerms.map(ct => ClassTermEmitter(ct, ordering, aliasMapping))), b)
-                  })
-              )
+        new EntryEmitter {
+          override def emit(b: EntryBuilder): Unit =
+            b.entry(
+              "classTerms",
+              _.obj({ b =>
+                traverse(ordering.sorted(classTerms.map(ct => ClassTermEmitter(ct, ordering, aliasMapping))), b)
+              })
+            )
 
-            override def position(): Position =
-              classTerms
-                .map(_.annotations.find(classOf[LexicalInformation]).map(_.range.start))
-                .find(_.isDefined)
-                .flatten
-                .getOrElse(ZERO)
-          }
+          override def position(): Position =
+            classTerms
+              .map(_.annotations.find(classOf[LexicalInformation]).map(_.range.start))
+              .find(_.isDefined)
+              .flatten
+              .getOrElse(ZERO)
+        }
       )
     } else {
       Nil
@@ -373,25 +373,25 @@ case class VocabularyEmitter(vocabulary: Vocabulary, document: DocumentCreator) 
     val propertyTerms = vocabulary.declares.filter(_.isInstanceOf[PropertyTerm]).asInstanceOf[Seq[PropertyTerm]]
     if (propertyTerms.nonEmpty) {
       Seq(
-          new EntryEmitter {
-            override def emit(b: EntryBuilder): Unit =
-              b.entry(
-                  "propertyTerms",
-                  _.obj({ b =>
-                    traverse(
-                        ordering.sorted(propertyTerms.map(pt => PropertyTermEmitter(pt, ordering, aliasMapping))),
-                        b
-                    )
-                  })
-              )
+        new EntryEmitter {
+          override def emit(b: EntryBuilder): Unit =
+            b.entry(
+              "propertyTerms",
+              _.obj({ b =>
+                traverse(
+                  ordering.sorted(propertyTerms.map(pt => PropertyTermEmitter(pt, ordering, aliasMapping))),
+                  b
+                )
+              })
+            )
 
-            override def position(): Position =
-              propertyTerms
-                .map(_.annotations.find(classOf[LexicalInformation]).map(_.range.start))
-                .find(_.isDefined)
-                .flatten
-                .getOrElse(ZERO)
-          }
+          override def position(): Position =
+            propertyTerms
+              .map(_.annotations.find(classOf[LexicalInformation]).map(_.range.start))
+              .find(_.isDefined)
+              .flatten
+              .getOrElse(ZERO)
+        }
       )
     } else {
       Nil

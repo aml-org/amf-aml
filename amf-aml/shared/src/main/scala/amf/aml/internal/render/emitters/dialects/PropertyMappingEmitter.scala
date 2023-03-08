@@ -76,10 +76,10 @@ case class PropertyRangeEmitters[T <: PropertyLikeMappingModel](
         emitters ++= Seq(new EntryEmitter {
           override def emit(b: EntryBuilder): Unit =
             b.entry(
-                "range",
-                _.list { b =>
-                  targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
-                }
+              "range",
+              _.list { b =>
+                targets.foreach(target => ScalarEmitter(AmfScalar(target)).emit(b))
+              }
             )
           override def position(): Position = pos
         })
@@ -166,11 +166,11 @@ case class PropertyLikeMappingEmitter[T <: PropertyLikeMappingModel](
 case class EnumEmitter(entry: FieldEntry, ordering: SpecOrdering) extends EntryEmitter {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-        "enum",
-        _.list { b =>
-          val scalars = emitters(entry.arrayValues)
-          traverse(ordering.sorted(scalars), b)
-        }
+      "enum",
+      _.list { b =>
+        val scalars = emitters(entry.arrayValues)
+        traverse(ordering.sorted(scalars), b)
+      }
     )
   }
 
@@ -204,8 +204,8 @@ case class MandatoryEmitter[T <: PropertyLikeMappingModel](propertyMapping: Prop
           case Some(minCount) =>
             val minCountPos = fieldPos(propertyMapping, PropertyMappingModel.MinCount)
             emitters ++= Seq(
-                MapEntryEmitter("minItems", minCount.toString, YType.Int, minCountPos),
-                MapEntryEmitter("mandatory", mandatory.toString, YType.Bool, mandatoryPos)
+              MapEntryEmitter("minItems", minCount.toString, YType.Int, minCountPos),
+              MapEntryEmitter("mandatory", mandatory.toString, YType.Bool, mandatoryPos)
             )
           case None => Seq(MapEntryEmitter("mandatory", mandatory.toString, YType.Bool, mandatoryPos))
         }
@@ -235,55 +235,55 @@ case class PropertyMappingEmitter(
     with DefaultFacetEmission {
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-        propertyMapping.name().value(),
-        _.obj { b =>
-          var emitters: Seq[EntryEmitter] =
-            PropertyLikeMappingEmitter(dialect, propertyMapping, ordering, aliases).emitters
+      propertyMapping.name().value(),
+      _.obj { b =>
+        var emitters: Seq[EntryEmitter] =
+          PropertyLikeMappingEmitter(dialect, propertyMapping, ordering, aliases).emitters
 
-          propertyMapping.mergePolicy.option().foreach { policy =>
-            val pos = fieldPos(propertyMapping, PropertyMappingModel.MergePolicy)
-            emitters ++= Seq(
-                new MapEntryEmitter("patch", policy, YType.Str, pos)
-            )
-          }
-
-          propertyMapping
-            .mapKeyProperty()
-            .option()
-            .fold({
-              propertyMapping.mapTermKeyProperty().option().foreach { term =>
-                val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermKeyProperty)
-                aliasFor(term) match {
-                  case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapTermKey", propertyId, YType.Str, pos))
-                  case _                =>
-                }
-              }
-            })({ value =>
-              val pos = fieldPos(propertyMapping, PropertyMappingModel.MapKeyProperty)
-              emitters ++= Seq(MapEntryEmitter("mapKey", value, YType.Str, pos))
-            })
-
-          propertyMapping
-            .mapValueProperty()
-            .option()
-            .fold({
-              propertyMapping.mapTermValueProperty().option().foreach { term =>
-                val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermValueProperty)
-                aliasFor(term) match {
-                  case Some(propertyId) =>
-                    emitters ++= Seq(MapEntryEmitter("mapTermValue", propertyId, YType.Str, pos))
-                  case _ =>
-                }
-              }
-            })({ value =>
-              val pos = fieldPos(propertyMapping, PropertyMappingModel.MapValueProperty)
-              emitters ++= Seq(MapEntryEmitter("mapValue", value, YType.Str, pos))
-            })
-
-          emitters ++= emitDefault(propertyMapping)
-
-          ordering.sorted(emitters).foreach(_.emit(b))
+        propertyMapping.mergePolicy.option().foreach { policy =>
+          val pos = fieldPos(propertyMapping, PropertyMappingModel.MergePolicy)
+          emitters ++= Seq(
+            new MapEntryEmitter("patch", policy, YType.Str, pos)
+          )
         }
+
+        propertyMapping
+          .mapKeyProperty()
+          .option()
+          .fold({
+            propertyMapping.mapTermKeyProperty().option().foreach { term =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermKeyProperty)
+              aliasFor(term) match {
+                case Some(propertyId) => emitters ++= Seq(MapEntryEmitter("mapTermKey", propertyId, YType.Str, pos))
+                case _                =>
+              }
+            }
+          })({ value =>
+            val pos = fieldPos(propertyMapping, PropertyMappingModel.MapKeyProperty)
+            emitters ++= Seq(MapEntryEmitter("mapKey", value, YType.Str, pos))
+          })
+
+        propertyMapping
+          .mapValueProperty()
+          .option()
+          .fold({
+            propertyMapping.mapTermValueProperty().option().foreach { term =>
+              val pos = fieldPos(propertyMapping, PropertyMappingModel.MapTermValueProperty)
+              aliasFor(term) match {
+                case Some(propertyId) =>
+                  emitters ++= Seq(MapEntryEmitter("mapTermValue", propertyId, YType.Str, pos))
+                case _ =>
+              }
+            }
+          })({ value =>
+            val pos = fieldPos(propertyMapping, PropertyMappingModel.MapValueProperty)
+            emitters ++= Seq(MapEntryEmitter("mapValue", value, YType.Str, pos))
+          })
+
+        emitters ++= emitDefault(propertyMapping)
+
+        ordering.sorted(emitters).foreach(_.emit(b))
+      }
     )
   }
 

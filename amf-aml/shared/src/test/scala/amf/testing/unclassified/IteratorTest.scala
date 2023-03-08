@@ -24,9 +24,9 @@ trait IteratorTest extends DialectTests with Matchers {
   test("findById in self encoded dialect instance") {
     parseInstance("dialect23.yaml", "example23.yaml").map(baseUnit => {
       assert(
-          baseUnit
-            .findById("file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets")
-            .isDefined
+        baseUnit
+          .findById("file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets")
+          .isDefined
       )
     })
   }

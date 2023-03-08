@@ -39,10 +39,10 @@ case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, al
 
         override def emit(b: EntryBuilder): Unit = {
           b.entry(
-              "declares",
-              _.obj { b =>
-                traverse(sortedNodes, b)
-              }
+            "declares",
+            _.obj { b =>
+              traverse(sortedNodes, b)
+            }
           )
         }
 
@@ -52,10 +52,10 @@ case class RootDocumentModelEmitter(dialect: Dialect, ordering: SpecOrdering, al
       })
     }
     b.entry(
-        "root",
-        _.obj { b =>
-          traverse(ordering.sorted(emitters), b)
-        }
+      "root",
+      _.obj { b =>
+        traverse(ordering.sorted(emitters), b)
+      }
     )
   }
 

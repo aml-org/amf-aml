@@ -25,20 +25,20 @@ trait AnyMappingParser {
   private def processAnyMappingField(map: YMap, mapping: AnyMapping, key: String, field: Field)(implicit
       ctx: DialectContext
   ): Unit = map.key(
-      key,
-      entry => {
-        entry.value.tagType match {
-          case YType.Seq =>
-            val nodes = MappingParsingHelper.entrySeqNodesToString(entry)
-            mapping.set(field, AmfArray(nodes, Annotations(entry.value)), Annotations(entry))
-          case _ =>
-            ctx.eh.violation(
-                DialectError,
-                mapping.id,
-                s"$key mappings must be declared as lists of node mapping references",
-                entry.value.location
-            )
-        }
+    key,
+    entry => {
+      entry.value.tagType match {
+        case YType.Seq =>
+          val nodes = MappingParsingHelper.entrySeqNodesToString(entry)
+          mapping.set(field, AmfArray(nodes, Annotations(entry.value)), Annotations(entry))
+        case _ =>
+          ctx.eh.violation(
+            DialectError,
+            mapping.id,
+            s"$key mappings must be declared as lists of node mapping references",
+            entry.value.location
+          )
       }
+    }
   )
 }

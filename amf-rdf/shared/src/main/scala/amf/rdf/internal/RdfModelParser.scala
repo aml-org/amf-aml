@@ -37,9 +37,9 @@ class RdfModelParser(config: ParseConfiguration, facade: EntitiesFacade) extends
             unit
           case _ =>
             ctx.eh.violation(
-                UnableToParseRdfDocument,
-                location,
-                s"Unable to parse RDF model for location root node: $location"
+              UnableToParseRdfDocument,
+              location,
+              s"Unable to parse RDF model for location root node: $location"
             )
             Document()
         }

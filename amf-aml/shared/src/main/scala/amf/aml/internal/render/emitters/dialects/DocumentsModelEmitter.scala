@@ -21,27 +21,27 @@ case class DocumentsModelEmitter(dialect: Dialect, ordering: SpecOrdering, alias
 
   override def emit(b: EntryBuilder): Unit = {
     b.entry(
-        "documents",
-        _.obj { b =>
-          // Root Emitter
-          if (Option(documents.root()).isDefined) {
-            emitters ++= Seq(RootDocumentModelEmitter(dialect, ordering, aliases))
-          }
-
-          // Fragments emitter
-          if (documents.fragments().nonEmpty) {
-            emitters ++= Seq(FragmentsDocumentModelEmitter(dialect, ordering, aliases))
-          }
-
-          // Module emitter
-          if (Option(documents.library()).isDefined) {
-            emitters ++= Seq(LibraryDocumentModelEmitter(dialect, ordering, aliases))
-          }
-
-          emitters ++= Seq(DocumentsModelOptionsEmitter(dialect, ordering))
-
-          traverse(ordering.sorted(emitters), b)
+      "documents",
+      _.obj { b =>
+        // Root Emitter
+        if (Option(documents.root()).isDefined) {
+          emitters ++= Seq(RootDocumentModelEmitter(dialect, ordering, aliases))
         }
+
+        // Fragments emitter
+        if (documents.fragments().nonEmpty) {
+          emitters ++= Seq(FragmentsDocumentModelEmitter(dialect, ordering, aliases))
+        }
+
+        // Module emitter
+        if (Option(documents.library()).isDefined) {
+          emitters ++= Seq(LibraryDocumentModelEmitter(dialect, ordering, aliases))
+        }
+
+        emitters ++= Seq(DocumentsModelOptionsEmitter(dialect, ordering))
+
+        traverse(ordering.sorted(emitters), b)
+      }
     )
   }
 

@@ -39,33 +39,33 @@ class DialectInstanceResolutionTest extends DialectInstanceResolutionCycleTests 
 
   test("Resolve patch properties to AML") {
     cycleWithDialect(
-        "dialect.yaml",
-        "patch.yaml",
-        "patch.resolved.yaml",
-        Some(`application/yaml`),
-        directory = s"$basePath/patch-properties/"
+      "dialect.yaml",
+      "patch.yaml",
+      "patch.resolved.yaml",
+      Some(`application/yaml`),
+      directory = s"$basePath/patch-properties/"
     )
   }
 
   multiGoldenTest("Resolve declares on self-encoded dialect instance", "instance.%s") { config =>
     cycleWithDialect(
-        "dialect.yaml",
-        "instance.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        renderOptions = Some(config.renderOptions),
-        directory = s"$basePath/declares-in-self-encoded/"
+      "dialect.yaml",
+      "instance.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/declares-in-self-encoded/"
     )
   }
 
   multiGoldenTest("Resolve patch properties to AMF Graph", "patch.resolved.%s") { config =>
     cycleWithDialect(
-        "dialect.yaml",
-        "patch.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        renderOptions = Some(config.renderOptions),
-        directory = s"$basePath/patch-properties/"
+      "dialect.yaml",
+      "patch.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      renderOptions = Some(config.renderOptions),
+      directory = s"$basePath/patch-properties/"
     )
   }
 

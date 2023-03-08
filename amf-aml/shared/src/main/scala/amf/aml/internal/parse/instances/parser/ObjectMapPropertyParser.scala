@@ -68,9 +68,9 @@ object ObjectMapPropertyParser extends NodeMappableHelper {
       case Some(propId) =>
         try {
           node.set(
-              Field(Str, ValueType(propId)),
-              AmfScalar(propertyEntry.key.as[YScalar].text),
-              Annotations(propertyEntry.key)
+            Field(Str, ValueType(propId)),
+            AmfScalar(propertyEntry.key.as[YScalar].text),
+            Annotations(propertyEntry.key)
           )
           node.annotations.reject(_.isInstanceOf[LexicalInformation]) ++= Annotations(propertyEntry)
           node

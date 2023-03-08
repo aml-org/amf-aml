@@ -14,10 +14,10 @@ class ParsedDialectRenderTest extends FunSuiteCycleTests with PlatformSecrets {
 
   test("Cycle dialect with annotation mappings with multiple domains") {
     cycle(
-        "dialect.yaml",
-        "dialect.cycled.yaml",
-        s"${basePath}annotation-mapping-with-multiple-domains/",
-        UnhandledErrorHandler
+      "dialect.yaml",
+      "dialect.cycled.yaml",
+      s"${basePath}annotation-mapping-with-multiple-domains/",
+      UnhandledErrorHandler
     )
   }
 
@@ -25,10 +25,10 @@ class ParsedDialectRenderTest extends FunSuiteCycleTests with PlatformSecrets {
     // Due to issues with how numbers are emitted.
     test("Cycle dialect with annotation mappings with type discriminators") {
       cycle(
-          "dialect.yaml",
-          "dialect.cycled.yaml",
-          s"${basePath}annotation-mappings-with-extra-facets/",
-          DefaultErrorHandler()
+        "dialect.yaml",
+        "dialect.cycled.yaml",
+        s"${basePath}annotation-mappings-with-extra-facets/",
+        DefaultErrorHandler()
       )
     }
   }

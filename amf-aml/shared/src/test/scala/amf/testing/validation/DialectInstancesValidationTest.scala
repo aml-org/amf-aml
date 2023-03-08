@@ -105,10 +105,10 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
     for {
       nextConfig <- AMLConfiguration.predefined().withDialect(s"$basePath/dialect8b.yaml")
       assertion <- validate(
-          "dialect8a.yaml",
-          "instance8_incorrect1.yaml",
-          Some("instance8_incorrect1.report.json"),
-          config = nextConfig
+        "dialect8a.yaml",
+        "instance8_incorrect1.yaml",
+        Some("instance8_incorrect1.report.json"),
+        config = nextConfig
       )
     } yield {
       assertion
@@ -149,9 +149,9 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
 
   test("validation mule_config  example 2 incorrect") {
     validate(
-        "mule_config_dialect1.yaml",
-        "mule_config_instance_incorrect2.yaml",
-        Some("mule_config_instance_incorrect2.report.json")
+      "mule_config_dialect1.yaml",
+      "mule_config_instance_incorrect2.yaml",
+      Some("mule_config_instance_incorrect2.report.json")
     )
   }
 
@@ -161,10 +161,10 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
 
   test("Can validate asyncapi 0.1 error") {
     validate(
-        "dialect1.yaml",
-        "example1.yaml",
-        path = s"$productionPath/asyncapi",
-        golden = Some("example1.report.json")
+      "dialect1.yaml",
+      "example1.yaml",
+      path = s"$productionPath/asyncapi",
+      golden = Some("example1.report.json")
     )
   }
 
@@ -198,30 +198,30 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
 
   test("Validate native link with colliding properties") {
     validate(
-        "dialect.yaml",
-        "instance.yaml",
-        Some("report.json"),
-        path = s"$basePath/native-link-with-colliding-properties"
+      "dialect.yaml",
+      "instance.yaml",
+      Some("report.json"),
+      path = s"$basePath/native-link-with-colliding-properties"
     )
   }
 
   // This should be invalid!
   test("Validate native link with extra properties") {
     validate(
-        "dialect.yaml",
-        "instance.yaml",
-        Some("report.json"),
-        path = s"$basePath/native-link-with-extra-properties"
+      "dialect.yaml",
+      "instance.yaml",
+      Some("report.json"),
+      path = s"$basePath/native-link-with-extra-properties"
     )
   }
 
   // This should be invalid!
   test("Validate native link with $base without $id") {
     validate(
-        "dialect.yaml",
-        "instance.yaml",
-        Some("report.json"),
-        path = s"$basePath/native-link-with-$$base-without-$$id"
+      "dialect.yaml",
+      "instance.yaml",
+      Some("report.json"),
+      path = s"$basePath/native-link-with-$$base-without-$$id"
     )
   }
 
@@ -235,9 +235,9 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
 
   test("Invalid self encoded dialect") {
     validate(
-        "self-encoded-dialect.yaml",
-        "self-encoded-dialect-instance.yaml",
-        Some("self-encoded-dialect-instance.report.json")
+      "self-encoded-dialect.yaml",
+      "self-encoded-dialect-instance.yaml",
+      Some("self-encoded-dialect-instance.report.json")
     )
   }
 
@@ -251,9 +251,9 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
 
   test("JSON Instance with Union at root level should omit the $dialect entry") {
     validate(
-        "dialect.yaml",
-        "instance.json",
-        path = s"$instancesPath/json-root-union/"
+      "dialect.yaml",
+      "instance.json",
+      path = s"$instancesPath/json-root-union/"
     )
   }
 
@@ -279,10 +279,10 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
 
   test("MinItems 0 with mandatory true invalid") {
     validate(
-        "dialect.yaml",
-        "instance-invalid.yaml",
-        Some("report.json"),
-        path = s"$basePath/minItems-0-mandatory-true"
+      "dialect.yaml",
+      "instance-invalid.yaml",
+      Some("report.json"),
+      path = s"$basePath/minItems-0-mandatory-true"
     )
   }
 
@@ -296,10 +296,10 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
 
   test("MinItems n with mandatory false invalid") {
     validate(
-        "dialect.yaml",
-        "instance-invalid.yaml",
-        Some("report.json"),
-        path = s"$basePath/minItems-n-mandatory-false"
+      "dialect.yaml",
+      "instance-invalid.yaml",
+      Some("report.json"),
+      path = s"$basePath/minItems-n-mandatory-false"
     )
   }
 
@@ -309,19 +309,19 @@ trait DialectInstancesValidationTest extends DialectInstanceValidation {
 
   test("MinItems n with mandatory true invalid") {
     validate(
-        "dialect.yaml",
-        "instance-invalid.yaml",
-        Some("report.json"),
-        path = s"$basePath/minItems-n-mandatory-true"
+      "dialect.yaml",
+      "instance-invalid.yaml",
+      Some("report.json"),
+      path = s"$basePath/minItems-n-mandatory-true"
     )
   }
 
   test("Long datatype test") {
     validate(
-        "dialect.yaml",
-        "instance.yaml",
-        None,
-        path = s"$instancesPath/long-datatype"
+      "dialect.yaml",
+      "instance.yaml",
+      None,
+      path = s"$instancesPath/long-datatype"
     )
   }
 

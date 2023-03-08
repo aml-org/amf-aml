@@ -13,18 +13,18 @@ object IncludeFirstUnionElementFinder {
     val refTuple = ctx.link(ast) match {
       case Left(key) =>
         (
-            key,
-            allPossibleMappings
-              .map(mapping => ctx.declarations.findDialectDomainElement(key, mapping, SearchScope.Fragments))
-              .collectFirst { case Some(x) => x }
+          key,
+          allPossibleMappings
+            .map(mapping => ctx.declarations.findDialectDomainElement(key, mapping, SearchScope.Fragments))
+            .collectFirst { case Some(x) => x }
         )
       case _ =>
         val text = ast.as[YScalar].text
         (
-            text,
-            allPossibleMappings
-              .map(mapping => ctx.declarations.findDialectDomainElement(text, mapping, SearchScope.Named))
-              .collectFirst { case Some(x) => x }
+          text,
+          allPossibleMappings
+            .map(mapping => ctx.declarations.findDialectDomainElement(text, mapping, SearchScope.Named))
+            .collectFirst { case Some(x) => x }
         )
     }
     refTuple match {
@@ -33,7 +33,7 @@ object IncludeFirstUnionElementFinder {
           .link(text, Annotations(ast.value))
           .asInstanceOf[DialectDomainElement]
           .withId(
-              id
+            id
           ) // and the ID of the link at that position in the tree, not the ID of the linked element, tha goes in link-target
         linkedNode
       case (text: String, _) =>

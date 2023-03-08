@@ -79,21 +79,21 @@ class VocabularyParsingTest extends DialectTests {
 
   multiGoldenTest("Multiple extends test", "vocabulary.%s") { config =>
     cycle(
-        "vocabulary.yaml",
-        config.golden,
-        Some(Mimes.`application/ld+json`),
-        config.config,
-        directory = s"${basePath}multiple-extends/"
+      "vocabulary.yaml",
+      config.golden,
+      Some(Mimes.`application/ld+json`),
+      config.config,
+      directory = s"${basePath}multiple-extends/"
     )
   }
 
   test("Parse vocabulary in JSON") {
     cycle(
-        "vocabulary.json",
-        "vocabulary.jsonld",
-        Some(Mimes.`application/ld+json`),
-        AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
-        directory = s"${basePath}../dialects/json/with-vocabulary/"
+      "vocabulary.json",
+      "vocabulary.jsonld",
+      Some(Mimes.`application/ld+json`),
+      AMLConfiguration.predefined().withRenderOptions(RenderOptions().withCompactUris.withPrettyPrint),
+      directory = s"${basePath}../dialects/json/with-vocabulary/"
     )
   }
 }

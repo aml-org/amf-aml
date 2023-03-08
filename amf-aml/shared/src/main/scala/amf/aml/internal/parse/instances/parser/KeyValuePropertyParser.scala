@@ -34,32 +34,32 @@ object KeyValuePropertyParser {
               .withInstanceTypes(effectiveTypes)
             try {
               nestedNode.set(
-                  Field(Str, ValueType(propertyKeyMapping.get)),
-                  AmfScalar(pair.key.as[YScalar].text),
-                  Annotations(pair.key)
+                Field(Str, ValueType(propertyKeyMapping.get)),
+                AmfScalar(pair.key.as[YScalar].text),
+                Annotations(pair.key)
               )
 
               if (valueAllowsMultiple) {
                 pair.value.value match {
                   case seq: YSequence =>
                     nestedNode.set(
-                        Field(Array(Str), ValueType(propertyValueMapping.get)),
-                        AmfArray(seq.nodes.flatMap(_.asScalar).map(AmfScalar(_)), Annotations(seq)),
-                        Annotations(pair.value)
+                      Field(Array(Str), ValueType(propertyValueMapping.get)),
+                      AmfArray(seq.nodes.flatMap(_.asScalar).map(AmfScalar(_)), Annotations(seq)),
+                      Annotations(pair.value)
                     )
                   case scalar: YScalar =>
                     nestedNode.set(
-                        Field(Array(Str), ValueType(propertyValueMapping.get)),
-                        AmfArray(Seq(AmfScalar(scalar.text))),
-                        Annotations(pair.value)
+                      Field(Array(Str), ValueType(propertyValueMapping.get)),
+                      AmfArray(Seq(AmfScalar(scalar.text))),
+                      Annotations(pair.value)
                     )
                   case _ => // ignore
                 }
               } else {
                 nestedNode.set(
-                    Field(Str, ValueType(propertyValueMapping.get)),
-                    AmfScalar(pair.value.as[YScalar].text),
-                    Annotations(pair.value)
+                  Field(Str, ValueType(propertyValueMapping.get)),
+                  AmfScalar(pair.value.as[YScalar].text),
+                  Annotations(pair.value)
                 )
               }
             } catch {
@@ -70,10 +70,10 @@ object KeyValuePropertyParser {
           }
         case _ =>
           ctx.eh.violation(
-              DialectError,
-              id,
-              s"Cannot find mapping for property range of mapValue property: ${property.objectRange().head.value()}",
-              propertyEntry.location
+            DialectError,
+            id,
+            s"Cannot find mapping for property range of mapValue property: ${property.objectRange().head.value()}",
+            propertyEntry.location
           )
           Nil
       }
@@ -82,10 +82,10 @@ object KeyValuePropertyParser {
 
     } else {
       ctx.eh.violation(
-          DialectError,
-          id,
-          s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
-          propertyEntry.location
+        DialectError,
+        id,
+        s"Both 'mapKey' and 'mapValue' are mandatory in a map pair property mapping",
+        propertyEntry.location
       )
     }
   }

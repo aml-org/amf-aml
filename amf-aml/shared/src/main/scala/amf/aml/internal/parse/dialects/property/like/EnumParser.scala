@@ -14,22 +14,22 @@ case class EnumParser(map: YMap, propertyLikeMapping: PropertyLikeMapping[_ <: P
 ) {
   def parse(): Unit = {
     map.key(
-        "enum",
-        entry => {
-          val seq = entry.value.as[YSequence]
-          val values = seq.nodes.flatMap { node =>
-            node.tagType match {
-              case YType.Int   => Some(ScalarNode(node).integer())
-              case YType.Float => Some(ScalarNode(node).double())
-              case YType.Str   => Some(ScalarNode(node).string())
-              case YType.Bool  => Some(ScalarNode(node).boolean())
-              case _ =>
-                ctx.eh.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
-                None
-            }
+      "enum",
+      entry => {
+        val seq = entry.value.as[YSequence]
+        val values = seq.nodes.flatMap { node =>
+          node.tagType match {
+            case YType.Int   => Some(ScalarNode(node).integer())
+            case YType.Float => Some(ScalarNode(node).double())
+            case YType.Str   => Some(ScalarNode(node).string())
+            case YType.Bool  => Some(ScalarNode(node).boolean())
+            case _ =>
+              ctx.eh.violation(DialectError, "Cannot create enumeration constraint from not scalar value", node)
+              None
           }
-          propertyLikeMapping.set(propertyLikeMapping.meta.Enum, AmfArray(values, Annotations(seq)), Annotations(entry))
         }
+        propertyLikeMapping.set(propertyLikeMapping.meta.Enum, AmfArray(values, Annotations(seq)), Annotations(entry))
+      }
     )
   }
 }
