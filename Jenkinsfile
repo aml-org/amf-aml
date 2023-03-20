@@ -8,7 +8,7 @@ def PRODUCT_NAME = "amf-aml"
 def lastStage = ""
 def color = '#FF8C00'
 def headerFlavour = "WARNING"
-@Field AMF_JOB = "application/AMF/amf/develop"
+@Field AMF_JOB = "application/AMF/amf/shape-normalization-publish"
 @Field AMF_CUSTOM_VALIDATOR_SCALAJS_JOB = "application/AMF/amf-custom-validator-scalajs/develop"
 
 pipeline {
@@ -63,6 +63,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
+                    branch 'shape-normalization-publish'
                 }
             }
             steps {
@@ -80,6 +81,7 @@ pipeline {
             when {
                 anyOf {
                     branch 'develop'
+                    branch 'shape-normalization-publish'
                 }
             }
             steps {
@@ -87,8 +89,8 @@ pipeline {
                     lastStage = env.STAGE_NAME
                     echo "Triggering amf on develop branch"
                     build job: AMF_JOB, wait: false
-                    echo "Triggering amf-custom-validator-scalajs on develop branch"
-                    build job: AMF_CUSTOM_VALIDATOR_SCALAJS_JOB, wait: false
+                    // echo "Triggering amf-custom-validator-scalajs on develop branch"
+                    // build job: AMF_CUSTOM_VALIDATOR_SCALAJS_JOB, wait: false
                 }
             }
         }
