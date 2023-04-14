@@ -63,6 +63,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
+                    branch 'chore/bump-ci-image'
                 }
             }
             steps {
