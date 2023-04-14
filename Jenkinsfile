@@ -63,7 +63,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
-                    branch 'W-12560400/bump-scala-js'
+                    branch 'W-12560400/bump-scala-js-21215'
                 }
             }
             steps {
