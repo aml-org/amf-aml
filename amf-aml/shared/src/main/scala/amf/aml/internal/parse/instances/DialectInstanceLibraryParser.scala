@@ -1,15 +1,16 @@
 package amf.aml.internal.parse.instances
 
+import amf.aml.client.scala.model.document.{DialectInstanceLibrary, DialectInstanceProcessingData}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
-import amf.aml.client.scala.model.document.{DialectInstanceLibrary, DialectInstanceProcessingData}
-import com.github.ghik.silencer.silent
+
+import scala.annotation.nowarn
 
 class DialectInstanceLibraryParser(root: Root)(implicit override val ctx: DialectInstanceContext)
     extends DialectInstanceParser(root) {
 
   def parse(): DialectInstanceLibrary = {
-    @silent("deprecated") // Silent can only be used in assignment expressions
+    @nowarn
     val dialectInstance: DialectInstanceLibrary = DialectInstanceLibrary(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)

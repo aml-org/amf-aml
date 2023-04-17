@@ -7,7 +7,7 @@ import amf.aml.client.scala.model.domain.{
   PropertyMapping
 }
 import amf.aml.internal.metamodel.domain.NodeWithDiscriminatorModel
-import amf.aml.internal.parse.instances.DialectInstanceParser.pathSegment
+import amf.aml.internal.parse.instances.DialectInstanceParserOps.pathSegment
 import amf.aml.internal.parse.instances.{DialectInstanceContext, NodeMappableHelper}
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.domain.DomainElement

@@ -6,7 +6,7 @@ import amf.aml.internal.parse.instances.ClosedInstanceNode.checkNode
 import amf.aml.internal.parse.instances.InstanceNodeIdHandling.generateNodeId
 import amf.aml.internal.parse.instances.finder.{IncludeFirstUnionElementFinder, JSONPointerUnionFinder}
 import amf.aml.internal.parse.instances.parser.ExternalLinkGenerator.PropertyParser
-import amf.aml.internal.parse.instances.{DialectInstanceContext, DialectInstanceParser}
+import amf.aml.internal.parse.instances.{DialectInstanceContext, DialectInstanceParser, DialectInstanceParserOps}
 import amf.aml.internal.validate.DialectValidations.{DialectAmbiguousRangeSpecification, DialectError, InvalidUnionType}
 import amf.core.client.scala.model.domain.{Annotation, DomainElement}
 import amf.core.internal.parser.Root
@@ -45,7 +45,7 @@ object ObjectUnionParser {
           case _                                  => Annotations(nodeMap)
         }
 
-        DialectInstanceParser.computeParsingScheme(nodeMap) match {
+        DialectInstanceParserOps.computeParsingScheme(nodeMap) match {
           case "$include" =>
             val link = resolveLinkUnion(ast, allPossibleMappings, defaultId, rootMap)
             link.annotations += RefInclude()

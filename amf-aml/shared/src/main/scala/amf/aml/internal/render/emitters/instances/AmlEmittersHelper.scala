@@ -85,7 +85,8 @@ trait DialectEmitterHelper {
   protected def buildReferenceAliasIndexFrom(unit: BaseUnit): Map[RefKey, (Alias, ImportLocation)] = {
     val aliases   = extractAliasesFrom(unit)
     val idCounter = new IdCounter()
-    unit.references.toStream
+    unit.references
+      .to(LazyList)
       .filter(_.isInstanceOf[DeclaresModel])
       .map { case m: DeclaresModel =>
         val key            = referenceIndexKeyFor(m)

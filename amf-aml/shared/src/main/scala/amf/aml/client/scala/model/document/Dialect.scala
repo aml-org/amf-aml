@@ -118,11 +118,13 @@ case class Dialect(fields: Fields, annotations: Annotations)
         }
       }
       .groupBy(x => x._1)
+      .view
       .mapValues(values =>
         values.map { x =>
           x._2
         }.toMap
       )
+      .toMap
   }
 }
 

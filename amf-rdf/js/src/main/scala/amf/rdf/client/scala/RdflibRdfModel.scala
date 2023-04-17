@@ -73,9 +73,7 @@ class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfMo
     }
   }
 
-  override def toN3(): String = {
-    (model.toNTSync() + "")
-  }
+  override def toN3(): String = model.toNTSync().toString
 
   override def getNative(): Any = model
 

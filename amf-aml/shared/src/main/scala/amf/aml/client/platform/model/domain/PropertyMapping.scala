@@ -35,7 +35,7 @@ case class PropertyMapping(override private[amf] val _internal: InternalProperty
   def minimum(): DoubleField              = _internal.minimum()
   def maximum(): DoubleField              = _internal.maximum()
   def allowMultiple(): BoolField          = _internal.allowMultiple()
-  def enum(): ClientList[AnyField]        = _internal.enum().asClient
+  def `enum`(): ClientList[AnyField]      = _internal.enum().asClient
   def sorted(): BoolField                 = _internal.sorted()
   def typeDiscriminatorName(): StrField   = _internal.typeDiscriminatorName()
   def externallyLinkable(): BoolField     = _internal.externallyLinkable()

@@ -2,7 +2,7 @@ package amf.aml.internal.parse.instances.parser
 
 import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.parse.instances.DialectInstanceContext
-import amf.aml.internal.parse.instances.DialectInstanceParser.{computeParsingScheme, pathSegment}
+import amf.aml.internal.parse.instances.DialectInstanceParserOps.{computeParsingScheme, pathSegment}
 import amf.aml.internal.parse.instances.parser.ObjectCollectionPropertyParser.NodeParser
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.internal.parser.{Root, YMapOps}
@@ -44,6 +44,7 @@ object DialectExtensionParser {
                   nested.value.location
                 )
             }
+          case Some(_) => // ignore
           case None =>
             computeParsingScheme(map) match {
               case "$include" =>

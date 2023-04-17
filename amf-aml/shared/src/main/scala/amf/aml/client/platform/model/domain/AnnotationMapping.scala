@@ -24,7 +24,7 @@ case class AnnotationMapping(override private[amf] val _internal: InternalAnnota
   def minimum(): DoubleField              = _internal.minimum()
   def maximum(): DoubleField              = _internal.maximum()
   def allowMultiple(): BoolField          = _internal.allowMultiple()
-  def enum(): ClientList[AnyField]        = _internal.enum().asClient
+  def `enum`(): ClientList[AnyField]      = _internal.enum().asClient
   def sorted(): BoolField                 = _internal.sorted()
   def typeDiscriminator(): ClientMap[String] = Option(_internal.typeDiscriminator()) match {
     case Some(m) =>

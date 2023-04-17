@@ -1,21 +1,20 @@
 package amf.aml.internal.parse.instances
 
-import amf.core.internal.parser.Root
-import org.mulesoft.common.core._
-import amf.core.internal.parser.domain.Annotations
-import amf.aml.internal.metamodel.document.DialectInstanceModel
 import amf.aml.client.scala.model.document.{DialectInstanceFragment, DialectInstanceProcessingData}
-import amf.aml.client.scala.model.domain.{DialectDomainElement, DocumentsModel}
-import amf.aml.internal.parse.instances.DialectInstanceParser.encodedElementDefaultId
+import amf.aml.client.scala.model.domain.DialectDomainElement
+import amf.aml.internal.metamodel.document.DialectInstanceModel
+import amf.aml.internal.parse.instances.DialectInstanceParserOps.encodedElementDefaultId
 import amf.aml.internal.parse.instances.parser.InstanceElementParser
-import amf.aml.internal.validate.DialectValidations.DialectError
-import com.github.ghik.silencer.silent
+import amf.core.internal.parser.Root
+import amf.core.internal.parser.domain.Annotations
+
+import scala.annotation.nowarn
 
 class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: DialectInstanceContext)
     extends DialectInstanceParser(root) {
 
   def parse(name: String): DialectInstanceFragment = {
-    @silent("deprecated") // Silent can only be used in assignment expressions
+    @nowarn
     val dialectInstanceFragment: DialectInstanceFragment = DialectInstanceFragment(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)

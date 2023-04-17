@@ -2,7 +2,7 @@ package amf.aml.internal.parse.instances.parser
 
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.instances.DialectInstanceContext
-import amf.aml.internal.parse.instances.DialectInstanceParser.typesFrom
+import amf.aml.internal.parse.instances.DialectInstanceParserOps.typesFrom
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.domain.{AmfArray, AmfScalar}
 import amf.core.client.scala.vocabulary.ValueType

@@ -4,6 +4,7 @@ import amf.core.internal.parser.YMapOps
 import org.yaml.model.{YMap, YMapEntry}
 import amf.aml.internal.parse.instances.BaseDirective.baseFrom
 
+import scala.annotation.nowarn
 import scala.util.matching.Regex
 
 /** Base of an URI (spec definition): the beginning part of a URI until the first (inclusive) '#' character or else the
@@ -26,7 +27,9 @@ trait BaseDirectiveOverride {
 }
 
 object BaseDirective {
-  val HashRegex: Regex  = "(http://|file://)?([^#]*)#(.*)".r("protocol", "base", "tail")
+  @nowarn
+  val HashRegex: Regex = "(http://|file://)?([^#]*)#(.*)".r("protocol", "base", "tail")
+  @nowarn
   val SlashRegex: Regex = "(http://|file://)?([^/]*)/(.*)".r("protocol", "base", "tail")
 
   /** Extracts the base from the supplied URI

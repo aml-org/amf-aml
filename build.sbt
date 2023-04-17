@@ -6,8 +6,8 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-ThisBuild / version      := "6.2.4-SCALAJS1.6-SNAPSHOT"
-ThisBuild / scalaVersion := "2.12.15"
+ThisBuild / version      := "6.2.4-213-SNAPSHOT"
+ThisBuild / scalaVersion := "2.13.8"
 
 publish := {}
 
@@ -19,7 +19,7 @@ lazy val workspaceDirectory: File =
     case _       => Path.userHome / "mulesoft"
   }
 
-val amfCoreVersion = "5.2.4-SCALAJS1.6-21215-SNAPSHOT"
+val amfCoreVersion = "5.2.4-213-SNAPSHOT"
 
 lazy val amfCoreJVMRef = ProjectRef(workspaceDirectory / "amf-core", "coreJVM")
 lazy val amfCoreJSRef  = ProjectRef(workspaceDirectory / "amf-core", "coreJS")
@@ -31,7 +31,7 @@ val commonSettings = Common.settings ++ Common.publish ++ Seq(
     resolvers ++= List(ivyLocal, Common.releases, Common.snapshots, Resolver.mavenLocal, Resolver.mavenCentral),
     credentials ++= Common.credentials(),
     libraryDependencies ++= Seq(
-        "org.mule.common" %%% "scala-common-test" % "0.1.12-SCALAJS1.6-SNAPSHOT" % Test,
+        "org.mule.common" %%% "scala-common-test" % "0.1.12-213-SNAPSHOT" % Test,
         "org.slf4j"         % "slf4j-nop"         % "1.7.32" % Test
     ),
     Test / logBuffered := false
@@ -137,10 +137,10 @@ lazy val rdfJS =
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
     .enablePlugins(JSDependenciesPlugin)
 
-ThisBuild / libraryDependencies ++= Seq(
-    compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.1" cross CrossVersion.constant("2.12.13")),
-    "com.github.ghik" % "silencer-lib" % "1.7.1" % Provided cross CrossVersion.constant("2.12.13")
-)
+//ThisBuild / libraryDependencies ++= Seq(
+//    compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.1" cross CrossVersion.constant("2.12.13")),
+//    "com.github.ghik" % "silencer-lib" % "1.7.1" % Provided cross CrossVersion.constant("2.12.13")
+//)
 
 lazy val sonarUrl   = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
 lazy val sonarToken = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")

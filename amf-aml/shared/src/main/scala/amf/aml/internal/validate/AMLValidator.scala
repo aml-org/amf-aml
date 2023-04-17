@@ -3,7 +3,6 @@ package amf.aml.internal.validate
 import amf.aml.client.scala.model.document.{Dialect, DialectInstanceUnit}
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.transform.pipelines.DialectInstanceTransformationPipeline
-import amf.aml.internal.utils.DialectRegister
 import amf.core.client.common.validation.{AmfProfile, ProfileName, UnknownProfile}
 import amf.core.client.scala.AMFGraphConfiguration
 import amf.core.client.scala.config.SkippedValidationPluginEvent
@@ -16,8 +15,8 @@ import amf.core.internal.remote.AmlDialectSpec
 import amf.core.internal.validation.core.ValidationProfile
 import amf.core.internal.validation.{EffectiveValidations, ShaclReportAdaptation}
 import amf.validation.internal.shacl.custom.CustomShaclValidator
-import com.github.ghik.silencer.silent
 
+import scala.annotation.nowarn
 import scala.concurrent.{ExecutionContext, Future}
 
 object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstraints {
@@ -80,7 +79,7 @@ object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstrai
       knownDialects: Seq[Dialect],
       constraints: Map[ProfileName, ValidationProfile]
   )(implicit executionContext: ExecutionContext) = {
-    @silent("deprecated") // Silent can only be used in assignment expressions
+    @nowarn
     val graphDependencies =
       if (dialectInstance.processingData.graphDependencies.nonEmpty) {
         dialectInstance.processingData.graphDependencies

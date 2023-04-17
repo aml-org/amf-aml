@@ -42,8 +42,8 @@ case class DynamicExtensionParser(
     } else {
       rest
     }
-    val dateParts = date.split("-")
-    val timeParts = time.split(":")
+    val dateParts = date.split("-").toSeq
+    val timeParts = time.split(":").toSeq
     (dateParts, timeParts)
   }
 

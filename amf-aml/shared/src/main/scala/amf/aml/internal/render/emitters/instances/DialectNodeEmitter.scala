@@ -92,7 +92,8 @@ class RootDialectNodeEmitter(
                       .declarationsPath()
                       .option()
                       .getOrElse("/")
-                      .split("/"),
+                      .split("/")
+                      .toList,
                     referencesAliasIndex,
                     renderOptions = renderOptions,
                     registry = registry

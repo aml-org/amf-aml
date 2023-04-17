@@ -2,7 +2,7 @@ package amf.aml.internal.parse.instances.parser
 
 import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMappable, PropertyMapping, UnknownMapKeyProperty}
 import amf.aml.internal.parse.instances.{DialectInstanceContext, NodeMappableHelper}
-import amf.aml.internal.parse.instances.DialectInstanceParser.pathSegment
+import amf.aml.internal.parse.instances.DialectInstanceParserOps.pathSegment
 import amf.aml.internal.parse.instances.parser.ObjectCollectionPropertyParser.{NodeParser, ObjectUnionParser}
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}

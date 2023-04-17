@@ -25,8 +25,8 @@ object AnyTypeConverter extends Converter {
           case Some(s: String) if s == xsdInteger  => Some(AmfScalar(v.toInt))
           case Some(s: String) if s == xsdFloat    => Some(AmfScalar(v.toFloat))
           case Some(s: String) if s == xsdDouble   => Some(AmfScalar(v.toDouble))
-          case Some(s: String) if s == xsdDateTime => Some(AmfScalar(SimpleDateTime.parse(v).right.get))
-          case Some(s: String) if s == xsdDate     => Some(AmfScalar(SimpleDateTime.parse(v).right.get))
+          case Some(s: String) if s == xsdDateTime => Some(AmfScalar(SimpleDateTime.parse(v).toOption.get))
+          case Some(s: String) if s == xsdDate     => Some(AmfScalar(SimpleDateTime.parse(v).toOption.get))
           case _                                   => Some(AmfScalar(v))
         }
       case Uri(v) => conversionValidation(s"Expecting String literal found URI $v")

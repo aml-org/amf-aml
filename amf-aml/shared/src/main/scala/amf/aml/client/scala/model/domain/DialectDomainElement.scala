@@ -2,7 +2,7 @@ package amf.aml.client.scala.model.domain
 
 import amf.aml.internal.annotations.YNodeAnnotationOperations.getAnnotationsOf
 import amf.aml.internal.metamodel.domain.DialectDomainElementModel
-import amf.aml.internal.parse.instances.DialectInstanceParser.typesFrom
+import amf.aml.internal.parse.instances.DialectInstanceParserOps.typesFrom
 import amf.core.client.scala.model.domain._
 import amf.core.client.scala.model.{BoolField, StrField}
 import amf.core.client.scala.vocabulary.Namespace
@@ -31,7 +31,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
 
   def isAbstract: BoolField                                = fields.field(DialectDomainElementModel.Abstract)
   def declarationName: StrField                            = fields.field(DialectDomainElementModel.DeclarationName)
-  def containsProperty(property: PropertyMapping): Boolean = graph.containsField(property.toField)
+  def containsProperty(property: PropertyMapping): Boolean = graph.containsField(property.toField())
 
   def definedBy: NodeMapping = instanceDefinedBy match {
     case Some(mapping) => mapping
@@ -235,12 +235,12 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
       case Some(mapping) if mapping.allowMultiple().is(true) =>
         value match {
           case seq: Seq[_] =>
-            set(mapping.toField, AmfArray(seq.map(AmfScalar(_))))
+            set(mapping.toField(), AmfArray(seq.map(AmfScalar(_))))
           case other =>
-            set(mapping.toField, AmfArray(Seq(AmfScalar(other))))
+            set(mapping.toField(), AmfArray(Seq(AmfScalar(other))))
         }
       case Some(mapping) =>
-        set(mapping.toField, AmfScalar(value))
+        set(mapping.toField(), AmfScalar(value))
         this
       case None =>
         throw new Exception(s"Cannot find node mapping for property IRI $propertyIri")
@@ -252,7 +252,7 @@ case class DialectDomainElement(override val fields: Fields, annotations: Annota
     else {
       new DialectDomainElementModel(
         instanceTypes.distinct,
-        instanceDefinedBy.map(_.propertiesMapping().map(_.toField)).getOrElse(Seq.empty),
+        instanceDefinedBy.map(_.propertiesMapping().map(_.toField())).getOrElse(Seq.empty),
         instanceDefinedBy
       )
     }

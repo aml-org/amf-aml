@@ -6,7 +6,11 @@ import amf.aml.internal.annotations.FromUnionNodeMapping
 import amf.aml.internal.metamodel.document.DialectInstanceModel
 import amf.aml.internal.metamodel.domain.DialectDomainElementModel
 import amf.aml.internal.parse.common.{DeclarationKey, DeclarationKeyCollector}
-import amf.aml.internal.parse.instances.DialectInstanceParser._
+import amf.aml.internal.parse.instances.DialectInstanceParserOps.{
+  encodedElementDefaultId,
+  findDeclarationsMap,
+  pathSegment
+}
 import amf.aml.internal.parse.instances.parser._
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.document.EncodesModel
@@ -15,14 +19,15 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
 import amf.core.internal.utils._
-import com.github.ghik.silencer.silent
 import org.yaml.model._
+
+import scala.annotation.nowarn
 
 // TODO: needs further breakup of parts. This components of this class are untestable the current way.
 // TODO: find out why all these methods are protected.
 // TODO:
 
-object DialectInstanceParser extends NodeMappableHelper {
+object DialectInstanceParserOps extends NodeMappableHelper {
   def typesFrom(mapping: NodeMapping): Seq[String] = {
     Seq(mapping.nodetypeMapping.option(), Some(mapping.id)).flatten
   }
@@ -103,7 +108,7 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
   val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
   def parseDocument(): DialectInstance = {
-    @silent("deprecated") // Silent can only be used in assignment expressions
+    @nowarn
     val dialectInstance: DialectInstance = DialectInstance(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
@@ -129,7 +134,7 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
       dialectInstance.withReferences(references.baseUnitReferences())
     if (ctx.nestedDialects.nonEmpty) {
       dialectInstance.processingData.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
-      @silent("deprecated") // Silent can only be used in assignment expressions
+      @nowarn
       val a = dialectInstance.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
     }
 

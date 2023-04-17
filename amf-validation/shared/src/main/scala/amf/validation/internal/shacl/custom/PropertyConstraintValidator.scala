@@ -58,5 +58,5 @@ trait PropertyConstraintValidator {
       propertyConstraint: PropertyConstraint,
       parent: AmfObject,
       reportBuilder: ReportBuilder
-  )
+  ): Unit
 }

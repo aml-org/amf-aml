@@ -14,7 +14,7 @@ object JSONPointerUnionFinder {
     val entry   = map.key("$ref").get
     val pointer = entry.value.as[String]
     val fullPointer = if (pointer.startsWith("#")) {
-      root.location + pointer
+      root.location.toString() + pointer
     } else {
       pointer
     }

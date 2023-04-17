@@ -3,7 +3,7 @@ package amf.aml.internal.parse.instances.parser
 import amf.aml.client.scala.model.domain._
 import amf.aml.internal.parse.common.AnnotationsParser.parseAnnotations
 import amf.aml.internal.parse.instances.ClosedInstanceNode.checkNode
-import amf.aml.internal.parse.instances.DialectInstanceParser.{computeParsingScheme, emptyElement, typesFrom}
+import amf.aml.internal.parse.instances.DialectInstanceParserOps.{computeParsingScheme, emptyElement, typesFrom}
 import amf.aml.internal.parse.instances.InstanceNodeIdHandling.generateNodeId
 import amf.aml.internal.parse.instances.parser.IncludeNodeParser.resolveLink
 import amf.aml.internal.parse.instances.parser.applicable.ApplicableMappingFinder

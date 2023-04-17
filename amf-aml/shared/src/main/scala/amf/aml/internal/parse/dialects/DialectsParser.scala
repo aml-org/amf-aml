@@ -197,7 +197,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
   protected def membersFrom(union: NodeWithDiscriminator[_]): Seq[NodeMappable] = {
     union
       .objectRange()
-      .toStream
+      .to(LazyList)
       .flatMap { name =>
         ctx.declarations.findNodeMapping(name.value(), All)
       }
@@ -272,7 +272,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
 
     val allProperties = member
       .propertiesMapping()
-      .toStream
+      .to(LazyList)
       .sortBy(_.name().value()) // Sort properties by name
 
     val mandatoryProperties = allProperties.filter(_.minCount().is(1))
@@ -342,7 +342,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     *      validates union & discriminator members exist 3. checks for ambiguity
     */
   protected def checkNodeMappableReferences[T <: DomainElement](mappable: NodeWithDiscriminator[_]): Unit = {
-    val memberStream = mappable.objectRange().toStream
+    val memberStream = mappable.objectRange().to(LazyList)
     val memberIdsStream = memberStream
       .map(field => (memberIdFromName(field.value(), mappable), field.annotations()))
       .filter { case (optionalValue, _) =>

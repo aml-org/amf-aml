@@ -1,7 +1,7 @@
 package amf.aml.internal.parse.instances.parser
 
 import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping}
-import amf.aml.internal.parse.instances.DialectInstanceParser.pathSegment
+import amf.aml.internal.parse.instances.DialectInstanceParserOps.pathSegment
 import amf.aml.internal.parse.instances.parser.ObjectCollectionPropertyParser.{NodeParser, ObjectUnionParser}
 import amf.aml.internal.parse.instances.parser.ObjectPropertyParser.NodeMappable
 import amf.aml.internal.parse.instances.{DialectInstanceContext, NodeMappableHelper}

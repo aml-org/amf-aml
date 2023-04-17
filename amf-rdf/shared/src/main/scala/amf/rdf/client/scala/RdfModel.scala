@@ -34,7 +34,7 @@ abstract class RdfModel {
     * @param text
     * @param mediaType
     */
-  def load(mediaType: String, text: String)
+  def load(mediaType: String, text: String): Unit
 
   /** Write model as a String representation
     * @param mediaType

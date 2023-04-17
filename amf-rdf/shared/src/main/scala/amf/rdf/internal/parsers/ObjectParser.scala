@@ -235,7 +235,7 @@ class ObjectParser(
         }
       }
     }
-    properties
+    properties.toSeq
   }
 
   private def checkLinkables(instance: AmfObject): Unit = {
@@ -249,7 +249,7 @@ class ObjectParser(
         }
         ctx.unresolvedReferences.update(link.id, Nil)
       case ref: ExternalSourceElement =>
-        ctx.unresolvedExtReferencesMap += (ref.referenceId.value -> ref) // process when parse the references node
+        ctx.unresolvedExtReferencesMap += (ref.referenceId.value() -> ref) // process when parse the references node
       case _ => // ignore
     }
   }

@@ -14,7 +14,7 @@ trait IteratorTest extends DialectTests with Matchers {
   test("Domain element iterator in self encoded dialect instance") {
     parseInstance("dialect23.yaml", "example23.yaml").map(baseUnit => {
       val ids =
-        baseUnit.iterator().collect { case e: DomainElement => e.id }.toStream
+        baseUnit.iterator().collect { case e: DomainElement => e.id }.to(LazyList)
       ids should contain inOrderOnly
         ("file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml",
         "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets")

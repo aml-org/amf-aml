@@ -58,7 +58,7 @@ case class AnnotationMappingEmitter(
           }
           .toSeq
         emitters.appendAll(PropertyLikeMappingEmitter(dialect, element, ordering, aliases).emitters)
-        traverse(ordering.sorted(emitters), b)
+        traverse(ordering.sorted(emitters.toSeq), b)
       }
     )
   }

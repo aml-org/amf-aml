@@ -30,7 +30,7 @@ trait DialectWrapper {
     node.definedBy
       .propertiesMapping()
       .find(_.name().value() == property)
-      .flatMap(p => node.literalProperty(p.toField))
+      .flatMap(p => node.literalProperty(p.toField()))
       .map(_.toString)
   }
 
@@ -38,7 +38,7 @@ trait DialectWrapper {
     node.definedBy
       .propertiesMapping()
       .find(_.name().value() == property)
-      .flatMap(p => node.literalProperty(p.toField))
+      .flatMap(p => node.literalProperty(p.toField()))
       .map(_.asInstanceOf[Int])
   }
 
@@ -46,7 +46,7 @@ trait DialectWrapper {
     node.definedBy
       .propertiesMapping()
       .find(_.name().value() == property)
-      .map(p => node.literalProperties(p.toField).map(_.toString))
+      .map(p => node.literalProperties(p.toField()).map(_.toString))
       .getOrElse(Nil)
   }
 
@@ -54,7 +54,7 @@ trait DialectWrapper {
     node.definedBy
       .propertiesMapping()
       .find(_.name().value() == property)
-      .map(p => node.objectCollectionProperty(p.toField).map(f))
+      .map(p => node.objectCollectionProperty(p.toField()).map(f))
       .getOrElse(Nil)
   }
 
@@ -64,7 +64,7 @@ trait DialectWrapper {
       f: (DialectDomainElement, Int) => T
   ): Seq[T] = {
     node.definedBy.propertiesMapping().find(_.name().value() == property).map { p =>
-      node.objectCollectionProperty(p.toField).zipWithIndex.map { case (dialectDomainElement, i) =>
+      node.objectCollectionProperty(p.toField()).zipWithIndex.map { case (dialectDomainElement, i) =>
         f(dialectDomainElement, i)
       }
     } getOrElse (Nil)
@@ -74,11 +74,11 @@ trait DialectWrapper {
     node.definedBy
       .propertiesMapping()
       .find(_.name().value() == property)
-      .flatMap(p => node.objectProperty(p.toField).map(f))
+      .flatMap(p => node.objectProperty(p.toField()).map(f))
 
   def prefixes(node: DialectDomainElement): mutable.Map[String, String] = {
     val prefixMap: mutable.Map[String, String] = mutable.HashMap()
-    node.definedBy.propertiesMapping().find(_.name().value() == "prefixes").map(_.toField) match {
+    node.definedBy.propertiesMapping().find(_.name().value() == "prefixes").map(_.toField()) match {
       case Some(prefixesProperty) =>
         node.objectCollectionProperty(prefixesProperty).foreach { prefixEntity =>
           val prefix    = extractString(prefixEntity, "prefix").getOrElse("")

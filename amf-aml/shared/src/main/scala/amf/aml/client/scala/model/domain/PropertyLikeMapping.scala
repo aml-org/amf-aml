@@ -19,7 +19,7 @@ trait PropertyLikeMapping[M <: PropertyLikeMappingModel]
   def maximum(): DoubleField          = fields.field(meta.Maximum)
   def allowMultiple(): BoolField      = fields.field(meta.AllowMultiple)
   def sorted(): BoolField             = fields.field(meta.Sorted)
-  def enum(): Seq[AnyField]           = fields.field(meta.Enum)
+  def `enum`(): Seq[AnyField]         = fields.field(meta.Enum)
   def unique(): BoolField             = fields.field(meta.Unique)
   def externallyLinkable(): BoolField = fields.field(meta.ExternallyLinkable)
   def mandatory(): BoolField          = fields.field(meta.Mandatory)

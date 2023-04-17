@@ -5,15 +5,14 @@ import amf.aml.internal.AMLDialectInstancePlugin
 import amf.aml.internal.registries.AMLRegistry
 import amf.aml.internal.render.emitters.instances.{DefaultNodeMappableFinder, DialectInstancesEmitter}
 import amf.core.client.common.{NormalPriority, PluginPriority}
-import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.AMFErrorHandler
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.plugins.render.{RenderConfiguration, RenderInfo, SYAMLASTBuilder, SYAMLBasedRenderPlugin}
 import amf.core.internal.plugins.syntax.ASTBuilder
 import amf.core.internal.remote.Mimes._
-import com.github.ghik.silencer.silent
-import org.yaml.builder.{DocBuilder, YDocumentBuilder}
 import org.yaml.model.YDocument
+
+import scala.annotation.nowarn
 
 /** Parsing plugin for dialect instance like units derived from a resolved dialect
   * @param dialect
@@ -60,7 +59,7 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
 
   override def applies(element: RenderInfo): Boolean = element.unit match {
     case unit: DialectInstanceUnit =>
-      @silent("deprecated") // Silent can only be used in assignment expressions
+      @nowarn
       val a = unit.processingData.definedBy().option().orElse(unit.definedBy().option()).contains(dialect.id)
       a
     case _ => false

@@ -302,7 +302,7 @@ private class DialectPatchApplication()(implicit val errorHandler: AMFErrorHandl
           .values
           .toSeq
 
-        val unionElements = targetElements union toInsertElements
+        val unionElements = targetElements concat toInsertElements
 
         targetNode.graph.patchSeqField(patchField, unionElements)
 

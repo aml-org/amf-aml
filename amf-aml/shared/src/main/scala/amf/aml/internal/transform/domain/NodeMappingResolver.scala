@@ -32,7 +32,7 @@ class NodeMappingResolver(val child: NodeMapping) {
   def resolvePropertyMappings(child: NodeMapping, parent: NodeMapping): Unit = {
     val childPropertyMappings = child
       .propertiesMapping()
-      .toStream
+      .to(LazyList)
       .map(_.name().value())
       .toSet
 
@@ -40,7 +40,7 @@ class NodeMappingResolver(val child: NodeMapping) {
 
     val inheritedProperties = parent
       .propertiesMapping()
-      .toStream
+      .to(LazyList)
       .filter(property => !definedInChild(property))
       .map { inheritedProperty =>
         PropertyMapping(inheritedProperty.fields.copy(), inheritedProperty.annotations.copy())

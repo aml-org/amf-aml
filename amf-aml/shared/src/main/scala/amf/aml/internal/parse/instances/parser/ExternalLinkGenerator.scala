@@ -3,7 +3,7 @@ package amf.aml.internal.parse.instances.parser
 import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMapping, PropertyMapping}
 import amf.aml.internal.annotations.{CustomBase, CustomId}
 import amf.aml.internal.parse.instances.{BaseDirectiveOverride, DialectInstanceContext, InstanceNodeIdHandling}
-import amf.aml.internal.parse.instances.DialectInstanceParser.typesFrom
+import amf.aml.internal.parse.instances.DialectInstanceParserOps.typesFrom
 import amf.aml.internal.parse.instances.InstanceNodeIdHandling.idTemplate
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.internal.parser.{Root, YMapOps}
