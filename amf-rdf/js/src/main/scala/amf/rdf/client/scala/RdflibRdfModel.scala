@@ -7,25 +7,19 @@ import org.mulesoft.common.io.Output
 import scala.scalajs.js
 
 object RDF {
-  lazy val instance: js.Dynamic = if (js.isUndefined(js.Dynamic.global.GlobalSHACLValidator)) {
-    throw new Exception("Cannot find global SHACLValidator object")
+  lazy val instance: js.Dynamic = if (js.typeOf(js.Dynamic.global.global.GlobalSHACLValidator) == "undefined") {
+    val keys = js.Object.keys(js.Dynamic.global.global.asInstanceOf[js.Object])
+    throw new Exception(s"Cannot find global SHACLValidator object. Found $keys")
   } else {
-    js.Dynamic.global.GlobalSHACLValidator.`$rdf`
-  }
-}
-
-object JSONLD {
-  lazy val instance: js.Dynamic = if (js.isUndefined(js.Dynamic.global.SHACLValidator)) {
-    throw new Exception("Cannot find global SHACLValidator object")
-  } else {
-    js.Dynamic.global.SHACLValidator.jsonld
+    val keys = js.Object.keys(js.Dynamic.global.global.asInstanceOf[js.Object])
+    println(s"Found keys ${keys}")
+    js.Dynamic.global.global.GlobalSHACLValidator.`$rdf`
   }
 }
 
 class RdflibRdfModel(val model: js.Dynamic = RDF.instance.graph()) extends RdfModel {
 
-  lazy val rdf: js.Dynamic    = RDF.instance
-  lazy val jsonld: js.Dynamic = JSONLD.instance
+  lazy val rdf: js.Dynamic = RDF.instance
 
   override def nextAnonId(): String = synchronized {
     rdf.blankNode().toString
