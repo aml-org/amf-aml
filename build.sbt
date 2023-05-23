@@ -63,7 +63,7 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
   .jsSettings(
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js",
-    jsDependencies += ProvidedJS / "shacl.js"
+    jsDependencies += ProvidedJS / "shacl.js" % "test"
   )
 
 lazy val amlJVM = aml.jvm.in(file("./amf-aml/jvm"))
