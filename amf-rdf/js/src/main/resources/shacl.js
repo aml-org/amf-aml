@@ -17461,11 +17461,11 @@ class DynamicNestedLoopJoin extends MultiTransformIterator
     constructor (left, funRight, funJoin)
     {
         super(left);
-        
+
         this.funRight = funRight;
         this.funJoin = funJoin;
     }
-    
+
     _createTransformer (leftItem)
     {
         return new SimpleTransformIterator(this.funRight(leftItem), { transform: (rightItem, done) =>
@@ -17489,24 +17489,24 @@ class HashJoin extends AsyncIterator
     constructor (left, right, funHash, funJoin)
     {
         super(right);
-        
+
         this.left = left;
         this.right = right;
         this.funHash = funHash;
         this.funJoin = funJoin;
-        
+
         this.leftMap = new Map();
-    
+
         this.match    = null;
         this.matches  = [];
         this.matchIdx = 0;
-        
-        
+
+
         this.readable = false;
-        
+
         this.left.on('end', allowJoining.bind(this));
         this.left.on('data', addItem.bind(this));
-        
+
         function addItem (item)
         {
             let hash = this.funHash(item);
@@ -17524,24 +17524,24 @@ class HashJoin extends AsyncIterator
             this.right.on('end', () => { if (!this.hasResults()) this._end(); });
         }
     }
-    
+
     hasResults ()
     {
         return !this.right.ended || this.matchIdx < this.matches.length;
     }
-    
+
     close ()
     {
         super.close();
         this.left.close();
         this.right.close();
     }
-    
+
     read ()
     {
         if (this.ended || !this.readable)
             return null;
-    
+
         while (this.matchIdx < this.matches.length)
         {
             let item = this.matches[this.matchIdx++];
@@ -17549,22 +17549,22 @@ class HashJoin extends AsyncIterator
             if (result !== null)
                 return result;
         }
-    
+
         if (!this.hasResults())
             this._end();
-    
+
         this.match = this.right.read();
-    
+
         if (this.match === null)
         {
             this.readable = false;
             return null;
         }
-    
+
         let hash = this.funHash(this.match);
         this.matches = this.leftMap.get(hash) || [];
         this.matchIdx = 0;
-    
+
         // array is filled again so recursive call can have results
         return this.read();
     }
@@ -17583,18 +17583,18 @@ class NestedLoopJoin extends MultiTransformIterator
     constructor (left, right, funJoin)
     {
         super(left);
-        
+
         this.right = right;
         this.funJoin = funJoin; // function that joins 2 elements or returns null if join is not possible
         this.on('end', () => this.right.close());
     }
-    
+
     close ()
     {
         super.close();
         this.right.close();
     }
-    
+
     _createTransformer (leftItem)
     {
         return new SimpleTransformIterator(this.right.clone(), { transform: (rightItem, done) =>
@@ -17618,36 +17618,36 @@ class SymmetricHashJoin extends AsyncIterator
     constructor (left, right, funHash, funJoin)
     {
         super();
-        
+
         this.left  = left;
         this.right = right;
-        
+
         this.funHash = funHash;
         this.funJoin = funJoin;
-    
+
         this.usedLeft = false;
         this.leftMap  = new Map();
         this.rightMap = new Map();
-        
+
         this.on('end', () => this._cleanup() );
-        
+
         this.match    = null;
         this.matches  = [];
         this.matchIdx = 0;
-        
+
         this.left.on ('readable', () => this.readable = true);
         this.right.on('readable', () => this.readable = true);
-        
+
         // this needs to be here since it's possible the left/right streams only get ended after there are no more results left
         this.left.on ('end', () => { if (!this.hasResults()) this._end(); });
         this.right.on('end', () => { if (!this.hasResults()) this._end(); });
     }
-    
+
     hasResults()
     {
         return !this.left.ended  || !this.right.ended || this.matchIdx < this.matches.length;
     }
-    
+
     _cleanup ()
     {
         // motivate garbage collector to remove these
@@ -17655,19 +17655,19 @@ class SymmetricHashJoin extends AsyncIterator
         this.rightMap = null;
         this.matches = null;
     }
-    
+
     close ()
     {
         super.close();
         this.left.close();
         this.right.close();
     }
-    
+
     read ()
     {
         if (this.ended)
             return null;
-        
+
         while (this.matchIdx < this.matches.length)
         {
             let item = this.matches[this.matchIdx++];
@@ -17675,39 +17675,39 @@ class SymmetricHashJoin extends AsyncIterator
             if (result !== null)
                 return result;
         }
-        
+
         if (!this.hasResults())
             this._end();
-        
+
         let item = null;
         // try both streams if the first one has no value
         for (let i = 0; i < 2; ++i)
         {
             item = this.usedLeft ? this.right.read() : this.left.read();
             this.usedLeft = !this.usedLeft; // try other stream next time
-            
+
             // found a result, no need to check the other stream this run
             if (item !== null)
                 break;
         }
-        
+
         if (item === null)
         {
             this.readable = false;
             return null;
         }
-        
+
         let hash = this.funHash(item);
         let map = this.usedLeft ? this.leftMap : this.rightMap;
         if (!map.has(hash))
             map.set(hash, []);
         let arr = map.get(hash);
         arr.push(item);
-    
+
         this.match = item;
         this.matches = (this.usedLeft ? this.rightMap : this.leftMap).get(hash) || [];
         this.matchIdx = 0;
-        
+
         // array is filled again so recursive call can have results
         return this.read();
     }
@@ -17724,45 +17724,45 @@ class MergeIterator extends AsyncIterator
     constructor (streams)
     {
         super();
-        
+
         if (!Array.isArray(streams))
             streams = Array.prototype.slice.call(arguments);
-        
+
         this.streams = streams;
-        
+
         for (let stream of streams)
         {
             stream.on('readable', () => this.emit('readable'));
             stream.on('end', () => this._removeStream(stream));
         }
-        
+
         if (this.streams.length === 0)
             this.close();
-        
+
         this.idx = this.streams.length-1;
     }
-    
+
     _removeStream (stream)
     {
         let idx = this.streams.indexOf(stream);
         if (idx < 0)
             return;
-        
+
         this.streams.splice(idx, 1);
         if (this.idx >= this.streams.length)
             --this.idx;
-        
+
         if (this.streams.length === 0)
             this._end();
     }
-    
+
     close ()
     {
         super.close();
         for (let stream of this.streams)
             stream.close();
     }
-    
+
     read ()
     {
         for (let attempts = 0; attempts < this.streams.length; ++attempts)
@@ -17772,7 +17772,7 @@ class MergeIterator extends AsyncIterator
             if (item !== null)
                 return item;
         }
-        
+
         return null;
     }
 }
@@ -46291,7 +46291,7 @@ var Parser = /** @class */ (function (_super) {
         this._tagname = name;
         if (!this._options.xmlMode &&
             Object.prototype.hasOwnProperty.call(openImpliesClose, name)) {
-            for (var el = void 0; 
+            for (var el = void 0;
             // @ts-ignore
             openImpliesClose[name].has((el = this._stack[this._stack.length - 1])); this.onclosetag(el))
                 ;
@@ -48246,7 +48246,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
       var array = this._array;
       var maxIndex = array.length - 1;
       var ii = 0;
-      return new Iterator(function() 
+      return new Iterator(function()
         {return ii > maxIndex ?
           iteratorDone() :
           iteratorValue(type, ii, array[reverse ? maxIndex - ii++ : ii++])}
@@ -48717,7 +48717,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 
     Repeat.prototype.__iterator = function(type, reverse) {var this$0 = this;
       var ii = 0;
-      return new Iterator(function() 
+      return new Iterator(function()
         {return ii < this$0.size ? iteratorValue(type, ii++, this$0._value) : iteratorDone()}
       );
     };
@@ -50915,7 +50915,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
         return flipSequence;
       };
     }
-    reversedSequence.get = function(key, notSetValue) 
+    reversedSequence.get = function(key, notSetValue)
       {return iterable.get(useKeys ? key : -1 - key, notSetValue)};
     reversedSequence.has = function(key )
       {return iterable.has(useKeys ? key : -1 - key)};
@@ -51114,7 +51114,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
         return this.cacheResult().__iterate(fn, reverse);
       }
       var iterations = 0;
-      iterable.__iterate(function(v, k, c) 
+      iterable.__iterate(function(v, k, c)
         {return predicate.call(context, v, k, c) && ++iterations && fn(v, k, this$0)}
       );
       return iterations;
@@ -51305,7 +51305,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
     interposedSequence.size = iterable.size && iterable.size * 2 -1;
     interposedSequence.__iterateUncached = function(fn, reverse) {var this$0 = this;
       var iterations = 0;
-      iterable.__iterate(function(v, k) 
+      iterable.__iterate(function(v, k)
         {return (!iterations || fn(separator, iterations++, this$0) !== false) &&
         fn(v, iterations++, this$0) !== false},
         reverse
@@ -53044,26 +53044,26 @@ var at, // The index of the current character
             text:    text
         };
     },
-    
+
     next = function (c) {
         // If a c parameter is provided, verify that it matches the current character.
         if (c && c !== ch) {
             error("Expected '" + c + "' instead of '" + ch + "'");
         }
-        
+
         // Get the next character. When there are no more characters,
         // return the empty string.
-        
+
         ch = text.charAt(at);
         at += 1;
         return ch;
     },
-    
+
     number = function () {
         // Parse a number value.
         var number,
             string = '';
-        
+
         if (ch === '-') {
             string = '-';
             next('-');
@@ -53097,14 +53097,14 @@ var at, // The index of the current character
             return number;
         }
     },
-    
+
     string = function () {
         // Parse a string value.
         var hex,
             i,
             string = '',
             uffff;
-        
+
         // When parsing for string values, we must look for " and \ characters.
         if (ch === '"') {
             while (next()) {
@@ -53261,7 +53261,7 @@ value = function () {
 
 module.exports = function (source, reviver) {
     var result;
-    
+
     text = source;
     at = 0;
     ch = ' ';
@@ -53316,7 +53316,7 @@ function quote(string) {
     // backslash characters, then we can safely slap some quotes around it.
     // Otherwise we must also replace the offending characters with safe escape
     // sequences.
-    
+
     escapable.lastIndex = 0;
     return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
         var c = meta[a];
@@ -53334,47 +53334,47 @@ function str(key, holder) {
         mind = gap,
         partial,
         value = holder[key];
-    
+
     // If the value has a toJSON method, call it to obtain a replacement value.
     if (value && typeof value === 'object' &&
             typeof value.toJSON === 'function') {
         value = value.toJSON(key);
     }
-    
+
     // If we were called with a replacer function, then call the replacer to
     // obtain a replacement value.
     if (typeof rep === 'function') {
         value = rep.call(holder, key, value);
     }
-    
+
     // What happens next depends on the value's type.
     switch (typeof value) {
         case 'string':
             return quote(value);
-        
+
         case 'number':
             // JSON numbers must be finite. Encode non-finite numbers as null.
             return isFinite(value) ? String(value) : 'null';
-        
+
         case 'boolean':
         case 'null':
             // If the value is a boolean or null, convert it to a string. Note:
             // typeof null does not produce 'null'. The case is included here in
             // the remote chance that this gets fixed someday.
             return String(value);
-            
+
         case 'object':
             if (!value) return 'null';
             gap += indent;
             partial = [];
-            
+
             // Array.isArray
             if (Object.prototype.toString.apply(value) === '[object Array]') {
                 length = value.length;
                 for (i = 0; i < length; i += 1) {
                     partial[i] = str(i, value) || 'null';
                 }
-                
+
                 // Join all of the elements together, separated with commas, and
                 // wrap them in brackets.
                 v = partial.length === 0 ? '[]' : gap ?
@@ -53383,7 +53383,7 @@ function str(key, holder) {
                 gap = mind;
                 return v;
             }
-            
+
             // If the replacer is an array, use it to select the members to be
             // stringified.
             if (rep && typeof rep === 'object') {
@@ -53409,7 +53409,7 @@ function str(key, holder) {
                     }
                 }
             }
-            
+
         // Join all of the member texts together, separated with commas,
         // and wrap them in braces.
 
@@ -53425,7 +53425,7 @@ module.exports = function (value, replacer, space) {
     var i;
     gap = '';
     indent = '';
-    
+
     // If the space parameter is a number, make an indent string containing that
     // many spaces.
     if (typeof space === 'number') {
@@ -53445,7 +53445,7 @@ module.exports = function (value, replacer, space) {
     && (typeof replacer !== 'object' || typeof replacer.length !== 'number')) {
         throw new Error('JSON.stringify');
     }
-    
+
     // Make a fake root object containing our value under the key of ''.
     // Return the result of stringifying the value.
     return str('', {'': value});
@@ -70438,7 +70438,7 @@ function parseLink(link) {
 
     var info = parts
       .reduce(createObjects, {});
-    
+
     info = xtend(qry, info);
     info.url = linkUrl;
     return info;
@@ -86268,7 +86268,7 @@ case 1:
       $$[$0-1].prefixes = Parser.prefixes;
       Parser.prefixes = null;
       return $$[$0-1];
-    
+
 break;
 case 3:
 this.$ = extend($$[$0-1], $$[$0], { type: 'query' });
@@ -86277,7 +86277,7 @@ case 4:
 
       Parser.base = resolveIRI($$[$0])
       base = basePath = baseRoot = '';
-    
+
 break;
 case 5:
 
@@ -86285,7 +86285,7 @@ case 5:
       $$[$0-1] = $$[$0-1].substr(0, $$[$0-1].length - 1);
       $$[$0] = resolveIRI($$[$0]);
       Parser.prefixes[$$[$0-1]] = $$[$0];
-    
+
 break;
 case 6: case 7:
 this.$ = extend($$[$0-3], groupDatasets($$[$0-2]), $$[$0-1], $$[$0]);
@@ -86371,12 +86371,12 @@ break;
 case 40:
 
       this.$ = $$[$0-1].map(function(v) { var o = {}; o[$$[$0-3]] = v; return o; })
-    
+
 break;
 case 41:
 
       this.$ = $$[$0-1].map(function() { return {}; })
-    
+
 break;
 case 42:
 
@@ -86390,7 +86390,7 @@ case 42:
           valuesObject['?' + $$[$0-4][i].value] = values[i];
         return valuesObject;
       });
-    
+
 break;
 case 45:
 this.$ = undefined;
@@ -86441,7 +86441,7 @@ case 63: case 64:
 this.$ = { type: 'graph', name: $$[$0] };
 break;
 case 65:
- this.$ = {}; this.$[lowercase($$[$0])] = true; 
+ this.$ = {}; this.$[lowercase($$[$0])] = true;
 break;
 case 66:
 this.$ = $$[$0-2] ? unionAll($$[$0-1], [$$[$0-2]]) : unionAll($$[$0-1]);
@@ -86450,7 +86450,7 @@ case 67:
 
       var graph = extend($$[$0-3] || { triples: [] }, { type: 'graph', name: toVar($$[$0-5]) });
       this.$ = $$[$0] ? [graph, $$[$0]] : [graph];
-    
+
 break;
 case 68: case 73:
 this.$ = { type: 'bgp', triples: unionAll($$[$0-2], [$$[$0-1]]) };
@@ -86473,7 +86473,7 @@ case 74:
         this.$ = { type: 'union', patterns: unionAll($$[$0-1].map(degroupSingle), [degroupSingle($$[$0])]) };
       else
         this.$ = $$[$0];
-    
+
 break;
 case 75:
 this.$ = extend($$[$0], { type: 'optional' });
@@ -86690,7 +86690,7 @@ case 192:
       if (!expansion) throw new Error('Unknown prefix: ' + prefix);
       var uriString = resolveIRI(expansion + $$[$0].substr(namePos + 1));
       this.$ = Parser.factory.namedNode(uriString);
-    
+
 break;
 case 193:
 
@@ -86698,7 +86698,7 @@ case 193:
       if (!($$[$0] in Parser.prefixes)) throw new Error('Unknown prefix: ' + $$[$0]);
       var uriString = resolveIRI(Parser.prefixes[$$[$0]]);
       this.$ = Parser.factory.namedNode(uriString);
-    
+
 break;
 case 201: case 209: case 211: case 213: case 223: case 225: case 231: case 235: case 239: case 253: case 255: case 257: case 259: case 261: case 263: case 265: case 267: case 292: case 298: case 309: case 325: case 357: case 369: case 388: case 390: case 392: case 394: case 404: case 408: case 410: case 412:
 $$[$0-1].push($$[$0]);
@@ -88899,7 +88899,7 @@ var IncomingMessage = exports.IncomingMessage = function (xhr, response, mode, f
 		self.url = response.url
 		self.statusCode = response.status
 		self.statusMessage = response.statusText
-		
+
 		response.headers.forEach(function (header, key){
 			self.headers[key.toLowerCase()] = header
 			self.rawHeaders.push(key, header)
@@ -93839,15 +93839,15 @@ var objectHelper = (function () {
     function isString (value) {
         return Object.prototype.toString.apply(value) === '[object String]';
     }
-    
+
     function isNumber (value) {
         return Object.prototype.toString.apply(value) === '[object Number]';
     }
-    
+
     function isBoolean (value) {
         return Object.prototype.toString.apply(value) === '[object Boolean]';
     }
-    
+
     function join (arr, separator) {
         var
             result = '',
@@ -96867,13 +96867,13 @@ Script.prototype.runInContext = function (context) {
     if (!(context instanceof Context)) {
         throw new TypeError("needs a 'context' argument.");
     }
-    
+
     var iframe = document.createElement('iframe');
     if (!iframe.style) iframe.style = {};
     iframe.style.display = 'none';
-    
+
     document.body.appendChild(iframe);
-    
+
     var win = iframe.contentWindow;
     var wEval = win.eval, wExecScript = win.execScript;
 
@@ -96882,7 +96882,7 @@ Script.prototype.runInContext = function (context) {
         wExecScript.call(win, 'null');
         wEval = win.eval;
     }
-    
+
     forEach(Object_keys(context), function (key) {
         win[key] = context[key];
     });
@@ -96891,11 +96891,11 @@ Script.prototype.runInContext = function (context) {
             win[key] = context[key];
         }
     });
-    
+
     var winKeys = Object_keys(win);
 
     var res = wEval.call(win, this.code);
-    
+
     forEach(Object_keys(win), function (key) {
         // Avoid copying circular objects like `top` and `window` by only
         // updating existing context properties or new properties in the `win`
@@ -96910,9 +96910,9 @@ Script.prototype.runInContext = function (context) {
             defineProp(context, key, win[key]);
         }
     });
-    
+
     document.body.removeChild(iframe);
-    
+
     return res;
 };
 
@@ -97073,7 +97073,7 @@ class NodeReadable extends Readable {
         };
         doRead();
     }
-    
+
     _destroy(err, callback) {
         if (this._reading) {
             const promise = new Promise(resolve => {
@@ -97084,7 +97084,7 @@ class NodeReadable extends Readable {
             this._handleDestroy(err, callback);
         }
     }
-        
+
     _handleDestroy(err, callback) {
         this._webStream.cancel();
         super._destroy(err, callback);
