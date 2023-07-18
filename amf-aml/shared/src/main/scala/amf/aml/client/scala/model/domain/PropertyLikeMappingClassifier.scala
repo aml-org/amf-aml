@@ -8,11 +8,12 @@ object PropertyLikeMappingClassifier {
     val isAnyNode = propertyLike.objectRange().exists { obj =>
       obj.value() == (Namespace.Meta + "anyNode").iri()
     }
-    val isLiteral           = propertyLike.literalRange().nonNull
-    val isObject            = propertyLike.objectRange().nonEmpty
-    val multiple            = propertyLike.allowMultiple().option().getOrElse(false)
-    val (isMap, isMapValue) = hasMapTermValue(propertyLike)
-    val isExternalLink      = propertyLike.externallyLinkable().option().getOrElse(false)
+    val isLiteral      = propertyLike.literalRange().nonNull
+    val isObject       = propertyLike.objectRange().nonEmpty
+    val multiple       = propertyLike.allowMultiple().option().getOrElse(false)
+    val hasMapKey_     = hasMapKey(propertyLike)
+    val hasMapValue_   = hasMapValue(propertyLike)
+    val isExternalLink = propertyLike.externallyLinkable().option().getOrElse(false)
 
     if (isExternalLink)
       ExternalLinkProperty
@@ -22,9 +23,9 @@ object PropertyLikeMappingClassifier {
       LiteralProperty
     else if (isLiteral)
       LiteralPropertyCollection
-    else if (isObject && isMap && isMapValue)
+    else if (isObject && hasMapKey_ && hasMapValue_)
       ObjectPairProperty
-    else if (isObject && isMap)
+    else if (isObject && hasMapKey_)
       ObjectMapProperty
     else if (isObject && !multiple)
       ObjectProperty
@@ -32,10 +33,11 @@ object PropertyLikeMappingClassifier {
       ObjectPropertyCollection
   }
 
-  private def hasMapTermValue(propertyLikeMapping: PropertyLikeMapping[_]): (Boolean, Boolean) = {
-    propertyLikeMapping match {
-      case mapping: PropertyMapping => (mapping.mapTermKeyProperty().nonNull, mapping.mapValueProperty().nonNull)
-      case _                        => (false, false)
-    }
+  private def hasMapKey(plm: PropertyLikeMapping[_]): Boolean = {
+    plm.mapTermKeyProperty().nonNull || plm.mapKeyProperty().nonNull
+  }
+
+  private def hasMapValue(plm: PropertyLikeMapping[_]): Boolean = {
+    plm.mapTermValueProperty().nonNull || plm.mapValueProperty().nonNull
   }
 }

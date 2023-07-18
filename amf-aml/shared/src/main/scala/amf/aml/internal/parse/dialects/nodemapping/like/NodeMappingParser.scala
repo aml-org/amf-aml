@@ -215,8 +215,6 @@ class NodeMappingParser(implicit ctx: DialectContext)
 
         PropertyLikeMappingParser(map, propertyMapping).parse()
 
-        parseMapKey(map, propertyMapping)
-        parseMapValue(map, propertyMapping)
         parsePatch(map, propertyMapping)
         parseAnnotations(map, propertyMapping, ctx.declarations)
         parseDefault(map, propertyMapping)

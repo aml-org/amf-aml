@@ -400,10 +400,10 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     if (name == (Namespace.Meta + "anyNode").iri()) Some(name)
     else {
       ctx.declarations.findNodeMapping(name, All) match {
-        case Some(mapping: NodeMapping) if union.isInstanceOf[PropertyMapping] =>
+        case Some(mapping: NodeMapping) if union.isInstanceOf[PropertyLikeMapping[_]] =>
           // I want to search or generate the uri (and check that the term is the same if is already set it) right know, so I can throw a violation if some is wrong before start parsing the instance.
           // Also, If none instance will be parsed, but the dialect model is going to be serialized, I would be better has the terms already setting in the json ld. That way, the violation is collected now, and we don't need to do some particular, border case, logic in the json ld graph parser.
-          updateMapLabelReferences(union.asInstanceOf[PropertyMapping], mapping) // Should remove this side effect
+          updateMapLabelReferences(union.asInstanceOf[PropertyLikeMapping[_]], mapping) // Should remove this side effect
           Some(mapping.id)
         case Some(mapping) =>
           Some(mapping.id)
@@ -432,14 +432,14 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
-  def updateMapLabelReferences(propertyMapping: PropertyMapping, range: NodeMapping): Unit = {
+  def updateMapLabelReferences(propertyMapping: PropertyLikeMapping[_], range: NodeMapping): Unit = {
     // todo: if mapKey is not defined but mapTermKey is, should we validate that all ranges contains one property with that term and if not, throw a violation?
 
     updateKeyMapReferences(propertyMapping, range)
     updateValueMapReferences(propertyMapping, range)
   }
 
-  private def updateValueMapReferences(propertyMapping: PropertyMapping, range: NodeMapping): Unit = {
+  private def updateValueMapReferences(propertyMapping: PropertyLikeMapping[_], range: NodeMapping): Unit = {
     propertyMapping.mapValueProperty().option().foreach { label =>
       range.propertiesMapping().find(_.name().value() == label) match {
         case Some(property) =>
@@ -468,7 +468,7 @@ class DialectsParser(root: Root)(implicit override val ctx: DialectContext)
     }
   }
 
-  private def updateKeyMapReferences(propertyMapping: PropertyMapping, range: NodeMapping): Unit = {
+  private def updateKeyMapReferences(propertyMapping: PropertyLikeMapping[_], range: NodeMapping): Unit = {
     propertyMapping.mapKeyProperty().option().foreach { label =>
       range.propertiesMapping().find(_.name().value() == label) match {
         case Some(property) =>

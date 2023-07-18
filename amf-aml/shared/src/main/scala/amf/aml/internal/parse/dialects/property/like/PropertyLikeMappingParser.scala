@@ -6,6 +6,9 @@ import amf.aml.client.scala.model.domain.{PropertyLikeMapping, PropertyMapping}
 import amf.aml.internal.parse.dialects.DialectAstOps.{DialectYMapOps, _}
 import amf.aml.internal.parse.dialects.DialectContext
 import amf.aml.internal.validate.DialectValidations
+import amf.aml.internal.validate.DialectValidations.DialectError
+import amf.core.internal.parser.domain.SearchScope.All
+import amf.core.internal.parser.domain.{Annotations, ValueNode}
 import org.yaml.model.{YMap, YPart}
 
 case class PropertyLikeMappingParser[T <: PropertyLikeMapping[_ <: PropertyLikeMappingModel]](
@@ -22,6 +25,9 @@ case class PropertyLikeMappingParser[T <: PropertyLikeMapping[_ <: PropertyLikeM
     map.parse("allowMultiple", propertyLikeMapping setParsing meta.AllowMultiple)
     map.parse("sorted", propertyLikeMapping setParsing meta.Sorted)
     map.parse("typeDiscriminatorName", propertyLikeMapping setParsing meta.TypeDiscriminatorName)
+
+    parseMapKey()
+    parseMapValue()
 
     MandatoryParser(map, propertyLikeMapping).parse()
     PropertyTermParser(map, propertyLikeMapping).parse()
@@ -44,6 +50,70 @@ case class PropertyLikeMappingParser[T <: PropertyLikeMapping[_ <: PropertyLikeM
           ast.location
         )
       }
+    }
+  }
+
+  private def parseMapKey(): Unit = {
+    val mapKey = map.key("mapKey")
+    val mapTermKey = map.key("mapTermKey")
+
+    for {
+      _ <- mapKey
+      _ <- mapTermKey
+    } yield {
+      ctx.eh.violation(DialectError, propertyLikeMapping.id, s"mapKey and mapTermKey are mutually exclusive", map.location)
+    }
+
+    mapTermKey.fold({
+      mapKey.foreach(entry => {
+        val propertyLabel = ValueNode(entry.value).string().toString
+        propertyLikeMapping.withMapKeyProperty(propertyLabel, Annotations(entry.value))
+      })
+    })(entry => {
+      val propertyTermId = ValueNode(entry.value).string().toString
+      getTermIfValid(propertyTermId, propertyLikeMapping.id, entry.value).foreach { p =>
+        propertyLikeMapping.withMapTermKeyProperty(p, Annotations(entry.value))
+      }
+    })
+  }
+
+  private def parseMapValue(): Unit = {
+    val mapValue = map.key("mapValue")
+    val mapTermValue = map.key("mapTermValue")
+
+    for {
+      _ <- mapValue
+      _ <- mapTermValue
+    } yield {
+      ctx.eh
+        .violation(DialectError, propertyLikeMapping.id, s"mapValue and mapTermValue are mutually exclusive", map.location)
+    }
+
+    mapTermValue.fold({
+      mapValue.foreach(entry => {
+        val propertyLabel = ValueNode(entry.value).string().toString
+        propertyLikeMapping.withMapValueProperty(propertyLabel, Annotations(entry.value))
+      })
+    })(entry => {
+      val propertyTermId = ValueNode(entry.value).string().toString
+      getTermIfValid(propertyTermId, propertyLikeMapping.id, entry.value).foreach { p =>
+        propertyLikeMapping.withMapTermValueProperty(p, Annotations(entry.value))
+      }
+    })
+
+  }
+
+  private def getTermIfValid(iri: String, propertyMappingId: String, ast: YPart): Option[String] = {
+    Namespace(iri).base match {
+      case Namespace.Data.base => Some(iri)
+      case _ =>
+        ctx.declarations.findPropertyTerm(iri, All) match {
+          case Some(term) => Some(term.id)
+          case _ =>
+            ctx.eh
+              .violation(DialectError, propertyMappingId, s"Cannot find property term with alias $iri", ast.location)
+            None
+        }
     }
   }
 

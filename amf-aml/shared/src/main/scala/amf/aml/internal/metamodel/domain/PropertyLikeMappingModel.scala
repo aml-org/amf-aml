@@ -100,4 +100,36 @@ trait PropertyLikeMappingModel extends DomainElementModel with HasObjectRangeMod
       "Mandatory constraint over the property. Different from minCount because it only checks the presence of property"
     )
   )
+
+  val MapKeyProperty: Field = Field(
+    Str,
+    Namespace.Meta + "mapProperty",
+    ModelDoc(
+      ModelVocabularies.Meta,
+      "mapLabelProperty",
+      "Marks the mapping as a 'map' mapping syntax. Directly related with mapTermKeyProperty"
+    )
+  )
+
+  val MapValueProperty: Field = Field(
+    Str,
+    Namespace.Meta + "mapValueProperty",
+    ModelDoc(
+      ModelVocabularies.Meta,
+      "mapLabelValueProperty",
+      "Marks the mapping as a 'map value' mapping syntax. Directly related with mapTermValueProperty"
+    )
+  )
+
+  val MapTermKeyProperty: Field = Field(
+    Iri,
+    Namespace.Meta + "mapTermProperty",
+    ModelDoc(ModelVocabularies.Meta, "mapTermPropertyUri", "Marks the mapping as a 'map' mapping syntax. ")
+  )
+
+  val MapTermValueProperty: Field = Field(
+    Iri,
+    Namespace.Meta + "mapTermValueProperty",
+    ModelDoc(ModelVocabularies.Meta, "mapTermValueProperty", "Marks the mapping as a 'map value' mapping syntax")
+  )
 }

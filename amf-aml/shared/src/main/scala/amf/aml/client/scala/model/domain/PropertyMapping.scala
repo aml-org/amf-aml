@@ -27,21 +27,6 @@ case class PropertyMapping(fields: Fields, annotations: Annotations)
     with NodeWithDiscriminator[PropertyMappingModel.type]
     with WithDefaultFacet {
 
-  def mapKeyProperty(): StrField   = fields.field(MapKeyProperty)
-  def mapValueProperty(): StrField = fields.field(MapValueProperty)
-
-  def mapTermKeyProperty(): StrField   = fields.field(MapTermKeyProperty)
-  def mapTermValueProperty(): StrField = fields.field(MapTermValueProperty)
-
-  def withMapKeyProperty(key: String, annotations: Annotations = Annotations()): PropertyMapping =
-    set(MapKeyProperty, AmfScalar(key, annotations))
-  def withMapValueProperty(value: String, annotations: Annotations = Annotations()): PropertyMapping =
-    set(MapValueProperty, AmfScalar(value, annotations))
-  def withMapTermKeyProperty(key: String, annotations: Annotations = Annotations()): PropertyMapping =
-    set(MapTermKeyProperty, AmfScalar(key, annotations))
-  def withMapTermValueProperty(value: String, annotations: Annotations = Annotations()): PropertyMapping =
-    set(MapTermValueProperty, AmfScalar(value, annotations))
-
   override def meta: PropertyMappingModel.type = PropertyMappingModel
 
   /** Value , path + field value that is used to compose the id when the object its adopted */
