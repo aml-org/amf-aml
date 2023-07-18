@@ -5,15 +5,14 @@ import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.parse.instances.parser.ObjectCollectionPropertyParser.NodeParser
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.client.scala.parse.document.SyamlBasedParserErrorHandler
 import amf.core.internal.parser.Root
 import org.yaml.model.{YMap, YMapEntry, YNode}
 
 object LiteralPropertyParser {
-  def parse(propertyEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(implicit
+  def parse(propertyValueEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(implicit
       ctx: DialectInstanceContext
   ): Unit = {
-    setLiteralValue(propertyEntry, property, node)
+    setLiteralValue(propertyValueEntry, property, node)
   }
 
   private def setLiteralValue(entry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(implicit
@@ -26,41 +25,39 @@ object LiteralPropertyParser {
 
 class ElementPropertyParser(private val root: Root, private val rootMap: YMap, private val nodeParser: NodeParser) {
 
-  def parse(id: String, propertyEntry: YMapEntry, property: PropertyLikeMapping[_], node: DialectDomainElement)(implicit
-      ctx: DialectInstanceContext
+  def parse(id: String, propertyValueEntry: YMapEntry, propertyLikeMapping: PropertyLikeMapping[_], node: DialectDomainElement)(implicit
+                                                                                                                                ctx: DialectInstanceContext
   ): Unit = {
-    property.classification() match {
-      case ExtensionPointProperty    => parseDialectExtension(id, propertyEntry, property, node)
-      case LiteralProperty           => LiteralPropertyParser.parse(propertyEntry, property, node)
-      case LiteralPropertyCollection => parseLiteralCollectionProperty(id, propertyEntry, property, node)
-      case ObjectProperty            => parseObjectProperty(id, propertyEntry, property, node)
-      case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyEntry, property, node)
-      case ObjectMapProperty if property.isInstanceOf[PropertyMapping] =>
-        parseObjectMapProperty(id, propertyEntry, property.asInstanceOf[PropertyMapping], node)
-      case ObjectPairProperty => parseObjectPairProperty(id, propertyEntry, property, node)
-      case ExternalLinkProperty =>
-        parseExternalLinkProperty(id, propertyEntry, property, node)
+    propertyLikeMapping.classification() match {
+      case ExtensionPointProperty    => parseDialectExtension(id, propertyValueEntry, propertyLikeMapping, node)
+      case LiteralProperty           => LiteralPropertyParser.parse(propertyValueEntry, propertyLikeMapping, node)
+      case LiteralPropertyCollection => parseLiteralCollectionProperty(id, propertyValueEntry, propertyLikeMapping, node)
+      case ObjectProperty            => parseObjectProperty(id, propertyValueEntry, propertyLikeMapping, node)
+      case ObjectPropertyCollection  => parseObjectCollectionProperty(id, propertyValueEntry, propertyLikeMapping, node)
+      case ObjectMapProperty         => parseObjectMapProperty(id, propertyValueEntry, propertyLikeMapping, node)
+      case ObjectPairProperty        => parseObjectPairProperty(id, propertyValueEntry, propertyLikeMapping, node)
+      case ExternalLinkProperty      => parseExternalLinkProperty(id, propertyValueEntry, propertyLikeMapping, node)
       case _ =>
-        ctx.eh.violation(DialectError, id, s"Unknown type of node property ${property.id}", propertyEntry.location)
+        ctx.eh.violation(DialectError, id, s"Unknown type of node property ${propertyLikeMapping.id}", propertyValueEntry.location)
     }
   }
 
   protected def parseDialectExtension(
       id: String,
-      propertyEntry: YMapEntry,
+      propertyValueEntry: YMapEntry,
       property: PropertyLikeMapping[_],
       node: DialectDomainElement
   )(implicit ctx: DialectInstanceContext): Unit = {
-    DialectExtensionParser.parse(id, propertyEntry, property, node, root, nodeParser)
+    DialectExtensionParser.parse(id, propertyValueEntry, property, node, root, nodeParser)
   }
 
   private def parseExternalLinkProperty(
       id: String,
-      propertyEntry: YMapEntry,
+      propertyValueEntry: YMapEntry,
       property: PropertyLikeMapping[_],
       node: DialectDomainElement
   )(implicit ctx: DialectInstanceContext): Unit = {
-    ExternalLinkPropertyParser.parse(id, propertyEntry, property, node, root, parse)
+    ExternalLinkPropertyParser.parse(id, propertyValueEntry, property, node, root, parse)
   }
 
   protected def parseObjectUnion[T <: DomainElement](
@@ -76,35 +73,35 @@ class ElementPropertyParser(private val root: Root, private val rootMap: YMap, p
 
   protected def parseObjectProperty(
       id: String,
-      propertyEntry: YMapEntry,
+      propertyValueEntry: YMapEntry,
       property: PropertyLikeMapping[_],
       node: DialectDomainElement,
       additionalProperties: Map[String, Any] = Map()
   )(implicit ctx: DialectInstanceContext): Unit = {
-    ObjectPropertyParser.parse(id, propertyEntry, property, node, additionalProperties, parseObjectUnion, nodeParser)
+    ObjectPropertyParser.parse(id, propertyValueEntry, property, node, additionalProperties, parseObjectUnion, nodeParser)
   }
 
   protected def parseObjectMapProperty(
       id: String,
-      propertyEntry: YMapEntry,
-      property: PropertyMapping,
+      propertyValueEntry: YMapEntry,
+      property: PropertyLikeMapping[_],
       node: DialectDomainElement,
       additionalProperties: Map[String, Any] = Map()
   )(implicit ctx: DialectInstanceContext): Unit = {
-    ObjectMapPropertyParser.parse(id, propertyEntry, property, node, additionalProperties, parseObjectUnion, nodeParser)
+    ObjectMapPropertyParser.parse(id, propertyValueEntry, property, node, additionalProperties, parseObjectUnion, nodeParser)
   }
 
   protected def parseObjectPairProperty(
       id: String,
-      propertyEntry: YMapEntry,
+      propertyValueEntry: YMapEntry,
       property: PropertyLikeMapping[_],
       node: DialectDomainElement
   )(implicit ctx: DialectInstanceContext): Unit =
-    KeyValuePropertyParser.parse(id, propertyEntry, property, node)
+    KeyValuePropertyParser.parse(id, propertyValueEntry, property, node)
 
   protected def parseObjectCollectionProperty(
       id: String,
-      propertyEntry: YMapEntry,
+      propertyValueEntry: YMapEntry,
       property: PropertyLikeMapping[_],
       node: DialectDomainElement,
       additionalProperties: Map[String, Any] = Map()
@@ -112,7 +109,7 @@ class ElementPropertyParser(private val root: Root, private val rootMap: YMap, p
 
     ObjectCollectionPropertyParser.parse(
       id,
-      propertyEntry,
+      propertyValueEntry,
       property,
       node,
       additionalProperties,
@@ -123,10 +120,10 @@ class ElementPropertyParser(private val root: Root, private val rootMap: YMap, p
 
   protected def parseLiteralCollectionProperty(
       id: String,
-      propertyEntry: YMapEntry,
+      propertyValueEntry: YMapEntry,
       property: PropertyLikeMapping[_],
       node: DialectDomainElement
   )(implicit ctx: DialectInstanceContext): Unit = {
-    LiteralCollectionParser.parse(propertyEntry, property, node)
+    LiteralCollectionParser.parse(propertyValueEntry, property, node)
   }
 }

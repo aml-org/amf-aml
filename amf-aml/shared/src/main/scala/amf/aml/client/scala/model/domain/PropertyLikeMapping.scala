@@ -1,9 +1,10 @@
 package amf.aml.client.scala.model.domain
 
-import amf.core.client.scala.model.{AnyField, BoolField, DoubleField, IntField, StrField}
-import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.aml.internal.metamodel.domain.PropertyLikeMappingModel
+import amf.core.client.scala.model._
+import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.internal.metamodel.Field
+import amf.core.internal.parser.domain.Annotations
 
 trait PropertyLikeMapping[M <: PropertyLikeMappingModel]
     extends DomainElement
@@ -47,6 +48,26 @@ trait PropertyLikeMapping[M <: PropertyLikeMappingModel]
   def withUnique(unique: Boolean): this.type                 = set(meta.Unique, unique)
   def withExternallyLinkable(linkable: Boolean): this.type   = set(meta.ExternallyLinkable, linkable)
   def withMandatory(mandatory: Boolean): this.type           = set(meta.Mandatory, mandatory)
+
+  def mapKeyProperty(): StrField = fields.field(meta.MapKeyProperty)
+
+  def mapValueProperty(): StrField = fields.field(meta.MapValueProperty)
+
+  def mapTermKeyProperty(): StrField = fields.field(meta.MapTermKeyProperty)
+
+  def mapTermValueProperty(): StrField = fields.field(meta.MapTermValueProperty)
+
+  def withMapKeyProperty(key: String, annotations: Annotations = Annotations()): this.type =
+    set(meta.MapKeyProperty, AmfScalar(key, annotations))
+
+  def withMapValueProperty(value: String, annotations: Annotations = Annotations()): this.type =
+    set(meta.MapValueProperty, AmfScalar(value, annotations))
+
+  def withMapTermKeyProperty(key: String, annotations: Annotations = Annotations()): this.type =
+    set(meta.MapTermKeyProperty, AmfScalar(key, annotations))
+
+  def withMapTermValueProperty(value: String, annotations: Annotations = Annotations()): this.type =
+    set(meta.MapTermValueProperty, AmfScalar(value, annotations))
 
   def classification(): PropertyClassification = PropertyLikeMappingClassifier.classification(this)
 
