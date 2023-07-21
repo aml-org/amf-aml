@@ -2,7 +2,6 @@ package amf.aml.client.scala
 
 import amf.aml.client.scala.AMLConfiguration.platform
 import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
-import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.internal.annotations.serializable.AMLSerializableAnnotations
 import amf.aml.internal.entities.AMLEntities
 import amf.aml.internal.parse.plugin.{
@@ -21,25 +20,18 @@ import amf.aml.internal.transform.pipelines.{DefaultAMLTransformationPipeline, D
 import amf.aml.internal.utils.{DialectRegister, VocabulariesRegister}
 import amf.aml.internal.validate.{AMFDialectValidations, AMLValidationPlugin, DialectEnumValidationPlugin}
 import amf.core.client.scala.AMFGraphConfiguration
+import amf.core.client.scala.adoption.{DefaultIdAdopterProvider, IdAdopterProvider}
 import amf.core.client.scala.config._
-import amf.core.client.scala.errorhandling.{
-  AMFErrorHandler,
-  DefaultErrorHandlerProvider,
-  ErrorHandlerProvider,
-  UnhandledErrorHandler
-}
+import amf.core.client.scala.errorhandling.{DefaultErrorHandlerProvider, ErrorHandlerProvider, UnhandledErrorHandler}
 import amf.core.client.scala.execution.ExecutionEnvironment
 import amf.core.client.scala.model.domain.AnnotationGraphLoader
 import amf.core.client.scala.parse.AMFParsePlugin
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.{TransformationPipeline, TransformationPipelineRunner}
 import amf.core.client.scala.vocabulary.NamespaceAliases
-import amf.core.internal.annotations.serializable.CoreSerializableAnnotations
-import amf.core.internal.entities.CoreEntities
 import amf.core.internal.metamodel.ModelDefaultBuilder
 import amf.core.internal.parser.{AMFCompiler, CompilerContextBuilder}
 import amf.core.internal.plugins.AMFPlugin
-import amf.core.internal.plugins.document.graph.entities.DataNodeEntities
 import amf.core.internal.plugins.parse.DomainParsingFallback
 import amf.core.internal.registries.AMFRegistry
 import amf.core.internal.resource.AMFResolvers
@@ -68,8 +60,9 @@ class AMLConfiguration private[amf] (
     override private[amf] val errorHandlerProvider: ErrorHandlerProvider,
     override private[amf] val registry: AMLRegistry,
     override private[amf] val listeners: Set[AMFEventListener],
-    override private[amf] val options: AMFOptions
-) extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, listeners, options) {
+    override private[amf] val options: AMFOptions,
+    override private[amf] val idAdopterProvider: IdAdopterProvider
+) extends AMFGraphConfiguration(resolvers, errorHandlerProvider, registry, listeners, options, idAdopterProvider) {
 
   private implicit val ec: ExecutionContext = this.getExecutionContext
 
@@ -78,9 +71,17 @@ class AMLConfiguration private[amf] (
       errorHandlerProvider: ErrorHandlerProvider = errorHandlerProvider,
       registry: AMFRegistry = registry,
       listeners: Set[AMFEventListener] = listeners,
-      options: AMFOptions = options
+      options: AMFOptions = options,
+      idAdopterProvider: IdAdopterProvider = idAdopterProvider
   ): AMLConfiguration =
-    new AMLConfiguration(resolvers, errorHandlerProvider, registry.asInstanceOf[AMLRegistry], listeners, options)
+    new AMLConfiguration(
+      resolvers,
+      errorHandlerProvider,
+      registry.asInstanceOf[AMLRegistry],
+      listeners,
+      options,
+      idAdopterProvider
+    )
 
   /** Contains common AMF graph operations associated to documents */
   override def baseUnitClient(): AMLBaseUnitClient = new AMLBaseUnitClient(this)
@@ -262,6 +263,9 @@ class AMLConfiguration private[amf] (
         }
     }
   }
+
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): AMLConfiguration =
+    super._withIdAdopterProvider(idAdopterProvider)
 }
 
 object AMLConfiguration extends PlatformSecrets {
@@ -288,7 +292,8 @@ object AMLConfiguration extends PlatformSecrets {
         .withEntities(AMLEntities.entities)
         .withAnnotations(AMLSerializableAnnotations.annotations),
       predefinedGraphConfiguration.listeners,
-      predefinedGraphConfiguration.options
+      predefinedGraphConfiguration.options,
+      predefinedGraphConfiguration.idAdopterProvider
     ).withPlugins(predefinedPlugins)
       .withTransformationPipeline(DefaultAMLTransformationPipeline())
   }
@@ -299,7 +304,8 @@ object AMLConfiguration extends PlatformSecrets {
       DefaultErrorHandlerProvider,
       AMLRegistry.empty,
       Set.empty,
-      AMFOptions.default()
+      AMFOptions.default(),
+      new DefaultIdAdopterProvider()
     )
   }
 }

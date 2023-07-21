@@ -4,6 +4,7 @@ import amf.aml.client.platform.model.document.Dialect
 import amf.aml.client.scala.{AMLConfiguration => InternalAMLConfiguration}
 import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.core.client.platform.AMFGraphConfiguration
+import amf.core.client.platform.adoption.IdAdopterProvider
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.reference.UnitCache
@@ -47,4 +48,7 @@ class BaseAMLConfiguration private[amf] (private[amf] override val _internal: In
 
   def withDialect(dialect: Dialect): BaseAMLConfiguration =
     new BaseAMLConfiguration(_internal.withDialect(dialect))
+
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): BaseAMLConfiguration =
+    new BaseAMLConfiguration(_internal.withIdAdopterProvider(idAdopterProvider))
 }
