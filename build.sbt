@@ -65,6 +65,7 @@ lazy val aml = crossProject(JSPlatform, JVMPlatform)
     Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-aml-module.js",
     jsDependencies += ProvidedJS / "shacl.js" % "test"
   )
+  .settings(AutomaticModuleName.settings("amf.aml"))
 
 lazy val amlJVM = aml.jvm.in(file("./amf-aml/jvm"))
 lazy val amlJS  = aml.js.in(file("./amf-aml/js"))
@@ -88,6 +89,7 @@ lazy val validation = crossProject(JSPlatform, JVMPlatform)
     scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
       Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-validation-module.js"
   )
+  .settings(AutomaticModuleName.settings("amf.validation"))
 
 lazy val validationJVM = validation.jvm
   .in(file("./amf-validation/jvm"))
@@ -126,6 +128,7 @@ lazy val rdf = crossProject(JSPlatform, JVMPlatform)
       scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) },
       Compile / fullOptJS / artifactPath := baseDirectory.value / "target" / "artifact" / "amf-rdf-module.js"
   )
+  .settings(AutomaticModuleName.settings("amf.rdf"))
 
 lazy val rdfJVM =
   rdf.jvm.in(file("./amf-rdf/jvm")).sourceDependency(amfCoreJVMRef, amfCoreLibJVM)
