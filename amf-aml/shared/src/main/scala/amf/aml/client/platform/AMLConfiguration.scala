@@ -4,6 +4,7 @@ import amf.aml.client.platform.model.document.Dialect
 import amf.aml.client.platform.model.document.DialectInstance
 import amf.aml.client.scala.{AMLConfiguration => InternalAMLConfiguration}
 import amf.aml.internal.convert.VocabulariesClientConverter._
+import amf.core.client.platform.adoption.IdAdopterProvider
 import amf.core.client.platform.config.{AMFEventListener, ParsingOptions, RenderOptions}
 import amf.core.client.platform.errorhandling.ErrorHandlerProvider
 import amf.core.client.platform.execution.BaseExecutionEnvironment
@@ -125,6 +126,9 @@ class AMLConfiguration private[amf] (private[amf] override val _internal: Intern
 
   override def withShapePayloadPlugin(plugin: AMFShapePayloadValidationPlugin): AMLConfiguration =
     _internal.withPlugin(PayloadValidationPluginMatcher.asInternal(plugin))
+
+  override def withIdAdopterProvider(idAdopterProvider: IdAdopterProvider): AMLConfiguration =
+    _internal.withIdAdopterProvider(idAdopterProvider)
 }
 
 @JSExportAll
