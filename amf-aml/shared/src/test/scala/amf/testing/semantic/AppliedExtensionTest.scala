@@ -59,6 +59,17 @@ class AppliedExtensionTest extends AsyncFunSuite with Matchers {
     }
   }
 
+  test("Nested semex 1") {
+    assertModel("dialect-scalar-extensions.yaml", "instance-scalar.yaml") { instance =>
+      val extension = instance.encodes.customDomainProperties.head
+      extension.name.value() shouldBe "maintainer"
+      assertAnnotations(extension.fields.getValueAsOption("http://a.ml/vocab#maintainer").get)
+
+      val maintainerInstance = extension.graph.scalarByProperty("http://a.ml/vocab#maintainer").head
+      maintainerInstance shouldEqual "Some value"
+    }
+  }
+
   private def assertAnnotations(value: Value): Unit = {
     value.annotations.nonEmpty shouldBe true
     value.annotations.find(classOf[LexicalInformation]) shouldNot be(empty)

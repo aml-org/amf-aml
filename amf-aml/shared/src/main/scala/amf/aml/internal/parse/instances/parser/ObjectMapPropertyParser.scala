@@ -1,9 +1,9 @@
 package amf.aml.internal.parse.instances.parser
 
-import amf.aml.client.scala.model.domain.{DialectDomainElement, NodeMappable, PropertyMapping, UnknownMapKeyProperty}
-import amf.aml.internal.parse.instances.{DialectInstanceContext, NodeMappableHelper}
+import amf.aml.client.scala.model.domain.{DialectDomainElement, PropertyLikeMapping, UnknownMapKeyProperty}
 import amf.aml.internal.parse.instances.DialectInstanceParser.pathSegment
 import amf.aml.internal.parse.instances.parser.ObjectCollectionPropertyParser.{NodeParser, ObjectUnionParser}
+import amf.aml.internal.parse.instances.{DialectInstanceContext, NodeMappableHelper}
 import amf.aml.internal.validate.DialectValidations.DialectError
 import amf.core.client.scala.model.domain.{AmfScalar, DomainElement}
 import amf.core.client.scala.vocabulary.ValueType
@@ -17,50 +17,55 @@ object ObjectMapPropertyParser extends NodeMappableHelper {
 
   def parse[T <: DomainElement](
       id: String,
-      propertyEntry: YMapEntry,
-      property: PropertyMapping,
+      propertyValueEntry: YMapEntry,
+      propertyLikeMapping: PropertyLikeMapping[_],
       node: DialectDomainElement,
       additionalProperties: Map[String, Any] = Map(),
       unionParser: ObjectUnionParser[T],
       nodeParser: NodeParser
   )(implicit ctx: DialectInstanceContext): Unit = {
-    val nested = propertyEntry.value.as[YMap].entries.map { keyEntry =>
-      val path           = List(propertyEntry.key.as[YScalar].text, keyEntry.key.as[YScalar].text)
+    val nested = propertyValueEntry.value.as[YMap].entries.map { keyEntry =>
+      val path           = List(propertyValueEntry.key.as[YScalar].text, keyEntry.key.as[YScalar].text)
       val nestedObjectId = pathSegment(id, path)
+
       // we add the potential mapKey additional property
-      val keyAdditionalProperties: Map[String, Any] = findHashProperties(property, keyEntry) match {
+      val keyAdditionalProperties: Map[String, Any] = findHashProperties(propertyLikeMapping, keyEntry) match {
         case Some((k, v)) => additionalProperties + (k -> v)
         case _            => additionalProperties
       }
       val isUnion = (range: Seq[String]) => range.size > 1
-      val parsedNode = property.nodesInRange match {
+      val parsedNode = propertyLikeMapping.nodesInRange match {
+
         case range: Seq[String] if isUnion(range) =>
           // we also add the potential mapValue property
-          val keyValueAdditionalProperties = property.mapTermValueProperty().option() match {
+          val keyValueAdditionalProperties = propertyLikeMapping.mapTermValueProperty().option() match {
             case Some(mapValueProperty) => keyAdditionalProperties + (mapValueProperty -> "")
             case _                      => keyAdditionalProperties
           }
           // now we can parse the union with all the required properties to find the right node in the union
-          Some(unionParser(nestedObjectId, path, keyEntry.value, property, keyValueAdditionalProperties))
+          Some(unionParser(nestedObjectId, path, keyEntry.value, propertyLikeMapping, keyValueAdditionalProperties))
+
         case range: Seq[String] if range.size == 1 =>
           ctx.dialect.declares.find(_.id == range.head) match {
             case Some(nodeMapping: NodeMappable) if keyEntry.value.tagType != YType.Null =>
               Some(nodeParser(id, nestedObjectId, keyEntry.value, nodeMapping, keyAdditionalProperties, false))
             case _ => None
           }
+
         case _ => None
       }
       parsedNode match {
-        case Some(dialectDomainElement) => Some(checkHashProperties(dialectDomainElement, property, keyEntry))
-        case None                       => None
+        case Some(dialectDomainElement) =>
+          Some(checkHashProperties(dialectDomainElement, propertyLikeMapping, keyEntry))
+        case None => None
       }
     }
-    node.withObjectCollectionProperty(property, nested.flatten, Right(propertyEntry))
+    node.withObjectCollectionProperty(propertyLikeMapping, nested.flatten, Right(propertyValueEntry))
   }
 
   protected def checkHashProperties(
       node: DialectDomainElement,
-      propertyMapping: PropertyMapping,
+      propertyMapping: PropertyLikeMapping[_],
       propertyEntry: YMapEntry
   )(implicit ctx: DialectInstanceContext): DialectDomainElement = {
     // TODO: check if the node already has a value and that it matches (maybe coming from a declaration)
@@ -83,7 +88,7 @@ object ObjectMapPropertyParser extends NodeMappableHelper {
     }
   }
 
-  protected def findHashProperties(propertyMapping: PropertyMapping, propertyEntry: YMapEntry)(implicit
+  protected def findHashProperties(propertyMapping: PropertyLikeMapping[_], propertyEntry: YMapEntry)(implicit
       ctx: DialectInstanceContext
   ): Option[(String, Any)] = {
     propertyMapping.mapTermKeyProperty().option() match {

@@ -1,16 +1,10 @@
 package amf.aml.internal.metamodel.domain
 
-import amf.core.internal.metamodel.{Field, Type}
-import amf.core.internal.metamodel.Type.Iri
-import amf.core.internal.metamodel.domain.{
-  DomainElementModel,
-  ExternalModelVocabularies,
-  ModelDoc,
-  ModelVocabularies,
-  ShapeModel
-}
-import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.aml.client.scala.model.domain.AnnotationMapping
+import amf.core.client.scala.vocabulary.{Namespace, ValueType}
+import amf.core.internal.metamodel.Type.Iri
+import amf.core.internal.metamodel.domain.{DomainElementModel, ModelDoc, ModelVocabularies}
+import amf.core.internal.metamodel.{Field, Type}
 
 object AnnotationMappingModel extends DomainElementModel with PropertyLikeMappingModel with NodeMappableModel {
 
@@ -29,7 +23,8 @@ object AnnotationMappingModel extends DomainElementModel with PropertyLikeMappin
   override def fields: List[Field] =
     NodePropertyMapping :: Name :: LiteralRange :: ObjectRange ::
       MinCount :: Pattern :: Minimum :: Maximum :: AllowMultiple :: Sorted :: Enum :: TypeDiscriminator ::
-      Unique :: ExternallyLinkable :: TypeDiscriminatorName :: Domain :: DomainElementModel.fields
+      Unique :: ExternallyLinkable :: TypeDiscriminatorName :: MapKeyProperty :: MapValueProperty ::
+      MapTermKeyProperty :: MapTermValueProperty :: Domain :: DomainElementModel.fields
 
   override def modelInstance: AnnotationMapping = AnnotationMapping()
 
