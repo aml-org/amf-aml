@@ -63,6 +63,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
+                    branch 'rc/support/6.4.1'
                 }
             }
             steps {
