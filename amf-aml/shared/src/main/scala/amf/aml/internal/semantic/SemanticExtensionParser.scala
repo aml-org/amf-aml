@@ -5,18 +5,13 @@ import amf.aml.client.scala.model.domain.{AnnotationMapping, DialectDomainElemen
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.parse.instances.parser.{ElementPropertyParser, InstanceElementParser}
 import amf.aml.internal.render.emitters.instances.DefaultNodeMappableFinder
-import amf.aml.internal.semantic.SemanticExtensionHelper.{findAnnotationMapping, findSemanticExtension}
 import amf.aml.internal.semantic.SemanticExtensionOps.findExtensionMapping
+import amf.aml.internal.semantic.SemanticExtensionParser.{createCustomDomainProperty, createDomainExtension, mergeAnnotationIntoExtension}
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
-import amf.core.client.scala.parse.document.{
-  EmptyFutureDeclarations,
-  ParserContext,
-  SyamlParsedDocument,
-  UnspecifiedReference
-}
+import amf.core.client.scala.parse.document.{EmptyFutureDeclarations, ParserContext, SyamlParsedDocument, UnspecifiedReference}
 import amf.core.internal.parser.Root
 import amf.core.internal.parser.domain.Annotations
-import org.yaml.model.{YDocument, YMap, YMapEntry, YNode}
+import org.yaml.model.{YDocument, YMap, YMapEntry}
 
 class SemanticExtensionParser(finder: ExtensionDialectFinder, specAnnotationValidator: AnnotationSchemaValidator) {
 
@@ -58,26 +53,6 @@ class SemanticExtensionParser(finder: ExtensionDialectFinder, specAnnotationVali
     new DialectInstanceContext(dialect, DefaultNodeMappableFinder(Seq(dialect)), nextCtx)
   }
 
-  private def mergeAnnotationIntoExtension(instanceElement: DialectDomainElement, extension: DomainExtension) = {
-    val fields = instanceElement.fields.fields()
-    fields.foldLeft(extension) { (acc, curr) =>
-      acc.set(curr.field, curr.element, curr.value.annotations)
-    }
-  }
-
-  private def createDomainExtension(key: String, value: YMapEntry, id: String, property: CustomDomainProperty) = {
-    val extension = DomainExtension()
-      .withId(id)
-      .withDefinedBy(property)
-      .withName(key)
-      .add(Annotations(value))
-    extension
-  }
-
-  private def createCustomDomainProperty(instanceElement: DialectDomainElement, key: String, ast: YMapEntry) = {
-    CustomDomainProperty(Annotations(ast)).withId(instanceElement.id).withName(key, Annotations())
-  }
-
   private def parseAnnotation(mapping: AnnotationMapping, ast: YMapEntry, extensionId: String)(implicit
       ctx: DialectInstanceContext
   ) = {
@@ -90,4 +65,27 @@ class SemanticExtensionParser(finder: ExtensionDialectFinder, specAnnotationVali
     ctx.futureDeclarations.resolve()
     instanceElement
   }
+}
+
+object SemanticExtensionParser {
+  private[amf] def mergeAnnotationIntoExtension(instanceElement: DialectDomainElement, extension: DomainExtension) = {
+    val fields = instanceElement.fields.fields()
+    fields.foldLeft(extension) { (acc, curr) =>
+      acc.set(curr.field, curr.element, curr.value.annotations)
+    }
+  }
+
+  private[amf] def createDomainExtension(key: String, value: YMapEntry, id: String, property: CustomDomainProperty) = {
+    val extension = DomainExtension()
+      .withId(id)
+      .withDefinedBy(property)
+      .withName(key)
+      .add(Annotations(value))
+    extension
+  }
+
+  private[amf] def createCustomDomainProperty(instanceElement: DialectDomainElement, key: String, ast: YMapEntry) = {
+    CustomDomainProperty(Annotations(ast)).withId(instanceElement.id).withName(key, Annotations())
+  }
+
 }
