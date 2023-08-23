@@ -53,7 +53,7 @@ object KeyValuePropertyParser {
                       AmfArray(Seq(AmfScalar(scalar.text))),
                       Annotations(pair.value)
                     )
-                  case _ => // ignore
+                  case _ => // ignore TODO handle YMaps
                 }
               } else {
                 nestedNode.set(
