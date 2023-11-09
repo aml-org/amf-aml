@@ -63,6 +63,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
+                    branch 'W-14413932'
                 }
             }
             steps {
