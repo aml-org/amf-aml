@@ -3,19 +3,12 @@ package amf.testing.semantic
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.{DefaultErrorHandlerProvider, UnhandledErrorHandler}
-import amf.testing.common.utils.{
-  DialectInstanceValidation,
-  MultiPlatformReportComparator,
-  ReportComparator,
-  UniquePlatformReportComparator
-}
+import amf.testing.common.utils.{DialectInstanceValidation, MultiPlatformReportComparator, ReportComparator, UniquePlatformReportComparator}
 import org.scalatest.Assertion
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 class SemanticExtensionValidationTest extends DialectInstanceValidation {
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def basePath: String = "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/validation/"
 

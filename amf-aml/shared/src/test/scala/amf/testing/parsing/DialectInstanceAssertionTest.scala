@@ -3,14 +3,14 @@ package amf.testing.parsing
 import amf.aml.client.scala.model.document.DialectInstance
 import amf.aml.client.scala.{AMLConfiguration, AMLDialectInstanceResult}
 import amf.core.client.scala.model.domain.AmfArray
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.mulesoft.common.client.lexical.PositionRange
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class DialectInstanceAssertionTest extends AsyncFunSuite with Matchers {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class DialectInstanceAssertionTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
+
   val basePath = "file://amf-aml/shared/src/test/resources/vocabularies2/instances/"
 
   def parseDialectInstance(dialectPath: String, instancePath: String): Future[AMLDialectInstanceResult] = {

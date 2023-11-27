@@ -4,11 +4,9 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.testing.common.utils.{DialectInstanceValidation, ReportComparator, UniquePlatformReportComparator}
 import org.scalatest.Assertion
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 trait DialectInstancesValidationTest extends DialectInstanceValidation {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath                                   = "file://amf-aml/shared/src/test/resources/vocabularies2/validation"
   val productionPath                             = "file://amf-aml/shared/src/test/resources/vocabularies2/production"

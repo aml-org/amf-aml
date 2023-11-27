@@ -9,17 +9,12 @@ import amf.core.internal.remote.Hint
 import amf.core.internal.remote.Mimes._
 import amf.core.io.FileAssertionTest
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.yaml.model.{YDocument, YNode}
 
 import java.io.StringWriter
 import scala.concurrent.Future
 
-trait DomainElementCycleTests
-    extends AsyncFunSuite
-    with FileAssertionTest
-    with AMLParsingHelper
-    with DialectRegistrationHelper {
+trait DomainElementCycleTests extends FileAssertionTest with AMLParsingHelper with DialectRegistrationHelper {
 
   val basePath: String
   val baseHint: Hint

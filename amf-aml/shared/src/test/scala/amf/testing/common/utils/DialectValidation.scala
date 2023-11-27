@@ -2,13 +2,12 @@ package amf.testing.common.utils
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.unsafe.PlatformSecrets
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.Future
 
-trait DialectValidation extends AsyncFunSuite with PlatformSecrets {
+trait DialectValidation extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
 
   protected val path: String
   protected val reportComparator: ReportComparator = UniquePlatformReportComparator

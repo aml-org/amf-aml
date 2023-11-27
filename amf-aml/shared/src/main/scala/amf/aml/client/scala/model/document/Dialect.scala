@@ -13,7 +13,6 @@ import amf.core.internal.metamodel.Type
 import amf.core.internal.metamodel.document.DocumentModel.Encodes
 import amf.core.internal.metamodel.document.ModuleModel.{Declares, References}
 import amf.core.internal.parser.domain.{Annotations, Fields}
-import org.mulesoft.common.collections._
 import org.mulesoft.common.core._
 
 case class Dialect(fields: Fields, annotations: Annotations)

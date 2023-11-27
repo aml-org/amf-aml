@@ -2,13 +2,10 @@ package amf.testing.unclassified
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.domain.DialectDomainElement
-import org.scalatest.funsuite.AsyncFunSuite
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
-class OOInterfaceTest extends AsyncFunSuite with Matchers {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class OOInterfaceTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   test("Test setLiteralProperty with List") {
     val dialect = "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/set-literal-property/dialect.yaml"

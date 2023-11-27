@@ -4,14 +4,12 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.document.DialectInstance
 import amf.core.client.scala.config.RenderOptions
 import amf.core.client.scala.errorhandling.UnhandledErrorHandler
-import org.scalatest.funsuite.AsyncFunSuite
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class JsonLdSemanticExtensionsParserTest extends AsyncFunSuite with Matchers {
-
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class JsonLdSemanticExtensionsParserTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   def basePath: String = "file://amf-aml/shared/src/test/resources/vocabularies2/semantic/"
 

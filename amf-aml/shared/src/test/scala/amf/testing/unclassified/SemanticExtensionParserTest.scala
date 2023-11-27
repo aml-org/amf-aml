@@ -1,15 +1,13 @@
 package amf.testing.unclassified
 
 import amf.aml.client.scala.AMLConfiguration
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class SemanticExtensionParserTest extends AsyncFunSuite with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class SemanticExtensionParserTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private def basePath: String = "file://amf-aml/shared/src/test/resources/vocabularies2/dialects"
 
@@ -19,8 +17,8 @@ class SemanticExtensionParserTest extends AsyncFunSuite with Matchers {
 
   test("Parse SE 2") {
     run(
-      s"$basePath/annotation-mappings-with-extra-facets/dialect.yaml",
-      Seq("maintainer", "rateLimiting", "owner", "anypointId", "accountType", "contactEmail", "ldapReferences")
+        s"$basePath/annotation-mappings-with-extra-facets/dialect.yaml",
+        Seq("maintainer", "rateLimiting", "owner", "anypointId", "accountType", "contactEmail", "ldapReferences")
     )
   }
 

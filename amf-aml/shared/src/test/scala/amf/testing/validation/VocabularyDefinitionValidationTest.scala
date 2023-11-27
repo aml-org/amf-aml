@@ -2,22 +2,14 @@ package amf.testing.validation
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.unsafe.PlatformSecrets
 import amf.core.io.FileAssertionTest
 import amf.validation.internal.emitters.ValidationReportJSONLDEmitter
 import org.scalatest
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class VocabularyDefinitionValidationTest
-    extends AsyncFunSuite
-    with Matchers
-    with FileAssertionTest
-    with PlatformSecrets {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class VocabularyDefinitionValidationTest extends FileAssertionTest with Matchers {
 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/validations/vocabularies"
 

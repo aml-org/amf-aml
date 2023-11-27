@@ -2,14 +2,12 @@ package amf.testing.common.utils
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.validation.AMFValidationReport
-import amf.core.internal.unsafe.PlatformSecrets
-import org.scalatest.funsuite.AsyncFunSuite
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 
 import scala.concurrent.Future
 
 trait DialectInstanceValidation
-    extends AsyncFunSuite
-    with PlatformSecrets
+    extends AsyncFunSuiteWithPlatformGlobalExecutionContext
     with DialectRegistrationHelper
     with AMLParsingHelper {
 
@@ -25,7 +23,7 @@ trait DialectInstanceValidation
     val instancePath = s"$path/$instance"
     val client       = config.baseUnitClient()
     for {
-      dialectResult  <- client.parseDialect(s"$path/$dialect")
+      dialectResult  <- client.parseDialect(dialectPath)
       nextConfig     <- Future.successful(config.withDialect(dialectResult.dialect))
       instanceResult <- nextConfig.baseUnitClient().parseDialectInstance(instancePath)
       report <- {
