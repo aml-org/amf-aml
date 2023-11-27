@@ -3,14 +3,11 @@ package amf.testing.render
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.core.client.scala.model.domain.DomainElement
-import amf.core.internal.remote.{Amf, Hint, VocabularyYamlHint}
+import amf.core.internal.remote.{Hint, VocabularyYamlHint}
 import amf.testing.common.utils.DomainElementCycleTests
-
-import scala.concurrent.ExecutionContext
 
 class DialectDomainElementRenderTest extends DomainElementCycleTests {
 
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
   override val basePath: String = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
   override val baseHint: Hint   = VocabularyYamlHint
   val rendering: String         = "amf-aml/shared/src/test/resources/vocabularies2/rendering"

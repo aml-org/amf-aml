@@ -7,11 +7,7 @@ import amf.core.internal.remote.Syntax
 import amf.testing.common.cycling.FunSuiteCycleTests
 import amf.testing.common.utils.DialectInstanceTester
 
-import scala.concurrent.ExecutionContext
-
 class DialectProductionResolutionTest extends FunSuiteCycleTests with DialectInstanceTester {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def transform(unit: BaseUnit, config: CycleConfig, amlConfig: AMLConfiguration): BaseUnit =
     amlConfig.baseUnitClient().transform(unit, DefaultAMLTransformationPipeline.name).baseUnit

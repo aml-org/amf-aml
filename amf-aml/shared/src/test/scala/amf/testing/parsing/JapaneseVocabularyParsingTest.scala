@@ -2,13 +2,10 @@ package amf.testing.parsing
 
 import amf.aml.client.scala.AMLConfiguration
 import amf.core.client.scala.config.RenderOptions
-import amf.core.internal.remote.{Amf, AmfJsonHint, Aml, Mimes, VocabularyYamlHint}
+import amf.core.internal.remote.Mimes
 import amf.testing.common.utils.DialectTests
 
-import scala.concurrent.ExecutionContext
-
 class JapaneseVocabularyParsingTest extends DialectTests {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/japanese/dialects/"
 

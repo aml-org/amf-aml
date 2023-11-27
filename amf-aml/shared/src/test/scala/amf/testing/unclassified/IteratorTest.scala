@@ -4,12 +4,9 @@ import amf.core.client.scala.model.domain.DomainElement
 import amf.testing.common.utils.DialectTests
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
 trait IteratorTest extends DialectTests with Matchers {
 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Domain element iterator in self encoded dialect instance") {
     parseInstance("dialect23.yaml", "example23.yaml").map(baseUnit => {
@@ -24,9 +21,9 @@ trait IteratorTest extends DialectTests with Matchers {
   test("findById in self encoded dialect instance") {
     parseInstance("dialect23.yaml", "example23.yaml").map(baseUnit => {
       assert(
-        baseUnit
-          .findById("file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets")
-          .isDefined
+          baseUnit
+            .findById("file://amf-aml/shared/src/test/resources/vocabularies2/instances/example23.yaml#/lets")
+            .isDefined
       )
     })
   }

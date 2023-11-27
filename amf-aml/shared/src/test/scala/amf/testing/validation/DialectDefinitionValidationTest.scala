@@ -1,16 +1,11 @@
 package amf.testing.validation
 
 import amf.testing.common.utils.DialectValidation
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.ExecutionContext
-
-class DialectDefinitionValidationTest extends AsyncFunSuite with Matchers with DialectValidation {
+class DialectDefinitionValidationTest extends DialectValidation with Matchers {
 
   protected val path: String = "amf-aml/shared/src/test/resources/vocabularies2/instances/invalids"
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   test("Test missing version") {
     validate("/missing-version/dialect.yaml", Some("/missing-version/report.json"))
