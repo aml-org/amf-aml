@@ -47,6 +47,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
+                    branch 'bump-java-21'
                 }
             }
             steps {
@@ -63,6 +64,7 @@ pipeline {
                 anyOf {
                     branch 'master'
                     branch 'develop'
+                    branch 'bump-java-21'
                 }
             }
             steps {
