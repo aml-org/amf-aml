@@ -315,10 +315,10 @@ private class DialectReferencesCollector(implicit val ec: ExecutionContext) {
     val ctx      = new CompilerContextBuilder(url, platform, amfConfig.compilerConfiguration).build()
     val compiler = new AMFCompiler(ctx)
     for {
-      content                <- compiler.fetchContent()
-      eitherContentOrAst     <- Future.successful(compiler.parseSyntax(content))
-      root                   <- Future.successful(eitherContentOrAst.right.get) if eitherContentOrAst.isRight
-      plugin                 <- Future.successful(compiler.getDomainPluginFor(root))
+      content <- compiler.fetchContent()
+      eitherContentOrAst = compiler.parseSyntax(content)
+      root               = eitherContentOrAst.right.get if eitherContentOrAst.isRight
+      plugin             = compiler.getDomainPluginFor(root)
       documentWithReferences <- compiler.parseReferences(root, plugin.get) if plugin.isDefined
     } yield {
       documentWithReferences.references.toStream

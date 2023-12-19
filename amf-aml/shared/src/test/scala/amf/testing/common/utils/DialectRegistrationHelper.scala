@@ -18,14 +18,12 @@ trait DialectRegistrationHelper {
     val context       = new CompilerContextBuilder(uri, platform, configuration.compilerConfiguration).build()
     for {
       baseUnit <- new AMFCompiler(context).build()
-      dialect  <- Future.successful { baseUnit.asInstanceOf[Dialect] }
-      resolved <- Future.successful(
-        TransformationPipelineRunner(DefaultErrorHandler(), configuration)
-          .run(dialect, DialectTransformationPipeline())
-          .asInstanceOf[Dialect]
-      )
-      dialectConfig <- Future.successful(configuration.withDialect(resolved))
-      result        <- fn(resolved, dialectConfig)
+      dialect = baseUnit.asInstanceOf[Dialect]
+      resolved = TransformationPipelineRunner(DefaultErrorHandler(), configuration)
+        .run(dialect, DialectTransformationPipeline())
+        .asInstanceOf[Dialect]
+      dialectConfig = configuration.withDialect(resolved)
+      result <- fn(resolved, dialectConfig)
     } yield {
       result
     }
