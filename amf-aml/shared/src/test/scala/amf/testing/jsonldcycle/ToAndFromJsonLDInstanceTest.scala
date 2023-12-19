@@ -22,10 +22,10 @@ class ToAndFromJsonLDInstanceTest extends AsyncFunSuite with FileAssertionTest w
     for {
       c              <- AMLConfiguration.predefined().withDialect("file://" + current + "dialect.yaml")
       instanceResult <- c.baseUnitClient().parse("file://" + current + "instance.yaml").map(_.baseUnit)
-      jsonLD         <- Future.successful(c.baseUnitClient().render(instanceResult, Mimes.`application/ld+json`))
-      actual         <- writeTemporaryFile(current + "instance.yaml.jsonld")(jsonLD)
-      assertion      <- assertDifferences(actual, current + "instance.yaml.jsonld")
-      jsonLDParsed   <- c.baseUnitClient().parse("file://" + current + "instance.yaml.jsonld")
+      jsonLD = c.baseUnitClient().render(instanceResult, Mimes.`application/ld+json`)
+      actual       <- writeTemporaryFile(current + "instance.yaml.jsonld")(jsonLD)
+      assertion    <- assertDifferences(actual, current + "instance.yaml.jsonld")
+      jsonLDParsed <- c.baseUnitClient().parse("file://" + current + "instance.yaml.jsonld")
     } yield {
       assert(assertion == succeed)
       jsonLDParsed.baseUnit
