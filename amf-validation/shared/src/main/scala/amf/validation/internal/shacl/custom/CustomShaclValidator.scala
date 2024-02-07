@@ -4,6 +4,7 @@ import amf.core.client.common.validation.MessageStyle
 import amf.core.client.scala.model.DataType
 import amf.core.client.scala.model.document.BaseUnit
 import amf.core.client.scala.model.domain._
+import amf.core.client.scala.traversal.iterator.{DomainElementStrategy, IteratorStrategy}
 import amf.core.client.scala.vocabulary.Namespace
 import amf.core.internal.annotations.LexicalInformation
 import amf.core.internal.metamodel.Field
@@ -44,12 +45,13 @@ object CustomShaclValidator {
 class CustomShaclValidator(
     customFunctions: CustomShaclFunctions,
     messageStyle: MessageStyle,
-    extractor: ElementExtractor = DefaultElementExtractor
+    extractor: ElementExtractor = DefaultElementExtractor,
+    strategy: IteratorStrategy = DomainElementStrategy
 ) {
 
   def validate(unit: BaseUnit, validations: Seq[ValidationSpecification]): ValidationReport = {
     val reportBuilder: ReportBuilder = new ReportBuilder(messageStyle)
-    unit.iterator().foreach {
+    unit.iterator(strategy = strategy).foreach {
       case element: DomainElement => validateIdentityTransformation(element, validations, reportBuilder)
       case _                      =>
     }

@@ -38,8 +38,6 @@ object DefaultElementExtractor extends ElementExtractor {
     extractElement(propertyConstraint.ramlPropertyId, element).map {
       case s: AmfScalar =>
         ExtractedPropertyValue(s, Some(amfScalarToScala(s)))
-      case a: AmfArray =>
-        ExtractedPropertyValue(a, None)
       case other =>
         ExtractedPropertyValue(other, None)
     }
