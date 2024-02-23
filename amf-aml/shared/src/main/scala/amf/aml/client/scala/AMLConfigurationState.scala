@@ -4,6 +4,7 @@ import amf.aml.client.scala.model.document.{Dialect, DialectInstance}
 import amf.aml.client.scala.model.domain.SemanticExtension
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.semantic.SemanticExtensionHelper
+import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
 import com.github.ghik.silencer.silent
 
@@ -11,6 +12,12 @@ import scala.collection.immutable
 
 /** Contains methods to get information about the current state of the configuration */
 class AMLConfigurationState private[amf] (protected val configuration: AMLConfiguration) {
+
+  /** Get all the ResourceLoaders of the configuration
+   * @return
+   *   a Seq of [[ResourceLoader]]
+   */
+  def getResourceLoaders(): immutable.Seq[ResourceLoader] = configuration.getResourceLoaders
 
   /** Get all instances of registered dialects
     * @return
