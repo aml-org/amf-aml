@@ -131,11 +131,6 @@
       "@type": [
         "http://a.ml/vocabularies/document-source-maps#SourceMap"
       ],
-      "http://a.ml/vocabularies/document-source-maps#custom-id": [
-        {
-          "@id": "http://test.com/declarations/B1#/source-map/custom-id/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#lexical": [
         {
           "@id": "http://test.com/declarations/B1#/source-map/lexical/element_3"
@@ -149,17 +144,17 @@
         {
           "@id": "http://test.com/declarations/B1#/source-map/lexical/element_2"
         }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#custom-id": [
+        {
+          "@id": "http://test.com/declarations/B1#/source-map/custom-id/element_0"
+        }
       ]
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml#/source-map/lexical/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/native-links-with-native-target/instance.yaml",
       "http://a.ml/vocabularies/document-source-maps#value": "[(2,0)-(12,0)]"
-    },
-    {
-      "@id": "http://test.com/declarations/B1#/source-map/custom-id/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/declarations/B1",
-      "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
       "@id": "http://test.com/declarations/B1#/source-map/lexical/element_3",
@@ -180,6 +175,11 @@
       "@id": "http://test.com/declarations/B1#/source-map/lexical/element_2",
       "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/declarations/B1",
       "http://a.ml/vocabularies/document-source-maps#value": "[(3,2)-(7,0)]"
+    },
+    {
+      "@id": "http://test.com/declarations/B1#/source-map/custom-id/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "http://test.com/declarations/B1",
+      "http://a.ml/vocabularies/document-source-maps#value": "true"
     }
   ]
 }

@@ -221,21 +221,6 @@
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
-        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
-          {
-            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map/aliases-array/element_0",
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "crm->http://crm.com/vocabularies/core#::http://crm.com/vocabularies/core#::crm.yaml"
-              }
-            ]
-          }
-        ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
             "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map/lexical/element_4",
@@ -299,6 +284,21 @@
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
                 "@value": "[(3,0)-(4,0)]"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/streams/activity.yaml#/source-map/aliases-array/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/production/streams/activity.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "crm->http://crm.com/vocabularies/core#::http://crm.com/vocabularies/core#::crm.yaml"
               }
             ]
           }

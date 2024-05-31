@@ -153,21 +153,6 @@
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
-        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
-          {
-            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9.yaml#/source-map/aliases-array/element_0",
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9.yaml"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "lib->file://amf-aml/shared/src/test/resources/vocabularies2/instances/library9.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/instances/library9.yaml::library9.yaml"
-              }
-            ]
-          }
-        ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
             "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9.yaml#/source-map/lexical/element_0",
@@ -179,6 +164,21 @@
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
                 "@value": "[(2,0)-(8,0)]"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9.yaml#/source-map/aliases-array/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example9.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "lib->file://amf-aml/shared/src/test/resources/vocabularies2/instances/library9.yaml::file://amf-aml/shared/src/test/resources/vocabularies2/instances/library9.yaml::library9.yaml"
               }
             ]
           }
