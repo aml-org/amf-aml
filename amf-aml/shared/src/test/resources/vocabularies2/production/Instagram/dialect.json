@@ -288,21 +288,6 @@
         "@type": [
           "http://a.ml/vocabularies/document-source-maps#SourceMap"
         ],
-        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
-          {
-            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/source-map/aliases-array/element_0",
-            "http://a.ml/vocabularies/document-source-maps#element": [
-              {
-                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml"
-              }
-            ],
-            "http://a.ml/vocabularies/document-source-maps#value": [
-              {
-                "@value": "learning->http://mulesoft.com/vocabularies/amf-learning#::http://mulesoft.com/vocabularies/amf-learning#::vocabulary.yaml"
-              }
-            ]
-          }
-        ],
         "http://a.ml/vocabularies/document-source-maps#lexical": [
           {
             "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/source-map/lexical/element_4",
@@ -366,6 +351,21 @@
             "http://a.ml/vocabularies/document-source-maps#value": [
               {
                 "@value": "[(4,0)-(5,0)]"
+              }
+            ]
+          }
+        ],
+        "http://a.ml/vocabularies/document-source-maps#aliases-array": [
+          {
+            "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml#/source-map/aliases-array/element_0",
+            "http://a.ml/vocabularies/document-source-maps#element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/production/Instagram/dialect.yaml"
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#value": [
+              {
+                "@value": "learning->http://mulesoft.com/vocabularies/amf-learning#::http://mulesoft.com/vocabularies/amf-learning#::vocabulary.yaml"
               }
             ]
           }

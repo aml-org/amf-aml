@@ -62,21 +62,6 @@
                     ]
                   }
                 ],
-                "http://a.ml/vocabularies/document-source-maps#lexical": [
-                  {
-                    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/rb/source-map/lexical/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/rb"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "[(9,0)-(10,0)]"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#json-pointer-ref": [
                   {
                     "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/rb/source-map/json-pointer-ref/element_0",
@@ -88,6 +73,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "true"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#lexical": [
+                  {
+                    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/rb/source-map/lexical/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example24c.yaml#/encodes/rb"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "[(9,0)-(10,0)]"
                       }
                     ]
                   }

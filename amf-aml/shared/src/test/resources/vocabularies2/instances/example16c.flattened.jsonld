@@ -79,14 +79,14 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml#/encodes/za/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml#/encodes/za/source-map/lexical/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#ref-include": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml#/encodes/za/source-map/ref-include/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml#/encodes/za/source-map/lexical/element_0"
         }
       ]
     },
@@ -106,14 +106,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml#/encodes/za/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml#/encodes/za",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,12)-(3,27)]"
-    },
-    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml#/encodes/za/source-map/ref-include/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml#/encodes/za",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml#/encodes/za/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml#/encodes/za",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,12)-(3,27)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example16c.yaml",

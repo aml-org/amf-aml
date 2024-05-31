@@ -89,21 +89,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#custom-id": [
-                  {
-                    "@id": "http://overriden.com/presidents/BarackObama#/source-map/custom-id/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://overriden.com/presidents/BarackObama"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "true"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "http://overriden.com/presidents/BarackObama#/source-map/lexical/element_1",
@@ -131,6 +116,21 @@
                       }
                     ]
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#custom-id": [
+                  {
+                    "@id": "http://overriden.com/presidents/BarackObama#/source-map/custom-id/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://overriden.com/presidents/BarackObama"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
                 ]
               }
             ]
@@ -152,21 +152,6 @@
                 "@id": "http://overriden.com/presidents#GeorgeWBush/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#custom-id": [
-                  {
-                    "@id": "http://overriden.com/presidents#GeorgeWBush/source-map/custom-id/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://overriden.com/presidents#GeorgeWBush"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "true"
-                      }
-                    ]
-                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
@@ -192,6 +177,21 @@
                     "http://a.ml/vocabularies/document-source-maps#value": [
                       {
                         "@value": "[(10,4)-(11,0)]"
+                      }
+                    ]
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#custom-id": [
+                  {
+                    "@id": "http://overriden.com/presidents#GeorgeWBush/source-map/custom-id/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://overriden.com/presidents#GeorgeWBush"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
                       }
                     ]
                   }
