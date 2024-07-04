@@ -85,7 +85,7 @@ class CustomShaclValidator(
       validations: Seq[ValidationSpecification],
       reportBuilder: ReportBuilder
   ): Unit = {
-    val classes        = element.meta.`type`.map(_.iri())
+    val classes        = element.meta.typeIrisSet
     val isExternalLink = element.isExternalLink.value()
     validations.foreach { specification =>
       if (!isExternalLink && (matchingClass(specification, classes) || matchingInstance(specification, element))) {
@@ -116,8 +116,7 @@ class CustomShaclValidator(
     }
   }
 
-  // TODO: could this made be faster by using Sets? -> We would have to propagate Sets to several places
-  private def matchingClass(specification: ValidationSpecification, classes: Seq[String]): Boolean = {
+  private def matchingClass(specification: ValidationSpecification, classes: Set[String]): Boolean = {
     specification.targetClass.exists(classes.contains)
   }
 

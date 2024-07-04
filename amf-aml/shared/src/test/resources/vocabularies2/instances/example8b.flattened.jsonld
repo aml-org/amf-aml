@@ -115,14 +115,14 @@
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml#/encodes/b/a/source-map/synthesized-field/element_0"
         }
       ],
-      "http://a.ml/vocabularies/document-source-maps#lexical": [
-        {
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml#/encodes/b/a/source-map/lexical/element_0"
-        }
-      ],
       "http://a.ml/vocabularies/document-source-maps#ref-include": [
         {
           "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml#/encodes/b/a/source-map/ref-include/element_0"
+        }
+      ],
+      "http://a.ml/vocabularies/document-source-maps#lexical": [
+        {
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml#/encodes/b/a/source-map/lexical/element_0"
         }
       ]
     },
@@ -142,14 +142,14 @@
       "http://a.ml/vocabularies/document-source-maps#value": "true"
     },
     {
-      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml#/encodes/b/a/source-map/lexical/element_0",
-      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml#/encodes/b/a",
-      "http://a.ml/vocabularies/document-source-maps#value": "[(3,4)-(5,0)]"
-    },
-    {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml#/encodes/b/a/source-map/ref-include/element_0",
       "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml#/encodes/b/a",
       "http://a.ml/vocabularies/document-source-maps#value": "true"
+    },
+    {
+      "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml#/encodes/b/a/source-map/lexical/element_0",
+      "http://a.ml/vocabularies/document-source-maps#element": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml#/encodes/b/a",
+      "http://a.ml/vocabularies/document-source-maps#value": "[(3,4)-(5,0)]"
     },
     {
       "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example8b.yaml",

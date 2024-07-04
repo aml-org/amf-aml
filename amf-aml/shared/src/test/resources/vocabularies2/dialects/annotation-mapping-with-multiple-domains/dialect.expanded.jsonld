@@ -370,6 +370,21 @@
             ]
           }
         ],
+        "sourcemaps:aliases-array": [
+          {
+            "@id": "#/source-map/aliases-array/element_0",
+            "sourcemaps:element": [
+              {
+                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml"
+              }
+            ],
+            "sourcemaps:value": [
+              {
+                "@value": "github->http://github.org/vocabulary#::http://github.org/vocabulary#::github.vocabulary.yaml"
+              }
+            ]
+          }
+        ],
         "sourcemaps:lexical": [
           {
             "@id": "#/source-map/lexical/element_5",
@@ -446,21 +461,6 @@
             "sourcemaps:value": [
               {
                 "@value": "[(3,0)-(5,0)]"
-              }
-            ]
-          }
-        ],
-        "sourcemaps:aliases-array": [
-          {
-            "@id": "#/source-map/aliases-array/element_0",
-            "sourcemaps:element": [
-              {
-                "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/dialects/annotation-mapping-with-multiple-domains/dialect.yaml"
-              }
-            ],
-            "sourcemaps:value": [
-              {
-                "@value": "github->http://github.org/vocabulary#::http://github.org/vocabulary#::github.vocabulary.yaml"
               }
             ]
           }

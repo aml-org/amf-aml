@@ -42,21 +42,6 @@
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
                 ],
-                "http://a.ml/vocabularies/document-source-maps#custom-id": [
-                  {
-                    "@id": "http://test.com/something#here/source-map/custom-id/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "http://test.com/something#here"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "true"
-                      }
-                    ]
-                  }
-                ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
                     "@id": "http://test.com/something#here/source-map/lexical/element_1",
@@ -84,6 +69,21 @@
                       }
                     ]
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#custom-id": [
+                  {
+                    "@id": "http://test.com/something#here/source-map/custom-id/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "http://test.com/something#here"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
                 ]
               }
             ]
@@ -106,21 +106,6 @@
                 "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#/ho/source-map",
                 "@type": [
                   "http://a.ml/vocabularies/document-source-maps#SourceMap"
-                ],
-                "http://a.ml/vocabularies/document-source-maps#custom-id": [
-                  {
-                    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#/ho/source-map/custom-id/element_0",
-                    "http://a.ml/vocabularies/document-source-maps#element": [
-                      {
-                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#/ho"
-                      }
-                    ],
-                    "http://a.ml/vocabularies/document-source-maps#value": [
-                      {
-                        "@value": "true"
-                      }
-                    ]
-                  }
                 ],
                 "http://a.ml/vocabularies/document-source-maps#lexical": [
                   {
@@ -149,6 +134,21 @@
                       }
                     ]
                   }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#custom-id": [
+                  {
+                    "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#/ho/source-map/custom-id/element_0",
+                    "http://a.ml/vocabularies/document-source-maps#element": [
+                      {
+                        "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#/ho"
+                      }
+                    ],
+                    "http://a.ml/vocabularies/document-source-maps#value": [
+                      {
+                        "@value": "true"
+                      }
+                    ]
+                  }
                 ]
               }
             ]
@@ -159,21 +159,6 @@
             "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#a/source-map",
             "@type": [
               "http://a.ml/vocabularies/document-source-maps#SourceMap"
-            ],
-            "http://a.ml/vocabularies/document-source-maps#custom-id": [
-              {
-                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#a/source-map/custom-id/element_0",
-                "http://a.ml/vocabularies/document-source-maps#element": [
-                  {
-                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#a"
-                  }
-                ],
-                "http://a.ml/vocabularies/document-source-maps#value": [
-                  {
-                    "@value": "true"
-                  }
-                ]
-              }
             ],
             "http://a.ml/vocabularies/document-source-maps#lexical": [
               {
@@ -199,6 +184,21 @@
                 "http://a.ml/vocabularies/document-source-maps#value": [
                   {
                     "@value": "[(2,0)-(9,0)]"
+                  }
+                ]
+              }
+            ],
+            "http://a.ml/vocabularies/document-source-maps#custom-id": [
+              {
+                "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#a/source-map/custom-id/element_0",
+                "http://a.ml/vocabularies/document-source-maps#element": [
+                  {
+                    "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/dialect14.yaml#a"
+                  }
+                ],
+                "http://a.ml/vocabularies/document-source-maps#value": [
+                  {
+                    "@value": "true"
                   }
                 ]
               }
