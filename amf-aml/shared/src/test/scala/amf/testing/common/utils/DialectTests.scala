@@ -54,7 +54,7 @@ trait DialectTests
       case Amf                   => `application/ld+json`
       case Payload               => `application/yaml`
       case Raml10 | Raml08 | Aml => `application/yaml`
-      case Oas20 | Oas30         => `application/json`
+      case Oas20 | Oas30 | Oas31 => `application/json`
       case _                     => `text/plain`
     }
   }
