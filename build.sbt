@@ -6,7 +6,7 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-ThisBuild / scalaVersion := "2.12.18"
+ThisBuild / scalaVersion := "2.12.20"
 ThisBuild / version      := "6.7.0-SNAPSHOT"
 
 val amfCoreVersion         = "5.5.0-JAVA21-INTERNAL"
@@ -140,8 +140,8 @@ lazy val rdfJS =
     .enablePlugins(JSDependenciesPlugin)
 
 ThisBuild / libraryDependencies ++= Seq(
-    compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.14" cross CrossVersion.constant("2.12.18")),
-    "com.github.ghik" % "silencer-lib" % "1.7.14" % Provided cross CrossVersion.constant("2.12.18")
+    compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.19" cross CrossVersion.constant("2.12.20")),
+    "com.github.ghik" % "silencer-lib" % "1.7.19" % Provided cross CrossVersion.constant("2.12.20")
 )
 
 lazy val sonarUrl   = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
