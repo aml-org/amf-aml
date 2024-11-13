@@ -98,7 +98,7 @@
               "@value": "(anon1)"
             }
           ],
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/AnnotationInfo((anon1),anon1,None,anon1,(anon1): true).suffix/scalar_1",
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon1/scalar_1",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -121,16 +121,16 @@
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/AnnotationInfo((anon1),anon1,None,anon1,(anon1): true).suffix/scalar_1/source-map",
+              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon1/scalar_1/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/AnnotationInfo((anon1),anon1,None,anon1,(anon1): true).suffix/scalar_1/source-map/lexical/element_0",
+                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon1/scalar_1/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/AnnotationInfo((anon1),anon1,None,anon1,(anon1): true).suffix/scalar_1"
+                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon1/scalar_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
@@ -149,7 +149,7 @@
               "@value": "x-anon2"
             }
           ],
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/AnnotationInfo(x-anon2,anon2,None,anon2,x-anon2: 2.3[).suffix/scalar_1",
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon2/scalar_1",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -172,16 +172,16 @@
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/AnnotationInfo(x-anon2,anon2,None,anon2,x-anon2: 2.3[).suffix/scalar_1/source-map",
+              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon2/scalar_1/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/AnnotationInfo(x-anon2,anon2,None,anon2,x-anon2: 2.3[).suffix/scalar_1/source-map/lexical/element_0",
+                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon2/scalar_1/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/AnnotationInfo(x-anon2,anon2,None,anon2,x-anon2: 2.3[).suffix/scalar_1"
+                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodes/anon2/scalar_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
@@ -200,7 +200,7 @@
               "@value": "(a.hey)"
             }
           ],
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/AnnotationInfo((a.hey),a.hey,Some(a),hey,(a.hey): hey).suffix/scalar_1",
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey/scalar_1",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -223,16 +223,16 @@
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/AnnotationInfo((a.hey),a.hey,Some(a),hey,(a.hey): hey).suffix/scalar_1/source-map",
+              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey/scalar_1/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/AnnotationInfo((a.hey),a.hey,Some(a),hey,(a.hey): hey).suffix/scalar_1/source-map/lexical/element_0",
+                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey/scalar_1/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/AnnotationInfo((a.hey),a.hey,Some(a),hey,(a.hey): hey).suffix/scalar_1"
+                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey/scalar_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
@@ -251,7 +251,7 @@
               "@value": "x-a-hey2"
             }
           ],
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/AnnotationInfo(x-a-hey2,a-hey2,Some(a),hey2,x-a-hey2: 1).suffix/scalar_1",
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey2/scalar_1",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -274,16 +274,16 @@
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/AnnotationInfo(x-a-hey2,a-hey2,Some(a),hey2,x-a-hey2: 1).suffix/scalar_1/source-map",
+              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey2/scalar_1/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/AnnotationInfo(x-a-hey2,a-hey2,Some(a),hey2,x-a-hey2: 1).suffix/scalar_1/source-map/lexical/element_0",
+                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey2/scalar_1/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/AnnotationInfo(x-a-hey2,a-hey2,Some(a),hey2,x-a-hey2: 1).suffix/scalar_1"
+                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesa/hey2/scalar_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
@@ -302,7 +302,7 @@
               "@value": "(b.ho)"
             }
           ],
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/AnnotationInfo((b.ho),b.ho,Some(b),ho,(b.ho): ho).suffix/scalar_1",
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho/scalar_1",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -325,16 +325,16 @@
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/AnnotationInfo((b.ho),b.ho,Some(b),ho,(b.ho): ho).suffix/scalar_1/source-map",
+              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho/scalar_1/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/AnnotationInfo((b.ho),b.ho,Some(b),ho,(b.ho): ho).suffix/scalar_1/source-map/lexical/element_0",
+                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho/scalar_1/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/AnnotationInfo((b.ho),b.ho,Some(b),ho,(b.ho): ho).suffix/scalar_1"
+                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho/scalar_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [
@@ -353,7 +353,7 @@
               "@value": "x-b-ho2"
             }
           ],
-          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/AnnotationInfo(x-b-ho2,b-ho2,Some(b),ho2,x-b-ho2: 2).suffix/scalar_1",
+          "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho2/scalar_1",
           "@type": [
             "http://a.ml/vocabularies/data#Scalar",
             "http://a.ml/vocabularies/data#Node",
@@ -376,16 +376,16 @@
           ],
           "http://a.ml/vocabularies/document-source-maps#sources": [
             {
-              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/AnnotationInfo(x-b-ho2,b-ho2,Some(b),ho2,x-b-ho2: 2).suffix/scalar_1/source-map",
+              "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho2/scalar_1/source-map",
               "@type": [
                 "http://a.ml/vocabularies/document-source-maps#SourceMap"
               ],
               "http://a.ml/vocabularies/document-source-maps#lexical": [
                 {
-                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/AnnotationInfo(x-b-ho2,b-ho2,Some(b),ho2,x-b-ho2: 2).suffix/scalar_1/source-map/lexical/element_0",
+                  "@id": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho2/scalar_1/source-map/lexical/element_0",
                   "http://a.ml/vocabularies/document-source-maps#element": [
                     {
-                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/AnnotationInfo(x-b-ho2,b-ho2,Some(b),ho2,x-b-ho2: 2).suffix/scalar_1"
+                      "@value": "file://amf-aml/shared/src/test/resources/vocabularies2/instances/example1_annotations.yaml#/encodesb/ho2/scalar_1"
                     }
                   ],
                   "http://a.ml/vocabularies/document-source-maps#value": [

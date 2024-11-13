@@ -3,11 +3,11 @@ package amf.aml.internal.parse.common
 import amf.aml.internal.parse.DynamicExtensionParser
 import amf.aml.internal.parse.instances.DialectInstanceContext
 import amf.aml.internal.parse.vocabularies.VocabularyDeclarations
+import amf.aml.internal.semantic.SemanticExtensionsFacade
 import amf.aml.internal.validate.DialectValidations.MissingVocabulary
-import amf.core.client.scala.model.domain.{AmfObject, DomainElement}
+import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.model.domain.extensions.{CustomDomainProperty, DomainExtension}
 import amf.core.client.scala.parse.document.ParserContext
-import amf.core.internal.annotations.SourceAST
 import amf.core.internal.metamodel.domain.DomainElementModel.CustomDomainProperties
 import amf.core.internal.metamodel.domain.extensions.DomainExtensionModel
 import amf.core.internal.parser.domain.Annotations
@@ -26,7 +26,7 @@ object AnnotationsParser {
     computeAnnotationInfo(ast) flatMap { ai =>
       computeSemanticExtensionParser(ctx, ai.key)
         .flatMap { parser =>
-          val id    = node.id + s"${ai.prefix.map(_ + "/").getOrElse("/")}${ai.suffix}"
+          val id    = node.id + annotationInfoId(ai)
           val types = node.meta.`type`.map(_.iri())
           parser.parse(types, ai.entry, ctx, id)
         }
@@ -35,7 +35,9 @@ object AnnotationsParser {
     }
   }
 
-  private def computeSemanticExtensionParser(ctx: ParserContext, key: String) = {
+  private def annotationInfoId(ai: AnnotationInfo): String = s"${ai.prefix.map(_ + "/").getOrElse("/")}${ai.suffix}"
+
+  private def computeSemanticExtensionParser(ctx: ParserContext, key: String): Option[SemanticExtensionsFacade] = {
     ctx match {
       case diCtx: DialectInstanceContext => Some(diCtx.extensionsFacadeBuilder.extensionName(key))
       case _                             => None
@@ -52,7 +54,7 @@ object AnnotationsParser {
     val key   = ai.originalKey
     declarations.resolveExternalNamespace(ai.prefix, ai.suffix) match {
       case Success(propertyId) =>
-        val id               = node.id + s"${ai.prefix.map(_ + "/").getOrElse("/")}$ai.suffix"
+        val id               = node.id + annotationInfoId(ai)
         val parsedAnnotation = DynamicExtensionParser(value, Some(id))(ctx).parse()
         val property         = CustomDomainProperty(Annotations(value)).withId(propertyId).withName(key, Annotations())
         val extension = DomainExtension()
@@ -65,8 +67,7 @@ object AnnotationsParser {
       case Failure(ex) =>
         declarations.usedVocabs.get(ai.prefix.getOrElse("")) match {
           case Some(vocabulary) =>
-            val id =
-              node.id + (if (node.id.endsWith("/") || node.id.endsWith("#")) "" else "/") + s"${ai.prefix.map(_ + "/").getOrElse("/")}$ai.suffix"
+            val id = node.id + (if (node.id.endsWith("/") || node.id.endsWith("#")) "" else "/") + annotationInfoId(ai)
             val parsedAnnotation = DynamicExtensionParser(value, Some(id))(ctx).parse()
             val base             = vocabulary.base.value()
             val propertyId = if (base.endsWith("#") || base.endsWith("/")) base + ai.suffix else base + "/" + ai.suffix
@@ -85,7 +86,7 @@ object AnnotationsParser {
     }
   }
 
-  def computeAnnotationInfo(ast: YMap): Seq[AnnotationInfo] = ast.entries.flatMap { entry: YMapEntry =>
+  private def computeAnnotationInfo(ast: YMap): Seq[AnnotationInfo] = ast.entries.flatMap { entry: YMapEntry =>
     val key: String                       = entry.key.as[String]
     val maybeBS: Option[BaseAndSeparator] = getKeyName(key)
     maybeBS.map { bs =>
@@ -112,6 +113,11 @@ object AnnotationsParser {
 
   private case class BaseAndSeparator(base: String, separator: String)
   private case class PrefixAndSuffix(prefix: Option[String], suffix: String)
-  case class AnnotationInfo(originalKey: String, key: String, prefix: Option[String], suffix: String, entry: YMapEntry)
-
+  private case class AnnotationInfo(
+      originalKey: String,
+      key: String,
+      prefix: Option[String],
+      suffix: String,
+      entry: YMapEntry
+  )
 }
