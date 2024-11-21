@@ -148,15 +148,16 @@ lazy val branch     = sys.env.getOrElse("BRANCH_NAME", "develop")
 
 sonarProperties ++= Map(
     "sonar.login"             -> sonarToken,
-    "sonar.projectKey"        -> "mulesoft.amf-aml",
+    "sonar.projectKey"        -> "mulesoft.amf-aml.gec",
     "sonar.projectName"       -> "AMF-AML",
     "sonar.projectVersion"    -> version.value,
     "sonar.sourceEncoding"    -> "UTF-8",
     "sonar.github.repository" -> "mulesoft/amf-aml",
     "sonar.branch.name"       -> branch,
-    "sonar.sources" -> "amf-aml/shared/src/main/scala, amf-rdf/shared/src/main/scala, amf-validation/shared/src/main/scala",
-    "sonar.tests"    -> "amf-aml/shared/src/test/scala, amf-rdf/shared/src/test/scala",
-    "sonar.userHome" -> "${buildDir}/.sonar"
+    "sonar.sources" -> ("amf-aml/shared/src/main/scala, " + "amf-rdf/shared/src/main/scala, " + "amf-validation/shared/src/main/scala"),
+    "sonar.tests"    -> ("amf-aml/shared/src/test/scala, " + "amf-rdf/shared/src/test/scala"),
+    "sonar.userHome" -> "${buildDir}/.sonar",
+    "sonar.scala.coverage.reportPaths" -> "target/scala-2.12/scoverage-report/scoverage.xml"
 )
 
 Global / concurrentRestrictions += Tags.limit(Tags.Untagged, 1)
