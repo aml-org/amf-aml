@@ -5,10 +5,8 @@ import amf.core.client.scala.model.domain.DomainElement
 import amf.core.internal.remote.{Hint, VocabularyYamlHint}
 import amf.testing.unclassified.ClientDomainElementTests
 
-import scala.concurrent.ExecutionContext
-
 class ClientDialectDomainElementRenderTest extends ClientDomainElementTests {
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+
   override val basePath: String = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
   override val baseHint: Hint   = VocabularyYamlHint
   val rendering: String         = "amf-aml/shared/src/test/resources/vocabularies2/rendering"
@@ -21,11 +19,11 @@ class ClientDialectDomainElementRenderTest extends ClientDomainElementTests {
 
   test("Simple node union rendering") {
     renderElement(
-      "dialect.yaml",
-      "instance.yaml",
-      encodes,
-      "instance-encodes.yaml",
-      directory = s"$rendering/simple-node-union"
+        "dialect.yaml",
+        "instance.yaml",
+        encodes,
+        "instance-encodes.yaml",
+        directory = s"$rendering/simple-node-union"
     )
   }
 

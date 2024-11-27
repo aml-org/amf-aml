@@ -8,11 +8,7 @@ import amf.core.internal.remote._
 import amf.testing.common.cycling.FunSuiteCycleTests
 import amf.testing.common.utils.DialectInstanceTester
 
-import scala.concurrent.ExecutionContext
-
 class DialectProductionTest extends FunSuiteCycleTests with DialectInstanceTester {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   override def defaultRenderOptions: RenderOptions = RenderOptions().withSourceMaps.withPrettyPrint
 

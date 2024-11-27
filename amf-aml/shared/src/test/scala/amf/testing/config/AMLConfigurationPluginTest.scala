@@ -4,20 +4,19 @@ import amf.aml.client.scala.AMLConfiguration
 import amf.aml.client.scala.model.domain.NodeMapping
 import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.render.plugin.AMLDialectInstanceRenderingPlugin
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.resource.AMFResolvers.platform.fs
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class AMLConfigurationPluginTest extends AsyncFunSuite with Matchers {
+class AMLConfigurationPluginTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
-  override implicit def executionContext: ExecutionContext = ExecutionContext.Implicits.global
-  val basePath                                             = "amf-aml/shared/src/test/resources/vocabularies2/config/"
-  val movieDialect0                                        = s"$basePath/movie_dialect_0.yaml"
-  val movieDialect1                                        = s"$basePath/movie_dialect_1.yaml"
-  val personDialect0                                       = s"$basePath/person_dialect_0.yaml"
+  val basePath       = "amf-aml/shared/src/test/resources/vocabularies2/config/"
+  val movieDialect0  = s"$basePath/movie_dialect_0.yaml"
+  val movieDialect1  = s"$basePath/movie_dialect_1.yaml"
+  val personDialect0 = s"$basePath/person_dialect_0.yaml"
 
   test("Loading dialects with same name and version should update plugins") {
     withLoadedConfig(path = s"file://$movieDialect0") { config =>

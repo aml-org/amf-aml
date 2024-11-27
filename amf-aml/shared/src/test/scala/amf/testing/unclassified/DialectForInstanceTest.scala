@@ -1,15 +1,13 @@
 package amf.testing.unclassified
 
 import amf.aml.client.scala.AMLConfiguration
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
-class DialectForInstanceTest extends AsyncFunSuite with Matchers {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
+class DialectForInstanceTest extends AsyncFunSuiteWithPlatformGlobalExecutionContext with Matchers {
 
   private def basePath: String    = "amf-aml/shared/src/test/resources/vocabularies2/instances/nested-dialects/"
   private val baseDialect: String = buildPath("base-dialect.yaml")

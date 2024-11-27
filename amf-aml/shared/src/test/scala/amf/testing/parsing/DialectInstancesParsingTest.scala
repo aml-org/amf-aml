@@ -8,11 +8,9 @@ import amf.core.internal.remote._
 import amf.testing.common.utils.DialectTests
 import org.scalatest.Assertion
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 trait DialectInstancesParsingTest extends DialectTests {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/instances/"
 
