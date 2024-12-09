@@ -7,9 +7,9 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 name := "amf-aml"
 
 ThisBuild / scalaVersion := "2.12.20"
-ThisBuild / version      := "6.7.0-SNAPSHOT"
+ThisBuild / version      := "6.7.0-RC.0"
 
-val amfCoreVersion         = "5.7.0-SNAPSHOT"
+val amfCoreVersion         = "5.7.0-RC.0"
 val scalaCommonTestVersion = "0.2.15"
 
 publish := {}
