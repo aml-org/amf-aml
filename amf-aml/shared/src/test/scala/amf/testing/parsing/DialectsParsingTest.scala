@@ -5,11 +5,7 @@ import amf.core.client.scala.config.RenderOptions
 import amf.core.internal.remote.Mimes
 import amf.testing.common.utils.DialectTests
 
-import scala.concurrent.ExecutionContext
-
 trait DialectsParsingTest extends DialectTests {
-
-  override implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   val basePath = "amf-aml/shared/src/test/resources/vocabularies2/dialects/"
 

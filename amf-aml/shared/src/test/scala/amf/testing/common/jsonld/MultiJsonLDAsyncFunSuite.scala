@@ -1,17 +1,17 @@
 package amf.testing.common.jsonld
 
 import amf.core.client.scala.config.RenderOptions
+import amf.core.common.AsyncFunSuiteWithPlatformGlobalExecutionContext
 import amf.core.internal.plugins.document.graph.{EmbeddedForm, FlattenedForm, JsonLdDocumentForm}
 import amf.testing.common.jsonld
 import org.scalactic.Fail
 import org.scalatest.Assertion
-import org.scalatest.funsuite.AsyncFunSuite
 
 import scala.concurrent.Future
 
 /** Cycle tests using temporary file and directory creator
   */
-abstract class MultiJsonLDAsyncFunSuite extends AsyncFunSuite {
+abstract class MultiJsonLDAsyncFunSuite extends AsyncFunSuiteWithPlatformGlobalExecutionContext {
   def testedForms: Seq[JsonLdDocumentForm] = Seq(FlattenedForm, EmbeddedForm)
 
   def defaultRenderOptions: RenderOptions = RenderOptions()

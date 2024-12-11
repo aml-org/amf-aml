@@ -9,11 +9,9 @@ import amf.core.internal.remote.Syntax.Syntax
 import amf.core.io.FileAssertionTest
 import amf.testing.common.utils.AMFRenderer
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 trait BuildCycleTestCommon extends FileAssertionTest {
-
-  implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   def basePath: String
 

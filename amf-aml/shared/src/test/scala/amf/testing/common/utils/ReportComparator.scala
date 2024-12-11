@@ -7,11 +7,9 @@ import amf.validation.internal.emitters.ValidationReportJSONLDEmitter
 import org.scalatest.Assertion
 import org.scalatest.matchers.should.Matchers
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.Future
 
 trait ReportComparator extends FileAssertionTest with Matchers {
-
-  implicit val executionContext: ExecutionContext = ExecutionContext.Implicits.global
 
   def assertReport(
       report: AMFValidationReport,
