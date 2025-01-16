@@ -163,3 +163,4 @@ sonarProperties ++= Map(
 )
 
 Global / concurrentRestrictions += Tags.limit(Tags.Untagged, 1)
+Global / concurrentRestrictions += Tags.limit(Tags.Untagged, 1)
