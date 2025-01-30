@@ -76,22 +76,22 @@ pipeline {
                 }
             }
         }
-        stage('Triggers') {
-            when {
-                anyOf {
-                    branch 'develop'
-                }
-            }
-            steps {
-                script {
-                    lastStage = env.STAGE_NAME
-                    echo "Triggering amf on develop branch"
-                    build job: AMF_JOB, wait: false
-                    echo "Triggering amf-custom-validator-scalajs on develop branch"
-                    build job: AMF_CUSTOM_VALIDATOR_SCALAJS_JOB, wait: false
-                }
-            }
-        }
+        // stage('Triggers') {
+        //     when {
+        //         anyOf {
+        //             branch 'develop'
+        //         }
+        //     }
+        //     steps {
+        //         script {
+        //             lastStage = env.STAGE_NAME
+        //             echo "Triggering amf on develop branch"
+        //             build job: AMF_JOB, wait: false
+        //             echo "Triggering amf-custom-validator-scalajs on develop branch"
+        //             build job: AMF_CUSTOM_VALIDATOR_SCALAJS_JOB, wait: false
+        //         }
+        //     }
+        // }
         stage('Tag version') {
             when {
                 anyOf {
