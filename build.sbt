@@ -7,10 +7,14 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 name := "amf-aml"
 
 ThisBuild / scalaVersion := "2.12.20"
-ThisBuild / version      := "6.9.2"
+ThisBuild / version      := "6.10.0"
 
-val amfCoreVersion         = "5.9.2"
+val amfCoreVersion         = "5.10.0"
 val scalaCommonTestVersion = "0.2.15"
+
+ThisBuild / organizationName := "MuleSoft, Inc."
+ThisBuild / organizationHomepage := Some(url("http://www.mulesoft.com"))
+ThisBuild / licenses += ("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
 
 publish := {}
 
