@@ -16,7 +16,7 @@ import amf.core.internal.remote.AmlDialectSpec
 import amf.core.internal.validation.core.ValidationProfile
 import amf.core.internal.validation.{EffectiveValidations, ShaclReportAdaptation}
 import amf.validation.internal.shacl.custom.CustomShaclValidator
-import com.github.ghik.silencer.silent
+//import com.github.ghik.silencer.silent
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -80,7 +80,7 @@ object AMLValidator extends ShaclReportAdaptation with SemanticExtensionConstrai
       knownDialects: Seq[Dialect],
       constraints: Map[ProfileName, ValidationProfile]
   )(implicit executionContext: ExecutionContext) = {
-    @silent("deprecated") // Silent can only be used in assignment expressions
+//    @silent("deprecated") // Silent can only be used in assignment expressions
     val graphDependencies =
       if (dialectInstance.processingData.graphDependencies.nonEmpty) {
         dialectInstance.processingData.graphDependencies
