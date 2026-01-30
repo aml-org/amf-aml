@@ -10,7 +10,7 @@ ThisBuild / scalaVersion := "2.12.21"
 ThisBuild / version      := "6.11.0-SNAPSHOT"
 
 val amfCoreVersion         = "5.11.0-SNAPSHOT"
-val scalaCommonTestVersion = "0.2.15"
+val scalaCommonTestVersion = "0.2.18"
 
 ThisBuild / organizationName := "MuleSoft, Inc."
 ThisBuild / organizationHomepage := Some(url("http://www.mulesoft.com"))
