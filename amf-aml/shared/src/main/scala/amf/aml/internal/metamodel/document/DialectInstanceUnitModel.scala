@@ -8,10 +8,10 @@ import amf.core.internal.metamodel.document.{BaseUnitModel, BaseUnitProcessingDa
 import amf.core.internal.metamodel.domain.{ModelDoc, ModelVocabularies}
 
 trait DialectInstanceUnitModel { self: BaseUnitModel =>
-  @deprecated("Use DialectInstanceProcessingDataModel.DefinedBy instead", "AML 6.0.0")
+//  @deprecated("Use DialectInstanceProcessingDataModel.DefinedBy instead", "AML 6.0.0")
   val DefinedBy: Field = Field(Iri, Namespace.Meta + "definedBy", deprecated = true)
 
-  @deprecated("Use DialectInstanceProcessingDataModel.GraphDependencies instead", "AML 6.0.0")
+//  @deprecated("Use DialectInstanceProcessingDataModel.GraphDependencies instead", "AML 6.0.0")
   val GraphDependencies: Field = Field(Array(Iri), Namespace.Document + "graphDependencies", deprecated = true)
 
   override val ProcessingData: Field =

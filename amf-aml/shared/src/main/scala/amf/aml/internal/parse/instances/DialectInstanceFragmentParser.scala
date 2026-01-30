@@ -9,13 +9,13 @@ import amf.aml.client.scala.model.domain.{DialectDomainElement, DocumentsModel}
 import amf.aml.internal.parse.instances.DialectInstanceParser.encodedElementDefaultId
 import amf.aml.internal.parse.instances.parser.InstanceElementParser
 import amf.aml.internal.validate.DialectValidations.DialectError
-import com.github.ghik.silencer.silent
+//import com.github.ghik.silencer.silent
 
 class DialectInstanceFragmentParser(root: Root)(implicit override val ctx: DialectInstanceContext)
     extends DialectInstanceParser(root) {
 
   def parse(name: String): DialectInstanceFragment = {
-    @silent("deprecated") // Silent can only be used in assignment expressions
+//    @silent("deprecated") // Silent can only be used in assignment expressions
     val dialectInstanceFragment: DialectInstanceFragment = DialectInstanceFragment(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)

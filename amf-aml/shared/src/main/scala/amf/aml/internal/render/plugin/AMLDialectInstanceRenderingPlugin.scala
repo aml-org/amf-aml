@@ -11,7 +11,7 @@ import amf.core.client.scala.model.document.BaseUnit
 import amf.core.internal.plugins.render.{RenderConfiguration, RenderInfo, SYAMLASTBuilder, SYAMLBasedRenderPlugin}
 import amf.core.internal.plugins.syntax.ASTBuilder
 import amf.core.internal.remote.Mimes._
-import com.github.ghik.silencer.silent
+//import com.github.ghik.silencer.silent
 import org.yaml.builder.{DocBuilder, YDocumentBuilder}
 import org.yaml.model.YDocument
 
@@ -60,7 +60,7 @@ class AMLDialectInstanceRenderingPlugin(val dialect: Dialect)
 
   override def applies(element: RenderInfo): Boolean = element.unit match {
     case unit: DialectInstanceUnit =>
-      @silent("deprecated") // Silent can only be used in assignment expressions
+//      @silent("deprecated") // Silent can only be used in assignment expressions
       val a = unit.processingData.definedBy().option().orElse(unit.definedBy().option()).contains(dialect.id)
       a
     case _ => false

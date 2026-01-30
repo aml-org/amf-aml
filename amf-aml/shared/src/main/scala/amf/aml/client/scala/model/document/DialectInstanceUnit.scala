@@ -7,18 +7,18 @@ import amf.core.internal.metamodel.document.BaseUnitModel.References
 
 trait DialectInstanceUnit extends BaseUnit with ExternalContext[DialectInstanceUnit] {
 
-  @deprecated("Use processingData.graphDependencies instead", "AML 6.0.0")
+//  @deprecated("Use processingData.graphDependencies instead", "AML 6.0.0")
   def graphDependencies: Seq[StrField] = fields.field(GraphDependencies)
 
-  @deprecated("Use processingData.definedBy instead", "AML 6.0.0")
+//  @deprecated("Use processingData.definedBy instead", "AML 6.0.0")
   def definedBy(): StrField = fields.field(DefinedBy)
 
   def references: Seq[BaseUnit] = fields.field(References)
 
-  @deprecated("Use processingData.withDefinedBy instead", "AML 6.0.0")
+//  @deprecated("Use processingData.withDefinedBy instead", "AML 6.0.0")
   def withDefinedBy(dialectIri: String): this.type = set(DefinedBy, dialectIri)
 
-  @deprecated("Use processingData.withGraphDependencies instead", "AML 6.0.0")
+//  @deprecated("Use processingData.withGraphDependencies instead", "AML 6.0.0")
   def withGraphDependencies(dialectIris: Seq[String]): this.type = set(GraphDependencies, dialectIris)
 
   override def processingData: DialectInstanceProcessingData = fields.field(ProcessingData)
