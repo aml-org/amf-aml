@@ -6,7 +6,7 @@ import amf.core.internal.metamodel.document.{DocumentModel, FragmentModel}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
 import amf.aml.client.scala.model.document.DialectInstanceFragment
-import com.github.ghik.silencer.silent
+//import com.github.ghik.silencer.silent
 
 object DialectInstanceFragmentModel extends DocumentModel with ExternalContextModel with DialectInstanceUnitModel {
 
@@ -17,6 +17,6 @@ object DialectInstanceFragmentModel extends DocumentModel with ExternalContextMo
   override val `type`: List[ValueType] =
     Namespace.Meta + "DialectInstanceFragment" :: FragmentModel.`type`
 
-  @silent("deprecated")
+//  @silent("deprecated")
   override val fields: List[Field] = DefinedBy :: Fragment :: GraphDependencies :: Externals :: FragmentModel.fields
 }

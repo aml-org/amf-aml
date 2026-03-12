@@ -6,11 +6,11 @@ val ivyLocal = Resolver.file("ivy", file(Path.userHome.absolutePath + "/.ivy2/lo
 
 name := "amf-aml"
 
-ThisBuild / scalaVersion := "2.12.20"
-ThisBuild / version      := "6.10.0"
+ThisBuild / scalaVersion := "2.12.21"
+ThisBuild / version      := "6.10.1"
 
-val amfCoreVersion         = "5.10.0"
-val scalaCommonTestVersion = "0.2.15"
+val amfCoreVersion         = "5.10.1"
+val scalaCommonTestVersion = "0.2.18"
 
 ThisBuild / organizationName := "MuleSoft, Inc."
 ThisBuild / organizationHomepage := Some(url("http://www.mulesoft.com"))
@@ -143,10 +143,12 @@ lazy val rdfJS =
     .disablePlugins(SonarPlugin, ScoverageSbtPlugin)
     .enablePlugins(JSDependenciesPlugin)
 
+/**
 ThisBuild / libraryDependencies ++= Seq(
     compilerPlugin("com.github.ghik" % "silencer-plugin" % "1.7.19" cross CrossVersion.constant("2.12.20")),
     "com.github.ghik" % "silencer-lib" % "1.7.19" % Provided cross CrossVersion.constant("2.12.20")
 )
+**/
 
 lazy val sonarUrl   = sys.env.getOrElse("SONAR_SERVER_URL", "Not found url.")
 lazy val sonarToken = sys.env.getOrElse("SONAR_SERVER_TOKEN", "Not found token.")

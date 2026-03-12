@@ -6,7 +6,7 @@ import amf.aml.internal.parse.plugin.AMLDialectInstanceParsingPlugin
 import amf.aml.internal.semantic.SemanticExtensionHelper
 import amf.core.client.scala.resource.ResourceLoader
 import amf.core.client.scala.transform.TransformationPipeline
-import com.github.ghik.silencer.silent
+//import com.github.ghik.silencer.silent
 
 import scala.collection.immutable
 
@@ -78,7 +78,7 @@ class AMLConfigurationState private[amf] (protected val configuration: AMLConfig
     SemanticExtensionHelper.byNameFinder(configuration).find(name).headOption
 
   def findDialectFor(dialectInstance: DialectInstance): Option[Dialect] = {
-    @silent("deprecated") // Silent can only be used in assignment expressions
+//    @silent("deprecated") // Silent can only be used in assignment expressions
     val a = getDialects().find(dialect =>
       dialectInstance.processingData
         .definedBy()

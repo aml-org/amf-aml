@@ -5,7 +5,7 @@ import amf.core.client.platform.model.StrField
 import amf.aml.client.platform.model.domain.{DocumentsModel, External, SemanticExtension}
 import amf.core.client.platform.model.document.{BaseUnit, DeclaresModel, EncodesModel}
 import amf.aml.client.scala.model.document.{Dialect => InternalDialect}
-import com.github.ghik.silencer.silent
+//import com.github.ghik.silencer.silent
 
 import scala.scalajs.js.annotation.{JSExportAll, JSExportTopLevel}
 
@@ -23,27 +23,27 @@ case class Dialect(private[amf] val _internal: InternalDialect) extends BaseUnit
   def extensions(): ClientList[SemanticExtension] = _internal.extensions().asClient
 
 //  @deprecated("Useless functionality", "AML 6.0.3")
-  @silent
+//  @silent
   def header: String = _internal.header
 
 //  @deprecated("Useless functionality", "AML 6.0.3")
-  @silent
+//  @silent
   def isLibraryHeader(header: String): Boolean = _internal.isLibraryHeader(header)
 
 //  @deprecated("Useless functionality", "AML 6.0.3")
-  @silent
+//  @silent
   def isFragmentHeader(header: String): Boolean = _internal.isFragmentHeader(header)
 
 //  @deprecated("Useless functionality", "AML 6.0.3")
-  @silent
+//  @silent
   def libraryHeader: ClientOption[String] = _internal.libraryHeader.asClient
 
 //  @deprecated("Useless functionality", "AML 6.0.3")
-  @silent
+//  @silent
   def fragmentHeaders: ClientList[String] = _internal.fragmentHeaders.asClient
 
 //  @deprecated("Useless functionality", "AML 6.0.3")
-  @silent
+//  @silent
   def allHeaders: ClientList[String] = _internal.allHeaders.asClient
 
   def withName(name: String): Dialect = {

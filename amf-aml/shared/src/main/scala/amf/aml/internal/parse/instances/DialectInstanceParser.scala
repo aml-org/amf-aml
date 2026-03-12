@@ -15,7 +15,7 @@ import amf.core.client.scala.parse.document.SyamlParsedDocument
 import amf.core.internal.parser.domain.Annotations
 import amf.core.internal.parser.{Root, YMapOps, YNodeLikeOps}
 import amf.core.internal.utils._
-import com.github.ghik.silencer.silent
+//import com.github.ghik.silencer.silent
 import org.yaml.model._
 
 // TODO: needs further breakup of parts. This components of this class are untestable the current way.
@@ -103,7 +103,7 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
   val map: YMap = root.parsed.asInstanceOf[SyamlParsedDocument].document.as[YMap]
 
   def parseDocument(): DialectInstance = {
-    @silent("deprecated") // Silent can only be used in assignment expressions
+//    @silent("deprecated") // Silent can only be used in assignment expressions
     val dialectInstance: DialectInstance = DialectInstance(Annotations(map))
       .withLocation(root.location)
       .withId(root.location)
@@ -129,7 +129,7 @@ class DialectInstanceParser(val root: Root)(implicit val ctx: DialectInstanceCon
       dialectInstance.withReferences(references.baseUnitReferences())
     if (ctx.nestedDialects.nonEmpty) {
       dialectInstance.processingData.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
-      @silent("deprecated") // Silent can only be used in assignment expressions
+//      @silent("deprecated") // Silent can only be used in assignment expressions
       val a = dialectInstance.withGraphDependencies(ctx.nestedDialects.map(nd => nd.location().getOrElse(nd.id)))
     }
 

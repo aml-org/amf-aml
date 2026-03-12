@@ -4,7 +4,6 @@ import amf.aml.internal.convert.VocabulariesClientConverter._
 import amf.aml.internal.convert.VocabulariesClientConverter.ClientList
 import amf.core.client.platform.model.StrField
 import amf.core.client.platform.model.document.BaseUnit
-import com.github.ghik.silencer.silent
 
 import scala.scalajs.js.annotation.JSExportAll
 
@@ -20,22 +19,22 @@ trait DialectInstanceUnit extends BaseUnit {
   }
 
 //  @deprecated("Use processingData.definedBy instead", "AML 6.0.0")
-  @silent
+//  @silent
   def definedBy(): StrField = _internal.definedBy()
 
 //  @deprecated("Use processingData.graphDependencies instead", "AML 6.0.0")
-  @silent
+//  @silent
   def graphDependencies(): ClientList[StrField] = _internal.graphDependencies.asClient
 
 //  @deprecated("Use processingData.withDefinedBy instead", "AML 6.0.0")
-  @silent
+//  @silent
   def withDefinedBy(dialectId: String): this.type = {
     _internal.withDefinedBy(dialectId)
     this
   }
 
 //  @deprecated("Use processingData.withGraphDependencies instead", "AML 6.0.0")
-  @silent
+//  @silent
   def withGraphDependencies(ids: ClientList[String]): this.type = {
     _internal.withGraphDependencies(ids.asInternal)
     this

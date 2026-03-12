@@ -1,7 +1,7 @@
 package amf.aml.internal.metamodel.document
 
 import amf.core.internal.metamodel.Field
-import com.github.ghik.silencer.silent
+//import com.github.ghik.silencer.silent
 import amf.core.internal.metamodel.document.{BaseUnitModel, DocumentModel, ExtensionLikeModel, FragmentModel}
 import amf.core.client.scala.model.domain.AmfObject
 import amf.core.client.scala.vocabulary.{Namespace, ValueType}
@@ -17,6 +17,6 @@ object DialectInstancePatchModel
   override val `type`: List[ValueType] =
     Namespace.Meta + "DialectInstancePatch" :: Namespace.Document + "DocumentExtension" :: BaseUnitModel.`type`
 
-  @silent("deprecated")
+//  @silent("deprecated")
   override val fields: List[Field] = DefinedBy :: GraphDependencies :: Externals :: Extends :: FragmentModel.fields
 }
